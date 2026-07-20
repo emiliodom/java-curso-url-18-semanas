@@ -1,0 +1,349 @@
+:root {
+    --brand: #0d6efd;
+    --brand-2: #6610f2;
+    --bg-soft: #f6f8fb;
+    --code-bg: #0b1220;
+    --code-fg: #e6edf3;
+    --ok: #22c55e;
+    --warn: #f59e0b;
+    --bad: #ef4444;
+}
+
+body {
+    background: var(--bg-soft);
+}
+
+.hero {
+    background:
+        radial-gradient(1200px circle at 10% 10%, rgba(13, 110, 253, 0.25), transparent 60%),
+        radial-gradient(900px circle at 90% 20%, rgba(102, 16, 242, 0.22), transparent 55%),
+        linear-gradient(180deg, #ffffff, var(--bg-soft));
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.brand-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    background: rgba(13, 110, 253, 0.12);
+    color: #0b3d91;
+    font-weight: 600;
+}
+
+.card {
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 10px 30px rgba(16, 24, 40, 0.06);
+}
+
+.kbd {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.9em;
+    background: #111827;
+    color: #fff;
+    padding: 0.1rem 0.4rem;
+    border-radius: 0.35rem;
+}
+
+pre {
+    background: var(--code-bg);
+    color: var(--code-fg);
+    padding: 1rem;
+    border-radius: 0.75rem;
+    overflow-x: auto;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+details > summary {
+    cursor: pointer;
+}
+
+.section-title {
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.small-muted {
+    color: rgba(0, 0, 0, 0.65);
+}
+
+.callout {
+    border-left: 5px solid var(--brand);
+    background: #fff;
+    padding: 1rem;
+    border-radius: 0.75rem;
+}
+
+.callout.warning {
+    border-left-color: var(--warn);
+}
+
+.callout.success {
+    border-left-color: var(--ok);
+}
+
+.callout.danger {
+    border-left-color: var(--bad);
+}
+
+/* ---- Cronómetro / bloques de tiempo ---- */
+.time-chip {
+    display: inline-block;
+    min-width: 5.5rem;
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    background: #eef4ff;
+    color: #0b3d91;
+    border: 1px solid rgba(13, 110, 253, 0.25);
+}
+
+/* ---- Quiz ---- */
+.quiz-q {
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 0.75rem;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.quiz-q.correct {
+    border-color: var(--ok);
+    box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.25);
+}
+
+.quiz-q.incorrect {
+    border-color: var(--bad);
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+}
+
+.quiz-feedback {
+    display: none;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.quiz-q.correct .quiz-feedback.ok,
+.quiz-q.incorrect .quiz-feedback.ko {
+    display: block;
+}
+
+.quiz-feedback.ok {
+    background: rgba(34, 197, 94, 0.12);
+    color: #14532d;
+}
+
+.quiz-feedback.ko {
+    background: rgba(239, 68, 68, 0.1);
+    color: #7f1d1d;
+}
+
+.score-banner {
+    display: none;
+    border-radius: 0.75rem;
+    padding: 1rem 1.25rem;
+    font-weight: 600;
+}
+
+.score-banner.show {
+    display: block;
+}
+
+/* ---- Challenge drag & drop ---- */
+.dd-pool,
+.dd-target {
+    min-height: 90px;
+    border-radius: 0.75rem;
+    padding: 0.75rem;
+}
+
+.dd-pool {
+    background: #fff;
+    border: 2px dashed rgba(13, 110, 253, 0.4);
+}
+
+.dd-target {
+    background: var(--code-bg);
+    border: 2px dashed rgba(255, 255, 255, 0.25);
+    counter-reset: linea;
+}
+
+.dd-slot {
+    display: flex;
+    align-items: stretch;
+    min-height: 2.4rem;
+    margin-bottom: 0.4rem;
+    border-radius: 0.5rem;
+    border: 1.5px dashed rgba(255, 255, 255, 0.35);
+    color: rgba(255, 255, 255, 0.45);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.85rem;
+}
+
+.dd-slot::before {
+    counter-increment: linea;
+    content: counter(linea);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    border-right: 1px dashed rgba(255, 255, 255, 0.25);
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.dd-slot.over {
+    border-color: var(--brand);
+    background: rgba(13, 110, 253, 0.15);
+}
+
+.dd-slot.correct {
+    border: 1.5px solid var(--ok);
+}
+
+.dd-slot.incorrect {
+    border: 1.5px solid var(--bad);
+}
+
+.dd-piece {
+    display: inline-block;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.85rem;
+    background: #111827;
+    color: #e6edf3;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.5rem;
+    padding: 0.4rem 0.7rem;
+    margin: 0.2rem;
+    cursor: grab;
+    user-select: none;
+    white-space: pre;
+}
+
+.dd-piece.selected {
+    outline: 3px solid var(--warn);
+}
+
+.dd-piece.dragging {
+    opacity: 0.5;
+}
+
+.dd-slot .dd-piece {
+    flex: 1;
+    margin: 0;
+    border-radius: 0 0.5rem 0.5rem 0;
+    border: none;
+}
+
+.indent-1 { padding-left: 1.4rem; }
+.indent-2 { padding-left: 2.8rem; }
+
+/* ---- Tabla comparativa Python/Java ---- */
+.table-code td,
+.table-code th {
+    vertical-align: top;
+}
+
+.table-code pre {
+    margin: 0;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+}
+
+/* ---- Entregable ---- */
+.fill-line {
+    border: none;
+    border-bottom: 1.5px solid rgba(0, 0, 0, 0.35);
+    width: 100%;
+    background: transparent;
+}
+
+textarea.code-area {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.85rem;
+    background: var(--code-bg);
+    color: var(--code-fg);
+    border-radius: 0.5rem;
+    width: 100%;
+    padding: 0.75rem;
+}
+
+/* ---- Exportar a PDF (impresión) ---- */
+.btn-export::before {
+    content: "🖨 ";
+}
+
+@media print {
+    nav.navbar,
+    .no-print,
+    .btn,
+    button {
+        display: none !important;
+    }
+
+    body {
+        background: #fff !important;
+    }
+
+    .hero {
+        background: #fff !important;
+        border-bottom: 2px solid #000;
+    }
+
+    .card {
+        box-shadow: none !important;
+        border: 1px solid #999 !important;
+        break-inside: avoid;
+    }
+
+    .quiz-q,
+    .accordion-item,
+    .callout {
+        break-inside: avoid;
+    }
+
+    /* Mostrar todos los acordeones y detalles al imprimir */
+    .accordion-collapse {
+        display: block !important;
+        height: auto !important;
+    }
+
+    .accordion-button::after {
+        display: none;
+    }
+
+    details {
+        open: true;
+    }
+
+    details > *:not(summary) {
+        display: block !important;
+    }
+
+    pre {
+        white-space: pre-wrap;
+        border: 1px solid #999;
+        background: #f3f4f6 !important;
+        color: #111 !important;
+    }
+
+    a[href^="http"]::after {
+        content: " (" attr(href) ")";
+        font-size: 0.8em;
+        color: #555;
+    }
+
+    .score-banner.show,
+    .quiz-feedback {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}

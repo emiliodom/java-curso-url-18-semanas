@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guía del Programador de Python — Semana 1</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 1 — Java</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link active" href="guia_programador_python.html">Python→Java</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="entregable.html">Entregable</a></li>
+          <li class="nav-item"><a class="nav-link" href="instalacion.html">Instalación</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">La Guía del Programador de Python · Semana 1</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">De Python a Java: tu puente entre lenguajes</h1>
+          <div class="small-muted">Si ya conoces Python (o cualquier otro lenguaje), esta guía traduce lo que sabes. Si no conoces ninguno, léela igual: entender <strong>por qué Java es diferente</strong> es parte de los valores de la semana (pensamiento crítico).</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <div class="callout mb-4">
+      <div class="fw-semibold">La gran pregunta de la semana</div>
+      <div class="small-muted">En Python escribes <code>edad = 20</code> y listo. En Java escribes <code>int edad = 20;</code> dentro de una clase con un método <code>main</code>. <strong>¿Por qué Java exige tanta estructura?</strong> Al final de esta guía tendrás argumentos para responder — y no solo "porque sí".</div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">1. El mismo programa, en dos idiomas</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-code align-middle">
+            <thead>
+              <tr><th style="width:50%">🐍 Python</th><th style="width:50%">☕ Java</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><pre><code>print("Hola, mundo")</code></pre></td>
+                <td><pre><code>public class Main {
+  public static void main(String[] args) {
+    System.out.println("Hola, mundo");
+  }
+}</code></pre></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="small-muted">Sí: una línea contra cinco. Pero esas cuatro líneas "extra" no son burocracia — son un contrato. Sigue leyendo.</div>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">2. Tabla de traducción Python ↔ Java (lo de esta semana)</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-code align-middle">
+            <thead>
+              <tr><th>Concepto</th><th>🐍 Python</th><th>☕ Java</th><th>Qué cambia</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="fw-semibold">Variable entera</td>
+                <td><pre><code>edad = 20</code></pre></td>
+                <td><pre><code>int edad = 20;</code></pre></td>
+                <td class="small">Declaras el <strong>tipo</strong> y cierras con <code>;</code></td>
+              </tr>
+              <tr>
+                <td class="fw-semibold">Decimal</td>
+                <td><pre><code>estatura = 1.62</code></pre></td>
+                <td><pre><code>double estatura = 1.62;</code></pre></td>
+                <td class="small"><code>double</code> para decimales</td>
+              </tr>
+              <tr>
+                <td class="fw-semibold">Texto</td>
+                <td><pre><code>nombre = "Ana"</code></pre></td>
+                <td><pre><code>String nombre = "Ana";</code></pre></td>
+                <td class="small"><code>String</code> con S mayúscula, siempre comillas dobles</td>
+              </tr>
+              <tr>
+                <td class="fw-semibold">Booleano</td>
+                <td><pre><code>inscrito = True</code></pre></td>
+                <td><pre><code>boolean inscrito = true;</code></pre></td>
+                <td class="small">En Java es <code>true/false</code> en minúscula</td>
+              </tr>
+              <tr>
+                <td class="fw-semibold">Constante</td>
+                <td><pre><code>IVA = 0.12  # convención</code></pre></td>
+                <td><pre><code>final double IVA = 0.12;</code></pre></td>
+                <td class="small">En Python es solo costumbre; en Java <code>final</code> lo <strong>prohíbe de verdad</strong></td>
+              </tr>
+              <tr>
+                <td class="fw-semibold">Imprimir</td>
+                <td><pre><code>print("Edad:", edad)</code></pre></td>
+                <td><pre><code>System.out.println("Edad: " + edad);</code></pre></td>
+                <td class="small">Concatenación con <code>+</code></td>
+              </tr>
+              <tr>
+                <td class="fw-semibold">Comentario</td>
+                <td><pre><code># una línea</code></pre></td>
+                <td><pre><code>// una línea
+/* varias líneas */</code></pre></td>
+                <td class="small"><code>//</code> en vez de <code>#</code></td>
+              </tr>
+              <tr>
+                <td class="fw-semibold">División</td>
+                <td><pre><code>7 / 2   # 3.5
+7 // 2  # 3</code></pre></td>
+                <td><pre><code>7 / 2          // 3 ⚠
+(double) 7 / 2 // 3.5</code></pre></td>
+                <td class="small">⚠ ¡Invertido! En Java <code>int/int</code> es entera por defecto</td>
+              </tr>
+              <tr>
+                <td class="fw-semibold">Residuo</td>
+                <td><pre><code>17 % 5  # 2</code></pre></td>
+                <td><pre><code>17 % 5  // 2</code></pre></td>
+                <td class="small">Igual 🙂</td>
+              </tr>
+              <tr>
+                <td class="fw-semibold">Y / O / NO</td>
+                <td><pre><code>a and b
+a or b
+not a</code></pre></td>
+                <td><pre><code>a && b
+a || b
+!a</code></pre></td>
+                <td class="small">Símbolos en vez de palabras</td>
+              </tr>
+              <tr>
+                <td class="fw-semibold">Texto → número</td>
+                <td><pre><code>int("20")</code></pre></td>
+                <td><pre><code>Integer.parseInt("20")</code></pre></td>
+                <td class="small">Más largo, misma idea</td>
+              </tr>
+              <tr>
+                <td class="fw-semibold">Potencia</td>
+                <td><pre><code>2 ** 10</code></pre></td>
+                <td><pre><code>Math.pow(2, 10)</code></pre></td>
+                <td class="small">Java no tiene operador de potencia</td>
+              </tr>
+              <tr>
+                <td class="fw-semibold">Bloques de código</td>
+                <td><pre><code>« indentación obligatoria »</code></pre></td>
+                <td><pre><code>{ llaves } y ; obligatorios</code></pre></td>
+                <td class="small">En Java la indentación es buena práctica; las llaves son la ley</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">3. Los 5 tropiezos clásicos del pythonista en Java</h2>
+    <div class="row g-3 mb-4">
+      <div class="col-md-6">
+        <div class="callout danger h-100">
+          <div class="fw-semibold">1. Olvidar el <code>;</code></div>
+          <div class="small-muted">Cada instrucción termina en punto y coma. El error <code>';' expected</code> será tu compañero la primera semana. Es normal.</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="callout danger h-100">
+          <div class="fw-semibold">2. <code>True</code> con mayúscula</div>
+          <div class="small-muted">Python: <code>True/False</code>. Java: <code>true/false</code>. El compilador dirá <code>cannot find symbol</code>.</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="callout danger h-100">
+          <div class="fw-semibold">3. Esperar que <code>7 / 2</code> dé 3.5</div>
+          <div class="small-muted">En Java, entero entre entero da entero: <code>3</code>. Convierte primero: <code>(double) 7 / 2</code>.</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="callout danger h-100">
+          <div class="fw-semibold">4. Reasignar con otro tipo</div>
+          <div class="small-muted">En Python <code>x = 5</code> y luego <code>x = "hola"</code> es válido. En Java <strong>no</strong>: la cajita <code>int</code> solo acepta enteros para siempre.</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="callout danger h-100">
+          <div class="fw-semibold">5. Usar <code>and / or / not</code></div>
+          <div class="small-muted">Java usa símbolos: <code>&amp;&amp;</code>, <code>||</code>, <code>!</code>. Escribir <code>and</code> es error de compilación.</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="callout success h-100">
+          <div class="fw-semibold">Bonus: lo que NO cambia</div>
+          <div class="small-muted">La lógica es idéntica: variables, expresiones, precedencia de operadores, módulo, comparaciones. <strong>Aprender el segundo lenguaje siempre es más fácil que el primero.</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">4. ¿Por qué Java exige tipado fuerte? (pensamiento crítico)</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <h3 class="h6 fw-bold">🐍 Python (tipado dinámico)</h3>
+            <ul class="small">
+              <li>El tipo se decide <strong>al ejecutar</strong>.</li>
+              <li>Escribir es rápido; ideal para scripts y prototipos.</li>
+              <li>Un error de tipos explota <strong>en producción</strong>, frente al usuario:
+                <pre class="mt-1"><code>edad = "veinte"
+edad + 1  # 💥 TypeError en ejecución</code></pre>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <h3 class="h6 fw-bold">☕ Java (tipado fuerte y estático)</h3>
+            <ul class="small">
+              <li>El tipo se verifica <strong>al compilar</strong>, antes de que nadie lo use.</li>
+              <li>El mismo error se detecta al instante:
+                <pre class="mt-1"><code>int edad = "veinte";
+// 💡 error: incompatible types
+// (no llega ni a ejecutarse)</code></pre>
+              </li>
+              <li>En proyectos grandes (como tu app web de este curso), el tipo es <strong>documentación viva</strong>: leer <code>int edad</code> te dice qué esperar sin adivinar.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="callout mt-3">
+          <div class="fw-semibold">Conclusión honesta</div>
+          <div class="small-muted">No es que Java sea "mejor" que Python: son herramientas para trabajos distintos. Python brilla en ciencia de datos y scripts; Java brilla en sistemas grandes, bancos y aplicaciones web empresariales (Spring Boot, semanas 7–18). La estructura que hoy parece exceso será tu red de seguridad cuando el proyecto tenga 30 archivos.</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">5. Ejercicios de traducción (Python → Java)</h2>
+    <div class="row g-3 mb-4">
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h3 class="h6 fw-bold">Traducción 1 — Ficha simple</h3>
+            <p class="small-muted mb-1">Traduce este Python a Java y ejecútalo en <a href="https://www.educative.io/compilers/java" target="_blank" rel="noreferrer">Educative</a>:</p>
+            <pre><code>nombre = "Luis"
+edad = 22
+print("Hola", nombre)
+print("El próximo año tendrás", edad + 1)</code></pre>
+            <details class="mt-2">
+              <summary class="fw-semibold">Solución</summary>
+              <pre class="mt-2"><code>public class Main {
+  public static void main(String[] args) {
+    String nombre = "Luis";
+    int edad = 22;
+    System.out.println("Hola " + nombre);
+    System.out.println("El próximo año tendrás " + (edad + 1));
+  }
+}</code></pre>
+            </details>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h3 class="h6 fw-bold">Traducción 2 — Lógica booleana</h3>
+            <p class="small-muted mb-1">Este es más tramposo (¡ojo con <code>and</code> y <code>True</code>!):</p>
+            <pre><code>edad = 20
+inscrito = True
+puede = edad >= 18 and inscrito
+print(puede)
+print(not puede)</code></pre>
+            <details class="mt-2">
+              <summary class="fw-semibold">Solución</summary>
+              <pre class="mt-2"><code>public class Main {
+  public static void main(String[] args) {
+    int edad = 20;
+    boolean inscrito = true;
+    boolean puede = edad >= 18 && inscrito;
+    System.out.println(puede);
+    System.out.println(!puede);
+  }
+}</code></pre>
+            </details>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h3 class="h6 fw-bold">Traducción 3 — La división traicionera</h3>
+            <p class="small-muted mb-1">En Python esto imprime <code>3.5</code>. Logra que Java también imprima <code>3.5</code>:</p>
+            <pre><code>a = 7
+b = 2
+print(a / b)</code></pre>
+            <details class="mt-2">
+              <summary class="fw-semibold">Solución</summary>
+              <pre class="mt-2"><code>public class Main {
+  public static void main(String[] args) {
+    int a = 7;
+    int b = 2;
+    System.out.println((double) a / b); // 3.5
+  }
+}</code></pre>
+              <div class="small-muted">Sin el casting imprime <code>3</code>: división entera.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h3 class="h6 fw-bold">Traducción 4 — Reto inverso (Java → Python)</h3>
+            <p class="small-muted mb-1">Ahora al revés: ¿qué imprime este Java? Escríbelo en Python mentalmente y verifica:</p>
+            <pre><code>public class Main {
+  public static void main(String[] args) {
+    final int ANIO = 2026;
+    int nacimiento = 2004;
+    boolean mayor = (ANIO - nacimiento) >= 18;
+    System.out.println("Mayor de edad: " + mayor);
+  }
+}</code></pre>
+            <details class="mt-2">
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small">Imprime <code>Mayor de edad: true</code> (2026−2004 = 22 ≥ 18). En Python sería:</div>
+              <pre class="mt-2"><code>ANIO = 2026
+nacimiento = 2004
+mayor = (ANIO - nacimiento) >= 18
+print("Mayor de edad:", mayor)  # True</code></pre>
+            </details>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout success">
+      <div class="fw-semibold">Para el ticket de salida</div>
+      <div class="small-muted">Con lo leído, responde en una frase: <em>"¿Qué gana un equipo de 10 desarrolladores usando un lenguaje de tipado fuerte como Java?"</em> Llévala escrita al cierre de la clase.</div>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      La Guía del Programador de Python — Semana 1 · De Python a Java (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cheat Sheet — Semana 1 (Java)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 1 — Java</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link active" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="guia_programador_python.html">Python→Java</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="entregable.html">Entregable</a></li>
+          <li class="nav-item"><a class="nav-link" href="instalacion.html">Instalación</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Cheat Sheet · Semana 1</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Referencia rápida — Java básico</h1>
+          <div class="small-muted">Imprímela o tenla en una pestaña: es tu salvavidas durante ejercicios, challenge y la Guía 1.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <div class="row g-3">
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">1. Esqueleto de todo programa</h2>
+            <pre><code>public class Main {                      // contenedor
+  public static void main(String[] args) { // punto de entrada
+    System.out.println("Hola");            // instrucción + ;
+  }                                        // cierra main
+}                                          // cierra la clase
+</code></pre>
+            <ul class="small mb-0">
+              <li>Toda instrucción termina en <code>;</code></li>
+              <li>Toda <code>{</code> que se abre, se cierra <code>}</code></li>
+              <li>Mayúsculas/minúsculas importan: <code>System</code> ≠ <code>system</code></li>
+              <li><code>println</code> imprime y salta línea; <code>print</code> no salta</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">2. Tipos de datos</h2>
+            <div class="table-responsive">
+              <table class="table table-sm small">
+                <thead><tr><th>Tipo</th><th>Guarda</th><th>Ejemplo</th></tr></thead>
+                <tbody>
+                  <tr><td><code>int</code></td><td>enteros</td><td><code>int edad = 20;</code></td></tr>
+                  <tr><td><code>double</code></td><td>decimales</td><td><code>double pi = 3.14;</code></td></tr>
+                  <tr><td><code>boolean</code></td><td>true / false</td><td><code>boolean ok = true;</code></td></tr>
+                  <tr><td><code>char</code></td><td>1 carácter</td><td><code>char letra = 'A';</code></td></tr>
+                  <tr><td><code>long</code></td><td>enteros grandes</td><td><code>long habitantes = 8000000000L;</code></td></tr>
+                  <tr><td><code>String</code></td><td>texto (objeto)</td><td><code>String nombre = "Ana";</code></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="small mb-0">
+              Constante: <code>final double IVA = 0.12;</code> — no se puede reasignar.<br />
+              <code>char</code> → comillas simples <code>'A'</code> · <code>String</code> → dobles <code>"Ana"</code> · decimales con <strong>punto</strong> (<code>1.75</code>, no <code>1,75</code>).
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">3. Nombres de variables (convención)</h2>
+            <ul class="small">
+              <li>✅ <code>camelCase</code>: <code>anioNacimiento</code>, <code>promedioFinal</code></li>
+              <li>✅ Constantes: <code>MAYUSCULAS_CON_GUION</code>: <code>ANIO_ACTUAL</code></li>
+              <li>❌ No empezar con número: <code>1nombre</code></li>
+              <li>❌ Sin espacios ni tildes ni ñ: <code>año nacimiento</code></li>
+              <li>❌ No usar palabras reservadas: <code>int</code>, <code>class</code>…</li>
+            </ul>
+            <h2 class="h5 section-title mt-3">4. Comentarios</h2>
+            <pre><code>// comentario de una línea
+
+/* comentario
+   de varias líneas */
+</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">5. Operadores</h2>
+            <div class="table-responsive">
+              <table class="table table-sm small mb-2">
+                <thead><tr><th>Aritméticos</th><th>Ejemplo (a=17, b=5)</th><th>Resultado</th></tr></thead>
+                <tbody>
+                  <tr><td><code>+ - *</code></td><td><code>a + b</code></td><td><code>22</code></td></tr>
+                  <tr><td><code>/</code> (división)</td><td><code>a / b</code></td><td><code>3</code> ⚠ entera</td></tr>
+                  <tr><td><code>%</code> (residuo)</td><td><code>a % b</code></td><td><code>2</code></td></tr>
+                </tbody>
+              </table>
+              <table class="table table-sm small mb-2">
+                <thead><tr><th>Comparación</th><th>Ejemplo</th><th>Resultado</th></tr></thead>
+                <tbody>
+                  <tr><td><code>== !=</code></td><td><code>a == b</code></td><td><code>false</code></td></tr>
+                  <tr><td><code>&gt; &lt; &gt;= &lt;=</code></td><td><code>a &gt;= b</code></td><td><code>true</code></td></tr>
+                </tbody>
+              </table>
+              <table class="table table-sm small mb-0">
+                <thead><tr><th>Lógicos</th><th>Se lee</th><th>Ejemplo</th></tr></thead>
+                <tbody>
+                  <tr><td><code>&amp;&amp;</code></td><td>Y (ambas)</td><td><code>edad &gt;= 18 &amp;&amp; inscrito</code></td></tr>
+                  <tr><td><code>||</code></td><td>O (al menos una)</td><td><code>esBecado || promedio &gt;= 85</code></td></tr>
+                  <tr><td><code>!</code></td><td>NO (invierte)</td><td><code>!inscrito</code></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="callout danger mt-2 small">
+              <strong><code>=</code> asigna · <code>==</code> compara.</strong> Confundirlos es el error clásico #1.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">6. Conversiones (casting)</h2>
+            <pre><code>// Implícito (chico → grande): automático
+int x = 7;
+double d = x;              // 7.0
+
+// Explícito (grande → chico): TRUNCA
+double precio = 9.99;
+int p = (int) precio;      // 9 (no redondea)
+
+// División entera vs decimal
+7 / 2                      // 3
+(double) 7 / 2             // 3.5
+
+// Texto ↔ número
+int n = Integer.parseInt("20");     // "20" → 20
+double m = Double.parseDouble("1.5");
+String s = String.valueOf(20);      // 20 → "20"
+</code></pre>
+            <div class="small">Truco del <code>+</code>: si hay texto en la mezcla, concatena. <code>1 + 2 + "3"</code> → <code>"33"</code>, pero <code>"1" + 2 + 3</code> → <code>"123"</code> (se evalúa de izquierda a derecha).</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">7. Errores comunes y su traducción</h2>
+            <div class="table-responsive">
+              <table class="table table-sm small mb-0">
+                <thead><tr><th>El compilador dice…</th><th>Significa…</th></tr></thead>
+                <tbody>
+                  <tr><td><code>';' expected</code></td><td>Falta un punto y coma al final de una línea.</td></tr>
+                  <tr><td><code>cannot find symbol</code></td><td>Variable no declarada o mal escrita (revisa mayúsculas).</td></tr>
+                  <tr><td><code>incompatible types</code></td><td>Intentas guardar un dato en una cajita del tipo equivocado.</td></tr>
+                  <tr><td><code>unclosed string literal</code></td><td>Se te olvidó cerrar unas comillas <code>"</code>.</td></tr>
+                  <tr><td><code>reached end of file while parsing</code></td><td>Falta una llave de cierre <code>}</code>.</td></tr>
+                  <tr><td><code>cannot assign a value to final variable</code></td><td>Intentas cambiar una constante (<code>final</code>).</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="callout success mt-2 small">
+              <strong>Protocolo ante un error:</strong> 1) respira, 2) lee la línea que indica el error, 3) corrige <strong>solo eso</strong>, 4) ejecuta de nuevo. El error es información, no fracaso.
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Cheat Sheet — Semana 1 · Java básico (formato 18 semanas) · Compilador: <a href="https://www.educative.io/compilers/java" target="_blank" rel="noreferrer">educative.io/compilers/java</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

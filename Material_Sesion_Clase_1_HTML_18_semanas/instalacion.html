@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Instala tu entorno — VS Code + JDK + Git (Semana 1)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 1 — Java</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="guia_programador_python.html">Python→Java</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="entregable.html">Entregable</a></li>
+          <li class="nav-item"><a class="nav-link active" href="instalacion.html">Instalación</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Tu entorno de desarrollo · VS Code + JDK + Git</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Instala y configura tu computadora para programar</h1>
+          <div class="small-muted">Guía súper detallada, paso a paso, con verificación de cada pieza, videos de apoyo, solución de problemas y un <strong>Plan B 100% online</strong> por si nada funciona hoy.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <div class="callout warning mb-4">
+      <div class="fw-semibold">⏰ ¿Tengo que instalar todo esto HOY?</div>
+      <div class="small-muted">
+        <strong>No.</strong> La Semana 1 se trabaja completa con el compilador online (Plan B, al final de esta página), sin instalar nada.
+        Pero tu computadora <strong>debe estar lista a más tardar en la Semana 7</strong> (Spring Boot exige JDK local).
+        Nuestra recomendación: instala todo <strong>esta semana con calma</strong>, siguiendo esta guía; si algo se traba, tienes 6 semanas y la sección de troubleshooting para resolverlo sin presión.
+      </div>
+    </div>
+
+    <!-- ÍNDICE -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="h5 section-title mb-2">Ruta de instalación (en este orden)</h2>
+        <div class="row g-2 small">
+          <div class="col-md-6">
+            <ol class="mb-0">
+              <li><a href="#paso1">Instalar el JDK (el motor de Java)</a> — 10 min</li>
+              <li><a href="#paso2">Instalar Visual Studio Code (el editor)</a> — 5 min</li>
+              <li><a href="#paso3">Instalar las extensiones de Java</a> — 5 min</li>
+              <li><a href="#paso4">Instalar Git (control de versiones)</a> — 10 min</li>
+            </ol>
+          </div>
+          <div class="col-md-6">
+            <ol start="5" class="mb-0">
+              <li><a href="#verificar">Verificación final (checklist del semáforo)</a> — 5 min</li>
+              <li><a href="#videos">Videos de apoyo (español)</a></li>
+              <li><a href="#troubleshooting">Troubleshooting: si algo falla</a></li>
+              <li><a href="#planb">Plan B: herramientas online (sin instalar nada)</a></li>
+            </ol>
+          </div>
+        </div>
+        <div class="small-muted mt-2">Tiempo total estimado: <strong>35–45 minutos</strong> con buena conexión. Hazlo con la compu conectada a la corriente.</div>
+      </div>
+    </div>
+
+    <!-- PASO 1: JDK -->
+    <div class="card mb-4" id="paso1">
+      <div class="card-body">
+        <h2 class="h4 section-title">Paso 1 — Instalar el JDK <span class="badge text-bg-primary">el motor</span></h2>
+        <p class="small-muted">El <strong>JDK (Java Development Kit)</strong> es lo que realmente compila y ejecuta Java. VS Code sin JDK es como un carro sin motor. Usaremos <strong>Eclipse Temurin</strong> (de Adoptium): gratuito, oficial y el que recomienda el programa del curso.</p>
+
+        <h3 class="h6 fw-bold mt-3">1.1 ¿Qué versión? (2026)</h3>
+        <ul class="small">
+          <li>El curso pide <strong>JDK 17 o superior</strong>. Las versiones LTS (soporte largo) vigentes en 2026 son <strong>17, 21 y 25</strong>.</li>
+          <li><strong>Recomendación del curso: JDK 21 (LTS)</strong> — es el equilibrio perfecto: moderno, estable y 100% compatible con Spring Boot (semanas 7–18). Si en la página te ofrece JDK 25 LTS como "Latest LTS Release", también sirve.</li>
+        </ul>
+
+        <h3 class="h6 fw-bold mt-3">1.2 Descarga (Windows)</h3>
+        <ol class="small">
+          <li>Abre <a href="https://adoptium.net/es/temurin/releases/?version=21" target="_blank" rel="noreferrer">https://adoptium.net/es/temurin/releases/?version=21</a>.</li>
+          <li>La página detecta tu sistema. Verifica los selectores de arriba: <strong>Operating System: Windows</strong> · <strong>Architecture: x64</strong> · <strong>Package Type: JDK</strong> (⚠ no JRE) · <strong>Version: 21 - LTS</strong>.</li>
+          <li>Descarga el archivo que termina en <strong>.msi</strong> (es el instalador con asistente; el .zip es para usuarios avanzados).</li>
+        </ol>
+
+        <h3 class="h6 fw-bold mt-3">1.3 Instalación (Windows) — la parte donde TODOS se equivocan</h3>
+        <ol class="small">
+          <li>Doble clic al <code>.msi</code> → <em>Next</em>.</li>
+          <li>Acepta la licencia → <em>Next</em>.</li>
+          <li>Llegarás a la pantalla <strong>"Custom Setup"</strong> (iconos de disco duro en un arbolito). Aquí está el truco:
+            <ul>
+              <li>Clic en el icono junto a <strong>"Set JAVA_HOME variable"</strong> → elige <strong>"Will be installed on local hard drive"</strong>.</li>
+              <li>Verifica que <strong>"Add to PATH"</strong> ya esté marcado para instalarse (viene activado por defecto — no lo desactives).</li>
+            </ul>
+          </li>
+          <li><em>Next</em> → <em>Install</em> → acepta el permiso de administrador → <em>Finish</em>.</li>
+        </ol>
+        <div class="callout danger small mt-2">
+          <strong>⚠ El error #1:</strong> instalar el JDK y saltarse la casilla <code>JAVA_HOME</code>. El programa se instala, pero la terminal "no encuentra" Java. Si te pasó, no reinstales todavía: mira el <a href="#troubleshooting">troubleshooting T1</a>.
+        </div>
+
+        <h3 class="h6 fw-bold mt-3">1.4 Instalación (macOS)</h3>
+        <ol class="small">
+          <li>En la misma página elige <strong>Operating System: macOS</strong> y la arquitectura: <strong>aarch64</strong> si tu Mac es Apple Silicon (M1/M2/M3/M4) o <strong>x64</strong> si es Intel. (¿No sabes? Menú  → "Acerca de este Mac" → si dice "Chip Apple M…", es aarch64.)</li>
+          <li>Descarga el <strong>.pkg</strong>, doble clic y sigue el asistente (Continuar → Instalar). En Mac el instalador configura todo solo: no hay casillas especiales.</li>
+        </ol>
+
+        <h3 class="h6 fw-bold mt-3">1.5 Verificar el JDK ✅</h3>
+        <ol class="small">
+          <li><strong>Cierra</strong> cualquier terminal que tuvieras abierta (las terminales viejas no ven el PATH nuevo).</li>
+          <li>Abre una terminal nueva:
+            <ul>
+              <li><strong>Windows:</strong> tecla Windows → escribe <code>powershell</code> → Enter.</li>
+              <li><strong>macOS:</strong> Cmd + espacio → escribe <code>terminal</code> → Enter.</li>
+            </ul>
+          </li>
+          <li>Escribe estos dos comandos (Enter después de cada uno):</li>
+        </ol>
+        <pre><code>java -version
+javac -version</code></pre>
+        <div class="small-muted">Salida esperada (los números menores pueden variar):</div>
+        <pre><code>openjdk version "21.0.11" 2026-04-21 LTS
+OpenJDK Runtime Environment Temurin-21.0.11+9 (build 21.0.11+9-LTS)
+...
+javac 21.0.11</code></pre>
+        <div class="callout success small">
+          <strong>✅ Checkpoint:</strong> si ambos comandos responden con "21" (o 17/25), tu motor Java está listo. Si aparece <em>"no se reconoce como un comando…"</em> → <a href="#troubleshooting">troubleshooting T1</a>. Si <code>java</code> funciona pero <code>javac</code> no → instalaste el JRE en vez del JDK → <a href="#troubleshooting">T2</a>.
+        </div>
+      </div>
+    </div>
+
+    <!-- PASO 2: VS CODE -->
+    <div class="card mb-4" id="paso2">
+      <div class="card-body">
+        <h2 class="h4 section-title">Paso 2 — Instalar Visual Studio Code <span class="badge text-bg-primary">el editor</span></h2>
+        <p class="small-muted"><strong>VS Code</strong> es el editor de código más usado del mundo: gratuito, liviano y el que usaremos las 18 semanas (Java hoy, Spring Boot después).</p>
+
+        <h3 class="h6 fw-bold mt-3">2.1 Descarga e instalación</h3>
+        <ol class="small">
+          <li>Abre <a href="https://code.visualstudio.com/" target="_blank" rel="noreferrer">https://code.visualstudio.com</a> → botón azul <strong>"Download for Windows"</strong> (o Mac).</li>
+          <li><strong>Windows:</strong> ejecuta el instalador → acepta la licencia → deja la carpeta por defecto → en la pantalla <strong>"Tareas adicionales"</strong> marca TODAS las casillas, especialmente:
+            <ul>
+              <li>✅ <em>"Agregar la acción 'Abrir con Code' al menú contextual"</em> (las dos).</li>
+              <li>✅ <em>"Agregar a PATH"</em> (ya viene marcada — no la quites).</li>
+            </ul>
+          </li>
+          <li><strong>macOS:</strong> se descarga un .zip → descomprime → arrastra <strong>Visual Studio Code.app</strong> a la carpeta <strong>Aplicaciones</strong> (importante: si lo dejas en Descargas, no se actualiza bien).</li>
+          <li>Abre VS Code al terminar.</li>
+        </ol>
+
+        <h3 class="h6 fw-bold mt-3">2.2 Conoce la interfaz (versión 2026) — para no perderte</h3>
+        <p class="small-muted">VS Code cambió bastante en 2025–2026: si ves tutoriales viejos, algunas cosas se ven distintas. Lo esencial:</p>
+        <div class="table-responsive">
+          <table class="table table-sm small">
+            <thead><tr><th>Qué ves</th><th>Qué es</th><th>Para qué la usarás</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Pestaña "Welcome"</strong></td><td>Página de bienvenida con accesos y "walkthroughs"</td><td>Puedes cerrarla; se reabre desde Help → Welcome</td></tr>
+              <tr><td><strong>Activity Bar</strong> (barra vertical izquierda)</td><td>Iconos: Explorador 📄, Búsqueda 🔍, Source Control (Git), Ejecutar/Depurar ▶, <strong>Extensiones (4 cuadritos)</strong></td><td>Extensiones para el Paso 3; Explorador para tus archivos. Desde 2026 los iconos son más grandes; clic derecho sobre la barra → "Activity Bar Size" → Compact si la prefieres clásica</td></tr>
+              <tr><td><strong>Panel de Chat / IA</strong> (icono de burbuja, arriba a la derecha o barra lateral)</td><td>Copilot/agentes de IA integrados (novedad 2025–2026)</td><td><strong>En este curso lo mantenemos cerrado</strong>: primero aprende a pensar tú; la IA llegará cuando sepas leer lo que te sugiere. Ciérralo con la X o el mismo icono</td></tr>
+              <tr><td><strong>Terminal integrada</strong></td><td>Una terminal dentro del editor</td><td>Menú Terminal → New Terminal, o atajo <span class="kbd">Ctrl + `</span> (la tecla junto al 1). Aquí verás la salida de tus programas</td></tr>
+              <tr><td><strong>Command Palette</strong></td><td>Buscador de comandos del editor</td><td><span class="kbd">Ctrl + Shift + P</span> (Mac: <span class="kbd">Cmd + Shift + P</span>). Escribe lo que buscas, p. ej. "Java: Tips for Beginners"</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="h6 fw-bold mt-3">2.3 (Opcional) VS Code en español</h3>
+        <ol class="small">
+          <li>Abre Extensiones (<span class="kbd">Ctrl + Shift + X</span>).</li>
+          <li>Busca <strong>"Spanish Language Pack"</strong> (editor: Microsoft) → <em>Install</em> → botón <em>Change Language and Restart</em>.</li>
+          <li>Nota: esta guía usa los nombres en inglés (los verás igual en la mayoría de tutoriales), pero el menú te quedará en español.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- PASO 3: EXTENSIONES JAVA -->
+    <div class="card mb-4" id="paso3">
+      <div class="card-body">
+        <h2 class="h4 section-title">Paso 3 — Extensiones de Java para VS Code <span class="badge text-bg-primary">los superpoderes</span></h2>
+        <p class="small-muted">Una sola instalación trae todo: el <strong>Extension Pack for Java</strong> de Microsoft (colores, autocompletado, botón Run, depurador, Maven y gestor de proyectos).</p>
+
+        <h3 class="h6 fw-bold mt-3">3.1 Instalar el Extension Pack for Java</h3>
+        <ol class="small">
+          <li>En VS Code, abre <strong>Extensiones</strong>: icono de 4 cuadritos en la Activity Bar o <span class="kbd">Ctrl + Shift + X</span>.</li>
+          <li>En el buscador escribe: <code>Extension Pack for Java</code>.</li>
+          <li>Elige el que dice <strong>Microsoft</strong> como editor (icono con la taza de café ☕) → botón azul <strong>Install</strong>.</li>
+          <li>Espera 1–3 minutos: instala 6 extensiones de golpe (verás que aparecen solas: Language Support for Java (Red Hat), Debugger for Java, Test Runner, Maven for Java, Project Manager…). No cierres VS Code mientras tanto.</li>
+          <li>Si abajo a la derecha aparece un aviso tipo <em>"Reload required"</em> → clic en <em>Reload</em>.</li>
+        </ol>
+
+        <h3 class="h6 fw-bold mt-3">3.2 Tu primer programa en VS Code (la prueba de fuego)</h3>
+        <ol class="small">
+          <li>Crea una carpeta en tus Documentos llamada <code>programacion1</code> (sin tildes ni espacios — hazte ese favor desde hoy).</li>
+          <li>En VS Code: <strong>File → Open Folder…</strong> → elige <code>programacion1</code> → botón <em>Seleccionar carpeta</em>. Si pregunta "Do you trust the authors?" → <em>Yes, I trust</em>.</li>
+          <li>En el Explorador (icono 📄), clic en el icono <strong>"New File"</strong> y nómbralo exactamente: <code>HolaMundo.java</code></li>
+          <li>Pega esto y guarda con <span class="kbd">Ctrl + S</span>:</li>
+        </ol>
+        <pre><code>public class HolaMundo {
+  public static void main(String[] args) {
+    System.out.println("¡Mi entorno funciona!");
+    System.out.println("Java listo para las 18 semanas.");
+  }
+}</code></pre>
+        <ol class="small" start="5">
+          <li>Verás un botoncito <strong>▶ Run</strong> gris arriba del <code>main</code> (tarda unos segundos en aparecer la primera vez). Haz clic.</li>
+          <li>Abajo se abre la <strong>Terminal</strong> y debe imprimir tus dos frases. 🎉</li>
+        </ol>
+        <div class="callout success small">
+          <strong>✅ Checkpoint:</strong> si ves "¡Mi entorno funciona!" en la terminal, tienes JDK + VS Code + extensiones correctamente conectados. Si el botón Run no aparece o da error → <a href="#troubleshooting">troubleshooting T4/T5</a>.
+        </div>
+        <div class="callout small mt-2">
+          <strong>💡 Tip para novatos:</strong> abre la Command Palette (<span class="kbd">Ctrl + Shift + P</span>) y ejecuta <strong>"Java: Tips for Beginners"</strong> — la propia extensión te da un mini-tour guiado.
+        </div>
+      </div>
+    </div>
+
+    <!-- PASO 4: GIT -->
+    <div class="card mb-4" id="paso4">
+      <div class="card-body">
+        <h2 class="h4 section-title">Paso 4 — Instalar Git <span class="badge text-bg-success">control de versiones</span></h2>
+        <p class="small-muted"><strong>Git</strong> guarda la historia de tu código (lo usaremos a fondo desde la Semana 3, con GitHub). Instalarlo hoy te deja listo y VS Code lo detecta automáticamente.</p>
+
+        <h3 class="h6 fw-bold mt-3">4.1 Windows — el instalador de las mil pantallas</h3>
+        <ol class="small">
+          <li>Descarga desde <a href="https://git-scm.com/download/win" target="_blank" rel="noreferrer">https://git-scm.com/download/win</a> → "Click here to download" (64-bit, versión 2.5x).</li>
+          <li>Ejecuta el instalador. Verás <strong>muchas</strong> pantallas: en casi todas la respuesta es <strong>Next sin tocar nada</strong>. Solo presta atención a estas 3:</li>
+        </ol>
+        <div class="table-responsive">
+          <table class="table table-sm small">
+            <thead><tr><th>Pantalla</th><th>Qué elegir</th><th>Por qué</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>"Choosing the default editor used by Git"</strong></td>
+                <td>Cambia el desplegable a <strong>"Use Visual Studio Code as Git's default editor"</strong></td>
+                <td>El default (Vim) es una trampa mortal para principiantes</td>
+              </tr>
+              <tr>
+                <td><strong>"Adjusting the name of the initial branch"</strong></td>
+                <td>Marca <strong>"Override…"</strong> y deja el nombre <strong>main</strong></td>
+                <td>Es el estándar actual de GitHub (lo usaremos en la Semana 3)</td>
+              </tr>
+              <tr>
+                <td><strong>"Adjusting your PATH environment"</strong></td>
+                <td>Deja la opción recomendada: <strong>"Git from the command line and also from 3rd-party software"</strong></td>
+                <td>Permite usar git desde PowerShell y desde VS Code</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="small-muted">Todo lo demás (SSH, HTTPS, line endings "Checkout Windows-style", MinTTY, etc.): deja lo que viene marcado → Next → … → Install → Finish.</div>
+
+        <h3 class="h6 fw-bold mt-3">4.2 macOS</h3>
+        <ol class="small">
+          <li>Abre la Terminal y escribe <code>git --version</code>.</li>
+          <li>Si no está instalado, macOS te ofrece instalar las <em>Command Line Developer Tools</em> → acepta (botón "Instalar") y espera. Eso es todo.</li>
+        </ol>
+
+        <h3 class="h6 fw-bold mt-3">4.3 Preséntate con Git (una sola vez)</h3>
+        <p class="small-muted">Git firma cada cambio con tu nombre. En una terminal <strong>nueva</strong>:</p>
+        <pre><code>git config --global user.name "Tu Nombre Real"
+git config --global user.email "tucorreo@ejemplo.com"</code></pre>
+        <div class="small-muted">Usa el mismo correo con el que crearás tu cuenta de GitHub (Semana 3). Verifica con: <code>git config --global --list</code></div>
+
+        <h3 class="h6 fw-bold mt-3">4.4 Verificar Git ✅</h3>
+        <pre><code>git --version</code></pre>
+        <div class="small-muted">Salida esperada: <code>git version 2.50.1.windows.1</code> (o similar). En VS Code, el icono de Source Control (tercer icono de la Activity Bar) dejará de ofrecer "Download Git".</div>
+      </div>
+    </div>
+
+    <!-- VERIFICACIÓN FINAL -->
+    <div class="card mb-4" id="verificar">
+      <div class="card-body">
+        <h2 class="h4 section-title">Paso 5 — Verificación final: el semáforo 🚦</h2>
+        <p class="small-muted">Abre una terminal <strong>nueva</strong> y corre los 4 comandos. Marca tu semáforo:</p>
+        <div class="table-responsive">
+          <table class="table table-sm small">
+            <thead><tr><th>#</th><th>Comando</th><th>Respuesta esperada</th><th>Si falla, ve a…</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td><code>java -version</code></td><td>openjdk version "21…" (o 17/25)</td><td><a href="#troubleshooting">T1</a></td></tr>
+              <tr><td>2</td><td><code>javac -version</code></td><td>javac 21…</td><td><a href="#troubleshooting">T2</a></td></tr>
+              <tr><td>3</td><td><code>code --version</code></td><td>1.12x… (número de versión de VS Code)</td><td><a href="#troubleshooting">T3</a></td></tr>
+              <tr><td>4</td><td><code>git --version</code></td><td>git version 2.5x…</td><td><a href="#troubleshooting">T7</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <ul class="small mb-2">
+          <li>🟢 <strong>4 de 4 + HolaMundo.java corrió con ▶ Run:</strong> entorno completo. Estás listo hasta la Semana 18.</li>
+          <li>🟡 <strong>Java sí, Git o code no:</strong> puedes trabajar las semanas 1–2; resuelve lo que falta antes de la Semana 3.</li>
+          <li>🔴 <strong>Nada funciona:</strong> respira. Usa el <a href="#planb">Plan B online</a> para la clase y luego ataca el <a href="#troubleshooting">troubleshooting</a> con calma (o trae tu laptop a tutoría).</li>
+        </ul>
+        <div class="callout small">
+          <strong>Evidencia opcional (recomendada):</strong> toma una captura de la terminal con los 4 comandos respondidos y guárdala — te servirá como respaldo de que tu entorno quedó listo, y el docente puede pedirla como verificación en la Semana 7.
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDEOS -->
+    <div class="card mb-4" id="videos">
+      <div class="card-body">
+        <h2 class="h4 section-title">Videos de apoyo (español) 🎬</h2>
+        <p class="small-muted">Si prefieres ver el proceso antes de hacerlo (o mientras lo haces), estos videos son recientes y coinciden con las interfaces actuales:</p>
+        <div class="table-responsive">
+          <table class="table table-sm small">
+            <thead><tr><th>Video</th><th>Cubre</th><th>Enlace</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>Cómo Instalar JAVA 2025 | JDK + Visual Studio Code | Tutorial Completo Español</strong></td>
+                <td>Pasos 1, 2 y 3 (JDK + VS Code + extensiones)</td>
+                <td><a href="https://www.youtube.com/watch?v=fbJ1LgDbnpU" target="_blank" rel="noreferrer">Ver en YouTube</a></td>
+              </tr>
+              <tr>
+                <td><strong>Cómo instalar Java en Visual Studio Code (JDK + Configuración) — Windows 11</strong></td>
+                <td>Pasos 1 y 3, con Windows 11</td>
+                <td><a href="https://www.youtube.com/watch?v=JFiKQNjZdyU" target="_blank" rel="noreferrer">Ver en YouTube</a></td>
+              </tr>
+              <tr>
+                <td><strong>Cómo Descargar e INSTALAR GIT en Windows | Fácil y Rápido</strong></td>
+                <td>Paso 4 (Git en Windows, pantalla por pantalla)</td>
+                <td><a href="https://www.youtube.com/watch?v=4sw0ROVaoQ0" target="_blank" rel="noreferrer">Ver en YouTube</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="small-muted">⚠ Si un video muestra botones distintos a los que ves, confía en esta guía: los videos envejecen, la página oficial no. Y si el video instala Oracle JDK en vez de Temurin, no pasa nada — ambos sirven; en el curso usamos Temurin porque no pide cuenta ni licencia.</div>
+      </div>
+    </div>
+
+    <!-- TROUBLESHOOTING -->
+    <div class="card mb-4" id="troubleshooting">
+      <div class="card-body">
+        <h2 class="h4 section-title">Troubleshooting — si algo falla 🔧</h2>
+        <p class="small-muted">Regla de oro: <strong>lee el mensaje de error completo</strong> antes de tocar nada (resiliencia ante el error, ¿recuerdas?). Busca tu síntoma:</p>
+
+        <div class="accordion" id="tsAcc">
+
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#t1">
+                T1 · "java no se reconoce como un comando interno o externo…"
+              </button>
+            </h3>
+            <div id="t1" class="accordion-collapse collapse" data-bs-parent="#tsAcc">
+              <div class="accordion-body small">
+                <ol>
+                  <li><strong>¿Cerraste y reabriste la terminal?</strong> Las terminales abiertas antes de instalar no ven el PATH nuevo. Cierra TODAS (incluida la de VS Code) y abre una nueva. El 70% de los casos se resuelve aquí.</li>
+                  <li>Si persiste: el instalador no agregó Java al PATH. La vía rápida es <strong>reinstalar</strong>: vuelve a ejecutar el <code>.msi</code> de Temurin → elige <em>Modify/Change</em> → activa <strong>"Add to PATH"</strong> y <strong>"Set JAVA_HOME variable"</strong> → siguiente hasta terminar → terminal nueva → <code>java -version</code>.</li>
+                  <li>Vía manual (si no puedes reinstalar): tecla Windows → "variables de entorno" → <em>Editar las variables de entorno del sistema</em> → botón <em>Variables de entorno</em> → en "Variables del sistema" edita <code>Path</code> → <em>Nuevo</em> → pega la ruta del bin del JDK, normalmente <code>C:\Program Files\Eclipse Adoptium\jdk-21.x.x-hotspot\bin</code> → Aceptar todo → terminal nueva.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#t2">
+                T2 · <code>java -version</code> funciona pero <code>javac -version</code> no
+              </button>
+            </h3>
+            <div id="t2" class="accordion-collapse collapse" data-bs-parent="#tsAcc">
+              <div class="accordion-body small">
+                Instalaste el <strong>JRE</strong> (solo ejecuta) en lugar del <strong>JDK</strong> (ejecuta Y compila). Vuelve a <a href="https://adoptium.net/es/temurin/releases/?version=21" target="_blank" rel="noreferrer">adoptium.net</a>, asegúrate de que el selector <strong>Package Type diga JDK</strong>, descarga el .msi e instálalo (puede convivir con lo anterior). Terminal nueva y verifica.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#t3">
+                T3 · <code>code --version</code> no responde en la terminal
+              </button>
+            </h3>
+            <div id="t3" class="accordion-collapse collapse" data-bs-parent="#tsAcc">
+              <div class="accordion-body small">
+                <strong>Windows:</strong> no marcaste "Agregar a PATH" al instalar. No es grave (puedes abrir VS Code desde el menú de inicio), pero para arreglarlo: abre VS Code → <span class="kbd">Ctrl + Shift + P</span> → escribe <em>"Shell Command"</em>… si no aparece, reinstala VS Code marcando todas las casillas de "Tareas adicionales".<br />
+                <strong>macOS:</strong> abre VS Code → <span class="kbd">Cmd + Shift + P</span> → <em>"Shell Command: Install 'code' command in PATH"</em> → Enter → terminal nueva.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#t4">
+                T4 · No aparece el botón ▶ Run sobre el main
+              </button>
+            </h3>
+            <div id="t4" class="accordion-collapse collapse" data-bs-parent="#tsAcc">
+              <div class="accordion-body small">
+                <ol>
+                  <li>Espera 1–2 minutos la primera vez: abajo a la derecha dice "Opening Java Projects / Importing…" mientras la extensión arranca.</li>
+                  <li>Verifica que el archivo termina en <code>.java</code> y que abriste una <strong>carpeta</strong> (File → Open Folder), no solo el archivo suelto.</li>
+                  <li>Revisa que el Extension Pack for Java esté instalado y habilitado (<span class="kbd">Ctrl + Shift + X</span> → pestaña "Installed").</li>
+                  <li><span class="kbd">Ctrl + Shift + P</span> → <em>"Java: Clean Java Language Server Workspace"</em> → Reload and delete.</li>
+                  <li>Si dice que no encuentra un JDK: <span class="kbd">Ctrl + Shift + P</span> → <em>"Java: Configure Java Runtime"</em> → debería listar tu Temurin 21; si no, reinicia VS Code después de instalar el JDK (el orden importa: primero JDK, luego VS Code abierto).</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#t5">
+                T5 · Error: "class HolaMundo is public, should be declared in a file named HolaMundo.java"
+              </button>
+            </h3>
+            <div id="t5" class="accordion-collapse collapse" data-bs-parent="#tsAcc">
+              <div class="accordion-body small">
+                En Java, el nombre del archivo debe ser <strong>idéntico</strong> al de la clase, mayúsculas incluidas. <code>holamundo.java</code> ≠ <code>HolaMundo.java</code>. Renombra el archivo (clic derecho en el Explorador → Rename) o cambia el nombre de la clase para que coincidan.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#t6">
+                T6 · La extensión de Java se queda "cargando" para siempre o da errores raros
+              </button>
+            </h3>
+            <div id="t6" class="accordion-collapse collapse" data-bs-parent="#tsAcc">
+              <div class="accordion-body small">
+                <ol>
+                  <li>Causa típica: la carpeta del proyecto tiene <strong>tildes, ñ o espacios</strong> en la ruta (ej. <code>C:\Users\José María\Programación</code>). Mueve tu carpeta a una ruta simple: <code>C:\dev\programacion1</code>.</li>
+                  <li>Antivirus/Windows Defender bloqueando: agrega una exclusión para la carpeta de proyectos si tu equipo lo permite.</li>
+                  <li>Última bala: <span class="kbd">Ctrl + Shift + P</span> → "Java: Clean Java Language Server Workspace".</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#t7">
+                T7 · "git no se reconoce…" después de instalarlo
+              </button>
+            </h3>
+            <div id="t7" class="accordion-collapse collapse" data-bs-parent="#tsAcc">
+              <div class="accordion-body small">
+                Igual que T1: <strong>terminal nueva</strong> primero. Si persiste, reinstala Git y en la pantalla del PATH elige la opción del medio: <em>"Git from the command line and also from 3rd-party software"</em>. Mientras tanto puedes usar la app <strong>"Git Bash"</strong> que se instaló en tu menú inicio (ahí git siempre funciona).
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#t8">
+                T8 · Mi computadora es prestada / del trabajo y no tengo permisos de administrador
+              </button>
+            </h3>
+            <div id="t8" class="accordion-collapse collapse" data-bs-parent="#tsAcc">
+              <div class="accordion-body small">
+                <ol>
+                  <li>VS Code tiene <strong>"User Installer"</strong> que NO pide administrador (es el de descarga por defecto) — ese sí podrás instalarlo.</li>
+                  <li>Para el JDK sin admin: descarga el <strong>.zip</strong> de Temurin (en vez del .msi), descomprímelo en <code>C:\Users\TuUsuario\jdk21</code> y en VS Code configura <span class="kbd">Ctrl + Shift + P</span> → "Java: Configure Java Runtime" → apunta a esa carpeta.</li>
+                  <li>Si nada de esto es posible: trabaja con el <a href="#planb">Plan B online</a> — cubre perfectamente las semanas 1–6 y hablamos tu caso antes de la Semana 7.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#t9">
+                T9 · Mi computadora es muy vieja / 32 bits / casi no tiene espacio
+              </button>
+            </h3>
+            <div id="t9" class="accordion-collapse collapse" data-bs-parent="#tsAcc">
+              <div class="accordion-body small">
+                Requisitos mínimos realistas: Windows 10/11 de 64 bits, 8 GB de RAM (con 4 GB se puede, cerrando todo lo demás) y ~3 GB libres de disco. Si tu equipo no llega: usa el <a href="#planb">Plan B online</a> desde cualquier navegador (incluso desde una tablet) y escríbele al docente — buscamos solución juntos antes de la Semana 7 (laboratorio, equipo prestado, etc.). <strong>Nadie se queda fuera del curso por hardware.</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#t10">
+                T10 · Descargué "Visual Studio" y pesa 10 GB… ¿es normal?
+              </button>
+            </h3>
+            <div id="t10" class="accordion-collapse collapse" data-bs-parent="#tsAcc">
+              <div class="accordion-body small">
+                Te confundiste de producto (le pasa a todos una vez 😄). <strong>Visual Studio</strong> (morado, gigante) es otro programa. Nosotros usamos <strong>Visual Studio Code</strong> (azul, ~100 MB): <a href="https://code.visualstudio.com/" target="_blank" rel="noreferrer">code.visualstudio.com</a>. Cancela la otra descarga y listo.
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="callout warning small mt-3">
+          <div class="fw-semibold">¿Nada de esto resolvió tu caso?</div>
+          Toma <strong>captura de pantalla del error completo</strong> (no foto borrosa del monitor 📵), anota qué paso estabas haciendo y publícalo en el foro del aula virtual o tráelo a la próxima sesión. Un error bien reportado se resuelve en minutos.
+        </div>
+      </div>
+    </div>
+
+    <!-- PLAN B -->
+    <div class="card mb-4" id="planb">
+      <div class="card-body">
+        <h2 class="h4 section-title">Plan B — Si todo falla: programa 100% online 🌐</h2>
+        <p class="small-muted">Ninguna instalación es requisito para arrancar. Estas herramientas corren Java <strong>en el navegador, gratis y sin crear cuenta</strong>, y te permiten hacer TODA la Semana 1 (y hasta la 6):</p>
+        <div class="table-responsive">
+          <table class="table table-sm small">
+            <thead><tr><th>Herramienta</th><th>Enlace</th><th>Lo bueno</th><th>Ojo con…</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>Educative Java Compiler</strong> ⭐ <span class="badge text-bg-primary">la oficial del curso</span></td>
+                <td><a href="https://www.educative.io/compilers/java" target="_blank" rel="noreferrer">educative.io/compilers/java</a></td>
+                <td>Sin cuenta, interfaz limpísima, es la que usa todo el material de esta semana</td>
+                <td>La clase debe llamarse <code>Main</code></td>
+              </tr>
+              <tr>
+                <td><strong>Programiz Java Online</strong></td>
+                <td><a href="https://www.programiz.com/java-programming/online-compiler/" target="_blank" rel="noreferrer">programiz.com/java-programming/online-compiler</a></td>
+                <td>Sin cuenta, muy rápido, soporta entrada de datos (stdin)</td>
+                <td>Publicidad en pantalla</td>
+              </tr>
+              <tr>
+                <td><strong>OneCompiler</strong></td>
+                <td><a href="https://onecompiler.com/java" target="_blank" rel="noreferrer">onecompiler.com/java</a></td>
+                <td>Corre Java moderno (25), permite compartir tu código con un enlace</td>
+                <td>Guardar proyectos pide cuenta (correr no)</td>
+              </tr>
+              <tr>
+                <td><strong>JDoodle</strong></td>
+                <td><a href="https://www.jdoodle.com/online-java-compiler" target="_blank" rel="noreferrer">jdoodle.com/online-java-compiler</a></td>
+                <td>Puedes elegir la versión de Java, soporta stdin</td>
+                <td>Interfaz con más botones de la cuenta</td>
+              </tr>
+              <tr>
+                <td><strong>W3Schools Java Editor</strong></td>
+                <td><a href="https://www.w3schools.com/java/java_compiler.asp" target="_blank" rel="noreferrer">w3schools.com/java/java_compiler.asp</a></td>
+                <td>Integrado con su tutorial de Java (buen material de consulta)</td>
+                <td>Más lento al ejecutar</td>
+              </tr>
+              <tr>
+                <td><strong>OnlineGDB</strong></td>
+                <td><a href="https://www.onlinegdb.com/online_java_compiler" target="_blank" rel="noreferrer">onlinegdb.com/online_java_compiler</a></td>
+                <td>Incluye <strong>debugger</strong> (ver el programa paso a paso) — útil más adelante</td>
+                <td>Interfaz algo anticuada</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="h6 fw-bold mt-3">Mini-guía: tu primera vez en Educative (2 minutos)</h3>
+        <ol class="small">
+          <li>Abre <a href="https://www.educative.io/compilers/java" target="_blank" rel="noreferrer">educative.io/compilers/java</a> (no pide registro).</li>
+          <li>Verás un editor con una clase <code>Main</code> de ejemplo. Borra el contenido y pega el template del <a href="cheatsheet.html">cheat sheet</a>.</li>
+          <li>Botón <strong>Run</strong> (▶) → la salida aparece en el panel de abajo.</li>
+          <li>⚠ Importante: <strong>los compiladores online no guardan tu código</strong>. Antes de cerrar la pestaña, copia tu programa a un documento (o al bloc de notas) para pegarlo en tu entregable.</li>
+        </ol>
+
+        <div class="callout success small">
+          <strong>Resumen honesto:</strong> online = perfecto para aprender la lógica (semanas 1–6) · instalado = obligatorio para Spring Boot (semana 7 en adelante). Esta guía te espera aquí toda la vida; vuelve cuando tengas 45 minutos tranquilos.
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Instalación del entorno — Semana 1 · VS Code + Extension Pack for Java + JDK Temurin + Git (formato 18 semanas) · Fuentes: adoptium.net, code.visualstudio.com, git-scm.com (interfaces verificadas 2026).
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

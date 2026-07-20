@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz de Final de Clase — Semana 2</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 2 — Java</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="guia_programador_python.html">Python→Java</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link active" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="entregable.html">Entregable</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Quiz de Final de Clase · 7 minutos · Evidencia de la Actividad en clase — Sesión 2</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">¿Qué aprendiste hoy?</h1>
+          <div class="small-muted">10 preguntas sobre condicionales, ciclos, métodos y clases. Al terminar: <strong>Calificar → Exportar a PDF → subir al aula virtual</strong>.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 900px;">
+    <div class="card mb-3">
+      <div class="card-body">
+        <label class="form-label fw-semibold" for="studentName">Nombre del estudiante (aparecerá en el PDF)</label>
+        <input id="studentName" class="form-control" type="text" placeholder="Nombre y apellido" />
+      </div>
+    </div>
+
+    <div class="quiz-q" data-answer="b">
+      <div class="fw-semibold mb-2">1) ¿Cuál es la forma correcta de comparar dos textos (String) en Java?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q1" id="q1a" value="a" /><label class="form-check-label" for="q1a"><code>texto1 == texto2</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q1" id="q1b" value="b" /><label class="form-check-label" for="q1b"><code>texto1.equals(texto2)</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q1" id="q1c" value="c" /><label class="form-check-label" for="q1c"><code>texto1.equal(texto2)</code></label></div>
+      <div class="quiz-feedback ok">✅ <code>.equals()</code> es el método correcto para comparar el contenido de dos Strings.</div>
+      <div class="quiz-feedback ko">Es <code>.equals()</code>: <code>==</code> compara si son el mismo objeto en memoria, no el contenido.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="c">
+      <div class="fw-semibold mb-2">2) En un <code>switch</code>, ¿qué pasa si olvidas el <code>break</code> dentro de un <code>case</code>?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q2" id="q2a" value="a" /><label class="form-check-label" for="q2a">Error de compilación inmediato</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q2" id="q2b" value="b" /><label class="form-check-label" for="q2b">El programa se detiene sin ejecutar nada más</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q2" id="q2c" value="c" /><label class="form-check-label" for="q2c">Sigue ejecutando el siguiente <code>case</code> ("fallthrough")</label></div>
+      <div class="quiz-feedback ok">✅ Correcto: sin <code>break</code>, la ejecución "cae" al siguiente caso.</div>
+      <div class="quiz-feedback ko">Sigue ejecutando el siguiente <code>case</code>: es el "fallthrough", un error silencioso muy común.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="a">
+      <div class="fw-semibold mb-2">3) ¿Cuántas veces imprime <code>for (int i = 0; i < 5; i++) { System.out.println(i); }</code>?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q3" id="q3a" value="a" /><label class="form-check-label" for="q3a">5 veces (0,1,2,3,4)</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q3" id="q3b" value="b" /><label class="form-check-label" for="q3b">4 veces (0,1,2,3)</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q3" id="q3c" value="c" /><label class="form-check-label" for="q3c">6 veces (0,1,2,3,4,5)</label></div>
+      <div class="quiz-feedback ok">✅ Correcto: empieza en 0 y se detiene justo antes de llegar a 5.</div>
+      <div class="quiz-feedback ko">Son 5 veces: i toma los valores 0,1,2,3,4 y se detiene cuando <code>i < 5</code> es falso (i=5).</div>
+    </div>
+
+    <div class="quiz-q" data-answer="b">
+      <div class="fw-semibold mb-2">4) ¿Qué le falta a este ciclo para NO ser infinito? <code>int i = 0; while (i < 10) { System.out.println(i); }</code></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q4" id="q4a" value="a" /><label class="form-check-label" for="q4a">Un <code>break</code> al final</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q4" id="q4b" value="b" /><label class="form-check-label" for="q4b">Algo que modifique <code>i</code> dentro del ciclo (ej. <code>i++</code>)</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q4" id="q4c" value="c" /><label class="form-check-label" for="q4c">Nada, ya está completo</label></div>
+      <div class="quiz-feedback ok">✅ Correcto: sin modificar <code>i</code>, la condición <code>i < 10</code> siempre será verdadera.</div>
+      <div class="quiz-feedback ko">Falta modificar <code>i</code> (por ejemplo <code>i++</code>) dentro del ciclo; si no, la condición nunca se vuelve falsa.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="c">
+      <div class="fw-semibold mb-2">5) ¿Cuál de estas firmas de método es válida para uno que SÍ retorna un valor?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q5" id="q5a" value="a" /><label class="form-check-label" for="q5a"><code>static void calcular(int a) { }</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q5" id="q5b" value="b" /><label class="form-check-label" for="q5b"><code>static int calcular(int a) { }</code> (sin return)</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q5" id="q5c" value="c" /><label class="form-check-label" for="q5c"><code>static int calcular(int a) { return a * 2; }</code></label></div>
+      <div class="quiz-feedback ok">✅ Correcto: un método con tipo distinto de <code>void</code> debe incluir <code>return</code> con un valor de ese tipo.</div>
+      <div class="quiz-feedback ko">La opción C: un método <code>int</code> exige un <code>return</code> que entregue un entero. La opción B da error "missing return statement".</div>
+    </div>
+
+    <div class="quiz-q" data-answer="b">
+      <div class="fw-semibold mb-2">6) ¿Cómo se llama al método <code>saludar(String nombre)</code> desde <code>main</code>, pasándole "Ana"?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q6" id="q6a" value="a" /><label class="form-check-label" for="q6a"><code>saludar;</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q6" id="q6b" value="b" /><label class="form-check-label" for="q6b"><code>saludar("Ana");</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q6" id="q6c" value="c" /><label class="form-check-label" for="q6c"><code>saludar[Ana];</code></label></div>
+      <div class="quiz-feedback ok">✅ Correcto: se llama con paréntesis y el argumento dentro, como cualquier método.</div>
+      <div class="quiz-feedback ko">Es <code>saludar("Ana");</code> — paréntesis con el argumento adentro.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="a">
+      <div class="fw-semibold mb-2">7) Con <code>class Mascota { String nombre; }</code>, ¿cómo creas un objeto y le asignas el nombre "Firulais"?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q7" id="q7a" value="a" /><label class="form-check-label" for="q7a"><code>Mascota m = new Mascota(); m.nombre = "Firulais";</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q7" id="q7b" value="b" /><label class="form-check-label" for="q7b"><code>Mascota m = "Firulais";</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q7" id="q7c" value="c" /><label class="form-check-label" for="q7c"><code>new nombre = "Firulais";</code></label></div>
+      <div class="quiz-feedback ok">✅ Correcto: <code>new</code> crea el objeto y el punto accede al campo.</div>
+      <div class="quiz-feedback ko">Es la opción A: <code>new Mascota()</code> crea el objeto y <code>m.nombre = ...</code> asigna su campo.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="c">
+      <div class="fw-semibold mb-2">8) ¿Cuál es la diferencia principal entre una clase y un objeto?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q8" id="q8a" value="a" /><label class="form-check-label" for="q8a">Son exactamente lo mismo</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q8" id="q8b" value="b" /><label class="form-check-label" for="q8b">La clase solo existe en tiempo de ejecución</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q8" id="q8c" value="c" /><label class="form-check-label" for="q8c">La clase es el molde/diseño; el objeto es una instancia creada a partir de ese molde</label></div>
+      <div class="quiz-feedback ok">✅ Correcto: puedes crear muchos objetos distintos a partir de la misma clase.</div>
+      <div class="quiz-feedback ko">La clase es el molde (plano); el objeto es lo que se construye con <code>new</code> a partir de ese molde, con sus propios valores.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="b">
+      <div class="fw-semibold mb-2">9) ¿Cuál método parece mejor nombrado según la convención de este curso (verbo/pregunta en camelCase)?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q9" id="q9a" value="a" /><label class="form-check-label" for="q9a"><code>Calcular_Promedio</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q9" id="q9b" value="b" /><label class="form-check-label" for="q9b"><code>calcularPromedio</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q9" id="q9c" value="c" /><label class="form-check-label" for="q9c"><code>CALCULARPROMEDIO</code></label></div>
+      <div class="quiz-feedback ok">✅ Correcto: camelCase, empezando con minúscula.</div>
+      <div class="quiz-feedback ko">Es <code>calcularPromedio</code>: los métodos (y variables) van en camelCase, no en mayúsculas ni con guiones bajos.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="a">
+      <div class="fw-semibold mb-2">10) Tu compañero escribió un método <code>esMayorDeEdad</code> que retorna <code>void</code> en vez de <code>boolean</code> y ahora no puede usar el resultado en un <code>if</code>. ¿Cuál es el problema?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q10" id="q10a" value="a" /><label class="form-check-label" for="q10a">El método debería retornar <code>boolean</code>, no <code>void</code>, para poder usar su resultado</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q10" id="q10b" value="b" /><label class="form-check-label" for="q10b">El nombre del método está mal escrito</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q10" id="q10c" value="c" /><label class="form-check-label" for="q10c">Nada, así está bien</label></div>
+      <div class="quiz-feedback ok">✅ Correcto: si necesitas usar el resultado en una condición, el método debe declarar y retornar <code>boolean</code>.</div>
+      <div class="quiz-feedback ko">El método necesita ser <code>boolean</code> (con su <code>return true/false</code>) para poder usarse dentro de un <code>if</code>.</div>
+    </div>
+
+    <div id="scoreBanner" class="score-banner"></div>
+
+    <div class="d-flex gap-2 flex-wrap mt-3 no-print">
+      <button class="btn btn-primary btn-lg" onclick="gradeQuiz()">Calificar</button>
+      <button class="btn btn-outline-secondary" onclick="resetQuiz()">Reintentar (estudio)</button>
+      <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      <a class="btn btn-outline-primary ms-auto" href="entregable.html">Ir al Entregable →</a>
+    </div>
+
+    <div class="callout warning mt-4">
+      <div class="fw-semibold">Instrucciones de entrega (Actividad en clase — Sesión 2)</div>
+      <ol class="small-muted mb-0">
+        <li>Escribe tu nombre en la casilla de arriba.</li>
+        <li>Pulsa <strong>Calificar</strong> y revisa la retroalimentación de cada pregunta.</li>
+        <li>Pulsa <strong>Exportar a PDF</strong> y guarda el archivo como <code>QuizFinal_S2_TuNombre.pdf</code>.</li>
+        <li>Súbelo al aula virtual junto con el PDF del <a href="challenge.html">Challenge</a>.</li>
+      </ol>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Quiz de Final de Clase — Semana 2 · Lógica, métodos y buenas prácticas (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="quiz.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

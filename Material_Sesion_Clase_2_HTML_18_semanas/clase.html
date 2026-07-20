@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guía Docente — Semana 2 (70 min)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 2 — Java</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link active" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="guia_programador_python.html">Python→Java</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="entregable.html">Entregable</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Guía Docente · Sesión sincrónica de 70 minutos</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Semana 2 — Lógica, métodos y buenas prácticas</h1>
+          <div class="small-muted">Sábado 18 de julio de 2026 · 11:10–12:20 · En línea · Compilador online (o VS Code si ya instalaste tu entorno).</div>
+        </div>
+        <div class="d-flex gap-2 flex-wrap">
+          <a class="btn btn-outline-primary" target="_blank" rel="noreferrer" href="https://www.educative.io/compilers/java">Abrir compilador Java</a>
+          <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <div class="row g-3">
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="h5 section-title">Objetivos (hoy)</h2>
+            <ul class="mb-0">
+              <li>Usar <code>if / else if / else</code> y <code>switch</code> para tomar decisiones.</li>
+              <li>Usar <code>for</code> y <code>while</code> para repetir instrucciones.</li>
+              <li>Declarar métodos con parámetros y valor de retorno, y llamarlos desde <code>main</code>.</li>
+              <li>Crear una clase simple, instanciar un objeto con <code>new</code> y acceder a sus campos.</li>
+              <li>Reforzar: indentación consistente y nombres claros (camelCase).</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h2 class="h5 section-title">Distribución del tiempo (70 min)</h2>
+            <table class="table table-sm small mb-0">
+              <tbody>
+                <tr><td><span class="time-chip">00–05</span></td><td>Bienvenida + Quiz Presaberes</td></tr>
+                <tr><td><span class="time-chip">05–15</span></td><td>Condicionales: if/else y switch</td></tr>
+                <tr><td><span class="time-chip">15–27</span></td><td>Ciclos: for y while</td></tr>
+                <tr><td><span class="time-chip">27–35</span></td><td>Métodos: parámetros y retorno</td></tr>
+                <tr><td><span class="time-chip">35–37</span></td><td>Pausa activa</td></tr>
+                <tr><td><span class="time-chip">37–47</span></td><td>Primeros pasos: clases y objetos</td></tr>
+                <tr><td><span class="time-chip">47–57</span></td><td>Challenge + práctica guiada</td></tr>
+                <tr><td><span class="time-chip">57–65</span></td><td>Quiz de Final de Clase</td></tr>
+                <tr><td><span class="time-chip">65–70</span></td><td>Cierre + Guía 2</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h2 class="h5 section-title">Normas rápidas</h2>
+            <ul class="mb-0">
+              <li>Todo bloque <code>{ }</code> se indenta: si no ves la "escalera", algo está mal anidado.</li>
+              <li>En <code>switch</code> clásico, no olvides el <code>break</code> (o cae al siguiente caso).</li>
+              <li>Todo <code>for</code>/<code>while</code> necesita una condición que eventualmente sea falsa: si no, ciclo infinito.</li>
+              <li>Nombre de métodos en camelCase y como verbos: <code>calcularPromedio</code>, <code>esMayorDeEdad</code>.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout warning mt-3">
+          <div class="fw-semibold">Checklist antes de iniciar (docente)</div>
+          <ul class="small-muted mb-0">
+            <li>Recordar quiénes aún no completaron la instalación de su entorno (Semana 1) — pueden seguir en el compilador online.</li>
+            <li>Tener listo el ejemplo del "semáforo" para la demo de condicionales.</li>
+            <li>Cronómetro visible; hoy hay 4 bloques temáticos en 70 min, el ritmo importa.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="h4 section-title">Guion minuto a minuto (70 min)</h2>
+
+            <div class="accordion" id="acc">
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#c1">
+                    <span class="time-chip me-2">00–05</span> 1) Bienvenida + Quiz de Presaberes
+                  </button>
+                </h2>
+                <div id="c1" class="accordion-collapse collapse show" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ol>
+                      <li>Saluda y recuerda en una frase la Semana 1: <em>"la semana pasada aprendimos a guardar y calcular datos; hoy el programa va a decidir y repetir por sí solo"</em>.</li>
+                      <li>Comparte el enlace del <a href="quiz_presaberes.html">Quiz de Presaberes</a> (4 minutos, individual).</li>
+                      <li>Pregunta rápida al terminar: "¿Alguna vez programaste algo con un <code>if</code> en Scratch, Excel o cualquier otro lugar?"</li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c2">
+                    <span class="time-chip me-2">05–15</span> 2) Condicionales: if/else y switch
+                  </button>
+                </h2>
+                <div id="c2" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">Pregunta detonadora: <em>"¿cómo decide un semáforo qué luz encender?"</em> → puente a: condición = pregunta con respuesta true/false (repaso de operadores de comparación de la Semana 1).</p>
+                    <pre><code>public class Main {
+  public static void main(String[] args) {
+    int edad = 16;
+
+    if (edad >= 18) {
+      System.out.println("Puedes votar");
+    } else if (edad >= 16) {
+      System.out.println("Puedes votar solo en algunas elecciones");
+    } else {
+      System.out.println("Aún no puedes votar");
+    }
+  }
+}
+</code></pre>
+                    <ul>
+                      <li>El programa evalúa <strong>de arriba hacia abajo</strong> y ejecuta el primer bloque cuya condición sea verdadera; el resto se ignora.</li>
+                      <li><code>else</code> es el "en cualquier otro caso" — nunca lleva condición propia.</li>
+                    </ul>
+                    <p class="small-muted mb-2 mt-3">Ahora el mismo tipo de decisión con <code>switch</code> (útil cuando comparas UNA variable contra varios valores exactos):</p>
+                    <pre><code>public class Main {
+  public static void main(String[] args) {
+    int diaSemana = 3;
+    String nombreDia;
+
+    switch (diaSemana) {
+      case 1:
+        nombreDia = "Lunes";
+        break;
+      case 2:
+        nombreDia = "Martes";
+        break;
+      case 3:
+        nombreDia = "Miércoles";
+        break;
+      default:
+        nombreDia = "Día inválido";
+    }
+
+    System.out.println(nombreDia);
+  }
+}
+</code></pre>
+                    <div class="callout danger mt-2">
+                      <div class="fw-semibold">Demostración del error (¡a propósito!)</div>
+                      <div class="small-muted">Borra un <code>break</code> y ejecuta: el programa sigue ejecutando el <code>case</code> siguiente ("fallthrough"). Es uno de los errores silenciosos más comunes de <code>switch</code>.</div>
+                    </div>
+                    <details class="mt-2">
+                      <summary class="fw-semibold">Bonus: sintaxis moderna (opcional)</summary>
+                      <pre class="mt-2"><code>String nombreDia = switch (diaSemana) {
+  case 1 -> "Lunes";
+  case 2 -> "Martes";
+  case 3 -> "Miércoles";
+  default -> "Día inválido";
+};</code></pre>
+                      <div class="small-muted">Java moderno permite <code>switch</code> como expresión con <code>-></code> (sin <code>break</code>, sin fallthrough). Se acepta cualquiera de las dos formas en este curso; verás esta variante en más código de terceros.</div>
+                    </details>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c3">
+                    <span class="time-chip me-2">15–27</span> 3) Ciclos: for y while
+                  </button>
+                </h2>
+                <div id="c3" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">Metáfora: un ciclo es una instrucción que se repite mientras una condición sea verdadera. <code>for</code> cuando sabes cuántas veces; <code>while</code> cuando no lo sabes de antemano.</p>
+                    <pre><code>public class Main {
+  public static void main(String[] args) {
+    // for: sabemos que son exactamente 5 vueltas
+    for (int i = 1; i <= 5; i++) {
+      System.out.println("Vuelta número: " + i);
+    }
+
+    // while: repetimos hasta que se cumpla una condición
+    int saldo = 1000;
+    int mes = 0;
+    while (saldo > 0) {
+      saldo = saldo - 250;
+      mes++;
+      System.out.println("Mes " + mes + " — saldo restante: " + saldo);
+    }
+  }
+}
+</code></pre>
+                    <ul>
+                      <li><code>for (inicio; condición; incremento)</code>: las tres partes van separadas por <code>;</code>. Si omites el incremento (<code>i++</code>), el ciclo nunca termina.</li>
+                      <li><code>while</code>: revisa la condición <strong>antes</strong> de cada vuelta. Si la condición nace falsa, el bloque nunca se ejecuta.</li>
+                    </ul>
+                    <div class="callout danger mt-2">
+                      <div class="fw-semibold">Demostración del ciclo infinito (¡a propósito, con cuidado!)</div>
+                      <div class="small-muted">Cambia <code>i++</code> por nada (quítalo) y explica qué pasaría (el compilador online se colgará: hay que detenerlo/recargar la pestaña). Mensaje clave: <strong>todo ciclo necesita una salida garantizada</strong>.</div>
+                    </div>
+                    <details class="mt-2">
+                      <summary class="fw-semibold">Preguntas rápidas</summary>
+                      <ul class="mt-2">
+                        <li>¿Cuántas veces imprime <code>for (int i = 0; i < 5; i++)</code>? (Respuesta: 5 veces, i = 0,1,2,3,4 — ¡ojo con el "off-by-one"!)</li>
+                        <li>¿Qué diferencia hay entre <code>i < 5</code> e <code>i <= 5</code>?</li>
+                      </ul>
+                    </details>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c4">
+                    <span class="time-chip me-2">27–35</span> 4) Métodos: parámetros y retorno
+                  </button>
+                </h2>
+                <div id="c4" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">Metáfora: un método es una "mini receta" reutilizable. Le das ingredientes (parámetros) y a veces te devuelve un resultado (retorno).</p>
+                    <pre><code>public class Main {
+  public static void main(String[] args) {
+    // Método sin retorno (void): solo hace una acción
+    saludar("Ana");
+
+    // Método CON retorno: produce un valor que puedo usar
+    int promedio = calcularPromedio(80, 90, 70);
+    System.out.println("Promedio: " + promedio);
+
+    boolean aprobado = esAprobatorio(promedio);
+    System.out.println("¿Aprobado?: " + aprobado);
+  }
+
+  static void saludar(String nombre) {
+    System.out.println("Hola, " + nombre + "!");
+  }
+
+  static int calcularPromedio(int a, int b, int c) {
+    return (a + b + c) / 3;
+  }
+
+  static boolean esAprobatorio(int promedio) {
+    return promedio >= 61;
+  }
+}
+</code></pre>
+                    <ul>
+                      <li><code>void</code> = "no devuelve nada"; cualquier otro tipo (<code>int</code>, <code>boolean</code>, <code>String</code>…) exige un <code>return</code>.</li>
+                      <li>Los parámetros son variables locales al método: <code>a</code>, <code>b</code>, <code>c</code> solo existen dentro de <code>calcularPromedio</code>.</li>
+                      <li>El valor que <code>return</code> entrega puede guardarse en una variable (como <code>promedio</code>) o usarse directamente.</li>
+                    </ul>
+                    <div class="callout mt-2">
+                      <div class="fw-semibold">Pensamiento algorítmico (valor de la semana)</div>
+                      <div class="small-muted">Pregunta al grupo: <em>"¿Qué parte de un programa largo convertirían en método?"</em> Respuesta guiada: cualquier bloque que se repita o que tenga un propósito claro y nombrable. Descomponer problemas grandes en piezas pequeñas es la esencia de programar.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c5">
+                    <span class="time-chip me-2">35–37</span> 5) Pausa activa (2 min)
+                  </button>
+                </h2>
+                <div id="c5" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>Estirar manos y espalda, agua, mirar lejos de la pantalla 20 segundos.</li>
+                      <li>Micro-check en el chat: "¿if/else, switch, for o while: cuál se te complicó más?"</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c6">
+                    <span class="time-chip me-2">37–47</span> 6) Primeros pasos: clases y objetos simples
+                  </button>
+                </h2>
+                <div id="c6" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">Hasta ahora todo vivía "suelto" dentro de <code>Main</code>. Hoy damos el primer paso de Programación Orientada a Objetos: agrupar datos relacionados en una <strong>clase</strong> y crear <strong>objetos</strong> a partir de ella.</p>
+                    <pre><code>public class Main {
+  public static void main(String[] args) {
+    // Creamos DOS objetos a partir de la misma clase Mascota
+    Mascota firulais = new Mascota();
+    firulais.nombre = "Firulais";
+    firulais.edad = 3;
+
+    Mascota michi = new Mascota();
+    michi.nombre = "Michi";
+    michi.edad = 1;
+
+    firulais.hacerSonido();
+    michi.hacerSonido();
+  }
+}
+
+class Mascota {
+  String nombre;
+  int edad;
+
+  void hacerSonido() {
+    System.out.println(nombre + " (edad " + edad + ") hace: ¡Guau!");
+  }
+}
+</code></pre>
+                    <ul>
+                      <li>Una <strong>clase</strong> (<code>Mascota</code>) es un molde: describe qué datos (<code>nombre</code>, <code>edad</code>) y qué acciones (<code>hacerSonido()</code>) tendrá cada objeto.</li>
+                      <li>Un <strong>objeto</strong> (<code>firulais</code>, <code>michi</code>) se crea con <code>new NombreClase()</code>. Cada objeto tiene <strong>sus propios valores</strong>.</li>
+                      <li>Se accede a los datos y acciones de un objeto con el punto: <code>firulais.nombre</code>, <code>firulais.hacerSonido()</code>.</li>
+                      <li>Conexión con el proyecto del curso: en la Semana 12 (persistencia), cada "entidad" (beneficiario, usuario) será exactamente esto: una clase con campos y objetos guardados en la base de datos.</li>
+                    </ul>
+                    <div class="callout success mt-2">
+                      <div class="fw-semibold">Visión sistémica (valor de la semana)</div>
+                      <div class="small-muted">Las piezas aisladas de hoy (condicionales, ciclos, métodos, clases) se van a combinar constantemente el resto del curso: un método puede tener un ciclo adentro, una clase puede tener métodos con condicionales adentro. Ese es el "sistema" que estamos armando.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c7">
+                    <span class="time-chip me-2">47–57</span> 7) Challenge drag &amp; drop + práctica guiada
+                  </button>
+                </h2>
+                <div id="c7" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ol>
+                      <li>Comparte el enlace del <a href="challenge.html">Challenge — Arma el código</a>.</li>
+                      <li>Modela el nivel <strong>Fácil</strong> en pantalla (1 min): un if/else simple.</li>
+                      <li>Los estudiantes resuelven <strong>Medio</strong> (ciclo for) y, si alcanza, <strong>Difícil</strong> (método + clase) — 8 min. Exportan su resultado a PDF.</li>
+                      <li>Quien termine antes: continúa con los <a href="ejercicios.html">Ejercicios 1–4</a> en el compilador.</li>
+                    </ol>
+                    <div class="callout warning">
+                      <div class="fw-semibold">Preguntas guía (docente, mientras circula por salas)</div>
+                      <div class="small-muted">¿Por qué esa condición va primero? ¿Qué pasa si el ciclo empieza en 0 en vez de 1? ¿Dónde declararías el método, dentro o fuera de <code>main</code>? ¿Qué datos guardaría esta clase?</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c8">
+                    <span class="time-chip me-2">57–65</span> 8) Quiz de Final de Clase
+                  </button>
+                </h2>
+                <div id="c8" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ol>
+                      <li>Comparte el enlace del <a href="quiz_final.html">Quiz de Final de Clase</a> (10 preguntas, individual, 7 min).</li>
+                      <li>Al terminar, cada estudiante pulsa <em>Calificar</em>, revisa la retroalimentación y <strong>exporta su resultado a PDF</strong>.</li>
+                      <li>Los PDF del quiz y del challenge = evidencia de la <strong>Actividad en clase – Sesión 2</strong>.</li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c9">
+                    <span class="time-chip me-2">65–70</span> 9) Cierre + lanzamiento de la Guía 2
+                  </button>
+                </h2>
+                <div id="c9" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>Síntesis en 3 frases: decidir (if/switch), repetir (for/while), organizar y modelar (métodos, clases).</li>
+                      <li>Ticket de salida en el chat: <strong>1 aprendizaje + 1 duda</strong>.</li>
+                      <li>Invitación a la <a href="../evaluacion_docente/index.html">evaluación anónima de la sesión</a>.</li>
+                      <li>Presenta el <a href="entregable.html">Entregable — Guía de Aprendizaje 2</a>: fecha límite antes de la Sesión 3 (25 de julio de 2026).</li>
+                      <li>Puente a la semana 3: "Ya sabes escribir programas completos; ahora aprenderás a <strong>guardar su historia</strong> con Git y GitHub, para nunca perder tu trabajo".</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="callout success mt-3">
+          <div class="fw-semibold">Plan B (si la tecnología falla)</div>
+          <div class="small-muted">
+            Igual que la Semana 1: <a href="https://www.jdoodle.com/online-java-compiler" target="_blank" rel="noreferrer">JDoodle</a> o
+            <a href="https://www.programiz.com/java-programming/online-compiler/" target="_blank" rel="noreferrer">Programiz</a> como respaldo del compilador.
+            Si alguien ya instaló VS Code (Semana 1) y algo no corre, revisa el <a href="../Material_Sesion_Clase_1_HTML_18_semanas/instalacion.html#troubleshooting">troubleshooting de instalación</a>.
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Guía Docente — Semana 2 (formato 18 semanas · 70 min) · Ejercicios en <a href="ejercicios.html">ejercicios.html</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

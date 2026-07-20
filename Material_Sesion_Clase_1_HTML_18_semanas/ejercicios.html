@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ejercicios — Semana 1 (Java)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 1 — Java</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link active" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="guia_programador_python.html">Python→Java</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="entregable.html">Entregable</a></li>
+          <li class="nav-item"><a class="nav-link" href="instalacion.html">Instalación</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Guía de ejercicios · Semana 1</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Variables, tipos, casting y operadores (sin instalar nada)</h1>
+          <div class="small-muted">Usar: <a href="https://www.educative.io/compilers/java" target="_blank" rel="noreferrer">Educative Java Compiler</a>. Intenta primero <strong>sin ver la solución</strong>: primero la pista, luego la solución.</div>
+        </div>
+        <div class="d-flex gap-2 flex-wrap">
+          <a class="btn btn-primary" target="_blank" rel="noreferrer" href="https://www.educative.io/compilers/java">Abrir compilador</a>
+          <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <div class="callout mb-3">
+      <div class="fw-semibold">Template recomendado</div>
+      <div class="small-muted">Copia/pega esto al iniciar cada ejercicio. En Educative la clase <strong>debe llamarse <code>Main</code></strong>.</div>
+      <pre class="mt-2"><code>public class Main {
+  public static void main(String[] args) {
+    // Tu código aquí
+  }
+}
+</code></pre>
+      <div class="small-muted">Método de trabajo: escribe → ejecuta → lee la salida (o el error) → corrige → repite. Un cambio a la vez.</div>
+    </div>
+
+    <div class="row g-3">
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 1 — Hola Mundo + 3 líneas <span class="badge text-bg-success">Calentamiento</span></h2>
+            <p class="small-muted mb-2">Objetivo: comprobar que compila y entender la impresión en consola.</p>
+            <ol>
+              <li>Imprime <code>Hola mundo</code>.</li>
+              <li>Imprime tu nombre completo.</li>
+              <li>Imprime la frase: <em>"Hoy empiezo a programar en Java"</em>.</li>
+              <li>Extra: borra un <code>;</code> a propósito, ejecuta y <strong>lee el error</strong>. Vuelve a ponerlo.</li>
+            </ol>
+            <details>
+              <summary class="fw-semibold">Solución sugerida</summary>
+              <pre class="mt-2"><code>public class Main {
+  public static void main(String[] args) {
+    System.out.println("Hola mundo");
+    System.out.println("Ana López");
+    System.out.println("Hoy empiezo a programar en Java");
+  }
+}
+</code></pre>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 2 — Mi ficha personal <span class="badge text-bg-success">Variables</span></h2>
+            <p class="small-muted mb-2">Objetivo: declarar un dato de cada tipo primitivo básico + <code>String</code>.</p>
+            <ol>
+              <li>Declara: <code>String nombre</code>, <code>int edad</code>, <code>double estatura</code>, <code>char inicial</code>, <code>boolean leGustaProgramar</code>.</li>
+              <li>Asígnales <strong>tus</strong> datos reales.</li>
+              <li>Imprime cada uno con una etiqueta, por ejemplo: <code>Edad: 20</code>.</li>
+            </ol>
+            <details>
+              <summary class="fw-semibold">Pista</summary>
+              <div class="mt-2">Texto + variable se une con <code>+</code>: <code>"Edad: " + edad</code>. Recuerda: <code>char</code> con comillas simples <code>'A'</code>, <code>String</code> con dobles <code>"Ana"</code>.</div>
+            </details>
+            <details class="mt-2">
+              <summary class="fw-semibold">Solución sugerida</summary>
+              <pre class="mt-2"><code>public class Main {
+  public static void main(String[] args) {
+    String nombre = "Ana López";
+    int edad = 20;
+    double estatura = 1.62;
+    char inicial = 'A';
+    boolean leGustaProgramar = true;
+
+    System.out.println("Nombre: " + nombre);
+    System.out.println("Edad: " + edad);
+    System.out.println("Estatura: " + estatura);
+    System.out.println("Inicial: " + inicial);
+    System.out.println("¿Le gusta programar?: " + leGustaProgramar);
+  }
+}
+</code></pre>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 3 — Calculadora de operadores <span class="badge text-bg-primary">Aritméticos</span></h2>
+            <p class="small-muted mb-2">Objetivo: practicar <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code> y descubrir la división entera.</p>
+            <ol>
+              <li>Define <code>int a = 17;</code> y <code>int b = 5;</code>.</li>
+              <li><strong>Antes de ejecutar</strong>, escribe en un comentario qué crees que imprime cada operación.</li>
+              <li>Imprime suma, resta, multiplicación, división y residuo (<code>%</code>).</li>
+              <li>¿Te sorprendió <code>a / b</code>? Explica en un comentario por qué da <code>3</code> y no <code>3.4</code>.</li>
+            </ol>
+            <details>
+              <summary class="fw-semibold">Pista</summary>
+              <div class="mt-2"><code>int / int</code> siempre da <code>int</code>: se descarta la parte decimal. El residuo de <code>17 % 5</code> es lo que sobra tras repartir: <code>2</code>.</div>
+            </details>
+            <details class="mt-2">
+              <summary class="fw-semibold">Solución sugerida</summary>
+              <pre class="mt-2"><code>public class Main {
+  public static void main(String[] args) {
+    int a = 17;
+    int b = 5;
+
+    System.out.println("Suma: " + (a + b));        // 22
+    System.out.println("Resta: " + (a - b));       // 12
+    System.out.println("Multiplicación: " + (a * b)); // 85
+    System.out.println("División: " + (a / b));    // 3 (entera)
+    System.out.println("Residuo: " + (a % b));     // 2
+  }
+}
+</code></pre>
+              <div class="small-muted">Nota: los paréntesis en <code>(a + b)</code> importan. Sin ellos, <code>"Suma: " + a + b</code> imprime <code>Suma: 175</code> (concatena).</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 4 — El cajero que trunca <span class="badge text-bg-primary">Casting</span></h2>
+            <p class="small-muted mb-2">Objetivo: diferenciar conversión implícita y explícita, y ver la pérdida de datos.</p>
+            <ol>
+              <li>Declara <code>double precio = 9.99;</code>.</li>
+              <li>Conviértelo a <code>int</code> con casting explícito e imprímelo. ¿Da 9 o 10?</li>
+              <li>Declara <code>int puntos = 250;</code> y guárdalo en un <code>double</code> <strong>sin</strong> casting. ¿Por qué no exige <code>(double)</code>?</li>
+              <li>Calcula <code>7 / 2</code> y luego <code>(double) 7 / 2</code>. Imprime ambos.</li>
+            </ol>
+            <details>
+              <summary class="fw-semibold">Pista</summary>
+              <div class="mt-2">De chico a grande (int → double) Java convierte solo (widening). De grande a chico (double → int) debes escribir <code>(int)</code> y aceptar que se <strong>trunca</strong>.</div>
+            </details>
+            <details class="mt-2">
+              <summary class="fw-semibold">Solución sugerida</summary>
+              <pre class="mt-2"><code>public class Main {
+  public static void main(String[] args) {
+    double precio = 9.99;
+    int precioEntero = (int) precio;      // 9 (trunca, no redondea)
+    System.out.println(precioEntero);
+
+    int puntos = 250;
+    double puntosDecimal = puntos;        // implícito: 250.0
+    System.out.println(puntosDecimal);
+
+    System.out.println(7 / 2);            // 3
+    System.out.println((double) 7 / 2);   // 3.5
+  }
+}
+</code></pre>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 5 — ¿Verdadero o falso? <span class="badge text-bg-info">Comparación y lógicos</span></h2>
+            <p class="small-muted mb-2">Objetivo: construir expresiones booleanas con <code>&gt;</code>, <code>==</code>, <code>&amp;&amp;</code>, <code>||</code>, <code>!</code>.</p>
+            <ol>
+              <li>Declara <code>int edad = 20;</code>, <code>double promedio = 85.5;</code>, <code>boolean esBecado = false;</code>.</li>
+              <li>Crea e imprime estas expresiones booleanas (primero predice el resultado en un comentario):
+                <ul class="small">
+                  <li><code>edad &gt;= 18</code></li>
+                  <li><code>promedio &gt; 90</code></li>
+                  <li><code>edad &gt;= 18 &amp;&amp; promedio &gt; 80</code></li>
+                  <li><code>esBecado || promedio &gt;= 85</code></li>
+                  <li><code>!esBecado</code></li>
+                </ul>
+              </li>
+              <li>Guarda la tercera en una variable <code>boolean puedeInscribirse</code> e imprímela con etiqueta.</li>
+            </ol>
+            <details>
+              <summary class="fw-semibold">Solución sugerida</summary>
+              <pre class="mt-2"><code>public class Main {
+  public static void main(String[] args) {
+    int edad = 20;
+    double promedio = 85.5;
+    boolean esBecado = false;
+
+    System.out.println(edad >= 18);                    // true
+    System.out.println(promedio > 90);                 // false
+    boolean puedeInscribirse = edad >= 18 && promedio > 80;
+    System.out.println("¿Puede inscribirse?: " + puedeInscribirse); // true
+    System.out.println(esBecado || promedio >= 85);    // true
+    System.out.println(!esBecado);                     // true
+  }
+}
+</code></pre>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 6 — Constantes: la cuenta del restaurante <span class="badge text-bg-info">final</span></h2>
+            <p class="small-muted mb-2">Objetivo: usar constantes y combinar operadores en un cálculo real.</p>
+            <ol>
+              <li>Declara la constante <code>final double PROPINA = 0.10;</code> (10%).</li>
+              <li>Declara <code>double consumo = 185.50;</code>.</li>
+              <li>Calcula e imprime: la propina (<code>consumo * PROPINA</code>) y el total (<code>consumo + propina</code>).</li>
+              <li>Intenta reasignar <code>PROPINA = 0.15;</code>, ejecuta, <strong>lee el error</strong> y luego borra esa línea.</li>
+              <li>Extra: divide el total entre 4 amigos e imprime cuánto paga cada uno.</li>
+            </ol>
+            <details>
+              <summary class="fw-semibold">Solución sugerida</summary>
+              <pre class="mt-2"><code>public class Main {
+  public static void main(String[] args) {
+    final double PROPINA = 0.10;
+    double consumo = 185.50;
+
+    double propina = consumo * PROPINA;
+    double total = consumo + propina;
+
+    System.out.println("Propina: " + propina);   // 18.55
+    System.out.println("Total: " + total);       // 204.05
+    System.out.println("Cada uno paga: " + (total / 4)); // 51.0125
+  }
+}
+</code></pre>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 7 — Detective de errores <span class="badge text-bg-warning">Depuración</span></h2>
+            <p class="small-muted mb-2">Objetivo: leer errores de compilación con calma (resiliencia ante el error). Este código tiene <strong>4 errores</strong>. Cópialo, ejecútalo y corrígelos <strong>uno por uno</strong>.</p>
+            <pre><code>public class Main {
+  public static void main(String[] args) {
+    int edad = "veinte";
+    String nombre = 'Ana';
+    double estatura = 1,75;
+    System.out.println("Hola " + nombre)
+  }
+}
+</code></pre>
+            <details>
+              <summary class="fw-semibold">Pista</summary>
+              <ul class="mt-2 small">
+                <li>¿<code>"veinte"</code> cabe en una cajita <code>int</code>?</li>
+                <li>¿Qué comillas usa <code>String</code>?</li>
+                <li>¿Java usa coma o punto para decimales?</li>
+                <li>¿Qué le falta al final de la última instrucción?</li>
+              </ul>
+            </details>
+            <details class="mt-2">
+              <summary class="fw-semibold">Solución sugerida</summary>
+              <pre class="mt-2"><code>public class Main {
+  public static void main(String[] args) {
+    int edad = 20;                 // int guarda números, no texto
+    String nombre = "Ana";         // String usa comillas dobles
+    double estatura = 1.75;        // decimales con punto
+    System.out.println("Hola " + nombre); // faltaba el ;
+  }
+}
+</code></pre>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 8 — Reto integrador: "Ficha de beneficiario" <span class="badge text-bg-danger">Integrador</span></h2>
+            <p class="small-muted mb-2">Objetivo: integrar todo lo de hoy. Contexto del proyecto del curso: registrar personas de una entidad sin fines de lucro.</p>
+            <ol>
+              <li>Constante: <code>final int ANIO_ACTUAL = 2026;</code></li>
+              <li>Variables del beneficiario: nombre (<code>String</code>), año de nacimiento (<code>int</code>), estatura en metros (<code>double</code>), inscrito (<code>boolean</code>).</li>
+              <li>Calcula la <strong>edad aproximada</strong> (<code>ANIO_ACTUAL - anioNacimiento</code>).</li>
+              <li>Crea un <code>boolean esMayorDeEdad</code> con una comparación.</li>
+              <li>Crea un <code>boolean puedeRecibirPrograma</code>: es mayor de edad <strong>Y</strong> está inscrito.</li>
+              <li>Imprime una ficha completa, una línea por dato, con etiquetas claras.</li>
+            </ol>
+            <details>
+              <summary class="fw-semibold">Solución sugerida</summary>
+              <pre class="mt-2"><code>public class Main {
+  public static void main(String[] args) {
+    final int ANIO_ACTUAL = 2026;
+
+    String nombre = "Carlos Pérez";
+    int anioNacimiento = 2005;
+    double estatura = 1.70;
+    boolean inscrito = true;
+
+    int edad = ANIO_ACTUAL - anioNacimiento;
+    boolean esMayorDeEdad = edad >= 18;
+    boolean puedeRecibirPrograma = esMayorDeEdad && inscrito;
+
+    System.out.println("=== Ficha de beneficiario ===");
+    System.out.println("Nombre: " + nombre);
+    System.out.println("Edad: " + edad);
+    System.out.println("Estatura: " + estatura);
+    System.out.println("Inscrito: " + inscrito);
+    System.out.println("Mayor de edad: " + esMayorDeEdad);
+    System.out.println("Puede recibir el programa: " + puedeRecibirPrograma);
+  }
+}
+</code></pre>
+              <div class="small-muted">Este mismo "modelo de persona" será, en la semana 12, una entidad JPA con base de datos. Hoy es tu primer modelo de datos.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="callout success mt-4">
+      <div class="fw-semibold">¿Terminaste todo?</div>
+      <div class="small-muted">Pasa al <a href="challenge.html">Challenge drag &amp; drop</a> en nivel Difícil, o adelanta el <a href="entregable.html">Entregable de la Guía 1</a>. Antes de pedir ayuda: relee el error, consulta el <a href="cheatsheet.html">cheat sheet</a> e intenta una vez más (autonomía = valor de la semana).</div>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Ejercicios — Semana 1 · Fundamentos de Java y tipos de datos (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guía Docente — Semana 1 (70 min)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 1 — Java</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link active" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="guia_programador_python.html">Python→Java</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="entregable.html">Entregable</a></li>
+          <li class="nav-item"><a class="nav-link" href="instalacion.html">Instalación</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Guía Docente · Sesión sincrónica de 70 minutos</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Semana 1 — Fundamentos de Java y tipos de datos</h1>
+          <div class="small-muted">Sábado 11 de julio de 2026 · 11:10–12:20 · En línea · Compilador online (sin instalar nada).</div>
+        </div>
+        <div class="d-flex gap-2 flex-wrap">
+          <a class="btn btn-outline-primary" target="_blank" rel="noreferrer" href="https://www.educative.io/compilers/java">Abrir compilador Java</a>
+          <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <div class="row g-3">
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="h5 section-title">Objetivos (hoy)</h2>
+            <ul class="mb-0">
+              <li>Entender la estructura mínima de un programa Java (<code>class</code> + <code>main</code>).</li>
+              <li>Declarar variables, constantes (<code>final</code>) y tipos primitivos.</li>
+              <li>Aplicar conversiones entre tipos (casting implícito y explícito).</li>
+              <li>Usar operadores aritméticos, de comparación y lógicos en expresiones.</li>
+              <li>Perder el miedo al error de compilación: leerlo, entenderlo, corregirlo.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h2 class="h5 section-title">Distribución del tiempo (70 min)</h2>
+            <table class="table table-sm small mb-0">
+              <tbody>
+                <tr><td><span class="time-chip">00–05</span></td><td>Bienvenida + Quiz Presaberes</td></tr>
+                <tr><td><span class="time-chip">05–13</span></td><td>Java y su ecosistema + Hola Mundo</td></tr>
+                <tr><td><span class="time-chip">13–25</span></td><td>Variables, constantes y tipos</td></tr>
+                <tr><td><span class="time-chip">25–33</span></td><td>Conversiones (casting)</td></tr>
+                <tr><td><span class="time-chip">33–43</span></td><td>Operadores y expresiones</td></tr>
+                <tr><td><span class="time-chip">43–45</span></td><td>Pausa activa</td></tr>
+                <tr><td><span class="time-chip">45–57</span></td><td>Challenge + práctica guiada</td></tr>
+                <tr><td><span class="time-chip">57–65</span></td><td>Quiz de Final de Clase</td></tr>
+                <tr><td><span class="time-chip">65–70</span></td><td>Cierre + Guía 1</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h2 class="h5 section-title">Normas rápidas</h2>
+            <ul class="mb-0">
+              <li>Si no compila: <strong>leer el error en voz alta</strong> antes de pedir ayuda.</li>
+              <li>Un cambio a la vez; ejecutar seguido.</li>
+              <li>Nombres de variables claros: <code>edad</code>, <code>nombreCompleto</code> (camelCase).</li>
+              <li>Indentación siempre, desde la primera línea.</li>
+              <li>Cámara encendida si es posible; micrófono en silencio salvo participación.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout warning mt-3">
+          <div class="fw-semibold">Checklist antes de iniciar (docente)</div>
+          <ul class="small-muted mb-0">
+            <li>Enlace de la sesión y grabación activada.</li>
+            <li>Compilador Educative abierto y probado.</li>
+            <li>Enlaces del material compartidos en el chat: hub, quizzes y challenge.</li>
+            <li>Cronómetro visible (el tiempo es el recurso más escaso del formato de 70 min).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="h4 section-title">Guion minuto a minuto (70 min)</h2>
+
+            <div class="accordion" id="acc">
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#c1">
+                    <span class="time-chip me-2">00–05</span> 1) Bienvenida + Quiz de Presaberes
+                  </button>
+                </h2>
+                <div id="c1" class="accordion-collapse collapse show" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ol>
+                      <li>Saluda, presenta el objetivo de la sesión en una frase: <em>"Hoy escribirás tu primer programa en Java y entenderás cómo guarda y opera datos"</em>.</li>
+                      <li>Comparte en el chat el enlace al <a href="quiz_presaberes.html">Quiz de Presaberes</a>. Los estudiantes lo resuelven en 4 minutos, de forma individual.</li>
+                      <li>Aclara: <strong>no cuenta para nota</strong>; sirve para saber de dónde partimos.</li>
+                      <li>Pregunta rápida al terminar: "¿Quién ya programó algo alguna vez, en cualquier lenguaje?" (levantar mano o chat).</li>
+                    </ol>
+                    <div class="callout warning">
+                      <div class="fw-semibold">Tip de tiempo</div>
+                      <div class="small-muted">Pon cronómetro de 4 min en pantalla. Al minuto 5 se avanza aunque falten respuestas: el quiz queda disponible para completarlo después.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c2">
+                    <span class="time-chip me-2">05–13</span> 2) Java y su ecosistema + Hola Mundo
+                  </button>
+                </h2>
+                <div id="c2" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">Pregunta detonadora: <em>"¿Qué idioma habla tu computadora?"</em> → puente a: algoritmo = pasos, programa = instrucciones, Java = un idioma con reglas estrictas.</p>
+                    <ul>
+                      <li><strong>Ecosistema en 3 piezas</strong> (dibujo rápido o diapositiva):
+                        <ul>
+                          <li><strong>JDK</strong>: la caja de herramientas del desarrollador (compilador incluido).</li>
+                          <li><strong>Compilador (javac)</strong>: traduce tu código a <em>bytecode</em>.</li>
+                          <li><strong>JVM</strong>: la máquina virtual que ejecuta el bytecode en cualquier sistema ("write once, run anywhere").</li>
+                        </ul>
+                      </li>
+                      <li>Hoy no instalamos nada: el compilador online hace todo eso por nosotros. La instalación local llega en la semana 7 (Spring Boot).</li>
+                    </ul>
+                    <p class="small-muted mb-2">Demostración en vivo — pega y ejecuta en Educative:</p>
+                    <pre><code>public class Main {
+  public static void main(String[] args) {
+    System.out.println("Hola, mundo");
+  }
+}
+</code></pre>
+                    <ul>
+                      <li><code>public class Main</code>: el contenedor. En Java <strong>todo vive dentro de una clase</strong>.</li>
+                      <li><code>public static void main(String[] args)</code>: el punto de entrada. La JVM busca exactamente esta firma.</li>
+                      <li><code>System.out.println(...)</code>: imprime y salta de línea. El <code>;</code> cierra cada instrucción.</li>
+                    </ul>
+                    <div class="callout danger mt-2">
+                      <div class="fw-semibold">Demostración del error (¡a propósito!)</div>
+                      <div class="small-muted">Borra el <code>;</code> y ejecuta. Lee el error en voz alta: <code>';' expected</code>. Mensaje clave de la semana: <strong>el compilador no te regaña, te ayuda</strong> — te dice qué y dónde. Resiliencia ante el error.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c3">
+                    <span class="time-chip me-2">13–25</span> 3) Variables, constantes y tipos primitivos
+                  </button>
+                </h2>
+                <div id="c3" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">Metáfora: una variable es una <strong>cajita con etiqueta</strong>… pero en Java la cajita tiene <strong>forma</strong>: solo caben datos del tipo declarado.</p>
+                    <pre><code>public class Main {
+  public static void main(String[] args) {
+    String nombre = "Ana";        // texto (objeto, va con comillas dobles)
+    int edad = 20;                // entero
+    double estatura = 1.62;       // decimal
+    char inicial = 'A';           // un solo carácter (comillas simples)
+    boolean esEstudiante = true;  // verdadero o falso
+    final int ANIO_ACTUAL = 2026; // constante: no puede cambiar
+
+    int anioNacimiento = ANIO_ACTUAL - edad;
+
+    System.out.println("Nombre: " + nombre);
+    System.out.println("Edad: " + edad);
+    System.out.println("Estatura: " + estatura);
+    System.out.println("Inicial: " + inicial);
+    System.out.println("¿Estudiante?: " + esEstudiante);
+    System.out.println("Año de nacimiento aprox: " + anioNacimiento);
+  }
+}
+</code></pre>
+                    <ul>
+                      <li>Recorre tipo por tipo preguntando: "¿qué guardarías aquí?".</li>
+                      <li><code>final</code> = constante. Convención: <code>MAYUSCULAS_CON_GUION</code>. Demuestra el error al intentar reasignarla.</li>
+                      <li>Convención de nombres: <code>camelCase</code> para variables (<code>anioNacimiento</code>), nunca empezar con número ni usar espacios.</li>
+                      <li>El <code>+</code> con texto <strong>concatena</strong> (pega); con números <strong>suma</strong>.</li>
+                    </ul>
+                    <details class="mt-2">
+                      <summary class="fw-semibold">Preguntas rápidas (piensa–escribe–comparte, 2 min)</summary>
+                      <ul class="mt-2">
+                        <li>¿Qué pasa si guardo <code>"veinte"</code> en <code>int edad</code>? (Error de tipos: pruébalo.)</li>
+                        <li>¿Por qué <code>char</code> usa comillas simples y <code>String</code> dobles?</li>
+                        <li>¿Qué imprime <code>System.out.println(1 + 2 + "3")</code>? ¿Y <code>"1" + 2 + 3</code>? (¡Sorpresa! <code>33</code> vs <code>123</code>.)</li>
+                      </ul>
+                    </details>
+                    <div class="callout mt-2">
+                      <div class="fw-semibold">Pensamiento crítico (valor de la semana)</div>
+                      <div class="small-muted">Pregunta al grupo: <em>"En Python escribes <code>edad = 20</code> sin declarar tipo. ¿Por qué Java te obliga a escribir <code>int</code>?"</em> Respuesta guiada: el tipado fuerte detecta errores <strong>antes</strong> de ejecutar, hace el código más legible en proyectos grandes y permite a la JVM optimizar. Enlaza con la <a href="guia_programador_python.html">Guía del Programador de Python</a>.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c4">
+                    <span class="time-chip me-2">25–33</span> 4) Conversiones (casting)
+                  </button>
+                </h2>
+                <div id="c4" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">Metáfora: pasar agua entre recipientes. De cajita chica a grande no se pierde nada (implícito); de grande a chica <strong>puede derramarse</strong> (explícito: tú asumes el riesgo).</p>
+                    <pre><code>public class Main {
+  public static void main(String[] args) {
+    // Implícito (widening): int → double, sin pérdida
+    int entero = 7;
+    double decimal = entero;          // 7.0
+
+    // Explícito (narrowing): double → int, se TRUNCA (no redondea)
+    double precio = 9.99;
+    int precioEntero = (int) precio;  // 9
+
+    // División entera vs decimal (el clásico)
+    int a = 7, b = 2;
+    System.out.println(a / b);           // 3  (división entera)
+    System.out.println((double) a / b);  // 3.5
+
+    // Número → texto y texto → número
+    String textoEdad = "20";
+    int edad = Integer.parseInt(textoEdad);
+    String edadComoTexto = String.valueOf(edad);
+
+    System.out.println(decimal);
+    System.out.println(precioEntero);
+    System.out.println(edad + 1);          // 21
+    System.out.println(edadComoTexto + 1); // "201"
+  }
+}
+</code></pre>
+                    <ul>
+                      <li>Insiste en el caso <code>7 / 2 = 3</code>: es el error silencioso más común del curso.</li>
+                      <li><code>(int) 9.99</code> da <code>9</code>, no <code>10</code>: truncar ≠ redondear.</li>
+                      <li><code>Integer.parseInt</code> aparecerá cuando leamos datos de formularios web (semana 10): siembra esa conexión.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c5">
+                    <span class="time-chip me-2">33–43</span> 5) Operadores y expresiones
+                  </button>
+                </h2>
+                <div id="c5" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <pre><code>public class Main {
+  public static void main(String[] args) {
+    int a = 17, b = 5;
+
+    // Aritméticos
+    System.out.println(a + b);  // 22
+    System.out.println(a - b);  // 12
+    System.out.println(a * b);  // 85
+    System.out.println(a / b);  // 3  (entera)
+    System.out.println(a % b);  // 2  (residuo/módulo)
+
+    // Comparación (resultado: boolean)
+    System.out.println(a > b);   // true
+    System.out.println(a == b);  // false
+    System.out.println(a != b);  // true
+
+    // Lógicos: && (y), || (o), ! (no)
+    int edad = 20;
+    boolean tieneCarne = true;
+    boolean puedeEntrar = edad >= 18 && tieneCarne;
+    System.out.println(puedeEntrar);        // true
+    System.out.println(!puedeEntrar);       // false
+    System.out.println(edad < 18 || tieneCarne); // true
+  }
+}
+</code></pre>
+                    <ul>
+                      <li>Diferencia clave: <code>=</code> asigna, <code>==</code> compara. Escríbelo grande.</li>
+                      <li>Las expresiones de comparación <strong>producen un valor</strong> (<code>true</code>/<code>false</code>) que se puede guardar en un <code>boolean</code>. La semana 2 usaremos esos booleanos en <code>if/else</code>.</li>
+                      <li><code>%</code> (módulo): pregunta "¿17 pizzas entre 5 personas, cuántas sobran?" → 2.</li>
+                      <li>Tabla rápida <code>&amp;&amp;</code>/<code>||</code> con ejemplos hablados: "mayor de edad Y con carné", "descuento si es estudiante O adulto mayor".</li>
+                    </ul>
+                    <details class="mt-2">
+                      <summary class="fw-semibold">Mini-reto relámpago (2 min, en el chat)</summary>
+                      <div class="mt-2">Sin ejecutar: ¿qué imprime <code>System.out.println(10 % 3 == 1 &amp;&amp; 4 / 2 == 2);</code>? (Respuesta: <code>true</code>.) Luego lo ejecutan para verificar.</div>
+                    </details>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c6">
+                    <span class="time-chip me-2">43–45</span> 6) Pausa activa (2 min)
+                  </button>
+                </h2>
+                <div id="c6" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>Estirar manos y espalda, agua, mirar lejos de la pantalla 20 segundos.</li>
+                      <li>Micro-check en el chat: "¿Cuál fue el error más raro que te dio el compilador hasta ahora?"</li>
+                      <li>Recordatorio del método: 1 cambio → ejecutar → leer error → corregir.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c7">
+                    <span class="time-chip me-2">45–57</span> 7) Challenge drag &amp; drop + práctica guiada
+                  </button>
+                </h2>
+                <div id="c7" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ol>
+                      <li>Comparte el enlace del <a href="challenge.html">Challenge — Arma el código</a>.</li>
+                      <li>Resuelve el nivel <strong>Fácil</strong> en pantalla compartida (1 min) para modelar la mecánica: arrastrar (o clic-clic) las líneas al orden correcto y pulsar <em>Verificar</em>.</li>
+                      <li>Los estudiantes hacen <strong>Medio</strong> y, si el tiempo alcanza, <strong>Difícil</strong> (8 min). Cada quien exporta su resultado a PDF.</li>
+                      <li>Quien termine antes: pasa a los <a href="ejercicios.html">Ejercicios 1–3</a> en el compilador.</li>
+                    </ol>
+                    <div class="callout warning">
+                      <div class="fw-semibold">Preguntas guía (docente, mientras circula por salas)</div>
+                      <div class="small-muted">¿Por qué esa línea va antes? ¿Qué pasaría si la declaración va después del uso? ¿Cuál línea abre el programa y cuál lo cierra? ¿Dónde declararías la constante?</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c8">
+                    <span class="time-chip me-2">57–65</span> 8) Quiz de Final de Clase
+                  </button>
+                </h2>
+                <div id="c8" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ol>
+                      <li>Comparte el enlace del <a href="quiz_final.html">Quiz de Final de Clase</a> (10 preguntas, individual, 7 min).</li>
+                      <li>Al terminar, cada estudiante pulsa <em>Calificar</em>, revisa la retroalimentación y <strong>exporta su resultado a PDF</strong>.</li>
+                      <li>El PDF del quiz + el PDF del challenge = evidencia de la <strong>Actividad en clase – Sesión 1</strong> (se sube al aula virtual).</li>
+                    </ol>
+                    <div class="small-muted">Si alguien saca bajo: recuérdale que el quiz mide la clase de hoy, no su futuro como programador. Puede repasar con el <a href="cheatsheet.html">cheat sheet</a> y reintentar como estudio.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c9">
+                    <span class="time-chip me-2">65–70</span> 9) Cierre + lanzamiento de la Guía 1
+                  </button>
+                </h2>
+                <div id="c9" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>Síntesis en 3 frases: estructura (<code>class</code>/<code>main</code>), cajitas con forma (tipos + casting), expresiones que calculan y comparan.</li>
+                      <li>Ticket de salida en el chat: <strong>1 aprendizaje + 1 duda</strong>.</li>
+                      <li>Presenta el <a href="entregable.html">Entregable — Guía de Aprendizaje 1</a>: ejercicios de variables y expresiones, trabajo autónomo, fecha límite antes de la sesión 2.</li>
+                      <li>Puente a la semana 2: "Ya sabemos guardar y calcular datos; la próxima semana el programa <strong>tomará decisiones</strong> (if/else) y <strong>repetirá tareas</strong> (ciclos)".</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="callout success mt-3">
+          <div class="fw-semibold">Plan B (si la tecnología falla)</div>
+          <div class="small-muted">
+            Si Educative no carga: usar <a href="https://www.jdoodle.com/online-java-compiler" target="_blank" rel="noreferrer">JDoodle</a> o
+            <a href="https://www.programiz.com/java-programming/online-compiler/" target="_blank" rel="noreferrer">Programiz</a> como respaldo.
+            Si un estudiante no puede ejecutar nada: que siga con papel y lápiz prediciendo salidas — la predicción también es programar.
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Guía Docente — Semana 1 (formato 18 semanas · 70 min) · Ejercicios en <a href="ejercicios.html">ejercicios.html</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz de Presaberes — Semana 2</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 2 — Java</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="guia_programador_python.html">Python→Java</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="entregable.html">Entregable</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Quiz de Presaberes · 5 minutos · No cuenta para nota</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">¿De dónde partimos hoy?</h1>
+          <div class="small-muted">8 preguntas: repaso de la Semana 1 (variables y operadores) y tu intuición sobre decisiones y repeticiones antes de verlas en Java.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 900px;">
+    <div class="card mb-3">
+      <div class="card-body">
+        <label class="form-label fw-semibold" for="studentName">Nombre del estudiante (aparecerá en el PDF)</label>
+        <input id="studentName" class="form-control" type="text" placeholder="Nombre y apellido" />
+      </div>
+    </div>
+
+    <div class="quiz-q" data-answer="b">
+      <div class="fw-semibold mb-2">1) (Repaso Semana 1) ¿Qué imprime <code>System.out.println(9 / 2);</code>?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q1" id="q1a" value="a" /><label class="form-check-label" for="q1a"><code>4.5</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q1" id="q1b" value="b" /><label class="form-check-label" for="q1b"><code>4</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q1" id="q1c" value="c" /><label class="form-check-label" for="q1c"><code>5</code></label></div>
+      <div class="quiz-feedback ok">✅ Correcto: división entera entre enteros descarta los decimales.</div>
+      <div class="quiz-feedback ko">Era <code>4</code>: entre enteros, la división es entera (se descartan los decimales).</div>
+    </div>
+
+    <div class="quiz-q" data-answer="c">
+      <div class="fw-semibold mb-2">2) Si un semáforo está en amarillo, ¿qué estructura de tu vida cotidiana se parece más a "decidir qué hacer según el color"?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q2" id="q2a" value="a" /><label class="form-check-label" for="q2a">Contar del 1 al 10</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q2" id="q2b" value="b" /><label class="form-check-label" for="q2b">Guardar tu nombre en una libreta</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q2" id="q2c" value="c" /><label class="form-check-label" for="q2c">Un letrero que dice "si llueve, lleva paraguas; si no, no"</label></div>
+      <div class="quiz-feedback ok">✅ Exacto: eso es una condición (if/else). Hoy la escribirás en Java.</div>
+      <div class="quiz-feedback ko">La respuesta era el letrero: eso es una <strong>condición</strong>, la base de <code>if/else</code> que veremos hoy.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="a">
+      <div class="fw-semibold mb-2">3) "Repite 10 veces: salta una vez". ¿Qué palabra describe mejor esa instrucción?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q3" id="q3a" value="a" /><label class="form-check-label" for="q3a">Un ciclo (repetición)</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q3" id="q3b" value="b" /><label class="form-check-label" for="q3b">Una variable</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q3" id="q3c" value="c" /><label class="form-check-label" for="q3c">Un tipo de dato</label></div>
+      <div class="quiz-feedback ok">✅ Correcto: repetir una acción varias veces es exactamente lo que hace un ciclo (<code>for</code>/<code>while</code>).</div>
+      <div class="quiz-feedback ko">Era "un ciclo": repetir una acción un número de veces es la idea central de <code>for</code> y <code>while</code>, que veremos hoy.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="b">
+      <div class="fw-semibold mb-2">4) Si le pides a alguien "prepárame un sándwich" y esa receta se puede repetir con distintos ingredientes (jamón, queso, pavo), ¿a qué se parece esa "receta reutilizable" en programación?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q4" id="q4a" value="a" /><label class="form-check-label" for="q4a">Un comentario</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q4" id="q4b" value="b" /><label class="form-check-label" for="q4b">Un método</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q4" id="q4c" value="c" /><label class="form-check-label" for="q4c">Un error de compilación</label></div>
+      <div class="quiz-feedback ok">✅ Exacto: un método es una "receta" reutilizable a la que le puedes cambiar los ingredientes (parámetros).</div>
+      <div class="quiz-feedback ko">Era "un método": una receta reutilizable con ingredientes que cambian es la idea de un método con parámetros.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="c">
+      <div class="fw-semibold mb-2">5) (Repaso Semana 1) ¿Qué tipo de dato usarías para "¿está inscrito el estudiante?"</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q5" id="q5a" value="a" /><label class="form-check-label" for="q5a"><code>int</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q5" id="q5b" value="b" /><label class="form-check-label" for="q5b"><code>String</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q5" id="q5c" value="c" /><label class="form-check-label" for="q5c"><code>boolean</code></label></div>
+      <div class="quiz-feedback ok">✅ Correcto: preguntas de sí/no se guardan en <code>boolean</code> (true/false).</div>
+      <div class="quiz-feedback ko">Era <code>boolean</code>: preguntas de sí/no se representan con <code>true</code>/<code>false</code>.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="a">
+      <div class="fw-semibold mb-2">6) Un carro de juguete que se mueve tiene "nombre", "color" y "velocidad", y una acción "avanzar()". Si quisieras crear varios carritos distintos a partir del mismo diseño, ¿qué concepto de programación se parece a ese "diseño"?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q6" id="q6a" value="a" /><label class="form-check-label" for="q6a">Una clase (el molde)</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q6" id="q6b" value="b" /><label class="form-check-label" for="q6b">Un operador aritmético</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q6" id="q6c" value="c" /><label class="form-check-label" for="q6c">Un comentario de código</label></div>
+      <div class="quiz-feedback ok">✅ Exacto: una clase es el molde/diseño; cada carrito creado sería un objeto.</div>
+      <div class="quiz-feedback ko">Era "una clase": el diseño/molde común a partir del cual se crean objetos (cada carrito) es justo lo que veremos hoy.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="b">
+      <div class="fw-semibold mb-2">7) ¿Qué pasa si a un ciclo que "cuenta hacia abajo" (100, 99, 98…) se le olvida restar en cada vuelta?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q7" id="q7a" value="a" /><label class="form-check-label" for="q7a">Termina más rápido de lo normal</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q7" id="q7b" value="b" /><label class="form-check-label" for="q7b">Nunca termina (se queda "colgado")</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q7" id="q7c" value="c" /><label class="form-check-label" for="q7c">Da un error de sintaxis inmediato</label></div>
+      <div class="quiz-feedback ok">✅ Correcto: si la condición del ciclo nunca cambia, el ciclo es infinito.</div>
+      <div class="quiz-feedback ko">Nunca termina: si el número no cambia, la condición del ciclo (ej. "mientras sea mayor a 0") nunca se vuelve falsa.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="c">
+      <div class="fw-semibold mb-2">8) Estás depurando un programa con un ciclo y un condicional anidados y no logras entenderlo a simple vista. ¿Qué es lo primero que revisarías, según lo aprendido en la Semana 1?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q8" id="q8a" value="a" /><label class="form-check-label" for="q8a">Borrar todo y empezar de cero</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q8" id="q8b" value="b" /><label class="form-check-label" for="q8b">Ignorarlo y esperar que funcione solo</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q8" id="q8c" value="c" /><label class="form-check-label" for="q8c">Leer el error o el código con calma, línea por línea</label></div>
+      <div class="quiz-feedback ok">✅ Esa es la actitud que seguimos cultivando: resiliencia ante el error y lectura cuidadosa del código.</div>
+      <div class="quiz-feedback ko">Lo mejor es leer con calma: la resiliencia ante el error que practicamos la Semana 1 aplica igual a código difícil de leer.</div>
+    </div>
+
+    <div id="scoreBanner" class="score-banner"></div>
+
+    <div class="d-flex gap-2 flex-wrap mt-3 no-print">
+      <button class="btn btn-primary btn-lg" onclick="gradeQuiz()">Calificar</button>
+      <button class="btn btn-outline-secondary" onclick="resetQuiz()">Reintentar</button>
+      <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      <a class="btn btn-outline-primary ms-auto" href="clase.html">Continuar a la clase →</a>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Quiz de Presaberes — Semana 2 · Lógica, métodos y buenas prácticas (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="quiz.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

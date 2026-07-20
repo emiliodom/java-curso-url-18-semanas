@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guía del Programador de Python — Semana 2</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 2 — Java</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link active" href="guia_programador_python.html">Python→Java</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="entregable.html">Entregable</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">La Guía del Programador de Python · Semana 2</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">De Python a Java: condicionales, ciclos, funciones y clases</h1>
+          <div class="small-muted">Segunda parada del puente Python↔Java. Hoy comparamos cómo cada lenguaje decide, repite, organiza en funciones/métodos y da sus primeros pasos hacia los objetos.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <div class="callout mb-4">
+      <div class="fw-semibold">Recordatorio de la Semana 1</div>
+      <div class="small-muted">Java exige declarar tipos y usa <code>;</code> y <code>{ }</code> donde Python usa indentación. Hoy verás que la <strong>lógica</strong> (cómo piensas el problema) es idéntica entre ambos lenguajes — solo cambia la sintaxis.</div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">1. Condicionales: if/elif/else vs if/else if/else</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-code align-middle">
+            <thead><tr><th style="width:50%">🐍 Python</th><th style="width:50%">☕ Java</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><pre><code>edad = 16
+
+if edad >= 18:
+    print("Puedes votar")
+elif edad >= 16:
+    print("Voto parcial")
+else:
+    print("Aún no")</code></pre></td>
+                <td><pre><code>int edad = 16;
+
+if (edad >= 18) {
+  System.out.println("Puedes votar");
+} else if (edad >= 16) {
+  System.out.println("Voto parcial");
+} else {
+  System.out.println("Aún no");
+}</code></pre></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="small-muted">Diferencias: <code>elif</code> → <code>else if</code>, dos puntos <code>:</code> → llaves <code>{ }</code>, e indentación obligatoria → llaves obligatorias (la indentación en Java es solo buena práctica, no la exige el compilador).</div>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">2. El switch — Python no lo tuvo por años</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-code align-middle">
+            <thead><tr><th style="width:50%">🐍 Python (match, desde 3.10)</th><th style="width:50%">☕ Java (switch, desde siempre)</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><pre><code>match dia:
+    case 1:
+        nombre = "Lunes"
+    case 2:
+        nombre = "Martes"
+    case _:
+        nombre = "Inválido"</code></pre></td>
+                <td><pre><code>switch (dia) {
+  case 1:
+    nombre = "Lunes";
+    break;
+  case 2:
+    nombre = "Martes";
+    break;
+  default:
+    nombre = "Inválido";
+}</code></pre></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="small-muted">Antes de Python 3.10, la alternativa típica era un diccionario o una cadena de <code>if/elif</code>. Ojo: Java <strong>exige</strong> <code>break</code> en el switch clásico o "cae" al siguiente caso — Python's <code>match</code> no tiene ese problema.</div>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">3. Ciclos: for-in-range vs for clásico</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-code align-middle">
+            <thead><tr><th style="width:50%">🐍 Python</th><th style="width:50%">☕ Java</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><pre><code>for i in range(5):
+    print(i)
+# imprime 0,1,2,3,4</code></pre></td>
+                <td><pre><code>for (int i = 0; i < 5; i++) {
+  System.out.println(i);
+}
+// imprime 0,1,2,3,4</code></pre></td>
+              </tr>
+              <tr>
+                <td><pre><code>i = 100
+while i > 0:
+    i -= 15
+    print(i)</code></pre></td>
+                <td><pre><code>int i = 100;
+while (i > 0) {
+  i -= 15;
+  System.out.println(i);
+}</code></pre></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="small-muted"><code>range(5)</code> ya calcula "5 vueltas" por ti; en Java escribes las tres partes del <code>for</code> a mano (inicio, condición, incremento) — más verboso, pero más explícito sobre qué está pasando.</div>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">4. Funciones (def) vs métodos (static)</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-code align-middle">
+            <thead><tr><th style="width:50%">🐍 Python</th><th style="width:50%">☕ Java</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><pre><code>def convertir_celsius_a_fahrenheit(celsius):
+    return celsius * 9 / 5 + 32
+
+fahrenheit = convertir_celsius_a_fahrenheit(30)
+print(fahrenheit)</code></pre></td>
+                <td><pre><code>static double convertirCelsiusAFahrenheit(double celsius) {
+  return celsius * 9 / 5 + 32;
+}
+
+double fahrenheit = convertirCelsiusAFahrenheit(30);
+System.out.println(fahrenheit);</code></pre></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="small-muted">Python no exige declarar el tipo de los parámetros ni del retorno (aunque puedes usar "type hints" opcionales); Java sí, siempre. Nombre: en Python se usa <code>snake_case</code> (<code>convertir_celsius_a_fahrenheit</code>); en Java, <code>camelCase</code> (<code>convertirCelsiusAFahrenheit</code>).</div>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">5. Clases: Python (self, __init__) vs Java (this, new)</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-code align-middle">
+            <thead><tr><th style="width:50%">🐍 Python</th><th style="width:50%">☕ Java</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><pre><code>class Libro:
+    def __init__(self, titulo, autor):
+        self.titulo = titulo
+        self.autor = autor
+
+    def mostrar_info(self):
+        print(f"{self.titulo} — {self.autor}")
+
+quijote = Libro("Don Quijote", "Cervantes")
+quijote.mostrar_info()</code></pre></td>
+                <td><pre><code>class Libro {
+  String titulo;
+  String autor;
+
+  void mostrarInfo() {
+    System.out.println(titulo + " — " + autor);
+  }
+}
+
+Libro quijote = new Libro();
+quijote.titulo = "Don Quijote";
+quijote.autor = "Cervantes";
+quijote.mostrarInfo();</code></pre></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="small-muted">Hoy en Java usamos la forma más simple (asignar los campos directo, sin constructor). Python casi siempre usa <code>__init__</code> (equivalente a un "constructor") desde el día 1; en Java verás constructores más adelante en el curso — por ahora, campos públicos y asignación directa. <code>self</code> en Python ≈ <code>this</code> en Java (ambos se refieren "al propio objeto"), aunque hoy no lo necesitamos explícitamente.</div>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">6. Tabla resumen de esta semana</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-sm small">
+            <thead><tr><th>Concepto</th><th>🐍 Python</th><th>☕ Java</th></tr></thead>
+            <tbody>
+              <tr><td>Y / O / NO</td><td><code>and</code> / <code>or</code> / <code>not</code></td><td><code>&amp;&amp;</code> / <code>||</code> / <code>!</code> (repaso Semana 1)</td></tr>
+              <tr><td>Bloque de código</td><td>indentación</td><td>llaves <code>{ }</code></td></tr>
+              <tr><td>elif</td><td><code>elif</code></td><td><code>else if</code></td></tr>
+              <tr><td>Selección múltiple</td><td><code>match/case</code> (3.10+)</td><td><code>switch/case</code> (siempre, requiere <code>break</code>)</td></tr>
+              <tr><td>Repetición conocida</td><td><code>for i in range(n)</code></td><td><code>for (int i=0;i&lt;n;i++)</code></td></tr>
+              <tr><td>Repetición condicional</td><td><code>while cond:</code></td><td><code>while (cond) { }</code></td></tr>
+              <tr><td>Función</td><td><code>def nombre(params):</code></td><td><code>static TIPO nombre(params) { }</code></td></tr>
+              <tr><td>Sin retorno</td><td>(nada, o <code>return None</code>)</td><td><code>void</code></td></tr>
+              <tr><td>Clase</td><td><code>class X: def __init__(self, ...)</code></td><td><code>class X { campos; métodos; }</code></td></tr>
+              <tr><td>Crear objeto</td><td><code>x = X(args)</code></td><td><code>X x = new X();</code></td></tr>
+              <tr><td>Convención nombres</td><td><code>snake_case</code></td><td><code>camelCase</code> (PascalCase para clases)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">7. Ejercicios de traducción (Python → Java)</h2>
+    <div class="row g-3 mb-4">
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h3 class="h6 fw-bold">Traducción 1 — Clasificar una donación</h3>
+            <pre><code>monto = 250
+
+if monto >= 500:
+    print("Donación mayor")
+elif monto >= 100:
+    print("Donación media")
+else:
+    print("Donación básica")</code></pre>
+            <details class="mt-2">
+              <summary class="fw-semibold">Solución</summary>
+              <pre class="mt-2"><code>public class Main {
+  public static void main(String[] args) {
+    double monto = 250;
+
+    if (monto >= 500) {
+      System.out.println("Donación mayor");
+    } else if (monto >= 100) {
+      System.out.println("Donación media");
+    } else {
+      System.out.println("Donación básica");
+    }
+  }
+}</code></pre>
+              <div class="small-muted">Aquí no necesitas <code>.equals()</code>: comparar números con <code>&gt;=</code> funciona igual en ambos lenguajes. Ese cuidado especial es solo para texto (<code>String</code>) — como en el Ejercicio 1 de <a href="ejercicios.html">ejercicios.html</a>, que compara colores en vez de montos.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h3 class="h6 fw-bold">Traducción 2 — Ciclo con función</h3>
+            <pre><code>def es_multiplo_de_tres(numero):
+    return numero % 3 == 0
+
+for i in range(1, 11):
+    print(i, es_multiplo_de_tres(i))</code></pre>
+            <details class="mt-2">
+              <summary class="fw-semibold">Solución</summary>
+              <pre class="mt-2"><code>public class Main {
+  public static void main(String[] args) {
+    for (int i = 1; i < 11; i++) {
+      System.out.println(i + " " + esMultiploDeTres(i));
+    }
+  }
+
+  static boolean esMultiploDeTres(int numero) {
+    return numero % 3 == 0;
+  }
+}</code></pre>
+              <div class="small-muted">Misma idea que el <code>esPar</code> del Ejercicio 6 (<a href="ejercicios.html">ejercicios.html</a>): un método booleano probado dentro de un ciclo, aquí con <code>%3</code> en vez de <code>%2</code>.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h3 class="h6 fw-bold">Traducción 3 — Clase simple</h3>
+            <pre><code>class Libro:
+    def __init__(self, titulo):
+        self.titulo = titulo
+
+    def mostrar_titulo(self):
+        print("Libro: " + self.titulo)
+
+l = Libro("Cien años de soledad")
+l.mostrar_titulo()</code></pre>
+            <details class="mt-2">
+              <summary class="fw-semibold">Solución</summary>
+              <pre class="mt-2"><code>public class Main {
+  public static void main(String[] args) {
+    Libro l = new Libro();
+    l.titulo = "Cien años de soledad";
+    l.mostrarTitulo();
+  }
+}
+
+class Libro {
+  String titulo;
+
+  void mostrarTitulo() {
+    System.out.println("Libro: " + titulo);
+  }
+}</code></pre>
+              <div class="small-muted">Versión reducida (un solo campo) de la clase <code>Libro</code> de la sección 5. Compárala con la clase <code>Mascota</code> del Ejercicio 7 (<a href="ejercicios.html">ejercicios.html</a>): misma idea, otro dominio.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h3 class="h6 fw-bold">Traducción 4 — Reto inverso (Java → Python)</h3>
+            <p class="small-muted mb-1">¿Qué imprime este Java? Tradúcelo mentalmente a Python:</p>
+            <pre><code>public class Main {
+  public static void main(String[] args) {
+    int total = 0;
+    for (int i = 1; i <= 5; i++) {
+      total += i;
+    }
+    System.out.println(total);
+  }
+}</code></pre>
+            <details class="mt-2">
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small">Imprime <code>15</code> (suma 1+2+3+4+5). En Python:</div>
+              <pre class="mt-2"><code>total = 0
+for i in range(1, 6):
+    total += i
+print(total)  # 15</code></pre>
+            </details>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout success">
+      <div class="fw-semibold">Para el ticket de salida</div>
+      <div class="small-muted">En una frase: <em>"¿Qué fue más fácil de entender en Java gracias a tu experiencia con Python (si tienes): las condiciones, los ciclos, los métodos o las clases? ¿Por qué?"</em></div>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      La Guía del Programador de Python — Semana 2 · Condicionales, ciclos, métodos y clases (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

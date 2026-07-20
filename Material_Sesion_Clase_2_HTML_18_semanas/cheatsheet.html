@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cheat Sheet — Semana 2 (Java)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 2 — Java</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link active" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="guia_programador_python.html">Python→Java</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="entregable.html">Entregable</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Cheat Sheet · Semana 2</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Referencia rápida — Condicionales, ciclos, métodos y clases</h1>
+          <div class="small-muted">Tenla abierta durante ejercicios, challenge y la Guía 2.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <div class="row g-3">
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">1. Condicionales</h2>
+            <pre><code>if (condicion) {
+  // se ejecuta si condicion es true
+} else if (otraCondicion) {
+  // se ejecuta si la anterior fue false y esta true
+} else {
+  // en cualquier otro caso
+}</code></pre>
+            <pre><code>switch (variable) {
+  case valor1:
+    // ...
+    break;          // ¡no lo olvides!
+  case valor2:
+    // ...
+    break;
+  default:
+    // ...
+}</code></pre>
+            <div class="small mb-0">Comparar <code>String</code>: usa <code>texto.equals("algo")</code>, <strong>nunca</strong> <code>texto == "algo"</code>.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">2. Ciclos</h2>
+            <pre><code>// Cuando SÉ cuántas vueltas
+for (int i = 0; i < 5; i++) {
+  // se repite 5 veces: i = 0,1,2,3,4
+}</code></pre>
+            <pre><code>// Cuando NO sé cuántas vueltas
+while (condicion) {
+  // se repite mientras condicion sea true
+  // debe existir algo que la haga false eventualmente
+}</code></pre>
+            <pre><code>// Ejecuta AL MENOS una vez
+do {
+  // ...
+} while (condicion);</code></pre>
+            <div class="callout danger small mt-2">
+              <strong>⚠ Ciclo infinito:</strong> si la condición nunca se vuelve falsa (olvidaste el <code>i++</code> o la resta), el programa se cuelga.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">3. Métodos</h2>
+            <pre><code>static TIPO nombreMetodo(TIPO parametro1, TIPO parametro2) {
+  // ...
+  return valor;   // obligatorio si TIPO no es void
+}
+
+static void otroMetodo() {
+  // no retorna nada
+}</code></pre>
+            <div class="table-responsive">
+              <table class="table table-sm small mb-0">
+                <thead><tr><th>Parte</th><th>Significa</th></tr></thead>
+                <tbody>
+                  <tr><td><code>static</code></td><td>Se puede llamar directo desde <code>main</code> sin crear un objeto</td></tr>
+                  <tr><td><code>void</code> / <code>int</code> / <code>boolean</code>…</td><td>Tipo de dato que retorna (<code>void</code> = nada)</td></tr>
+                  <tr><td><code>(int a, int b)</code></td><td>Parámetros: datos de entrada del método</td></tr>
+                  <tr><td><code>return valor;</code></td><td>Entrega el resultado y termina el método</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">4. Clases y objetos (primeros pasos)</h2>
+            <pre><code>class Mascota {
+  String nombre;    // campo
+  int edad;         // campo
+
+  void hacerSonido() {   // método de la clase
+    System.out.println(nombre + ": ¡Guau!");
+  }
+}
+
+// En main:
+Mascota firulais = new Mascota();  // crear objeto
+firulais.nombre = "Firulais";      // acceder a un campo
+firulais.hacerSonido();            // llamar un método</code></pre>
+            <div class="small mb-0"><strong>Clase</strong> = molde/plano. <strong>Objeto</strong> = algo creado a partir del molde con <code>new</code>. Cada objeto tiene sus propios valores.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">5. Convenciones (repaso + nuevo)</h2>
+            <ul class="small mb-0">
+              <li>Variables y métodos: <code>camelCase</code> — <code>calcularPromedio</code>, <code>esAprobatorio</code>.</li>
+              <li>Métodos booleanos: nómbralos como pregunta — <code>esPar</code>, <code>puedeVotar</code>.</li>
+              <li>Clases: <code>PascalCase</code> (primera letra mayúscula) — <code>Mascota</code>, <code>Beneficiario</code>.</li>
+              <li>Indenta cada bloque <code>{ }</code> — si no ves la "escalera", revisa el anidado.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">6. Errores comunes de esta semana</h2>
+            <div class="table-responsive">
+              <table class="table table-sm small mb-0">
+                <thead><tr><th>El compilador dice / síntoma…</th><th>Significa…</th></tr></thead>
+                <tbody>
+                  <tr><td>El <code>switch</code> ejecuta más casos de los esperados</td><td>Olvidaste un <code>break</code> ("fallthrough").</td></tr>
+                  <tr><td>El programa nunca termina (se cuelga)</td><td>Ciclo infinito: la condición del <code>for</code>/<code>while</code> nunca se vuelve falsa.</td></tr>
+                  <tr><td><code>missing return statement</code></td><td>Un método con tipo de retorno (no <code>void</code>) tiene un camino sin <code>return</code>.</td></tr>
+                  <tr><td><code>cannot find symbol</code> (con un método)</td><td>Llamaste el método con otro nombre/mayúsculas, o con distinta cantidad de parámetros.</td></tr>
+                  <tr><td>Comparación de texto rara con <code>==</code></td><td>Compara <code>String</code> con <code>.equals()</code>, no <code>==</code>.</td></tr>
+                  <tr><td><code>class X is public, should be in X.java</code></td><td>Si declaras varias clases, solo UNA puede ser <code>public</code> y su nombre debe coincidir con el archivo.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Cheat Sheet — Semana 2 · Condicionales, ciclos, métodos y clases (formato 18 semanas) · Compilador: <a href="https://www.educative.io/compilers/java" target="_blank" rel="noreferrer">educative.io/compilers/java</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

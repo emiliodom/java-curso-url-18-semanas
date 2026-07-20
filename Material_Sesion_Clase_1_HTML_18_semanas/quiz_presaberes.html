@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz de Presaberes — Semana 1</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 1 — Java</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="guia_programador_python.html">Python→Java</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="entregable.html">Entregable</a></li>
+          <li class="nav-item"><a class="nav-link" href="instalacion.html">Instalación</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Quiz de Presaberes · 5 minutos · No cuenta para nota</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">¿De dónde partimos hoy?</h1>
+          <div class="small-muted">8 preguntas sobre lógica, computadoras y sentido común algorítmico. Responde honestamente: es tu <strong>foto de entrada</strong>, no un examen.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 900px;">
+    <div class="card mb-3">
+      <div class="card-body">
+        <label class="form-label fw-semibold" for="studentName">Nombre del estudiante (aparecerá en el PDF)</label>
+        <input id="studentName" class="form-control" type="text" placeholder="Nombre y apellido" />
+      </div>
+    </div>
+
+    <div class="quiz-q" data-answer="b">
+      <div class="fw-semibold mb-2">1) Una receta de cocina dice: "bate 3 huevos, agrega harina, hornea 30 min". En programación, esa lista ordenada de pasos se parece más a…</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q1" id="q1a" value="a" /><label class="form-check-label" for="q1a">Una computadora</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q1" id="q1b" value="b" /><label class="form-check-label" for="q1b">Un algoritmo</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q1" id="q1c" value="c" /><label class="form-check-label" for="q1c">Un teclado</label></div>
+      <div class="quiz-feedback ok">✅ Exacto: un algoritmo es una secuencia ordenada de pasos para lograr un resultado.</div>
+      <div class="quiz-feedback ko">La respuesta era <strong>un algoritmo</strong>: una secuencia ordenada de pasos. Hoy escribiremos algoritmos que la computadora pueda ejecutar.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="c">
+      <div class="fw-semibold mb-2">2) ¿Qué entiende directamente el procesador de una computadora?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q2" id="q2a" value="a" /><label class="form-check-label" for="q2a">Español bien escrito</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q2" id="q2b" value="b" /><label class="form-check-label" for="q2b">Cualquier lenguaje de programación tal cual</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q2" id="q2c" value="c" /><label class="form-check-label" for="q2c">Instrucciones en código binario (unos y ceros)</label></div>
+      <div class="quiz-feedback ok">✅ Correcto. Por eso existen los compiladores: traducen nuestro código a algo que la máquina entienda.</div>
+      <div class="quiz-feedback ko">El procesador solo entiende <strong>binario</strong>. Java se compila a "bytecode" que la JVM traduce por nosotros — lo veremos hoy.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="b">
+      <div class="fw-semibold mb-2">3) Si guardo el número <strong>20</strong> en una caja etiquetada "edad" y luego guardo <strong>21</strong> en la misma caja, ¿qué contiene la caja al final?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q3" id="q3a" value="a" /><label class="form-check-label" for="q3a">20 y 21 a la vez</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q3" id="q3b" value="b" /><label class="form-check-label" for="q3b">Solo 21: el valor nuevo reemplaza al anterior</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q3" id="q3c" value="c" /><label class="form-check-label" for="q3c">41, porque se suman</label></div>
+      <div class="quiz-feedback ok">✅ Así funcionan las variables: guardan <strong>un</strong> valor a la vez y el nuevo sustituye al viejo.</div>
+      <div class="quiz-feedback ko">Una variable guarda <strong>un solo valor</strong>: al asignar 21, el 20 se pierde. Esa "caja con etiqueta" es la protagonista de hoy.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="a">
+      <div class="fw-semibold mb-2">4) ¿Cuál de estos datos es de un "tipo" diferente a los otros dos?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q4" id="q4a" value="a" /><label class="form-check-label" for="q4a">"Guatemala"</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q4" id="q4b" value="b" /><label class="form-check-label" for="q4b">42</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q4" id="q4c" value="c" /><label class="form-check-label" for="q4c">-7</label></div>
+      <div class="quiz-feedback ok">✅ "Guatemala" es texto; 42 y -7 son números enteros. Distinguir tipos de datos es la clave de esta semana.</div>
+      <div class="quiz-feedback ko">"Guatemala" es <strong>texto</strong> y los otros dos son <strong>números enteros</strong>. En Java cada tipo tiene su propia "caja": <code>String</code>, <code>int</code>…</div>
+    </div>
+
+    <div class="quiz-q" data-answer="c">
+      <div class="fw-semibold mb-2">5) ¿Cuánto es el <strong>residuo</strong> (lo que sobra) de repartir 17 dulces entre 5 niños en partes iguales?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q5" id="q5a" value="a" /><label class="form-check-label" for="q5a">3</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q5" id="q5b" value="b" /><label class="form-check-label" for="q5b">5</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q5" id="q5c" value="c" /><label class="form-check-label" for="q5c">2</label></div>
+      <div class="quiz-feedback ok">✅ Cada niño recibe 3 y sobran 2. En Java eso se escribe <code>17 % 5</code> y da <code>2</code>.</div>
+      <div class="quiz-feedback ko">Cada niño recibe 3 dulces (15 en total) y <strong>sobran 2</strong>. Hoy conocerás el operador módulo: <code>17 % 5 = 2</code>.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="b">
+      <div class="fw-semibold mb-2">6) La frase "puede votar si es mayor de 18 <strong>Y</strong> tiene DPI" es verdadera cuando…</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q6" id="q6a" value="a" /><label class="form-check-label" for="q6a">Cumple al menos una de las dos condiciones</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q6" id="q6b" value="b" /><label class="form-check-label" for="q6b">Cumple las dos condiciones a la vez</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q6" id="q6c" value="c" /><label class="form-check-label" for="q6c">No cumple ninguna</label></div>
+      <div class="quiz-feedback ok">✅ El "Y" lógico exige ambas. En Java se escribe <code>&amp;&amp;</code>.</div>
+      <div class="quiz-feedback ko">El "Y" exige <strong>ambas condiciones</strong>. Si bastara una, sería un "O". En Java: <code>&amp;&amp;</code> (Y) y <code>||</code> (O).</div>
+    </div>
+
+    <div class="quiz-q" data-answer="a">
+      <div class="fw-semibold mb-2">7) ¿Has escrito código antes en algún lenguaje (Scratch, Python, Excel con fórmulas, etc.)?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q7" id="q7a" value="a" /><label class="form-check-label" for="q7a">Sí, algo he hecho</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q7" id="q7b" value="b" /><label class="form-check-label" for="q7b">Nunca, este es mi primer contacto</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q7" id="q7c" value="c" /><label class="form-check-label" for="q7c">Solo he visto a alguien más hacerlo</label></div>
+      <div class="quiz-feedback ok">✅ ¡Genial! Si conoces Python u otro lenguaje, la <a href="guia_programador_python.html">Guía del Programador de Python</a> te servirá de puente.</div>
+      <div class="quiz-feedback ko">Cualquier respuesta era válida aquí 🙂 — esta pregunta es solo diagnóstica. Si nunca has programado, este curso empieza desde cero; si conoces Python, revisa la <a href="guia_programador_python.html">guía puente</a>.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="c">
+      <div class="fw-semibold mb-2">8) Escribes un programa, lo ejecutas y aparece un mensaje de error. ¿Cuál es la mejor primera reacción?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q8" id="q8a" value="a" /><label class="form-check-label" for="q8a">Borrar todo y empezar de cero</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q8" id="q8b" value="b" /><label class="form-check-label" for="q8b">Pedir ayuda de inmediato sin leer el mensaje</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q8" id="q8c" value="c" /><label class="form-check-label" for="q8c">Leer el mensaje con calma: casi siempre dice qué y dónde está el problema</label></div>
+      <div class="quiz-feedback ok">✅ Esa es la actitud de la semana: <strong>resiliencia ante el error</strong>. El compilador es un maestro, no un juez.</div>
+      <div class="quiz-feedback ko">La mejor reacción es <strong>leer el mensaje</strong>: indica la línea y la causa. Hoy practicaremos leer errores sin miedo.</div>
+    </div>
+
+    <div id="scoreBanner" class="score-banner"></div>
+
+    <div class="d-flex gap-2 flex-wrap mt-3 no-print">
+      <button class="btn btn-primary btn-lg" onclick="gradeQuiz()">Calificar</button>
+      <button class="btn btn-outline-secondary" onclick="resetQuiz()">Reintentar</button>
+      <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      <a class="btn btn-outline-primary ms-auto" href="clase.html">Continuar a la clase →</a>
+    </div>
+
+    <div class="callout mt-4">
+      <div class="fw-semibold">¿Para qué sirve este quiz?</div>
+      <div class="small-muted">Al final de la clase harás el <a href="quiz_final.html">Quiz de Final de Clase</a>. Comparar ambos resultados te muestra <strong>cuánto aprendiste hoy</strong>. Guarda tu PDF de presaberes para esa comparación.</div>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Quiz de Presaberes — Semana 1 · Fundamentos de Java (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="quiz.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

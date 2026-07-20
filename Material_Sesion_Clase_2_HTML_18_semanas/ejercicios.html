@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ejercicios — Semana 2 (Java)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 2 — Java</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link active" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="guia_programador_python.html">Python→Java</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="entregable.html">Entregable</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Guía de ejercicios · Semana 2</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Condicionales, ciclos, métodos y clases</h1>
+          <div class="small-muted">Usar: <a href="https://www.educative.io/compilers/java" target="_blank" rel="noreferrer">Educative Java Compiler</a> (o tu VS Code si ya lo instalaste). Primero intenta, luego pista, luego solución.</div>
+        </div>
+        <div class="d-flex gap-2 flex-wrap">
+          <a class="btn btn-primary" target="_blank" rel="noreferrer" href="https://www.educative.io/compilers/java">Abrir compilador</a>
+          <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <div class="callout mb-3">
+      <div class="fw-semibold">Template recomendado</div>
+      <div class="small-muted">Copia/pega esto al iniciar cada ejercicio. En Educative la clase <strong>debe llamarse <code>Main</code></strong>.</div>
+      <pre class="mt-2"><code>public class Main {
+  public static void main(String[] args) {
+    // Tu código aquí
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="row g-3">
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 1 — El semáforo <span class="badge text-bg-success">Calentamiento</span></h2>
+            <p class="small-muted mb-2">Objetivo: practicar <code>if / else if / else</code>.</p>
+            <ol>
+              <li>Declara <code>String color = "amarillo";</code></li>
+              <li>Si es <code>"rojo"</code> imprime "Alto". Si es <code>"amarillo"</code> imprime "Prepárate". Si es <code>"verde"</code> imprime "Avanza". Cualquier otro valor: "Color inválido".</li>
+              <li>Usa <code>.equals()</code> para comparar Strings (no <code>==</code>).</li>
+            </ol>
+            <details>
+              <summary class="fw-semibold">Pista</summary>
+              <div class="mt-2">Para comparar texto en Java: <code>color.equals("rojo")</code>, no <code>color == "rojo"</code>.</div>
+            </details>
+            <details class="mt-2">
+              <summary class="fw-semibold">Solución sugerida</summary>
+              <pre class="mt-2"><code>public class Main {
+  public static void main(String[] args) {
+    String color = "amarillo";
+
+    if (color.equals("rojo")) {
+      System.out.println("Alto");
+    } else if (color.equals("amarillo")) {
+      System.out.println("Prepárate");
+    } else if (color.equals("verde")) {
+      System.out.println("Avanza");
+    } else {
+      System.out.println("Color inválido");
+    }
+  }
+}
+</code></pre>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 2 — Días con switch <span class="badge text-bg-success">Condicionales</span></h2>
+            <p class="small-muted mb-2">Objetivo: practicar <code>switch</code> con <code>break</code>.</p>
+            <ol>
+              <li>Declara <code>int mes = 7;</code> (1 = enero … 12 = diciembre).</li>
+              <li>Con <code>switch</code>, imprime el nombre del mes correspondiente.</li>
+              <li>Agrega un <code>default</code> que imprima "Mes inválido".</li>
+              <li>Quita un <code>break</code> a propósito, ejecuta y observa el "fallthrough". Vuelve a ponerlo.</li>
+            </ol>
+            <details>
+              <summary class="fw-semibold">Solución sugerida</summary>
+              <pre class="mt-2"><code>public class Main {
+  public static void main(String[] args) {
+    int mes = 7;
+    String nombreMes;
+
+    switch (mes) {
+      case 7:
+        nombreMes = "Julio";
+        break;
+      case 8:
+        nombreMes = "Agosto";
+        break;
+      default:
+        nombreMes = "Mes inválido";
+    }
+
+    System.out.println(nombreMes);
+  }
+}
+</code></pre>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 3 — Tabla de multiplicar <span class="badge text-bg-primary">Ciclo for</span></h2>
+            <p class="small-muted mb-2">Objetivo: usar <code>for</code> para repetir un cálculo.</p>
+            <ol>
+              <li>Declara <code>int numero = 7;</code>.</li>
+              <li>Con un <code>for</code>, imprime la tabla del 1 al 10: <code>7 x 1 = 7</code>, <code>7 x 2 = 14</code>, … <code>7 x 10 = 70</code>.</li>
+            </ol>
+            <details>
+              <summary class="fw-semibold">Pista</summary>
+              <div class="mt-2"><code>for (int i = 1; i <= 10; i++) { ... numero * i ... }</code></div>
+            </details>
+            <details class="mt-2">
+              <summary class="fw-semibold">Solución sugerida</summary>
+              <pre class="mt-2"><code>public class Main {
+  public static void main(String[] args) {
+    int numero = 7;
+
+    for (int i = 1; i <= 10; i++) {
+      System.out.println(numero + " x " + i + " = " + (numero * i));
+    }
+  }
+}
+</code></pre>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 4 — Cuenta regresiva con while <span class="badge text-bg-primary">Ciclo while</span></h2>
+            <p class="small-muted mb-2">Objetivo: usar <code>while</code> cuando no sabes exactamente cuántas vueltas serán.</p>
+            <ol>
+              <li>Declara <code>int contador = 100;</code> y una constante <code>final int PASO = 15;</code>.</li>
+              <li>Con un <code>while</code>, resta <code>PASO</code> a <code>contador</code> en cada vuelta e imprime su valor, hasta que sea menor o igual a 0.</li>
+              <li>¿Cuántas vueltas dio el ciclo? Contesta en un comentario.</li>
+            </ol>
+            <details>
+              <summary class="fw-semibold">Solución sugerida</summary>
+              <pre class="mt-2"><code>public class Main {
+  public static void main(String[] args) {
+    int contador = 100;
+    final int PASO = 15;
+
+    while (contador > 0) {
+      contador = contador - PASO;
+      System.out.println("Contador: " + contador);
+    }
+    // Dio 7 vueltas (100, 85, 70... hasta -5)
+  }
+}
+</code></pre>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 5 — Método con parámetros <span class="badge text-bg-info">Métodos</span></h2>
+            <p class="small-muted mb-2">Objetivo: declarar un método con parámetros y valor de retorno.</p>
+            <ol>
+              <li>Crea el método <code>static double calcularPromedio(double a, double b, double c)</code> que retorne el promedio de los tres.</li>
+              <li>Llámalo desde <code>main</code> con tres notas distintas e imprime el resultado.</li>
+              <li>Llámalo una segunda vez con otras tres notas (demuestra que es <strong>reutilizable</strong>).</li>
+            </ol>
+            <details>
+              <summary class="fw-semibold">Solución sugerida</summary>
+              <pre class="mt-2"><code>public class Main {
+  public static void main(String[] args) {
+    double promedio1 = calcularPromedio(80, 90, 70);
+    double promedio2 = calcularPromedio(60, 55, 65);
+
+    System.out.println("Promedio 1: " + promedio1);
+    System.out.println("Promedio 2: " + promedio2);
+  }
+
+  static double calcularPromedio(double a, double b, double c) {
+    return (a + b + c) / 3;
+  }
+}
+</code></pre>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 6 — Método booleano <span class="badge text-bg-info">Métodos + lógica</span></h2>
+            <p class="small-muted mb-2">Objetivo: un método que retorna <code>boolean</code>, combinando lo visto en la Semana 1.</p>
+            <ol>
+              <li>Crea el método <code>static boolean esPar(int numero)</code> que retorne <code>true</code> si el número es par (usa <code>%</code>).</li>
+              <li>Crea el método <code>static boolean esAprobatorio(int nota)</code> que retorne <code>true</code> si <code>nota >= 61</code>.</li>
+              <li>Llama ambos métodos desde <code>main</code> con distintos valores e imprime los resultados.</li>
+            </ol>
+            <details>
+              <summary class="fw-semibold">Solución sugerida</summary>
+              <pre class="mt-2"><code>public class Main {
+  public static void main(String[] args) {
+    System.out.println(esPar(8));       // true
+    System.out.println(esPar(7));       // false
+    System.out.println(esAprobatorio(75)); // true
+  }
+
+  static boolean esPar(int numero) {
+    return numero % 2 == 0;
+  }
+
+  static boolean esAprobatorio(int nota) {
+    return nota >= 61;
+  }
+}
+</code></pre>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 7 — Mi primera clase: Mascota <span class="badge text-bg-warning">Clases y objetos</span></h2>
+            <p class="small-muted mb-2">Objetivo: crear una clase simple con campos y un método, e instanciar dos objetos.</p>
+            <ol>
+              <li>Fuera de <code>Main</code>, crea <code>class Mascota</code> con campos <code>String nombre</code> y <code>int edad</code>.</li>
+              <li>Agrégale el método <code>void hacerSonido()</code> que imprima <code>nombre + " hace: ¡Guau!"</code>.</li>
+              <li>En <code>main</code>, crea dos objetos <code>Mascota</code> con datos distintos y llama <code>hacerSonido()</code> en cada uno.</li>
+            </ol>
+            <details>
+              <summary class="fw-semibold">Pista</summary>
+              <div class="mt-2">Recuerda: <code>Mascota firulais = new Mascota();</code> y luego <code>firulais.nombre = "Firulais";</code></div>
+            </details>
+            <details class="mt-2">
+              <summary class="fw-semibold">Solución sugerida</summary>
+              <pre class="mt-2"><code>public class Main {
+  public static void main(String[] args) {
+    Mascota firulais = new Mascota();
+    firulais.nombre = "Firulais";
+    firulais.edad = 3;
+    firulais.hacerSonido();
+
+    Mascota michi = new Mascota();
+    michi.nombre = "Michi";
+    michi.edad = 1;
+    michi.hacerSonido();
+  }
+}
+
+class Mascota {
+  String nombre;
+  int edad;
+
+  void hacerSonido() {
+    System.out.println(nombre + " hace: ¡Guau!");
+  }
+}
+</code></pre>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 8 — Reto integrador: "Registro de beneficiarios" <span class="badge text-bg-danger">Integrador</span></h2>
+            <p class="small-muted mb-2">Objetivo: combinar condicionales + ciclo + método + clase. Contexto del proyecto del curso.</p>
+            <ol>
+              <li>Crea <code>class Beneficiario</code> con campos <code>String nombre</code> e <code>int edad</code>.</li>
+              <li>Crea el método <code>static boolean puedeRecibirPrograma(int edad)</code> que retorne <code>true</code> si <code>edad >= 18</code>.</li>
+              <li>En <code>main</code>, crea un arreglo o simplemente 4 objetos <code>Beneficiario</code> distintos (puedes usar <code>Beneficiario[] lista = new Beneficiario[4];</code> si ya viste arreglos, o simplemente 4 variables si no).</li>
+              <li>Con un <code>for</code> (o repitiendo el bloque 4 veces si no usaste arreglo), imprime el nombre de cada uno y si puede recibir el programa (usa el método del paso 2 y un <code>if</code>).</li>
+            </ol>
+            <details>
+              <summary class="fw-semibold">Solución sugerida (versión simple, sin arreglos)</summary>
+              <pre class="mt-2"><code>public class Main {
+  public static void main(String[] args) {
+    Beneficiario b1 = new Beneficiario();
+    b1.nombre = "Carlos";
+    b1.edad = 20;
+
+    Beneficiario b2 = new Beneficiario();
+    b2.nombre = "Ana";
+    b2.edad = 15;
+
+    revisarBeneficiario(b1);
+    revisarBeneficiario(b2);
+  }
+
+  static void revisarBeneficiario(Beneficiario b) {
+    if (puedeRecibirPrograma(b.edad)) {
+      System.out.println(b.nombre + ": SÍ puede recibir el programa");
+    } else {
+      System.out.println(b.nombre + ": NO puede recibir el programa (es menor de edad)");
+    }
+  }
+
+  static boolean puedeRecibirPrograma(int edad) {
+    return edad >= 18;
+  }
+}
+
+class Beneficiario {
+  String nombre;
+  int edad;
+}
+</code></pre>
+              <div class="small-muted">Este patrón (clase + método que evalúa una regla de negocio) es exactamente lo que harás en Spring Boot desde la Semana 8.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="callout success mt-4">
+      <div class="fw-semibold">¿Terminaste todo?</div>
+      <div class="small-muted">Pasa al <a href="challenge.html">Challenge drag &amp; drop</a> en nivel Difícil, o adelanta el <a href="entregable.html">Entregable de la Guía 2</a>. Antes de pedir ayuda: relee el error, consulta el <a href="cheatsheet.html">cheat sheet</a> e intenta una vez más.</div>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Ejercicios — Semana 2 · Lógica, métodos y buenas prácticas (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

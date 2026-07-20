@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Entregable — Guía de Aprendizaje 2 (Semana 2)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 2 — Java</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="guia_programador_python.html">Python→Java</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link active" href="entregable.html">Entregable</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Entregable · Guía de Aprendizaje 2 · Trabajo autónomo (1 pt)</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Mini-programa con condicionales, ciclos, métodos y clases</h1>
+          <div class="small-muted">Completa esta plantilla durante la semana y súbela <strong>antes de la Sesión 3 (25 de julio de 2026)</strong>. Llena los campos, luego <strong>Exportar a PDF</strong> y súbelo al aula virtual como <code>Guia2_TuNombre.pdf</code>.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 950px;">
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title mb-3">Datos del estudiante</h2>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label small fw-semibold">Nombre completo</label>
+            <input class="form-control fill-line" type="text" />
+          </div>
+          <div class="col-md-3">
+            <label class="form-label small fw-semibold">Carné</label>
+            <input class="form-control fill-line" type="text" />
+          </div>
+          <div class="col-md-3">
+            <label class="form-label small fw-semibold">Fecha de entrega</label>
+            <input class="form-control fill-line" type="text" placeholder="dd/mm/2026" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout mb-3">
+      <div class="fw-semibold">Instrucciones generales</div>
+      <ol class="small-muted mb-0">
+        <li>Resuelve cada parte en el <a href="https://www.educative.io/compilers/java" target="_blank" rel="noreferrer">compilador online</a> (o tu VS Code si ya lo instalaste).</li>
+        <li>Cuando el programa funcione, <strong>copia tu código</strong> en el recuadro correspondiente y <strong>copia la salida</strong> que imprimió.</li>
+        <li>Responde las preguntas de reflexión con tus palabras.</li>
+        <li>Trabaja con autonomía: antes de preguntar, relee el error, consulta el <a href="cheatsheet.html">cheat sheet</a> e intenta de nuevo.</li>
+      </ol>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title">Parte A — Decisiones (25%)</h2>
+        <p class="small-muted">Escribe un programa que use <strong>al menos un <code>if/else if/else</code> Y un <code>switch</code></strong>. Puede ser sobre el mismo dato (ej. clasificar una nota, un día de la semana, una talla de ropa). Usa nombres de variable en camelCase.</p>
+        <label class="form-label small fw-semibold">Tu código:</label>
+        <textarea class="code-area" rows="12" placeholder="public class Main { ..."></textarea>
+        <label class="form-label small fw-semibold mt-2">Salida que imprimió:</label>
+        <textarea class="code-area" rows="5"></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title">Parte B — Repetición (25%)</h2>
+        <p class="small-muted">Escribe un programa con <strong>un ciclo <code>for</code> y un ciclo <code>while</code></strong> (pueden resolver problemas distintos: una tabla, un acumulador, una cuenta regresiva). Comenta cada ciclo explicando su condición de parada.</p>
+        <label class="form-label small fw-semibold">Tu código (con comentarios):</label>
+        <textarea class="code-area" rows="12" placeholder="public class Main { ..."></textarea>
+        <label class="form-label small fw-semibold mt-2">Salida que imprimió:</label>
+        <textarea class="code-area" rows="6"></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title">Parte C — Métodos (25%)</h2>
+        <p class="small-muted">Crea <strong>2 métodos propios</strong>: uno con parámetros que retorne un valor (no <code>void</code>) y otro que retorne <code>boolean</code>. Llama ambos desde <code>main</code> con al menos dos conjuntos de datos distintos, demostrando que son reutilizables.</p>
+        <label class="form-label small fw-semibold">Tu código:</label>
+        <textarea class="code-area" rows="12" placeholder="public class Main { ..."></textarea>
+        <label class="form-label small fw-semibold mt-2">Salida que imprimió:</label>
+        <textarea class="code-area" rows="4"></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title">Parte D — Reto pedagógico: mi primera clase (15%)</h2>
+        <p class="small-muted">Inventa una clase simple relacionada con el proyecto del curso (ej. <code>Beneficiario</code>, <code>Voluntario</code>, <code>Donacion</code>) con al menos 2 campos. Crea <strong>2 objetos</strong> distintos de esa clase e imprime sus datos. Si puedes, agrégale un método propio.</p>
+        <label class="form-label small fw-semibold">Tu código:</label>
+        <textarea class="code-area" rows="12" placeholder="class MiClase { ..."></textarea>
+        <label class="form-label small fw-semibold mt-2">Salida que imprimió:</label>
+        <textarea class="code-area" rows="4"></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title">Parte E — Reflexión (10%)</h2>
+        <ol class="small">
+          <li class="mb-2">
+            <strong>Resiliencia ante el error:</strong> ¿tuviste algún ciclo infinito o un "fallthrough" de switch esta semana? ¿Cómo lo detectaste y corregiste?
+            <textarea class="form-control mt-1" rows="3"></textarea>
+          </li>
+          <li class="mb-2">
+            <strong>Pensamiento algorítmico:</strong> piensa en un método que escribiste. ¿Por qué decidiste separar ese pedazo de código en un método en vez de dejarlo suelto en <code>main</code>?
+            <textarea class="form-control mt-1" rows="4"></textarea>
+          </li>
+          <li>
+            <strong>Autonomía:</strong> ¿qué recurso usaste primero cuando te trabaste esta semana? ¿Funcionó?
+            <textarea class="form-control mt-1" rows="3"></textarea>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title">Lista de cotejo (marca antes de entregar)</h2>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck1" /><label class="form-check-label small" for="ck1">Mis 4 programas compilan sin errores.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck2" /><label class="form-check-label small" for="ck2">Usé <code>if/else</code>, <code>switch</code>, <code>for</code> y <code>while</code> al menos una vez cada uno.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck3" /><label class="form-check-label small" for="ck3">Mis métodos usan camelCase y mi clase usa PascalCase.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck4" /><label class="form-check-label small" for="ck4">Copié el código Y la salida de cada parte.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck5" /><label class="form-check-label small" for="ck5">Exporté el PDF con el nombre <code>Guia2_TuNombre.pdf</code>.</label></div>
+      </div>
+    </div>
+
+    <div class="callout warning">
+      <div class="fw-semibold">Rúbrica rápida (1 punto total)</div>
+      <div class="small-muted">Parte A: 0.25 · Parte B: 0.25 · Parte C: 0.25 · Parte D: 0.15 · Parte E: 0.10. Se valora que el código compile, la claridad de los nombres y la honestidad de la reflexión. Entregar tarde: −25% por día.</div>
+    </div>
+
+    <div class="d-flex gap-2 mt-3 no-print">
+      <button class="btn btn-primary btn-lg btn-export" onclick="window.print()">Exportar a PDF</button>
+      <a class="btn btn-outline-primary btn-lg" href="index.html">Volver al inicio</a>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Entregable — Guía de Aprendizaje 2 · Semana 2 (formato 18 semanas) · Fecha límite: antes de la Sesión 3
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz de Final de Clase — Semana 1</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 1 — Java</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="guia_programador_python.html">Python→Java</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link active" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="entregable.html">Entregable</a></li>
+          <li class="nav-item"><a class="nav-link" href="instalacion.html">Instalación</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Quiz de Final de Clase · 7 minutos · Evidencia de la Actividad en clase — Sesión 1</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">¿Qué aprendiste hoy?</h1>
+          <div class="small-muted">10 preguntas sobre estructura de un programa Java, tipos de datos, casting y operadores. Al terminar: <strong>Calificar → Exportar a PDF → subir al aula virtual</strong>.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 900px;">
+    <div class="card mb-3">
+      <div class="card-body">
+        <label class="form-label fw-semibold" for="studentName">Nombre del estudiante (aparecerá en el PDF)</label>
+        <input id="studentName" class="form-control" type="text" placeholder="Nombre y apellido" />
+      </div>
+    </div>
+
+    <div class="quiz-q" data-answer="b">
+      <div class="fw-semibold mb-2">1) ¿Cuál es el punto de entrada de todo programa Java, donde la JVM empieza a ejecutar?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q1" id="q1a" value="a" /><label class="form-check-label" for="q1a">La primera línea del archivo</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q1" id="q1b" value="b" /><label class="form-check-label" for="q1b">El método <code>public static void main(String[] args)</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q1" id="q1c" value="c" /><label class="form-check-label" for="q1c">Cualquier <code>System.out.println</code></label></div>
+      <div class="quiz-feedback ok">✅ La JVM busca exactamente esa firma para arrancar.</div>
+      <div class="quiz-feedback ko">Es el método <code>main</code>: la JVM busca exactamente <code>public static void main(String[] args)</code> para empezar.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="c">
+      <div class="fw-semibold mb-2">2) ¿Qué tipo de dato usarías para guardar una estatura como <code>1.62</code>?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q2" id="q2a" value="a" /><label class="form-check-label" for="q2a"><code>int</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q2" id="q2b" value="b" /><label class="form-check-label" for="q2b"><code>boolean</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q2" id="q2c" value="c" /><label class="form-check-label" for="q2c"><code>double</code></label></div>
+      <div class="quiz-feedback ok">✅ <code>double</code> guarda números con decimales.</div>
+      <div class="quiz-feedback ko">Era <code>double</code>: <code>int</code> solo guarda enteros y <code>boolean</code> solo true/false.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="a">
+      <div class="fw-semibold mb-2">3) ¿Qué imprime <code>System.out.println(7 / 2);</code>?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q3" id="q3a" value="a" /><label class="form-check-label" for="q3a"><code>3</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q3" id="q3b" value="b" /><label class="form-check-label" for="q3b"><code>3.5</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q3" id="q3c" value="c" /><label class="form-check-label" for="q3c"><code>4</code></label></div>
+      <div class="quiz-feedback ok">✅ División entera: <code>int / int</code> descarta los decimales.</div>
+      <div class="quiz-feedback ko">Imprime <code>3</code>: entre enteros la división es entera. Para 3.5 necesitas <code>(double) 7 / 2</code>.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="b">
+      <div class="fw-semibold mb-2">4) ¿Qué valor queda en <code>p</code>? <code>double precio = 9.99; int p = (int) precio;</code></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q4" id="q4a" value="a" /><label class="form-check-label" for="q4a"><code>10</code> (redondea)</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q4" id="q4b" value="b" /><label class="form-check-label" for="q4b"><code>9</code> (trunca)</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q4" id="q4c" value="c" /><label class="form-check-label" for="q4c">Error de compilación</label></div>
+      <div class="quiz-feedback ok">✅ El casting explícito <strong>trunca</strong>: corta los decimales sin redondear.</div>
+      <div class="quiz-feedback ko">Queda <code>9</code>: el casting <code>(int)</code> trunca (corta) los decimales, no redondea.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="c">
+      <div class="fw-semibold mb-2">5) ¿Cuál declaración de constante es correcta y sigue la convención?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q5" id="q5a" value="a" /><label class="form-check-label" for="q5a"><code>constant double iva = 0.12;</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q5" id="q5b" value="b" /><label class="form-check-label" for="q5b"><code>final double iva = 0.12;</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q5" id="q5c" value="c" /><label class="form-check-label" for="q5c"><code>final double IVA = 0.12;</code></label></div>
+      <div class="quiz-feedback ok">✅ <code>final</code> + nombre en MAYÚSCULAS: constante correcta y bien nombrada.</div>
+      <div class="quiz-feedback ko">La palabra clave es <code>final</code> y la convención pide MAYÚSCULAS: <code>final double IVA = 0.12;</code></div>
+    </div>
+
+    <div class="quiz-q" data-answer="a">
+      <div class="fw-semibold mb-2">6) ¿Qué imprime <code>System.out.println(17 % 5);</code>?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q6" id="q6a" value="a" /><label class="form-check-label" for="q6a"><code>2</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q6" id="q6b" value="b" /><label class="form-check-label" for="q6b"><code>3</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q6" id="q6c" value="c" /><label class="form-check-label" for="q6c"><code>3.4</code></label></div>
+      <div class="quiz-feedback ok">✅ <code>%</code> devuelve el residuo: 17 = 5×3 + <strong>2</strong>.</div>
+      <div class="quiz-feedback ko">El operador <code>%</code> da el <strong>residuo</strong> de la división: 17 entre 5 cabe 3 veces y sobran <strong>2</strong>.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="b">
+      <div class="fw-semibold mb-2">7) ¿Cuál es la diferencia entre <code>=</code> y <code>==</code>?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q7" id="q7a" value="a" /><label class="form-check-label" for="q7a">Son intercambiables</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q7" id="q7b" value="b" /><label class="form-check-label" for="q7b"><code>=</code> asigna un valor; <code>==</code> compara si dos valores son iguales</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q7" id="q7c" value="c" /><label class="form-check-label" for="q7c"><code>=</code> compara; <code>==</code> asigna</label></div>
+      <div class="quiz-feedback ok">✅ Asignar vs comparar: el error clásico #1 ya no te atrapará.</div>
+      <div class="quiz-feedback ko"><code>=</code> <strong>asigna</strong> (mete el valor en la caja); <code>==</code> <strong>compara</strong> (pregunta si son iguales y devuelve true/false).</div>
+    </div>
+
+    <div class="quiz-q" data-answer="c">
+      <div class="fw-semibold mb-2">8) Con <code>int edad = 20;</code> y <code>boolean inscrito = false;</code>, ¿qué imprime <code>System.out.println(edad &gt;= 18 &amp;&amp; inscrito);</code>?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q8" id="q8a" value="a" /><label class="form-check-label" for="q8a"><code>true</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q8" id="q8b" value="b" /><label class="form-check-label" for="q8b">Error: no se pueden mezclar</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q8" id="q8c" value="c" /><label class="form-check-label" for="q8c"><code>false</code></label></div>
+      <div class="quiz-feedback ok">✅ El <code>&amp;&amp;</code> exige ambas: la edad cumple pero <code>inscrito</code> es false → resultado false.</div>
+      <div class="quiz-feedback ko">Imprime <code>false</code>: <code>&amp;&amp;</code> (Y) exige que <strong>ambas</strong> condiciones sean verdaderas, e <code>inscrito</code> es false.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="a">
+      <div class="fw-semibold mb-2">9) ¿Qué imprime <code>System.out.println(1 + 2 + "3");</code>?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q9" id="q9a" value="a" /><label class="form-check-label" for="q9a"><code>33</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q9" id="q9b" value="b" /><label class="form-check-label" for="q9b"><code>123</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q9" id="q9c" value="c" /><label class="form-check-label" for="q9c"><code>6</code></label></div>
+      <div class="quiz-feedback ok">✅ Se evalúa de izquierda a derecha: 1+2=3 (números) y luego 3+"3" concatena → "33".</div>
+      <div class="quiz-feedback ko">Imprime <code>33</code>: primero <code>1+2=3</code> (suma de números) y después <code>3 + "3"</code> ya es concatenación de texto.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="b">
+      <div class="fw-semibold mb-2">10) El compilador marca: <code>error: ';' expected</code> en la línea 4. ¿Qué haces?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q10" id="q10a" value="a" /><label class="form-check-label" for="q10a">Borro el programa y empiezo de nuevo</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q10" id="q10b" value="b" /><label class="form-check-label" for="q10b">Voy a la línea 4, agrego el <code>;</code> que falta y vuelvo a ejecutar</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q10" id="q10c" value="c" /><label class="form-check-label" for="q10c">Ignoro el mensaje y ejecuto otra vez a ver si se arregla</label></div>
+      <div class="quiz-feedback ok">✅ Leer → ubicar → corregir → ejecutar. El error es información, no fracaso.</div>
+      <div class="quiz-feedback ko">El mensaje ya te dice qué (<code>;</code>) y dónde (línea 4): corriges solo eso y ejecutas de nuevo.</div>
+    </div>
+
+    <div id="scoreBanner" class="score-banner"></div>
+
+    <div class="d-flex gap-2 flex-wrap mt-3 no-print">
+      <button class="btn btn-primary btn-lg" onclick="gradeQuiz()">Calificar</button>
+      <button class="btn btn-outline-secondary" onclick="resetQuiz()">Reintentar (estudio)</button>
+      <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      <a class="btn btn-outline-primary ms-auto" href="entregable.html">Ir al Entregable →</a>
+    </div>
+
+    <div class="callout warning mt-4">
+      <div class="fw-semibold">Instrucciones de entrega (Actividad en clase — Sesión 1)</div>
+      <ol class="small-muted mb-0">
+        <li>Escribe tu nombre en la casilla de arriba.</li>
+        <li>Pulsa <strong>Calificar</strong> y revisa la retroalimentación de cada pregunta.</li>
+        <li>Pulsa <strong>Exportar a PDF</strong> y guarda el archivo como <code>QuizFinal_S1_TuNombre.pdf</code>.</li>
+        <li>Súbelo al aula virtual junto con el PDF del <a href="challenge.html">Challenge</a>.</li>
+      </ol>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Quiz de Final de Clase — Semana 1 · Fundamentos de Java (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="quiz.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

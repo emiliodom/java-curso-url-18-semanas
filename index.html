@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Portal de Materiales — Programación</title>
-  <meta name="description" content="Frontend para navegar y acumular materiales del curso (sesiones, guías y carpetas HTML)." />
+  <title>Portal — Programación I (18 semanas)</title>
+  <meta name="description" content="Hub del curso en formato 18 semanas: material semanal, documentos oficiales y evaluación anónima." />
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="portal.css" />
@@ -14,7 +14,7 @@
     <div class="container">
       <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
         <span class="brand-dot" aria-hidden="true"></span>
-        <span class="fw-semibold">Portal de Materiales</span>
+        <span class="fw-semibold">Programación I — Formato 18 semanas</span>
       </a>
       <div class="d-flex align-items-center gap-2">
         <span class="kbd-pill" title="Atajo: escribe para filtrar">Filtrar: Ctrl + K</span>
@@ -26,15 +26,16 @@
     <section class="hero">
       <div class="row g-4 align-items-center">
         <div class="col-12 col-lg-7">
-          <h1 class="display-6 mb-2">Materiales del curso, en un solo lugar</h1>
+          <h1 class="display-6 mb-2">Materiales del curso, semana a semana</h1>
           <p class="mb-0 hero-lead">
-            Navega por sesiones, guías y carpetas HTML. Pensado para uso docente TIC: evidencia, proceso y recursos listos para clase.
+            Curso sabatino en línea (70 min por sesión) · Inicio: 11 de julio de 2026 ·
+            Java → Git/GitHub → MVC → Spring Boot → despliegue. Cada semana se habilita su material aquí.
           </p>
         </div>
         <div class="col-12 col-lg-5">
           <div class="glass p-3">
-            <label for="search" class="form-label mb-2 hero-label">Buscar (carpetas / archivos / etiquetas)</label>
-            <input id="search" class="form-control form-control-lg search" type="search" placeholder="Ej: GitHub, sesión 2, guía, HTML, docx…" autocomplete="off" />
+            <label for="search" class="form-label mb-2 hero-label">Buscar (semana / tema / etiqueta)</label>
+            <input id="search" class="form-control form-control-lg search" type="search" placeholder="Ej: Java, semana 1, quiz, GitHub, Spring…" autocomplete="off" />
             <div class="d-flex justify-content-between mt-2">
               <div class="small-muted">
                 <span id="resultCount">0</span> resultados
@@ -48,430 +49,305 @@
       <hr class="sep my-4" />
 
       <div class="d-flex flex-wrap gap-2">
-        <span class="badge tag accent">HTML</span>
+        <span class="badge tag accent">Java</span>
         <span class="badge tag green">Git/GitHub</span>
+        <span class="badge tag">Spring Boot</span>
         <span class="badge tag amber">Docencia TIC</span>
-        <span class="badge tag">Markdown</span>
-        <span class="badge tag">Word (.docx)</span>
-      </div>
-
-      <div class="d-flex flex-wrap gap-2 mt-3">
-        <span class="badge tag">Sesión 1</span>
-        <span class="badge tag">Sesión 2</span>
-        <span class="badge tag">Sesión 3</span>
-        <span class="badge tag">Sesión 4</span>
-        <span class="badge tag">Sesión 5</span>
+        <span class="badge tag">Export a PDF</span>
       </div>
     </section>
 
+    <!-- Semana actual destacada -->
     <section class="mt-4 mt-lg-5">
-      <div class="d-flex align-items-end justify-content-between gap-3 mb-3">
-        <div>
-          <h2 class="h4 mb-1">Carpetas de materiales (HTML)</h2>
-          <div class="small-muted">Abrir los <strong>index.html</strong> de cada carpeta para navegación interna.</div>
+      <div class="glass p-3 mb-3">
+        <div class="fw-semibold">📍 Semana actual — Semana 2 · Lógica, métodos y buenas prácticas (18 jul 2026)</div>
+        <div class="small-muted">Quiz de presaberes, guía docente de 70 min (if/else, switch, for/while, métodos y primeros pasos con clases), ejercicios, cheat sheet, Guía del Programador de Python, challenge drag &amp; drop, quiz final y entregable — todo con export a PDF.</div>
+        <div class="d-flex gap-2 mt-2 flex-wrap">
+          <a class="btn btn-ghost" href="Material_Sesion_Clase_2_HTML_18_semanas/index.html">Abrir material</a>
+          <a class="btn btn-ghost" href="PEM%20en%20TIC_Sesi%C3%B3n%20de%20Clase%202%20Programaci%C3%B3n%20I_18_semanas.md">Sesión 2 (.md)</a>
+          <a class="btn btn-ghost" href="PEM%20en%20TIC_Gu%C3%ADa%20de%20Aprendizaje%202%20Programaci%C3%B3n%201_18_semanas.md">Guía 2 (.md)</a>
+        </div>
+        <div class="small-muted mt-2">¿Semana 1? Sigue disponible en la cuadrícula de abajo.</div>
+      </div>
+
+      <!-- Evaluación de la sesión: se abre con timer al final de cada clase (sábado 11:00) -->
+      <div class="glass p-3 mb-3" id="evalTimerBlock">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+          <div>
+            <div class="fw-semibold" id="evalTimerTitle">🔒 Evaluación anónima de la sesión</div>
+            <div class="small-muted" id="evalTimerSub">Se abre al final de la clase.</div>
+          </div>
+          <div class="eval-timer-wrap" id="evalCountdown">
+            <div class="timer-box"><div class="num" id="tD">--</div><div class="lbl">días</div></div>
+            <div class="timer-sep">:</div>
+            <div class="timer-box"><div class="num" id="tH">--</div><div class="lbl">horas</div></div>
+            <div class="timer-sep">:</div>
+            <div class="timer-box"><div class="num" id="tM">--</div><div class="lbl">min</div></div>
+            <div class="timer-sep">:</div>
+            <div class="timer-box"><div class="num" id="tS">--</div><div class="lbl">seg</div></div>
+          </div>
+          <a class="btn btn-ghost btn-locked" id="evalOpenBtn" href="evaluacion_docente/index.html">Evaluar la sesión (anónimo)</a>
         </div>
       </div>
 
-      <div class="glass p-3 mb-3">
-        <div class="fw-semibold">Semana 5 destacada</div>
-        <div class="small-muted">Rutas y controladores con hotspots, diagramas y quiz.</div>
-        <div class="d-flex gap-2 mt-2">
-          <a class="btn btn-ghost" href="Material_Sesion_Clase_5_RUTAS/index.html">Abrir material</a>
-          <a class="btn btn-ghost" href="PEM%20en%20TIC_Sesi%C3%B3n%20de%20Clase%205%20Programaci%C3%B3n%20I.md">Sesión 5 (.md)</a>
-          <a class="btn btn-ghost" href="PEM%20en%20TIC_Gu%C3%ADa%20de%20Aprendizaje%205%20Programaci%C3%B3n%201.md">Guía 5 (.md)</a>
+      <div class="d-flex align-items-end justify-content-between gap-3 mb-3">
+        <div>
+          <h2 class="h4 mb-1">Las 18 semanas</h2>
+          <div class="small-muted">Cada tarjeta se activa cuando el material de esa semana está publicado.</div>
         </div>
       </div>
 
       <div class="row g-3" id="grid">
-        <!-- Materiales HTML -->
-        <div class="col-12 col-md-6 col-xl-4 item-wrap" data-tags="material html sesion 1 fundamentos html css" data-title="Material Sesión 1 HTML">
+        <!-- Las tarjetas de semanas se generan por JS (ver WEEKS abajo) -->
+
+        <!-- Transversal: evaluación docente -->
+        <div class="col-12 col-md-6 col-xl-4 item-wrap" data-tags="evaluacion docente anonima sugerencias quejas admin dashboard json hostinger transversal" data-title="Evaluación docente anónima">
           <div class="card item">
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-start">
                 <div>
-                  <div class="fw-semibold">Material Sesión 1 (HTML/CSS)</div>
-                  <div class="small-muted">Carpeta con clase, ejercicios, cheat sheet y entregable.</div>
+                  <div class="fw-semibold">🔒 Evaluación docente anónima (todas las sesiones)</div>
+                  <div class="small-muted">Formulario anónimo de evaluación, sugerencias y quejas + dashboard /admin. Una sola fuente JSON. Listo para Hostinger.</div>
                 </div>
-                <span class="badge tag accent">HTML</span>
+                <span class="badge tag green">Anónimo</span>
               </div>
               <div class="d-flex flex-wrap gap-2">
-                <span class="badge tag">Sesión 1</span>
-                <span class="badge tag">Bootstrap</span>
-                <span class="badge tag">Ejercicios</span>
+                <span class="badge tag">18 sesiones</span>
+                <span class="badge tag">JSON</span>
+                <span class="badge tag">Dashboard</span>
               </div>
               <div class="d-flex gap-2 mt-2">
-                <a class="btn btn-ghost" href="Material_Sesion_Clase_1_HTML/index.html">Abrir</a>
-                <a class="btn btn-ghost" href="Material_Sesion_Clase_1_HTML/README.md">README</a>
+                <a class="btn btn-ghost btn-locked eval-gated" href="evaluacion_docente/index.html">Formulario</a>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="col-12 col-md-6 col-xl-4 item-wrap" data-tags="material html sesion 2 github git control de versiones docencia" data-title="Material Sesión 2 GitHub">
+        <!-- Transversal: programa del curso -->
+        <div class="col-12 col-md-6 col-xl-4 item-wrap" data-tags="programa curso 18 semanas planificacion documento oficial" data-title="Programa del curso 18 semanas">
           <div class="card item">
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-start">
                 <div>
-                  <div class="fw-semibold">Material Sesión 2 (GitHub y control de versiones)</div>
-                  <div class="small-muted">Clase, ejercicios, cheat sheet, entregable y rúbrica formativa.</div>
+                  <div class="fw-semibold">📘 Programa del curso (18 semanas)</div>
+                  <div class="small-muted">Planificación oficial: competencias, metodología, proyecto, evaluación y las 18 semanas detalladas.</div>
                 </div>
-                <span class="badge tag green">Git/GitHub</span>
-              </div>
-              <div class="d-flex flex-wrap gap-2">
-                <span class="badge tag">Sesión 2</span>
-                <span class="badge tag">Commits</span>
-                <span class="badge tag amber">Docencia TIC</span>
+                <span class="badge tag">Oficial</span>
               </div>
               <div class="d-flex gap-2 mt-2">
-                <a class="btn btn-ghost" href="Material_Sesion_Clase_2_GitHub/index.html">Abrir</a>
-                <a class="btn btn-ghost" href="Material_Sesion_Clase_2_GitHub/README.md">README</a>
+                <a class="btn btn-ghost" href="Nuevo_Programa_18_semanas.md">Abrir .md</a>
               </div>
             </div>
           </div>
         </div>
-
-        <div class="col-12 col-md-6 col-xl-4 item-wrap" data-tags="material html sesion 3 spring boot mvc patrones diseno web docencia java 17" data-title="Material Sesión 3 Spring Boot (primer arranque)">
-          <div class="card item">
-            <div class="card-body">
-              <div class="d-flex justify-content-between align-items-start">
-                <div>
-                  <div class="fw-semibold">Material Sesión 3 (Spring Boot primer arranque + MVC mínimo)</div>
-                  <div class="small-muted">Preparar PC (Java 17), Spring Initializr paso a paso, primer run y endpoint /hello.</div>
-                </div>
-                <span class="badge tag">Spring Boot</span>
-              </div>
-              <div class="d-flex flex-wrap gap-2">
-                <span class="badge tag">Sesión 3</span>
-                <span class="badge tag">Java 17</span>
-                <span class="badge tag amber">Docencia TIC</span>
-              </div>
-              <div class="d-flex gap-2 mt-2">
-                <a class="btn btn-ghost" href="Material_Sesion_Clase_3_MVC/index.html">Abrir</a>
-                <a class="btn btn-ghost" href="Material_Sesion_Clase_3_MVC/README.md">README</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-xl-4 item-wrap" data-tags="material html sesion 4 spring boot crud h2 thymeleaf bootstrap jpa docencia java 17" data-title="Material Sesión 4 CRUD inicial">
-          <div class="card item">
-            <div class="card-body">
-              <div class="d-flex justify-content-between align-items-start">
-                <div>
-                  <div class="fw-semibold">Material Sesión 4 (CRUD inicial + H2 persistente + Thymeleaf)</div>
-                  <div class="small-muted">Inicio del CRUD con pantallas (Bootstrap) y base persistente (H2 en archivo) + troubleshooting.</div>
-                </div>
-                <span class="badge tag">Spring Boot</span>
-              </div>
-              <div class="d-flex flex-wrap gap-2">
-                <span class="badge tag">Sesión 4</span>
-                <span class="badge tag">CRUD</span>
-                <span class="badge tag">H2</span>
-                <span class="badge tag amber">Docencia TIC</span>
-              </div>
-              <div class="d-flex gap-2 mt-2">
-                <a class="btn btn-ghost" href="Material_Sesion_Clase_4_CRUD/index.html">Abrir</a>
-                <a class="btn btn-ghost" href="Material_Sesion_Clase_4_CRUD/README.md">README</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-xl-4 item-wrap" data-tags="material html sesion 5 spring boot rutas controladores thymeleaf jpa docencia" data-title="Material Sesión 5 Rutas y Controladores">
-          <div class="card item">
-            <div class="card-body">
-              <div class="d-flex justify-content-between align-items-start">
-                <div>
-                  <div class="fw-semibold">Material Sesión 5 (Rutas y Controladores)</div>
-                  <div class="small-muted">Rutas GET/POST, hotspots, diagramas y quiz de comprensión.</div>
-                </div>
-                <span class="badge tag">Spring Boot</span>
-              </div>
-              <div class="d-flex flex-wrap gap-2">
-                <span class="badge tag">Sesión 5</span>
-                <span class="badge tag">Rutas</span>
-                <span class="badge tag">MVC</span>
-                <span class="badge tag amber">Docencia TIC</span>
-              </div>
-              <div class="d-flex gap-2 mt-2">
-                <a class="btn btn-ghost" href="Material_Sesion_Clase_5_RUTAS/index.html">Abrir</a>
-                <a class="btn btn-ghost" href="Material_Sesion_Clase_5_RUTAS/README.md">README</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-xl-4 item-wrap" data-tags="zip descarga paquete material sesion 2 github" data-title="Material Sesión 2 (ZIP)">
-          <div class="card item">
-            <div class="card-body">
-              <div class="d-flex justify-content-between align-items-start">
-                <div>
-                  <div class="fw-semibold">Material Sesión 2 (ZIP)</div>
-                  <div class="small-muted">Paquete listo para compartir o subir a plataforma.</div>
-                </div>
-                <span class="badge tag">ZIP</span>
-              </div>
-              <div class="d-flex flex-wrap gap-2">
-                <span class="badge tag">Compartir</span>
-                <span class="badge tag">Offline</span>
-              </div>
-              <div class="d-flex gap-2 mt-2">
-                <a class="btn btn-ghost" href="Material_Sesion_Clase_2_GitHub.zip">Descargar</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Documentos -->
-        <div class="col-12">
-          <div class="glass p-3">
-            <div class="fw-semibold">Documentos oficiales (Sesiones y Guías)</div>
-            <div class="small-muted">Ordenados por semana para facilitar la búsqueda.</div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-xl-4 item-wrap" data-tags="documento programa curso markdown" data-title="Formato programa de curso">
-          <div class="card item">
-            <div class="card-body">
-              <div class="d-flex justify-content-between align-items-start">
-                <div>
-                  <div class="fw-semibold">Programa de curso (formato)</div>
-                  <div class="small-muted">Referencia oficial del plan (semanas, temas, evidencias).</div>
-                </div>
-                <span class="badge tag">MD</span>
-              </div>
-              <div class="d-flex gap-2 mt-2">
-                <a class="btn btn-ghost" href="Formato%20programa%20de%20curso.md">Abrir .md</a>
-                <a class="btn btn-ghost" href="Formato%20programa%20de%20curso_ACTUALIZADO_2026-01-16.docx">Abrir .docx</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-xl-4 item-wrap" data-tags="sesion 1 documento markdown programacion" data-title="Sesión de Clase 1">
-          <div class="card item">
-            <div class="card-body">
-              <div class="d-flex justify-content-between align-items-start">
-                <div>
-                  <div class="fw-semibold">Sesión de Clase 1 (Programación I)</div>
-                  <div class="small-muted">Documento oficial de sesión (base institucional).</div>
-                </div>
-                <span class="badge tag">MD</span>
-              </div>
-              <div class="d-flex gap-2 mt-2 flex-wrap">
-                <a class="btn btn-ghost" href="PEM%20en%20TIC_Sesi%C3%B3n%20de%20Clase%201%20Programaci%C3%B3n%20I.md">Abrir .md</a>
-                <a class="btn btn-ghost" href="PEM%20en%20TIC_Sesi%C3%B3n%20de%20Clase%201%20Programaci%C3%B3n%20I_ACTUALIZADO_2026-01-16_v4_140min.docx">Abrir .docx</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-xl-4 item-wrap" data-tags="guia 1 documento markdown" data-title="Guía de Aprendizaje 1">
-          <div class="card item">
-            <div class="card-body">
-              <div class="d-flex justify-content-between align-items-start">
-                <div>
-                  <div class="fw-semibold">Guía de Aprendizaje 1</div>
-                  <div class="small-muted">Actividades y evidencias de aprendizaje (Sesión 1).</div>
-                </div>
-                <span class="badge tag">MD</span>
-              </div>
-              <div class="d-flex gap-2 mt-2 flex-wrap">
-                <a class="btn btn-ghost" href="PEM%20en%20TIC_Gu%C3%ADa%20de%20Aprendizaje%201%20Programaci%C3%B3n%201.md">Abrir .md</a>
-                <a class="btn btn-ghost" href="PEM%20en%20TIC_Gu%C3%ADa%20de%20Aprendizaje%201%20Programaci%C3%B3n%201_ACTUALIZADO_2026-01-16_v3.docx">Abrir .docx</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-xl-4 item-wrap" data-tags="sesion 2 documento github git docencia" data-title="Sesión de Clase 2 Programación 2">
-          <div class="card item">
-            <div class="card-body">
-              <div class="d-flex justify-content-between align-items-start">
-                <div>
-                  <div class="fw-semibold">Sesión de Clase 2 (Programación 2)</div>
-                  <div class="small-muted">GitHub y control de versiones (enfoque docente TIC).</div>
-                </div>
-                <span class="badge tag green">Git/GitHub</span>
-              </div>
-              <div class="d-flex gap-2 mt-2 flex-wrap">
-                <a class="btn btn-ghost" href="PEM%20en%20TIC_Sesi%C3%B3n%20de%20Clase%202%20Programaci%C3%B3n%202.md">Abrir .md</a>
-                <a class="btn btn-ghost" href="PEM%20en%20TIC_Sesi%C3%B3n%20de%20Clase%202%20Programaci%C3%B3n%202.docx">Abrir .docx</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-xl-4 item-wrap" data-tags="guia 2 documento github git docencia" data-title="Guía de Aprendizaje 2 Programación 2">
-          <div class="card item">
-            <div class="card-body">
-              <div class="d-flex justify-content-between align-items-start">
-                <div>
-                  <div class="fw-semibold">Guía de Aprendizaje 2 (Programación 2)</div>
-                  <div class="small-muted">Entregable por repositorio + evidencia por commits.</div>
-                </div>
-                <span class="badge tag amber">Formativa</span>
-              </div>
-              <div class="d-flex gap-2 mt-2 flex-wrap">
-                <a class="btn btn-ghost" href="PEM%20en%20TIC_Gu%C3%ADa%20de%20Aprendizaje%202%20Programaci%C3%B3n%202.md">Abrir .md</a>
-                <a class="btn btn-ghost" href="PEM%20en%20TIC_Gu%C3%ADa%20de%20Aprendizaje%202%20Programaci%C3%B3n%202.docx">Abrir .docx</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-xl-4 item-wrap" data-tags="sesion 3 documento spring boot java 17 mvc minimo" data-title="Sesión de Clase 3 Programación I">
-          <div class="card item">
-            <div class="card-body">
-              <div class="d-flex justify-content-between align-items-start">
-                <div>
-                  <div class="fw-semibold">Sesión de Clase 3 (Programación I)</div>
-                  <div class="small-muted">MVC mínimo + primer arranque de Spring Boot (entorno, build/run, endpoint).</div>
-                </div>
-                <span class="badge tag">MD</span>
-              </div>
-              <div class="d-flex gap-2 mt-2 flex-wrap">
-                <a class="btn btn-ghost" href="PEM%20en%20TIC_Sesi%C3%B3n%20de%20Clase%203%20Programaci%C3%B3n%20I.md">Abrir .md</a>
-                <a class="btn btn-ghost" href="PEM%20en%20TIC_Sesi%C3%B3n%20de%20Clase%203%20Programaci%C3%B3n%20I.docx">Abrir .docx</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-xl-4 item-wrap" data-tags="guia 3 documento spring boot java 17 entorno mvnw endpoint" data-title="Guía de Aprendizaje 3">
-          <div class="card item">
-            <div class="card-body">
-              <div class="d-flex justify-content-between align-items-start">
-                <div>
-                  <div class="fw-semibold">Guía de Aprendizaje 3</div>
-                  <div class="small-muted">Entorno (Java 17), Spring Initializr, primer run, endpoint /hello y evidencias.</div>
-                </div>
-                <span class="badge tag">MD</span>
-              </div>
-              <div class="d-flex gap-2 mt-2 flex-wrap">
-                <a class="btn btn-ghost" href="PEM%20en%20TIC_Gu%C3%ADa%20de%20Aprendizaje%203%20Programaci%C3%B3n%201.md">Abrir .md</a>
-                <a class="btn btn-ghost" href="PEM%20en%20TIC_Gu%C3%ADa%20de%20Aprendizaje%203%20Programaci%C3%B3n%201.docx">Abrir .docx</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-xl-4 item-wrap" data-tags="sesion 4 documento spring boot crud h2 thymeleaf bootstrap jpa" data-title="Sesión de Clase 4 Programación I">
-          <div class="card item">
-            <div class="card-body">
-              <div class="d-flex justify-content-between align-items-start">
-                <div>
-                  <div class="fw-semibold">Sesión de Clase 4 (Programación I)</div>
-                  <div class="small-muted">Inicio del CRUD: H2 persistente (archivo) + Thymeleaf + Bootstrap + troubleshooting.</div>
-                </div>
-                <span class="badge tag">MD</span>
-              </div>
-              <div class="d-flex gap-2 mt-2 flex-wrap">
-                <a class="btn btn-ghost" href="PEM%20en%20TIC_Sesi%C3%B3n%20de%20Clase%204%20Programaci%C3%B3n%20I.md">Abrir .md</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-xl-4 item-wrap" data-tags="guia 4 documento spring boot crud h2 thymeleaf bootstrap troubleshooting" data-title="Guía de Aprendizaje 4">
-          <div class="card item">
-            <div class="card-body">
-              <div class="d-flex justify-content-between align-items-start">
-                <div>
-                  <div class="fw-semibold">Guía de Aprendizaje 4</div>
-                  <div class="small-muted">Inicio del CRUD: H2 persistente, pantallas con Thymeleaf + Bootstrap, comandos y troubleshooting.</div>
-                </div>
-                <span class="badge tag">MD</span>
-              </div>
-              <div class="d-flex gap-2 mt-2 flex-wrap">
-                <a class="btn btn-ghost" href="PEM%20en%20TIC_Gu%C3%ADa%20de%20Aprendizaje%204%20Programaci%C3%B3n%201.md">Abrir .md</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-xl-4 item-wrap" data-tags="sesion 5 documento spring boot rutas controladores mvc" data-title="Sesión de Clase 5 Programación I">
-          <div class="card item">
-            <div class="card-body">
-              <div class="d-flex justify-content-between align-items-start">
-                <div>
-                  <div class="fw-semibold">Sesión de Clase 5 (Programación I)</div>
-                  <div class="small-muted">Rutas y controladores (GET/POST) + comprensión de MVC.</div>
-                </div>
-                <span class="badge tag">MD</span>
-              </div>
-              <div class="d-flex gap-2 mt-2 flex-wrap">
-                <a class="btn btn-ghost" href="PEM%20en%20TIC_Sesi%C3%B3n%20de%20Clase%205%20Programaci%C3%B3n%20I.md">Abrir .md</a>
-                <a class="btn btn-ghost" href="PEM%20en%20TIC_Sesi%C3%B3n%20de%20Clase%205%20Programaci%C3%B3n%20I.docx">Abrir .docx</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-xl-4 item-wrap" data-tags="guia 5 documento spring boot rutas controladores mvc" data-title="Guía de Aprendizaje 5">
-          <div class="card item">
-            <div class="card-body">
-              <div class="d-flex justify-content-between align-items-start">
-                <div>
-                  <div class="fw-semibold">Guía de Aprendizaje 5</div>
-                  <div class="small-muted">Rutas y controladores + checklist de comprensión.</div>
-                </div>
-                <span class="badge tag">MD</span>
-              </div>
-              <div class="d-flex gap-2 mt-2 flex-wrap">
-                <a class="btn btn-ghost" href="PEM%20en%20TIC_Gu%C3%ADa%20de%20Aprendizaje%205%20Programaci%C3%B3n%201.md">Abrir .md</a>
-                <a class="btn btn-ghost" href="PEM%20en%20TIC_Gu%C3%ADa%20de%20Aprendizaje%205%20Programaci%C3%B3n%201.docx">Abrir .docx</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-6 col-xl-4 item-wrap" data-tags="borradores archivo por ahora" data-title="ARCHIVO_POR_AHORA">
-          <div class="card item">
-            <div class="card-body">
-              <div class="d-flex justify-content-between align-items-start">
-                <div>
-                  <div class="fw-semibold">Archivo / Borradores</div>
-                  <div class="small-muted">Plantillas y documentos en progreso.</div>
-                </div>
-                <span class="badge tag">Carpeta</span>
-              </div>
-              <div class="d-flex gap-2 mt-2">
-                <a class="btn btn-ghost" href="ARCHIVO_POR_AHORA/">Abrir carpeta</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
 
       <div id="empty" class="glass p-4 mt-3 hidden">
         <div class="fw-semibold">Sin resultados</div>
-        <div class="small-muted">Prueba con otra palabra (ej: “GitHub”, “Sesión 1”, “docx”).</div>
+        <div class="small-muted">Prueba con otra palabra (ej: "Java", "semana 3", "Spring").</div>
       </div>
     </section>
 
     <section class="mt-4 mt-lg-5">
       <div class="glass p-4">
-        <h3 class="h5 mb-2">Cómo agregar nuevas carpetas al portal</h3>
-        <div class="small-muted mb-2">Este portal es estático (sin servidor). Para sumar materiales nuevos:</div>
+        <h3 class="h5 mb-2">Cómo publicar la siguiente semana</h3>
         <ol class="mb-0 hero-steps">
-          <li>Crea tu carpeta en la raíz (por ejemplo: <strong>Material_Sesion_Clase_3_Algo/</strong>).</li>
-          <li>Dentro, pon un <strong>index.html</strong> como entrada (idealmente con navegación).</li>
-          <li>Duplica una tarjeta en este <strong>index.html</strong> y ajusta título/enlaces/etiquetas.</li>
+          <li>Crea la carpeta <strong>Material_Sesion_Clase_N_XXX_18_semanas/</strong> replicando la estructura de la Semana 1 (hub, quizzes, challenge, entregable, export a PDF).</li>
+          <li>Crea los documentos <strong>Sesión de Clase N</strong> y <strong>Guía de Aprendizaje N</strong> (sufijo <code>_18_semanas.md</code>).</li>
+          <li>En este <code>index.html</code>, dentro de <code>WEEKS</code>, agrega <code>folder</code>, <code>sesionDoc</code> y <code>guiaDoc</code> a la semana correspondiente — la tarjeta se activa sola.</li>
         </ol>
       </div>
     </section>
 
+    <section class="mt-4">
+      <details class="glass p-3">
+        <summary class="fw-semibold">🗄 Archivo — materiales del formato anterior (no vigente)</summary>
+        <div class="small-muted mt-2 mb-2">Se conservan como referencia; el curso vigente es el de 18 semanas.</div>
+        <div class="d-flex flex-wrap gap-2">
+          <a class="btn btn-ghost" href="Material_Sesion_Clase_1_HTML/index.html">Sesión 1 (Java)</a>
+          <a class="btn btn-ghost" href="Material_Sesion_Clase_2_GitHub/index.html">Sesión 2 (GitHub)</a>
+          <a class="btn btn-ghost" href="Material_Sesion_Clase_3_MVC/index.html">Sesión 3 (Spring Boot)</a>
+          <a class="btn btn-ghost" href="Material_Sesion_Clase_4_CRUD/index.html">Sesión 4 (CRUD)</a>
+          <a class="btn btn-ghost" href="Material_Sesion_Clase_5_RUTAS/index.html">Sesión 5 (Rutas)</a>
+          <a class="btn btn-ghost" href="Material_Sesion_Clase_6_PERSISTENCIA/index.html">Sesión 6 (Persistencia)</a>
+          <a class="btn btn-ghost" href="ARCHIVO_POR_AHORA/">Borradores</a>
+        </div>
+      </details>
+    </section>
+
     <footer class="mt-4 mt-lg-5 pb-4 footer">
       <div class="d-flex flex-wrap justify-content-between gap-2">
-        <div>Portal local (raíz del workspace). Recomendado: abrir con Live Server para evitar restricciones del navegador al navegar carpetas.</div>
+        <div>Portal local (raíz del workspace). Recomendado: abrir con Live Server. El formulario de evaluación requiere el sitio publicado (PHP en Hostinger).</div>
         <div id="buildStamp">Actualizado: —</div>
       </div>
     </footer>
   </main>
 
   <script>
+    // ====== Semanas del curso (fuente: Nuevo_Programa_18_semanas.md) ======
+    // Para activar una semana: agrega folder / sesionDoc / guiaDoc.
+    var WEEKS = [
+      {
+        n: 1, fecha: '11 jul 2026', tema: 'Fundamentos de Java y tipos de datos',
+        detalle: 'Ecosistema Java, variables, constantes, casting y operadores.',
+        tags: 'java fundamentos tipos datos casting operadores quiz challenge python',
+        badge: 'Java',
+        folder: 'Material_Sesion_Clase_1_HTML_18_semanas/index.html',
+        sesionDoc: 'PEM%20en%20TIC_Sesi%C3%B3n%20de%20Clase%201%20Programaci%C3%B3n%20I_18_semanas.md',
+        guiaDoc: 'PEM%20en%20TIC_Gu%C3%ADa%20de%20Aprendizaje%201%20Programaci%C3%B3n%201_18_semanas.md'
+      },
+      {
+        n: 2, fecha: '18 jul 2026', tema: 'Lógica, métodos y buenas prácticas',
+        detalle: 'Condicionales, ciclos, métodos, código limpio y primeros pasos con clases y objetos.',
+        tags: 'java logica metodos ciclos condicionales switch for while clases objetos quiz challenge python',
+        badge: 'Java',
+        folder: 'Material_Sesion_Clase_2_HTML_18_semanas/index.html',
+        sesionDoc: 'PEM%20en%20TIC_Sesi%C3%B3n%20de%20Clase%202%20Programaci%C3%B3n%20I_18_semanas.md',
+        guiaDoc: 'PEM%20en%20TIC_Gu%C3%ADa%20de%20Aprendizaje%202%20Programaci%C3%B3n%201_18_semanas.md'
+      },
+      { n: 3,  fecha: '25 jul 2026', tema: 'Git y GitHub: control de versiones', detalle: 'init, add, commit, push y repositorios remotos.', tags: 'git github versiones commit', badge: 'Git/GitHub' },
+      { n: 4,  fecha: '1 ago 2026',  tema: 'Ramas, colaboración y documentación', detalle: 'Branches, pull requests, conflictos y README.', tags: 'git github ramas branches pull request readme', badge: 'Git/GitHub' },
+      { n: 5,  fecha: '8 ago 2026',  tema: 'Patrones de diseño y arquitectura web (MVC)', detalle: 'MVC y organización del proyecto. ★ Entrega parcial 1.', tags: 'mvc patrones arquitectura entrega parcial', badge: 'MVC' },
+      { n: 6,  fecha: '15 ago 2026', tema: 'Arquitectura en capas', detalle: 'Presentación, negocio, datos; servicios y repositorios.', tags: 'arquitectura capas servicios repositorios', badge: 'MVC' },
+      { n: 7,  fecha: '22 ago 2026', tema: 'Entorno de desarrollo y Spring Boot', detalle: 'JDK, IDE, Maven/Gradle, Spring Initializr, primer run.', tags: 'spring boot jdk maven initializr entorno', badge: 'Spring' },
+      { n: 8,  fecha: '29 ago 2026', tema: 'Spring Boot: configuración y primer servicio', detalle: '@RestController, endpoints GET y prueba con Postman.', tags: 'spring boot rest endpoint postman', badge: 'Spring' },
+      { n: 9,  fecha: '5 sep 2026',  tema: 'Examen parcial y entrega de avance', detalle: 'Repaso, examen de mitad de curso y peer review. ★ Entrega parcial 2.', tags: 'examen parcial evaluacion pares entrega', badge: 'Hito' },
+      { n: 10, fecha: '19 sep 2026', tema: 'Rutas, controladores y formularios', detalle: '@GetMapping/@PostMapping, Thymeleaf y binding de datos.', tags: 'spring rutas controladores formularios thymeleaf', badge: 'Spring' },
+      { n: 11, fecha: '26 sep 2026', tema: 'Validación, errores y experiencia de usuario', detalle: 'Bean Validation, mensajes de error y accesibilidad.', tags: 'validacion errores ux accesibilidad', badge: 'Spring' },
+      { n: 12, fecha: '3 oct 2026',  tema: 'Persistencia con JPA y CRUD', detalle: '@Entity, JpaRepository y operaciones CRUD.', tags: 'jpa crud base datos entity repositorio', badge: 'Spring' },
+      { n: 13, fecha: '10 oct 2026', tema: 'Autenticación, roles y renderizado condicional', detalle: 'Spring Security, roles y sec:authorize.', tags: 'seguridad autenticacion roles spring security', badge: 'Spring' },
+      { n: 14, fecha: '17 oct 2026', tema: 'Despliegue en producción', detalle: 'JAR/WAR, Render/Railway/Fly.io y URL pública. ★ Entrega parcial 3.', tags: 'deploy despliegue produccion render railway', badge: 'Deploy' },
+      { n: 15, fecha: '24 oct 2026', tema: 'Seguridad básica y HTTPS', detalle: 'SSL, CSRF/XSS y cabeceras de seguridad.', tags: 'seguridad https ssl csrf xss', badge: 'Deploy' },
+      { n: 16, fecha: '31 oct 2026', tema: 'QA, pruebas y mantenimiento', detalle: 'Casos de prueba, documentación y redeploy.', tags: 'qa pruebas testing mantenimiento redeploy', badge: 'QA' },
+      { n: 17, fecha: '7 nov 2026',  tema: 'Presentación interna y retroalimentación', detalle: 'Demo al grupo y peer review. ★ Entrega parcial 4.', tags: 'presentacion retroalimentacion pares entrega', badge: 'Hito' },
+      { n: 18, fecha: '14 nov 2026', tema: 'Entrega final, evaluación y reflexión', detalle: 'Defensa del proyecto final y metacognición.', tags: 'entrega final presentacion reflexion', badge: 'Hito' }
+    ];
+
+    (function renderWeeks() {
+      var grid = document.getElementById('grid');
+      var first = grid.firstElementChild; // insertar semanas antes de las tarjetas transversales
+      WEEKS.forEach(function (w) {
+        var active = !!w.folder;
+        var col = document.createElement('div');
+        col.className = 'col-12 col-md-6 col-xl-4 item-wrap';
+        col.setAttribute('data-title', 'Semana ' + w.n + ' ' + w.tema);
+        col.setAttribute('data-tags', 'semana ' + w.n + ' ' + w.tags + (active ? ' disponible material' : ' proximamente'));
+
+        var links = active
+          ? '<a class="btn btn-ghost" href="' + w.folder + '">Abrir material</a>' +
+            (w.sesionDoc ? '<a class="btn btn-ghost" href="' + w.sesionDoc + '">Sesión (.md)</a>' : '') +
+            (w.guiaDoc ? '<a class="btn btn-ghost" href="' + w.guiaDoc + '">Guía (.md)</a>' : '')
+          : '<span class="small-muted">Próximamente — se habilita en su semana.</span>';
+
+        col.innerHTML =
+          '<div class="card item' + (active ? '' : ' opacity-75') + '">' +
+            '<div class="card-body">' +
+              '<div class="d-flex justify-content-between align-items-start">' +
+                '<div>' +
+                  '<div class="fw-semibold">Semana ' + w.n + ' — ' + w.tema + '</div>' +
+                  '<div class="small-muted">' + w.detalle + '</div>' +
+                '</div>' +
+                '<span class="badge tag ' + (active ? 'accent' : '') + '">' + (active ? 'Disponible' : w.badge) + '</span>' +
+              '</div>' +
+              '<div class="d-flex flex-wrap gap-2">' +
+                '<span class="badge tag">' + w.fecha + '</span>' +
+                '<span class="badge tag">' + w.badge + '</span>' +
+              '</div>' +
+              '<div class="d-flex gap-2 mt-2 flex-wrap">' + links + '</div>' +
+            '</div>' +
+          '</div>';
+        grid.insertBefore(col, first);
+      });
+    })();
+
+    // ====== Timer de apertura de la evaluación docente ======
+    // Cada semana corre de sábado (día de clase) a viernes siguiente.
+    // La evaluación de la semana N se ABRE el sábado de esa semana a las 11:00
+    // (final de la clase) y permanece abierta hasta la apertura de la siguiente.
+    var SESSION_SATURDAYS = [
+      '2026-07-11', '2026-07-18', '2026-07-25', '2026-08-01', '2026-08-08',
+      '2026-08-15', '2026-08-22', '2026-08-29', '2026-09-05', '2026-09-19',
+      '2026-09-26', '2026-10-03', '2026-10-10', '2026-10-17', '2026-10-24',
+      '2026-10-31', '2026-11-07', '2026-11-14'
+    ];
+    var OPEN_HOUR = '11:00:00'; // fin de la clase
+
+    (function evalTimer() {
+      var block = document.getElementById('evalTimerBlock');
+      var title = document.getElementById('evalTimerTitle');
+      var sub = document.getElementById('evalTimerSub');
+      var countdown = document.getElementById('evalCountdown');
+      var openBtn = document.getElementById('evalOpenBtn');
+      var gated = document.querySelectorAll('.eval-gated');
+      var autoOpened = false;
+
+      function openTime(i) {
+        return new Date(SESSION_SATURDAYS[i] + 'T' + OPEN_HOUR);
+      }
+
+      // Índice de la sesión "vigente": la última cuya apertura ya pasó.
+      function currentOpenIndex(now) {
+        var idx = -1;
+        for (var i = 0; i < SESSION_SATURDAYS.length; i++) {
+          if (openTime(i) <= now) idx = i; else break;
+        }
+        return idx;
+      }
+
+      function pad(n) { return String(n).padStart(2, '0'); }
+
+      function unlock(week) {
+        countdown.classList.add('hidden');
+        title.innerHTML = '<span class="eval-open-pulse me-2"></span>Evaluación anónima de la Semana ' + week + ' — ¡abierta!';
+        sub.textContent = 'Cuéntanos cómo estuvo la clase de hoy: es 100% anónimo y toma 2 minutos.';
+        openBtn.classList.remove('btn-locked');
+        gated.forEach(function (b) { b.classList.remove('btn-locked'); });
+        if (!autoOpened) {
+          autoOpened = true;
+          // Apertura automática solo en el momento exacto en que el timer llega a cero
+          // (si la página estaba abierta esperándolo). Si el navegador la bloquea,
+          // el botón ya quedó habilitado.
+          if (block.dataset.wasCounting === '1') {
+            window.open('evaluacion_docente/index.html', '_blank');
+          }
+        }
+      }
+
+      function tick() {
+        var now = new Date();
+        var idx = currentOpenIndex(now);
+        var nextIdx = idx + 1;
+
+        if (idx >= 0) {
+          // Hay una evaluación vigente abierta (semana idx+1, de sábado a viernes).
+          unlock(idx + 1);
+          return; // el bloque queda abierto; no seguimos contando
+        }
+
+        // Aún no abre la primera (o siguiente) evaluación: cuenta regresiva.
+        var target = openTime(nextIdx);
+        var week = nextIdx + 1;
+        var diff = target - now;
+        block.dataset.wasCounting = '1';
+        title.textContent = '🔒 Evaluación anónima de la Semana ' + week;
+        sub.textContent = 'Se abre al final de la clase — sábado ' +
+          target.toLocaleDateString('es-GT', { day: 'numeric', month: 'long' }) + ', 11:00.';
+
+        var s = Math.max(0, Math.floor(diff / 1000));
+        var d = Math.floor(s / 86400); s -= d * 86400;
+        var h = Math.floor(s / 3600);  s -= h * 3600;
+        var m = Math.floor(s / 60);    s -= m * 60;
+        document.getElementById('tD').textContent = pad(d);
+        document.getElementById('tH').textContent = pad(h);
+        document.getElementById('tM').textContent = pad(m);
+        document.getElementById('tS').textContent = pad(s);
+
+        setTimeout(tick, 1000);
+      }
+
+      tick();
+    })();
+
     (function(){
       const search = document.getElementById('search');
       const clearBtn = document.getElementById('clearBtn');
@@ -479,7 +355,6 @@
       const empty = document.getElementById('empty');
       const resultCount = document.getElementById('resultCount');
       const buildStamp = document.getElementById('buildStamp');
-      const sessionFilters = document.getElementById('sessionFilters');
 
       const items = Array.from(grid.querySelectorAll('.item-wrap'));
 
@@ -489,52 +364,26 @@
 
       function applyFilter(){
         const q = norm(search.value);
-        const activeChip = sessionFilters ? sessionFilters.querySelector('.filter-chip.active') : null;
-        const chipFilter = activeChip ? norm(activeChip.getAttribute('data-filter')) : '';
         let visible = 0;
-
         for (const el of items){
           const title = norm(el.getAttribute('data-title'));
           const tags = norm(el.getAttribute('data-tags'));
-          const textMatch = !q || title.includes(q) || tags.includes(q);
-          const chipMatch = !chipFilter || tags.includes(chipFilter) || title.includes(chipFilter);
-          const show = textMatch && chipMatch;
+          const show = !q || title.includes(q) || tags.includes(q);
           el.classList.toggle('hidden', !show);
           if (show) visible++;
         }
-
         resultCount.textContent = String(visible);
         empty.classList.toggle('hidden', visible !== 0);
       }
 
       clearBtn.addEventListener('click', () => {
         search.value = '';
-        if (sessionFilters) {
-          sessionFilters.querySelectorAll('.filter-chip').forEach((chip) => {
-            chip.classList.remove('active');
-          });
-        }
         search.focus();
         applyFilter();
       });
 
       search.addEventListener('input', applyFilter);
 
-      if (sessionFilters) {
-        sessionFilters.addEventListener('click', (event) => {
-          const target = event.target;
-          if (!target.classList.contains('filter-chip')) return;
-          sessionFilters.querySelectorAll('.filter-chip').forEach((chip) => {
-            chip.classList.remove('active');
-          });
-          if (target.getAttribute('data-filter')) {
-            target.classList.add('active');
-          }
-          applyFilter();
-        });
-      }
-
-      // Ctrl+K para enfocar buscador
       window.addEventListener('keydown', (e) => {
         const isMac = navigator.platform.toUpperCase().includes('MAC');
         const cmdOrCtrl = isMac ? e.metaKey : e.ctrlKey;
@@ -547,12 +396,10 @@
         }
       });
 
-      // Sello de fecha (local)
       const d = new Date();
       const pad = (n) => String(n).padStart(2,'0');
       buildStamp.textContent = `Actualizado: ${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
 
-      // Inicial
       applyFilter();
     })();
   </script>
