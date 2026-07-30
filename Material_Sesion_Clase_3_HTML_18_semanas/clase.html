@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guía Docente — Semana 3 (70 min)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 3 — Git</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link active" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="guia_programador_python.html">Puente Git</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="entregable.html">Entregable</a></li>
+          <li class="nav-item"><a class="nav-link" href="instalacion_github_desktop.html">GitHub Desktop</a></li>
+          <li class="nav-item"><a class="nav-link" href="anexo_comandos.html">Anexo: Comandos</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Guía Docente · Sesión sincrónica de 70 minutos</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Semana 3 — Git y GitHub: control de versiones</h1>
+          <div class="small-muted">Sábado 25 de julio de 2026 · 11:10–12:20 · En línea · Requiere GitHub Desktop instalado (o Git, ver Semana 1) y cuenta de GitHub.</div>
+        </div>
+        <div class="d-flex gap-2 flex-wrap">
+          <a class="btn btn-outline-primary" target="_blank" rel="noreferrer" href="https://github.com">Abrir GitHub</a>
+          <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <div class="row g-3">
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="h5 section-title">Objetivos (hoy)</h2>
+            <ul class="mb-0">
+              <li>Explicar qué es el control de versiones y por qué importa.</li>
+              <li>Verificar/instalar Git y configurarlo con nombre y correo.</li>
+              <li>Ejecutar el flujo local: <code>init → add → commit → log</code>.</li>
+              <li>Conectar un repositorio local con GitHub y hacer <code>push</code>.</li>
+              <li>Escribir mensajes de commit claros (buena práctica desde hoy).</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h2 class="h5 section-title">Distribución del tiempo (70 min)</h2>
+            <table class="table table-sm small mb-0">
+              <tbody>
+                <tr><td><span class="time-chip">00–05</span></td><td>Bienvenida + Quiz Presaberes</td></tr>
+                <tr><td><span class="time-chip">05–15</span></td><td>Conceptos de control de versiones + verificar Git</td></tr>
+                <tr><td><span class="time-chip">15–27</span></td><td>Flujo local: init, add, commit, log</td></tr>
+                <tr><td><span class="time-chip">27–37</span></td><td>Repositorio remoto: GitHub + push</td></tr>
+                <tr><td><span class="time-chip">37–39</span></td><td>Pausa activa</td></tr>
+                <tr><td><span class="time-chip">39–49</span></td><td>Buenas prácticas: mensajes de commit + .gitignore</td></tr>
+                <tr><td><span class="time-chip">49–57</span></td><td>Challenge + práctica guiada</td></tr>
+                <tr><td><span class="time-chip">57–65</span></td><td>Quiz de Final de Clase</td></tr>
+                <tr><td><span class="time-chip">65–70</span></td><td>Cierre + Guía 3</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h2 class="h5 section-title">Normas rápidas</h2>
+            <ul class="mb-0">
+              <li>Un commit = una idea/cambio completo, no "guardado automático".</li>
+              <li>Mensaje de commit en presente/imperativo: "Agrega README", no "agregué" ni "cambios".</li>
+              <li><code>git status</code> es tu mejor amigo: úsalo antes de cada paso si dudas.</li>
+              <li>Nunca subas contraseñas ni archivos pesados al repositorio (usa <code>.gitignore</code>).</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout warning mt-3">
+          <div class="fw-semibold">Checklist antes de iniciar (docente)</div>
+          <ul class="small-muted mb-0">
+            <li>Confirmar quiénes tienen GitHub Desktop instalado (o Git por comandos) y quiénes no.</li>
+            <li>Tener una cuenta de GitHub propia lista para la demo en pantalla.</li>
+            <li>Crear (o limpiar) una carpeta de práctica de ejemplo antes de clase.</li>
+            <li>Plan B listo por si GitHub.com está lento/caído (ver más abajo).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="h4 section-title">Guion minuto a minuto (70 min)</h2>
+
+            <div class="accordion" id="acc">
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#c1">
+                    <span class="time-chip me-2">00–05</span> 1) Bienvenida + Quiz de Presaberes
+                  </button>
+                </h2>
+                <div id="c1" class="accordion-collapse collapse show" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ol>
+                      <li>Saluda y conecta con la Semana 2: <em>"ya escribes programas completos; hoy aprendes a no perderlos nunca"</em>.</li>
+                      <li>Comparte el enlace del <a href="quiz_presaberes.html">Quiz de Presaberes</a> (4 minutos, individual).</li>
+                      <li>Pregunta rápida: "¿Alguna vez perdiste un archivo importante, o guardaste versiones como <code>trabajo_final_v2_YA.docx</code>?"</li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c2">
+                    <span class="time-chip me-2">05–15</span> 2) Conceptos de control de versiones + verificar Git
+                  </button>
+                </h2>
+                <div id="c2" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">Pregunta detonadora: <em>"¿Qué pasa si dos personas editan el mismo documento de Word a la vez?"</em> → puente a: control de versiones = un historial ordenado de "fotografías" del proyecto, con autor y momento exacto de cada cambio.</p>
+                    <ul>
+                      <li><strong>Git</strong>: el programa que toma esas fotografías (commits) en tu computadora.</li>
+                      <li><strong>GitHub</strong>: un lugar en internet donde guardas una copia de ese historial y colaboras con otros.</li>
+                      <li>Analogía: Git es como el historial de versiones de Google Docs, pero tú decides cuándo tomar cada fotografía y qué incluir en ella.</li>
+                    </ul>
+                    <p class="small-muted mb-2 mt-3">Verificación rápida (todos en su terminal):</p>
+                    <pre><code>git --version
+git config --global --list</code></pre>
+                    <div class="callout danger mt-2">
+                      <div class="fw-semibold">Si falta Git o no aparece nombre/correo</div>
+                      <div class="small-muted">Recordar los pasos de <a href="../Material_Sesion_Clase_1_HTML_18_semanas/instalacion.html#paso4">instalacion.html — Paso 4</a> (Semana 1). Sin nombre/correo configurados, Git rechazará el primer commit con <code>"Please tell me who you are"</code>.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c3">
+                    <span class="time-chip me-2">15–27</span> 3) Flujo local: init, add, commit, log
+                  </button>
+                </h2>
+                <div id="c3" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">Demostración en vivo, paso a paso, en una carpeta nueva:</p>
+                    <pre><code>mkdir mi-primer-repo
+cd mi-primer-repo
+
+git init                          # crea el repositorio (una vez por proyecto)
+git status                        # ¿qué ve Git? (nada todavía)
+
+echo "Mi primer proyecto" > README.md
+git status                        # README.md aparece en rojo: "untracked"
+
+git add README.md                 # lo pasa al área de preparación (staging)
+git status                        # ahora aparece en verde: listo para commit
+
+git commit -m "Agrega README inicial"
+git log --oneline                 # historial: aparece tu commit
+</code></pre>
+                    <ul>
+                      <li>Las <strong>3 zonas</strong> de Git: directorio de trabajo (tus archivos) → área de preparación/staging (<code>git add</code>) → repositorio (<code>git commit</code>).</li>
+                      <li><code>git status</code> se usa constantemente: dice en qué zona está cada archivo.</li>
+                      <li>Un commit sin <code>-m "mensaje"</code> abre un editor de texto (a veces Vim) — recordar configurar VS Code como editor de Git (visto en instalación, Semana 1).</li>
+                    </ul>
+                    <div class="callout mt-2">
+                      <div class="fw-semibold">Orden y trazabilidad (valor de la semana)</div>
+                      <div class="small-muted">Un buen mensaje de commit responde "¿qué cambia y por qué?" en pocas palabras, en presente: <code>"Agrega validación de edad"</code>, no <code>"cambios"</code> ni <code>"asdasd"</code>.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c4">
+                    <span class="time-chip me-2">27–37</span> 4) Repositorio remoto: GitHub + push
+                  </button>
+                </h2>
+                <div id="c4" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">Demostración en pantalla: crear un repositorio vacío en <a href="https://github.com/new" target="_blank" rel="noreferrer">github.com/new</a> (sin marcar "Add a README" porque ya tenemos uno local) y conectar:</p>
+                    <pre><code>git remote add origin https://github.com/tu-usuario/mi-primer-repo.git
+git remote -v                     # confirma la conexión
+
+git branch -M main                # asegura que la rama se llame "main"
+git push -u origin main           # sube el historial completo por primera vez
+</code></pre>
+                    <ul>
+                      <li><code>remote</code> = la dirección de un repositorio en internet. <code>origin</code> es solo un apodo (el más común) para esa dirección.</li>
+                      <li><code>-u</code> en el primer <code>push</code> "recuerda" la conexión: después basta con <code>git push</code>.</li>
+                      <li>Refrescar GitHub en el navegador y mostrar que los archivos ya aparecen ahí — "tu código ya no vive solo en tu computadora".</li>
+                    </ul>
+                    <div class="callout danger mt-2">
+                      <div class="fw-semibold">Error común: "failed to push some refs (rejected)"</div>
+                      <div class="small-muted">Pasa cuando el repositorio remoto tiene algo que tu copia local no tiene (ej. sí marcaste "Add a README" en GitHub). Solución: <code>git pull origin main --allow-unrelated-histories</code> y luego <code>git push</code>. Se profundiza en la Semana 4.</div>
+                    </div>
+                    <details class="mt-2">
+                      <summary class="fw-semibold">Adelanto: ramas, Pull Request y merge</summary>
+                      <div class="mt-2 small-muted">Hoy trabajamos directo sobre <code>main</code>. La próxima semana (Ramas y colaboración) veremos cómo crear una rama para cada cambio y proponerlo con una Pull Request. El <a href="cheatsheet.html">cheat sheet de hoy</a> ya incluye la referencia rápida de esos comandos por si quieres adelantarte.</div>
+                    </details>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c5">
+                    <span class="time-chip me-2">37–39</span> 5) Pausa activa (2 min)
+                  </button>
+                </h2>
+                <div id="c5" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>Estirar manos y espalda, agua, mirar lejos de la pantalla 20 segundos.</li>
+                      <li>Micro-check en el chat: "¿ya ves tus archivos en GitHub.com?"</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c6">
+                    <span class="time-chip me-2">39–49</span> 6) Buenas prácticas: mensajes de commit + .gitignore
+                  </button>
+                </h2>
+                <div id="c6" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">Comparar mensajes de commit reales (buenos vs. malos) y explicar <code>.gitignore</code>: un archivo de texto que le dice a Git qué NO debe vigilar.</p>
+                    <pre><code># .gitignore para un proyecto Java
+target/
+*.class
+.idea/
+*.iml
+.DS_Store
+</code></pre>
+                    <ul>
+                      <li>¿Por qué no subir carpetas generadas (<code>target/</code>) o archivos del sistema operativo? Ocupan espacio y generan conflictos innecesarios.</li>
+                      <li>Regla de oro: <strong>nunca</strong> subir contraseñas, llaves de API ni datos sensibles — ni siquiera en un repositorio "privado".</li>
+                    </ul>
+                    <div class="callout success mt-2">
+                      <div class="fw-semibold">Seguridad colaborativa (valor de la semana)</div>
+                      <div class="small-muted">El control de versiones no es solo para colaborar: es tu red de seguridad personal. Si algo se rompe, siempre puedes volver a un commit anterior que funcionaba.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c7">
+                    <span class="time-chip me-2">49–57</span> 7) Challenge "Ordena el flujo Git" + práctica guiada
+                  </button>
+                </h2>
+                <div id="c7" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ol>
+                      <li>Comparte el enlace del <a href="challenge.html">Challenge — Ordena el flujo Git</a>.</li>
+                      <li>Modela el nivel <strong>Fácil</strong> en pantalla (1 min): ordenar los comandos de un primer commit local.</li>
+                      <li>Los estudiantes resuelven <strong>Medio</strong> (conectar con GitHub) y, si alcanza, <strong>Difícil</strong> (rama + push) — 7 min. El juego da retroalimentación instantánea (toasts) en cada movimiento.</li>
+                      <li>Quien termine antes: continúa con los <a href="ejercicios.html">Ejercicios 5–8</a> en su propia GitHub Desktop.</li>
+                    </ol>
+                    <div class="callout warning">
+                      <div class="fw-semibold">Preguntas guía (docente, mientras circula por salas)</div>
+                      <div class="small-muted">¿Por qué ese comando va antes? ¿Qué pasaría si haces <code>push</code> antes de <code>commit</code>? ¿Qué zona de Git modifica cada comando?</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c8">
+                    <span class="time-chip me-2">57–65</span> 8) Quiz de Final de Clase
+                  </button>
+                </h2>
+                <div id="c8" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ol>
+                      <li>Comparte el enlace del <a href="quiz_final.html">Quiz de Final de Clase</a> (10 preguntas, individual, 7 min).</li>
+                      <li>Al terminar, cada estudiante pulsa <em>Calificar</em>, revisa la retroalimentación y <strong>exporta su resultado a PDF</strong>.</li>
+                      <li>Los PDF del quiz y del challenge = evidencia de la <strong>Actividad en clase – Sesión 3</strong>.</li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c9">
+                    <span class="time-chip me-2">65–70</span> 9) Cierre + lanzamiento de la Guía 3
+                  </button>
+                </h2>
+                <div id="c9" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>Síntesis en 3 frases: fotografiar cambios (commit), guardarlos en internet (push), nunca perder el progreso.</li>
+                      <li>Ticket de salida en el chat: <strong>1 aprendizaje + 1 duda</strong>.</li>
+                      <li>Invitación a la <a href="../evaluacion_docente/index.html">evaluación anónima de la sesión</a>.</li>
+                      <li>Presenta el <a href="entregable.html">Entregable — Guía de Aprendizaje 3</a>: crear el repositorio inicial del proyecto del curso en GitHub, fecha límite antes de la Sesión 4 (1 de agosto de 2026).</li>
+                      <li>Puente a la semana 4: "hoy trabajaste solo en <code>main</code>; la próxima semana usarás <strong>ramas</strong> para trabajar sin romper lo que ya funciona, y propondrás cambios con una Pull Request".</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="callout success mt-3">
+          <div class="fw-semibold">Plan B (si la tecnología falla)</div>
+          <div class="small-muted">
+            Si alguien se traba con la terminal (o no tiene Git instalado): cambiar a
+            <a href="instalacion_github_desktop.html">GitHub Desktop</a> — mismo resultado, 100% a punta de clics,
+            sin comandos que memorizar. Si ni siquiera eso se puede instalar hoy:
+            <a href="https://learngitbranching.js.org/?locale=es_ES" target="_blank" rel="noreferrer">Learn Git Branching</a>
+            (simulador de Git en el navegador) para practicar mientras se pone al día con la instalación durante la
+            semana, o crear/editar archivos directo en la interfaz web de GitHub (botón "Add file") como alternativa
+            temporal a <code>git push</code>.
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Guía Docente — Semana 3 (formato 18 semanas · 70 min) · Ejercicios en <a href="ejercicios.html">ejercicios.html</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

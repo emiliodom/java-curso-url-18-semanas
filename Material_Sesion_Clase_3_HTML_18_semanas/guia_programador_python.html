@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>La Guía del Programador de Python — Semana 3</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 3 — Git</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link active" href="guia_programador_python.html">Puente Git</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="entregable.html">Entregable</a></li>
+          <li class="nav-item"><a class="nav-link" href="instalacion_github_desktop.html">GitHub Desktop</a></li>
+          <li class="nav-item"><a class="nav-link" href="anexo_comandos.html">Anexo: Comandos</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">La Guía del Programador de Python · Semana 3</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Git no es de Java: es de cualquier proyecto</h1>
+          <div class="small-muted">A diferencia de las semanas 1 y 2, hoy no comparamos sintaxis de lenguajes: Git es <strong>el mismo Git</strong> sin importar si programas en Java, Python o cualquier otro lenguaje. Esta guía conecta lo que ya conoces (Python, y los clics de GitHub Desktop que practicaste esta semana) con el comando que hace lo mismo por debajo.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <div class="callout mb-4">
+      <div class="fw-semibold">Buenas noticias si ya conoces Python</div>
+      <div class="small-muted">Si alguna vez ejecutaste <code>git clone</code> para descargar una librería o un proyecto de GitHub para tus clases de Python, <strong>ya usaste Git</strong> sin saberlo. Todo lo que aprendas hoy sirve exactamente igual para tus proyectos en Python, Java, o cualquier otro lenguaje — Git no le pertenece a ninguno.</div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">1. Lo que SÍ cambia entre proyectos: el .gitignore</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <p class="small-muted">Lo único que varía de un lenguaje a otro es <strong>qué archivos generados automáticamente</strong> no quieres subir al repositorio.</p>
+        <div class="table-responsive">
+          <table class="table table-code align-middle">
+            <thead><tr><th style="width:50%">🐍 .gitignore típico de Python</th><th style="width:50%">☕ .gitignore típico de Java</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><pre><code>__pycache__/
+*.pyc
+venv/
+.env
+.pytest_cache/</code></pre></td>
+                <td><pre><code>target/
+*.class
+.idea/
+*.iml
+.env</code></pre></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="small-muted">Ambos ignoran lo mismo en esencia: entornos virtuales/dependencias (<code>venv/</code> ↔ nada equivalente hoy, pero será <code>target/</code> con Maven desde la Semana 7), archivos compilados (<code>*.pyc</code> ↔ <code>*.class</code>) y configuración del editor (<code>.idea/</code>). El comando para usarlo es idéntico en ambos mundos: crear un archivo <code>.gitignore</code> y listar los patrones.</div>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3" id="seccion2">2. Lo que ya sabes hacer con GitHub Desktop: traducción a comandos</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <p class="small-muted">Esta semana aprendiste primero el "clic" (GitHub Desktop). Aquí ves qué comando hace exactamente lo mismo por debajo.</p>
+        <div class="table-responsive">
+          <table class="table table-sm small">
+            <thead><tr><th>Acción en la interfaz gráfica</th><th>Comando equivalente en terminal</th></tr></thead>
+            <tbody>
+              <tr><td>Botón "+" junto a un archivo cambiado (stage)</td><td><code>git add archivo</code></td></tr>
+              <tr><td>Caja de texto "Commit message" + botón "Commit"</td><td><code>git commit -m "mensaje"</code></td></tr>
+              <tr><td>Botón "Sync" / "Push origin"</td><td><code>git push</code></td></tr>
+              <tr><td>Botón "Fetch origin" / "Pull"</td><td><code>git pull</code></td></tr>
+              <tr><td>Menú "Current Branch" → "New Branch"</td><td><code>git checkout -b nombre-rama</code></td></tr>
+              <tr><td>Ícono de "historial" / "History"</td><td><code>git log --oneline</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="small-muted">Ninguna es "mejor": los equipos profesionales usan ambas según el momento. Conocer también el comando te sirve para trabajar en cualquier servidor sin interfaz gráfica (donde se despliegan la mayoría de aplicaciones reales) y es el estándar que asume cualquier tutorial o compañero de trabajo.</div>
+        <div class="callout mt-2">
+          <div class="fw-semibold">¿Quieres profundizar en los comandos?</div>
+          <div class="small-muted">El <a href="anexo_comandos.html">Anexo: Comandos</a> tiene el flujo completo de la semana (crear repositorio, commit, publicar, branch, merge) explicado paso a paso con <code>git</code>, para cuando ya tengas Git y VS Code listos.</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">3. Ejercicios de traducción: de la acción a el comando</h2>
+    <div class="row g-3 mb-4">
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h3 class="h6 fw-bold">Traducción 1 — "Guardé mi trabajo con Ctrl+S y quiero respaldarlo"</h3>
+            <p class="small-muted mb-1">Tienes un archivo nuevo, <code>datos.py</code> (o <code>Main.java</code>), y quieres que Git lo empiece a vigilar y guarde una fotografía.</p>
+            <details class="mt-2">
+              <summary class="fw-semibold">Solución</summary>
+              <pre class="mt-2"><code>git add datos.py
+git commit -m "Agrega archivo de datos inicial"</code></pre>
+            </details>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h3 class="h6 fw-bold">Traducción 2 — "Quiero que mi compañero vea mis cambios"</h3>
+            <p class="small-muted mb-1">Ya hiciste commit localmente. ¿Qué falta para que exista en GitHub?</p>
+            <details class="mt-2">
+              <summary class="fw-semibold">Solución</summary>
+              <pre class="mt-2"><code>git push</code></pre>
+              <div class="small-muted">(La primera vez en un repositorio nuevo: <code>git push -u origin main</code>.)</div>
+            </details>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h3 class="h6 fw-bold">Traducción 3 — "No quiero subir mi carpeta de dependencias"</h3>
+            <p class="small-muted mb-1">Tienes una carpeta <code>venv/</code> (Python) que no debe subirse jamás al repositorio.</p>
+            <details class="mt-2">
+              <summary class="fw-semibold">Solución</summary>
+              <pre class="mt-2"><code># dentro de .gitignore
+venv/</code></pre>
+              <div class="small-muted">El mismo principio se usará con <code>target/</code> cuando trabajes con Maven en Java (Semana 7).</div>
+            </details>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h3 class="h6 fw-bold">Traducción 4 — Reto inverso: ¿qué pasó aquí?</h3>
+            <p class="small-muted mb-1">Un compañero ejecutó estos 3 comandos seguidos. Describe en una frase qué logró:</p>
+            <pre><code>git add .
+git commit -m "Estructura inicial"
+git push -u origin main</code></pre>
+            <details class="mt-2">
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small">Preparó todos sus archivos, guardó una fotografía local con mensaje descriptivo, y la subió a GitHub por primera vez (conectando su rama local <code>main</code> con la remota).</div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout success">
+      <div class="fw-semibold">Para el ticket de salida</div>
+      <div class="small-muted">En una frase: <em>"¿Por qué crees que Git funciona igual sin importar el lenguaje de programación que uses?"</em></div>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      La Guía del Programador de Python — Semana 3 · Git y GitHub (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz de Final de Clase — Semana 3</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 3 — Git</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="guia_programador_python.html">Puente Git</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link active" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="entregable.html">Entregable</a></li>
+          <li class="nav-item"><a class="nav-link" href="instalacion_github_desktop.html">GitHub Desktop</a></li>
+          <li class="nav-item"><a class="nav-link" href="anexo_comandos.html">Anexo: Comandos</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Quiz de Final de Clase · 7 minutos · Evidencia de la Actividad en clase — Sesión 3</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">¿Qué aprendiste hoy?</h1>
+          <div class="small-muted">10 preguntas sobre Git y GitHub. Al terminar: <strong>Calificar → Exportar a PDF → subir al aula virtual</strong>.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 900px;">
+    <div class="card mb-3">
+      <div class="card-body">
+        <label class="form-label fw-semibold" for="studentName">Nombre del estudiante (aparecerá en el PDF)</label>
+        <input id="studentName" class="form-control" type="text" placeholder="Nombre y apellido" />
+      </div>
+    </div>
+
+    <div class="quiz-q" data-answer="b">
+      <div class="fw-semibold mb-2">1) ¿Qué comando crea un repositorio de Git en la carpeta actual?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q1" id="q1a" value="a" /><label class="form-check-label" for="q1a"><code>git start</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q1" id="q1b" value="b" /><label class="form-check-label" for="q1b"><code>git init</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q1" id="q1c" value="c" /><label class="form-check-label" for="q1c"><code>git new</code></label></div>
+      <div class="quiz-feedback ok">✅ <code>git init</code> crea el repositorio, una sola vez por proyecto.</div>
+      <div class="quiz-feedback ko">Es <code>git init</code>. Se ejecuta una sola vez, al comenzar el proyecto.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="c">
+      <div class="fw-semibold mb-2">2) Un archivo nuevo aparece en rojo al hacer <code>git status</code>. ¿Qué significa?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q2" id="q2a" value="a" /><label class="form-check-label" for="q2a">Ya está guardado en el historial</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q2" id="q2b" value="b" /><label class="form-check-label" for="q2b">Tiene un error de sintaxis</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q2" id="q2c" value="c" /><label class="form-check-label" for="q2c">Es "untracked": Git lo ve pero no lo vigila todavía</label></div>
+      <div class="quiz-feedback ok">✅ Correcto: falta <code>git add</code> para que pase al área de preparación.</div>
+      <div class="quiz-feedback ko">Significa "untracked" (sin seguimiento). Necesitas <code>git add</code> antes de poder incluirlo en un commit.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="a">
+      <div class="fw-semibold mb-2">3) ¿Qué hace exactamente <code>git add archivo.txt</code>?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q3" id="q3a" value="a" /><label class="form-check-label" for="q3a">Mueve el archivo al área de preparación (staging)</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q3" id="q3b" value="b" /><label class="form-check-label" for="q3b">Sube el archivo directo a GitHub</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q3" id="q3c" value="c" /><label class="form-check-label" for="q3c">Borra el archivo</label></div>
+      <div class="quiz-feedback ok">✅ Correcto: prepara el archivo para el próximo <code>git commit</code>; no sube nada a internet todavía.</div>
+      <div class="quiz-feedback ko">Solo lo prepara para el commit (staging). Para subir a internet hace falta después <code>git push</code>.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="b">
+      <div class="fw-semibold mb-2">4) ¿Cuál es el mejor mensaje de commit?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q4" id="q4a" value="a" /><label class="form-check-label" for="q4a"><code>git commit -m "cambios"</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q4" id="q4b" value="b" /><label class="form-check-label" for="q4b"><code>git commit -m "Agrega validación de formulario"</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q4" id="q4c" value="c" /><label class="form-check-label" for="q4c"><code>git commit -m "asdf"</code></label></div>
+      <div class="quiz-feedback ok">✅ Correcto: describe con claridad qué cambia, en presente.</div>
+      <div class="quiz-feedback ko">Es la opción B: un mensaje claro dice qué cambia. "cambios" o "asdf" no ayudan a nadie después.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="c">
+      <div class="fw-semibold mb-2">5) ¿Qué comando conecta tu repositorio local con uno en GitHub?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q5" id="q5a" value="a" /><label class="form-check-label" for="q5a"><code>git connect origin URL</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q5" id="q5b" value="b" /><label class="form-check-label" for="q5b"><code>git link origin URL</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q5" id="q5c" value="c" /><label class="form-check-label" for="q5c"><code>git remote add origin URL</code></label></div>
+      <div class="quiz-feedback ok">✅ Correcto: <code>remote add</code> conecta tu carpeta local con la dirección remota.</div>
+      <div class="quiz-feedback ko">Es <code>git remote add origin URL</code>. "origin" es solo el apodo más común para esa dirección remota.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="a">
+      <div class="fw-semibold mb-2">6) ¿Para qué sirve el <code>-u</code> en <code>git push -u origin main</code>?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q6" id="q6a" value="a" /><label class="form-check-label" for="q6a">Recuerda la conexión, para que los próximos <code>push</code> no necesiten especificarla</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q6" id="q6b" value="b" /><label class="form-check-label" for="q6b">Borra el historial anterior</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q6" id="q6c" value="c" /><label class="form-check-label" for="q6c">Crea una nueva rama</label></div>
+      <div class="quiz-feedback ok">✅ Correcto: después de usarlo una vez, basta con <code>git push</code> a secas.</div>
+      <div class="quiz-feedback ko">Recuerda la conexión (upstream) entre tu rama local y la remota, para simplificar los próximos <code>push</code>.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="b">
+      <div class="fw-semibold mb-2">7) ¿Qué archivo le dice a Git qué NO debe vigilar?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q7" id="q7a" value="a" /><label class="form-check-label" for="q7a"><code>README.md</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q7" id="q7b" value="b" /><label class="form-check-label" for="q7b"><code>.gitignore</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q7" id="q7c" value="c" /><label class="form-check-label" for="q7c"><code>.gitconfig</code></label></div>
+      <div class="quiz-feedback ok">✅ Correcto: <code>.gitignore</code> lista patrones de archivos que Git debe ignorar.</div>
+      <div class="quiz-feedback ko">Es <code>.gitignore</code>. Sirve para que archivos como carpetas generadas o datos sensibles nunca se suban.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="c">
+      <div class="fw-semibold mb-2">8) ¿Cuál es la diferencia entre Git y GitHub?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q8" id="q8a" value="a" /><label class="form-check-label" for="q8a">Son la misma herramienta con dos nombres</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q8" id="q8b" value="b" /><label class="form-check-label" for="q8b">GitHub es un lenguaje de programación</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q8" id="q8c" value="c" /><label class="form-check-label" for="q8c">Git corre en tu computadora; GitHub es el sitio remoto donde alojas el repositorio</label></div>
+      <div class="quiz-feedback ok">✅ Correcto: uno es la herramienta local, el otro el servicio en internet.</div>
+      <div class="quiz-feedback ko">Git es local (tu terminal); GitHub es remoto (un sitio web que aloja tu repositorio y permite colaborar).</div>
+    </div>
+
+    <div class="quiz-q" data-answer="a">
+      <div class="fw-semibold mb-2">9) Intentas <code>git push</code> y aparece <code>failed to push some refs (rejected)</code>. ¿Qué es lo primero que intentas?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q9" id="q9a" value="a" /><label class="form-check-label" for="q9a"><code>git pull</code> para traer lo que falta y luego reintentar el push</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q9" id="q9b" value="b" /><label class="form-check-label" for="q9b">Borrar el repositorio y empezar de cero</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q9" id="q9c" value="c" /><label class="form-check-label" for="q9c">Ignorar el mensaje y presionar Enter varias veces</label></div>
+      <div class="quiz-feedback ok">✅ Correcto: el remoto tiene algo que tu copia local no tiene; <code>git pull</code> lo trae antes de reintentar.</div>
+      <div class="quiz-feedback ko">Lo correcto es <code>git pull</code> primero: sincroniza tu copia local con lo que ya existe en el remoto.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="b">
+      <div class="fw-semibold mb-2">10) ¿Qué comando crea una rama nueva y te mueve a ella en un solo paso?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q10" id="q10a" value="a" /><label class="form-check-label" for="q10a"><code>git branch nueva-rama</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q10" id="q10b" value="b" /><label class="form-check-label" for="q10b"><code>git checkout -b nueva-rama</code></label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q10" id="q10c" value="c" /><label class="form-check-label" for="q10c"><code>git merge nueva-rama</code></label></div>
+      <div class="quiz-feedback ok">✅ Correcto (o su forma moderna <code>git switch -c</code>). <code>git branch</code> sola solo la crea, sin moverte a ella.</div>
+      <div class="quiz-feedback ko">Es <code>git checkout -b nueva-rama</code> (o <code>git switch -c nueva-rama</code>). Verás esto a fondo la próxima semana.</div>
+    </div>
+
+    <div id="scoreBanner" class="score-banner"></div>
+
+    <div class="d-flex gap-2 flex-wrap mt-3 no-print">
+      <button class="btn btn-primary btn-lg" onclick="gradeQuiz()">Calificar</button>
+      <button class="btn btn-outline-secondary" onclick="resetQuiz()">Reintentar (estudio)</button>
+      <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      <a class="btn btn-outline-primary ms-auto" href="entregable.html">Ir al Entregable →</a>
+    </div>
+
+    <div class="callout warning mt-4">
+      <div class="fw-semibold">Instrucciones de entrega (Actividad en clase — Sesión 3)</div>
+      <ol class="small-muted mb-0">
+        <li>Escribe tu nombre en la casilla de arriba.</li>
+        <li>Pulsa <strong>Calificar</strong> y revisa la retroalimentación de cada pregunta.</li>
+        <li>Pulsa <strong>Exportar a PDF</strong> y guarda el archivo como <code>QuizFinal_S3_TuNombre.pdf</code>.</li>
+        <li>Súbelo al aula virtual junto con el PDF del <a href="challenge.html">Challenge</a>.</li>
+      </ol>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Quiz de Final de Clase — Semana 3 · Git y GitHub (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="quiz.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

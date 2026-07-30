@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz de Presaberes — Semana 3</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 3 — Git</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="guia_programador_python.html">Puente Git</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="entregable.html">Entregable</a></li>
+          <li class="nav-item"><a class="nav-link" href="instalacion_github_desktop.html">GitHub Desktop</a></li>
+          <li class="nav-item"><a class="nav-link" href="anexo_comandos.html">Anexo: Comandos</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Quiz de Presaberes · 5 minutos · No cuenta para nota</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">¿De dónde partimos hoy?</h1>
+          <div class="small-muted">8 preguntas sobre respaldos, versiones e intuición de "guardar cambios". Responde honestamente: es tu foto de entrada.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 900px;">
+    <div class="card mb-3">
+      <div class="card-body">
+        <label class="form-label fw-semibold" for="studentName">Nombre del estudiante (aparecerá en el PDF)</label>
+        <input id="studentName" class="form-control" type="text" placeholder="Nombre y apellido" />
+      </div>
+    </div>
+
+    <div class="quiz-q" data-answer="c">
+      <div class="fw-semibold mb-2">1) Guardaste 3 versiones de un trabajo: <code>ensayo.docx</code>, <code>ensayo_v2.docx</code>, <code>ensayo_final_FINAL.docx</code>. ¿Qué problema tiene esta forma de "versionar"?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q1" id="q1a" value="a" /><label class="form-check-label" for="q1a">Ninguno, es una buena práctica</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q1" id="q1b" value="b" /><label class="form-check-label" for="q1b">Ocupa demasiado espacio en disco</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q1" id="q1c" value="c" /><label class="form-check-label" for="q1c">No queda claro qué cambió entre cada versión, ni quién ni cuándo</label></div>
+      <div class="quiz-feedback ok">✅ Exacto: sin un historial real, los nombres de archivo no explican qué cambió ni por qué. Eso resuelve el control de versiones.</div>
+      <div class="quiz-feedback ko">El problema real es que esos nombres no dicen <strong>qué cambió, quién y cuándo</strong>. Hoy verás cómo Git resuelve esto con un historial ordenado.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="b">
+      <div class="fw-semibold mb-2">2) Google Docs guarda automáticamente un "historial de versiones" que puedes revisar. ¿A qué se parece más esa idea en programación?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q2" id="q2a" value="a" /><label class="form-check-label" for="q2a">A un operador aritmético</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q2" id="q2b" value="b" /><label class="form-check-label" for="q2b">A un sistema de control de versiones (como Git)</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q2" id="q2c" value="c" /><label class="form-check-label" for="q2c">A un ciclo <code>for</code></label></div>
+      <div class="quiz-feedback ok">✅ Correcto: es exactamente la misma idea, aplicada a código en vez de documentos de texto.</div>
+      <div class="quiz-feedback ko">Se parece a un <strong>sistema de control de versiones</strong>: un historial de "fotografías" con autor y fecha. Hoy conocerás Git, la herramienta que hace justo eso para el código.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="a">
+      <div class="fw-semibold mb-2">3) Si guardas tu proyecto SOLO en tu computadora y esta se daña, ¿qué pasa con tu trabajo?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q3" id="q3a" value="a" /><label class="form-check-label" for="q3a">Se pierde (a menos que tengas una copia en otro lugar)</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q3" id="q3b" value="b" /><label class="form-check-label" for="q3b">Se recupera automáticamente</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q3" id="q3c" value="c" /><label class="form-check-label" for="q3c">No importa, Java lo guarda en la nube solo</label></div>
+      <div class="quiz-feedback ok">✅ Correcto. Por eso hoy aprenderás a tener una copia remota en GitHub: tu red de seguridad.</div>
+      <div class="quiz-feedback ko">Se pierde. Por eso hoy subirás tu proyecto a <strong>GitHub</strong>: una copia en internet que sobrevive aunque tu computadora falle.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="b">
+      <div class="fw-semibold mb-2">4) ¿Cuál de estos mensajes describe mejor "qué cambió" en un commit?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q4" id="q4a" value="a" /><label class="form-check-label" for="q4a">"cambios"</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q4" id="q4b" value="b" /><label class="form-check-label" for="q4b">"Agrega validación de edad mínima"</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q4" id="q4c" value="c" /><label class="form-check-label" for="q4c">"asdasd"</label></div>
+      <div class="quiz-feedback ok">✅ Correcto: un buen mensaje dice qué cambia y, si hace falta, por qué. Es el estándar profesional que verás hoy.</div>
+      <div class="quiz-feedback ko">La opción B: describe con claridad qué cambió. "cambios" o "asdasd" no le sirven a nadie, ni siquiera a ti mismo en un mes.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="c">
+      <div class="fw-semibold mb-2">5) Dos personas trabajan en el mismo proyecto a la vez. Sin ninguna herramienta de control de versiones, ¿qué es más probable que pase?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q5" id="q5a" value="a" /><label class="form-check-label" for="q5a">Todo funciona perfecto siempre</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q5" id="q5b" value="b" /><label class="form-check-label" for="q5b">El código se organiza solo</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q5" id="q5c" value="c" /><label class="form-check-label" for="q5c">Uno sobrescribe el trabajo del otro por accidente</label></div>
+      <div class="quiz-feedback ok">✅ Correcto: sin control de versiones, es fácil perder el trabajo de alguien sin darte cuenta.</div>
+      <div class="quiz-feedback ko">Es muy probable que uno sobrescriba el trabajo del otro. Git (y GitHub) existen justo para evitar esto de forma ordenada.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="a">
+      <div class="fw-semibold mb-2">6) "GitHub" y "Git" suenan parecido. ¿Cuál es la diferencia?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q6" id="q6a" value="a" /><label class="form-check-label" for="q6a">Git es la herramienta que corre en tu computadora; GitHub es un sitio en internet donde alojas tus repositorios</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q6" id="q6b" value="b" /><label class="form-check-label" for="q6b">Son exactamente lo mismo, con nombres distintos</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q6" id="q6c" value="c" /><label class="form-check-label" for="q6c">GitHub es un lenguaje de programación</label></div>
+      <div class="quiz-feedback ok">✅ Exacto. Hoy usarás ambos: Git en tu terminal, GitHub en el navegador.</div>
+      <div class="quiz-feedback ko">Git es la herramienta local; GitHub es el sitio remoto donde subes ese historial para respaldarlo y compartirlo.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="b">
+      <div class="fw-semibold mb-2">7) ¿Has usado GitHub antes, aunque sea para descargar el código de otra persona?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q7" id="q7a" value="a" /><label class="form-check-label" for="q7a">Sí</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q7" id="q7b" value="b" /><label class="form-check-label" for="q7b">No, es mi primera vez</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q7" id="q7c" value="c" /><label class="form-check-label" for="q7c">No estoy seguro/a</label></div>
+      <div class="quiz-feedback ok">✅ Cualquier respuesta es válida aquí — es solo diagnóstica. Hoy lo usarás de forma activa, no solo para mirar código ajeno.</div>
+      <div class="quiz-feedback ko">Cualquier respuesta era válida 🙂 — hoy, sin importar tu experiencia previa, crearás y subirás tu propio repositorio.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="c">
+      <div class="fw-semibold mb-2">8) Escribiste mal un comando en la terminal y aparece un mensaje en inglés que no entiendes. ¿Qué haces primero?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q8" id="q8a" value="a" /><label class="form-check-label" for="q8a">Cerrar la terminal y no volver a intentarlo</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q8" id="q8b" value="b" /><label class="form-check-label" for="q8b">Presionar teclas al azar</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q8" id="q8c" value="c" /><label class="form-check-label" for="q8c">Leer el mensaje con calma: casi siempre dice exactamente qué pasó</label></div>
+      <div class="quiz-feedback ok">✅ Esa es la actitud que ya practicamos desde la Semana 1: los mensajes de error (también en Git) son información, no un castigo.</div>
+      <div class="quiz-feedback ko">Lo mejor es <strong>leer el mensaje</strong>: Git suele decir exactamente qué falta (ver la tabla de errores en el cheat sheet de hoy).</div>
+    </div>
+
+    <div id="scoreBanner" class="score-banner"></div>
+
+    <div class="d-flex gap-2 flex-wrap mt-3 no-print">
+      <button class="btn btn-primary btn-lg" onclick="gradeQuiz()">Calificar</button>
+      <button class="btn btn-outline-secondary" onclick="resetQuiz()">Reintentar</button>
+      <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      <a class="btn btn-outline-primary ms-auto" href="clase.html">Continuar a la clase →</a>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Quiz de Presaberes — Semana 3 · Git y GitHub (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="quiz.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

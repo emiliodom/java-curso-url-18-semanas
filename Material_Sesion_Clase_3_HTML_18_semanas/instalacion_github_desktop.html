@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Instala GitHub Desktop — Semana 3</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 3 — Git</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="guia_programador_python.html">Puente Git</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="entregable.html">Entregable</a></li>
+          <li class="nav-item"><a class="nav-link active" href="instalacion_github_desktop.html">GitHub Desktop</a></li>
+          <li class="nav-item"><a class="nav-link" href="anexo_comandos.html">Anexo: Comandos</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Ruta alternativa · 100% con botones, sin escribir comandos</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Instala GitHub Desktop: crea tu cuenta, tu app y tu primer repositorio</h1>
+          <div class="small-muted">Guía súper detallada, pensada para quien <strong>nunca ha usado estos programas</strong> ni sabía que existían. Cero terminal, cero comandos: todo a punta de clics.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <div class="callout warning mb-4">
+      <div class="fw-semibold">¿Esto reemplaza lo que vimos en clase?</div>
+      <div class="small-muted">
+        No. En la <a href="clase.html">clase</a> y en el <a href="cheatsheet.html">cheat sheet</a> aprendiste Git
+        <strong>por comandos</strong> (terminal): <code>git init</code>, <code>git add</code>, <code>git commit</code>, <code>git push</code>…
+        Esta página te enseña <strong>exactamente lo mismo, pero con botones</strong>, usando el programa
+        <strong>GitHub Desktop</strong>. Son dos caminos al mismo destino — muchos profesionales usan ambos según el momento.
+        Si el curso te pide comandos, usa la terminal; si prefieres ver todo visualmente, usa esta guía.
+        La <a href="guia_programador_python.html#seccion2">tabla de equivalencias botón ↔ comando</a> conecta ambos mundos.
+        El <a href="entregable.html">Entregable de la Guía 3</a> acepta evidencia de cualquiera de los dos caminos.
+      </div>
+    </div>
+
+    <!-- ÍNDICE -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="h5 section-title mb-2">Ruta de esta guía (en este orden)</h2>
+        <div class="row g-2 small">
+          <div class="col-md-6">
+            <ol class="mb-0">
+              <li><a href="#paso1">Crear tu cuenta en GitHub</a> — 8 min</li>
+              <li><a href="#paso2">Instalar Visual Studio Code</a> — 5 min</li>
+              <li><a href="#paso3">Instalar el Extension Pack for Java</a> — 5 min</li>
+              <li><a href="#paso4">Instalar GitHub Desktop</a> — 5 min</li>
+            </ol>
+          </div>
+          <div class="col-md-6">
+            <ol start="5" class="mb-0">
+              <li><a href="#paso5">Iniciar sesión y configurar tu identidad</a> — 5 min</li>
+              <li><a href="#paso6">Crear tu primer repositorio</a> — 5 min</li>
+              <li><a href="#paso7">Tu primer cambio, commit y publicación</a> — 5 min</li>
+              <li><a href="#verificar">Verificación final</a>, <a href="#videos">videos</a>, <a href="#troubleshooting">troubleshooting</a> y <a href="#planb">Plan B</a></li>
+            </ol>
+          </div>
+        </div>
+        <div class="small-muted mt-2">Tiempo total estimado: <strong>35–40 minutos</strong>. Si ya hiciste la <a href="../Material_Sesion_Clase_1_HTML_18_semanas/instalacion.html">instalación de la Semana 1</a> (VS Code + JDK + extensiones), salta directo al <a href="#paso4">Paso 4</a>.</div>
+      </div>
+    </div>
+
+    <!-- PASO 1: CUENTA GITHUB -->
+    <div class="card mb-4" id="paso1">
+      <div class="card-body">
+        <h2 class="h4 section-title">Paso 1 — Crear tu cuenta en GitHub <span class="badge text-bg-primary">gratis</span></h2>
+        <p class="small-muted">GitHub es el sitio de internet donde vivirá tu proyecto. Necesitas una cuenta antes de instalar cualquier otra cosa.</p>
+
+        <ol class="small">
+          <li>Abre <a href="https://github.com/signup" target="_blank" rel="noreferrer">github.com/signup</a> en tu navegador.</li>
+          <li>Escribe tu <strong>correo electrónico</strong> real (usa uno que revises seguido — llegará un código de verificación) → <em>Continuar</em>.</li>
+          <li>Crea una <strong>contraseña</strong> segura (mínimo 15 caracteres, o 8 con números y minúsculas mezclados) → <em>Continuar</em>.</li>
+          <li>Elige un <strong>nombre de usuario</strong>. Este nombre será público y aparecerá en la URL de tus proyectos (ej. <code>github.com/tu-usuario</code>). Sugerencia: usa algo profesional y simple, no un apodo random — lo usarás toda tu carrera.</li>
+          <li>Responde si quieres recibir noticias por correo (opcional, puedes decir que no) → <em>Continuar</em>.</li>
+          <li><strong>Verificación "no soy un robot":</strong> GitHub te pide resolver un pequeño acertijo visual (ej. "gira la imagen hasta que quede derecha" o similar). Sigue las instrucciones en pantalla con calma; si fallas, te deja intentar de nuevo.</li>
+          <li>Clic en <strong>"Create account"</strong> (Crear cuenta).</li>
+          <li><strong>Verifica tu correo:</strong> GitHub te envía un código de 6 u 8 dígitos. Ve a tu bandeja de entrada (revisa también spam/promociones), copia el código y pégalo en la página de GitHub.</li>
+          <li>GitHub puede preguntarte tu experiencia o para qué usarás la cuenta — puedes elegir <em>"Estudiante"</em> o simplemente saltar ese paso ("Skip personalization").</li>
+          <li>Cuando veas tu <strong>panel principal (dashboard)</strong> con el logo del gato (Octocat) arriba a la izquierda, tu cuenta ya existe. 🎉</li>
+        </ol>
+
+        <div class="callout success mt-2">
+          <div class="fw-semibold">✅ Checkpoint</div>
+          <div class="small-muted">Si puedes ver tu panel principal en <a href="https://github.com" target="_blank" rel="noreferrer">github.com</a> con tu nombre de usuario arriba a la derecha, este paso está listo.</div>
+        </div>
+        <div class="callout danger mt-2">
+          <div class="fw-semibold">⚠ Guarda bien tu contraseña</div>
+          <div class="small-muted">Usa un gestor de contraseñas o apúntala en un lugar seguro. La necesitarás para iniciar sesión en GitHub Desktop en el Paso 5.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASO 2: VS CODE (condensado, cross-ref semana 1) -->
+    <div class="card mb-4" id="paso2">
+      <div class="card-body">
+        <h2 class="h4 section-title">Paso 2 — Instalar Visual Studio Code <span class="badge text-bg-secondary">el editor</span></h2>
+        <p class="small-muted">Si ya lo instalaste en la Semana 1, <strong>salta al Paso 3</strong>. Si no, aquí el resumen (versión completa con solución de problemas en <a href="../Material_Sesion_Clase_1_HTML_18_semanas/instalacion.html#paso2">instalacion.html — Paso 2</a>).</p>
+        <ol class="small">
+          <li>Abre <a href="https://code.visualstudio.com/" target="_blank" rel="noreferrer">code.visualstudio.com</a> → botón azul <strong>"Download for Windows"</strong> (o Mac).</li>
+          <li><strong>Windows:</strong> ejecuta el instalador → acepta la licencia → en "Tareas adicionales" marca <strong>todas las casillas</strong> (incluida "Agregar a PATH") → <em>Instalar</em>.</li>
+          <li><strong>macOS:</strong> descomprime el .zip → arrastra <strong>Visual Studio Code.app</strong> a la carpeta <strong>Aplicaciones</strong>.</li>
+          <li>Abre VS Code para confirmar que instaló bien.</li>
+        </ol>
+        <div class="callout success mt-2">
+          <div class="fw-semibold">✅ Checkpoint</div>
+          <div class="small-muted">VS Code abre y ves la pantalla de bienvenida ("Welcome"). Si algo falla, la guía de la Semana 1 tiene el troubleshooting completo.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASO 3: EXTENSION PACK FOR JAVA (condensado) -->
+    <div class="card mb-4" id="paso3">
+      <div class="card-body">
+        <h2 class="h4 section-title">Paso 3 — Instalar el Extension Pack for Java <span class="badge text-bg-secondary">los superpoderes</span></h2>
+        <p class="small-muted">También cubierto a fondo en <a href="../Material_Sesion_Clase_1_HTML_18_semanas/instalacion.html#paso3">instalacion.html — Paso 3</a> (Semana 1). Resumen:</p>
+        <ol class="small">
+          <li>En VS Code, abre <strong>Extensiones</strong>: <span class="kbd">Ctrl + Shift + X</span>.</li>
+          <li>Busca <code>Extension Pack for Java</code> → elige el de <strong>Microsoft</strong> → <em>Install</em>.</li>
+          <li>Espera 1–3 minutos mientras instala 6 extensiones relacionadas.</li>
+        </ol>
+        <div class="callout success mt-2">
+          <div class="fw-semibold">✅ Checkpoint</div>
+          <div class="small-muted">Necesitas también el <strong>JDK</strong> instalado para que Java funcione de verdad (ver <a href="../Material_Sesion_Clase_1_HTML_18_semanas/instalacion.html#paso1">Paso 1 de la Semana 1</a>) — sin él, VS Code no podrá ejecutar programas Java, aunque la extensión sí se instale.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASO 4: GITHUB DESKTOP -->
+    <div class="card mb-4" id="paso4">
+      <div class="card-body">
+        <h2 class="h4 section-title">Paso 4 — Instalar GitHub Desktop <span class="badge text-bg-success">Git con botones</span></h2>
+        <p class="small-muted"><strong>GitHub Desktop</strong> es una aplicación gratuita de GitHub que hace exactamente lo mismo que los comandos de Git, pero con ventanas, botones y menús — sin escribir nada en una terminal.</p>
+
+        <h3 class="h6 fw-bold mt-3">4.1 Descarga e instalación (Windows)</h3>
+        <ol class="small">
+          <li>Abre <a href="https://desktop.github.com/" target="_blank" rel="noreferrer">desktop.github.com</a> → botón <strong>"Download for Windows"</strong>.</li>
+          <li>Ejecuta el archivo descargado (<code>GitHubDesktopSetup.exe</code>, pesa ~280 MB). No pide permisos de administrador: se instala solo para tu usuario y se abre automáticamente al terminar.</li>
+          <li>Si Windows Defender/SmartScreen muestra una advertencia ("Windows protegió su PC"), clic en <strong>"Más información"</strong> → <strong>"Ejecutar de todas formas"</strong> (es normal para instaladores nuevos y de bajo volumen de descargas; GitHub Desktop es un programa oficial y seguro).</li>
+        </ol>
+
+        <h3 class="h6 fw-bold mt-3">4.2 Descarga e instalación (macOS)</h3>
+        <ol class="small">
+          <li>Mismo enlace: <a href="https://desktop.github.com/" target="_blank" rel="noreferrer">desktop.github.com</a> → <strong>"Download for macOS"</strong>.</li>
+          <li>Abre el <code>.zip</code> descargado, y luego el <code>.app</code> resultante. Si macOS dice que es de un "desarrollador no identificado": clic derecho sobre la app → <em>Abrir</em> → confirmar <em>Abrir</em> en el diálogo.</li>
+        </ol>
+
+        <div class="callout mt-2">
+          <div class="fw-semibold">💡 ¿Y si ya tengo Git de la Semana 1?</div>
+          <div class="small-muted">No hay problema: GitHub Desktop trae su propia copia de Git integrada y funciona perfectamente aunque ya tengas Git instalado por línea de comandos. Puedes usar ambos caminos con el mismo repositorio, incluso alternando entre uno y otro.</div>
+        </div>
+        <div class="callout warning mt-2">
+          <div class="fw-semibold">⚠ ¿Y si NO tengo Git y solo voy a usar GitHub Desktop?</div>
+          <div class="small-muted">Perfecto, no necesitas instalarlo aparte: el Git de GitHub Desktop es suficiente para todo lo de esta guía. Ojo con un detalle: ese Git interno <strong>no queda disponible para VS Code</strong> (VS Code busca su propio "Git del sistema" para el ícono de Source Control). No es un problema — en esta guía nunca usas ese ícono, todo el add/commit/push lo haces desde la app de GitHub Desktop — pero si en algún momento VS Code te muestra "Download Git" o el ícono de Source Control aparece vacío, ignóralo (ver <a href="#troubleshooting">T9</a>) o instala Git por línea de comandos siguiendo <a href="../Material_Sesion_Clase_1_HTML_18_semanas/instalacion.html#paso4">instalacion.html — Paso 4</a>.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASO 5: LOGIN + CONFIG -->
+    <div class="card mb-4" id="paso5">
+      <div class="card-body">
+        <h2 class="h4 section-title">Paso 5 — Iniciar sesión y configurar tu identidad</h2>
+        <ol class="small">
+          <li>Al abrir GitHub Desktop por primera vez, verás la pantalla <strong>"Let's get started"</strong> con el botón <strong>"Sign in to GitHub.com"</strong> — haz clic ahí.</li>
+          <li>Se abrirá tu navegador pidiendo autorizar la aplicación. Inicia sesión con el correo/usuario y contraseña que creaste en el <a href="#paso1">Paso 1</a>.</li>
+          <li>Clic en <strong>"Authorize desktop"</strong> (Autorizar). El navegador te preguntará si quieres abrir GitHub Desktop — acepta.</li>
+          <li>De vuelta en GitHub Desktop, en <strong>"Configure Git"</strong> confirma tu <strong>nombre</strong> y <strong>correo</strong> (los toma de tu cuenta automáticamente) → <em>Continue</em>.</li>
+          <li>En la pantalla final, clic en <strong>"Finish"</strong>.</li>
+        </ol>
+        <div class="callout success mt-2">
+          <div class="fw-semibold">✅ Checkpoint</div>
+          <div class="small-muted">Arriba a la derecha de GitHub Desktop debe aparecer tu nombre de usuario de GitHub. Esto es el equivalente visual a haber corrido <code>git config --global user.name/user.email</code> por terminal (Semana 1).</div>
+        </div>
+        <div class="small-muted mt-2">💡 Opcional: en <strong>File → Options → Integrations</strong>, confirma que el "External editor" esté configurado como <strong>Visual Studio Code</strong> (así el botón "Open in Visual Studio Code" funcionará más adelante).</div>
+      </div>
+    </div>
+
+    <!-- PASO 6: PRIMER REPOSITORIO -->
+    <div class="card mb-4" id="paso6">
+      <div class="card-body">
+        <h2 class="h4 section-title">Paso 6 — Crear tu primer repositorio</h2>
+        <ol class="small">
+          <li>En la pantalla principal, clic en <strong>"Create a New Repository on your Hard Drive..."</strong> (o menú <strong>File → New Repository</strong>).</li>
+          <li>Completa el formulario:
+            <ul>
+              <li><strong>Name:</strong> el nombre de tu proyecto, sin espacios ni tildes (ej. <code>mi-primer-repositorio</code>).</li>
+              <li><strong>Description:</strong> una frase opcional describiendo el proyecto.</li>
+              <li><strong>Local path:</strong> dónde se guardará en tu computadora (deja la ruta sugerida o elige una carpeta simple como <code>Documentos/proyectos</code>).</li>
+              <li>Marca la casilla <strong>"Initialize this repository with a README"</strong> (así ya nace con un archivo para editar).</li>
+              <li><strong>Git ignore:</strong> puedes elegir "Java" en el desplegable (ignora automáticamente archivos generados por Java/Maven).</li>
+              <li><strong>License:</strong> puedes dejarlo en "None" por ahora.</li>
+            </ul>
+          </li>
+          <li>Clic en <strong>"Create repository"</strong>.</li>
+        </ol>
+        <div class="callout success mt-2">
+          <div class="fw-semibold">✅ Checkpoint</div>
+          <div class="small-muted">GitHub Desktop te muestra la pantalla principal del repositorio, con un archivo <code>README.md</code> en la lista y un botón <strong>"Publish repository"</strong> arriba. Esto es el equivalente visual de <code>git init</code>.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASO 7: COMMIT + PUBLISH -->
+    <div class="card mb-4" id="paso7">
+      <div class="card-body">
+        <h2 class="h4 section-title">Paso 7 — Tu primer cambio, commit y publicación en GitHub</h2>
+
+        <h3 class="h6 fw-bold mt-2">7.1 Edita un archivo</h3>
+        <ol class="small">
+          <li>Menú <strong>Repository → Open in Visual Studio Code</strong> (o abre la carpeta manualmente desde VS Code).</li>
+          <li>Abre <code>README.md</code> y agrega una línea, por ejemplo: <code>Este es mi primer proyecto versionado con GitHub Desktop.</code></li>
+          <li>Guarda el archivo (<span class="kbd">Ctrl + S</span>) y vuelve a GitHub Desktop.</li>
+        </ol>
+
+        <h3 class="h6 fw-bold mt-3">7.2 Haz tu primer commit</h3>
+        <ol class="small">
+          <li>En GitHub Desktop, ve a la pestaña <strong>"Changes"</strong> (columna izquierda): verás <code>README.md</code> listado, con el cambio resaltado en la vista previa (línea agregada en verde).</li>
+          <li>Confirma que la casilla junto al archivo esté marcada (así queda "preparado", como <code>git add</code>).</li>
+          <li>Abajo a la izquierda, escribe un mensaje breve en el campo <strong>"Summary"</strong>, por ejemplo: <code>Agrega descripción al README</code>.</li>
+          <li>Clic en el botón azul <strong>"Commit to main"</strong>.</li>
+        </ol>
+
+        <h3 class="h6 fw-bold mt-3">7.3 Publica tu repositorio en GitHub</h3>
+        <ol class="small">
+          <li>Arriba, clic en el botón <strong>"Publish repository"</strong>.</li>
+          <li>En la ventana "Publish Repository", confirma el nombre y decide si será <strong>público</strong> (recomendado para este curso, así tu profesor puede verlo) o <strong>privado</strong> (desmarca "Keep this code private" si quieres que sea público).</li>
+          <li>Clic en <strong>"Publish Repository"</strong>.</li>
+          <li>Para confirmar: menú <strong>Repository → View on GitHub</strong> — se abre tu navegador mostrando el repositorio ya en línea, con tu commit incluido.</li>
+        </ol>
+
+        <div class="callout success mt-2">
+          <div class="fw-semibold">✅ Checkpoint final</div>
+          <div class="small-muted">Si ves tu <code>README.md</code> actualizado en <code>github.com/tu-usuario/tu-repositorio</code>, lograste con clics exactamente lo mismo que tus compañeros lograron con <code>git init</code>, <code>git add</code>, <code>git commit</code> y <code>git push</code>.</div>
+        </div>
+
+        <h3 class="h6 fw-bold mt-3">7.4 Para cambios futuros (el ciclo se repite)</h3>
+        <div class="small-muted">Cada vez que edites algo: guarda el archivo → GitHub Desktop lo detecta en "Changes" → escribe un mensaje → "Commit to main" → botón <strong>"Push origin"</strong> (reemplaza a "Publish repository", que solo se usa la primera vez).</div>
+      </div>
+    </div>
+
+    <!-- VERIFICACIÓN FINAL -->
+    <div class="card mb-4" id="verificar">
+      <div class="card-body">
+        <h2 class="h4 section-title">Verificación final: el semáforo 🚦</h2>
+        <div class="table-responsive">
+          <table class="table table-sm small">
+            <thead><tr><th>#</th><th>Verificación</th><th>Cómo comprobarlo</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Cuenta de GitHub creada</td><td>Puedes entrar a github.com y ver tu panel principal</td></tr>
+              <tr><td>2</td><td>VS Code + extensión Java</td><td>Ver checkpoints de los Pasos 2–3 (o Semana 1)</td></tr>
+              <tr><td>3</td><td>GitHub Desktop instalado y con sesión iniciada</td><td>Tu usuario aparece arriba a la derecha de la app</td></tr>
+              <tr><td>4</td><td>Repositorio publicado</td><td><code>github.com/tu-usuario/tu-repositorio</code> existe y muestra tu commit</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <ul class="small mb-0">
+          <li>🟢 <strong>Los 4 verificados:</strong> estás listo para trabajar con Git tanto por comandos como por GitHub Desktop, el resto de las 18 semanas.</li>
+          <li>🟡 <strong>Cuenta y GitHub Desktop sí, VS Code/Java no:</strong> puedes seguir usando GitHub Desktop mientras resuelves lo de Java (o usa el <a href="../Material_Sesion_Clase_1_HTML_18_semanas/instalacion.html">Plan B online de la Semana 1</a>).</li>
+          <li>🔴 <strong>Nada funciona:</strong> ve directo al <a href="#planb">Plan B</a> de esta página.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- VIDEOS -->
+    <div class="card mb-4" id="videos">
+      <div class="card-body">
+        <h2 class="h4 section-title">Videos de apoyo (español) 🎬</h2>
+        <div class="table-responsive">
+          <table class="table table-sm small">
+            <thead><tr><th>Video</th><th>Cubre</th><th>Enlace</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>Cómo Crear Tu Primer Repositorio en GitHub — Guía para Principiantes</strong></td>
+                <td>Paso 1 y conceptos generales de repositorio</td>
+                <td><a href="https://www.patreon.com/posts/como-crear-tu-en-141743460?l=es" target="_blank" rel="noreferrer">Ver guía</a></td>
+              </tr>
+              <tr>
+                <td><strong>Cómo crear una cuenta en GitHub y un repositorio (SocraTech)</strong></td>
+                <td>Pasos 1 y 6, con capturas de pantalla actualizadas</td>
+                <td><a href="https://socratech.es/blog/como-crear-una-cuenta-en-github-y-un-repositorio/" target="_blank" rel="noreferrer">Ver guía</a></td>
+              </tr>
+              <tr>
+                <td><strong>Aprende GitHub desde Cero — Guía Completa en Español</strong></td>
+                <td>Repaso general de Git/GitHub para principiantes absolutos</td>
+                <td><a href="https://benrios.dev/hola-git/github/" target="_blank" rel="noreferrer">Ver guía</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="small-muted">⚠ GitHub Desktop actualiza su interfaz cada cierto tiempo: si un video muestra botones ligeramente distintos (colores, posición), confía en los nombres exactos de esta guía — están verificados contra la documentación oficial de GitHub vigente en 2026.</div>
+      </div>
+    </div>
+
+    <!-- TROUBLESHOOTING -->
+    <div class="card mb-4" id="troubleshooting">
+      <div class="card-body">
+        <h2 class="h4 section-title">Troubleshooting — si algo falla 🔧</h2>
+        <div class="accordion" id="tsAcc">
+
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#t1">
+                T1 · No me llega el correo de verificación de GitHub
+              </button>
+            </h3>
+            <div id="t1" class="accordion-collapse collapse" data-bs-parent="#tsAcc">
+              <div class="accordion-body small">
+                <ol>
+                  <li>Revisa spam, promociones o "correo no deseado".</li>
+                  <li>Espera 2–3 minutos: a veces tarda.</li>
+                  <li>En la página de GitHub suele haber un enlace "Reenviar código" — úsalo antes de crear una cuenta nueva.</li>
+                  <li>Si usas correo institucional, algunos filtros bloquean remitentes nuevos: prueba con un correo personal (Gmail/Outlook) si el problema persiste.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#t2">
+                T2 · "El nombre de usuario ya existe"
+              </button>
+            </h3>
+            <div id="t2" class="accordion-collapse collapse" data-bs-parent="#tsAcc">
+              <div class="accordion-body small">
+                Los nombres de usuario en GitHub son únicos en todo el mundo. Agrega números o variaciones (ej. <code>ana-perez-dev</code>) hasta encontrar uno libre. No afecta en nada tu trabajo: es solo un identificador.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#t3">
+                T3 · GitHub Desktop no abre el navegador para iniciar sesión, o se queda cargando
+              </button>
+            </h3>
+            <div id="t3" class="accordion-collapse collapse" data-bs-parent="#tsAcc">
+              <div class="accordion-body small">
+                <ol>
+                  <li>Cierra GitHub Desktop por completo y vuelve a abrirlo.</li>
+                  <li>Verifica que tu navegador predeterminado esté funcionando (ábrelo manualmente primero).</li>
+                  <li>Como alternativa, en la pantalla de inicio de sesión de GitHub Desktop hay un enlace pequeño "or sign in with your browser" — si ya iniciaste sesión ahí antes, prueba cerrar sesión y volver a intentar.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#t4">
+                T4 · No encuentro el botón "Publish repository"
+              </button>
+            </h3>
+            <div id="t4" class="accordion-collapse collapse" data-bs-parent="#tsAcc">
+              <div class="accordion-body small">
+                Ese botón solo aparece la <strong>primera vez</strong>, antes de que el repositorio tenga una versión remota. Si ya lo publicaste antes, el botón cambia a <strong>"Push origin"</strong> (o "Fetch origin" si no hay cambios nuevos que subir). Revisa también que tengas sesión iniciada (Paso 5).
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#t5">
+                T5 · Publiqué el repositorio pero es privado y mi profesor no puede verlo
+              </button>
+            </h3>
+            <div id="t5" class="accordion-collapse collapse" data-bs-parent="#tsAcc">
+              <div class="accordion-body small">
+                En GitHub.com, entra a tu repositorio → <strong>Settings</strong> (pestaña) → baja hasta <strong>"Danger Zone"</strong> → <strong>"Change repository visibility"</strong> → elige <strong>Public</strong>. Confirma escribiendo el nombre del repositorio cuando lo pida.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#t6">
+                T6 · El botón "Commit to main" aparece gris/deshabilitado
+              </button>
+            </h3>
+            <div id="t6" class="accordion-collapse collapse" data-bs-parent="#tsAcc">
+              <div class="accordion-body small">
+                Casi siempre falta escribir el mensaje en el campo <strong>"Summary"</strong> (es obligatorio). También revisa que al menos un archivo tenga la casilla marcada en la pestaña "Changes" — si no hay cambios reales, no hay nada que confirmar.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#t7">
+                T7 · Confundí "GitHub" con "GitHub Desktop" (o con "GitHub Desktop" con "Git")
+              </button>
+            </h3>
+            <div id="t7" class="accordion-collapse collapse" data-bs-parent="#tsAcc">
+              <div class="accordion-body small">
+                Le pasa a todos al inicio. Recuerda: <strong>GitHub</strong> (sin más) = el sitio web, <code>github.com</code>, donde vive tu repositorio.
+                <strong>GitHub Desktop</strong> = la aplicación con ventanas de esta guía, la instalas en tu computadora.
+                <strong>Git</strong> = el motor que hace el trabajo real por detrás de ambos (y de la terminal que usaste en clase). Los tres están relacionados, pero son cosas distintas.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#t8">
+                T8 · Mi computadora es prestada / no tengo permisos de administrador
+              </button>
+            </h3>
+            <div id="t8" class="accordion-collapse collapse" data-bs-parent="#tsAcc">
+              <div class="accordion-body small">
+                GitHub Desktop se instala por usuario, sin pedir permisos de administrador — igual que VS Code (instalador "User"). Si aun así no puedes instalar nada, usa el <a href="#planb">Plan B</a> de esta página (100% desde el navegador).
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#t9">
+                T9 · VS Code dice "Download Git" o el ícono de Source Control aparece vacío, aunque ya instalé GitHub Desktop
+              </button>
+            </h3>
+            <div id="t9" class="accordion-collapse collapse" data-bs-parent="#tsAcc">
+              <div class="accordion-body small">
+                Es normal y no afecta tu trabajo. El Git que trae GitHub Desktop es de uso <strong>interno de esa app</strong>; no queda instalado como "Git del sistema", que es lo que busca VS Code para su panel de Source Control. En esta guía nunca necesitas ese panel: todo el <code>add</code>/<code>commit</code>/<code>push</code> lo haces desde la app de GitHub Desktop (Pasos 5–7), usando <strong>Repository → Open in Visual Studio Code</strong> solo para editar archivos. Si de verdad quieres que VS Code también detecte Git (por ejemplo, más adelante en el curso), instala Git por línea de comandos con <a href="../Material_Sesion_Clase_1_HTML_18_semanas/instalacion.html#paso4">instalacion.html — Paso 4</a> (Semana 1); ambas copias de Git conviven sin problema.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- PLAN B -->
+    <div class="card mb-4" id="planb">
+      <div class="card-body">
+        <h2 class="h4 section-title">Plan B — Si no puedes instalar nada 🌐</h2>
+        <p class="small-muted">Puedes crear tu cuenta, tu repositorio y hasta tu primer commit <strong>sin instalar absolutamente nada</strong>, directo desde github.com en cualquier navegador (incluso desde un celular):</p>
+        <ol class="small">
+          <li>Crea tu cuenta igual que en el <a href="#paso1">Paso 1</a> (eso siempre es 100% web).</li>
+          <li>En tu perfil, clic en el botón verde <strong>"New"</strong> (o ve a <a href="https://github.com/new" target="_blank" rel="noreferrer">github.com/new</a>).</li>
+          <li>Escribe el nombre del repositorio, marca <strong>"Add a README file"</strong> y clic en <strong>"Create repository"</strong>.</li>
+          <li>Dentro del repositorio, clic en el ícono de lápiz (✏️) sobre <code>README.md</code> para editarlo directo en el navegador.</li>
+          <li>Escribe tu cambio y baja hasta <strong>"Commit changes..."</strong> → escribe un mensaje → <strong>"Commit changes"</strong>.</li>
+        </ol>
+        <div class="callout success small">
+          <strong>Con esto ya cumples la evidencia mínima de la Guía 3</strong> mientras resuelves la instalación en casa con calma. Cuando tengas VS Code, el JDK y Git (o GitHub Desktop) listos, sigue trabajando desde tu computadora con el mismo repositorio (clónalo o publícalo de nuevo desde ahí).
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Instalación GitHub Desktop — Semana 3 · Cuenta GitHub + VS Code + Extension Pack for Java + GitHub Desktop (formato 18 semanas) · Fuentes: github.com, desktop.github.com, docs.github.com (interfaces verificadas 2026).
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

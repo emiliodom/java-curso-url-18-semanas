@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cheat Sheet — Semana 3 (Git y GitHub)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 3 — Git</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link active" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="guia_programador_python.html">Puente Git</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="entregable.html">Entregable</a></li>
+          <li class="nav-item"><a class="nav-link" href="instalacion_github_desktop.html">GitHub Desktop</a></li>
+          <li class="nav-item"><a class="nav-link" href="anexo_comandos.html">Anexo: Comandos</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Cheat Sheet · Semana 3 · GitHub Desktop</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Referencia rápida — botones, no comandos</h1>
+          <div class="small-muted">De cero a tu primera Pull Request, todo a punta de clics. Guárdala: la usarás toda la semana. ¿Prefieres o necesitas la terminal? Mira el <a href="anexo_comandos.html">Anexo: Comandos</a>.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <div class="callout mb-4">
+      <div class="fw-semibold">Las 3 zonas de Git (repaso rápido)</div>
+      <div class="small-muted">
+        <strong>1. Directorio de trabajo</strong> (tus archivos tal cual, en el Explorador de VS Code) →
+        <strong>2. Área de preparación / staging</strong> (la casilla marcada junto a cada archivo en la pestaña "Changes" de GitHub Desktop) →
+        <strong>3. Repositorio</strong> (botón "Commit to main": historial guardado permanentemente).
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">A. Tu primer commit — paso a paso</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <ol class="mb-3">
+          <li class="mb-2">Abre GitHub Desktop y confirma que estás dentro del repositorio correcto (nombre arriba a la izquierda, botón "Current Repository").</li>
+          <li class="mb-2">Edita tus archivos donde quieras: en el Explorador de VS Code (<strong>Repository → Open in Visual Studio Code</strong>) o desde cualquier programa. Guarda con <span class="kbd">Ctrl + S</span>.</li>
+          <li class="mb-2">Vuelve a GitHub Desktop → pestaña <strong>"Changes"</strong> (columna izquierda): tus archivos editados aparecen listados, con el cambio resaltado en la vista previa.</li>
+          <li class="mb-2">Confirma que la casilla junto a cada archivo esté marcada (equivalente a <code>git add</code>: lo deja "preparado" para el commit).</li>
+          <li class="mb-2">Abajo a la izquierda, escribe un mensaje breve y claro en <strong>"Summary"</strong>, en presente: por ejemplo <em>"Agrega estructura inicial del proyecto"</em>.</li>
+          <li>Clic en el botón azul <strong>"Commit to main"</strong>.</li>
+        </ol>
+        <div class="callout warning mb-0">
+          <strong>Antes de tu primer commit en una computadora nueva</strong>, GitHub Desktop te pide tu nombre y correo en la pantalla "Configure Git" (paso único, ver <a href="instalacion_github_desktop.html#paso5">Instala GitHub Desktop — Paso 5</a>).
+        </div>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">B. Publicar tu proyecto en GitHub</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <ol class="mb-0">
+          <li class="mb-2">Con al menos un commit hecho (sección A), busca el botón <strong>"Publish repository"</strong> arriba de la ventana.</li>
+          <li class="mb-2">En la ventana que se abre: confirma el nombre y decide si será <strong>público</strong> (recomendado para este curso, así tu profesor puede verlo) — desmarca <strong>"Keep this code private"</strong> si quieres que sea público.</li>
+          <li class="mb-2">Clic en <strong>"Publish Repository"</strong>. Este único botón hace, por debajo, lo mismo que conectar un remoto y subir el historial por primera vez.</li>
+          <li class="mb-2">Para confirmar: menú <strong>Repository → View on GitHub</strong> — se abre tu navegador mostrando el repositorio ya en línea.</li>
+          <li>Para cambios futuros: edita → "Changes" → Summary → "Commit to main" → botón <strong>"Push origin"</strong> (reemplaza a "Publish repository", que solo se usa la primera vez).</li>
+        </ol>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">C. Crear una branch (rama)</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <p class="small-muted">Una rama es una <strong>copia paralela</strong> del proyecto donde puedes experimentar sin afectar <code>main</code> (la rama principal, siempre estable).</p>
+        <ol class="mb-0">
+          <li class="mb-2">Arriba, clic en el botón <strong>"Current Branch"</strong> (muestra el nombre de tu rama actual).</li>
+          <li class="mb-2">Clic en <strong>"New Branch"</strong>, escribe un nombre descriptivo (ej. <code>feature-formulario</code>) → <strong>"Create Branch"</strong>. GitHub Desktop te mueve a esa rama automáticamente.</li>
+          <li class="mb-2">Trabaja normalmente en esa rama: edita archivos, luego "Changes" → Summary → "Commit to main" (el botón mostrará el nombre de tu rama, no literalmente "main").</li>
+          <li class="mb-2">Sube la rama nueva a GitHub con el botón <strong>"Publish branch"</strong> (aparece porque es una rama nueva que aún no existe en GitHub).</li>
+          <li>Para volver a <code>main</code> en cualquier momento: botón "Current Branch" → selecciona <strong>main</strong> de la lista.</li>
+        </ol>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">D. Crear una Pull Request (PR)</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <p class="small-muted">Una Pull Request es una <strong>propuesta formal</strong> de integrar los cambios de tu rama a otra (normalmente <code>main</code>), con espacio para que alguien más los revise antes. Este paso se hace en github.com, sin importar si trabajaste con GitHub Desktop o con comandos.</p>
+        <ol class="mb-0">
+          <li class="mb-2">Con tu rama ya subida (paso C.4), en GitHub Desktop puedes usar el menú <strong>Branch → Create Pull Request</strong> (abre tu navegador directo en la página correcta).</li>
+          <li class="mb-2">GitHub suele mostrar un botón <strong>"Compare & pull request"</strong> apenas subes una rama nueva.</li>
+          <li class="mb-2">Verifica la dirección de la comparación: <code>base: main</code> ← <code>compare: nombre-de-tu-rama</code> (tus cambios van HACIA main, no al revés).</li>
+          <li class="mb-2">Escribe un título claro y, en la descripción, qué cambia y por qué.</li>
+          <li>Clic en <strong>"Create pull request"</strong>. En equipo, un compañero revisa el código y comenta o aprueba antes del siguiente paso.</li>
+        </ol>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">E. Merge a una branch diferente</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <p class="small-muted"><strong>Merge</strong> ("fusionar") integra los cambios de una rama dentro de otra.</p>
+        <ol class="mb-0">
+          <li class="mb-2">Abre la Pull Request ya creada (paso D). Si no hay conflictos, aparece el botón <strong>"Merge pull request"</strong> en github.com.</li>
+          <li class="mb-2">Clic en <strong>"Merge pull request"</strong> → <strong>"Confirm merge"</strong>. Los cambios ya quedan integrados en <code>main</code> (en GitHub).</li>
+          <li class="mb-2">En GitHub Desktop: botón "Current Branch" → selecciona <strong>main</strong> → clic en <strong>"Fetch origin"</strong> (trae los cambios recién fusionados a tu computadora).</li>
+          <li>(Opcional) borra la rama que ya cumplió su propósito: clic derecho sobre ella en "Current Branch" → <strong>"Delete"</strong>.</li>
+        </ol>
+        <div class="callout warning mt-3 mb-0">
+          <strong>Nota:</strong> el flujo de ramas, Pull Requests y merge se profundiza en la <strong>Semana 4</strong> (incluyendo cómo resolver conflictos). Esta sección es tu referencia de adelanto.
+        </div>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">F. Botones esenciales (tabla resumen)</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-sm small mb-0">
+            <thead><tr><th>Botón / acción en GitHub Desktop</th><th>Qué hace</th></tr></thead>
+            <tbody>
+              <tr><td>File → New Repository…</td><td>Crea un repositorio Git en una carpeta nueva</td></tr>
+              <tr><td>Pestaña "Changes"</td><td>Muestra qué archivos cambiaron desde el último commit</td></tr>
+              <tr><td>Casilla junto a un archivo</td><td>Lo incluye (o excluye) del próximo commit</td></tr>
+              <tr><td>Campo "Summary" + "Commit to main"</td><td>Guarda una "fotografía" con los cambios marcados</td></tr>
+              <tr><td>Pestaña "History"</td><td>Muestra el historial de commits</td></tr>
+              <tr><td>"Publish repository"</td><td>Crea el repositorio remoto en GitHub y sube tu historial (primera vez)</td></tr>
+              <tr><td>"Push origin" / "Publish branch"</td><td>Sube tus commits nuevos al remoto</td></tr>
+              <tr><td>"Fetch origin"</td><td>Trae y combina cambios del remoto</td></tr>
+              <tr><td>Repository → Clone Repository…</td><td>Copia un repositorio remoto completo a tu computadora</td></tr>
+              <tr><td>"Current Branch"</td><td>Muestra y cambia entre ramas</td></tr>
+              <tr><td>"Current Branch" → "New Branch"</td><td>Crea una rama nueva y se mueve a ella</td></tr>
+              <tr><td>Branch → "Merge into Current Branch…"</td><td>Integra los cambios de otra rama en la actual</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">G. .gitignore (plantilla para el proyecto del curso)</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <p class="small-muted">Al crear el repositorio con <strong>File → New Repository…</strong>, el desplegable <strong>"Git ignore"</strong> te deja elegir <em>"Java"</em> — GitHub Desktop genera el archivo por ti, automáticamente. Si quieres agregarle líneas extra, ábrelo desde VS Code y complétalo así:</p>
+        <pre><code># Java / Maven (lo usarás desde la Semana 7)
+target/
+*.class
+.idea/
+*.iml
+
+# General
+.DS_Store
+*.log
+notas_personales.txt</code></pre>
+        <div class="small-muted">Es un archivo de texto plano llamado exactamente <code>.gitignore</code> (con el punto al inicio), en la raíz del proyecto. Los archivos que coincidan con esas líneas dejan de aparecer en "Changes".</div>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">H. Problemas comunes y su traducción</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-sm small mb-0">
+            <thead><tr><th>GitHub Desktop muestra…</th><th>Significa…</th></tr></thead>
+            <tbody>
+              <tr><td>Botón "Commit to main" gris/deshabilitado</td><td>Falta escribir el mensaje en "Summary", o no hay ningún archivo marcado en "Changes".</td></tr>
+              <tr><td>No aparece "Publish repository"</td><td>Ese botón solo aparece la primera vez; después se llama "Push origin". Revisa que tengas sesión iniciada.</td></tr>
+              <tr><td>"This branch is X commits behind main"</td><td>Alguien (o tú, en otra computadora) subió cambios que aún no tienes; clic en "Fetch origin" para traerlos.</td></tr>
+              <tr><td>Repositorio publicado como privado</td><td>En github.com → Settings → Danger Zone → "Change repository visibility" → Public.</td></tr>
+              <tr><td>"There isn't anything to commit"</td><td>No hay cambios nuevos que guardar — todo ya está en el último commit.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="small-muted mt-2">Guía completa de instalación y solución de problemas: <a href="instalacion_github_desktop.html#troubleshooting">Instala GitHub Desktop — Troubleshooting</a>.</div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Cheat Sheet — Semana 3 · Git y GitHub, con GitHub Desktop (formato 18 semanas) · Referencia de comandos: <a href="anexo_comandos.html">Anexo</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

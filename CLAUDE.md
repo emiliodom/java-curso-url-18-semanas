@@ -48,7 +48,64 @@ portal.
 
 - **Semana 1** (Fundamentos de Java: variables, tipos, casting, operadores) — completa.
 - **Semana 2** (Condicionales, ciclos, métodos, clases/objetos simples) — completa.
-- **Semanas 3–18** — pendientes, mismo patrón descrito en este archivo.
+- **Semana 3** (Git y GitHub: control de versiones) — completa. Primera semana
+  cuyo tema no es sintaxis Java: ver más abajo cómo se adaptó la plantilla.
+- **Semanas 4–18** — pendientes, mismo patrón descrito en este archivo.
+
+### Cuando el tema de la semana no es sintaxis Java (ej. Git, MVC, despliegue)
+
+La plantilla de abajo asume "código Java" por defecto, pero no todas las
+semanas lo son (Semana 3 = Git/GitHub; Semanas 5–6 = patrones/arquitectura;
+Semana 14–16 = despliegue/QA). Ajustes aplicados en la Semana 3 que sirven de
+precedente:
+
+- **`ejercicios.html`** puede ser de terminal/consola en vez de compilador
+  online — usa el mismo formato (pista + solución en `<details>`), solo
+  cambia el entorno de ejecución.
+- **`guia_programador_python.html`**: si el tema no es sintaxis (no hay
+  "traducción Python↔Java" posible), pivotea su contenido a lo que sí
+  aplique — en Git fue ".gitignore Python vs Java" + "GUI↔CLI" — pero
+  **conserva el nombre de archivo, la posición en el navbar y el formato de
+  4 "ejercicios de traducción"** para no romper la consistencia entre
+  semanas. Cambiar solo la etiqueta del nav si el texto "Python→Java" no
+  aplica (Semana 3 usó "Puente Git").
+- **`instalacion.html`** de la Semana 1 se puede referenciar con ancla
+  (`#paso4`, etc.) desde `clase.html`/`ejercicios.html` de semanas
+  posteriores cuando profundizan un tema ya instalado ahí (ej. Git).
+- **Páginas de instalación adicionales fuera de la Semana 1** sí están
+  permitidas cuando cubren una herramienta nueva que la Semana 1 no incluyó
+  (ej. `instalacion_github_desktop.html` en la Semana 3, para la ruta 100%
+  gráfica de Git con GitHub Desktop). No es una violación de "solo Semana 1
+  tiene instalacion.html": esa regla es sobre no duplicar JDK/VS Code/Git
+  CLI, no sobre prohibir guías de instalación nuevas para herramientas
+  nuevas. Patrón a seguir: mismo estilo de página que `instalacion.html`
+  (índice con anclas, checkpoints ✅ por paso, tabla de troubleshooting en
+  acordeón, sección de videos en español, Plan B sin instalar nada), enlazar
+  cruzado con anclas hacia/desde la Semana 1 para las partes que sí se
+  solapan (ej. VS Code/extensión Java), y agregarla al navbar de las 9
+  páginas de esa semana + una tarjeta en su `index.html`.
+
+### Challenge con retroalimentación instantánea (toasts) — patrón desde Semana 3
+
+Cuando el challenge se presta a evaluar **cada movimiento** (no solo al
+pulsar "Verificar"), usar el patrón de toasts introducido en la Semana 3:
+
+- `styles.css` incluye el componente `.toast-stack`/`.toast-item` (colores
+  ok/warn/bad/info) — **ya está en el `styles.css` a partir de la Semana 3**;
+  cualquier semana nueva debe copiar el `styles.css` de la Semana 3 en
+  adelante (no el de la Semana 1/2) para heredarlo.
+- `toast.js` (archivo nuevo, copiar verbatim junto a `quiz.js`): expone
+  `showToast(mensaje, tipo)`. Requiere `<div class="toast-stack" id="toastStack">`
+  en la página y debe cargarse **antes** del script que lo usa.
+- **Regla clave para no agotar tokens en la retroalimentación:** clasificar
+  cada pieza con una `categoría` (ej. `init`, `stage`, `commit`, `push`) y
+  cada slot con su categoría esperada. La función de feedback compara por
+  categoría/orden con ~4 mensajes genéricos (correcto / va antes / va después
+  / sintaxis no coincide / es una trampa), **nunca** un mensaje por cada
+  combinación pieza×slot posible. Ver `challenge.html` de la Semana 3 para el
+  patrón completo (`feedbackForDrop()`).
+- Esto se suma (no reemplaza) al patrón de verificación final por
+  "Verificar" + banner de puntaje, que sigue igual que semanas 1–2.
 
 ---
 
@@ -69,8 +126,9 @@ contenido al tema de esa semana según `Nuevo_Programa_18_semanas.md`.
 | `challenge.html` | Juego drag & drop "Arma el código", 3 niveles (fácil/medio/difícil), medio y difícil con piezas trampa (distractors) | ~400–450 líneas |
 | `entregable.html` | Plantilla rellenable de la Guía de Aprendizaje N: partes con % que suman 100, reflexión, lista de cotejo, rúbrica | ~160–180 líneas |
 | `README.md` | Índice corto de la carpeta + evidencias de la semana | ~30–40 líneas |
-| `styles.css` | **Copiar verbatim** de una semana existente (no reinventar) | 349 líneas |
+| `styles.css` | **Copiar verbatim** de la semana más reciente (no reinventar) — incluye el componente de toasts desde la Semana 3 | ~380 líneas |
 | `quiz.js` | **Copiar verbatim** — motor de quiz genérico, solo cambia el comentario de cabecera con el número de semana | 74 líneas |
+| `toast.js` | **Copiar verbatim** solo si el challenge de esa semana da retroalimentación por movimiento (ver sección de toasts más abajo) | 25 líneas |
 
 Todas las páginas comparten: navbar con los mismos 8 enlaces (+ "Instalación"
 solo en Semana 1), botón **"Exportar a PDF"** (`window.print()` + reglas

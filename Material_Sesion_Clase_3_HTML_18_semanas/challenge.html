@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Challenge — Ordena el flujo Git (Semana 3)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 3 — Git</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="guia_programador_python.html">Puente Git</a></li>
+          <li class="nav-item"><a class="nav-link active" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="entregable.html">Entregable</a></li>
+          <li class="nav-item"><a class="nav-link" href="instalacion_github_desktop.html">GitHub Desktop</a></li>
+          <li class="nav-item"><a class="nav-link" href="anexo_comandos.html">Anexo: Comandos</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Challenge · Ordena el flujo Git · Semana 3 · Con GitHub Desktop</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Arrastra cada acción a su lugar correcto</h1>
+          <div class="small-muted">Un flujo de GitHub Desktop desordenado. Cada vez que sueltas una pieza recibes retroalimentación inmediata (arriba a la derecha). También puedes usar <strong>clic para tomar → clic para soltar</strong> en tablet o celular.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="exportChallengePdf()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <div class="row g-3">
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="h5 section-title">Cómo jugar</h2>
+            <ol class="small mb-0">
+              <li>Elige un nivel: <strong>Fácil → Medio → Difícil</strong>.</li>
+              <li>Lee la <strong>misión</strong>: qué flujo de GitHub Desktop debes reconstruir.</li>
+              <li>Arrastra las acciones del banco a las líneas numeradas (o tócalas: primero la acción, luego el destino).</li>
+              <li>Cada suelta te avisa al instante si vas bien, si el paso va antes/después, o si la acción no es válida.</li>
+              <li>Cuando todas las líneas estén en verde, pulsa <strong>Verificar</strong> para tu puntaje final.</li>
+              <li>Al terminar: escribe tu nombre y <strong>Exportar a PDF</strong>.</li>
+            </ol>
+          </div>
+        </div>
+        <div class="callout warning mt-3">
+          <div class="fw-semibold">Ojo en Medio y Difícil</div>
+          <div class="small-muted">Hay <strong>acciones trampa</strong>: se ven parecidas a las correctas pero son un botón que no existe, un orden ilógico, o algo destructivo. Déjalas en el banco.</div>
+        </div>
+        <div class="card mt-3">
+          <div class="card-body">
+            <h2 class="h6 section-title">Tu progreso</h2>
+            <div id="progressList" class="small">
+              <div>🟡 Fácil: <span id="prog-facil">sin intentar</span></div>
+              <div>🟠 Medio: <span id="prog-medio">sin intentar</span></div>
+              <div>🔴 Difícil: <span id="prog-dificil">sin intentar</span></div>
+            </div>
+            <label class="form-label fw-semibold mt-3 mb-1" for="studentName">Nombre (para el PDF)</label>
+            <input id="studentName" class="form-control form-control-sm" type="text" placeholder="Nombre y apellido" />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3 no-print">
+              <div class="btn-group" role="group" aria-label="Nivel">
+                <button class="btn btn-outline-primary level-btn active" data-level="facil" onclick="loadLevel('facil')">🟡 Fácil</button>
+                <button class="btn btn-outline-primary level-btn" data-level="medio" onclick="loadLevel('medio')">🟠 Medio</button>
+                <button class="btn btn-outline-primary level-btn" data-level="dificil" onclick="loadLevel('dificil')">🔴 Difícil</button>
+              </div>
+              <span class="badge text-bg-secondary" id="attemptsBadge">Verificaciones: 0</span>
+            </div>
+
+            <div class="callout mb-3">
+              <div class="fw-semibold">Misión — <span id="levelName"></span></div>
+              <div class="small-muted" id="levelMission"></div>
+            </div>
+
+            <h3 class="h6 fw-bold">Banco de acciones</h3>
+            <div id="pool" class="dd-pool mb-3" aria-label="Banco de acciones"></div>
+
+            <h3 class="h6 fw-bold">Tu flujo (pasos 1 a <span id="lineCount"></span>)</h3>
+            <div id="target" class="dd-target mb-3" aria-label="Flujo Git a armar"></div>
+
+            <div id="resultBanner" class="score-banner"></div>
+
+            <div class="d-flex gap-2 flex-wrap no-print mt-3">
+              <button class="btn btn-primary" onclick="verify()">✔ Verificar</button>
+              <button class="btn btn-outline-secondary" onclick="loadLevel(currentLevelKey)">↺ Reiniciar nivel</button>
+              <button class="btn btn-outline-warning" id="solutionBtn" onclick="showSolution()" disabled>💡 Ver solución (tras 3 verificaciones)</button>
+              <button class="btn btn-outline-dark btn-export ms-auto" onclick="exportChallengePdf()">Exportar a PDF</button>
+            </div>
+
+            <details class="mt-3">
+              <summary class="fw-semibold">¿Qué deberías ver al terminar este flujo?</summary>
+              <pre class="mt-2"><code id="expectedOutput"></code></pre>
+              <div class="small-muted">Cuando logres 100%, repite el mismo flujo en tu propia GitHub Desktop y comprueba que coincide. ¿Prefieres los comandos? Mira el <a href="anexo_comandos.html">Anexo: Comandos</a> — es exactamente el mismo flujo, con <code>git</code>.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Challenge — Semana 3 · Ordena el flujo Git con GitHub Desktop (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="toast.js"></script>
+  <script>
+    // ===== Definición de niveles =====
+    // Cada línea: { text, cat } — cat clasifica la etapa del flujo (para
+    // retroalimentación general, no exhaustiva por combinación exacta).
+    // distractors: { text, cat: 'trap' } — acciones inválidas, ilógicas o destructivas.
+    var CATEGORY_LABELS = {
+      init: 'crear repositorio (New Repository)',
+      stage: 'revisar cambios (Changes)',
+      commit: 'guardar cambios (Commit to main)',
+      publish: 'conectar y subir (Publish repository)',
+      verify: 'verificar en GitHub (View on GitHub)',
+      branch: 'crear/cambiar de rama (Current Branch)',
+      push: 'subir cambios de una rama (Publish branch)',
+      merge: 'fusionar ramas (Merge)'
+    };
+
+    var CATEGORY_TIPS_OK = {
+      init: 'Así arranca todo proyecto en GitHub Desktop: una sola vez.',
+      stage: 'Ya revisaste qué cambió — GitHub Desktop marca los archivos automáticamente.',
+      commit: '¡Fotografía guardada! Ya vive en tu historial local (pestaña "History").',
+      publish: 'Tu repositorio ya existe en GitHub y tu historial ya subió, en un solo clic.',
+      verify: 'Confirmaste que tu trabajo vive también en internet.',
+      branch: 'Ahora trabajas en una copia paralela, sin tocar main.',
+      push: 'Tu rama ya vive también en GitHub.',
+      merge: 'Los cambios de la rama ya son parte de la rama actual.'
+    };
+
+    var LEVELS = {
+      facil: {
+        name: 'Fácil — Tu primer commit local',
+        mission: 'Ordena las acciones para crear un repositorio, revisar un cambio y guardar tu primer commit en GitHub Desktop.',
+        lines: [
+          { text: 'File → New Repository...', cat: 'init' },
+          { text: 'Revisar el cambio en la pestaña "Changes"', cat: 'stage' },
+          { text: 'Escribir el resumen y clic en "Commit to main"', cat: 'commit' }
+        ],
+        distractors: [],
+        output: 'La pestaña "History" mostraría:\n1 commit — tu mensaje de resumen.'
+      },
+      medio: {
+        name: 'Medio — Conectar y subir a GitHub',
+        mission: 'Ordena el flujo completo: crear el repositorio, revisar y confirmar tus cambios, y publicarlo en GitHub por primera vez.',
+        lines: [
+          { text: 'File → New Repository... (con README)', cat: 'init' },
+          { text: 'Revisar el cambio en la pestaña "Changes"', cat: 'stage' },
+          { text: 'Escribir el resumen y clic en "Commit to main"', cat: 'commit' },
+          { text: 'Clic en "Publish repository"', cat: 'publish' },
+          { text: 'Repository → "View on GitHub"', cat: 'verify' }
+        ],
+        distractors: [
+          { text: 'Clic en "Discard changes" antes de hacer commit', cat: 'trap' },
+          { text: 'Buscar "git push" en el menú Repository', cat: 'trap' },
+          { text: 'Clic en "Fetch origin" antes de publicar', cat: 'trap' }
+        ],
+        output: 'Al hacer clic en "View on GitHub" verías tus archivos en línea, con 1 commit: tu mensaje de resumen.'
+      },
+      dificil: {
+        name: 'Difícil — Rama, cambios y merge',
+        mission: 'Crea una rama para un cambio, confírmalo, súbelo a GitHub y luego intégralo de vuelta en main, sin pasar por la interfaz de GitHub.',
+        lines: [
+          { text: 'Current Branch → "New Branch" → "feature-formulario" → Create Branch', cat: 'branch' },
+          { text: 'Editar el archivo y revisar el cambio en "Changes"', cat: 'stage' },
+          { text: 'Escribir el resumen y clic en "Commit to feature-formulario"', cat: 'commit' },
+          { text: 'Clic en "Publish branch"', cat: 'push' },
+          { text: 'Current Branch → cambiar a "main"', cat: 'branch' },
+          { text: 'Branch → "Merge into Current Branch..." → elegir "feature-formulario"', cat: 'merge' }
+        ],
+        distractors: [
+          { text: 'Current Branch → "New Branch" → nombre "main"', cat: 'trap' },
+          { text: 'Clic en "Publish repository" de nuevo', cat: 'trap' },
+          { text: 'Eliminar la rama antes de fusionarla', cat: 'trap' }
+        ],
+        output: 'main terminaría con los cambios de "feature-formulario" ya integrados, y la rama seguiría también disponible en GitHub (puedes borrarla después desde "Current Branch").'
+      }
+    };
+
+    var currentLevelKey = 'facil';
+    var attempts = 0;
+    var progress = { facil: null, medio: null, dificil: null };
+    var selectedPiece = null;
+
+    function shuffle(arr) {
+      var a = arr.slice();
+      for (var i = a.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = a[i]; a[i] = a[j]; a[j] = t;
+      }
+      return a;
+    }
+
+    function makePiece(text, cat, order) {
+      var el = document.createElement('div');
+      el.className = 'dd-piece';
+      el.textContent = text;
+      el.setAttribute('draggable', 'true');
+      el.dataset.text = text;
+      el.dataset.cat = cat;
+      el.dataset.order = order === undefined ? '-1' : String(order);
+      el.addEventListener('dragstart', function (e) {
+        el.classList.add('dragging');
+        e.dataTransfer.setData('text/plain', '');
+        window._dragged = el;
+      });
+      el.addEventListener('dragend', function () {
+        el.classList.remove('dragging');
+        window._dragged = null;
+      });
+      el.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (selectedPiece === el) {
+          el.classList.remove('selected');
+          selectedPiece = null;
+        } else {
+          if (selectedPiece) selectedPiece.classList.remove('selected');
+          selectedPiece = el;
+          el.classList.add('selected');
+        }
+      });
+      return el;
+    }
+
+    // Retroalimentación general por categoría: NO hay un mensaje por cada
+    // combinación pieza/slot posible — solo 4 casos generales + la etiqueta
+    // de la categoría involucrada. Esto evita "explotar" las posibilidades.
+    function feedbackForDrop(piece, slotIndex) {
+      var level = LEVELS[currentLevelKey];
+      var expected = level.lines[slotIndex];
+
+      if (piece.dataset.text === expected.text) {
+        var label = CATEGORY_LABELS[expected.cat] || expected.cat;
+        return { ok: true, type: 'ok', msg: '✓ Paso correcto (' + label + '). ' + (CATEGORY_TIPS_OK[expected.cat] || '') };
+      }
+
+      if (piece.dataset.cat === 'trap') {
+        return { ok: false, type: 'bad', msg: 'Esa acción no existe, no aplica aquí, o es destructiva. Revisa el botón exacto con cuidado.' };
+      }
+
+      var order = parseInt(piece.dataset.order, 10);
+      var pieceLabel = CATEGORY_LABELS[piece.dataset.cat] || piece.dataset.cat;
+
+      if (order < slotIndex) {
+        return { ok: false, type: 'warn', msg: 'Ese paso (' + pieceLabel + ') ya debía haber pasado antes. Va más temprano en el flujo.' };
+      }
+      if (order > slotIndex) {
+        return { ok: false, type: 'warn', msg: 'Ese paso (' + pieceLabel + ') todavía no toca aquí. Va más adelante en el flujo.' };
+      }
+      return { ok: false, type: 'info', msg: 'Vas en la etapa correcta (' + pieceLabel + '), pero no es exactamente ese botón/acción. Revisa el texto con cuidado.' };
+    }
+
+    function placePiece(piece, slot) {
+      var existing = slot.querySelector('.dd-piece');
+      if (existing) document.getElementById('pool').appendChild(existing);
+      slot.appendChild(piece);
+      piece.classList.remove('selected');
+      selectedPiece = null;
+
+      var slotIndex = Array.prototype.indexOf.call(document.querySelectorAll('#target .dd-slot'), slot);
+      var fb = feedbackForDrop(piece, slotIndex);
+      slot.classList.remove('correct', 'incorrect');
+      slot.classList.add(fb.ok ? 'correct' : 'incorrect');
+      showToast(fb.msg, fb.type);
+    }
+
+    function setupDropzone(zone, isSlot) {
+      zone.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        if (isSlot) zone.classList.add('over');
+      });
+      zone.addEventListener('dragleave', function () {
+        zone.classList.remove('over');
+      });
+      zone.addEventListener('drop', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        zone.classList.remove('over');
+        var piece = window._dragged;
+        if (!piece) return;
+        if (isSlot) placePiece(piece, zone);
+        else zone.appendChild(piece);
+      });
+      zone.addEventListener('click', function (e) {
+        if (!selectedPiece) return;
+        if (isSlot) {
+          placePiece(selectedPiece, zone);
+        } else if (e.target === zone) {
+          zone.appendChild(selectedPiece);
+          selectedPiece.classList.remove('selected');
+          selectedPiece = null;
+        }
+      });
+    }
+
+    function loadLevel(key) {
+      currentLevelKey = key;
+      attempts = 0;
+      selectedPiece = null;
+      document.getElementById('attemptsBadge').textContent = 'Verificaciones: 0';
+      document.getElementById('solutionBtn').disabled = true;
+
+      var level = LEVELS[key];
+      document.getElementById('levelName').textContent = level.name;
+      document.getElementById('levelMission').textContent = level.mission;
+      document.getElementById('lineCount').textContent = level.lines.length;
+      document.getElementById('expectedOutput').textContent = level.output;
+
+      document.querySelectorAll('.level-btn').forEach(function (b) {
+        b.classList.toggle('active', b.dataset.level === key);
+      });
+
+      var banner = document.getElementById('resultBanner');
+      banner.className = 'score-banner';
+      banner.innerHTML = '';
+
+      var target = document.getElementById('target');
+      target.innerHTML = '';
+      level.lines.forEach(function () {
+        var slot = document.createElement('div');
+        slot.className = 'dd-slot';
+        setupDropzone(slot, true);
+        target.appendChild(slot);
+      });
+
+      var pool = document.getElementById('pool');
+      pool.innerHTML = '';
+      var pieces = level.lines.map(function (l, i) { return makePiece(l.text, l.cat, i); })
+        .concat(level.distractors.map(function (d) { return makePiece(d.text, 'trap', -1); }));
+      shuffle(pieces).forEach(function (p) { pool.appendChild(p); });
+
+      showToast('Nivel "' + level.name + '" listo. Arrastra la primera acción.', 'info', 3000);
+    }
+
+    function verify() {
+      attempts++;
+      document.getElementById('attemptsBadge').textContent = 'Verificaciones: ' + attempts;
+      if (attempts >= 3) document.getElementById('solutionBtn').disabled = false;
+
+      var level = LEVELS[currentLevelKey];
+      var slots = document.querySelectorAll('#target .dd-slot');
+      var correct = 0;
+      slots.forEach(function (slot, i) {
+        var piece = slot.querySelector('.dd-piece');
+        slot.classList.remove('correct', 'incorrect');
+        if (piece && piece.dataset.text === level.lines[i].text) {
+          correct++;
+          slot.classList.add('correct');
+        } else {
+          slot.classList.add('incorrect');
+        }
+      });
+
+      var total = level.lines.length;
+      var pct = Math.round((correct / total) * 100);
+      progress[currentLevelKey] = { pct: pct, attempts: attempts };
+      var progEl = document.getElementById('prog-' + currentLevelKey);
+      progEl.textContent = pct + '% (' + attempts + ' verificación' + (attempts === 1 ? '' : 'es') + ')';
+
+      var banner = document.getElementById('resultBanner');
+      var msg;
+      if (pct === 100) {
+        msg = '🎉 ¡Flujo completo! Ese es el orden real que usarías en GitHub Desktop.';
+        showToast('¡Nivel completado! ' + level.name, 'ok', 5000);
+      } else if (pct >= 60) {
+        msg = 'Casi. Revisa los toasts de cada paso: te dicen si algo va antes, después, o si es una acción trampa.';
+      } else {
+        msg = 'Respira y piensa la secuencia: primero preparas el repositorio local, luego lo conectas y subes a GitHub.';
+      }
+      banner.className = 'score-banner show alert ' + (pct === 100 ? 'alert-success' : pct >= 60 ? 'alert-warning' : 'alert-danger');
+      banner.innerHTML =
+        '<div class="h5 mb-1">' + level.name + ' — ' + correct + ' / ' + total + ' pasos (' + pct + '%)</div>' +
+        '<div>' + msg + '</div>' +
+        '<div class="small mt-1">Verificaciones: ' + attempts + ' · Fecha: ' + new Date().toLocaleString('es-GT') + '</div>';
+    }
+
+    function showSolution() {
+      var level = LEVELS[currentLevelKey];
+      var pool = document.getElementById('pool');
+      var slots = document.querySelectorAll('#target .dd-slot');
+      document.querySelectorAll('#target .dd-piece').forEach(function (p) { pool.appendChild(p); });
+      level.lines.forEach(function (line, i) {
+        var piece = Array.prototype.find.call(pool.querySelectorAll('.dd-piece'), function (p) {
+          return p.dataset.text === line.text;
+        });
+        if (piece) {
+          slots[i].appendChild(piece);
+          slots[i].classList.remove('incorrect');
+          slots[i].classList.add('correct');
+        }
+      });
+      var banner = document.getElementById('resultBanner');
+      banner.className = 'score-banner show alert alert-warning';
+      banner.innerHTML = '<div class="fw-semibold">Solución mostrada (no cuenta como logro propio).</div><div class="small">Estúdiala, pulsa "Reiniciar nivel" e inténtalo de nuevo sin ayuda.</div>';
+      showToast('Solución mostrada — vuelve a intentarlo sin ayuda.', 'info');
+    }
+
+    function exportChallengePdf() {
+      var name = document.getElementById('studentName').value || '';
+      var attempted = Object.keys(progress).some(function (k) { return progress[k]; });
+      if (!attempted) {
+        showToast('Verifica al menos un nivel antes de exportar tu resultado.', 'warn');
+        return;
+      }
+      if (!name.trim()) {
+        showToast('Escribe tu nombre en la casilla "Nombre (para el PDF)".', 'warn');
+        document.getElementById('studentName').focus();
+        return;
+      }
+      window.print();
+    }
+
+    setupDropzone(document.getElementById('pool'), false);
+    loadLevel('facil');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
