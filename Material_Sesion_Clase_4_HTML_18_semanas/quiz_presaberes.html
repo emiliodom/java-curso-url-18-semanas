@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz de Presaberes — Semana 4</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 4 — Ramas</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="guia_programador_python.html">Puente Git</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="entregable.html">Entregable</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Quiz de Presaberes · 5 minutos · No cuenta para nota</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">¿De dónde partimos hoy?</h1>
+          <div class="small-muted">8 preguntas sobre trabajo en paralelo, revisión de código y repaso de Git (Semana 3). Responde honestamente: es tu foto de entrada.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 900px;">
+    <div class="card mb-3">
+      <div class="card-body">
+        <label class="form-label fw-semibold" for="studentName">Nombre del estudiante (aparecerá en el PDF)</label>
+        <input id="studentName" class="form-control" type="text" placeholder="Nombre y apellido" />
+      </div>
+    </div>
+
+    <div class="quiz-q" data-answer="c">
+      <div class="fw-semibold mb-2">1) Estás editando tu proyecto real y quieres probar una idea que podría no funcionar. ¿Qué es más seguro?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q1" id="q1a" value="a" /><label class="form-check-label" for="q1a">Editar directo en main y deshacer si sale mal</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q1" id="q1b" value="b" /><label class="form-check-label" for="q1b">Borrar el proyecto y empezar de nuevo</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q1" id="q1c" value="c" /><label class="form-check-label" for="q1c">Crear una rama nueva y probar ahí, sin tocar main</label></div>
+      <div class="quiz-feedback ok">✅ Exacto: una rama te deja experimentar sin arriesgar la versión que ya funciona.</div>
+      <div class="quiz-feedback ko">Lo más seguro es crear una <strong>rama</strong> nueva. Hoy aprenderás exactamente cómo.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="a">
+      <div class="fw-semibold mb-2">2) Dos personas editan la misma línea de un mismo archivo, en ramas distintas, y luego intentan fusionar ambas. ¿Qué es probable que pase?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q2" id="q2a" value="a" /><label class="form-check-label" for="q2a">Aparece un conflicto de fusión que hay que resolver a mano</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q2" id="q2b" value="b" /><label class="form-check-label" for="q2b">Git elige automáticamente cuál versión es la "correcta"</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q2" id="q2c" value="c" /><label class="form-check-label" for="q2c">El archivo se borra por seguridad</label></div>
+      <div class="quiz-feedback ok">✅ Correcto: Git avisa del conflicto y espera que una persona decida qué versión conservar.</div>
+      <div class="quiz-feedback ko">Aparece un <strong>conflicto de fusión</strong>: Git no adivina, avisa y espera que decidas tú. Lo practicarás hoy.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="b">
+      <div class="fw-semibold mb-2">3) En pocas palabras, ¿qué es una "Pull Request"?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q3" id="q3a" value="a" /><label class="form-check-label" for="q3a">Un comando para borrar una rama</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q3" id="q3b" value="b" /><label class="form-check-label" for="q3b">Una propuesta formal de integrar tus cambios, para que alguien la revise antes</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q3" id="q3c" value="c" /><label class="form-check-label" for="q3c">Una copia de seguridad automática</label></div>
+      <div class="quiz-feedback ok">✅ Correcto: es la puerta de entrada formal para que tus cambios lleguen a main, con espacio para revisión.</div>
+      <div class="quiz-feedback ko">Es una <strong>propuesta</strong>: "aquí están mis cambios, revísenlos antes de integrarlos". Hoy crearás la tuya.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="b">
+      <div class="fw-semibold mb-2">4) Un compañero comenta tu código: "esto está mal". ¿Es una buena retroalimentación?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q4" id="q4a" value="a" /><label class="form-check-label" for="q4a">Sí, es directa y suficiente</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q4" id="q4b" value="b" /><label class="form-check-label" for="q4b">No: falta explicar qué está mal y por qué, o qué se sugiere en su lugar</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q4" id="q4c" value="c" /><label class="form-check-label" for="q4c">Sí, siempre que sea rápida</label></div>
+      <div class="quiz-feedback ok">✅ Correcto: una revisión útil es específica y constructiva, nunca solo un juicio.</div>
+      <div class="quiz-feedback ko">No es suficiente. Una buena revisión explica <strong>qué</strong> cambiarías y <strong>por qué</strong> — lo verás hoy en la práctica.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="a">
+      <div class="fw-semibold mb-2">5) ¿Para qué sirve principalmente un archivo README.md?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q5" id="q5a" value="a" /><label class="form-check-label" for="q5a">Explicar de qué trata el proyecto, cómo usarlo y quién lo hizo</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q5" id="q5b" value="b" /><label class="form-check-label" for="q5b">Ejecutar el programa más rápido</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q5" id="q5c" value="c" /><label class="form-check-label" for="q5c">Guardar las contraseñas del proyecto</label></div>
+      <div class="quiz-feedback ok">✅ Correcto: es la primera puerta de entrada para cualquiera que abra tu repositorio.</div>
+      <div class="quiz-feedback ko">Sirve para <strong>documentar</strong> el proyecto: qué es, cómo se usa y quién lo hizo — nunca para guardar contraseñas (eso nunca se sube al repositorio).</div>
+    </div>
+
+    <div class="quiz-q" data-answer="c">
+      <div class="fw-semibold mb-2">6) ¿Ya viste alguna vez, en cualquier programa, un mensaje que mencione "conflict" o "merge"?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q6" id="q6a" value="a" /><label class="form-check-label" for="q6a">Sí</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q6" id="q6b" value="b" /><label class="form-check-label" for="q6b">No, es mi primera vez</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q6" id="q6c" value="c" /><label class="form-check-label" for="q6c">No estoy seguro/a</label></div>
+      <div class="quiz-feedback ok">✅ Cualquier respuesta es válida aquí — es solo diagnóstica. Hoy provocarás y resolverás uno a propósito.</div>
+      <div class="quiz-feedback ko">Cualquier respuesta era válida 🙂 — hoy, sin importar tu experiencia previa, resolverás un conflicto real paso a paso.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="b">
+      <div class="fw-semibold mb-2">7) (Repaso Semana 3) ¿Qué acción "toma la fotografía" de tus cambios en Git?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q7" id="q7a" value="a" /><label class="form-check-label" for="q7a">git push</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q7" id="q7b" value="b" /><label class="form-check-label" for="q7b">Un commit ("Commit to ...")</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q7" id="q7c" value="c" /><label class="form-check-label" for="q7c">git remote add</label></div>
+      <div class="quiz-feedback ok">✅ Correcto: un commit guarda una fotografía del estado actual de tus archivos, con mensaje y fecha.</div>
+      <div class="quiz-feedback ko">Es el <strong>commit</strong>. <code>push</code> sube esas fotografías a GitHub; hoy verás que también puede ocurrir dentro de una rama.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="a">
+      <div class="fw-semibold mb-2">8) ¿Por qué crees que la rama <code>main</code> "debe permanecer siempre estable"?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q8" id="q8a" value="a" /><label class="form-check-label" for="q8a">Porque ahí vive la versión que cualquiera podría ver o usar en cualquier momento</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q8" id="q8b" value="b" /><label class="form-check-label" for="q8b">Porque Git no permite editarla nunca</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q8" id="q8c" value="c" /><label class="form-check-label" for="q8c">Porque solo el profesor puede tocarla</label></div>
+      <div class="quiz-feedback ok">✅ Correcto: por eso los cambios en desarrollo viven en ramas, y solo llegan a main cuando ya funcionan.</div>
+      <div class="quiz-feedback ko">Porque <code>main</code> es la versión "pública" del proyecto. Sí se puede editar — pero solo con cambios ya probados y revisados.</div>
+    </div>
+
+    <div id="scoreBanner" class="score-banner"></div>
+
+    <div class="d-flex gap-2 flex-wrap mt-3 no-print">
+      <button class="btn btn-primary btn-lg" onclick="gradeQuiz()">Calificar</button>
+      <button class="btn btn-outline-secondary" onclick="resetQuiz()">Reintentar</button>
+      <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      <a class="btn btn-outline-primary ms-auto" href="clase.html">Continuar a la clase →</a>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Quiz de Presaberes — Semana 4 · Ramas y colaboración (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="quiz.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

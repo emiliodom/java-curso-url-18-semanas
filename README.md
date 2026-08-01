@@ -31,7 +31,9 @@ documentos oficiales y el enlace a la evaluación anónima de la sesión.
 
 - ✅ **Semana 1** — Fundamentos de Java y tipos de datos (11 jul 2026)
 - ✅ **Semana 2** — Lógica, métodos y buenas prácticas (18 jul 2026)
-- ⏳ Semanas 3–18 — pendientes (se activan en el portal al publicarse)
+- ✅ **Semana 3** — Git y GitHub: control de versiones (25 jul 2026)
+- ✅ **Semana 4** — Ramas, colaboración y documentación (1 ago 2026)
+- ⏳ Semanas 5–18 — pendientes (se activan en el portal al publicarse)
 
 ## Evaluación anónima de cada sesión
 

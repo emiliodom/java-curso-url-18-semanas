@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Entregable — Guía de Aprendizaje 4 (Semana 4)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 4 — Ramas</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="guia_programador_python.html">Puente Git</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link active" href="entregable.html">Entregable</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Entregable · Guía de Aprendizaje 4 · Trabajo autónomo (1 pt)</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Rama de desarrollo y README profesional del proyecto</h1>
+          <div class="small-muted">Completa esta plantilla durante la semana y súbela <strong>antes de la Sesión 5 (8 de agosto de 2026)</strong>. Llena los campos, luego <strong>Exportar a PDF</strong> y súbelo al aula virtual como <code>Guia4_TuNombre.pdf</code>.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 950px;">
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title mb-3">Datos del estudiante</h2>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label small fw-semibold">Nombre completo</label>
+            <input class="form-control fill-line" type="text" />
+          </div>
+          <div class="col-md-3">
+            <label class="form-label small fw-semibold">Carné</label>
+            <input class="form-control fill-line" type="text" />
+          </div>
+          <div class="col-md-3">
+            <label class="form-label small fw-semibold">Fecha de entrega</label>
+            <input class="form-control fill-line" type="text" placeholder="dd/mm/2026" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout mb-3">
+      <div class="fw-semibold">Instrucciones generales</div>
+      <ol class="small-muted mb-0">
+        <li>Este entregable trabaja sobre el <strong>mismo repositorio</strong> de la Guía 3: no crees un repositorio nuevo.</li>
+        <li>Sigue la guía paso a paso de <a href="proyecto.html">Proyecto</a> (rama <code>development</code> + README + Pull Request) antes de llenar esta plantilla.</li>
+        <li>El dato más importante que debes entregar es el <strong>enlace a tu Pull Request</strong> (Parte D).</li>
+        <li>Trabaja con autonomía: antes de preguntar, relee el mensaje en pantalla, consulta el <a href="cheatsheet.html">cheat sheet</a> e intenta de nuevo.</li>
+      </ol>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title">Parte A — Verificación de entorno (15%)</h2>
+        <p class="small-muted">Confirma que trabajaste sobre tu repositorio real (no uno de práctica) y que <code>main</code> permanece estable.</p>
+        <label class="form-label small fw-semibold">Enlace de tu repositorio (el mismo de la Guía 3):</label>
+        <input class="form-control fill-line mb-2" type="text" placeholder="https://github.com/tu-usuario/tu-repo" />
+        <label class="form-label small fw-semibold mt-2">¿Qué contenía tu README.md antes de esta guía? (resumen breve)</label>
+        <textarea class="form-control" rows="2"></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title">Parte B — Rama development (25%)</h2>
+        <p class="small-muted">Creaste la rama <code>development</code> con "Current Branch" → "New Branch" y trabajaste ahí, sin tocar <code>main</code> directamente.</p>
+        <label class="form-label small fw-semibold">Nombre exacto de la rama que creaste:</label>
+        <input class="form-control fill-line mb-2" type="text" placeholder="development" />
+        <label class="form-label small fw-semibold mt-2">Mensaje del commit tal como aparece en la pestaña "History" de esa rama:</label>
+        <textarea class="code-area" rows="3"></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title">Parte C — README.md profesional (30%)</h2>
+        <p class="small-muted">Pega el contenido completo de tu README actualizado (debe incluir: nombre del proyecto, descripción de la entidad, funcionalidades planeadas, tecnologías, cómo clonar/ejecutar y autor — plantilla en <a href="cheatsheet.html#seccionF">cheat sheet, sección F</a>).</p>
+        <textarea class="code-area" rows="10" placeholder="# Guardería Esperanza&#10;&#10;Aplicación web para..."></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title">Parte D — Pull Request y revisión (20%)</h2>
+        <p class="small-muted">Publicaste la rama, abriste una Pull Request de <code>development</code> hacia <code>main</code>, y obtuviste (o hiciste) al menos un comentario de revisión antes de fusionar.</p>
+        <label class="form-label small fw-semibold">Enlace de tu Pull Request (¡el dato más importante de esta guía!):</label>
+        <input class="form-control fill-line mb-2" type="text" placeholder="https://github.com/tu-usuario/tu-repo/pull/1" />
+        <label class="form-label small fw-semibold mt-2">Comentario de revisión recibido (o autorrevisión honesta si trabajaste solo/a):</label>
+        <textarea class="form-control mb-2" rows="3"></textarea>
+        <label class="form-label small fw-semibold mt-2">¿Ya fusionaste la Pull Request a main? Describe el resultado:</label>
+        <textarea class="form-control" rows="2"></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title">Parte E — Reflexión (10%)</h2>
+        <ol class="small">
+          <li class="mb-2">
+            <strong>Disciplina en el flujo:</strong> ¿por qué crees que main "debe permanecer estable" y qué hiciste esta semana para lograrlo?
+            <textarea class="form-control mt-1" rows="3"></textarea>
+          </li>
+          <li class="mb-2">
+            <strong>Colaboración y respeto:</strong> describe el comentario de revisión que diste o recibiste. ¿Fue específico y constructivo?
+            <textarea class="form-control mt-1" rows="3"></textarea>
+          </li>
+          <li>
+            <strong>Orientación a la calidad:</strong> ¿qué parte de tu README todavía te falta completar en las próximas semanas?
+            <textarea class="form-control mt-1" rows="3"></textarea>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title">Lista de cotejo (marca antes de entregar)</h2>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck1" /><label class="form-check-label small" for="ck1">Trabajé sobre mi repositorio real del proyecto, no uno de práctica.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck2" /><label class="form-check-label small" for="ck2">Creé y usé la rama <code>development</code> en vez de editar main directamente.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck3" /><label class="form-check-label small" for="ck3">Mi README incluye las 5 secciones mínimas (nombre, descripción, funcionalidades, tecnologías, autor).</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck4" /><label class="form-check-label small" for="ck4">El enlace de mi Pull Request es público y funciona.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck5" /><label class="form-check-label small" for="ck5">Exporté el PDF con el nombre <code>Guia4_TuNombre.pdf</code>.</label></div>
+      </div>
+    </div>
+
+    <div class="callout warning">
+      <div class="fw-semibold">Rúbrica rápida (1 punto total)</div>
+      <div class="small-muted">Parte A: 0.15 · Parte B: 0.25 · Parte C: 0.30 · Parte D: 0.20 · Parte E: 0.10. Se valora que la rama, el README y la Pull Request existan de verdad en GitHub (se verifican los enlaces), que <code>main</code> se haya mantenido estable durante el proceso, y la honestidad de la reflexión. Entregar tarde: −25% por día.</div>
+    </div>
+
+    <div class="d-flex gap-2 mt-3 no-print">
+      <button class="btn btn-primary btn-lg btn-export" onclick="window.print()">Exportar a PDF</button>
+      <a class="btn btn-outline-primary btn-lg" href="index.html">Volver al inicio</a>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Entregable — Guía de Aprendizaje 4 · Semana 4 (formato 18 semanas) · Fecha límite: antes de la Sesión 5
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

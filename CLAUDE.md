@@ -50,7 +50,11 @@ portal.
 - **Semana 2** (Condicionales, ciclos, métodos, clases/objetos simples) — completa.
 - **Semana 3** (Git y GitHub: control de versiones) — completa. Primera semana
   cuyo tema no es sintaxis Java: ver más abajo cómo se adaptó la plantilla.
-- **Semanas 4–18** — pendientes, mismo patrón descrito en este archivo.
+- **Semana 4** (Ramas, colaboración y documentación) — completa. Continúa el
+  tema de Git/GitHub de la Semana 3 (branches, Pull Requests, revisión de
+  código, conflictos básicos, README profesional) y agrega una 11ª página,
+  `proyecto.html` — ver "Página adicional `proyecto.html`" más abajo.
+- **Semanas 5–18** — pendientes, mismo patrón descrito en este archivo.
 
 ### Cuando el tema de la semana no es sintaxis Java (ej. Git, MVC, despliegue)
 
@@ -84,6 +88,23 @@ precedente:
   cruzado con anclas hacia/desde la Semana 1 para las partes que sí se
   solapan (ej. VS Code/extensión Java), y agregarla al navbar de las 9
   páginas de esa semana + una tarjeta en su `index.html`.
+
+### Página adicional `proyecto.html` — patrón desde Semana 4
+
+Cuando el tema de la semana requiere que el estudiante aplique lo aprendido
+directamente sobre el **repositorio real del proyecto del curso** (no solo
+sobre un ejemplo/práctica desechable), agregar una página extra
+`proyecto.html` con esa guía paso a paso — separada de `ejercicios.html`
+(que debe usar un dominio de práctica distinto y desechable, ver regla de
+no-repetición más abajo) y de `entregable.html` (que sigue siendo la
+plantilla calificable con rúbrica). `proyecto.html` es instructivo, no
+calificable: checkpoints ✅ por paso, tabla de solución de problemas en
+`<details>`, Plan B, y un botón final que enlaza a `entregable.html`. Se
+agrega al navbar de las 9+ páginas de esa semana (ver Semana 4: 9 enlaces,
+`Proyecto` justo antes de `Entregable`) y como tarjeta en el `index.html` de
+la semana. No es obligatoria cada semana — solo cuando el tema exige tocar
+el repositorio real (ej. ramas, arquitectura, despliegue), a diferencia de
+temas que se practican solo en ejercicios sueltos.
 
 ### Challenge con retroalimentación instantánea (toasts) — patrón desde Semana 3
 

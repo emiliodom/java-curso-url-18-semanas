@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Proyecto — Rama de desarrollo y README (Semana 4)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 4 — Ramas</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="guia_programador_python.html">Puente Git</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link active" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="entregable.html">Entregable</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Proyecto del curso · Semana 4 · Aplica lo aprendido a tu repositorio real</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Crea la rama de desarrollo y documenta tu proyecto</h1>
+          <div class="small-muted">Aquí aplicas, sobre tu repositorio <strong>real</strong> (el de la Guía 3), exactamente lo mismo que practicaste en <a href="ejercicios.html">Ejercicios</a>: una rama, un README profesional y tu primera Pull Request.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <div class="callout mb-4">
+      <div class="fw-semibold">Recordatorio: ¿qué estás construyendo?</div>
+      <div class="small-muted">
+        Una aplicación web para el <strong>registro y gestión de una entidad sin fines de lucro</strong>
+        (guardería, casa hogar o dispensario comunitario), construida de forma incremental durante las 18 semanas
+        del curso. Con el tiempo incluirá: registro de beneficiarios, operaciones CRUD, autenticación por perfiles y
+        roles, una interfaz amigable y responsiva, documentación técnica y despliegue en línea con HTTPS. Hoy le toca
+        el turno a la <strong>organización con ramas</strong> y a la <strong>documentación (README)</strong>.
+      </div>
+    </div>
+
+    <div class="callout warning mb-4">
+      <div class="fw-semibold">¿Todavía no tienes tu repositorio de la Semana 3?</div>
+      <div class="small-muted">Este material asume que ya completaste la <a href="../Material_Sesion_Clase_3_HTML_18_semanas/entregable.html">Guía 3</a>: un repositorio publicado en GitHub con al menos un commit y un README inicial. Si te falta, complétalo primero — todo lo de esta página depende de tener ese repositorio real ya en línea.</div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title" id="paso1">Paso 1 — Verifica tu repositorio real</h2>
+        <ol>
+          <li>Abre GitHub Desktop → botón <strong>"Current Repository"</strong> (arriba a la izquierda) → selecciona el repositorio de tu proyecto (el que publicaste en la Guía 3, no el de práctica de <a href="ejercicios.html">Ejercicios</a>).</li>
+          <li>Confirma que "Current Branch" muestre <code>main</code> y que no tengas cambios pendientes sin confirmar en "Changes".</li>
+        </ol>
+        <div class="callout success mb-0">✅ Checkpoint: ves el nombre correcto de tu proyecto en "Current Repository" y la rama activa es <code>main</code>.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title" id="paso2">Paso 2 — Crea la rama <code>development</code></h2>
+        <p class="small-muted">A partir de hoy, todo cambio nuevo del proyecto vive primero en esta rama — <code>main</code> se reserva para versiones ya revisadas y estables.</p>
+        <ol>
+          <li>Botón <strong>"Current Branch"</strong> → <strong>"New Branch"</strong>.</li>
+          <li>Nombre exacto: <code>development</code> (en minúsculas, sin espacios) → <strong>"Create Branch"</strong>.</li>
+        </ol>
+        <div class="callout success mb-0">✅ Checkpoint: "Current Branch" ahora muestra <code>development</code>.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title" id="paso3">Paso 3 — Documenta tu README.md profesional</h2>
+        <p class="small-muted">Dentro de <code>development</code>, actualiza el <code>README.md</code> real de tu proyecto con esta estructura mínima (plantilla completa en el <a href="cheatsheet.html#seccionF">cheat sheet, sección F</a>):</p>
+        <ul>
+          <li><strong>Nombre del proyecto</strong> y una descripción breve de la entidad sin fines de lucro a la que atenderá.</li>
+          <li><strong>Funcionalidades planeadas</strong>: registro de beneficiarios, CRUD, autenticación por roles, interfaz responsiva.</li>
+          <li><strong>Tecnologías</strong>: Java, Spring Boot (a partir de la Semana 7).</li>
+          <li><strong>Cómo clonar y ejecutar</strong> (aunque hoy sea un solo paso: "clonar este repositorio" — crecerá cada semana).</li>
+          <li><strong>Autor</strong>: tu nombre.</li>
+        </ul>
+        <ol>
+          <li><strong>Repository → Open in Visual Studio Code</strong>, edita <code>README.md</code> con la estructura de arriba, guarda.</li>
+          <li>GitHub Desktop → "Changes" → Summary: <em>"Documenta el proyecto con README profesional"</em> → <strong>"Commit to development"</strong>.</li>
+        </ol>
+        <div class="callout success mb-0">✅ Checkpoint: tu commit aparece en la pestaña "History" de la rama <code>development</code>, no en <code>main</code>.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title" id="paso4">Paso 4 — Publica la rama y abre tu Pull Request</h2>
+        <ol>
+          <li>Clic en <strong>"Publish branch"</strong>.</li>
+          <li>Menú <strong>Branch → Create Pull Request</strong>. Verifica: <code>base: main</code> ← <code>compare: development</code>.</li>
+          <li>Título: <em>"Rama de desarrollo: README profesional"</em>. Descripción: qué documentaste y por qué.</li>
+          <li>Clic en <strong>"Create pull request"</strong>. <strong>Copia el enlace</strong> — lo necesitarás en el <a href="entregable.html">Entregable</a>.</li>
+        </ol>
+        <div class="callout success mb-0">✅ Checkpoint: tienes una Pull Request abierta y su enlace guardado.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title" id="paso5">Paso 5 — Pide (o simula) una revisión de código</h2>
+        <p class="small-muted">La revisión entre pares es parte del valor de la semana: colaboración y respeto.</p>
+        <ul>
+          <li><strong>Si trabajas con un compañero:</strong> comparte el enlace de tu Pull Request y pide que deje al menos un comentario específico en "Files changed" antes de fusionar.</li>
+          <li><strong>Si trabajas solo/a por ahora:</strong> repasa tu propio README con ojo crítico 24 horas después de escribirlo (o pide a alguien de tu familia que lo lea) y dejáte a ti mismo un comentario honesto de qué mejorarías — se acepta como evidencia de autorrevisión.</li>
+        </ul>
+        <div class="callout success mb-0">✅ Checkpoint: hay al menos un comentario de revisión (propio o de un compañero) en la Pull Request.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title" id="paso6">Paso 6 — Fusiona y sincroniza</h2>
+        <ol>
+          <li>En la Pull Request (github.com): <strong>"Merge pull request"</strong> → <strong>"Confirm merge"</strong>.</li>
+          <li>En GitHub Desktop: "Current Branch" → <strong>main</strong> → clic en <strong>"Fetch origin"</strong>.</li>
+          <li>Confirma que el README de <code>main</code> ya muestra tu documentación profesional.</li>
+        </ol>
+        <div class="callout success mb-0">✅ Checkpoint: <code>main</code> tiene el README actualizado y la Pull Request aparece como "Merged".</div>
+      </div>
+    </div>
+
+    <details class="mb-3">
+      <summary class="fw-semibold">Solución de problemas frecuentes</summary>
+      <div class="table-responsive mt-2">
+        <table class="table table-sm small mb-0">
+          <thead><tr><th>Situación</th><th>Qué hacer</th></tr></thead>
+          <tbody>
+            <tr><td>No aparece el botón "New Branch"</td><td>Confirma que estás dentro del repositorio correcto en "Current Repository" (no el de práctica de Ejercicios).</td></tr>
+            <tr><td>El commit apareció en main por error</td><td>Desde el historial, clic derecho sobre el commit → "Move to Branch..." → elige <code>development</code>.</td></tr>
+            <tr><td>La Pull Request muestra conflictos</td><td>Sigue exactamente los pasos de <a href="cheatsheet.html">Cheat Sheet, sección E</a>: editar el archivo, borrar las marcas y hacer "Commit merge".</td></tr>
+            <tr><td>No tengo con quién simular la revisión</td><td>Usa la opción de autorrevisión honesta del Paso 5, o pide a tu profesor/a que deje el comentario.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <div class="callout success mb-4">
+      <div class="fw-semibold">Plan B (si algo falla técnicamente)</div>
+      <div class="small-muted">Si GitHub Desktop no permite crear la Pull Request: crea la rama <code>development</code> y edita el README directo en la interfaz web de GitHub (botón "Edit this file" estando en esa rama), luego abre la Pull Request desde ahí — el resultado final es el mismo.</div>
+    </div>
+
+    <div class="d-flex gap-2 flex-wrap no-print">
+      <a class="btn btn-primary btn-lg" href="entregable.html">Continuar al Entregable — Guía 4 →</a>
+      <a class="btn btn-outline-primary btn-lg" href="cheatsheet.html">Ver Cheat Sheet</a>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Proyecto — Semana 4 · Rama de desarrollo y README profesional (formato 18 semanas) · Entregable: <a href="entregable.html">entregable.html</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

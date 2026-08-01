@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ejercicios — Semana 4 (Ramas y colaboración)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 4 — Ramas</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link active" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="guia_programador_python.html">Puente Git</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="entregable.html">Entregable</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Guía de ejercicios · Semana 4 · Con GitHub Desktop</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">De la rama a la Pull Request, paso a paso</h1>
+          <div class="small-muted">Practicarás con un repositorio nuevo de bajo riesgo — el catálogo de una tienda de artículos deportivos ficticia — antes de aplicar lo mismo a tu proyecto real en la sección <a href="proyecto.html">Proyecto</a>.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <div class="callout mb-3">
+      <div class="fw-semibold">¿Por qué un repositorio aparte para practicar?</div>
+      <div class="small-muted">Vas a provocar un conflicto de fusión a propósito (Ejercicio 8) — mejor practicarlo aquí que en el repositorio real de tu proyecto. Cuando domines el flujo, repítelo con tu proyecto en <a href="proyecto.html">Proyecto</a>.</div>
+    </div>
+
+    <div class="callout mb-3">
+      <div class="fw-semibold">Plan B — si necesitas repasar GitHub Desktop</div>
+      <div class="small-muted">Revisa la instalación y lo básico de commits en <a href="../Material_Sesion_Clase_3_HTML_18_semanas/instalacion_github_desktop.html">Instala GitHub Desktop — Semana 3</a>, o practica el concepto de ramas en <a href="https://learngitbranching.js.org/?locale=es_ES" target="_blank" rel="noreferrer">Learn Git Branching</a> (simulador en el navegador).</div>
+    </div>
+
+    <div class="row g-3">
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 1 — Crea el repositorio de práctica <span class="badge text-bg-success">Calentamiento</span></h2>
+            <p class="small-muted mb-2">Objetivo: tener un repositorio nuevo, de bajo riesgo, para practicar ramas.</p>
+            <ol>
+              <li><strong>File → New Repository...</strong></li>
+              <li><strong>Name:</strong> <code>tienda-deportes-practica</code>.</li>
+              <li>Marca <strong>"Initialize this repository with a README"</strong> y elige <strong>Git ignore: Java</strong>.</li>
+              <li>Clic en <strong>"Create repository"</strong> y luego en <strong>"Publish repository"</strong> (público).</li>
+            </ol>
+            <details>
+              <summary class="fw-semibold">¿Qué deberías ver?</summary>
+              <div class="mt-2 small-muted">Tu repositorio en <code>github.com/tu-usuario/tienda-deportes-practica</code>, con un <code>README.md</code> inicial y la rama activa mostrando <strong>main</strong> en el botón "Current Branch".</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 2 — Crea tu primera rama <span class="badge text-bg-success">New Branch</span></h2>
+            <p class="small-muted mb-2">Objetivo: crear una rama para agregar el catálogo de productos, sin tocar <code>main</code>.</p>
+            <ol>
+              <li>Clic en el botón <strong>"Current Branch"</strong> (arriba).</li>
+              <li>Clic en <strong>"New Branch"</strong>, escribe <code>feature-catalogo</code> → <strong>"Create Branch"</strong>.</li>
+              <li>Confirma que "Current Branch" ahora muestra <code>feature-catalogo</code>.</li>
+            </ol>
+            <details>
+              <summary class="fw-semibold">¿Qué deberías ver?</summary>
+              <div class="mt-2 small-muted">GitHub Desktop te movió automáticamente a la nueva rama. Todavía es idéntica a <code>main</code> — no hay diferencias hasta que edites algo.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 3 — Trabaja en tu rama <span class="badge text-bg-primary">Changes + Commit</span></h2>
+            <p class="small-muted mb-2">Objetivo: hacer un cambio real dentro de la rama y confirmarlo con un commit.</p>
+            <ol>
+              <li>Menú <strong>Repository → Open in Visual Studio Code</strong>.</li>
+              <li>En <code>README.md</code>, agrega una sección: <code>## Catálogo de productos</code> con 3 productos de ejemplo (ej. balón, camiseta, tenis).</li>
+              <li>Guarda (<span class="kbd">Ctrl + S</span>) y vuelve a GitHub Desktop → pestaña "Changes".</li>
+              <li>Summary: <em>"Agrega sección de catálogo"</em> → <strong>"Commit to feature-catalogo"</strong>.</li>
+            </ol>
+            <details>
+              <summary class="fw-semibold">¿Qué deberías ver?</summary>
+              <div class="mt-2 small-muted">El botón de commit dice "Commit to feature-catalogo", no "main" — confirma que el cambio vive solo en tu rama.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 4 — Publica la rama <span class="badge text-bg-info">Publish branch</span></h2>
+            <p class="small-muted mb-2">Objetivo: subir tu rama nueva a GitHub (todavía separada de main).</p>
+            <ol>
+              <li>Con el commit ya hecho, busca el botón <strong>"Publish branch"</strong> arriba.</li>
+              <li>Clic — GitHub Desktop sube la rama <code>feature-catalogo</code> tal cual, sin tocar <code>main</code> en GitHub.</li>
+              <li>Menú <strong>Repository → View on GitHub</strong>: cambia el selector de ramas y confirma que <code>feature-catalogo</code> ya existe en línea.</li>
+            </ol>
+            <details>
+              <summary class="fw-semibold">¿Qué deberías ver?</summary>
+              <div class="mt-2 small-muted">En github.com aparece un botón amarillo <strong>"Compare & pull request"</strong> — GitHub detectó que subiste una rama nueva y sugiere el siguiente paso.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 5 — Abre una Pull Request <span class="badge text-bg-info">Pull Request</span></h2>
+            <p class="small-muted mb-2">Objetivo: proponer formalmente que <code>feature-catalogo</code> se integre a <code>main</code>.</p>
+            <ol>
+              <li>En GitHub Desktop: menú <strong>Branch → Create Pull Request</strong> (o el botón "Compare & pull request" en github.com).</li>
+              <li>Verifica: <code>base: main</code> ← <code>compare: feature-catalogo</code>.</li>
+              <li>Título: <em>"Agrega catálogo de productos"</em>. Descripción: qué agregaste y por qué.</li>
+              <li>Clic en <strong>"Create pull request"</strong>.</li>
+            </ol>
+            <details>
+              <summary class="fw-semibold">¿Qué deberías ver?</summary>
+              <div class="mt-2 small-muted">Una página de Pull Request con tu título, descripción, y la pestaña "Files changed" mostrando exactamente la línea que agregaste al README, resaltada en verde.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 6 — Revisa el código <span class="badge text-bg-warning">Revisión</span></h2>
+            <p class="small-muted mb-2">Objetivo: practicar dar retroalimentación de código de forma respetuosa y específica.</p>
+            <ol>
+              <li>En la pestaña <strong>"Files changed"</strong> de tu propia Pull Request, coloca el cursor sobre la línea que agregaste.</li>
+              <li>Clic en el ícono <strong>"+"</strong> que aparece a la izquierda de la línea para dejar un comentario.</li>
+              <li>Escribe un comentario constructivo, como si fueras un compañero revisando (ej. "¿Agregarías también el precio de cada producto?").</li>
+            </ol>
+            <details>
+              <summary class="fw-semibold">Pista</summary>
+              <div class="mt-2 small-muted">Un buen comentario de revisión describe qué mejorarías y por qué — nunca solo "está mal" o "no me gusta".</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 7 — Fusiona y sincroniza <span class="badge text-bg-primary">Merge</span></h2>
+            <p class="small-muted mb-2">Objetivo: integrar tu rama a main y traer el cambio de vuelta a tu computadora.</p>
+            <ol>
+              <li>En la Pull Request (github.com): clic en <strong>"Merge pull request"</strong> → <strong>"Confirm merge"</strong>.</li>
+              <li>En GitHub Desktop: "Current Branch" → selecciona <strong>main</strong> → clic en <strong>"Fetch origin"</strong>.</li>
+              <li>Confirma que tu README en <code>main</code> ya tiene la sección de catálogo.</li>
+              <li>(Opcional) borra <code>feature-catalogo</code>: clic derecho sobre ella en "Current Branch" → <strong>"Delete"</strong>.</li>
+            </ol>
+            <details>
+              <summary class="fw-semibold">¿Qué deberías ver?</summary>
+              <div class="mt-2 small-muted">El README de <code>main</code> (no solo el de la rama) ya incluye tu sección de catálogo. La Pull Request en GitHub aparece marcada como "Merged" en morado.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 8 — Reto integrador: provoca y resuelve un conflicto <span class="badge text-bg-danger">Integrador</span></h2>
+            <p class="small-muted mb-2">Objetivo: vivir un conflicto de fusión real y resolverlo con calma.</p>
+            <ol>
+              <li>Desde <code>main</code> actualizada, crea dos ramas nuevas: <code>feature-precios</code> y <code>feature-descuentos</code>.</li>
+              <li>En <strong>ambas</strong>, edita la <strong>misma línea</strong> del README (ej. la línea del balón) con textos distintos, y haz commit en cada una por separado.</li>
+              <li>Publica y fusiona primero <code>feature-precios</code> a <code>main</code> (sin conflicto, es la primera).</li>
+              <li>Publica <code>feature-descuentos</code> e intenta fusionarla: aparecerá un conflicto porque esa línea ya cambió en <code>main</code>.</li>
+              <li>Abre el archivo en conflicto en VS Code, decide qué texto conservar, borra las marcas <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> / <code>=======</code> / <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>, guarda y confirma el "Commit merge" en GitHub Desktop.</li>
+            </ol>
+            <details>
+              <summary class="fw-semibold">¿Qué deberías ver al terminar?</summary>
+              <div class="mt-2 small-muted"><code>main</code> con la línea final que tú decidiste conservar (o combinar), sin ninguna marca de conflicto visible en el archivo. Este es exactamente el flujo que puede aparecer en tu proyecto real cuando trabajes en equipo.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="callout success mt-4">
+      <div class="fw-semibold">¿Terminaste todo?</div>
+      <div class="small-muted">Pasa al <a href="challenge.html">Challenge "Ordena el flujo de colaboración"</a> en nivel Difícil, o aplica exactamente este flujo a tu proyecto real en <a href="proyecto.html">Proyecto</a>. Antes de pedir ayuda: relee el mensaje en pantalla, consulta el <a href="cheatsheet.html">cheat sheet</a> e intenta de nuevo.</div>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Ejercicios — Semana 4 · Ramas y colaboración, con GitHub Desktop (formato 18 semanas) · Aplica esto a tu proyecto en <a href="proyecto.html">Proyecto</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

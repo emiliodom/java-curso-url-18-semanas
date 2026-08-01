@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cheat Sheet — Semana 4 (Ramas y colaboración)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 4 — Ramas</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link active" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="guia_programador_python.html">Puente Git</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="entregable.html">Entregable</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Cheat Sheet · Semana 4 · GitHub Desktop</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Referencia rápida — ramas, Pull Requests y README</h1>
+          <div class="small-muted">Guárdala: la usarás toda la semana, en tu repositorio de práctica y en tu proyecto real.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <div class="callout mb-4">
+      <div class="fw-semibold">Regla de oro de la semana</div>
+      <div class="small-muted"><code>main</code> siempre debe funcionar. Cualquier cambio nuevo — por pequeño que sea — empieza en una <strong>rama</strong>, y solo vuelve a <code>main</code> a través de una <strong>Pull Request</strong> revisada.</div>
+    </div>
+
+    <h2 class="h4 section-title mb-3" id="seccionA">A. Crear una rama y trabajar en ella</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <ol class="mb-0">
+          <li class="mb-2">Botón <strong>"Current Branch"</strong> (arriba) → <strong>"New Branch"</strong>.</li>
+          <li class="mb-2">Nombre descriptivo y en minúsculas, con guiones: <code>feature-nombre-corto</code> (ej. <code>feature-login</code>), nunca <code>prueba</code> o <code>cosas</code>.</li>
+          <li class="mb-2">Clic en <strong>"Create Branch"</strong> — te mueve automáticamente a ella.</li>
+          <li>Edita tus archivos con normalidad; "Changes" → Summary → <strong>"Commit to nombre-de-tu-rama"</strong> (fíjate que el botón ya no dice "main").</li>
+        </ol>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">B. Publicar la rama y crear una Pull Request</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <ol class="mb-0">
+          <li class="mb-2">Con al menos un commit en tu rama: clic en <strong>"Publish branch"</strong>.</li>
+          <li class="mb-2">Menú <strong>Branch → Create Pull Request</strong> (o el botón "Compare & pull request" en github.com).</li>
+          <li class="mb-2">Verifica la dirección: <code>base: main</code> ← <code>compare: tu-rama</code> — tus cambios van HACIA main.</li>
+          <li class="mb-2">Título claro + descripción de qué cambia y por qué → <strong>"Create pull request"</strong>.</li>
+        </ol>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">C. Revisar código con respeto</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <p class="small-muted">En la pestaña <strong>"Files changed"</strong> de la Pull Request, cualquiera con acceso puede comentar una línea específica (ícono "+" a la izquierda de la línea).</p>
+        <div class="table-responsive">
+          <table class="table table-sm small mb-0">
+            <thead><tr><th>Comentario destructivo (evitar)</th><th>Comentario constructivo (usar)</th></tr></thead>
+            <tbody>
+              <tr><td>"Esto está mal."</td><td>"¿Consideraste validar que el campo no esté vacío antes de guardarlo?"</td></tr>
+              <tr><td>"No entiendo por qué hiciste esto."</td><td>"¿Podrías agregar un comentario explicando por qué se necesita este cálculo?"</td></tr>
+              <tr><td>(sin comentar nada, solo rechazar)</td><td>Aprobar con una sugerencia concreta de mejora para después.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">D. Aprobar y fusionar (merge)</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <ol class="mb-0">
+          <li class="mb-2">Sin conflictos pendientes, la Pull Request muestra el botón verde <strong>"Merge pull request"</strong> → <strong>"Confirm merge"</strong>.</li>
+          <li class="mb-2">En GitHub Desktop: "Current Branch" → <strong>main</strong> → clic en <strong>"Fetch origin"</strong> (trae el cambio ya fusionado a tu computadora).</li>
+          <li>(Opcional) borra la rama que ya cumplió su propósito: clic derecho sobre ella en "Current Branch" → <strong>"Delete"</strong>.</li>
+        </ol>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">E. Resolver un conflicto de fusión (merge conflict)</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <p class="small-muted">Ocurre cuando dos ramas cambiaron la <strong>misma línea</strong> de un archivo. GitHub marca el archivo con estas tres señales dentro del texto:</p>
+        <pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+(el contenido que ya existe en main)
+=======
+(el contenido que trae tu rama)
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; nombre-de-tu-rama</code></pre>
+        <ol class="mb-0">
+          <li class="mb-2">Abre el archivo marcado en VS Code (GitHub Desktop lo señala en rojo con "Conflicts found").</li>
+          <li class="mb-2">Decide qué contenido conservar: uno de los dos, o una combinación de ambos.</li>
+          <li class="mb-2"><strong>Borra las tres marcas</strong> (<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code>, <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>) — deben desaparecer del archivo por completo, no solo el texto entre ellas.</li>
+          <li class="mb-2">Guarda. En GitHub Desktop, el archivo pasa de "conflicto" a listo para confirmar.</li>
+          <li>Escribe un mensaje (ej. <em>"Resuelve conflicto en README"</em>) y clic en <strong>"Commit merge"</strong>.</li>
+        </ol>
+        <div class="callout danger mt-3 mb-0">
+          <strong>Nunca</strong> resuelvas un conflicto borrando todo el archivo o aceptando "lo que sea" sin leer — ambas versiones representan trabajo real de alguien.
+        </div>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3" id="seccionF">F. README.md profesional — estructura mínima</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <p class="small-muted">Un README responde, en orden, "¿qué es esto?", "¿cómo lo uso?" y "¿quién lo hizo?". Plantilla mínima para el proyecto del curso:</p>
+        <pre><code># Nombre del proyecto
+
+Breve descripción: qué hace y para qué entidad sin fines de lucro
+(guardería, casa hogar, dispensario) está pensado.
+
+## Funcionalidades
+
+- Registro de beneficiarios/usuarios
+- Gestión de datos (CRUD)
+- Autenticación por perfiles y roles
+
+## Tecnologías
+
+Java, Spring Boot (a partir de la Semana 7)
+
+## Cómo clonar y ejecutar
+
+1. Clonar este repositorio
+2. (Se completará semana a semana conforme el proyecto crezca)
+
+## Autor
+
+Tu nombre — Programación I, URL</code></pre>
+        <div class="small-muted">No hace falta que todas las secciones estén completas hoy — el README <strong>crece con el proyecto</strong>. Lo importante es que la estructura ya exista y se mantenga actualizada.</div>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">G. Botones esenciales (tabla resumen)</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-sm small mb-0">
+            <thead><tr><th>Botón / acción en GitHub Desktop</th><th>Qué hace</th></tr></thead>
+            <tbody>
+              <tr><td>"Current Branch"</td><td>Muestra y cambia entre ramas</td></tr>
+              <tr><td>"Current Branch" → "New Branch"</td><td>Crea una rama nueva y se mueve a ella</td></tr>
+              <tr><td>"Publish branch"</td><td>Sube una rama nueva a GitHub (equivalente a "Publish repository" pero para ramas)</td></tr>
+              <tr><td>Branch → "Create Pull Request"</td><td>Abre el navegador en github.com para proponer la fusión</td></tr>
+              <tr><td>"Merge pull request" (en github.com)</td><td>Integra los cambios de la rama a la rama base (normalmente main)</td></tr>
+              <tr><td>"Fetch origin"</td><td>Trae y combina cambios del remoto a tu copia local</td></tr>
+              <tr><td>Branch → "Merge into Current Branch..."</td><td>Fusiona otra rama dentro de la rama activa, sin pasar por github.com</td></tr>
+              <tr><td>Archivo marcado "Conflicts found"</td><td>Ese archivo necesita resolución manual antes del commit de fusión</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">H. Problemas comunes y su traducción</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-sm small mb-0">
+            <thead><tr><th>GitHub Desktop / GitHub muestra…</th><th>Significa…</th></tr></thead>
+            <tbody>
+              <tr><td>"This branch has conflicts that must be resolved"</td><td>Otra rama ya cambió la misma línea; resuélvelo manualmente (sección E) antes de fusionar.</td></tr>
+              <tr><td>No aparece "Merge pull request"</td><td>Faltan resolver conflictos, o alguien más debe aprobar primero según las reglas del repositorio.</td></tr>
+              <tr><td>"This branch is out-of-date with the base branch"</td><td><code>main</code> avanzó desde que creaste tu rama; conviene traer esos cambios antes de fusionar.</td></tr>
+              <tr><td>Botón "Commit merge" gris/deshabilitado</td><td>Todavía queda al menos un archivo marcado como "Conflicts found" sin resolver.</td></tr>
+              <tr><td>"There isn't anything to commit"</td><td>No hay cambios nuevos que guardar — revisa que editaste y guardaste el archivo correcto.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Cheat Sheet — Semana 4 · Ramas y colaboración, con GitHub Desktop (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
