@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ficha del Proyecto — Propuesta inicial</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --brand: #0d6efd;
+      --bg-soft: #f6f8fb;
+      --code-bg: #0b1220;
+      --code-fg: #e6edf3;
+      --ok: #22c55e;
+      --warn: #f59e0b;
+      --bad: #ef4444;
+    }
+    body { background: var(--bg-soft); }
+    .hero {
+      background:
+        radial-gradient(1200px circle at 10% 10%, rgba(13, 110, 253, 0.25), transparent 60%),
+        radial-gradient(900px circle at 90% 20%, rgba(102, 16, 242, 0.22), transparent 55%),
+        linear-gradient(180deg, #ffffff, var(--bg-soft));
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    .brand-pill {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .35rem .7rem; border-radius: 999px;
+      background: rgba(13, 110, 253, 0.12); color: #0b3d91; font-weight: 600;
+    }
+    .card { border: 1px solid rgba(0,0,0,.06); box-shadow: 0 10px 30px rgba(16,24,40,.06); }
+    .section-title { font-weight: 800; letter-spacing: -.02em; }
+    .small-muted { color: rgba(0,0,0,.65); }
+    .callout { border-left: 5px solid var(--brand); background: #fff; padding: 1rem; border-radius: .75rem; }
+    .callout.warning { border-left-color: var(--warn); }
+    .callout.success { border-left-color: var(--ok); }
+    .fill-line { border: none; border-bottom: 1.5px solid rgba(0,0,0,.35); width: 100%; background: transparent; }
+    textarea.code-area {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: .85rem; background: var(--code-bg); color: var(--code-fg);
+      border-radius: .5rem; width: 100%; padding: .75rem; border: none;
+    }
+    .btn-export::before { content: "🖨 "; }
+    @media print {
+      nav.navbar, .no-print, .btn, button { display: none !important; }
+      body { background: #fff !important; }
+      .hero { background: #fff !important; border-bottom: 2px solid #000; }
+      .card { box-shadow: none !important; border: 1px solid #999 !important; break-inside: avoid; }
+      textarea.code-area { background: #f3f4f6 !important; color: #111 !important; border: 1px solid #999; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Programación I — Portal</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">← Volver al portal</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Ficha del Proyecto · Propuesta inicial</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Registro del proyecto del curso</h1>
+          <div class="small-muted">Completa esta ficha con los datos generales de tu proyecto (la app para tu entidad sin fines de lucro). Es un registro inicial — se puede actualizar más adelante conforme el proyecto avance semana a semana.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 950px;">
+
+    <div class="callout mb-3">
+      <div class="fw-semibold">Instrucciones</div>
+      <div class="small-muted">Llena los campos con la información real de tu proyecto. Al terminar, pulsa <strong>Exportar a PDF</strong> y sube el archivo al aula virtual, o guárdalo como referencia para tus entregas de las próximas semanas.</div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title mb-3">Datos generales</h2>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label small fw-semibold">Nombre del proyecto</label>
+            <input class="form-control fill-line" type="text" placeholder="Ej: Guardería Esperanza" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label small fw-semibold">Fecha de la ficha</label>
+            <input class="form-control fill-line" type="text" placeholder="dd/mm/2026" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label small fw-semibold">Entidad / Institución con la que trabajará</label>
+            <input class="form-control fill-line" type="text" placeholder="Ej: Guardería Esperanza, Casa Hogar San José, Dispensario Comunitario..." />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label small fw-semibold">Ubicación</label>
+            <input class="form-control fill-line" type="text" placeholder="Municipio / departamento, país" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title mb-3">Integrantes</h2>
+        <p class="small-muted">Si trabajas de forma individual, completa únicamente la primera fila y escribe "Individual" en la columna Rol.</p>
+        <div class="table-responsive">
+          <table class="table table-sm align-middle">
+            <thead>
+              <tr><th style="width:35%">Nombre completo</th><th style="width:20%">Carné</th><th>Rol / responsabilidad</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><input class="form-control fill-line" type="text" /></td><td><input class="form-control fill-line" type="text" /></td><td><input class="form-control fill-line" type="text" /></td></tr>
+              <tr><td><input class="form-control fill-line" type="text" /></td><td><input class="form-control fill-line" type="text" /></td><td><input class="form-control fill-line" type="text" /></td></tr>
+              <tr><td><input class="form-control fill-line" type="text" /></td><td><input class="form-control fill-line" type="text" /></td><td><input class="form-control fill-line" type="text" /></td></tr>
+              <tr><td><input class="form-control fill-line" type="text" /></td><td><input class="form-control fill-line" type="text" /></td><td><input class="form-control fill-line" type="text" /></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title mb-3">Propuesta breve escrita del Proyecto</h2>
+        <p class="small-muted">En 1-2 párrafos: qué problema resuelve tu proyecto, a quién beneficia y qué funcionalidades planeas construir durante el curso (registro de beneficiarios, CRUD, autenticación, etc.).</p>
+        <textarea class="code-area" rows="8" placeholder="Nuestro proyecto es una aplicación web para..."></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title mb-3">Comentarios</h2>
+        <p class="small-muted">Cualquier información adicional, duda o contexto que el profesor deba conocer sobre este proyecto (ej. si ya tienen contacto con la entidad, restricciones de tiempo, etc.).</p>
+        <textarea class="form-control" rows="4"></textarea>
+      </div>
+    </div>
+
+    <div class="callout success mb-3">
+      <div class="fw-semibold">Antes de exportar</div>
+      <div class="small-muted">Revisa que el nombre del proyecto, la entidad y los integrantes estén completos — esta ficha servirá de referencia en las próximas guías y entregas del curso.</div>
+    </div>
+
+    <div class="d-flex gap-2 mt-3 no-print">
+      <button class="btn btn-primary btn-lg btn-export" onclick="window.print()">Exportar a PDF</button>
+      <a class="btn btn-outline-primary btn-lg" href="index.html">Volver al portal</a>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Ficha del Proyecto — Programación I · URL · Formato 18 semanas
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

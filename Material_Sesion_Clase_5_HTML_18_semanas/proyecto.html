@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Proyecto — Propuesta con estructura MVC (Semana 5)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 5 — MVC</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="guia_programador_python.html">Puente MVC</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link active" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="entregable.html">Entregable</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">★ Entrega Parcial 1 (5 pts) · Semana 5 · Aplica MVC a tu proyecto real</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Propuesta con estructura MVC de tu proyecto</h1>
+          <div class="small-muted">Aquí aplicas, sobre tu repositorio <strong>real</strong>, exactamente el mismo razonamiento que practicaste en <a href="ejercicios.html">Ejercicios</a> y el <a href="challenge.html">Challenge</a>: identificar Modelo, Vista y Controlador — pero ahora de tu propia aplicación.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <div class="callout warning mb-4">
+      <div class="fw-semibold">Esta es la entrega más grande hasta ahora — tómate tu tiempo</div>
+      <div class="small-muted">Vale <strong>5 puntos</strong> como "Avance del Proyecto — Entrega Parcial 1", además del punto normal de la <a href="entregable.html">Guía 5</a>. No es una implementación en código todavía (eso empieza en la Semana 7) — es una <strong>propuesta bien pensada</strong>: qué entidades tendrá tu Modelo, qué pantallas tendrá tu Vista, y qué acciones coordinará tu Controlador.</div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title" id="paso1">Paso 1 — Recuerda qué construyes</h2>
+        <p class="small-muted">Tu proyecto: una app para el <strong>registro y gestión de una entidad sin fines de lucro</strong> (guardería, casa hogar o dispensario comunitario), con registro de beneficiarios, operaciones CRUD, autenticación por roles y una interfaz responsiva. Antes de seguir, ten a la mano tu README.md de la <a href="../Material_Sesion_Clase_4_HTML_18_semanas/proyecto.html">Semana 4</a> — ahí ya describiste tu entidad y sus funcionalidades planeadas.</p>
+        <div class="callout success mb-0">✅ Checkpoint: tienes claro qué entidad atiende tu proyecto y qué funcionalidades planeaste.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title" id="paso2">Paso 2 — Identifica tu Modelo (datos y reglas)</h2>
+        <p class="small-muted">Lista 2 o 3 "entidades" reales de tu proyecto (lo que se guardará como datos) y una regla de negocio para cada una. Ejemplo, si tu entidad es una guardería:</p>
+        <pre><code>MODELO
+- Beneficiario: nombre, fecha de nacimiento, nombre del encargado
+  regla: "la fecha de nacimiento no puede ser futura"
+- Encargado: nombre, teléfono, parentesco
+  regla: "el teléfono debe tener 8 dígitos"</code></pre>
+        <div class="callout success mb-0">✅ Checkpoint: tienes al menos 2 entidades con sus atributos y al menos 1 regla de negocio cada una.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title" id="paso3">Paso 3 — Identifica tu Vista (pantallas)</h2>
+        <p class="small-muted">Lista las pantallas principales que un usuario vería. No necesitas diseñarlas hoy — solo nombrarlas y decir qué muestran.</p>
+        <pre><code>VISTA
+- Formulario de registro de beneficiario
+- Listado de beneficiarios registrados
+- Pantalla de inicio de sesión</code></pre>
+        <div class="callout success mb-0">✅ Checkpoint: tienes al menos 3 pantallas identificadas, coherentes con tus Modelos del Paso 2.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title" id="paso4">Paso 4 — Identifica tu Controlador (acciones)</h2>
+        <p class="small-muted">Por cada acción importante del usuario, describe qué coordina el Controlador (recibe → le pregunta al Modelo → decide qué Vista mostrar).</p>
+        <pre><code>CONTROLADOR
+- Registrar beneficiario: recibe el formulario, le pide al Modelo
+  validar y guardar, muestra el listado actualizado o el error.
+- Iniciar sesión: recibe usuario/contraseña, le pregunta al Modelo
+  si son válidos, muestra el panel principal o un error.</code></pre>
+        <div class="callout success mb-0">✅ Checkpoint: cada Controlador menciona qué recibe, a qué Modelo le pregunta, y qué Vista muestra según el resultado.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title" id="paso5">Paso 5 — Arma tu diagrama MVC</h2>
+        <p class="small-muted">Con los pasos 2 a 4 ya tienes todo el contenido — ahora solo hay que presentarlo como diagrama. Dos opciones válidas, elige la que prefieras:</p>
+        <ul>
+          <li><strong>Opción simple (sin herramientas nuevas):</strong> un archivo de texto <code>ARQUITECTURA.md</code> con las 3 secciones de arriba (Modelo/Vista/Controlador) y flechas de texto mostrando el flujo, ej. <code>Vista → Controlador → Modelo → Controlador → Vista</code>.</li>
+          <li><strong>Opción visual:</strong> un diagrama de cajas y flechas hecho en <a href="https://app.diagrams.net/" target="_blank" rel="noreferrer">draw.io</a> o Google Drawings, exportado como imagen y agregado a tu repositorio.</li>
+        </ul>
+        <div class="callout mb-0">
+          <div class="fw-semibold">No hace falta que sea perfecto</div>
+          <div class="small-muted">Lo que se evalúa es que las 3 capas estén bien identificadas y sean coherentes entre sí (que la Vista del Paso 3 tenga sentido con el Controlador del Paso 4, y ese con el Modelo del Paso 2) — no el nivel de diseño gráfico.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title" id="paso6">Paso 6 — Reorganiza las carpetas de tu repositorio</h2>
+        <p class="small-muted">Usando lo aprendido en la <a href="../Material_Sesion_Clase_4_HTML_18_semanas/index.html">Semana 4</a>: crea una rama nueva para este cambio.</p>
+        <ol>
+          <li>GitHub Desktop → "Current Branch" → "New Branch" → nombre <code>estructura-mvc</code>.</li>
+          <li>Dentro de tu proyecto, crea 3 carpetas: <code>modelo/</code>, <code>vista/</code>, <code>controlador/</code> (para el código que llegará en la Semana 7 — hoy solo son carpetas marcador de posición).</li>
+          <li>Dentro de cada carpeta, agrega un <code>README.md</code> corto explicando qué irá ahí (puedes usar el contenido de los pasos 2, 3 y 4).</li>
+          <li>Agrega también tu <code>ARQUITECTURA.md</code> o la imagen de tu diagrama en la raíz del proyecto.</li>
+          <li>"Changes" → Summary: <em>"Agrega propuesta de estructura MVC"</em> → <strong>"Commit to estructura-mvc"</strong>.</li>
+        </ol>
+        <div class="callout success mb-0">✅ Checkpoint: tu rama tiene las 3 carpetas, cada una con su README, más el diagrama general.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title" id="paso7">Paso 7 — Publica tu Pull Request</h2>
+        <ol>
+          <li>Clic en <strong>"Publish branch"</strong>.</li>
+          <li>Menú <strong>Branch → Create Pull Request</strong>. Verifica: <code>base: main</code> ← <code>compare: estructura-mvc</code>.</li>
+          <li>Título: <em>"Propuesta de arquitectura MVC — Entrega Parcial 1"</em>. En la descripción, pega o enlaza tu diagrama.</li>
+          <li>Clic en <strong>"Create pull request"</strong>. <strong>Copia el enlace</strong> — lo necesitarás en el <a href="entregable.html">Entregable</a>.</li>
+        </ol>
+        <div class="callout success mb-0">✅ Checkpoint: tienes una Pull Request abierta con tu diagrama visible en la descripción o en los archivos.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title" id="paso8">Paso 8 — Fusiona y sincroniza</h2>
+        <ol>
+          <li>(Si trabajas con un compañero) Pide una revisión rápida: ¿las 3 capas son coherentes entre sí?</li>
+          <li>"Merge pull request" → "Confirm merge" en github.com.</li>
+          <li>En GitHub Desktop: "Current Branch" → <strong>main</strong> → clic en <strong>"Fetch origin"</strong>.</li>
+        </ol>
+        <div class="callout success mb-0">✅ Checkpoint: tu repositorio en <code>main</code> ya muestra las carpetas <code>modelo/</code>, <code>vista/</code>, <code>controlador/</code> y tu diagrama.</div>
+      </div>
+    </div>
+
+    <details class="mb-3">
+      <summary class="fw-semibold">Solución de problemas frecuentes</summary>
+      <div class="table-responsive mt-2">
+        <table class="table table-sm small mb-0">
+          <thead><tr><th>Situación</th><th>Qué hacer</th></tr></thead>
+          <tbody>
+            <tr><td>No sé cuántas entidades debe tener mi Modelo</td><td>Empieza con 2: la entidad principal (ej. Beneficiario) y una relacionada (ej. Encargado/Donación). Puedes agregar más semanas después.</td></tr>
+            <tr><td>Mi Vista y mi Controlador no coinciden</td><td>Revisa que cada pantalla del Paso 3 tenga al menos una acción correspondiente en el Paso 4 — si una pantalla no tiene ninguna acción, probablemente falta un Controlador.</td></tr>
+            <tr><td>Git no me deja crear una carpeta vacía</td><td>Git no rastrea carpetas vacías — por eso cada carpeta debe tener su archivo <code>README.md</code> adentro, así ya no está vacía.</td></tr>
+            <tr><td>No sé usar draw.io</td><td>Usa la "opción simple" del Paso 5: un archivo de texto <code>ARQUITECTURA.md</code> es igual de válido.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <div class="callout success mb-4">
+      <div class="fw-semibold">Plan B (si algo falla técnicamente)</div>
+      <div class="small-muted">Si GitHub Desktop no coopera: crea las carpetas y archivos directo en la interfaz web de GitHub (botón "Add file" → "Create new file", escribiendo <code>modelo/README.md</code> como nombre para crear la carpeta automáticamente), luego abre la Pull Request desde ahí — el resultado final es el mismo.</div>
+    </div>
+
+    <div class="d-flex gap-2 flex-wrap no-print">
+      <a class="btn btn-primary btn-lg" href="entregable.html">Continuar al Entregable — Guía 5 →</a>
+      <a class="btn btn-outline-primary btn-lg" href="cheatsheet.html">Ver Cheat Sheet</a>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Proyecto — Semana 5 · Propuesta con estructura MVC · ★ Entrega Parcial 1 (formato 18 semanas) · Entregable: <a href="entregable.html">entregable.html</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guía Docente — Semana 5 (70 min)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 5 — MVC</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link active" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="guia_programador_python.html">Puente MVC</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="entregable.html">Entregable</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Guía Docente · Sesión sincrónica de 70 minutos</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Semana 5 — Patrones de diseño y arquitectura web (MVC)</h1>
+          <div class="small-muted">Sábado 8 de agosto de 2026 · 11:10–12:20 · En línea · 100% conceptual: no requiere instalar nada nuevo. Tema más abstracto hasta ahora — ir despacio.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <div class="row g-3">
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="h5 section-title">Objetivos (hoy)</h2>
+            <ul class="mb-0">
+              <li>Explicar por qué un programa "todo mezclado" se vuelve difícil de mantener.</li>
+              <li>Presentar el patrón MVC con una analogía cotidiana (el restaurante).</li>
+              <li>Identificar, con ejemplos del proyecto del curso, qué va en Modelo, qué en Vista y qué en Controlador.</li>
+              <li>Reconocer 2 antipatrones comunes: "controlador gordo" y "vista con lógica de negocio".</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h2 class="h5 section-title">Distribución del tiempo (70 min)</h2>
+            <table class="table table-sm small mb-0">
+              <tbody>
+                <tr><td><span class="time-chip">00–05</span></td><td>Bienvenida + Quiz Presaberes</td></tr>
+                <tr><td><span class="time-chip">05–15</span></td><td>El problema: un programa donde todo está mezclado</td></tr>
+                <tr><td><span class="time-chip">15–27</span></td><td>La analogía del restaurante + las 3 capas de MVC</td></tr>
+                <tr><td><span class="time-chip">27–37</span></td><td>MVC aplicado al proyecto del curso, capa por capa</td></tr>
+                <tr><td><span class="time-chip">37–39</span></td><td>Pausa activa</td></tr>
+                <tr><td><span class="time-chip">39–49</span></td><td>Antipatrones: controlador gordo y vista con lógica</td></tr>
+                <tr><td><span class="time-chip">49–57</span></td><td>Challenge + práctica guiada</td></tr>
+                <tr><td><span class="time-chip">57–65</span></td><td>Quiz de Final de Clase</td></tr>
+                <tr><td><span class="time-chip">65–70</span></td><td>Cierre + Guía 5 + Entrega Parcial 1</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h2 class="h5 section-title">Normas rápidas</h2>
+            <ul class="mb-0">
+              <li>No hay código "de más" hoy — todo se explica primero con analogías y ejemplos en español simple.</li>
+              <li>Si una capa "no sabe dónde poner algo", casi siempre es señal de que ese algo pertenece al Modelo (las reglas del negocio viven ahí).</li>
+              <li>Pregunta ancla para todo el día: <em>"¿esto es un dato/regla (Modelo), algo que el usuario ve (Vista), o una decisión de qué hacer (Controlador)?"</em></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout warning mt-3">
+          <div class="fw-semibold">Checklist antes de iniciar (docente)</div>
+          <ul class="small-muted mb-0">
+            <li>Preparar el ejemplo "todo mezclado" (pseudo-código de una sola función gigante) para mostrar el problema antes de la solución.</li>
+            <li>Tener a la mano 2-3 ejemplos reales de apps conocidas (redes sociales, tiendas en línea) para reforzar la analogía.</li>
+            <li>Recordar: hoy NO se escribe Spring Boot. Es diseño y diagrama, no implementación.</li>
+            <li>Plan B listo si el grupo necesita más tiempo en la analogía (ver más abajo).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="h4 section-title">Guion minuto a minuto (70 min)</h2>
+
+            <div class="accordion" id="acc">
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#c1">
+                    <span class="time-chip me-2">00–05</span> 1) Bienvenida + Quiz de Presaberes
+                  </button>
+                </h2>
+                <div id="c1" class="accordion-collapse collapse show" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ol>
+                      <li>Saluda y conecta con la Semana 4: <em>"ya sabes organizar el HISTORIAL de tu código con ramas; hoy aprendes a organizar el código MISMO"</em>.</li>
+                      <li>Comparte el enlace del <a href="quiz_presaberes.html">Quiz de Presaberes</a> (4 minutos, individual).</li>
+                      <li>Avisa que hoy es la sesión más conceptual hasta ahora — invita a tomar notas y preguntar sin pena.</li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c2">
+                    <span class="time-chip me-2">05–15</span> 2) El problema: un programa donde todo está mezclado
+                  </button>
+                </h2>
+                <div id="c2" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">Antes de dar la solución, mostrar el dolor. Pseudo-código de un solo método gigante que hace TODO para registrar un beneficiario:</p>
+                    <pre><code>al hacer clic en "Guardar":
+    leer nombre y edad del formulario
+    si edad es menor que 0 o el nombre está vacío:
+        mostrar mensaje de error en rojo en la pantalla
+    si no:
+        conectarse a la base de datos
+        guardar el registro
+        cambiar el color de fondo de la pantalla a verde
+        mostrar "¡Guardado!" con una animación
+        recalcular el total de beneficiarios registrados este mes</code></pre>
+                    <p class="small-muted mb-2 mt-3">Pregunta detonadora: <em>"si mañana piden agregar la MISMA validación de edad en otras 3 pantallas, ¿qué tendrías que hacer?"</em> → copiar y pegar la validación en cada lugar → si cambia la regla, hay que actualizarla en 4 sitios distintos, y es fácil olvidar uno.</p>
+                    <div class="callout danger mt-2">
+                      <div class="fw-semibold">El síntoma real: todo depende de todo</div>
+                      <div class="small-muted">Cuando la validación, el guardado y la presentación visual viven en el mismo bloque de código, tocar una cosa arriesga romper las otras dos. Eso es exactamente lo que MVC evita.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c3">
+                    <span class="time-chip me-2">15–27</span> 3) La analogía del restaurante + las 3 capas de MVC
+                  </button>
+                </h2>
+                <div id="c3" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">Imagina un restaurante bien organizado. Cada persona tiene un rol claro y no invade el trabajo de las demás:</p>
+                    <div class="table-responsive">
+                      <table class="table table-sm small">
+                        <thead><tr><th>En el restaurante</th><th>En una aplicación (MVC)</th></tr></thead>
+                        <tbody>
+                          <tr><td>🍳 <strong>La cocina</strong>: tiene los ingredientes, sabe las recetas, prepara y guarda la comida. No le importa quién la pidió ni cómo se ve el salón.</td><td><strong>Modelo</strong>: los datos y las reglas del negocio (ej. "un beneficiario no puede tener edad negativa"). No sabe nada de botones ni pantallas.</td></tr>
+                          <tr><td>🍽️ <strong>El menú y las mesas</strong>: lo que el cliente ve y con lo que interactúa. No cocina ni decide nada, solo presenta.</td><td><strong>Vista</strong>: lo que el usuario ve — formularios, tablas, mensajes. No decide reglas ni guarda datos.</td></tr>
+                          <tr><td>🧑‍💼 <strong>El mesero</strong>: recibe el pedido del cliente, se lo lleva a la cocina, y trae de vuelta lo que la cocina preparó, ya listo para servir.</td><td><strong>Controlador</strong>: recibe la acción del usuario (ej. clic en "Guardar"), le pide al Modelo que valide/guarde, y decide qué Vista mostrar después.</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="callout mt-2">
+                      <div class="fw-semibold">La regla de oro de hoy</div>
+                      <div class="small-muted">El mesero (Controlador) <strong>nunca cocina</strong> (no valida reglas de negocio él mismo) y la cocina (Modelo) <strong>nunca atiende mesas</strong> (no sabe nada de pantallas). Si algo rompe esta regla, es un antipatrón — lo veremos más adelante.</div>
+                    </div>
+                    <details class="mt-2">
+                      <summary class="fw-semibold">¿Y si el mesero se equivoca de mesa?</summary>
+                      <div class="mt-2 small-muted">Ese error es responsabilidad del Controlador — nunca de la cocina (Modelo) ni del menú (Vista). Cada capa solo responde por SU trabajo. Esto es "separación de responsabilidades", el valor de la semana.</div>
+                    </details>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c4">
+                    <span class="time-chip me-2">27–37</span> 4) MVC aplicado al proyecto del curso, capa por capa
+                  </button>
+                </h2>
+                <div id="c4" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">Retomamos el registro de un beneficiario, ahora organizado en 3 capas separadas:</p>
+                    <pre><code>MODELO (clase Beneficiario)
+- Datos: nombre, edad, fecha de ingreso
+- Regla: "la edad no puede ser negativa ni mayor a 120"
+
+VISTA (formulario_registro.html)
+- Muestra: campos de texto para nombre y edad, botón "Guardar"
+- Muestra: mensaje de error o de éxito (pero no decide CUÁL mostrar)
+
+CONTROLADOR (RegistroController)
+- Recibe: el clic en "Guardar" con los datos del formulario
+- Le pide al Modelo que valide y guarde
+- Decide: si el Modelo dice "válido", muestra la Vista de éxito;
+          si dice "inválido", muestra la Vista con el mensaje de error</code></pre>
+                    <ul>
+                      <li>Si mañana la regla de edad cambia, <strong>solo se edita el Modelo</strong> — la Vista y el Controlador no se tocan.</li>
+                      <li>Si se rediseña visualmente el formulario, <strong>solo se edita la Vista</strong> — la regla de negocio sigue intacta.</li>
+                      <li>El mismo Modelo (<code>Beneficiario</code>) puede usarse desde varias Vistas distintas (formulario de registro, reporte en PDF, panel de administración) sin duplicar la regla.</li>
+                    </ul>
+                    <div class="callout success mt-2">
+                      <div class="fw-semibold">Orden lógico (valor de la semana)</div>
+                      <div class="small-muted">Separar responsabilidades no es "burocracia" — es lo que permite que un equipo grande trabaje en paralelo (alguien en la Vista, alguien en el Modelo) sin pisarse.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c5">
+                    <span class="time-chip me-2">37–39</span> 5) Pausa activa (2 min)
+                  </button>
+                </h2>
+                <div id="c5" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>Estirar manos y espalda, agua, mirar lejos de la pantalla 20 segundos.</li>
+                      <li>Micro-check en el chat: "en una palabra, ¿qué hace el Controlador?"</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c6">
+                    <span class="time-chip me-2">39–49</span> 6) Antipatrones: controlador gordo y vista con lógica
+                  </button>
+                </h2>
+                <div id="c6" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2"><strong>Antipatrón 1 — "Controlador gordo" (fat controller):</strong> el Controlador termina validando reglas de negocio él mismo, en vez de pedírselo al Modelo.</p>
+                    <pre><code>// Antipatrón: el controlador "cocina" en vez de pedirle a la cocina
+si edad menor que 0 o edad mayor que 120:
+    error = "edad inválida"
+guardar_en_base_de_datos(nombre, edad)</code></pre>
+                    <div class="small-muted mb-3">Problema: si otra pantalla necesita la misma validación, hay que copiarla de nuevo — el error de la Semana pasada, pero ahora dentro del código en vez de en archivos duplicados.</div>
+                    <p class="small-muted mb-2"><strong>Antipatrón 2 — "Vista con lógica de negocio":</strong> el HTML/formulario calcula o decide algo que debería decidir el Modelo o el Controlador.</p>
+                    <pre><code>&lt;!-- Antipatrón: la vista "decide" un descuento --&gt;
+&lt;p&gt;Total a pagar: {{ precio - (precio * 0.15) }}&lt;/p&gt;</code></pre>
+                    <div class="small-muted">Problema: si la regla del descuento cambia (o depende de más condiciones), hay que buscarla escondida dentro del HTML en vez de en un solo lugar claro (el Modelo).</div>
+                    <div class="callout danger mt-3 mb-0">
+                      <div class="fw-semibold">Pregunta de diagnóstico rápido</div>
+                      <div class="small-muted">Ante cualquier línea de código, pregúntate: "¿esto es una regla del negocio (Modelo), algo visual (Vista), o una decisión de flujo (Controlador)?". Si dudas, probablemente es una señal de que esa capa está haciendo trabajo que no le toca.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c7">
+                    <span class="time-chip me-2">49–57</span> 7) Challenge "Clasifica las piezas" + práctica guiada
+                  </button>
+                </h2>
+                <div id="c7" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ol>
+                      <li>Comparte el enlace del <a href="challenge.html">Challenge — Clasifica las piezas</a>.</li>
+                      <li>Modela el nivel <strong>Fácil</strong> en pantalla (1 min): 2-3 elementos muy obvios por capa.</li>
+                      <li>Los estudiantes resuelven <strong>Medio</strong> (más elementos + una "zona de antipatrones") y, si alcanza, <strong>Difícil</strong> (casos ambiguos) — 7 min. Retroalimentación instantánea en toasts.</li>
+                      <li>Quien termine antes: continúa con los <a href="ejercicios.html">Ejercicios 6–8</a>.</li>
+                    </ol>
+                    <div class="callout warning">
+                      <div class="fw-semibold">Preguntas guía (docente, mientras circula por salas)</div>
+                      <div class="small-muted">¿Por qué esa pieza es del Modelo y no de la Vista? ¿Qué pasaría si la pusieras en el Controlador en vez de ahí? ¿Reconoces algún antipatrón en tu propio código de semanas anteriores?</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c8">
+                    <span class="time-chip me-2">57–65</span> 8) Quiz de Final de Clase
+                  </button>
+                </h2>
+                <div id="c8" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ol>
+                      <li>Comparte el enlace del <a href="quiz_final.html">Quiz de Final de Clase</a> (10 preguntas, individual, 7 min).</li>
+                      <li>Al terminar, cada estudiante pulsa <em>Calificar</em>, revisa la retroalimentación y <strong>exporta su resultado a PDF</strong>.</li>
+                      <li>Los PDF del quiz y del challenge = evidencia de la <strong>Actividad en clase – Sesión 5</strong>.</li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c9">
+                    <span class="time-chip me-2">65–70</span> 9) Cierre + lanzamiento de la Guía 5 y la Entrega Parcial 1
+                  </button>
+                </h2>
+                <div id="c9" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>Síntesis en 3 frases: el Modelo guarda y decide las reglas, la Vista muestra, el Controlador coordina.</li>
+                      <li>Ticket de salida en el chat: <strong>1 aprendizaje + 1 duda</strong>.</li>
+                      <li>Invitación a la <a href="../evaluacion_docente/index.html">evaluación anónima de la sesión</a>.</li>
+                      <li>Presenta la página <a href="proyecto.html">Proyecto</a>: hoy comienza el hito más grande hasta ahora, la <strong>Entrega Parcial 1</strong> (5 pts) — la propuesta con estructura MVC del proyecto real, publicada en GitHub.</li>
+                      <li>Presenta el <a href="entregable.html">Entregable — Guía de Aprendizaje 5</a>, fecha límite antes de la Sesión 6 (15 de agosto de 2026).</li>
+                      <li>Puente a la semana 6: "hoy viste las 3 capas a alto nivel; la próxima semana verás <strong>arquitectura en capas</strong> — cómo se organizan carpetas y archivos reales dentro de cada una".</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="callout success mt-3">
+          <div class="fw-semibold">Plan B (si el grupo necesita más tiempo con la analogía)</div>
+          <div class="small-muted">
+            Si notas caras confundidas después del restaurante, usa un segundo ejemplo cotidiano antes de seguir: una
+            biblioteca (Modelo = catálogo y reglas de préstamo, Vista = el mostrador donde ves los libros disponibles,
+            Controlador = el bibliotecario que procesa tu solicitud de préstamo). No avances a los antipatrones hasta
+            que la mayoría pueda decir, sin ayuda, qué capa es cuál en ese segundo ejemplo.
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Guía Docente — Semana 5 (formato 18 semanas · 70 min) · Ejercicios en <a href="ejercicios.html">ejercicios.html</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

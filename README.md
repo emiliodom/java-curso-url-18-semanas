@@ -33,7 +33,9 @@ documentos oficiales y el enlace a la evaluación anónima de la sesión.
 - ✅ **Semana 2** — Lógica, métodos y buenas prácticas (18 jul 2026)
 - ✅ **Semana 3** — Git y GitHub: control de versiones (25 jul 2026)
 - ✅ **Semana 4** — Ramas, colaboración y documentación (1 ago 2026)
-- ⏳ Semanas 5–18 — pendientes (se activan en el portal al publicarse)
+- ✅ **Semana 5** — Patrones de diseño y arquitectura web / MVC (8 ago 2026) — ★ Entrega Parcial 1
+- ✅ **Semana 6** — Arquitectura en capas (15 ago 2026)
+- ⏳ Semanas 7–18 — pendientes (se activan en el portal al publicarse)
 
 ## Evaluación anónima de cada sesión
 

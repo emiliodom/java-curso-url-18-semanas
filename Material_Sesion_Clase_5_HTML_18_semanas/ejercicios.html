@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ejercicios — Semana 5 (Patrón MVC)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 5 — MVC</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link active" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="guia_programador_python.html">Puente MVC</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="entregable.html">Entregable</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Guía de ejercicios · Semana 5 · Solo papel/diagrama — sin instalar nada</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Identifica las capas, paso a paso</h1>
+          <div class="small-muted">Practicarás con una app de bajo riesgo — <strong>CineReseñas</strong>, una app ficticia de reseñas de películas — antes de aplicar lo mismo a tu proyecto real en <a href="proyecto.html">Proyecto</a>. Cada ejercicio es corto: lee, responde en una frase o dos, y compara con la solución.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <div class="callout mb-3">
+      <div class="fw-semibold">Antes de empezar: la pregunta ancla</div>
+      <div class="small-muted">En cada ejercicio pregúntate: <strong>¿esto es un dato o regla (Modelo), algo que el usuario ve (Vista), o una decisión de qué hacer (Controlador)?</strong> Si lo puedes contestar, ya resolviste el ejercicio.</div>
+    </div>
+
+    <div class="callout success mb-3">
+      <div class="fw-semibold">¿Te trabaste con la analogía?</div>
+      <div class="small-muted">Repasa la tabla del restaurante en <a href="cheatsheet.html">Cheat Sheet</a> antes de seguir — no hay prisa, este tema se entiende mejor con ejemplos repetidos que leyendo rápido.</div>
+    </div>
+
+    <div class="row g-3">
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 1 — Encuentra el problema <span class="badge text-bg-success">Calentamiento</span></h2>
+            <p class="small-muted mb-2">Lee este pseudo-código de CineReseñas, todo mezclado en un solo bloque:</p>
+            <pre><code>al hacer clic en "Enviar reseña":
+    leer calificación (1 a 5) y comentario
+    si calificación menor que 1 o mayor que 5:
+        mostrar "Calificación inválida" en rojo
+    si no:
+        guardar la reseña en la base de datos
+        recalcular el promedio de calificaciones de la película
+        mostrar "¡Gracias por tu reseña!" en verde</code></pre>
+            <p class="small-muted mb-1"><strong>Tu turno:</strong> en una frase, ¿qué pasaría si mañana quieren agregar la misma validación de calificación (1 a 5) en la app de celular, además de la web?</p>
+            <details>
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small-muted">Habría que copiar y pegar esa validación en el código de la app de celular. Si la regla cambia (ej. de 1–5 pasa a 1–10), hay que recordar actualizarla en los dos lugares — fácil de olvidar. Esa es exactamente la señal de que la validación debería vivir en un solo lugar: el Modelo.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 2 — Clasifica 5 elementos <span class="badge text-bg-success">Calentamiento</span></h2>
+            <p class="small-muted mb-2">Para cada elemento, decide: ¿Modelo, Vista o Controlador?</p>
+            <ol class="small">
+              <li>Clase <code>Pelicula</code> con título, año y calificación promedio.</li>
+              <li>El botón "Enviar reseña" y el campo de texto del comentario.</li>
+              <li>La regla "una calificación debe estar entre 1 y 5".</li>
+              <li>El código que recibe el clic en "Enviar reseña" y decide qué pantalla mostrar después.</li>
+              <li>La pantalla que lista las reseñas ordenadas por fecha.</li>
+            </ol>
+            <details>
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small-muted">1) Modelo — es un dato. 2) Vista — es lo que el usuario ve y usa. 3) Modelo — es una regla del negocio. 4) Controlador — recibe la acción y decide el flujo. 5) Vista — es una pantalla de presentación.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 3 — ¿Qué NO va en el Modelo? <span class="badge text-bg-primary">Modelo</span></h2>
+            <p class="small-muted mb-2">Este es el Modelo <code>Reseña</code>: guarda usuario, película, calificación y comentario, y aplica la regla del rango 1–5.</p>
+            <p class="small-muted mb-1"><strong>Tu turno:</strong> de esta lista, ¿cuál NO debería estar dentro del Modelo <code>Reseña</code>? a) la regla de rango 1–5, b) el color del botón "Enviar", c) el dato "comentario".</p>
+            <details>
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small-muted">La opción b). El color de un botón es presentación visual — pertenece a la Vista. El Modelo nunca sabe nada sobre colores, botones ni pantallas.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 4 — ¿Qué SÍ y qué NO hace la Vista? <span class="badge text-bg-primary">Vista</span></h2>
+            <p class="small-muted mb-2">Piensa en la pantalla de detalle de una película en CineReseñas (título, calificación promedio, lista de reseñas).</p>
+            <p class="small-muted mb-1"><strong>Tu turno:</strong> escribe una cosa que la Vista SÍ debería hacer, y una que NO debería decidir por sí sola.</p>
+            <details>
+              <summary class="fw-semibold">Ejemplo de solución</summary>
+              <div class="mt-2 small-muted"><strong>Sí:</strong> mostrar el título, la calificación promedio y las reseñas que le entregan. <strong>No debería decidir:</strong> si una reseña es válida o cómo se calcula el promedio — eso ya viene resuelto desde el Modelo/Controlador; la Vista solo lo presenta.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 5 — Los 3 pasos del Controlador <span class="badge text-bg-primary">Controlador</span></h2>
+            <p class="small-muted mb-2">El Controlador recibe el clic en "Enviar reseña" con los datos del formulario.</p>
+            <p class="small-muted mb-1"><strong>Tu turno:</strong> escribe, en 3 pasos numerados, qué hace el Controlador (usa el ejemplo del mesero como guía).</p>
+            <details>
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small-muted">1) Recibe los datos del formulario (calificación y comentario). 2) Le pide al Modelo que valide y, si es válida, la guarde. 3) Según la respuesta del Modelo, decide qué Vista mostrar (éxito o mensaje de error).</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 6 — Detecta el antipatrón (controlador gordo) <span class="badge text-bg-warning">Antipatrón</span></h2>
+            <pre><code>// Dentro del Controlador:
+si calificación menor que 1 o calificación mayor que 5:
+    error = "Calificación inválida"
+guardar_en_base_de_datos(calificación, comentario)</code></pre>
+            <p class="small-muted mb-1"><strong>Tu turno:</strong> ¿cuál es el problema, y cómo lo corregirías?</p>
+            <details>
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small-muted">El Controlador está validando la regla de negocio él mismo ("controlador gordo"). Corrección: mover la validación del rango 1–5 al Modelo <code>Reseña</code> (ej. un método <code>esValida()</code>), y que el Controlador solo le pregunte al Modelo si es válida, sin conocer la regla exacta.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 7 — Detecta el antipatrón (vista con lógica) <span class="badge text-bg-warning">Antipatrón</span></h2>
+            <pre><code>&lt;!-- Dentro de la Vista (HTML): --&gt;
+&lt;p&gt;Promedio: {{ (suma_calificaciones / cantidad_reseñas) }}&lt;/p&gt;</code></pre>
+            <p class="small-muted mb-1"><strong>Tu turno:</strong> ¿cuál es el problema, y cómo lo corregirías?</p>
+            <details>
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small-muted">La Vista está calculando el promedio — una operación que pertenece al Modelo. Corrección: el Modelo <code>Pelicula</code> calcula y expone un dato ya listo, <code>calificacionPromedio</code>, y la Vista solo lo muestra tal cual, sin calcular nada.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 8 — Reto integrador: diseña una funcionalidad nueva <span class="badge text-bg-danger">Integrador</span></h2>
+            <p class="small-muted mb-2">CineReseñas quiere agregar: "marcar una reseña como útil" (como un botón de "me sirvió").</p>
+            <p class="small-muted mb-1"><strong>Tu turno:</strong> escribe qué agregarías en cada capa (Modelo, Vista, Controlador) para esta funcionalidad.</p>
+            <details>
+              <summary class="fw-semibold">Ejemplo de solución</summary>
+              <div class="mt-2 small-muted">
+                <strong>Modelo:</strong> agregar un contador <code>vecesUtil</code> a la clase <code>Reseña</code>, y la regla "un mismo usuario no puede marcar la misma reseña como útil dos veces".<br>
+                <strong>Vista:</strong> un botón "¿Te fue útil?" junto a cada reseña, y el número de veces marcada.<br>
+                <strong>Controlador:</strong> recibe el clic, le pide al Modelo que aplique la regla y sume el contador, y decide si actualizar el número mostrado o mostrar un aviso de "ya la marcaste antes".
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="callout success mt-4">
+      <div class="fw-semibold">¿Terminaste todo?</div>
+      <div class="small-muted">Pasa al <a href="challenge.html">Challenge "Clasifica las piezas"</a> en nivel Difícil, o aplica exactamente este mismo razonamiento a tu proyecto real en <a href="proyecto.html">Proyecto</a>. Antes de pedir ayuda: relee la pregunta ancla, consulta el <a href="cheatsheet.html">cheat sheet</a> e inténtalo de nuevo.</div>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Ejercicios — Semana 5 · Patrón MVC (formato 18 semanas) · Aplica esto a tu proyecto en <a href="proyecto.html">Proyecto</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ejercicios — Semana 6 (Arquitectura en capas)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 6 — Capas</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link active" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Guía de ejercicios · Semana 6 · Aprendizaje funcional — un mini-programa real</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Un simulador que sí funciona, capa por capa</h1>
+          <div class="small-muted">Abajo hay una <strong>lista de tareas de un voluntariado</strong> que funciona de verdad, en tu navegador, construida con las 4 capas de hoy (Vista, Controlador, Servicio, Repositorio). Interactúa con ella antes de resolver los ejercicios.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="h5 section-title mb-3">🔧 Simulador: Lista de tareas del voluntariado</h2>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label small fw-semibold">Nueva tarea</label>
+            <div class="d-flex gap-2">
+              <input id="taskInput" class="form-control" type="text" placeholder="Ej: Llamar a donantes" maxlength="40" />
+              <button class="btn btn-primary" onclick="onAgregarTarea()">Agregar</button>
+            </div>
+            <div class="small-muted mt-2">Regla activa: máximo <strong>5 tareas</strong>, y ninguna puede quedar vacía.</div>
+            <h3 class="h6 fw-bold mt-3">Tareas guardadas (Repositorio)</h3>
+            <ul id="taskList" class="list-group"></ul>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label small fw-semibold">Registro de capas (qué pasó, en orden)</label>
+            <div id="actionLog" class="sim-log"></div>
+            <button class="btn btn-sm btn-outline-secondary mt-2" onclick="limpiarLog()">Limpiar registro</button>
+          </div>
+        </div>
+        <details class="mt-3">
+          <summary class="fw-semibold">Ver el código de las 4 capas (JavaScript real, el que se está ejecutando)</summary>
+          <pre class="mt-2"><code>// ENTIDAD (el dato puro)
+// una tarea es simplemente: { texto: "..." }
+
+// REPOSITORIO — solo guarda y entrega, no decide nada
+var Repositorio = {
+  tareas: [],
+  guardar: function (tarea) { this.tareas.push(tarea); },
+  listarTodas: function () { return this.tareas; }
+};
+
+// SERVICIO — aplica las reglas de negocio
+var Servicio = {
+  agregarTarea: function (texto) {
+    if (!texto || !texto.trim()) {
+      return { ok: false, error: "La tarea no puede estar vacía." };
+    }
+    if (Repositorio.listarTodas().length >= 5) {
+      return { ok: false, error: "Ya hay 5 tareas — límite alcanzado." };
+    }
+    Repositorio.guardar({ texto: texto.trim() });
+    return { ok: true };
+  }
+};
+
+// CONTROLADOR — recibe el clic, le pregunta al SERVICIO (nunca al Repositorio)
+function onAgregarTarea() {
+  var texto = document.getElementById("taskInput").value; // lee de la Vista
+  var resultado = Servicio.agregarTarea(texto);            // le pregunta al Servicio
+  if (resultado.ok) { renderizarVista(); }                  // decide qué mostrar
+  else { mostrarError(resultado.error); }
+}
+
+// VISTA — solo muestra, no decide ni valida
+function renderizarVista() { /* dibuja Repositorio.listarTodas() en la pantalla */ }</code></pre>
+        </details>
+      </div>
+    </div>
+
+    <div class="callout mb-3">
+      <div class="fw-semibold">Antes de empezar: la pregunta ancla de esta semana</div>
+      <div class="small-muted">En cada ejercicio pregúntate: <strong>¿el Controlador le habló al Servicio, o se saltó directo al Repositorio?</strong> Si el Controlador respeta esa regla, el bajo acoplamiento está funcionando.</div>
+    </div>
+
+    <div class="row g-3">
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 1 — Observa el camino feliz <span class="badge text-bg-success">Calentamiento</span></h2>
+            <p class="small-muted mb-2">Escribe una tarea válida (ej. "Llamar a donantes") y pulsa "Agregar". Mira el registro de capas.</p>
+            <p class="small-muted mb-1"><strong>Tu turno:</strong> en orden, ¿qué capa actúa primero y cuál actúa al final?</p>
+            <details>
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small-muted">Primero el Controlador (recibe el clic), luego el Servicio (valida), luego el Repositorio (guarda), y al final la Vista (muestra la lista actualizada).</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 2 — Provoca el error de "vacío" <span class="badge text-bg-warning">Regla</span></h2>
+            <p class="small-muted mb-2">Deja el campo de texto vacío y pulsa "Agregar".</p>
+            <p class="small-muted mb-1"><strong>Tu turno:</strong> ¿qué capa detuvo la operación, y qué capa NUNCA llegó a actuar?</p>
+            <details>
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small-muted">El <strong>Servicio</strong> detuvo la operación (aplicó la regla). El <strong>Repositorio</strong> nunca llegó a actuar — nunca se guardó nada inválido.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 3 — Provoca el límite de 5 <span class="badge text-bg-warning">Regla</span></h2>
+            <p class="small-muted mb-2">Agrega tareas válidas hasta llegar a 5, y luego intenta una sexta.</p>
+            <p class="small-muted mb-1"><strong>Tu turno:</strong> ¿en qué capa vive la regla "máximo 5 tareas"?</p>
+            <details>
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small-muted">Vive en el <strong>Servicio</strong> — es una regla de negocio, igual que la validación de vacío. El Repositorio solo cuenta cuántas hay cuando el Servicio se lo pregunta.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 4 — Lee el código del Servicio <span class="badge text-bg-primary">Código real</span></h2>
+            <p class="small-muted mb-2">Abre "Ver el código" arriba y localiza la línea <code>if (Repositorio.listarTodas().length &gt;= 5)</code>.</p>
+            <p class="small-muted mb-1"><strong>Tu turno:</strong> si quisiéramos permitir hasta 10 tareas en vez de 5, ¿qué línea cambiarías, y en qué capa vive ese cambio?</p>
+            <details>
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small-muted">Cambiarías el número <code>5</code> por <code>10</code> en esa línea, dentro del <strong>Servicio</strong>. Ni el Controlador ni el Repositorio necesitan tocarse.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 5 — Verifica el bajo acoplamiento <span class="badge text-bg-primary">Código real</span></h2>
+            <p class="small-muted mb-2">Lee la función <code>onAgregarTarea()</code> (el Controlador) en el código de arriba.</p>
+            <p class="small-muted mb-1"><strong>Tu turno:</strong> ¿en algún punto llama directo a <code>Repositorio</code>? Justifica tu respuesta citando la línea exacta.</p>
+            <details>
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small-muted">No. El Controlador solo llama a <code>Servicio.agregarTarea(texto)</code> y a <code>renderizarVista()</code>/<code>mostrarError()</code>. Nunca escribe <code>Repositorio.algo()</code> directamente — por eso respeta el bajo acoplamiento.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 6 — ¿Qué pasaría si...? <span class="badge text-bg-danger">Antipatrón</span></h2>
+            <p class="small-muted mb-2">Imagina que alguien reescribe el Controlador así: <code>onAgregarTarea() { Repositorio.guardar({texto: ...}); renderizarVista(); }</code> (sin pasar por el Servicio).</p>
+            <p class="small-muted mb-1"><strong>Tu turno:</strong> en una frase, ¿qué reglas dejarían de cumplirse?</p>
+            <details>
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small-muted">Se podrían guardar tareas vacías y se podría superar el límite de 5 — ambas reglas viven en el Servicio, que quedó completamente evitado. Es el antipatrón de "saltarse capas".</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 7 — Reto integrador: diseña una regla nueva <span class="badge text-bg-danger">Integrador</span></h2>
+            <p class="small-muted mb-2">El voluntariado pide una regla nueva: "no se puede agregar una tarea con el mismo texto que otra ya existente".</p>
+            <p class="small-muted mb-1"><strong>Tu turno:</strong> ¿en qué capa la implementarías, y qué necesitarías preguntarle a otra capa para poder aplicarla?</p>
+            <details>
+              <summary class="fw-semibold">Ejemplo de solución</summary>
+              <div class="mt-2 small-muted">Se implementa en el <strong>Servicio</strong>: antes de guardar, le pregunta al <strong>Repositorio</strong> (<code>listarTodas()</code>) si ya existe una tarea con ese mismo texto, y si es así, devuelve un error — igual que hace ya con la regla del límite de 5.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="callout success mt-4">
+      <div class="fw-semibold">¿Terminaste todo?</div>
+      <div class="small-muted">Pasa al <a href="challenge.html">Challenge</a> (pestaña "Simulador funcional" para ver una segunda app completa, o "Clasifica las piezas" en nivel Difícil), o aplica este mismo razonamiento a tu proyecto real en <a href="proyecto.html">Proyecto</a>.</div>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Ejercicios — Semana 6 · Arquitectura en capas (formato 18 semanas) · Aplica esto a tu proyecto en <a href="proyecto.html">Proyecto</a>
+    </div>
+  </footer>
+
+  <script>
+    var Repositorio = {
+      tareas: [],
+      guardar: function (tarea) { this.tareas.push(tarea); },
+      listarTodas: function () { return this.tareas; }
+    };
+
+    var Servicio = {
+      agregarTarea: function (texto) {
+        if (!texto || !texto.trim()) {
+          return { ok: false, error: 'La tarea no puede estar vacía.' };
+        }
+        if (Repositorio.listarTodas().length >= 5) {
+          return { ok: false, error: 'Ya hay 5 tareas — límite alcanzado. Esa es la regla de negocio del Servicio.' };
+        }
+        Repositorio.guardar({ texto: texto.trim() });
+        return { ok: true };
+      }
+    };
+
+    function log(msg, hl) {
+      var box = document.getElementById('actionLog');
+      var line = document.createElement('div');
+      line.className = 'sim-line' + (hl ? ' hl' : '');
+      line.textContent = msg;
+      box.appendChild(line);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function limpiarLog() {
+      document.getElementById('actionLog').innerHTML = '';
+    }
+
+    function mostrarError(msg) {
+      log('❌ Servicio detuvo la operación: ' + msg, true);
+    }
+
+    function renderizarVista() {
+      var list = document.getElementById('taskList');
+      list.innerHTML = '';
+      Repositorio.listarTodas().forEach(function (t) {
+        var li = document.createElement('li');
+        li.className = 'list-group-item';
+        li.textContent = t.texto;
+        list.appendChild(li);
+      });
+      log('👁️ Vista actualizada: ' + Repositorio.listarTodas().length + ' tarea(s) en pantalla.');
+    }
+
+    function onAgregarTarea() {
+      var input = document.getElementById('taskInput');
+      var texto = input.value;
+      log('🧑‍💼 Controlador recibió el clic con el texto: "' + texto + '"');
+      log('👨‍🍳 Controlador le pregunta al Servicio (nunca al Repositorio directo)...');
+      var resultado = Servicio.agregarTarea(texto);
+      if (resultado.ok) {
+        log('📦 Repositorio guardó la nueva tarea.');
+        renderizarVista();
+        input.value = '';
+      } else {
+        mostrarError(resultado.error);
+      }
+    }
+
+    document.getElementById('taskInput').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') onAgregarTarea();
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

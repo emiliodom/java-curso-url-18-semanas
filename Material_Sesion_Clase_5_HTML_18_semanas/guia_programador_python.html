@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>La Guía del Programador de Python — Semana 5</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 5 — MVC</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link active" href="guia_programador_python.html">Puente MVC</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="entregable.html">Entregable</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">La Guía del Programador de Python · Semana 5</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">El mismo patrón, un nombre distinto (y confuso)</h1>
+          <div class="small-muted">MVC existe en Python igual que en Java — pero el framework más popular de Python para web, <strong>Django</strong>, le cambia el nombre a dos de las tres capas. Si algún día lees un tutorial de Django, esta página te evita una confusión muy común.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <div class="callout mb-4">
+      <div class="fw-semibold">Buenas noticias si ya conoces Python</div>
+      <div class="small-muted">Si alguna vez viste un proyecto de Django con archivos llamados <code>models.py</code>, <code>views.py</code> y una carpeta <code>templates/</code>, ya viste MVC en acción — solo que con otro nombre. La idea de separar datos, presentación y coordinación es exactamente la misma.</div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">1. MVC (Java/Spring) vs. MVT (Python/Django)</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-code align-middle">
+            <thead><tr><th>Qué hace esa capa</th><th>Nombre en Java/Spring (MVC)</th><th>Nombre en Python/Django (MVT)</th></tr></thead>
+            <tbody>
+              <tr><td>Datos y reglas del negocio</td><td><strong>Modelo</strong></td><td><code>models.py</code> (también se llama "Model")</td></tr>
+              <tr><td>Lo que el usuario ve (HTML)</td><td><strong>Vista</strong></td><td>Archivos en la carpeta <code>templates/</code> (Django los llama "Template")</td></tr>
+              <tr><td>Recibe la petición y decide qué mostrar</td><td><strong>Controlador</strong></td><td><code>views.py</code> (⚠️ Django llama a esto "View", aunque en Java sería el <strong>Controlador</strong>)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout danger mt-2 mb-0">
+          <div class="fw-semibold">La trampa de nombres más famosa entre frameworks</div>
+          <div class="small-muted">El archivo <code>views.py</code> de Django sí <strong>hace</strong> el trabajo de un Controlador (recibe la petición, decide qué hacer) — pero Django decidió llamarlo "View" por razones históricas. No es un error tuyo si te confunde: hasta desarrolladores con experiencia lo mencionan la primera vez que cambian de framework.</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">2. Lo que NO cambia entre frameworks (o lenguajes)</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <ul class="mb-0">
+          <li>La <strong>separación de responsabilidades</strong> es la misma: datos/reglas por un lado, presentación por otro, coordinación en medio.</li>
+          <li>Los <strong>antipatrones</strong> también son universales: un <code>views.py</code> de Django que valida reglas de negocio él mismo es un "controlador gordo", igual que en Java.</li>
+          <li>Flask (otro framework de Python, más pequeño que Django) no exige una estructura fija, pero la mayoría de sus proyectos organizan sus archivos con el mismo espíritu: <code>models.py</code>, <code>routes.py</code> (equivalente al Controlador) y una carpeta <code>templates/</code>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">3. Ejercicios de traducción: de Django a MVC</h2>
+    <div class="row g-3 mb-4">
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h3 class="h6 fw-bold">Traducción 1 — App de lista de tareas (to-do)</h3>
+            <p class="small-muted mb-1">En Django, dentro de <code>views.py</code> hay una función que recibe la petición cuando marcas una tarea como completada, y decide qué página mostrar después. En términos de MVC (Java), ¿qué capa es esa función?</p>
+            <details class="mt-2">
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small">Es un <strong>Controlador</strong>, aunque el archivo se llame "views.py". Recibe una acción y decide el flujo — exactamente el trabajo del mesero.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h3 class="h6 fw-bold">Traducción 2 — Reproductor de música (playlist)</h3>
+            <p class="small-muted mb-1">En Django, <code>models.py</code> define una clase <code>Cancion</code> con un atributo <code>duracion</code> y la regla "la duración no puede ser 0 o negativa". ¿A qué capa de MVC equivale?</p>
+            <details class="mt-2">
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small">Es el <strong>Modelo</strong>: datos + regla de negocio, sin importar el framework.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h3 class="h6 fw-bold">Traducción 3 — Agenda de turnos de una clínica dental</h3>
+            <p class="small-muted mb-1">Un archivo <code>agenda.html</code> dentro de <code>templates/</code> muestra la lista de citas del día. ¿A qué capa de MVC equivale?</p>
+            <details class="mt-2">
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small">Es la <strong>Vista</strong>: presenta información, sin decidir ni calcular nada.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h3 class="h6 fw-bold">Traducción 4 — Reto inverso: de Java a Django</h3>
+            <p class="small-muted mb-1">Tienes, en Java/Spring: un Controlador que recibe un formulario, un Modelo <code>Usuario</code> que valida el correo, y una Vista que muestra "Registro exitoso". Si migraras esto a Django, ¿en qué archivo/carpeta pondrías cada parte?</p>
+            <details class="mt-2">
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small">El Controlador → una función en <code>views.py</code>. El Modelo <code>Usuario</code> → una clase en <code>models.py</code>. La Vista de "Registro exitoso" → un archivo <code>.html</code> dentro de <code>templates/</code>.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout success">
+      <div class="fw-semibold">Para el ticket de salida</div>
+      <div class="small-muted">En una frase: <em>"¿Por qué crees que el nombre de una capa puede cambiar entre frameworks, pero su responsabilidad no?"</em></div>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      La Guía del Programador de Python — Semana 5 · Patrón MVC (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

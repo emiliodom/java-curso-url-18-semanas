@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Challenge — Simuladores de arquitectura en capas (Semana 6)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 6 — Capas</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link active" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Challenge · Semana 6 · Clínica Veterinaria PetCare</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Dos simuladores: clasificar y ver la arquitectura en acción</h1>
+          <div class="small-muted">Dos pestañas: un juego de clasificación (como la semana pasada, pero con Servicio y Repositorio) y un <strong>simulador funcional</strong> que anima, paso a paso, cómo viaja un dato real por las 4 capas.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="exportChallengePdf()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <ul class="nav nav-tabs mb-4 no-print" id="challengeTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="tab-clasifica-btn" data-bs-toggle="tab" data-bs-target="#tab-clasifica" type="button" role="tab">🧩 Clasifica las piezas</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-simulador-btn" data-bs-toggle="tab" data-bs-target="#tab-simulador" type="button" role="tab">⚙️ Simulador funcional</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="challengeTabsContent">
+
+      <!-- ================= PESTAÑA 1: CLASIFICACIÓN ================= -->
+      <div class="tab-pane fade show active" id="tab-clasifica" role="tabpanel">
+        <div class="row g-3">
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="h5 section-title">Cómo jugar</h2>
+                <ol class="small mb-0">
+                  <li>Elige un nivel: <strong>Fácil → Medio → Difícil</strong>.</li>
+                  <li><strong>Fácil</strong> se enfoca solo en lo nuevo de hoy: Entidad, Repositorio y Servicio.</li>
+                  <li><strong>Medio</strong> agrega la Presentación (Vista+Controlador juntos) y antipatrones.</li>
+                  <li><strong>Difícil</strong> separa Vista y Controlador — las 5 piezas completas.</li>
+                  <li>Cada suelta te avisa al instante. Pulsa <strong>Verificar</strong> para tu puntaje final.</li>
+                  <li>Al terminar: escribe tu nombre y <strong>Exportar a PDF</strong>.</li>
+                </ol>
+              </div>
+            </div>
+            <div class="callout warning mt-3">
+              <div class="fw-semibold">Ojo en Medio y Difícil</div>
+              <div class="small-muted">Algunas piezas no pertenecen a ninguna caja — déjalas en el banco. Otras son antipatrones: rompen la separación de capas.</div>
+            </div>
+            <div class="card mt-3">
+              <div class="card-body">
+                <h2 class="h6 section-title">Tu progreso</h2>
+                <div id="progressList" class="small">
+                  <div>🟡 Fácil: <span id="prog-facil">sin intentar</span></div>
+                  <div>🟠 Medio: <span id="prog-medio">sin intentar</span></div>
+                  <div>🔴 Difícil: <span id="prog-dificil">sin intentar</span></div>
+                </div>
+                <label class="form-label fw-semibold mt-3 mb-1" for="studentName">Nombre (para el PDF)</label>
+                <input id="studentName" class="form-control form-control-sm" type="text" placeholder="Nombre y apellido" />
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-8">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3 no-print">
+                  <div class="btn-group" role="group" aria-label="Nivel">
+                    <button class="btn btn-outline-primary level-btn active" data-level="facil" onclick="loadLevel('facil')">🟡 Fácil</button>
+                    <button class="btn btn-outline-primary level-btn" data-level="medio" onclick="loadLevel('medio')">🟠 Medio</button>
+                    <button class="btn btn-outline-primary level-btn" data-level="dificil" onclick="loadLevel('dificil')">🔴 Difícil</button>
+                  </div>
+                  <span class="badge text-bg-secondary" id="attemptsBadge">Verificaciones: 0</span>
+                </div>
+
+                <div class="callout mb-3">
+                  <div class="fw-semibold">Misión — <span id="levelName"></span></div>
+                  <div class="small-muted" id="levelMission"></div>
+                </div>
+
+                <h3 class="h6 fw-bold">Banco de piezas</h3>
+                <div id="pool" class="dd-pool mb-3" aria-label="Banco de piezas"></div>
+
+                <h3 class="h6 fw-bold">Cajas de clasificación</h3>
+                <div id="board" class="mvc-board mb-3" aria-label="Cajas de clasificación"></div>
+
+                <div id="resultBanner" class="score-banner"></div>
+
+                <div class="d-flex gap-2 flex-wrap no-print mt-3">
+                  <button class="btn btn-primary" onclick="verify()">✔ Verificar</button>
+                  <button class="btn btn-outline-secondary" onclick="loadLevel(currentLevelKey)">↺ Reiniciar nivel</button>
+                  <button class="btn btn-outline-warning" id="solutionBtn" onclick="showSolution()" disabled>💡 Ver solución (tras 3 verificaciones)</button>
+                  <button class="btn btn-outline-dark btn-export ms-auto" onclick="exportChallengePdf()">Exportar a PDF</button>
+                </div>
+
+                <details class="mt-3">
+                  <summary class="fw-semibold">¿Por qué va cada pieza donde va?</summary>
+                  <pre class="mt-2" style="white-space: pre-wrap;"><code id="expectedOutput"></code></pre>
+                  <div class="small-muted">Cuando logres 100%, repite el mismo razonamiento con tu propio proyecto en <a href="proyecto.html">Proyecto</a>.</div>
+                </details>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= PESTAÑA 2: SIMULADOR FUNCIONAL ================= -->
+      <div class="tab-pane fade" id="tab-simulador" role="tabpanel">
+        <div class="row g-3">
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="h5 section-title">Sigue el dato</h2>
+                <p class="small-muted">Elige un escenario de PetCare (la clínica veterinaria) y pulsa <strong>"Siguiente paso"</strong> para ver, en vivo, cómo un dato real recorre las 4 capas — nunca saltándose ninguna.</p>
+                <label class="form-label small fw-semibold" for="scenarioSelect">Escenario</label>
+                <select id="scenarioSelect" class="form-select mb-3" onchange="reiniciarSimulador()">
+                  <option value="exitoso">✅ Agendar una cita (caso exitoso)</option>
+                  <option value="conflicto">⚠️ Agendar una cita (con conflicto de horario)</option>
+                </select>
+                <div class="d-flex gap-2 flex-wrap">
+                  <button class="btn btn-primary" id="nextStepBtn" onclick="siguientePaso()">▶ Siguiente paso</button>
+                  <button class="btn btn-outline-secondary" onclick="reiniciarSimulador()">↺ Reiniciar</button>
+                </div>
+              </div>
+            </div>
+            <div class="callout mt-3">
+              <div class="fw-semibold">Qué observar</div>
+              <div class="small-muted">Fíjate que el Controlador <strong>siempre</strong> le habla al Servicio, nunca directo al Repositorio — y que el Servicio es quien decide si hay conflicto, no el Controlador.</div>
+            </div>
+          </div>
+
+          <div class="col-lg-8">
+            <div class="card">
+              <div class="card-body">
+                <h3 class="h6 fw-bold mb-2">Mapa de capas (se ilumina la capa activa)</h3>
+                <div class="layer-map mb-3">
+                  <div class="layer-card presentacion" id="box-vista">
+                    <div class="layer-title">🍽️ Vista <span class="small-muted fw-normal">— Presentación</span></div>
+                    <span class="role-chip">Formulario de cita</span><span class="role-chip">Mensajes en pantalla</span>
+                  </div>
+                  <div class="layer-arrow">↕</div>
+                  <div class="layer-card presentacion" id="box-controlador">
+                    <div class="layer-title">🧑‍💼 Controlador <span class="small-muted fw-normal">— Presentación</span></div>
+                    <span class="role-chip">Recibe el envío</span><span class="role-chip">Decide qué Vista mostrar</span>
+                  </div>
+                  <div class="layer-arrow">↕</div>
+                  <div class="layer-card negocio" id="box-servicio">
+                    <div class="layer-title">👨‍🍳 Servicio <span class="small-muted fw-normal">— Negocio</span></div>
+                    <span class="role-chip">Valida el horario</span><span class="role-chip">Aplica las reglas</span>
+                  </div>
+                  <div class="layer-arrow">↕</div>
+                  <div class="layer-card datos" id="box-repositorio">
+                    <div class="layer-title">📦 Repositorio <span class="small-muted fw-normal">— Datos</span></div>
+                    <span class="role-chip">Busca citas existentes</span><span class="role-chip">Guarda la nueva cita</span>
+                  </div>
+                </div>
+
+                <h3 class="h6 fw-bold">Registro de la simulación</h3>
+                <div id="simLog" class="sim-log"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Challenge — Semana 6 · Arquitectura en capas, Clínica Veterinaria PetCare (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="toast.js"></script>
+  <script>
+    // ===== PESTAÑA 1: Clasificación =====
+    var ZONE_LABELS = {
+      entidad: 'Entidad 🥫',
+      repositorio: 'Repositorio 📦',
+      servicio: 'Servicio 👨‍🍳',
+      presentacion: 'Presentación 🍽️',
+      vista: 'Vista 🖼️',
+      controlador: 'Controlador 🎮',
+      antipatron: '🚫 Antipatrón'
+    };
+
+    var ZONE_TIPS_OK = {
+      entidad: 'Correcto: es un dato puro, sin lógica ni acceso a datos.',
+      repositorio: 'Correcto: solo guarda/recupera, sin decidir reglas.',
+      servicio: 'Correcto: aplica una regla de negocio o coordina.',
+      presentacion: 'Correcto: es algo que el usuario ve o una coordinación de flujo.',
+      vista: 'Correcto: es algo que el usuario ve directamente.',
+      controlador: 'Correcto: recibe la acción y decide el flujo, sin validar reglas él mismo.',
+      antipatron: 'Correcto: esta pieza rompe la separación de capas.'
+    };
+
+    var LEVELS = {
+      facil: {
+        name: 'Fácil — Lo nuevo de hoy: Entidad, Repositorio, Servicio',
+        mission: 'PetCare ya tenía Vista y Controlador resueltos desde la Semana 5. Hoy clasifica solo las 3 piezas nuevas.',
+        zones: ['entidad', 'repositorio', 'servicio'],
+        items: [
+          { text: 'Clase Mascota: nombre, especie, fecha de nacimiento', zone: 'entidad' },
+          { text: 'Clase Cita: fecha, hora, mascota, veterinario', zone: 'entidad' },
+          { text: 'guardarCita(cita), buscarCitasPorFecha(fecha)', zone: 'repositorio' },
+          { text: 'listarMascotasRegistradas()', zone: 'repositorio' },
+          { text: 'Regla: "no se puede agendar dos citas en el mismo horario para el mismo veterinario"', zone: 'servicio' },
+          { text: 'agendarCita(datos): valida la regla y le pide al Repositorio que guarde', zone: 'servicio' }
+        ],
+        output: 'Entidad: Mascota y Cita (solo datos). Repositorio: guardar/buscar, sin decidir. Servicio: la regla del horario + coordinar el guardado.'
+      },
+      medio: {
+        name: 'Medio — Agrega Presentación y antipatrones',
+        mission: 'Ahora entra la caja "Presentación" (Vista+Controlador juntos) y la caja "🚫 Antipatrón". Una pieza no pertenece a ninguna capa.',
+        zones: ['entidad', 'repositorio', 'servicio', 'presentacion', 'antipatron'],
+        items: [
+          { text: 'Clase Mascota: nombre, especie, fecha de nacimiento', zone: 'entidad' },
+          { text: 'Regla: "no se puede agendar dos citas en el mismo horario"', zone: 'servicio' },
+          { text: 'agendarCita(datos): valida y le pide al Repositorio que guarde', zone: 'servicio' },
+          { text: 'guardarCita(cita), buscarCitasPorFecha(fecha)', zone: 'repositorio' },
+          { text: 'El formulario para agendar una cita + el botón "Confirmar"', zone: 'presentacion' },
+          { text: 'Recibe el clic en "Confirmar" y decide qué mensaje mostrar', zone: 'presentacion' },
+          { text: 'El botón "Confirmar" valida él mismo si el horario está libre, sin preguntarle al Servicio', zone: 'antipatron' },
+          { text: 'El HTML de la lista de citas calcula cuántos días faltan para cada una', zone: 'antipatron' }
+        ],
+        distractors: [
+          { text: 'El color de la bata de los veterinarios', zone: 'trap' }
+        ],
+        output: 'Los 2 antipatrones mezclan responsabilidades: el botón valida una regla (le toca al Servicio) y el HTML calcula algo (también le toca al Servicio/Entidad, nunca a la Vista). El color de la bata no es responsabilidad de ninguna capa de código.'
+      },
+      dificil: {
+        name: 'Difícil — Las 5 piezas completas',
+        mission: 'Ahora Vista y Controlador se separan. Hay 2 piezas que no pertenecen a ninguna caja — léelas con calma.',
+        zones: ['entidad', 'repositorio', 'servicio', 'vista', 'controlador', 'antipatron'],
+        items: [
+          { text: 'Clase Veterinario: nombre, especialidad, horario disponible', zone: 'entidad' },
+          { text: 'Regla: "un veterinario no puede atender más de 8 citas por día"', zone: 'servicio' },
+          { text: 'agendarCita(datos): valida las 2 reglas de negocio y le pide al Repositorio guardar', zone: 'servicio' },
+          { text: 'buscarCitasPorVeterinario(id), eliminarCita(id)', zone: 'repositorio' },
+          { text: 'La pantalla que lista las citas del día', zone: 'vista' },
+          { text: 'El mensaje "Horario no disponible" en rojo', zone: 'vista' },
+          { text: 'Recibe el clic en "Cancelar cita" y le pide al Servicio que cancele', zone: 'controlador' },
+          { text: 'Decide si redirigir a la lista de citas o mostrar un error', zone: 'controlador' },
+          { text: 'El Controlador llama directo a "repositorio.eliminarCita(id)" sin pasar por el Servicio', zone: 'antipatron' },
+          { text: 'La clase Cita se conecta directo a la base de datos Y además arma su propio HTML', zone: 'antipatron' }
+        ],
+        distractors: [
+          { text: 'El nombre de la recepcionista que atiende los turnos', zone: 'trap' },
+          { text: 'El horario de almuerzo del personal', zone: 'trap' }
+        ],
+        output: 'El primer antipatrón es "saltarse capas" (Controlador → Repositorio directo). El segundo mezcla Entidad con Repositorio Y con Vista en una sola clase — 3 responsabilidades que deberían estar separadas.'
+      }
+    };
+
+    var currentLevelKey = 'facil';
+    var attempts = 0;
+    var progress = { facil: null, medio: null, dificil: null };
+    var selectedPiece = null;
+    var pieceCounter = 0;
+
+    function shuffle(arr) {
+      var a = arr.slice();
+      for (var i = a.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = a[i]; a[i] = a[j]; a[j] = t;
+      }
+      return a;
+    }
+
+    function makePiece(text, zone) {
+      pieceCounter++;
+      var el = document.createElement('div');
+      el.className = 'dd-piece';
+      el.textContent = text;
+      el.setAttribute('draggable', 'true');
+      el.dataset.text = text;
+      el.dataset.zone = zone;
+      el.dataset.id = 'p' + pieceCounter;
+      el.addEventListener('dragstart', function (e) {
+        el.classList.add('dragging');
+        e.dataTransfer.setData('text/plain', '');
+        window._dragged = el;
+      });
+      el.addEventListener('dragend', function () {
+        el.classList.remove('dragging');
+        window._dragged = null;
+      });
+      el.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (selectedPiece === el) {
+          el.classList.remove('selected');
+          selectedPiece = null;
+        } else {
+          if (selectedPiece) selectedPiece.classList.remove('selected');
+          selectedPiece = el;
+          el.classList.add('selected');
+        }
+      });
+      return el;
+    }
+
+    function feedbackForDrop(piece, zoneKey) {
+      var pieceZone = piece.dataset.zone;
+      if (pieceZone === zoneKey) {
+        return { ok: true, type: 'ok', msg: '✓ ' + (ZONE_LABELS[zoneKey] || zoneKey) + '. ' + (ZONE_TIPS_OK[zoneKey] || '') };
+      }
+      if (pieceZone === 'trap') {
+        return { ok: false, type: 'bad', msg: 'Esta pieza no es responsabilidad de ninguna capa. Déjala en el banco.' };
+      }
+      if (zoneKey === 'antipatron' && pieceZone !== 'antipatron') {
+        return { ok: false, type: 'info', msg: 'Esto en realidad es una práctica válida de ' + (ZONE_LABELS[pieceZone] || pieceZone) + ', no un antipatrón.' };
+      }
+      if (pieceZone === 'antipatron' && zoneKey !== 'antipatron') {
+        return { ok: false, type: 'warn', msg: 'Mira de nuevo: esta pieza rompe la separación de capas. Es un antipatrón, no pertenece a ' + (ZONE_LABELS[zoneKey] || zoneKey) + '.' };
+      }
+      return { ok: false, type: 'warn', msg: 'Esa pieza pertenece a ' + (ZONE_LABELS[pieceZone] || pieceZone) + ', no a ' + (ZONE_LABELS[zoneKey] || zoneKey) + '.' };
+    }
+
+    function placePieceInZone(piece, zoneEl, zoneKey) {
+      zoneEl.appendChild(piece);
+      piece.classList.remove('selected');
+      selectedPiece = null;
+      var fb = feedbackForDrop(piece, zoneKey);
+      piece.classList.remove('correct-piece', 'incorrect-piece');
+      piece.classList.add(fb.ok ? 'correct-piece' : 'incorrect-piece');
+      showToast(fb.msg, fb.type);
+    }
+
+    function setupPoolDropzone(zone) {
+      zone.addEventListener('dragover', function (e) { e.preventDefault(); });
+      zone.addEventListener('drop', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var piece = window._dragged;
+        if (!piece) return;
+        piece.classList.remove('correct-piece', 'incorrect-piece');
+        zone.appendChild(piece);
+      });
+      zone.addEventListener('click', function (e) {
+        if (!selectedPiece || e.target !== zone) return;
+        selectedPiece.classList.remove('correct-piece', 'incorrect-piece', 'selected');
+        zone.appendChild(selectedPiece);
+        selectedPiece = null;
+      });
+    }
+
+    function setupZoneDropzone(zoneEl, zoneKey) {
+      zoneEl.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        zoneEl.classList.add('over');
+      });
+      zoneEl.addEventListener('dragleave', function () {
+        zoneEl.classList.remove('over');
+      });
+      zoneEl.addEventListener('drop', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        zoneEl.classList.remove('over');
+        var piece = window._dragged;
+        if (!piece) return;
+        placePieceInZone(piece, zoneEl, zoneKey);
+      });
+      zoneEl.addEventListener('click', function () {
+        if (!selectedPiece) return;
+        placePieceInZone(selectedPiece, zoneEl, zoneKey);
+      });
+    }
+
+    function loadLevel(key) {
+      currentLevelKey = key;
+      attempts = 0;
+      selectedPiece = null;
+      document.getElementById('attemptsBadge').textContent = 'Verificaciones: 0';
+      document.getElementById('solutionBtn').disabled = true;
+
+      var level = LEVELS[key];
+      document.getElementById('levelName').textContent = level.name;
+      document.getElementById('levelMission').textContent = level.mission;
+      document.getElementById('expectedOutput').textContent = level.output;
+
+      document.querySelectorAll('.level-btn').forEach(function (b) {
+        b.classList.toggle('active', b.dataset.level === key);
+      });
+
+      var banner = document.getElementById('resultBanner');
+      banner.className = 'score-banner';
+      banner.innerHTML = '';
+
+      var board = document.getElementById('board');
+      board.innerHTML = '';
+      level.zones.forEach(function (zoneKey) {
+        var zoneEl = document.createElement('div');
+        zoneEl.className = 'mvc-zone';
+        zoneEl.id = 'zone-' + zoneKey;
+        var title = document.createElement('div');
+        title.className = 'mvc-zone-title';
+        title.textContent = ZONE_LABELS[zoneKey] || zoneKey;
+        zoneEl.appendChild(title);
+        setupZoneDropzone(zoneEl, zoneKey);
+        board.appendChild(zoneEl);
+      });
+
+      var pool = document.getElementById('pool');
+      pool.innerHTML = '';
+      var pieces = level.items.map(function (l) { return makePiece(l.text, l.zone); })
+        .concat((level.distractors || []).map(function (d) { return makePiece(d.text, d.zone); }));
+      shuffle(pieces).forEach(function (p) { pool.appendChild(p); });
+
+      showToast('Nivel "' + level.name + '" listo. Arrastra la primera pieza.', 'info', 3000);
+    }
+
+    function verify() {
+      attempts++;
+      document.getElementById('attemptsBadge').textContent = 'Verificaciones: ' + attempts;
+      if (attempts >= 3) document.getElementById('solutionBtn').disabled = false;
+
+      var level = LEVELS[currentLevelKey];
+      var pool = document.getElementById('pool');
+      var allPieces = document.querySelectorAll('#board .dd-piece, #pool .dd-piece');
+      var correct = 0;
+
+      allPieces.forEach(function (piece) {
+        var inPool = piece.parentElement === pool;
+        var zoneKey = inPool ? null : piece.parentElement.id.replace('zone-', '');
+        var isCorrect = piece.dataset.zone === 'trap' ? inPool : (zoneKey === piece.dataset.zone);
+        piece.classList.remove('correct-piece', 'incorrect-piece');
+        if (!inPool || piece.dataset.zone === 'trap') {
+          piece.classList.add(isCorrect ? 'correct-piece' : 'incorrect-piece');
+        }
+        if (isCorrect) correct++;
+      });
+
+      var total = allPieces.length;
+      var pct = Math.round((correct / total) * 100);
+      progress[currentLevelKey] = { pct: pct, attempts: attempts };
+      var progEl = document.getElementById('prog-' + currentLevelKey);
+      progEl.textContent = pct + '% (' + attempts + ' verificación' + (attempts === 1 ? '' : 'es') + ')';
+
+      var banner = document.getElementById('resultBanner');
+      var msg;
+      if (pct === 100) {
+        msg = '🎉 ¡Todas las piezas en su caja correcta!';
+        showToast('¡Nivel completado! ' + level.name, 'ok', 5000);
+      } else if (pct >= 60) {
+        msg = 'Casi. Revisa las piezas marcadas en rojo — el toast de cada una te dice por qué.';
+      } else {
+        msg = 'Respira y usa la pregunta ancla: ¿el Controlador le habló al Servicio, o se saltó directo al Repositorio?';
+      }
+      banner.className = 'score-banner show alert ' + (pct === 100 ? 'alert-success' : pct >= 60 ? 'alert-warning' : 'alert-danger');
+      banner.innerHTML =
+        '<div class="h5 mb-1">' + level.name + ' — ' + correct + ' / ' + total + ' piezas (' + pct + '%)</div>' +
+        '<div>' + msg + '</div>' +
+        '<div class="small mt-1">Verificaciones: ' + attempts + ' · Fecha: ' + new Date().toLocaleString('es-GT') + '</div>';
+    }
+
+    function showSolution() {
+      var level = LEVELS[currentLevelKey];
+      var pool = document.getElementById('pool');
+      document.querySelectorAll('#board .dd-piece').forEach(function (p) { pool.appendChild(p); });
+      var allPieces = pool.querySelectorAll('.dd-piece');
+      allPieces.forEach(function (piece) {
+        piece.classList.remove('correct-piece', 'incorrect-piece');
+        if (piece.dataset.zone !== 'trap') {
+          var target = document.getElementById('zone-' + piece.dataset.zone);
+          if (target) {
+            target.appendChild(piece);
+            piece.classList.add('correct-piece');
+          }
+        }
+      });
+      var banner = document.getElementById('resultBanner');
+      banner.className = 'score-banner show alert alert-warning';
+      banner.innerHTML = '<div class="fw-semibold">Solución mostrada (no cuenta como logro propio).</div><div class="small">Estúdiala, pulsa "Reiniciar nivel" e inténtalo de nuevo sin ayuda.</div>';
+      showToast('Solución mostrada — vuelve a intentarlo sin ayuda.', 'info');
+    }
+
+    function exportChallengePdf() {
+      var name = document.getElementById('studentName').value || '';
+      var attempted = Object.keys(progress).some(function (k) { return progress[k]; });
+      if (!attempted) {
+        showToast('Verifica al menos un nivel de "Clasifica las piezas" antes de exportar.', 'warn');
+        return;
+      }
+      if (!name.trim()) {
+        showToast('Escribe tu nombre en la casilla "Nombre (para el PDF)".', 'warn');
+        document.getElementById('studentName').focus();
+        return;
+      }
+      window.print();
+    }
+
+    setupPoolDropzone(document.getElementById('pool'));
+    loadLevel('facil');
+
+    // ===== PESTAÑA 2: Simulador funcional =====
+    var SCENARIOS = {
+      exitoso: [
+        { layer: 'vista', msg: '🍽️ Vista: se envía el formulario — Firulais, 15 de agosto, 10:00 am.' },
+        { layer: 'controlador', msg: '🧑‍💼 Controlador: recibe el envío y le pregunta al Servicio (nunca al Repositorio directo).' },
+        { layer: 'servicio', msg: '👨‍🍳 Servicio: debe verificar si el veterinario ya tiene otra cita a esa hora. Le pregunta al Repositorio.' },
+        { layer: 'repositorio', msg: '📦 Repositorio: busca las citas del veterinario ese día... no hay conflicto.' },
+        { layer: 'servicio', msg: '👨‍🍳 Servicio: regla cumplida. Le pide al Repositorio que guarde la nueva cita.' },
+        { layer: 'repositorio', msg: '📦 Repositorio: cita guardada.' },
+        { layer: 'controlador', msg: '🧑‍💼 Controlador: recibe la confirmación y decide mostrar la Vista de éxito.' },
+        { layer: 'vista', msg: '🍽️ Vista: muestra "¡Cita confirmada para Firulais el 15 de agosto a las 10:00 am!"' }
+      ],
+      conflicto: [
+        { layer: 'vista', msg: '🍽️ Vista: se envía el formulario — Michi, 15 de agosto, 10:00 am (mismo horario que otra cita).' },
+        { layer: 'controlador', msg: '🧑‍💼 Controlador: recibe el envío y le pregunta al Servicio (nunca al Repositorio directo).' },
+        { layer: 'servicio', msg: '👨‍🍳 Servicio: debe verificar si el veterinario ya tiene otra cita a esa hora. Le pregunta al Repositorio.' },
+        { layer: 'repositorio', msg: '📦 Repositorio: busca las citas del veterinario ese día... ¡ya existe una a las 10:00 am!' },
+        { layer: 'servicio', msg: '👨‍🍳 Servicio: regla incumplida — detiene la operación. El Repositorio NUNCA llega a guardar nada.' },
+        { layer: 'controlador', msg: '🧑‍💼 Controlador: recibe el error del Servicio y decide mostrar la Vista de error.' },
+        { layer: 'vista', msg: '🍽️ Vista: muestra "Horario no disponible, elige otra hora."' }
+      ]
+    };
+    var simIndex = -1;
+
+    function limpiarResaltado() {
+      ['vista', 'controlador', 'servicio', 'repositorio'].forEach(function (l) {
+        var el = document.getElementById('box-' + l);
+        if (el) el.classList.remove('active-step');
+      });
+    }
+
+    function logSim(msg) {
+      var box = document.getElementById('simLog');
+      var line = document.createElement('div');
+      line.className = 'sim-line hl';
+      line.textContent = msg;
+      box.appendChild(line);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function siguientePaso() {
+      var scenario = SCENARIOS[document.getElementById('scenarioSelect').value];
+      if (simIndex >= scenario.length - 1) {
+        showToast('Escenario terminado. Pulsa "Reiniciar" para verlo de nuevo o elige otro escenario.', 'info');
+        return;
+      }
+      simIndex++;
+      limpiarResaltado();
+      var step = scenario[simIndex];
+      var el = document.getElementById('box-' + step.layer);
+      if (el) el.classList.add('active-step');
+      logSim((simIndex + 1) + '. ' + step.msg);
+      if (simIndex === scenario.length - 1) {
+        document.getElementById('nextStepBtn').textContent = '✔ Escenario completo';
+        showToast('Simulación completa. Fíjate que el Controlador nunca habló directo con el Repositorio.', 'ok', 5000);
+      }
+    }
+
+    function reiniciarSimulador() {
+      simIndex = -1;
+      limpiarResaltado();
+      document.getElementById('simLog').innerHTML = '';
+      document.getElementById('nextStepBtn').textContent = '▶ Siguiente paso';
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

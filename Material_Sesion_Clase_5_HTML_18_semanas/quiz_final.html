@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz de Final de Clase — Semana 5</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 5 — MVC</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="guia_programador_python.html">Puente MVC</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link active" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="entregable.html">Entregable</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Quiz de Final de Clase · 7 minutos · Evidencia de la Actividad en clase — Sesión 5</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">¿Qué aprendiste hoy?</h1>
+          <div class="small-muted">10 preguntas sobre MVC, responsabilidades por capa y antipatrones. Al terminar: <strong>Calificar → Exportar a PDF → subir al aula virtual</strong>.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 900px;">
+    <div class="card mb-3">
+      <div class="card-body">
+        <label class="form-label fw-semibold" for="studentName">Nombre del estudiante (aparecerá en el PDF)</label>
+        <input id="studentName" class="form-control" type="text" placeholder="Nombre y apellido" />
+      </div>
+    </div>
+
+    <div class="quiz-q" data-answer="b">
+      <div class="fw-semibold mb-2">1) ¿Qué significa la sigla MVC?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q1" id="q1a" value="a" /><label class="form-check-label" for="q1a">Módulo-Variable-Compilador</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q1" id="q1b" value="b" /><label class="form-check-label" for="q1b">Modelo-Vista-Controlador</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q1" id="q1c" value="c" /><label class="form-check-label" for="q1c">Método-Versión-Commit</label></div>
+      <div class="quiz-feedback ok">✅ Correcto.</div>
+      <div class="quiz-feedback ko">Es Modelo-Vista-Controlador: tres capas con responsabilidades separadas.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="c">
+      <div class="fw-semibold mb-2">2) ¿Qué va, principalmente, en el Modelo?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q2" id="q2a" value="a" /><label class="form-check-label" for="q2a">Colores y estilos de la pantalla</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q2" id="q2b" value="b" /><label class="form-check-label" for="q2b">Botones y formularios</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q2" id="q2c" value="c" /><label class="form-check-label" for="q2c">Datos y reglas del negocio</label></div>
+      <div class="quiz-feedback ok">✅ Correcto: el Modelo nunca sabe nada de pantallas.</div>
+      <div class="quiz-feedback ko">Van los datos y las reglas del negocio (validaciones, cálculos).</div>
+    </div>
+
+    <div class="quiz-q" data-answer="a">
+      <div class="fw-semibold mb-2">3) ¿Qué va, principalmente, en la Vista?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q3" id="q3a" value="a" /><label class="form-check-label" for="q3a">Lo que el usuario ve e interactúa (formularios, tablas, mensajes)</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q3" id="q3b" value="b" /><label class="form-check-label" for="q3b">Las reglas de validación de negocio</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q3" id="q3c" value="c" /><label class="form-check-label" for="q3c">La conexión a la base de datos</label></div>
+      <div class="quiz-feedback ok">✅ Correcto: la Vista presenta, no decide ni calcula.</div>
+      <div class="quiz-feedback ko">Va lo que el usuario ve e interactúa. Las reglas de negocio pertenecen al Modelo.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="b">
+      <div class="fw-semibold mb-2">4) ¿Cuál es el trabajo principal del Controlador?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q4" id="q4a" value="a" /><label class="form-check-label" for="q4a">Diseñar el color de los botones</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q4" id="q4b" value="b" /><label class="form-check-label" for="q4b">Recibir la acción del usuario, pedirle al Modelo y decidir qué Vista mostrar</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q4" id="q4c" value="c" /><label class="form-check-label" for="q4c">Guardar los datos directamente sin preguntarle a nadie</label></div>
+      <div class="quiz-feedback ok">✅ Correcto: el Controlador coordina, como el mesero del restaurante.</div>
+      <div class="quiz-feedback ko">Recibe la acción, coordina con el Modelo, y decide qué Vista mostrar — nunca decide reglas de negocio él mismo.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="a">
+      <div class="fw-semibold mb-2">5) La clase <code>Donacion</code> con atributos <code>monto</code> y <code>fecha</code>, más la regla "el monto debe ser mayor a 0", ¿a qué capa pertenece?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q5" id="q5a" value="a" /><label class="form-check-label" for="q5a">Modelo</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q5" id="q5b" value="b" /><label class="form-check-label" for="q5b">Vista</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q5" id="q5c" value="c" /><label class="form-check-label" for="q5c">Controlador</label></div>
+      <div class="quiz-feedback ok">✅ Correcto: es un dato con una regla del negocio.</div>
+      <div class="quiz-feedback ko">Es Modelo: define un dato y una regla de negocio.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="b">
+      <div class="fw-semibold mb-2">6) El botón "Donar ahora" y la barra de progreso de una meta de recaudación, ¿a qué capa pertenecen?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q6" id="q6a" value="a" /><label class="form-check-label" for="q6a">Modelo</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q6" id="q6b" value="b" /><label class="form-check-label" for="q6b">Vista</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q6" id="q6c" value="c" /><label class="form-check-label" for="q6c">Controlador</label></div>
+      <div class="quiz-feedback ok">✅ Correcto: son elementos visuales con los que interactúa el usuario.</div>
+      <div class="quiz-feedback ko">Es Vista: son elementos que el usuario ve y usa, no datos ni decisiones de flujo.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="c">
+      <div class="fw-semibold mb-2">7) Un Controlador valida él mismo que "el monto de la donación sea mayor a 0" en vez de pedírselo al Modelo. ¿Qué antipatrón es este?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q7" id="q7a" value="a" /><label class="form-check-label" for="q7a">Vista con lógica de negocio</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q7" id="q7b" value="b" /><label class="form-check-label" for="q7b">Modelo tonto</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q7" id="q7c" value="c" /><label class="form-check-label" for="q7c">Controlador gordo (fat controller)</label></div>
+      <div class="quiz-feedback ok">✅ Correcto: el Controlador está haciendo trabajo que le corresponde al Modelo.</div>
+      <div class="quiz-feedback ko">Es "Controlador gordo": el Controlador asume una regla de negocio que debería vivir en el Modelo.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="a">
+      <div class="fw-semibold mb-2">8) Un formulario HTML calcula directamente el "total con descuento" dentro de la plantilla. ¿Qué antipatrón es este?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q8" id="q8a" value="a" /><label class="form-check-label" for="q8a">Vista con lógica de negocio</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q8" id="q8b" value="b" /><label class="form-check-label" for="q8b">Controlador gordo</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q8" id="q8c" value="c" /><label class="form-check-label" for="q8c">No es un antipatrón, es normal</label></div>
+      <div class="quiz-feedback ok">✅ Correcto: la Vista está calculando algo que debería resolver el Modelo.</div>
+      <div class="quiz-feedback ko">Es "Vista con lógica de negocio": la Vista solo debería mostrar el resultado ya calculado.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="b">
+      <div class="fw-semibold mb-2">9) ¿Por qué separar responsabilidades ayuda a un equipo de trabajo?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q9" id="q9a" value="a" /><label class="form-check-label" for="q9a">Porque hace el código más lento a propósito</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q9" id="q9b" value="b" /><label class="form-check-label" for="q9b">Porque distintas personas pueden trabajar en distintas capas sin pisarse</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q9" id="q9c" value="c" /><label class="form-check-label" for="q9c">Porque ya no hace falta probar el código</label></div>
+      <div class="quiz-feedback ok">✅ Correcto: cada quien puede trabajar su capa con menos riesgo de romper el trabajo de otro.</div>
+      <div class="quiz-feedback ko">Permite que distintas personas trabajen distintas capas en paralelo, con menos riesgo de conflictos.</div>
+    </div>
+
+    <div class="quiz-q" data-answer="c">
+      <div class="fw-semibold mb-2">10) En Python (con Django), a este mismo patrón se le suele llamar con otras siglas. ¿Cuáles?</div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q10" id="q10a" value="a" /><label class="form-check-label" for="q10a">MVP</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q10" id="q10b" value="b" /><label class="form-check-label" for="q10b">CRUD</label></div>
+      <div class="form-check"><input class="form-check-input" type="radio" name="q10" id="q10c" value="c" /><label class="form-check-label" for="q10c">MVT (Modelo-Vista-Plantilla)</label></div>
+      <div class="quiz-feedback ok">✅ Correcto: Django le llama MVT, pero el concepto es el mismo — ver el Puente MVC.</div>
+      <div class="quiz-feedback ko">Es MVT (Modelo-Vista-Plantilla). Es el mismo patrón, solo cambia el nombre de dos capas — revisa el <a href="guia_programador_python.html">Puente MVC</a>.</div>
+    </div>
+
+    <div id="scoreBanner" class="score-banner"></div>
+
+    <div class="d-flex gap-2 flex-wrap mt-3 no-print">
+      <button class="btn btn-primary btn-lg" onclick="gradeQuiz()">Calificar</button>
+      <button class="btn btn-outline-secondary" onclick="resetQuiz()">Reintentar (estudio)</button>
+      <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      <a class="btn btn-outline-primary ms-auto" href="proyecto.html">Ir a Proyecto →</a>
+    </div>
+
+    <div class="callout warning mt-4">
+      <div class="fw-semibold">Instrucciones de entrega (Actividad en clase — Sesión 5)</div>
+      <ol class="small-muted mb-0">
+        <li>Escribe tu nombre en la casilla de arriba.</li>
+        <li>Pulsa <strong>Calificar</strong> y revisa la retroalimentación de cada pregunta.</li>
+        <li>Pulsa <strong>Exportar a PDF</strong> y guarda el archivo como <code>QuizFinal_S5_TuNombre.pdf</code>.</li>
+        <li>Súbelo al aula virtual junto con el PDF del <a href="challenge.html">Challenge</a>.</li>
+      </ol>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Quiz de Final de Clase — Semana 5 · Patrón MVC (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="quiz.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

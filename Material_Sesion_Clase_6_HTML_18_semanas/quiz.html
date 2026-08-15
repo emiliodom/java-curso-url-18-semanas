@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz — Semana 6 (Presaberes y Final)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 6 — Capas</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Quiz de la semana · Elige el modo con el menú</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Presaberes y Quiz Final, en un solo lugar</h1>
+          <div class="small-muted" id="quizTypeLabel">Presaberes · 8 preguntas · no cuenta para nota</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 900px;">
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="row g-3 align-items-end">
+          <div class="col-md-6">
+            <label class="form-label fw-semibold" for="quizType">¿Qué quiz vas a resolver?</label>
+            <select id="quizType" class="form-select" onchange="renderQuiz()">
+              <option value="presaberes">🟡 Presaberes (inicio de clase, no cuenta para nota)</option>
+              <option value="final">🔴 Final de clase (evidencia de la Actividad en clase)</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold" for="studentName">Nombre del estudiante (aparecerá en el PDF)</label>
+            <input id="studentName" class="form-control" type="text" placeholder="Nombre y apellido" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout mb-3 no-print">
+      <div class="fw-semibold">¿Cómo funciona?</div>
+      <div class="small-muted">Cada vez que cambias de modo (o pulsas "🔀 Nuevas preguntas") se eligen preguntas <strong>al azar</strong> de un banco más grande — es normal que no veas siempre las mismas. Los dos modos comparten varios conceptos a propósito, para que Presaberes te prepare de verdad para el Final.</div>
+    </div>
+
+    <div id="quizContainer"></div>
+
+    <div id="scoreBanner" class="score-banner"></div>
+
+    <div class="d-flex gap-2 flex-wrap mt-3 no-print">
+      <button class="btn btn-primary btn-lg" onclick="gradeQuiz()">Calificar</button>
+      <button class="btn btn-outline-secondary" onclick="resetQuiz()">Reintentar (mismas preguntas)</button>
+      <button class="btn btn-outline-info" onclick="regenerateQuiz()">🔀 Nuevas preguntas</button>
+      <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      <a class="btn btn-outline-primary ms-auto" href="clase.html">Continuar a la clase →</a>
+    </div>
+
+    <div class="callout warning mt-4 no-print">
+      <div class="fw-semibold">Instrucciones de entrega (si estás en modo Final)</div>
+      <ol class="small-muted mb-0">
+        <li>Escribe tu nombre en la casilla de arriba.</li>
+        <li>Pulsa <strong>Calificar</strong> y revisa la retroalimentación de cada pregunta.</li>
+        <li>Pulsa <strong>Exportar a PDF</strong> y guarda el archivo como <code>QuizFinal_S6_TuNombre.pdf</code>.</li>
+        <li>Súbelo al aula virtual junto con el PDF del <a href="challenge.html">Challenge</a>.</li>
+      </ol>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Quiz — Semana 6 · Arquitectura en capas (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script>
+    // ===== Banco de preguntas de la Semana 6 =====
+    // level: 'presaberes' (solo diagnóstico) | 'final' (solo cierre) | 'ambas'
+    // (se sortean en los dos modos, para que no diverjan por completo).
+    var QUESTION_BANK = [
+      // ---- Solo Presaberes (repaso Semana 5 + intuición) ----
+      {
+        level: 'presaberes',
+        pregunta: 'En MVC (Semana 5), ¿qué capa contiene las reglas de negocio?',
+        opciones: [{ v: 'a', t: 'La Vista' }, { v: 'b', t: 'El Modelo' }, { v: 'c', t: 'El Controlador' }],
+        correcta: 'b',
+        fbOk: 'Correcto: el Modelo guarda datos y reglas. Hoy veremos que esas reglas se pueden separar aún más.',
+        fbKo: 'Era el Modelo. Hoy dividiremos ese Modelo en piezas más pequeñas: Entidad, Repositorio y Servicio.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: 'Si el mesero (Controlador) fuera directo a la bodega sin preguntarle al chef, ¿qué problema tendría el restaurante?',
+        opciones: [{ v: 'a', t: 'Ninguno, sería más rápido' }, { v: 'b', t: 'Se perdería el control de calidad y las recetas (reglas) del chef' }, { v: 'c', t: 'La comida sabría mejor' }],
+        correcta: 'b',
+        fbOk: 'Exacto: sin el chef en medio, nadie aplica las reglas. Hoy veremos cómo evitar este problema con capas.',
+        fbKo: 'Se perdería el control de calidad: el chef (Servicio) es quien aplica las reglas antes de tocar la bodega.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: '(Repaso Semana 5) ¿Cómo se llama el antipatrón donde el Controlador valida reglas de negocio él mismo?',
+        opciones: [{ v: 'a', t: 'Controlador gordo' }, { v: 'b', t: 'Vista bonita' }, { v: 'c', t: 'Modelo vacío' }],
+        correcta: 'a',
+        fbOk: 'Correcto: "controlador gordo". Hoy conocerás un antipatrón nuevo relacionado, el de "saltarse capas".',
+        fbKo: 'Es "controlador gordo". Hoy veremos un antipatrón parecido, pero entre Controlador y Repositorio.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: '¿Qué gana un restaurante al tener un chef que revisa las recetas, en vez de que cada mesero cocine a su manera?',
+        opciones: [{ v: 'a', t: 'Nada en particular' }, { v: 'b', t: 'Consistencia: la misma regla se aplica siempre, sin importar quién atienda' }, { v: 'c', t: 'Los meseros cocinan más rápido' }],
+        correcta: 'b',
+        fbOk: 'Correcto: centralizar las reglas en un solo lugar (el chef/Servicio) evita inconsistencias.',
+        fbKo: 'Gana consistencia: la regla se aplica igual siempre, sin importar quién atienda la mesa.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: '¿Ya habías escuchado antes los términos "Servicio" y "Repositorio" en programación?',
+        opciones: [{ v: 'a', t: 'Sí' }, { v: 'b', t: 'No, es mi primera vez' }, { v: 'c', t: 'No estoy seguro/a' }],
+        correcta: 'b',
+        fbOk: 'Cualquier respuesta es válida aquí — es solo diagnóstica. Hoy los conocerás a fondo.',
+        fbKo: 'Cualquier respuesta era válida 🙂 — hoy los conocerás a fondo, sin importar tu experiencia previa.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: 'Si guardas los ingredientes en una bodega separada del chef, ¿qué gana el restaurante?',
+        opciones: [{ v: 'a', t: 'Puede cambiar de bodega/proveedor sin cambiar las recetas del chef' }, { v: 'b', t: 'La comida cuesta menos automáticamente' }, { v: 'c', t: 'Nada cambia' }],
+        correcta: 'a',
+        fbOk: 'Correcto: esa es la idea de separar el Repositorio del Servicio — puedes cambiar uno sin tocar el otro.',
+        fbKo: 'Puede cambiar de bodega (proveedor) sin tener que rediseñar las recetas — esa es la ventaja de separar capas.'
+      },
+      // ---- Ambas (conceptos centrales, compartidos) ----
+      {
+        level: 'ambas',
+        pregunta: '¿Qué capa aplica las reglas de negocio y coordina el trabajo, sin acceder directamente a la base de datos?',
+        opciones: [{ v: 'a', t: 'El Repositorio' }, { v: 'b', t: 'El Servicio' }, { v: 'c', t: 'La Vista' }],
+        correcta: 'b',
+        fbOk: 'Correcto: el Servicio es el "chef" — aplica las reglas y le pide al Repositorio lo que necesita.',
+        fbKo: 'Es el Servicio. Aplica las reglas de negocio y coordina, pero no accede directo a los datos.'
+      },
+      {
+        level: 'ambas',
+        pregunta: '¿Qué capa se encarga ÚNICAMENTE de guardar y recuperar datos, sin decidir ninguna regla?',
+        opciones: [{ v: 'a', t: 'El Repositorio' }, { v: 'b', t: 'El Controlador' }, { v: 'c', t: 'El Servicio' }],
+        correcta: 'a',
+        fbOk: 'Correcto: el Repositorio es la "bodega" — guarda y entrega, pero nunca decide nada.',
+        fbKo: 'Es el Repositorio. Solo guarda/recupera datos; las reglas viven en el Servicio.'
+      },
+      {
+        level: 'ambas',
+        pregunta: 'En la arquitectura en capas, ¿a qué capa grande pertenecen la Vista y el Controlador juntos?',
+        opciones: [{ v: 'a', t: 'Presentación' }, { v: 'b', t: 'Negocio' }, { v: 'c', t: 'Datos' }],
+        correcta: 'a',
+        fbOk: 'Correcto: Presentación agrupa todo lo que el usuario ve y toca, y quien coordina esa interacción.',
+        fbKo: 'Es Presentación. Negocio es donde vive el Servicio, y Datos es donde viven Repositorio y Entidad.'
+      },
+      {
+        level: 'ambas',
+        pregunta: '¿Qué principio se rompe si el Controlador llama directo al Repositorio, saltándose el Servicio?',
+        opciones: [{ v: 'a', t: 'Bajo acoplamiento (las capas dejan de ser independientes entre sí)' }, { v: 'b', t: 'Ninguno, es más eficiente' }, { v: 'c', t: 'El principio de los colores' }],
+        correcta: 'a',
+        fbOk: 'Correcto: se rompe el bajo acoplamiento — las capas ya no se pueden cambiar por separado con seguridad.',
+        fbKo: 'Se rompe el "bajo acoplamiento": las capas dejan de ser independientes, y cambiar una arriesga romper otra.'
+      },
+      {
+        level: 'ambas',
+        pregunta: '¿Qué es una Entidad en esta arquitectura?',
+        opciones: [{ v: 'a', t: 'La clase que representa un dato puro (ej. Beneficiario), sin lógica de negocio' }, { v: 'b', t: 'Un botón de la interfaz' }, { v: 'c', t: 'Una función que valida contraseñas' }],
+        correcta: 'a',
+        fbOk: 'Correcto: la Entidad es solo el dato (atributos), sin reglas ni lógica — las reglas viven en el Servicio.',
+        fbKo: 'Es la clase que representa el dato puro, como "Beneficiario". No contiene reglas: esas van en el Servicio.'
+      },
+      {
+        level: 'ambas',
+        pregunta: '¿Qué capa grande es donde vive el Servicio y las reglas de negocio?',
+        opciones: [{ v: 'a', t: 'Negocio' }, { v: 'b', t: 'Presentación' }, { v: 'c', t: 'Datos' }],
+        correcta: 'a',
+        fbOk: 'Correcto: Negocio = Servicio + reglas. Presentación = Vista+Controlador. Datos = Repositorio+Entidad.',
+        fbKo: 'Es Negocio. Presentación agrupa Vista y Controlador; Datos agrupa Repositorio y Entidad.'
+      },
+      // ---- Solo Final (más técnico, referencia a Spring Boot) ----
+      {
+        level: 'final',
+        pregunta: 'En Spring Boot (vista previa, Semana 7), ¿qué anotación se usa típicamente para marcar una clase como Servicio?',
+        opciones: [{ v: 'a', t: '@Service' }, { v: 'b', t: '@Vista' }, { v: 'c', t: '@Datos' }],
+        correcta: 'a',
+        fbOk: 'Correcto: @Service. Todavía no la usarás en código real hasta la Semana 7, pero ya sabes qué representa.',
+        fbKo: 'Es @Service. La verás en código real a partir de la Semana 7, cuando empiece Spring Boot.'
+      },
+      {
+        level: 'final',
+        pregunta: '¿Qué anotación de Spring Boot marca una clase como Repositorio?',
+        opciones: [{ v: 'a', t: '@Repository' }, { v: 'b', t: '@Controller' }, { v: 'c', t: '@Boton' }],
+        correcta: 'a',
+        fbOk: 'Correcto: @Repository. Esta capa hablará con la base de datos vía JPA más adelante en el curso.',
+        fbKo: 'Es @Repository. Esa clase será la única que "hable" con la base de datos, usando JPA.'
+      },
+      {
+        level: 'final',
+        pregunta: '¿Qué anotación de Spring Boot marca una clase como Entidad (dato puro)?',
+        opciones: [{ v: 'a', t: '@Entity' }, { v: 'b', t: '@Service' }, { v: 'c', t: '@Template' }],
+        correcta: 'a',
+        fbOk: 'Correcto: @Entity. Representa una tabla de la base de datos una vez que uses JPA (más adelante).',
+        fbKo: 'Es @Entity. Representará una "tabla" de tu base de datos una vez que llegues a JPA.'
+      },
+      {
+        level: 'final',
+        pregunta: '¿Qué anotación recibe las peticiones del usuario, en el rol de Controlador?',
+        opciones: [{ v: 'a', t: '@Controller' }, { v: 'b', t: '@Repository' }, { v: 'c', t: '@Entity' }],
+        correcta: 'a',
+        fbOk: 'Correcto: @Controller. Sus vistas se renderizarán con Thymeleaf a partir de la Semana 7.',
+        fbKo: 'Es @Controller. Recibirá las peticiones y decidirá qué vista de Thymeleaf mostrar (Semana 7 en adelante).'
+      },
+      {
+        level: 'final',
+        pregunta: 'Detecta el antipatrón: el Controlador ejecuta "repositorio.guardar(datos)" directamente, sin pasar por ningún Servicio. ¿Qué falta?',
+        opciones: [{ v: 'a', t: 'Falta la capa de Servicio: se saltó una capa' }, { v: 'b', t: 'Nada, así es más rápido' }, { v: 'c', t: 'Falta una Vista' }],
+        correcta: 'a',
+        fbOk: 'Correcto: es el antipatrón de "saltarse capas" — el Controlador nunca debe hablar directo con el Repositorio.',
+        fbKo: 'Falta el Servicio en medio. El Controlador nunca debe llamar directo al Repositorio — eso es "saltarse capas".'
+      },
+      {
+        level: 'final',
+        pregunta: '¿Por qué separar Servicio de Repositorio ayuda al "bajo acoplamiento"?',
+        opciones: [{ v: 'a', t: 'Porque cada capa puede cambiar sin afectar a las demás, mientras mantenga el mismo contrato' }, { v: 'b', t: 'Porque hace el código más largo' }, { v: 'c', t: 'Porque evita escribir pruebas' }],
+        correcta: 'a',
+        fbOk: 'Correcto: esa independencia entre capas es exactamente el objetivo del bajo acoplamiento.',
+        fbKo: 'Porque cada capa puede cambiar internamente sin romper a las demás, siempre que el "contrato" entre ellas no cambie.'
+      },
+      {
+        level: 'final',
+        pregunta: 'Si mañana cambias de base de datos (ej. de una lista en memoria a una base de datos real), ¿qué capa deberías modificar principalmente?',
+        opciones: [{ v: 'a', t: 'El Repositorio' }, { v: 'b', t: 'El Servicio' }, { v: 'c', t: 'El Controlador' }],
+        correcta: 'a',
+        fbOk: 'Correcto: si el Repositorio está bien aislado, el Servicio y el Controlador no deberían enterarse del cambio.',
+        fbKo: 'Principalmente el Repositorio. Si las capas están bien separadas, el Servicio y el Controlador casi no cambian.'
+      },
+      {
+        level: 'final',
+        pregunta: '¿Qué capa decide "qué pantalla mostrar después" de procesar una acción del usuario?',
+        opciones: [{ v: 'a', t: 'El Controlador' }, { v: 'b', t: 'El Repositorio' }, { v: 'c', t: 'La Entidad' }],
+        correcta: 'a',
+        fbOk: 'Correcto: el Controlador coordina el flujo y decide la Vista siguiente, dentro de la capa de Presentación.',
+        fbKo: 'Es el Controlador, dentro de la capa de Presentación — coordina el flujo, no decide reglas de negocio.'
+      }
+    ];
+    var QUIZ_CONFIG = { presaberesCount: 8, finalCount: 10 };
+  </script>
+  <script src="quiz.js"></script>
+  <script>renderQuiz();</script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

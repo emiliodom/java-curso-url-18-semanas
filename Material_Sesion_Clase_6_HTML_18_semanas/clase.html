@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guía Docente — Semana 6 (70 min)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 6 — Capas</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link active" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Guía Docente · Sesión sincrónica de 70 minutos</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Semana 6 — Arquitectura en capas</h1>
+          <div class="small-muted">Sábado 15 de agosto de 2026 · 11:10–12:20 · En línea · Continúa 100% conceptual — es la profundización directa de MVC (Semana 5). No requiere instalar nada nuevo hoy, pero es buen momento para verificar el entorno (Semana 7 empieza código real).</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <div class="row g-3">
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="h5 section-title">Objetivos (hoy)</h2>
+            <ul class="mb-0">
+              <li>Explicar por qué el "Modelo" de la semana pasada conviene dividirlo en Entidad + Repositorio + Servicio.</li>
+              <li>Presentar las 3 capas grandes: Presentación, Negocio y Datos.</li>
+              <li>Explicar "bajo acoplamiento" con la regla del mesero que nunca entra solo a la bodega.</li>
+              <li>Relacionar cada capa con su anotación en Spring Boot (vista previa, sin instalar nada).</li>
+              <li>Guiar la revisión del diseño MVC que cada quien hizo en la Semana 5.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h2 class="h5 section-title">Distribución del tiempo (70 min)</h2>
+            <table class="table table-sm small mb-0">
+              <tbody>
+                <tr><td><span class="time-chip">00–05</span></td><td>Bienvenida + Quiz (Presaberes)</td></tr>
+                <tr><td><span class="time-chip">05–15</span></td><td>Repaso de MVC + el problema de un Modelo que hace demasiado</td></tr>
+                <tr><td><span class="time-chip">15–27</span></td><td>Las 3 capas grandes + el chef y la bodega</td></tr>
+                <tr><td><span class="time-chip">27–37</span></td><td>Servicio vs. Repositorio + bajo acoplamiento</td></tr>
+                <tr><td><span class="time-chip">37–39</span></td><td>Pausa activa</td></tr>
+                <tr><td><span class="time-chip">39–49</span></td><td>Frameworks modernos (anotaciones) + antipatrón "saltarse capas" + revisión del proyecto</td></tr>
+                <tr><td><span class="time-chip">49–57</span></td><td>Challenge (simuladores) + práctica guiada</td></tr>
+                <tr><td><span class="time-chip">57–65</span></td><td>Quiz (Final de clase)</td></tr>
+                <tr><td><span class="time-chip">65–70</span></td><td>Cierre + Guía 6</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h2 class="h5 section-title">Normas rápidas</h2>
+            <ul class="mb-0">
+              <li>Hoy seguimos sin escribir Spring Boot real — solo mencionamos sus anotaciones como vista previa.</li>
+              <li>Pregunta ancla nueva: <em>"¿el Controlador le está preguntando al Servicio, o se está saltando directo al Repositorio?"</em></li>
+              <li>Todo el vocabulario nuevo (Servicio, Repositorio, Entidad) es una versión más detallada de lo que la semana pasada llamamos "Modelo" — no es información desconectada.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout warning mt-3">
+          <div class="fw-semibold">Checklist antes de iniciar (docente)</div>
+          <ul class="small-muted mb-0">
+            <li>Repasar mentalmente el diagrama MVC de la Semana 5 antes de clase, para conectar ambas sesiones con fluidez.</li>
+            <li>Tener a la mano el ejemplo del "controlador gordo" de la semana pasada para contrastarlo con el nuevo antipatrón de "saltarse capas".</li>
+            <li>Avisar que el Cheat Sheet de hoy incluye una sección extra: verificación del entorno (VS Code + Java) de cara a la Semana 7.</li>
+            <li>Plan B listo si el grupo necesita reforzar el repaso de MVC antes de avanzar (ver más abajo).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="h4 section-title">Guion minuto a minuto (70 min)</h2>
+
+            <div class="accordion" id="acc">
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#c1">
+                    <span class="time-chip me-2">00–05</span> 1) Bienvenida + Quiz (Presaberes)
+                  </button>
+                </h2>
+                <div id="c1" class="accordion-collapse collapse show" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ol>
+                      <li>Saluda y conecta con la Semana 5: <em>"ya sabes separar Modelo, Vista y Controlador; hoy vamos a abrir el Modelo y ver que en realidad tiene 2 trabajos distintos mezclados"</em>.</li>
+                      <li>Comparte el enlace del <a href="quiz.html">Quiz</a> — pide que elijan <strong>"Presaberes"</strong> en el menú desplegable (4 minutos, individual).</li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c2">
+                    <span class="time-chip me-2">05–15</span> 2) Repaso de MVC + el problema de un Modelo que hace demasiado
+                  </button>
+                </h2>
+                <div id="c2" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">Repaso relámpago (1 minuto): Modelo = datos + reglas, Vista = lo que se ve, Controlador = coordina. Ahora, pregunta detonadora: <em>"el Modelo 'Beneficiario' guarda el dato Y valida la regla Y probablemente también hable con la base de datos. ¿Eso no sería, en el fondo, un 'Modelo gordo'?"</em></p>
+                    <ul>
+                      <li>Cuando un proyecto crece, mezclar "guardar en la base de datos" con "aplicar reglas de negocio" en la misma clase se vuelve difícil de mantener — el mismo problema del "controlador gordo", pero un nivel más adentro.</li>
+                      <li>La solución: dividir ese trabajo en <strong>3 piezas más pequeñas y especializadas</strong>: Entidad (el dato puro), Repositorio (acceso a datos) y Servicio (las reglas y la coordinación).</li>
+                    </ul>
+                    <div class="callout mt-2">
+                      <div class="fw-semibold">No es un tema nuevo, es un zoom</div>
+                      <div class="small-muted">No estamos abandonando MVC — le estamos haciendo zoom a la parte de "Modelo" para ver que, en aplicaciones reales, conviene dividirla más.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c3">
+                    <span class="time-chip me-2">15–27</span> 3) Las 3 capas grandes + el chef y la bodega
+                  </button>
+                </h2>
+                <div id="c3" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">Retomamos el restaurante de la semana pasada, pero ahora separamos "la cocina" en dos roles distintos:</p>
+                    <div class="table-responsive">
+                      <table class="table table-sm small">
+                        <thead><tr><th>En el restaurante</th><th>En la aplicación</th><th>Capa grande</th></tr></thead>
+                        <tbody>
+                          <tr><td>🍽️ El menú y las mesas</td><td>Vista</td><td rowspan="2"><strong>Presentación</strong></td></tr>
+                          <tr><td>🧑‍💼 El mesero</td><td>Controlador</td></tr>
+                          <tr><td>👨‍🍳 El chef ejecutivo: aplica las recetas y decide qué pedir a la bodega</td><td><strong>Servicio</strong></td><td><strong>Negocio</strong></td></tr>
+                          <tr><td>📦 La bodega: solo guarda y entrega ingredientes, no cocina ni decide nada</td><td><strong>Repositorio</strong></td><td rowspan="2"><strong>Datos</strong></td></tr>
+                          <tr><td>🥫 El ingrediente mismo (ej. un tomate: cantidad, fecha de caducidad)</td><td><strong>Entidad</strong></td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="callout success mt-2">
+                      <div class="fw-semibold">Visión estratégica (valor de la semana)</div>
+                      <div class="small-muted">Elegir bien esta arquitectura desde el inicio facilita que el proyecto crezca (escalabilidad) y que sea fácil de mantener meses después.</div>
+                    </div>
+                    <details class="mt-2">
+                      <summary class="fw-semibold">¿El chef entra a la bodega él mismo?</summary>
+                      <div class="mt-2 small-muted">Sí — el Servicio SÍ le pide cosas al Repositorio directamente (el chef sí entra a la bodega). Lo que nunca pasa es que el <strong>mesero</strong> (Controlador) entre a la bodega sin pasar por el chef. Esa es la regla de bajo acoplamiento que viene en el siguiente bloque.</div>
+                    </details>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c4">
+                    <span class="time-chip me-2">27–37</span> 4) Servicio vs. Repositorio + bajo acoplamiento
+                  </button>
+                </h2>
+                <div id="c4" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">Ejemplo aplicado: registrar un beneficiario, ahora con las 5 piezas:</p>
+                    <pre><code>ENTIDAD (Beneficiario): nombre, edad, fecha de ingreso — solo datos
+
+REPOSITORIO (BeneficiarioRepositorio):
+- guardar(beneficiario)
+- buscarPorId(id)
+- listarTodos()
+(solo sabe leer/escribir; NO valida nada)
+
+SERVICIO (BeneficiarioServicio):
+- registrar(datos): valida la regla "edad entre 0 y 120",
+  y SOLO SI es válida, le pide al Repositorio que lo guarde
+
+CONTROLADOR (RegistroController): recibe el clic en "Guardar"
+        → le pide al SERVICIO que registre (nunca al Repositorio directo)
+        → decide qué Vista mostrar según la respuesta</code></pre>
+                    <div class="callout danger mt-2">
+                      <div class="fw-semibold">La regla de bajo acoplamiento de hoy</div>
+                      <div class="small-muted">El Controlador <strong>solo</strong> le habla al Servicio. Nunca al Repositorio directamente. Si mañana cambias cómo se guardan los datos (de una lista en memoria a una base de datos real), el Controlador ni se entera.</div>
+                    </div>
+                    <p class="small-muted mt-3 mb-1">Pregunta guía: <em>"¿por qué no dejamos que el Servicio también decida qué Vista mostrar?"</em></p>
+                    <div class="small-muted">Porque eso es trabajo de coordinación de la Presentación, no una regla de negocio — cada capa se queda en su carril.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c5">
+                    <span class="time-chip me-2">37–39</span> 5) Pausa activa (2 min)
+                  </button>
+                </h2>
+                <div id="c5" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>Estirar manos y espalda, agua, mirar lejos de la pantalla 20 segundos.</li>
+                      <li>Micro-check en el chat: "en una palabra, ¿qué hace el Repositorio?"</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c6">
+                    <span class="time-chip me-2">39–49</span> 6) Frameworks modernos + antipatrón "saltarse capas" + revisión del proyecto
+                  </button>
+                </h2>
+                <div id="c6" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">Vista previa (sin instalar nada): en Spring Boot, cada capa se marca con una "etiqueta" especial llamada anotación:</p>
+                    <pre><code>@Controller   → la capa de Presentación (coordina)
+@Service      → la capa de Negocio (reglas)
+@Repository   → la capa de Datos (acceso)
+@Entity       → el dato puro</code></pre>
+                    <div class="small-muted mb-3">Todavía no escribes esto en código real — lo verás desde la Semana 7. Hoy solo conectamos el nombre con el concepto.</div>
+                    <p class="small-muted mb-2"><strong>Antipatrón nuevo — "saltarse capas":</strong> el Controlador llama directo al Repositorio, sin pasar por el Servicio.</p>
+                    <pre><code>// Antipatrón: el mesero entra solo a la bodega
+al hacer clic en "Guardar":
+    repositorio.guardar(datosDelFormulario)   // ¡sin validar nada!</code></pre>
+                    <div class="small-muted mb-3">Problema: nadie valida la regla de negocio antes de guardar — es exactamente el mismo riesgo del "controlador gordo", pero ahora manifestado como una capa completa que se ignora.</div>
+                    <p class="small-muted mb-1"><strong>Revisión del diseño del proyecto personal (10 min compartido con el resto del bloque):</strong> en parejas o individualmente, cada quien revisa su diagrama MVC de la Semana 5 y marca con lápiz qué parte de su "Modelo" sería Entidad, cuál sería Repositorio y cuál sería Servicio.</p>
+                    <div class="callout mt-2">
+                      <div class="fw-semibold">Mentalidad crítica (valor de la semana)</div>
+                      <div class="small-muted">Revisar el propio diseño con ojo crítico —y aceptar que hay que dividirlo más— es parte normal del trabajo de un desarrollador, no un señal de que algo salió mal la semana pasada.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c7">
+                    <span class="time-chip me-2">49–57</span> 7) Challenge (simuladores) + práctica guiada
+                  </button>
+                </h2>
+                <div id="c7" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ol>
+                      <li>Comparte el enlace del <a href="challenge.html">Challenge</a> — tiene 2 pestañas: <strong>Clasifica las piezas</strong> y <strong>Simulador funcional</strong>.</li>
+                      <li>Modela en pantalla la pestaña "Simulador funcional" completa una vez (2 min): sigan el dato paso a paso por las 5 capas.</li>
+                      <li>Los estudiantes resuelven <strong>Clasifica las piezas</strong> (niveles Fácil/Medio) y exploran el simulador por su cuenta — 6 min.</li>
+                      <li>Quien termine antes: continúa con los <a href="ejercicios.html">Ejercicios</a>.</li>
+                    </ol>
+                    <div class="callout warning">
+                      <div class="fw-semibold">Preguntas guía (docente, mientras circula por salas)</div>
+                      <div class="small-muted">¿Por qué esa pieza es Servicio y no Repositorio? En el simulador, ¿qué pasaría si el paso del Controlador saltara directo al Repositorio?</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c8">
+                    <span class="time-chip me-2">57–65</span> 8) Quiz (Final de clase)
+                  </button>
+                </h2>
+                <div id="c8" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ol>
+                      <li>Comparte de nuevo el enlace del <a href="quiz.html">Quiz</a> — esta vez pide que elijan <strong>"Final de clase"</strong> en el menú (10 preguntas, individual, 7 min).</li>
+                      <li>Al terminar, cada estudiante pulsa <em>Calificar</em>, revisa la retroalimentación y <strong>exporta su resultado a PDF</strong>.</li>
+                      <li>Los PDF del quiz y del challenge = evidencia de la <strong>Actividad en clase – Sesión 6</strong>.</li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c9">
+                    <span class="time-chip me-2">65–70</span> 9) Cierre + lanzamiento de la Guía 6
+                  </button>
+                </h2>
+                <div id="c9" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>Síntesis en 3 frases: la Entidad guarda el dato, el Repositorio lo guarda/recupera, el Servicio decide con reglas — y el Controlador nunca se salta al Servicio.</li>
+                      <li>Ticket de salida en el chat: <strong>1 aprendizaje + 1 duda</strong>.</li>
+                      <li>Invitación a la <a href="../evaluacion_docente/index.html">evaluación anónima de la sesión</a>.</li>
+                      <li>Presenta el <a href="proyecto.html">Proyecto (Entregable de la Guía 6)</a>: diagrama de capas y entidades de su proyecto real, fecha límite antes de la Sesión 7 (22 de agosto de 2026).</li>
+                      <li>Aviso importante: pide que revisen la sección de <a href="cheatsheet.html">preparación de entorno</a> del cheat sheet antes de la próxima sesión — la Semana 7 empieza código real con Spring Boot.</li>
+                      <li>Puente a la semana 7: "hoy diseñaste las capas en papel; la próxima semana instalas Spring Boot y las ves nacer como código de verdad".</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="callout success mt-3">
+          <div class="fw-semibold">Plan B (si el grupo necesita reforzar MVC antes de avanzar)</div>
+          <div class="small-muted">
+            Si notas que el repaso del bloque 1 muestra huecos importantes de la Semana 5, dedica 3-4 minutos extra
+            ahí mismo (tómalos de la práctica guiada del bloque 7, no del cierre) repasando la tabla del restaurante
+            original antes de introducir el chef y la bodega — es preferible consolidar MVC bien a avanzar rápido
+            con bases débiles, ya que todo lo de hoy depende de esa base.
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Guía Docente — Semana 6 (formato 18 semanas · 70 min) · Ejercicios en <a href="ejercicios.html">ejercicios.html</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

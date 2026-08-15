@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cheat Sheet — Semana 6 (Arquitectura en capas)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 6 — Capas</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link active" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Cheat Sheet · Semana 6 · Capas + preparación de entorno</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Referencia rápida — Servicio, Repositorio y tu entorno</h1>
+          <div class="small-muted">Dos pestañas: conceptos de arquitectura, y una revisión paso a paso de tu entorno de cara a la Semana 7 (Spring Boot).</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <ul class="nav nav-tabs mb-4 no-print" id="cheatTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="tab-conceptos-btn" data-bs-toggle="tab" data-bs-target="#tab-conceptos" type="button" role="tab">📘 Conceptos de arquitectura</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-entorno-btn" data-bs-toggle="tab" data-bs-target="#tab-entorno" type="button" role="tab">💻 Prepara tu entorno</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="cheatTabsContent">
+
+      <div class="tab-pane fade show active" id="tab-conceptos" role="tabpanel">
+
+        <h2 class="h4 section-title mb-3" id="seccionA">A. La analogía extendida del restaurante</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-sm small mb-0">
+                <thead><tr><th>En el restaurante</th><th>En la aplicación</th><th>Capa grande</th></tr></thead>
+                <tbody>
+                  <tr><td>🍽️ El menú y las mesas</td><td><strong>Vista</strong></td><td rowspan="2">Presentación</td></tr>
+                  <tr><td>🧑‍💼 El mesero</td><td><strong>Controlador</strong></td></tr>
+                  <tr><td>👨‍🍳 El chef ejecutivo: aplica recetas y decide qué pedir a la bodega</td><td><strong>Servicio</strong></td><td>Negocio</td></tr>
+                  <tr><td>📦 La bodega: guarda y entrega, no decide</td><td><strong>Repositorio</strong></td><td rowspan="2">Datos</td></tr>
+                  <tr><td>🥫 El ingrediente mismo</td><td><strong>Entidad</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="seccionB">B. Responsabilidades: qué SÍ y qué NUNCA</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-sm small mb-0">
+                <thead><tr><th>Rol</th><th>SÍ hace</th><th>NUNCA hace</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Vista</strong></td><td>Mostrar datos, recibir clics/entradas</td><td>Validar reglas o decidir el flujo</td></tr>
+                  <tr><td><strong>Controlador</strong></td><td>Recibir la acción, preguntarle al Servicio, elegir la Vista</td><td>Validar reglas él mismo, o hablar directo con el Repositorio</td></tr>
+                  <tr><td><strong>Servicio</strong></td><td>Aplicar reglas de negocio, coordinar con el Repositorio</td><td>Dibujar pantallas o saber de botones</td></tr>
+                  <tr><td><strong>Repositorio</strong></td><td>Guardar y recuperar datos</td><td>Aplicar reglas de negocio</td></tr>
+                  <tr><td><strong>Entidad</strong></td><td>Representar el dato puro (atributos)</td><td>Contener lógica de negocio o de acceso a datos</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="seccionC">C. Ejemplo aplicado: registro de un beneficiario</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <pre><code>ENTIDAD (Beneficiario): nombre, edad, fecha de ingreso
+
+REPOSITORIO (BeneficiarioRepositorio): guardar(), buscarPorId(), listarTodos()
+        (solo lee/escribe, no valida nada)
+
+SERVICIO (BeneficiarioServicio): registrar(datos)
+        → valida "edad entre 0 y 120"
+        → si es válida, le pide al Repositorio que guarde
+
+CONTROLADOR (RegistroController): recibe el clic en "Guardar"
+        → le pide al SERVICIO que registre (nunca al Repositorio)
+        → decide qué Vista mostrar según la respuesta</code></pre>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="seccionD">D. Bajo acoplamiento: la regla del mesero</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="callout success mb-0">
+                  <div class="fw-semibold">✅ Correcto</div>
+                  <div class="small-muted">Vista → Controlador → <strong>Servicio</strong> → Repositorio → Entidad</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="callout danger mb-0">
+                  <div class="fw-semibold">🚫 Antipatrón: "saltarse capas"</div>
+                  <div class="small-muted">Vista → Controlador → <s>Servicio</s> → Repositorio (¡nadie validó nada!)</div>
+                </div>
+              </div>
+            </div>
+            <div class="small-muted mt-3">El Controlador solo le habla al Servicio. Si mañana cambias cómo se guardan los datos, el Controlador ni se entera — esa independencia es el "bajo acoplamiento".</div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="seccionE">E. Antipatrones (acumulado de las Semanas 5 y 6)</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-sm small mb-0">
+                <thead><tr><th>Antipatrón</th><th>Síntoma</th><th>Corrección</th></tr></thead>
+                <tbody>
+                  <tr><td>Controlador gordo <span class="small-muted">(S5)</span></td><td>El Controlador valida reglas él mismo</td><td>Mover la regla al Servicio</td></tr>
+                  <tr><td>Vista con lógica <span class="small-muted">(S5)</span></td><td>El HTML calcula o decide algo</td><td>El Servicio calcula el dato ya listo</td></tr>
+                  <tr><td><strong>Saltarse capas</strong> <span class="small-muted">(S6, nuevo)</span></td><td>El Controlador llama directo al Repositorio</td><td>El Controlador solo habla con el Servicio</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="seccionF">F. Relación con frameworks modernos (vista previa de Spring Boot)</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted">Todavía no instalas nada — la Semana 7 empieza el código real. Esto es solo para que el vocabulario ya te suene familiar:</p>
+            <div class="table-responsive">
+              <table class="table table-sm small mb-0">
+                <thead><tr><th>Capa/Rol</th><th>Anotación en Spring Boot</th><th>Qué hará más adelante</th></tr></thead>
+                <tbody>
+                  <tr><td>Controlador</td><td><code>@Controller</code></td><td>Recibirá peticiones y elegirá vistas de <strong>Thymeleaf</strong></td></tr>
+                  <tr><td>Servicio</td><td><code>@Service</code></td><td>Aplicará las reglas de negocio</td></tr>
+                  <tr><td>Repositorio</td><td><code>@Repository</code></td><td>Hablará con la base de datos vía <strong>JPA</strong> (CRUD)</td></tr>
+                  <tr><td>Entidad</td><td><code>@Entity</code></td><td>Representará una tabla real de la base de datos</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="seccionG">G. Estructura de carpetas ampliada (referencia)</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <pre><code>src/
+  main/
+    java/.../modelo/        ← Entidades (ej. Beneficiario.java)
+    java/.../repositorio/   ← Repositorios (acceso a datos)
+    java/.../servicio/      ← Servicios (reglas de negocio)
+    java/.../controlador/   ← Controladores
+    resources/templates/    ← Vistas (Thymeleaf, desde la Semana 7)</code></pre>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="seccionH">H. Confusiones frecuentes</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-sm small mb-0">
+                <thead><tr><th>Confusión</th><th>Aclaración</th></tr></thead>
+                <tbody>
+                  <tr><td>"¿El Servicio reemplaza al Modelo de la semana pasada?"</td><td>No lo reemplaza: lo divide. El "Modelo" de la Semana 5 = Entidad + Repositorio + Servicio juntos.</td></tr>
+                  <tr><td>"¿El Servicio puede hablar con el Repositorio?"</td><td>Sí, siempre. Lo que nunca ocurre es que el Controlador hable directo con el Repositorio.</td></tr>
+                  <tr><td>"¿Cuántos Servicios/Repositorios tiene una app?"</td><td>Normalmente uno de cada uno por Entidad (ej. BeneficiarioServicio, BeneficiarioRepositorio).</td></tr>
+                  <tr><td>"¿Esto ya es Spring Boot?"</td><td>No todavía — es diseño y diagrama. El código real empieza en la Semana 7.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="tab-pane fade" id="tab-entorno" role="tabpanel">
+
+        <div class="callout warning mb-4">
+          <div class="fw-semibold">¿Por qué revisar esto ahora?</div>
+          <div class="small-muted">La Semana 7 empieza código real con Spring Boot. Si tu entorno (VS Code + JDK) ya estaba listo desde la Semana 1, esto es solo un repaso de 5 minutos. Si algo quedó pendiente, este es el momento de resolverlo — <strong>sin prisa, con calma</strong>.</div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h2 class="h5 section-title mb-3">Checklist de preparación</h2>
+
+            <div class="env-step">
+              <div class="env-num">1</div>
+              <div>
+                <div class="fw-semibold">Verifica que Java (JDK) esté instalado</div>
+                <div class="small-muted mb-2">Abre una terminal (ver <a href="../Material_Sesion_Clase_1_HTML_18_semanas/instalacion.html#paso3">Semana 1 — Paso 3</a> si no sabes cómo) y escribe:</div>
+                <pre><code>java -version
+javac -version</code></pre>
+                <div class="small-muted">✅ Checkpoint: ambos comandos deben responder con un número de versión (ej. "21.0.x"), no con un error de "comando no encontrado".</div>
+              </div>
+            </div>
+
+            <div class="env-step">
+              <div class="env-num">2</div>
+              <div>
+                <div class="fw-semibold">Confirma que VS Code esté instalado</div>
+                <div class="small-muted">Abre VS Code. Si no lo tienes, sigue <a href="../Material_Sesion_Clase_1_HTML_18_semanas/instalacion.html#paso1">Semana 1 — Paso 1</a>. ✅ Checkpoint: la aplicación abre sin errores.</div>
+              </div>
+            </div>
+
+            <div class="env-step">
+              <div class="env-num">3</div>
+              <div>
+                <div class="fw-semibold">Confirma la extensión "Extension Pack for Java"</div>
+                <div class="small-muted">En VS Code: ícono de Extensiones (barra lateral izquierda) → busca <strong>"Extension Pack for Java"</strong> (de Microsoft) → debe decir "Instalado" (si no, clic en "Install"). ✅ Checkpoint: aparece "Installed" junto al nombre.</div>
+              </div>
+            </div>
+
+            <div class="env-step">
+              <div class="env-num">4</div>
+              <div>
+                <div class="fw-semibold">Crea y corre un archivo de prueba</div>
+                <div class="small-muted mb-2">Crea un archivo <code>Prueba.java</code> en una carpeta nueva, con este contenido:</div>
+                <pre><code>public class Prueba {
+    public static void main(String[] args) {
+        System.out.println("Entorno listo para la Semana 7");
+    }
+}</code></pre>
+                <div class="small-muted">Guarda, y busca el botón <strong>▶ Run</strong> que aparece arriba del método <code>main</code> (lo agrega la extensión de Java). Clic ahí. ✅ Checkpoint: en la terminal integrada aparece el mensaje "Entorno listo para la Semana 7".</div>
+              </div>
+            </div>
+
+            <div class="env-step">
+              <div class="env-num">5</div>
+              <div>
+                <div class="fw-semibold">Confirma tu GitHub Desktop (o Git) y tu repositorio del proyecto</div>
+                <div class="small-muted">Abre tu repositorio real (Semana 3) en GitHub Desktop y confirma que sigues teniendo acceso sin problemas — lo necesitarás para subir tu código real desde la Semana 7.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <details class="mb-4">
+          <summary class="fw-semibold">Solución de problemas frecuentes</summary>
+          <div class="table-responsive mt-2">
+            <table class="table table-sm small mb-0">
+              <thead><tr><th>Situación</th><th>Qué hacer</th></tr></thead>
+              <tbody>
+                <tr><td>"java no se reconoce como un comando"</td><td>El JDK no está instalado o no está en el PATH. Repite <a href="../Material_Sesion_Clase_1_HTML_18_semanas/instalacion.html#paso2">Semana 1 — Paso 2</a>.</td></tr>
+                <tr><td>El botón "▶ Run" no aparece sobre <code>main</code></td><td>Verifica que el archivo termine en <code>.java</code> y que "Extension Pack for Java" esté instalado y activo (reinicia VS Code).</td></tr>
+                <tr><td>VS Code pide "seleccionar un JDK"</td><td>Elige el que ya tienes instalado de la lista; si no aparece ninguno, reinstala el JDK y reinicia VS Code.</td></tr>
+                <tr><td>No tengo tiempo/permisos para instalar en esta computadora</td><td>Usa el compilador en línea (<a href="../Material_Sesion_Clase_1_HTML_18_semanas/instalacion.html">Plan B, Semana 1</a>) mientras resuelves la instalación real antes de la Semana 7.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <div class="callout success">
+          <div class="fw-semibold">¿Todo listo?</div>
+          <div class="small-muted">Si los 5 pasos tienen su ✅, tu entorno está listo para la Semana 7. Si algo falla, es normal — vuelve a la <a href="../Material_Sesion_Clase_1_HTML_18_semanas/instalacion.html">guía de instalación completa de la Semana 1</a> con calma durante la semana.</div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Cheat Sheet — Semana 6 · Arquitectura en capas (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cheat Sheet — Semana 5 (Patrón MVC)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 5 — MVC</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz_presaberes.html">Presaberes</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link active" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="guia_programador_python.html">Puente MVC</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz_final.html">Quiz Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="entregable.html">Entregable</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Cheat Sheet · Semana 5 · MVC sin código todavía</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Referencia rápida — Modelo, Vista, Controlador</h1>
+          <div class="small-muted">Guárdala: la usarás en los ejercicios, el challenge y, sobre todo, en tu propuesta real del proyecto.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <h2 class="h4 section-title mb-3" id="seccionA">A. La analogía del restaurante (repaso rápido)</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-sm small mb-0">
+            <thead><tr><th>En el restaurante</th><th>En la aplicación</th></tr></thead>
+            <tbody>
+              <tr><td>🍳 La cocina: tiene los ingredientes y las recetas</td><td><strong>Modelo</strong>: datos y reglas del negocio</td></tr>
+              <tr><td>🍽️ El menú y las mesas: lo que el cliente ve</td><td><strong>Vista</strong>: lo que el usuario ve e interactúa</td></tr>
+              <tr><td>🧑‍💼 El mesero: coordina entre cliente y cocina</td><td><strong>Controlador</strong>: recibe la acción y coordina</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3" id="seccionB">B. Responsabilidades por capa: qué SÍ y qué NO</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-sm small mb-0">
+            <thead><tr><th>Capa</th><th>SÍ hace</th><th>NUNCA hace</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Modelo</strong></td><td>Guardar datos, aplicar reglas de negocio (validaciones, cálculos)</td><td>Saber de botones, colores, pantallas o formularios</td></tr>
+              <tr><td><strong>Vista</strong></td><td>Mostrar datos e imágenes, recibir clics/entradas del usuario</td><td>Calcular, validar reglas de negocio o decidir qué pasa después</td></tr>
+              <tr><td><strong>Controlador</strong></td><td>Recibir la acción del usuario, preguntarle al Modelo, elegir qué Vista mostrar</td><td>Validar reglas de negocio él mismo, o dibujar la pantalla directamente</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3" id="seccionC">C. Ejemplo aplicado: registro de un beneficiario</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <pre><code>MODELO (Beneficiario): nombre, edad, fecha de ingreso
+        + regla: "la edad no puede ser negativa ni mayor a 120"
+
+VISTA (formulario_registro.html): campos de texto + botón "Guardar"
+        + mensaje de error o de éxito (recibido, no decidido)
+
+CONTROLADOR (RegistroController): recibe el clic en "Guardar"
+        → le pide al Modelo validar y guardar
+        → decide qué Vista mostrar según la respuesta</code></pre>
+        <div class="small-muted">Si la regla de edad cambia, solo se toca el Modelo. Si cambia el diseño del formulario, solo se toca la Vista.</div>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3" id="seccionD">D. Antipatrones comunes (y cómo corregirlos)</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-sm small mb-0">
+            <thead><tr><th>Antipatrón</th><th>Síntoma</th><th>Corrección</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Controlador gordo</strong> (fat controller)</td><td>El Controlador valida reglas de negocio él mismo</td><td>Mover la regla al Modelo; el Controlador solo pregunta "¿es válido?"</td></tr>
+              <tr><td><strong>Vista con lógica de negocio</strong></td><td>El HTML/formulario calcula o decide algo (promedios, descuentos)</td><td>El Modelo calcula el dato ya listo; la Vista solo lo muestra</td></tr>
+              <tr><td><strong>Modelo "tonto"</strong></td><td>El Modelo es solo datos, sin ninguna regla, y todas las reglas están regadas en Vista y Controlador</td><td>Centralizar las reglas de negocio en el Modelo, aunque parezca "más código" ahí</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3" id="seccionE">E. Estructura de carpetas de referencia (vista previa de Spring Boot)</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <p class="small-muted">Todavía no instalas Spring Boot (eso es la Semana 7), pero así se verán las carpetas de tu proyecto una vez que exista el código — organizar el diagrama de hoy pensando en esta estructura te ahorrará trabajo después.</p>
+        <pre><code>src/
+  main/
+    java/.../modelo/       ← clases como Beneficiario, Reseña
+    java/.../controlador/  ← clases como RegistroController
+    resources/templates/   ← las Vistas (HTML)</code></pre>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3" id="seccionF">F. Pregunta de diagnóstico rápido</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="callout mb-0">
+          <div class="fw-semibold">Ante cualquier línea de código o funcionalidad, pregúntate:</div>
+          <div class="small-muted">¿Esto es un <strong>dato o regla</strong> (Modelo), algo que el usuario <strong>ve o toca</strong> (Vista), o una <strong>decisión de qué hacer</strong> (Controlador)? Si dudas entre dos, casi siempre pertenece al Modelo — ahí viven las reglas del negocio.</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3" id="seccionG">G. Confusiones frecuentes</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-sm small mb-0">
+            <thead><tr><th>Confusión</th><th>Aclaración</th></tr></thead>
+            <tbody>
+              <tr><td>"La Vista es solo el HTML, ¿verdad?"</td><td>Sí, más lo que se ve en pantalla en general — pero nunca decide reglas ni calcula.</td></tr>
+              <tr><td>"¿El Controlador guarda los datos?"</td><td>No directamente: le pide al Modelo que lo haga. El Controlador coordina, no ejecuta la regla.</td></tr>
+              <tr><td>"¿Cuántos Modelos/Vistas/Controladores tiene una app?"</td><td>Muchos de cada uno — típicamente uno por "entidad" (Beneficiario, Donación) o por pantalla, no uno solo por capa.</td></tr>
+              <tr><td>"En Python (Django) escuché 'MVT', no 'MVC'"</td><td>Es el mismo patrón con otro nombre para dos capas — ver el <a href="guia_programador_python.html">Puente MVC</a>.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Cheat Sheet — Semana 5 · Patrón MVC (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
