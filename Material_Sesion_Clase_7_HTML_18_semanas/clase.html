@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guía Docente — Semana 7 (70 min)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 7 — Spring Boot</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link active" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Guía Docente · Sesión sincrónica de 70 minutos</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Semana 7 — Entorno de desarrollo y Spring Boot</h1>
+          <div class="small-muted">Sábado 22 de agosto de 2026 · 11:10–12:20 · En línea · Primera semana con código Java real ejecutándose de verdad. Límite de alcance: hoy NO se escriben controladores ni endpoints propios (@RestController llega en la Semana 8) — solo se genera, se explora y se ejecuta el proyecto base.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <div class="row g-3">
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="h5 section-title">Objetivos (hoy)</h2>
+            <ul class="mb-0">
+              <li>Confirmar que JDK 21 y VS Code (Semana 1) siguen funcionando, y agregar la extensión de Spring Boot.</li>
+              <li>Explicar qué hace Maven/Gradle y por qué Spring Initializr ya incluye el <em>wrapper</em> (no hay que instalar Maven aparte).</li>
+              <li>Generar un proyecto real en <strong>start.spring.io</strong> y recorrer su estructura.</li>
+              <li>Ejecutar el proyecto y leer el log de arranque hasta encontrar la línea de éxito.</li>
+              <li>Modificar <code>application.properties</code> (puerto, nombre) y confirmar el cambio.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h2 class="h5 section-title">Distribución del tiempo (70 min)</h2>
+            <table class="table table-sm small mb-0">
+              <tbody>
+                <tr><td><span class="time-chip">00–05</span></td><td>Bienvenida + Quiz (Presaberes)</td></tr>
+                <tr><td><span class="time-chip">05–12</span></td><td>Por qué Spring Boot + requisitos técnicos (JDK/IDE/Maven-Gradle)</td></tr>
+                <tr><td><span class="time-chip">12–22</span></td><td>Spring Initializr en vivo: generar el proyecto</td></tr>
+                <tr><td><span class="time-chip">22–30</span></td><td>Recorrido de la estructura generada</td></tr>
+                <tr><td><span class="time-chip">30–32</span></td><td>Pausa activa</td></tr>
+                <tr><td><span class="time-chip">32–45</span></td><td>Primer arranque + lectura del log + <code>application.properties</code></td></tr>
+                <tr><td><span class="time-chip">45–57</span></td><td>Challenge (ordena los pasos + simulador) + práctica guiada</td></tr>
+                <tr><td><span class="time-chip">57–65</span></td><td>Quiz (Final de clase)</td></tr>
+                <tr><td><span class="time-chip">65–70</span></td><td>Cierre + lanzamiento de la Guía 7</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h2 class="h5 section-title">Normas rápidas</h2>
+            <ul class="mb-0">
+              <li>Hoy no se escribe ningún controlador ni endpoint propio — eso es la Semana 8. Hoy el éxito es ver el proyecto arrancar.</li>
+              <li>Pregunta ancla nueva: <em>"¿tu terminal dice 'Started ... Application' y un número de segundos? Si sí, tu proyecto está corriendo — no busques más."</em></li>
+              <li>Ver la <strong>Whitelabel Error Page</strong> al visitar <code>localhost:8080</code> es una señal de éxito hoy, no de fracaso: significa que el servidor está corriendo y solo falta una ruta (eso llega la próxima semana).</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout warning mt-3">
+          <div class="fw-semibold">Checklist antes de iniciar (docente)</div>
+          <ul class="small-muted mb-0">
+            <li>Verificar tu propia máquina: JDK 21, VS Code, extensión "Extension Pack for Java" y "Spring Boot Extension Pack" instaladas antes de la sesión.</li>
+            <li>Tener ya generado (o generar en vivo) un proyecto de práctica en start.spring.io, para no perder tiempo de clase con la descarga.</li>
+            <li>Avisar con anticipación en el grupo que quien NO tenga JDK 21 listo debe resolverlo antes de la sesión — hoy depende 100% de eso.</li>
+            <li>Plan B listo si falla la conexión a start.spring.io durante la sesión (ver más abajo).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="h4 section-title">Guion minuto a minuto (70 min)</h2>
+
+            <div class="accordion" id="acc">
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#c1">
+                    <span class="time-chip me-2">00–05</span> 1) Bienvenida + Quiz (Presaberes)
+                  </button>
+                </h2>
+                <div id="c1" class="accordion-collapse collapse show" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ol>
+                      <li>Saluda y marca el cambio de tono: <em>"las últimas dos semanas diseñamos en papel; hoy encendemos el motor — todo lo de hoy corre de verdad en tu computadora"</em>.</li>
+                      <li>Comparte el enlace del <a href="quiz.html">Quiz</a> — pide que elijan <strong>"Presaberes"</strong> en el menú desplegable (4 minutos, individual).</li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c2">
+                    <span class="time-chip me-2">05–12</span> 2) Por qué Spring Boot + requisitos técnicos
+                  </button>
+                </h2>
+                <div id="c2" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">Elevator pitch (1 minuto): Spring Boot es un <strong>framework</strong> — un conjunto de piezas ya construidas (servidor web incluido, configuración lista) para no escribir desde cero todo lo que MVC y arquitectura en capas (Semanas 5–6) necesitan. En vez de programar un servidor, lo declaras con anotaciones y Spring lo construye por ti.</p>
+                    <p class="small-muted mb-2">Repaso de los 3 requisitos técnicos del programa de hoy:</p>
+                    <div class="table-responsive">
+                      <table class="table table-sm small">
+                        <thead><tr><th>Requisito</th><th>¿Ya lo tenemos?</th><th>Rol</th></tr></thead>
+                        <tbody>
+                          <tr><td><strong>JDK 21</strong></td><td>Sí — Semana 1</td><td>Compila y ejecuta el código Java</td></tr>
+                          <tr><td><strong>IDE (VS Code)</strong></td><td>Sí — Semana 1</td><td>Donde escribes y ejecutas el código</td></tr>
+                          <tr><td><strong>Maven (herramienta de construcción)</strong></td><td>Nuevo, pero <em>ya incluido</em></td><td>Descarga las piezas de Spring Boot y empaqueta el proyecto</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="callout success mt-2">
+                      <div class="fw-semibold">El atajo que ahorra una instalación completa</div>
+                      <div class="small-muted">No vamos a instalar Maven por separado. Spring Initializr genera un archivo <code>mvnw</code> (Maven Wrapper) dentro del proyecto — es una copia de Maven ya lista para ese proyecto. Menos pasos, menos riesgo de errores de instalación.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c3">
+                    <span class="time-chip me-2">12–22</span> 3) Spring Initializr en vivo
+                  </button>
+                </h2>
+                <div id="c3" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">Comparte pantalla en <a href="https://start.spring.io" target="_blank" rel="noreferrer">start.spring.io</a> y llena el formulario en vivo, explicando cada campo:</p>
+                    <div class="table-responsive">
+                      <table class="table table-sm small">
+                        <thead><tr><th>Campo</th><th>Valor a usar hoy</th><th>Por qué</th></tr></thead>
+                        <tbody>
+                          <tr><td>Project</td><td><strong>Maven</strong></td><td>Coherente con el empaquetado de la Semana 14</td></tr>
+                          <tr><td>Language</td><td><strong>Java</strong></td><td>El lenguaje del curso</td></tr>
+                          <tr><td>Spring Boot</td><td>La versión más alta que NO diga <code>SNAPSHOT</code></td><td>Las versiones SNAPSHOT son inestables/experimentales</td></tr>
+                          <tr><td>Group</td><td>ej. <code>gt.edu.url</code></td><td>Identifica a "quién le pertenece" el código (convención de paquetes Java)</td></tr>
+                          <tr><td>Artifact</td><td>ej. <code>demo-spring-boot</code></td><td>Nombre del proyecto (se usa también para carpeta y JAR final)</td></tr>
+                          <tr><td>Packaging</td><td><strong>Jar</strong></td><td>Formato que usaremos para desplegar más adelante (Semana 14)</td></tr>
+                          <tr><td>Java</td><td><strong>21</strong></td><td>La misma versión del JDK instalado en la Semana 1</td></tr>
+                          <tr><td>Dependencies</td><td><strong>Spring Web</strong> (única, por ahora)</td><td>Lo mínimo para tener un servidor web embebido — Thymeleaf y JPA llegan en semanas futuras</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="callout warning mt-2">
+                      <div class="fw-semibold">Menos es más, por ahora</div>
+                      <div class="small-muted">A propósito NO agregamos Thymeleaf ni Spring Data JPA hoy. Cada dependencia se introduce cuando toca su tema (Thymeleaf en la Semana 10, JPA en la Semana 12) — así cada semana entiende exactamente qué agregó y por qué.</div>
+                    </div>
+                    <p class="small-muted mt-2 mb-0">Pulsa <strong>Generate</strong>, descarga el <code>.zip</code>, y descomprímelo en una carpeta fácil de encontrar (ej. <code>Documentos/proyectos-java</code>).</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c4">
+                    <span class="time-chip me-2">22–30</span> 4) Recorrido de la estructura generada
+                  </button>
+                </h2>
+                <div id="c4" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">Abre la carpeta descomprimida con <strong>VS Code → File → Open Folder</strong> y recorre, en vivo, estos elementos:</p>
+                    <pre><code>demo-spring-boot/
+├── mvnw, mvnw.cmd        ← el "Maven Wrapper" (no instalamos Maven aparte)
+├── pom.xml               ← la "receta" del proyecto: dependencias y versión de Java
+└── src/
+    ├── main/java/.../DemoSpringBootApplication.java   ← el punto de partida
+    └── main/resources/application.properties          ← configuración del proyecto
+</code></pre>
+                    <div class="table-responsive">
+                      <table class="table table-sm small">
+                        <thead><tr><th>Archivo</th><th>Qué hace</th></tr></thead>
+                        <tbody>
+                          <tr><td><code>pom.xml</code></td><td>Lista las dependencias (ej. Spring Web) y le dice a Maven qué descargar y cómo empaquetar.</td></tr>
+                          <tr><td><code>...Application.java</code></td><td>Tiene el método <code>main</code> y la anotación <code>@SpringBootApplication</code> — es el botón de encendido de todo el proyecto.</td></tr>
+                          <tr><td><code>application.properties</code></td><td>Configuración en pares <code>clave=valor</code> (ej. el puerto del servidor). Hoy está casi vacío; lo iremos llenando semana a semana.</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="callout mt-2">
+                      <div class="fw-semibold">Curiosidad técnica (valor de la semana)</div>
+                      <div class="small-muted"><code>@SpringBootApplication</code> en realidad combina 3 anotaciones en una (auto-configuración, escaneo de componentes y punto de entrada) — Spring Boot automatiza configuración que en frameworks más antiguos había que escribir a mano.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c5">
+                    <span class="time-chip me-2">30–32</span> 5) Pausa activa (2 min)
+                  </button>
+                </h2>
+                <div id="c5" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>Estirar manos y espalda, agua, mirar lejos de la pantalla 20 segundos.</li>
+                      <li>Micro-check en el chat: "en una palabra, ¿qué archivo tiene el método <code>main</code>?"</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c6">
+                    <span class="time-chip me-2">32–45</span> 6) Primer arranque + log + <code>application.properties</code>
+                  </button>
+                </h2>
+                <div id="c6" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2"><strong>Arrancar el proyecto</strong> (cualquiera de las dos formas, mostrar ambas):</p>
+                    <ul>
+                      <li>Abre <code>...Application.java</code> y pulsa el botón <strong>▶ Run</strong> que aparece sobre <code>main</code> (extensión de Java).</li>
+                      <li>O, en la terminal integrada: <code>./mvnw spring-boot:run</code> (Mac/Linux) o <code>mvnw spring-boot:run</code> (Windows).</li>
+                    </ul>
+                    <pre><code>...
+Tomcat started on port 8080 (http) with context path ''
+Started DemoSpringBootApplication in 2.145 seconds (process running for 2.4)</code></pre>
+                    <div class="callout success mt-2">
+                      <div class="fw-semibold">✅ Señal de éxito</div>
+                      <div class="small-muted">La línea <code>Started ... Application in X seconds</code> significa que tu servidor Tomcat (incluido dentro de Spring Boot) ya está corriendo. No necesitas instalar Tomcat aparte — viene "embebido".</div>
+                    </div>
+                    <p class="small-muted mt-3 mb-2">Abre el navegador en <code>http://localhost:8080</code>. Aparece una <strong>Whitelabel Error Page</strong> (código 404).</p>
+                    <div class="callout danger mt-2">
+                      <div class="fw-semibold">Esto NO es un error de configuración — es lo esperado</div>
+                      <div class="small-muted">El servidor sí está corriendo (por eso responde algo), pero todavía no le dijimos qué mostrar en la ruta <code>/</code> — eso se llama definir una "ruta" o "endpoint", y es exactamente el tema de la Semana 8. Hoy, ver esta página confirma que todo funciona.</div>
+                    </div>
+                    <p class="small-muted mt-3 mb-1">Detén el proyecto (botón ⏹ o <code>Ctrl+C</code> en la terminal) y abre <code>application.properties</code>. Agrega:</p>
+                    <pre><code>server.port=8081
+spring.application.name=demo-spring-boot</code></pre>
+                    <p class="small-muted mb-0">Vuelve a ejecutar y confirma en el log que ahora dice <code>port 8081</code> — visita <code>http://localhost:8081</code> y verifica que también responde. <strong>Metodología estructurada (valor de la semana):</strong> una configuración inicial ordenada (puerto, nombre) evita confusiones cuando el proyecto crezca.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c7">
+                    <span class="time-chip me-2">45–57</span> 7) Challenge + práctica guiada
+                  </button>
+                </h2>
+                <div id="c7" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ol>
+                      <li>Comparte el enlace del <a href="challenge.html">Challenge</a> — tiene 2 pestañas: <strong>Ordena los pasos</strong> y <strong>Simulador de arranque</strong>.</li>
+                      <li>Modela en pantalla el escenario "con error de puerto" del simulador una vez (2 min).</li>
+                      <li>Los estudiantes resuelven ambas pestañas por su cuenta — 8 min.</li>
+                      <li>Quien termine antes: continúa con los <a href="ejercicios.html">Ejercicios</a> en su propia máquina.</li>
+                    </ol>
+                    <div class="callout warning">
+                      <div class="fw-semibold">Preguntas guía (docente, mientras circula por salas)</div>
+                      <div class="small-muted">¿Qué paso va antes: generar el proyecto o verificar el JDK? En el simulador, ¿qué mensaje exacto avisa que el puerto ya estaba ocupado?</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c8">
+                    <span class="time-chip me-2">57–65</span> 8) Quiz (Final de clase)
+                  </button>
+                </h2>
+                <div id="c8" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ol>
+                      <li>Comparte de nuevo el enlace del <a href="quiz.html">Quiz</a> — esta vez pide que elijan <strong>"Final de clase"</strong> en el menú (10 preguntas, individual, 7 min).</li>
+                      <li>Al terminar, cada estudiante pulsa <em>Calificar</em>, revisa la retroalimentación y <strong>exporta su resultado a PDF</strong>.</li>
+                      <li>Los PDF del quiz y del challenge = evidencia de la <strong>Actividad en clase – Sesión 7</strong>.</li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c9">
+                    <span class="time-chip me-2">65–70</span> 9) Cierre + lanzamiento de la Guía 7
+                  </button>
+                </h2>
+                <div id="c9" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>Síntesis en 3 frases: Spring Initializr genera el esqueleto, <code>...Application.java</code> lo enciende, y <code>application.properties</code> lo configura — todo antes de escribir una sola ruta propia.</li>
+                      <li>Ticket de salida en el chat: <strong>1 aprendizaje + 1 duda</strong>.</li>
+                      <li>Invitación a la <a href="../evaluacion_docente/index.html">evaluación anónima de la sesión</a>.</li>
+                      <li>Presenta el <a href="proyecto.html">Proyecto (Entregable de la Guía 7)</a>: generar el proyecto Spring Boot REAL, correrlo y subirlo a GitHub — fecha límite antes de la Sesión 8 (29 de agosto de 2026).</li>
+                      <li>Puente a la semana 8: "hoy tu proyecto responde con una página de error genérica; la próxima semana le enseñas a responder con tus propios datos, usando <code>@RestController</code>".</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="callout success mt-3">
+          <div class="fw-semibold">Plan B (si falla start.spring.io o la conexión durante la sesión)</div>
+          <div class="small-muted">
+            Ten preparado con anticipación un <code>.zip</code> ya generado (mismos parámetros de la tabla) para compartir por el aula virtual o el chat. También puedes usar el mismo IDE de VS Code con la extensión de Spring Boot para generar el proyecto sin salir del editor (comando "Spring Initializr: Create a Maven Project" en la paleta de comandos), como alternativa 100% local si el sitio web no responde.
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Guía Docente — Semana 7 (formato 18 semanas · 70 min) · Ejercicios en <a href="ejercicios.html">ejercicios.html</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
