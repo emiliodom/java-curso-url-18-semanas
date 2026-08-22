@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Proyecto — Entregable de la Guía 7 (Semana 7)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 7 — Spring Boot</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link active" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Proyecto · Entregable de la Guía de Aprendizaje 7 (1 pt)</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Tu proyecto Spring Boot real, corriendo y en GitHub</h1>
+          <div class="small-muted">Esta página tiene dos partes: primero una <strong>guía paso a paso</strong> para generar el proyecto Spring Boot de tu proyecto real, y al final la <strong>plantilla calificable</strong> que debes completar y entregar. Fecha límite: <strong>antes de la Sesión 8 (29 de agosto de 2026)</strong>. Esta semana no tiene Entrega Parcial adicional — el siguiente hito es en la Semana 9.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 980px;">
+
+    <div class="callout warning mb-4">
+      <div class="fw-semibold">Antes de empezar</div>
+      <div class="small-muted">Necesitas: tu <a href="../ficha_proyecto.html">Ficha del Proyecto</a> (nombre de la entidad/institución) a la mano, tu repositorio real de GitHub (Semanas 3–4, con su rama <code>development</code>), y tu JDK 21 verificado. Este proyecto Spring Boot será la base que crecerá hasta la Entrega Parcial 2 (Semana 9).</div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">Parte guiada — genera y ejecuta tu proyecto real</h2>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso1">Paso 1 — Elige Group y Artifact con datos reales de tu proyecto</h3>
+        <p class="small-muted">Usa el nombre de tu entidad/institución (de tu Ficha del Proyecto) para definir:</p>
+        <pre><code>Group:    gt.edu.url  (o similar, en minúsculas, sin acentos ni espacios)
+Artifact: nombre-de-tu-proyecto-en-minusculas-con-guiones
+          (ej. "guarderia-esperanza", "dispensario-santa-rita")</code></pre>
+        <div class="callout success mb-0">✅ Checkpoint: tienes decidido tu Group y tu Artifact, coherentes con el nombre real de tu proyecto.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso2">Paso 2 — Genera el proyecto en Spring Initializr</h3>
+        <p class="small-muted">En <a href="https://start.spring.io" target="_blank" rel="noreferrer">start.spring.io</a>: Project <strong>Maven</strong>, Language <strong>Java</strong>, Spring Boot la versión más alta que no diga SNAPSHOT, tu Group y Artifact del Paso 1, Packaging <strong>Jar</strong>, Java <strong>21</strong>, dependencia <strong>Spring Web</strong> únicamente. Genera y descomprime el <code>.zip</code>.</p>
+        <div class="callout success mb-0">✅ Checkpoint: tienes una carpeta con <code>pom.xml</code>, tu clase <code>Application.java</code> y <code>application.properties</code>.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso3">Paso 3 — Ábrelo en VS Code y ejecútalo por primera vez</h3>
+        <p class="small-muted">File → Open Folder sobre la carpeta descomprimida. Abre la clase <code>Application.java</code> y pulsa <strong>▶ Run</strong> sobre <code>main</code> (o usa <code>mvnw spring-boot:run</code> en la terminal).</p>
+        <div class="callout success mb-0">✅ Checkpoint: en la terminal aparece "Started ... Application in X seconds", y al visitar <code>http://localhost:8080</code> ves la Whitelabel Error Page (señal de éxito, no de fracaso — todavía no hay rutas).</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso4">Paso 4 — Personaliza <code>application.properties</code></h3>
+        <p class="small-muted">Detén el proyecto y agrega, con el nombre real de tu proyecto:</p>
+        <pre><code>spring.application.name=guarderia-esperanza</code></pre>
+        <p class="small-muted">Vuelve a ejecutar y confirma que sigue arrancando sin errores.</p>
+        <div class="callout success mb-0">✅ Checkpoint: <code>application.properties</code> tiene el nombre real de tu proyecto y el proyecto arranca sin problema.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso5">Paso 5 — Sube el proyecto a tu repositorio real</h3>
+        <p class="small-muted">En GitHub Desktop, dentro de tu repositorio de las Semanas 3–4: cambia a la rama <code>development</code>, copia (o mueve) toda la carpeta del proyecto generado dentro de tu repositorio local, confirma el cambio ("Commit to development") con el resumen <em>"Agrega el proyecto Spring Boot inicial"</em>, y publica/sincroniza la rama.</p>
+        <div class="callout success mb-0">✅ Checkpoint: tu rama <code>development</code> en GitHub.com muestra la carpeta completa del proyecto Spring Boot (incluyendo <code>pom.xml</code> y <code>src/</code>).</div>
+      </div>
+    </div>
+
+    <details class="mb-4">
+      <summary class="fw-semibold">Solución de problemas frecuentes</summary>
+      <div class="table-responsive mt-2">
+        <table class="table table-sm small mb-0">
+          <thead><tr><th>Situación</th><th>Qué hacer</th></tr></thead>
+          <tbody>
+            <tr><td>No sé qué Group usar</td><td>Cualquier valor coherente y en minúsculas sirve (ej. <code>gt.edu.url</code>); lo importante es que no cambie entre sesiones futuras.</td></tr>
+            <tr><td>"Port 8080 was already in use" al ejecutar</td><td>Ya tienes otra copia corriendo (quizás del Ejercicio 2). Deténla o usa otro puerto temporalmente con <code>server.port</code>.</td></tr>
+            <tr><td>GitHub Desktop no detecta los archivos nuevos</td><td>Verifica que copiaste la carpeta DENTRO de la carpeta de tu repositorio local (no en otro lugar).</td></tr>
+            <tr><td>No tengo permisos/tiempo para instalar en esta computadora</td><td>Usa el Plan B de la <a href="../Material_Sesion_Clase_1_HTML_18_semanas/instalacion.html">Semana 1</a> mientras resuelves tu entorno real — recuerda que Spring Boot exige JDK local para el resto del curso.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <hr class="my-4" />
+    <h2 class="h4 section-title mb-3">📋 Entregable — completa esto para tu calificación</h2>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title mb-3">Datos del estudiante</h3>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label small fw-semibold">Nombre completo</label>
+            <input class="form-control fill-line" type="text" />
+          </div>
+          <div class="col-md-3">
+            <label class="form-label small fw-semibold">Carné</label>
+            <input class="form-control fill-line" type="text" />
+          </div>
+          <div class="col-md-3">
+            <label class="form-label small fw-semibold">Fecha de entrega</label>
+            <input class="form-control fill-line" type="text" placeholder="dd/mm/2026" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte A — Verificación del entorno (10%)</h3>
+        <p class="small-muted">Pega la salida de <code>java -version</code> y <code>javac -version</code> en tu terminal (texto o captura describiendo el resultado):</p>
+        <textarea class="code-area" rows="3"></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte B — Parámetros de tu proyecto (20%)</h3>
+        <p class="small-muted">Escribe los parámetros exactos que usaste en Spring Initializr (Group, Artifact, versión de Spring Boot, versión de Java, dependencias) y el enlace a tu repositorio de GitHub:</p>
+        <textarea class="code-area" rows="6" placeholder="Group: ...&#10;Artifact: ...&#10;Spring Boot: ...&#10;Java: ...&#10;Dependencias: ...&#10;Repositorio: ..."></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte C — Evidencia del primer arranque (30%)</h3>
+        <p class="small-muted">Pega (o describe con detalle) la línea de tu log que confirma el arranque exitoso, y explica qué viste al visitar <code>localhost:8080</code>:</p>
+        <textarea class="code-area" rows="6"></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte D — Configuración y subida a GitHub (25%)</h3>
+        <p class="small-muted">Confirma el contenido que agregaste a <code>application.properties</code> y pega el enlace directo a la carpeta del proyecto dentro de tu rama <code>development</code> en GitHub:</p>
+        <textarea class="code-area" rows="5"></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte E — Reflexión (15%)</h3>
+        <ol class="small">
+          <li class="mb-2">
+            <strong>Metodología estructurada:</strong> ¿por qué crees que configurar bien <code>application.properties</code> desde ahora evitará problemas cuando el proyecto crezca?
+            <textarea class="form-control mt-1" rows="3"></textarea>
+          </li>
+          <li>
+            <strong>Autodisciplina:</strong> ¿qué paso de hoy requirió más paciencia (ej. esperar la descarga de dependencias, entender el error de puerto) y cómo lo resolviste?
+            <textarea class="form-control mt-1" rows="3"></textarea>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Lista de cotejo (marca antes de entregar)</h3>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck1" /><label class="form-check-label small" for="ck1">Generé el proyecto con los parámetros correctos (Maven, Java 21, Spring Web).</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck2" /><label class="form-check-label small" for="ck2">Vi la línea "Started ... Application" en mi terminal.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck3" /><label class="form-check-label small" for="ck3">Configuré spring.application.name con el nombre real de mi proyecto.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck4" /><label class="form-check-label small" for="ck4">Subí el proyecto completo a mi rama development en GitHub.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck5" /><label class="form-check-label small" for="ck5">Exporté el PDF con el nombre <code>Guia7_TuNombre.pdf</code>.</label></div>
+      </div>
+    </div>
+
+    <div class="callout warning">
+      <div class="fw-semibold">Rúbrica rápida (1 punto total)</div>
+      <div class="small-muted">Parte A: 0.10 · Parte B: 0.20 · Parte C: 0.30 · Parte D: 0.25 · Parte E: 0.15. Se valora que el proyecto realmente exista y corra (no solo que se describa), que los parámetros sean coherentes con tu proyecto real, y la honestidad de la reflexión. Entregar tarde: −25% por día.</div>
+    </div>
+
+    <div class="d-flex gap-2 mt-3 no-print">
+      <button class="btn btn-primary btn-lg btn-export" onclick="window.print()">Exportar a PDF</button>
+      <a class="btn btn-outline-primary btn-lg" href="index.html">Volver al inicio</a>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Proyecto — Entregable de la Guía 7 · Semana 7 (formato 18 semanas) · Fecha límite: antes de la Sesión 8
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
