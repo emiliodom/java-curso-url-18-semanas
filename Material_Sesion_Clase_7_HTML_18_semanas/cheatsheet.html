@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cheat Sheet — Semana 7 (Entorno y Spring Boot)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 7 — Spring Boot</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link active" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Cheat Sheet · Semana 7 · Entorno + Spring Boot</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Referencia rápida — Initializr, estructura y comandos</h1>
+          <div class="small-muted">Dos pestañas: conceptos (qué es cada cosa) y comandos + solución de problemas (para cuando algo no arranca).</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <ul class="nav nav-tabs mb-4 no-print" id="cheatTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="tab-conceptos-btn" data-bs-toggle="tab" data-bs-target="#tab-conceptos" type="button" role="tab">📘 Conceptos y estructura</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-comandos-btn" data-bs-toggle="tab" data-bs-target="#tab-comandos" type="button" role="tab">🧯 Comandos y solución de problemas</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="cheatTabsContent">
+
+      <div class="tab-pane fade show active" id="tab-conceptos" role="tabpanel">
+
+        <h2 class="h4 section-title mb-3" id="seccionA">A. Piezas del rompecabezas — qué hace cada una</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-sm small mb-0">
+                <thead><tr><th>Pieza</th><th>Qué es</th><th>Analogía</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>JDK</strong></td><td>Compila y ejecuta código Java</td><td>El motor del carro</td></tr>
+                  <tr><td><strong>VS Code + extensión Java</strong></td><td>Donde escribes y ejecutas el código</td><td>El tablero de controles</td></tr>
+                  <tr><td><strong>Maven</strong></td><td>Descarga dependencias y empaqueta el proyecto, según <code>pom.xml</code></td><td>El repartidor que trae las piezas que pediste</td></tr>
+                  <tr><td><strong>Maven Wrapper (<code>mvnw</code>)</strong></td><td>Una copia de Maven incluida en el proyecto — no hace falta instalar Maven aparte</td><td>Traer tu propia herramienta en la caja</td></tr>
+                  <tr><td><strong>Spring Initializr</strong></td><td>Genera el esqueleto del proyecto según los parámetros que elijas</td><td>La plantilla de un formulario ya armado</td></tr>
+                  <tr><td><strong>Spring Boot</strong></td><td>El framework: trae un servidor web (Tomcat) embebido y configuración automática</td><td>La cocina ya equipada, no hay que instalar cada aparato por separado</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="seccionB">B. Los 8 campos de Spring Initializr</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-sm small mb-0">
+                <thead><tr><th>Campo</th><th>Qué significa</th><th>Valor recomendado hoy</th></tr></thead>
+                <tbody>
+                  <tr><td>Project</td><td>Herramienta de construcción</td><td>Maven</td></tr>
+                  <tr><td>Language</td><td>Lenguaje de programación</td><td>Java</td></tr>
+                  <tr><td>Spring Boot</td><td>Versión del framework</td><td>La más alta que NO diga SNAPSHOT</td></tr>
+                  <tr><td>Group</td><td>Identifica al autor/organización (se usa como nombre de paquete)</td><td>ej. <code>gt.edu.url</code></td></tr>
+                  <tr><td>Artifact</td><td>Nombre del proyecto</td><td>Descriptivo, en minúsculas y con guiones</td></tr>
+                  <tr><td>Packaging</td><td>Formato final del empaquetado</td><td>Jar</td></tr>
+                  <tr><td>Java</td><td>Versión del JDK a usar</td><td>21</td></tr>
+                  <tr><td>Dependencies</td><td>Piezas adicionales a incluir</td><td>Spring Web (única, por ahora)</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="seccionC">C. Estructura generada — para qué sirve cada archivo</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <pre><code>mi-proyecto/
+├── mvnw, mvnw.cmd                    ← Maven Wrapper (no instalar Maven aparte)
+├── pom.xml                           ← dependencias + versión de Java
+└── src/
+    ├── main/java/.../MiProyectoApplication.java   ← @SpringBootApplication + main()
+    ├── main/resources/application.properties      ← configuración (clave=valor)
+    ├── main/resources/static/                     ← archivos públicos (imágenes, CSS) — semanas futuras
+    ├── main/resources/templates/                  ← vistas Thymeleaf — desde la Semana 10
+    └── test/java/...                              ← pruebas automáticas — semanas futuras</code></pre>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="seccionD">D. <code>application.properties</code> — lo que hoy sí toca</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <pre><code># cambia el puerto (por defecto es 8080)
+server.port=8081
+
+# le da un nombre a tu aplicación (aparece en los logs)
+spring.application.name=mi-proyecto</code></pre>
+            <div class="small-muted">Es un archivo de configuración simple: una línea por cada <code>clave=valor</code>. Semana a semana se irá llenando con más configuración (base de datos, seguridad, etc.).</div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="seccionE">E. Qué SÍ toca hoy y qué NO (para no adelantarse)</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="callout success mb-0">
+                  <div class="fw-semibold">✅ Semana 7 (hoy)</div>
+                  <div class="small-muted">Generar el proyecto, entender su estructura, ejecutarlo, leer el log, configurar <code>server.port</code> y <code>spring.application.name</code>.</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="callout warning mb-0">
+                  <div class="fw-semibold">⏭ Todavía no</div>
+                  <div class="small-muted"><code>@RestController</code> y rutas propias (Semana 8) · formularios con Thymeleaf (Semana 10) · base de datos con JPA (Semana 12).</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="seccionF">F. Confusiones frecuentes</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-sm small mb-0">
+                <thead><tr><th>Confusión</th><th>Aclaración</th></tr></thead>
+                <tbody>
+                  <tr><td>"¿Tengo que instalar Maven?"</td><td>No. Spring Initializr incluye <code>mvnw</code>/<code>mvnw.cmd</code>, una copia lista para ese proyecto.</td></tr>
+                  <tr><td>"La página de error (Whitelabel) significa que algo salió mal"</td><td>No necesariamente: significa que el servidor está corriendo pero aún no tiene ninguna ruta definida (eso llega en la Semana 8).</td></tr>
+                  <tr><td>"¿Por qué no agregamos Spring Data JPA de una vez?"</td><td>Cada dependencia se agrega cuando toca su tema, para entender bien qué hace cada una antes de mezclarlas.</td></tr>
+                  <tr><td>"¿Cuántas veces puedo generar un proyecto en Initializr?"</td><td>Las que necesites — es un formulario gratuito y sin límite, no crea nada hasta que pulsas "Generate".</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="tab-pane fade" id="tab-comandos" role="tabpanel">
+
+        <div class="callout mb-4">
+          <div class="fw-semibold">Antes de estos comandos</div>
+          <div class="small-muted">Todos se escriben en la <strong>terminal integrada de VS Code</strong> (menú Terminal → New Terminal), estando dentro de la carpeta del proyecto generado.</div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h2 class="h5 section-title mb-3">Comandos de verificación</h2>
+            <pre><code>java -version           # confirma el JDK
+javac -version          # confirma el compilador
+code --version          # confirma VS Code</code></pre>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h2 class="h5 section-title mb-3">Ejecutar el proyecto por terminal</h2>
+            <pre><code># Windows
+mvnw spring-boot:run
+
+# Mac/Linux
+./mvnw spring-boot:run
+
+# Detener: Ctrl + C en la misma terminal</code></pre>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h2 class="h5 section-title mb-3">Extensiones de VS Code necesarias hoy</h2>
+            <div class="env-step">
+              <div class="env-num">1</div>
+              <div>
+                <div class="fw-semibold">Extension Pack for Java (Microsoft)</div>
+                <div class="small-muted">Ya la tenías desde la <a href="../Material_Sesion_Clase_1_HTML_18_semanas/instalacion.html#paso3">Semana 1 — Paso 3</a>. Confirma que siga "Installed".</div>
+              </div>
+            </div>
+            <div class="env-step">
+              <div class="env-num">2</div>
+              <div>
+                <div class="fw-semibold">Spring Boot Extension Pack (VMware / Microsoft)</div>
+                <div class="small-muted">Nueva esta semana: icono de Extensiones → busca "Spring Boot Extension Pack" → Install. Agrega soporte para <code>application.properties</code> (autocompletado) y para generar proyectos desde VS Code.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <details class="mb-4" open>
+          <summary class="fw-semibold">Solución de problemas frecuentes</summary>
+          <div class="table-responsive mt-2">
+            <table class="table table-sm small mb-0">
+              <thead><tr><th>Mensaje / síntoma</th><th>Qué significa</th><th>Qué hacer</th></tr></thead>
+              <tbody>
+                <tr><td><code>Web server failed to start. Port 8080 was already in use.</code></td><td>Ya hay otro proceso usando ese puerto (a veces, otra copia tuya que quedó corriendo)</td><td>Detén el proceso anterior (<code>Ctrl+C</code> en su terminal) o cambia <code>server.port</code> en <code>application.properties</code>.</td></tr>
+                <tr><td>El botón "▶ Run" no aparece sobre <code>main</code></td><td>La extensión de Java no detectó el proyecto como Java/Maven</td><td>Verifica que abriste la carpeta raíz del proyecto (la que tiene <code>pom.xml</code>), no una subcarpeta.</td></tr>
+                <tr><td>"java: command not found" al ejecutar <code>mvnw</code></td><td>El JDK no está en el PATH</td><td>Repite <a href="../Material_Sesion_Clase_1_HTML_18_semanas/instalacion.html#paso2">Semana 1 — Paso 2</a> (troubleshooting T1).</td></tr>
+                <tr><td>La descarga de dependencias tarda mucho la primera vez</td><td>Maven está descargando las piezas de Spring Boot por primera vez (se guardan en caché)</td><td>Es normal solo la primera vez; espera con conexión estable. Las siguientes ejecuciones serán rápidas.</td></tr>
+                <tr><td>No tengo permisos/tiempo para instalar nada en esta computadora</td><td>—</td><td>Usa el Plan B de la <a href="../Material_Sesion_Clase_1_HTML_18_semanas/instalacion.html">Semana 1</a> (compilador en línea) mientras resuelves tu entorno real — Spring Boot exige JDK local, así que no es sustituto definitivo.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <div class="callout success">
+          <div class="fw-semibold">¿Todo listo?</div>
+          <div class="small-muted">Si viste la línea <code>Started ... Application in X seconds</code> en tu terminal y <code>localhost:8080</code> respondió con algo (aunque sea la Whitelabel Error Page), tu entorno está completamente listo para la Semana 8.</div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Cheat Sheet — Semana 7 · Entorno de desarrollo y Spring Boot (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
