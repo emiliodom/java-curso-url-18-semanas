@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Challenge — Ordena los pasos y simulador de arranque (Semana 7)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 7 — Spring Boot</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link active" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Challenge · Semana 7 · Biblioteca Comunitaria El Andén</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Dos retos: ordenar los pasos y leer un arranque real</h1>
+          <div class="small-muted">Dos pestañas: un juego de secuencia (el orden correcto para poner a correr un proyecto Spring Boot) y un <strong>simulador de arranque</strong> con un log de consola realista — un escenario exitoso y uno con un error real de puerto.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="exportChallengePdf()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <ul class="nav nav-tabs mb-4 no-print" id="challengeTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="tab-secuencia-btn" data-bs-toggle="tab" data-bs-target="#tab-secuencia" type="button" role="tab">🧩 Ordena los pasos</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-simulador-btn" data-bs-toggle="tab" data-bs-target="#tab-simulador" type="button" role="tab">⚙️ Simulador de arranque</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="challengeTabsContent">
+
+      <!-- ================= PESTAÑA 1: SECUENCIA ================= -->
+      <div class="tab-pane fade show active" id="tab-secuencia" role="tabpanel">
+        <div class="row g-3">
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="h5 section-title">Cómo jugar</h2>
+                <ol class="small mb-0">
+                  <li>Elige un nivel: <strong>Fácil → Medio → Difícil</strong>.</li>
+                  <li>Lee la <strong>misión</strong>: la Biblioteca Comunitaria El Andén necesita poner a correr su primer proyecto Spring Boot.</li>
+                  <li>Arrastra los pasos del banco a las líneas numeradas (o toca: primero el paso, luego el destino).</li>
+                  <li>Cada suelta te avisa al instante si vas bien, si el paso va antes/después, o si no aplica.</li>
+                  <li>Cuando todas las líneas estén en verde, pulsa <strong>Verificar</strong> para tu puntaje final.</li>
+                  <li>Al terminar: escribe tu nombre y <strong>Exportar a PDF</strong>.</li>
+                </ol>
+              </div>
+            </div>
+            <div class="callout warning mt-3">
+              <div class="fw-semibold">Ojo en Medio y Difícil</div>
+              <div class="small-muted">Hay <strong>pasos trampa</strong>: cosas que suenan técnicas pero no aplican hoy (instalaciones de más, o pasos que le tocan a otra semana). Déjalos en el banco.</div>
+            </div>
+            <div class="card mt-3">
+              <div class="card-body">
+                <h2 class="h6 section-title">Tu progreso</h2>
+                <div id="progressList" class="small">
+                  <div>🟡 Fácil: <span id="prog-facil">sin intentar</span></div>
+                  <div>🟠 Medio: <span id="prog-medio">sin intentar</span></div>
+                  <div>🔴 Difícil: <span id="prog-dificil">sin intentar</span></div>
+                </div>
+                <label class="form-label fw-semibold mt-3 mb-1" for="studentName">Nombre (para el PDF)</label>
+                <input id="studentName" class="form-control form-control-sm" type="text" placeholder="Nombre y apellido" />
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-8">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3 no-print">
+                  <div class="btn-group" role="group" aria-label="Nivel">
+                    <button class="btn btn-outline-primary level-btn active" data-level="facil" onclick="loadLevel('facil')">🟡 Fácil</button>
+                    <button class="btn btn-outline-primary level-btn" data-level="medio" onclick="loadLevel('medio')">🟠 Medio</button>
+                    <button class="btn btn-outline-primary level-btn" data-level="dificil" onclick="loadLevel('dificil')">🔴 Difícil</button>
+                  </div>
+                  <span class="badge text-bg-secondary" id="attemptsBadge">Verificaciones: 0</span>
+                </div>
+
+                <div class="callout mb-3">
+                  <div class="fw-semibold">Misión — <span id="levelName"></span></div>
+                  <div class="small-muted" id="levelMission"></div>
+                </div>
+
+                <h3 class="h6 fw-bold">Banco de pasos</h3>
+                <div id="pool" class="dd-pool mb-3" aria-label="Banco de pasos"></div>
+
+                <h3 class="h6 fw-bold">Tu secuencia (pasos 1 a <span id="lineCount"></span>)</h3>
+                <div id="target" class="dd-target mb-3" aria-label="Secuencia a armar"></div>
+
+                <div id="resultBanner" class="score-banner"></div>
+
+                <div class="d-flex gap-2 flex-wrap no-print mt-3">
+                  <button class="btn btn-primary" onclick="verify()">✔ Verificar</button>
+                  <button class="btn btn-outline-secondary" onclick="loadLevel(currentLevelKey)">↺ Reiniciar nivel</button>
+                  <button class="btn btn-outline-warning" id="solutionBtn" onclick="showSolution()" disabled>💡 Ver solución (tras 3 verificaciones)</button>
+                  <button class="btn btn-outline-dark btn-export ms-auto" onclick="exportChallengePdf()">Exportar a PDF</button>
+                </div>
+
+                <details class="mt-3">
+                  <summary class="fw-semibold">¿Qué deberías ver al terminar esta secuencia?</summary>
+                  <pre class="mt-2" style="white-space: pre-wrap;"><code id="expectedOutput"></code></pre>
+                  <div class="small-muted">Cuando logres 100%, repite exactamente esta secuencia con tu proyecto real en <a href="proyecto.html">Proyecto</a>.</div>
+                </details>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= PESTAÑA 2: SIMULADOR DE ARRANQUE ================= -->
+      <div class="tab-pane fade" id="tab-simulador" role="tabpanel">
+        <div class="row g-3">
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="h5 section-title">Lee la consola</h2>
+                <p class="small-muted">Elige un escenario del proyecto de la Biblioteca El Andén y pulsa <strong>"Siguiente línea"</strong> para ver, línea por línea, un log de arranque realista de Spring Boot.</p>
+                <label class="form-label small fw-semibold" for="scenarioSelect">Escenario</label>
+                <select id="scenarioSelect" class="form-select mb-3" onchange="reiniciarSimulador()">
+                  <option value="exitoso">✅ Arranque exitoso</option>
+                  <option value="conflicto">⚠️ Error: puerto ya ocupado</option>
+                </select>
+                <div class="d-flex gap-2 flex-wrap">
+                  <button class="btn btn-primary" id="nextStepBtn" onclick="siguientePaso()">▶ Siguiente línea</button>
+                  <button class="btn btn-outline-secondary" onclick="reiniciarSimulador()">↺ Reiniciar</button>
+                </div>
+              </div>
+            </div>
+            <div class="callout mt-3">
+              <div class="fw-semibold">Qué observar</div>
+              <div class="small-muted">En el escenario exitoso, busca la línea exacta que confirma que el servidor arrancó. En el escenario con error, busca la línea que dice <strong>qué</strong> falló y la que dice <strong>cómo</strong> resolverlo — Spring Boot casi siempre te dice ambas cosas.</div>
+            </div>
+          </div>
+
+          <div class="col-lg-8">
+            <div class="card">
+              <div class="card-body">
+                <h3 class="h6 fw-bold mb-2">Terminal — proyecto <code>biblioteca-el-anden</code></h3>
+                <div id="simLog" class="sim-log"></div>
+              </div>
+            </div>
+            <div class="callout success mt-3" id="simExplain" style="display:none;"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Challenge — Semana 7 · Entorno de desarrollo y Spring Boot, Biblioteca Comunitaria El Andén (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="toast.js"></script>
+  <script>
+    // ===== PESTAÑA 1: Secuencia =====
+    var CATEGORY_LABELS = {
+      verificar: 'verificar el entorno',
+      generar: 'generar el proyecto (Spring Initializr)',
+      explorar: 'explorar la estructura generada',
+      ejecutar: 'ejecutar el proyecto',
+      validar: 'validar el resultado en el navegador/log',
+      configurar: 'configurar application.properties'
+    };
+
+    var CATEGORY_TIPS_OK = {
+      verificar: 'Confirmaste que tu entorno puede compilar y ejecutar Java.',
+      generar: 'Ya tienes el esqueleto del proyecto, generado con los parámetros correctos.',
+      explorar: 'Ubicaste los archivos clave antes de tocar nada.',
+      ejecutar: 'El servidor embebido (Tomcat) ya está corriendo.',
+      validar: 'Confirmaste el resultado correcto en el lugar correcto (log o navegador).',
+      configurar: 'Ajustaste la configuración sin tocar código Java.'
+    };
+
+    var LEVELS = {
+      facil: {
+        name: 'Fácil — Tu primer arranque',
+        mission: 'La Biblioteca El Andén nunca ha corrido Spring Boot. Ordena los 4 pasos mínimos para verlo arrancar.',
+        lines: [
+          { text: 'Abrir una terminal y ejecutar "java -version" para confirmar el JDK', cat: 'verificar' },
+          { text: 'Generar el proyecto en start.spring.io con Maven, Java 21 y la dependencia Spring Web', cat: 'generar' },
+          { text: 'Ejecutar el proyecto con el botón ▶ Run sobre el método main', cat: 'ejecutar' },
+          { text: 'Buscar en la terminal la línea "Started ... Application in X seconds"', cat: 'validar' }
+        ],
+        distractors: [],
+        output: 'La terminal mostraría "Tomcat started on port 8080" y luego "Started BibliotecaElAndenApplication in X seconds" — el servidor está corriendo, aunque el proyecto todavía no tenga rutas propias.'
+      },
+      medio: {
+        name: 'Medio — Explora antes de ejecutar',
+        mission: 'Ahora se agrega el paso de explorar la estructura generada, y aparecen los primeros pasos trampa.',
+        lines: [
+          { text: 'Abrir una terminal y ejecutar "java -version" para confirmar el JDK', cat: 'verificar' },
+          { text: 'Generar el proyecto en start.spring.io con Maven, Java 21 y la dependencia Spring Web', cat: 'generar' },
+          { text: 'Abrir la carpeta descomprimida en VS Code y localizar pom.xml y la clase Application', cat: 'explorar' },
+          { text: 'Ejecutar el proyecto con el botón ▶ Run sobre el método main', cat: 'ejecutar' },
+          { text: 'Buscar en la terminal la línea "Started ... Application in X seconds"', cat: 'validar' }
+        ],
+        distractors: [
+          { text: 'Instalar Maven manualmente antes de generar el proyecto', cat: 'trap' },
+          { text: 'Instalar XAMPP para tener un servidor web', cat: 'trap' }
+        ],
+        output: 'Además del log de arranque, en VS Code verías la estructura con pom.xml, la clase Application y application.properties ya identificados antes de ejecutar nada.'
+      },
+      dificil: {
+        name: 'Difícil — Arranque completo + configuración',
+        mission: 'El flujo completo: desde verificar el entorno hasta cambiar el puerto y confirmar el cambio. Hay 3 pasos trampa que no le tocan a esta semana.',
+        lines: [
+          { text: 'Abrir una terminal y ejecutar "java -version" para confirmar el JDK', cat: 'verificar' },
+          { text: 'Generar el proyecto en start.spring.io con Maven, Java 21 y la dependencia Spring Web', cat: 'generar' },
+          { text: 'Abrir la carpeta descomprimida en VS Code y localizar pom.xml y la clase Application', cat: 'explorar' },
+          { text: 'Ejecutar el proyecto con el botón ▶ Run sobre el método main', cat: 'ejecutar' },
+          { text: 'Visitar http://localhost:8080 y ver la Whitelabel Error Page (señal de éxito, no de fracaso)', cat: 'validar' },
+          { text: 'Detener el proyecto y agregar server.port=8081 en application.properties', cat: 'configurar' },
+          { text: 'Ejecutar de nuevo y confirmar "Tomcat started on port 8081" en el log', cat: 'validar' }
+        ],
+        distractors: [
+          { text: 'Escribir una clase con @RestController para que aparezca algo distinto al error', cat: 'trap' },
+          { text: 'Descargar Tomcat por separado y configurarlo a mano', cat: 'trap' },
+          { text: 'Instalar Python para poder ejecutar el backend', cat: 'trap' }
+        ],
+        output: 'Verías el proyecto arrancar dos veces: primero en el puerto 8080 (con Whitelabel Error Page), y después en el 8081 tras el cambio en application.properties — sin escribir ningún controlador (eso es la Semana 8) ni instalar Tomcat o Python por separado.'
+      }
+    };
+
+    var currentLevelKey = 'facil';
+    var attempts = 0;
+    var progress = { facil: null, medio: null, dificil: null };
+    var selectedPiece = null;
+
+    function shuffle(arr) {
+      var a = arr.slice();
+      for (var i = a.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = a[i]; a[i] = a[j]; a[j] = t;
+      }
+      return a;
+    }
+
+    function makePiece(text, cat, order) {
+      var el = document.createElement('div');
+      el.className = 'dd-piece';
+      el.textContent = text;
+      el.setAttribute('draggable', 'true');
+      el.dataset.text = text;
+      el.dataset.cat = cat;
+      el.dataset.order = order === undefined ? '-1' : String(order);
+      el.addEventListener('dragstart', function (e) {
+        el.classList.add('dragging');
+        e.dataTransfer.setData('text/plain', '');
+        window._dragged = el;
+      });
+      el.addEventListener('dragend', function () {
+        el.classList.remove('dragging');
+        window._dragged = null;
+      });
+      el.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (selectedPiece === el) {
+          el.classList.remove('selected');
+          selectedPiece = null;
+        } else {
+          if (selectedPiece) selectedPiece.classList.remove('selected');
+          selectedPiece = el;
+          el.classList.add('selected');
+        }
+      });
+      return el;
+    }
+
+    function feedbackForDrop(piece, slotIndex) {
+      var level = LEVELS[currentLevelKey];
+      var expected = level.lines[slotIndex];
+
+      if (piece.dataset.text === expected.text) {
+        var label = CATEGORY_LABELS[expected.cat] || expected.cat;
+        return { ok: true, type: 'ok', msg: '✓ Paso correcto (' + label + '). ' + (CATEGORY_TIPS_OK[expected.cat] || '') };
+      }
+
+      if (piece.dataset.cat === 'trap') {
+        return { ok: false, type: 'bad', msg: 'Ese paso no aplica esta semana (instalación de más, o le toca a otra semana). Déjalo en el banco.' };
+      }
+
+      var order = parseInt(piece.dataset.order, 10);
+      var pieceLabel = CATEGORY_LABELS[piece.dataset.cat] || piece.dataset.cat;
+
+      if (order < slotIndex) {
+        return { ok: false, type: 'warn', msg: 'Ese paso (' + pieceLabel + ') ya debía haber pasado antes. Va más temprano.' };
+      }
+      if (order > slotIndex) {
+        return { ok: false, type: 'warn', msg: 'Ese paso (' + pieceLabel + ') todavía no toca aquí. Va más adelante.' };
+      }
+      return { ok: false, type: 'info', msg: 'Vas en la etapa correcta (' + pieceLabel + '), pero no es exactamente ese paso. Revisa el texto con cuidado.' };
+    }
+
+    function placePiece(piece, slot) {
+      var existing = slot.querySelector('.dd-piece');
+      if (existing) document.getElementById('pool').appendChild(existing);
+      slot.appendChild(piece);
+      piece.classList.remove('selected');
+      selectedPiece = null;
+
+      var slotIndex = Array.prototype.indexOf.call(document.querySelectorAll('#target .dd-slot'), slot);
+      var fb = feedbackForDrop(piece, slotIndex);
+      slot.classList.remove('correct', 'incorrect');
+      slot.classList.add(fb.ok ? 'correct' : 'incorrect');
+      showToast(fb.msg, fb.type);
+    }
+
+    function setupDropzone(zone, isSlot) {
+      zone.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        if (isSlot) zone.classList.add('over');
+      });
+      zone.addEventListener('dragleave', function () {
+        zone.classList.remove('over');
+      });
+      zone.addEventListener('drop', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        zone.classList.remove('over');
+        var piece = window._dragged;
+        if (!piece) return;
+        if (isSlot) placePiece(piece, zone);
+        else zone.appendChild(piece);
+      });
+      zone.addEventListener('click', function (e) {
+        if (!selectedPiece) return;
+        if (isSlot) {
+          placePiece(selectedPiece, zone);
+        } else if (e.target === zone) {
+          zone.appendChild(selectedPiece);
+          selectedPiece.classList.remove('selected');
+          selectedPiece = null;
+        }
+      });
+    }
+
+    function loadLevel(key) {
+      currentLevelKey = key;
+      attempts = 0;
+      selectedPiece = null;
+      document.getElementById('attemptsBadge').textContent = 'Verificaciones: 0';
+      document.getElementById('solutionBtn').disabled = true;
+
+      var level = LEVELS[key];
+      document.getElementById('levelName').textContent = level.name;
+      document.getElementById('levelMission').textContent = level.mission;
+      document.getElementById('lineCount').textContent = level.lines.length;
+      document.getElementById('expectedOutput').textContent = level.output;
+
+      document.querySelectorAll('.level-btn').forEach(function (b) {
+        b.classList.toggle('active', b.dataset.level === key);
+      });
+
+      var banner = document.getElementById('resultBanner');
+      banner.className = 'score-banner';
+      banner.innerHTML = '';
+
+      var target = document.getElementById('target');
+      target.innerHTML = '';
+      level.lines.forEach(function () {
+        var slot = document.createElement('div');
+        slot.className = 'dd-slot';
+        setupDropzone(slot, true);
+        target.appendChild(slot);
+      });
+
+      var pool = document.getElementById('pool');
+      pool.innerHTML = '';
+      var pieces = level.lines.map(function (l, i) { return makePiece(l.text, l.cat, i); })
+        .concat(level.distractors.map(function (d) { return makePiece(d.text, 'trap', -1); }));
+      shuffle(pieces).forEach(function (p) { pool.appendChild(p); });
+
+      showToast('Nivel "' + level.name + '" listo. Arrastra el primer paso.', 'info', 3000);
+    }
+
+    function verify() {
+      attempts++;
+      document.getElementById('attemptsBadge').textContent = 'Verificaciones: ' + attempts;
+      if (attempts >= 3) document.getElementById('solutionBtn').disabled = false;
+
+      var level = LEVELS[currentLevelKey];
+      var slots = document.querySelectorAll('#target .dd-slot');
+      var correct = 0;
+      slots.forEach(function (slot, i) {
+        var piece = slot.querySelector('.dd-piece');
+        slot.classList.remove('correct', 'incorrect');
+        if (piece && piece.dataset.text === level.lines[i].text) {
+          correct++;
+          slot.classList.add('correct');
+        } else {
+          slot.classList.add('incorrect');
+        }
+      });
+
+      var total = level.lines.length;
+      var pct = Math.round((correct / total) * 100);
+      progress[currentLevelKey] = { pct: pct, attempts: attempts };
+      var progEl = document.getElementById('prog-' + currentLevelKey);
+      progEl.textContent = pct + '% (' + attempts + ' verificación' + (attempts === 1 ? '' : 'es') + ')';
+
+      var banner = document.getElementById('resultBanner');
+      var msg;
+      if (pct === 100) {
+        msg = '🎉 ¡Secuencia completa! Así se arranca un proyecto Spring Boot desde cero.';
+        showToast('¡Nivel completado! ' + level.name, 'ok', 5000);
+      } else if (pct >= 60) {
+        msg = 'Casi. Revisa los toasts de cada paso: te dicen si algo va antes, después, o si es una acción trampa.';
+      } else {
+        msg = 'Respira y piensa el orden: primero verificas, luego generas, luego exploras, luego ejecutas, y al final validas.';
+      }
+      banner.className = 'score-banner show alert ' + (pct === 100 ? 'alert-success' : pct >= 60 ? 'alert-warning' : 'alert-danger');
+      banner.innerHTML =
+        '<div class="h5 mb-1">' + level.name + ' — ' + correct + ' / ' + total + ' pasos (' + pct + '%)</div>' +
+        '<div>' + msg + '</div>' +
+        '<div class="small mt-1">Verificaciones: ' + attempts + ' · Fecha: ' + new Date().toLocaleString('es-GT') + '</div>';
+    }
+
+    function showSolution() {
+      var level = LEVELS[currentLevelKey];
+      var pool = document.getElementById('pool');
+      var slots = document.querySelectorAll('#target .dd-slot');
+      document.querySelectorAll('#target .dd-piece').forEach(function (p) { pool.appendChild(p); });
+      level.lines.forEach(function (line, i) {
+        var piece = Array.prototype.find.call(pool.querySelectorAll('.dd-piece'), function (p) {
+          return p.dataset.text === line.text;
+        });
+        if (piece) {
+          slots[i].appendChild(piece);
+          slots[i].classList.remove('incorrect');
+          slots[i].classList.add('correct');
+        }
+      });
+      var banner = document.getElementById('resultBanner');
+      banner.className = 'score-banner show alert alert-warning';
+      banner.innerHTML = '<div class="fw-semibold">Solución mostrada (no cuenta como logro propio).</div><div class="small">Estúdiala, pulsa "Reiniciar nivel" e inténtalo de nuevo sin ayuda.</div>';
+      showToast('Solución mostrada — vuelve a intentarlo sin ayuda.', 'info');
+    }
+
+    function exportChallengePdf() {
+      var name = document.getElementById('studentName').value || '';
+      var attempted = Object.keys(progress).some(function (k) { return progress[k]; });
+      if (!attempted) {
+        showToast('Verifica al menos un nivel de "Ordena los pasos" antes de exportar.', 'warn');
+        return;
+      }
+      if (!name.trim()) {
+        showToast('Escribe tu nombre en la casilla "Nombre (para el PDF)".', 'warn');
+        document.getElementById('studentName').focus();
+        return;
+      }
+      window.print();
+    }
+
+    setupDropzone(document.getElementById('pool'), false);
+    loadLevel('facil');
+
+    // ===== PESTAÑA 2: Simulador de arranque =====
+    var SCENARIOS = {
+      exitoso: {
+        lines: [
+          '$ mvnw spring-boot:run',
+          '  .   ____          _            __ _ _',
+          ' /\\\\ / ___\'_ __ _ _(_)_ __  __ _ \\ \\ \\ \\',
+          ' :: Spring Boot ::                (v3.x)',
+          'INFO  Starting BibliotecaElAndenApplication using Java 21',
+          'INFO  No active profile set, falling back to default profile',
+          'INFO  Tomcat initialized with port 8080 (http)',
+          'INFO  Tomcat started on port 8080 (http) with context path \'\'',
+          'INFO  Started BibliotecaElAndenApplication in 2.317 seconds (process running for 2.6)'
+        ],
+        explain: '✅ Arranque exitoso: la última línea confirma que el servidor está corriendo. Si ahora visitas http://localhost:8080, verás la Whitelabel Error Page — es normal, todavía no hay ninguna ruta definida (eso llega en la Semana 8).'
+      },
+      conflicto: {
+        lines: [
+          '$ mvnw spring-boot:run   (en una SEGUNDA terminal, con el proyecto ya corriendo en la primera)',
+          '  .   ____          _            __ _ _',
+          ' :: Spring Boot ::                (v3.x)',
+          'INFO  Starting BibliotecaElAndenApplication using Java 21',
+          'ERROR ***************************',
+          'ERROR APPLICATION FAILED TO START',
+          'ERROR ***************************',
+          'Description: Web server failed to start. Port 8080 was already in use.',
+          'Action: Identify and stop the process that is listening on port 8080, or configure this application to listen on another port.'
+        ],
+        explain: '⚠️ Error real y común: ya había otra copia del proyecto corriendo en el puerto 8080. Se resuelve deteniendo esa primera copia (Ctrl+C en su terminal) o agregando server.port=8081 en application.properties antes de ejecutar de nuevo.'
+      }
+    };
+    var simIndex = -1;
+
+    function logSim(msg) {
+      var box = document.getElementById('simLog');
+      var line = document.createElement('div');
+      line.className = 'sim-line';
+      line.textContent = msg;
+      box.appendChild(line);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function siguientePaso() {
+      var scenario = SCENARIOS[document.getElementById('scenarioSelect').value];
+      if (simIndex >= scenario.lines.length - 1) {
+        showToast('Escenario terminado. Pulsa "Reiniciar" para verlo de nuevo o elige otro escenario.', 'info');
+        return;
+      }
+      simIndex++;
+      var isLast = simIndex === scenario.lines.length - 1;
+      var line = document.createElement('div');
+      line.className = 'sim-line' + (isLast ? ' hl' : '');
+      line.textContent = scenario.lines[simIndex];
+      document.getElementById('simLog').appendChild(line);
+      document.getElementById('simLog').scrollTop = document.getElementById('simLog').scrollHeight;
+      if (isLast) {
+        document.getElementById('nextStepBtn').textContent = '✔ Log completo';
+        var explainBox = document.getElementById('simExplain');
+        explainBox.style.display = 'block';
+        explainBox.innerHTML = '<div class="fw-semibold">Qué significa esta última línea</div><div class="small-muted">' + scenario.explain + '</div>';
+        showToast('Log completo. Lee la explicación bajo la terminal.', 'ok', 5000);
+      }
+    }
+
+    function reiniciarSimulador() {
+      simIndex = -1;
+      document.getElementById('simLog').innerHTML = '';
+      document.getElementById('nextStepBtn').textContent = '▶ Siguiente línea';
+      document.getElementById('simExplain').style.display = 'none';
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

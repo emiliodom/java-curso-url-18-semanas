@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz — Semana 7 (Presaberes y Final)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 7 — Spring Boot</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Quiz de la semana · Elige el modo con el menú</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Presaberes y Quiz Final, en un solo lugar</h1>
+          <div class="small-muted" id="quizTypeLabel">Presaberes · 8 preguntas · no cuenta para nota</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 900px;">
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="row g-3 align-items-end">
+          <div class="col-md-6">
+            <label class="form-label fw-semibold" for="quizType">¿Qué quiz vas a resolver?</label>
+            <select id="quizType" class="form-select" onchange="renderQuiz()">
+              <option value="presaberes">🟡 Presaberes (inicio de clase, no cuenta para nota)</option>
+              <option value="final">🔴 Final de clase (evidencia de la Actividad en clase)</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold" for="studentName">Nombre del estudiante (aparecerá en el PDF)</label>
+            <input id="studentName" class="form-control" type="text" placeholder="Nombre y apellido" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout mb-3 no-print">
+      <div class="fw-semibold">¿Cómo funciona?</div>
+      <div class="small-muted">Cada vez que cambias de modo (o pulsas "🔀 Nuevas preguntas") se eligen preguntas <strong>al azar</strong> de un banco más grande — es normal que no veas siempre las mismas. Los dos modos comparten varios conceptos a propósito, para que Presaberes te prepare de verdad para el Final.</div>
+    </div>
+
+    <div id="quizContainer"></div>
+
+    <div id="scoreBanner" class="score-banner"></div>
+
+    <div class="d-flex gap-2 flex-wrap mt-3 no-print">
+      <button class="btn btn-primary btn-lg" onclick="gradeQuiz()">Calificar</button>
+      <button class="btn btn-outline-secondary" onclick="resetQuiz()">Reintentar (mismas preguntas)</button>
+      <button class="btn btn-outline-info" onclick="regenerateQuiz()">🔀 Nuevas preguntas</button>
+      <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      <a class="btn btn-outline-primary ms-auto" href="clase.html">Continuar a la clase →</a>
+    </div>
+
+    <div class="callout warning mt-4 no-print">
+      <div class="fw-semibold">Instrucciones de entrega (si estás en modo Final)</div>
+      <ol class="small-muted mb-0">
+        <li>Escribe tu nombre en la casilla de arriba.</li>
+        <li>Pulsa <strong>Calificar</strong> y revisa la retroalimentación de cada pregunta.</li>
+        <li>Pulsa <strong>Exportar a PDF</strong> y guarda el archivo como <code>QuizFinal_S7_TuNombre.pdf</code>.</li>
+        <li>Súbelo al aula virtual junto con el PDF del <a href="challenge.html">Challenge</a>.</li>
+      </ol>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Quiz — Semana 7 · Entorno de desarrollo y Spring Boot (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script>
+    // ===== Banco de preguntas de la Semana 7 =====
+    // level: 'presaberes' (solo diagnóstico) | 'final' (solo cierre) | 'ambas'
+    var QUESTION_BANK = [
+      // ---- Solo Presaberes (repaso + intuición) ----
+      {
+        level: 'presaberes',
+        pregunta: '¿Qué instalaste en la Semana 1 que hoy es indispensable para correr Spring Boot?',
+        opciones: [{ v: 'a', t: 'El JDK (Java Development Kit)' }, { v: 'b', t: 'Un antivirus especial' }, { v: 'c', t: 'Python' }],
+        correcta: 'a',
+        fbOk: 'Correcto: el JDK compila y ejecuta el código Java que Spring Boot necesita.',
+        fbKo: 'Es el JDK. Spring Boot exige un JDK local instalado — por eso la Semana 1 insistió tanto en él.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: '¿Qué es un "framework" como Spring Boot, en términos simples?',
+        opciones: [{ v: 'a', t: 'Un conjunto de piezas ya construidas para no programar todo desde cero' }, { v: 'b', t: 'Un lenguaje de programación distinto a Java' }, { v: 'c', t: 'Un editor de texto' }],
+        correcta: 'a',
+        fbOk: 'Correcto: un framework trae piezas listas (como un servidor web) para que te enfoques en tu proyecto.',
+        fbKo: 'Es un conjunto de piezas ya construidas y configuradas, para no reinventar cosas como un servidor web desde cero.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: '(Repaso Semana 5-6) ¿En qué capa grande vivirá el código que hoy solo generamos, sin escribir todavía?',
+        opciones: [{ v: 'a', t: 'Ninguna aún — hoy es solo el esqueleto del proyecto' }, { v: 'b', t: 'Solo en la Vista' }, { v: 'c', t: 'Solo en el Repositorio' }],
+        correcta: 'a',
+        fbOk: 'Correcto: hoy generamos el proyecto base; las capas (Controlador, Servicio, Repositorio) se llenarán en semanas futuras.',
+        fbKo: 'Ninguna todavía: hoy es el esqueleto del proyecto. Las capas se van llenando desde la Semana 8 en adelante.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: '¿Alguna vez has usado una herramienta web que genera un proyecto ya armado con un formulario (como una plantilla)?',
+        opciones: [{ v: 'a', t: 'Sí' }, { v: 'b', t: 'No, es mi primera vez' }, { v: 'c', t: 'No estoy seguro/a' }],
+        correcta: 'b',
+        fbOk: 'Cualquier respuesta es válida aquí — es solo diagnóstica. Hoy usarás Spring Initializr por primera o enésima vez.',
+        fbKo: 'Cualquier respuesta era válida 🙂 — hoy usarás Spring Initializr, que funciona exactamente así.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: 'Si tu computadora ya tiene el "motor" (JDK) y el "tablero de controles" (VS Code) listos desde la Semana 1, ¿qué falta para correr Spring Boot?',
+        opciones: [{ v: 'a', t: 'Nada más pesado — Spring Initializr genera lo que falta' }, { v: 'b', t: 'Reinstalar todo el sistema operativo' }, { v: 'c', t: 'Un nuevo lenguaje de programación' }],
+        correcta: 'a',
+        fbOk: 'Correcto: no hace falta una instalación pesada nueva — el proyecto generado ya incluye lo que necesita para correr.',
+        fbKo: 'No falta una instalación pesada: Spring Initializr genera el proyecto con todo lo necesario, incluido un "Maven Wrapper".'
+      },
+      {
+        level: 'presaberes',
+        pregunta: '¿Qué crees que pasa la primera vez que ejecutas un proyecto Spring Boot nuevo?',
+        opciones: [{ v: 'a', t: 'Descarga las dependencias necesarias y luego arranca un servidor local' }, { v: 'b', t: 'Se publica automáticamente en internet' }, { v: 'c', t: 'No pasa nada visible' }],
+        correcta: 'a',
+        fbOk: 'Correcto: descarga dependencias (solo la primera vez) y luego arranca un servidor Tomcat embebido en tu máquina.',
+        fbKo: 'Descarga las dependencias que declara pom.xml y arranca un servidor local (Tomcat) — nada se publica a internet todavía.'
+      },
+      // ---- Ambas (conceptos centrales) ----
+      {
+        level: 'ambas',
+        pregunta: '¿Qué herramienta web usamos hoy para generar el esqueleto de un proyecto Spring Boot?',
+        opciones: [{ v: 'a', t: 'Spring Initializr (start.spring.io)' }, { v: 'b', t: 'GitHub Desktop' }, { v: 'c', t: 'Google Drawings' }],
+        correcta: 'a',
+        fbOk: 'Correcto: Spring Initializr genera el proyecto según los parámetros que elijas (lenguaje, versión, dependencias).',
+        fbKo: 'Es Spring Initializr, en start.spring.io. Genera el esqueleto según Project, Language, dependencias, etc.'
+      },
+      {
+        level: 'ambas',
+        pregunta: '¿Qué archivo lista las dependencias del proyecto y le dice a Maven cómo empaquetarlo?',
+        opciones: [{ v: 'a', t: 'pom.xml' }, { v: 'b', t: 'application.properties' }, { v: 'c', t: 'README.md' }],
+        correcta: 'a',
+        fbOk: 'Correcto: pom.xml es la "receta" del proyecto para Maven.',
+        fbKo: 'Es pom.xml. application.properties es para configuración en tiempo de ejecución, no para dependencias.'
+      },
+      {
+        level: 'ambas',
+        pregunta: '¿Para qué sirve el "Maven Wrapper" (mvnw / mvnw.cmd) que trae el proyecto generado?',
+        opciones: [{ v: 'a', t: 'Para no tener que instalar Maven por separado' }, { v: 'b', t: 'Para conectarse a una base de datos' }, { v: 'c', t: 'Para diseñar la interfaz visual' }],
+        correcta: 'a',
+        fbOk: 'Correcto: es una copia de Maven ya lista para ese proyecto — ahorra una instalación completa.',
+        fbKo: 'Sirve para no instalar Maven aparte: es una copia de Maven incluida dentro del proyecto generado.'
+      },
+      {
+        level: 'ambas',
+        pregunta: 'Al ejecutar el proyecto por primera vez, ¿qué línea del log confirma que arrancó correctamente?',
+        opciones: [{ v: 'a', t: '"Started ... Application in X seconds"' }, { v: 'b', t: '"BUILD FAILURE"' }, { v: 'c', t: '"Access denied"' }],
+        correcta: 'a',
+        fbOk: 'Correcto: esa línea confirma que el servidor embebido (Tomcat) ya está corriendo.',
+        fbKo: 'Es "Started ... Application in X seconds" — confirma que el servidor ya está corriendo.'
+      },
+      {
+        level: 'ambas',
+        pregunta: 'Visitas http://localhost:8080 justo después de arrancar el proyecto y aparece una "Whitelabel Error Page" (404). ¿Qué significa?',
+        opciones: [{ v: 'a', t: 'El servidor sí está corriendo, solo falta definir una ruta' }, { v: 'b', t: 'El JDK no está instalado' }, { v: 'c', t: 'El proyecto nunca arrancó' }],
+        correcta: 'a',
+        fbOk: 'Correcto: es una señal de éxito parcial — el servidor responde, solo falta la ruta (Semana 8).',
+        fbKo: 'El servidor sí está corriendo. El 404 solo dice que no hay ninguna ruta configurada todavía — eso llega en la Semana 8.'
+      },
+      {
+        level: 'ambas',
+        pregunta: '¿En qué archivo cambiarías el puerto en el que corre tu aplicación?',
+        opciones: [{ v: 'a', t: 'application.properties' }, { v: 'b', t: 'pom.xml' }, { v: 'c', t: 'La clase Application.java' }],
+        correcta: 'a',
+        fbOk: 'Correcto: application.properties es donde vive la configuración, como server.port.',
+        fbKo: 'Es application.properties, con la línea server.port=8081 (o el número que quieras).'
+      },
+      // ---- Solo Final (más técnico) ----
+      {
+        level: 'final',
+        pregunta: '¿Qué anotación identifica la clase principal que enciende un proyecto Spring Boot?',
+        opciones: [{ v: 'a', t: '@SpringBootApplication' }, { v: 'b', t: '@Entity' }, { v: 'c', t: '@Repository' }],
+        correcta: 'a',
+        fbOk: 'Correcto: @SpringBootApplication marca el punto de entrada y activa la auto-configuración.',
+        fbKo: 'Es @SpringBootApplication — el "botón de encendido" del proyecto, junto con el método main().'
+      },
+      {
+        level: 'final',
+        pregunta: '¿Qué servidor web viene "embebido" dentro de un proyecto Spring Boot con la dependencia Spring Web, sin instalarlo por separado?',
+        opciones: [{ v: 'a', t: 'Tomcat' }, { v: 'b', t: 'XAMPP' }, { v: 'c', t: 'Apache HTTP Server standalone' }],
+        correcta: 'a',
+        fbOk: 'Correcto: Tomcat viene incluido y arranca automáticamente al ejecutar el proyecto.',
+        fbKo: 'Es Tomcat, embebido dentro del propio proyecto — no hace falta instalarlo ni configurarlo aparte.'
+      },
+      {
+        level: 'final',
+        pregunta: 'Intentas ejecutar el mismo proyecto una segunda vez (en otra terminal) sin detener la primera copia. ¿Qué error es más probable?',
+        opciones: [{ v: 'a', t: '"Port 8080 was already in use"' }, { v: 'b', t: '"Class not found: Java"' }, { v: 'c', t: 'No pasa nada, corren ambas copias en el mismo puerto sin problema' }],
+        correcta: 'a',
+        fbOk: 'Correcto: dos procesos no pueden escuchar el mismo puerto al mismo tiempo.',
+        fbKo: 'Aparece "Port 8080 was already in use" — dos procesos no pueden usar el mismo puerto a la vez.'
+      },
+      {
+        level: 'final',
+        pregunta: '¿Cuáles son las 2 formas válidas de resolver un error de "puerto ya en uso"?',
+        opciones: [{ v: 'a', t: 'Detener el proceso anterior, o cambiar server.port' }, { v: 'b', t: 'Reinstalar el JDK completo' }, { v: 'c', t: 'Borrar el proyecto y generar uno nuevo' }],
+        correcta: 'a',
+        fbOk: 'Correcto: cualquiera de las dos resuelve el conflicto sin tocar el código Java.',
+        fbKo: 'Se resuelve deteniendo la copia anterior (Ctrl+C) o cambiando server.port en application.properties.'
+      },
+      {
+        level: 'final',
+        pregunta: '¿Por qué esta semana NO agregamos la dependencia Spring Data JPA al generar el proyecto?',
+        opciones: [{ v: 'a', t: 'Porque JPA/base de datos se introduce en la Semana 12, cuando toca su tema' }, { v: 'b', t: 'Porque JPA no existe en Spring Boot' }, { v: 'c', t: 'Porque el proyecto no puede tener más de una dependencia' }],
+        correcta: 'a',
+        fbOk: 'Correcto: cada dependencia se agrega cuando corresponde a su tema, para entenderla bien antes de mezclarla con otras.',
+        fbKo: 'Porque cada dependencia se agrega cuando toca su tema — JPA llega en la Semana 12, junto con la persistencia de datos.'
+      },
+      {
+        level: 'final',
+        pregunta: 'Detecta el límite de esta semana: ¿qué NO deberías escribir todavía en tu proyecto?',
+        opciones: [{ v: 'a', t: 'Una clase con @RestController y una ruta propia' }, { v: 'b', t: 'Un cambio en application.properties' }, { v: 'c', t: 'Nada — puedes explorar la estructura generada' }],
+        correcta: 'a',
+        fbOk: 'Correcto: @RestController y las rutas propias son el tema de la Semana 8, no de hoy.',
+        fbKo: 'No deberías escribir @RestController ni rutas propias todavía — eso es exactamente el tema de la Semana 8.'
+      },
+      {
+        level: 'final',
+        pregunta: 'En el campo "Packaging" de Spring Initializr, ¿qué opción usamos hoy y por qué?',
+        opciones: [{ v: 'a', t: 'Jar, porque así lo empaquetaremos para desplegar en la Semana 14' }, { v: 'b', t: 'War, porque es obligatorio para Spring Boot' }, { v: 'c', t: 'No importa el packaging, no se usa después' }],
+        correcta: 'a',
+        fbOk: 'Correcto: Jar es el formato que usaremos para el empaquetado y despliegue más adelante en el curso.',
+        fbKo: 'Es Jar — el formato de empaquetado que retomaremos en la Semana 14 (empaquetado con Maven y despliegue).'
+      }
+    ];
+    var QUIZ_CONFIG = { presaberesCount: 8, finalCount: 10 };
+  </script>
+  <script src="quiz.js"></script>
+  <script>renderQuiz();</script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
