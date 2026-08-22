@@ -67,7 +67,28 @@ portal.
   abajo): quiz unificado, Proyecto+Entregable fusionados, sin puente
   Python, cheatsheet con pestaña de preparación de entorno, y un challenge
   con pestañas (clasificación + simulador funcional interactivo).
-- **Semanas 7–18** — pendientes, mismo patrón reducido descrito en este archivo.
+- **Semana 7** (Entorno de desarrollo y Spring Boot) — completa. Primera
+  semana con **código Java real ejecutándose de verdad**: Spring
+  Initializr, estructura del proyecto generado, primer arranque y
+  `application.properties`. Alcance deliberadamente acotado para no
+  pisar la Semana 8: sin `@RestController` ni rutas propias, sin
+  Thymeleaf (Semana 10) y sin JPA (Semana 12) — solo generar, entender y
+  ejecutar el proyecto base con la dependencia Spring Web únicamente.
+  El profesor pidió explícitamente corregir el patrón de la Semana 6 de
+  usar JavaScript como sustituto de "aprendizaje funcional": desde la
+  Semana 7, `ejercicios.html` se resuelve 100% en la terminal/VS
+  Code/navegador reales del estudiante (con un proyecto de práctica
+  desechable), nunca en un mini-programa simulado en el navegador. El
+  `challenge.html` estrena un tercer patrón de simulador (log de consola
+  realista con "Siguiente línea", dos escenarios: arranque exitoso y
+  error de puerto ya ocupado) junto al ya existente de secuencia
+  (`dd-slot`/`dd-target`, reutilizado desde las Semanas 1–4 con trampas
+  creíbles ligadas a confusiones reales de la semana). `proyecto.html`
+  genera el esqueleto Spring Boot REAL del proyecto del estudiante (con
+  Group/Artifact basados en su Ficha del Proyecto) y lo sube a la rama
+  `development` de su repositorio real — es la base que crecerá hasta la
+  Entrega Parcial 2 (Semana 9). Sin hito de Entrega Parcial esta semana.
+- **Semanas 8–18** — pendientes, mismo patrón reducido descrito en este archivo.
 
 ### Cuando el tema de la semana no es sintaxis Java (ej. Git, MVC, despliegue)
 
