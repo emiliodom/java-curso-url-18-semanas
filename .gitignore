@@ -1,0 +1,10 @@
+# Archivos que NUNCA deben llegar a GitHub (el repo es publico)
+
+# Clave de respuestas del examen parcial y contrasena del panel admin.
+# Estos dos archivos viven solo en tu equipo y en Hostinger.
+examen_parcial/examen_datos.php
+examen_parcial/config.php
+
+# Respuestas e intentos de los estudiantes.
+examen_parcial/data/*.json
+evaluacion_docente/data/*.json

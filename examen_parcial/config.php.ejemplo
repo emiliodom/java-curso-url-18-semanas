@@ -1,0 +1,21 @@
+<?php
+/**
+ * Configuración del examen parcial y de su panel /admin.
+ * ⚠ PLANTILLA. Copia este archivo como config.php y cambia la clave.
+ *    config.php esta en .gitignore: nunca se sube a GitHub.
+ */
+
+define('ADMIN_PASSWORD', 'CAMBIA-ESTA-CLAVE');
+
+/** Cuántas veces puede resolver el examen cada carné. */
+define('INTENTOS_MAXIMOS', 2);
+
+/**
+ * Qué intento cuenta para la nota cuando el estudiante hace los dos.
+ *   'mejor'   → se toma el punteo más alto (recomendado)
+ *   'ultimo'  → se toma el último intento
+ *   'primero' → se toma el primer intento
+ * El panel /admin muestra siempre los dos, así que esto solo cambia
+ * la columna "Nota" del resumen.
+ */
+define('NOTA_QUE_CUENTA', 'mejor');
