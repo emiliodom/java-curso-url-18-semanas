@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Proyecto — Guía 9 y ★ Entrega Parcial 2 (Semana 9)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 9 — Hito Parcial</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="examen.html">Examen</a></li>
+          <li class="nav-item"><a class="nav-link" href="evaluacion_pares.html">Pares</a></li>
+          <li class="nav-item"><a class="nav-link active" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Proyecto · Guía 9 (1 pt) + ★ Entrega Parcial 2 (5 pts)</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Tu app Spring Boot base, con MVC funcional, en GitHub</h1>
+          <div class="small-muted">Primero la <strong>guía paso a paso</strong> para dejar tu proyecto en el estado que exige el hito, y al final la <strong>plantilla calificable</strong>. Fecha límite: <strong>antes de la Sesión 10 (19 de septiembre de 2026)</strong>.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 980px;">
+
+    <div class="callout danger mb-4">
+      <div class="fw-semibold">⚠️ Esta entrega cuenta doble</div>
+      <div class="small-muted">
+        Una sola entrega, dos calificaciones: <strong>Guía de Aprendizaje 9</strong> (1 pt, evaluación continua) y
+        <strong>Avance del Proyecto — Entrega Parcial 2</strong> (5 pts, hito de proyecto). No son dos plantillas
+        distintas: completas esta página una vez y el mismo PDF sirve para ambas. Es la entrega individual con
+        mayor peso de todo el primer tramo del curso.
+      </div>
+    </div>
+
+    <div class="callout warning mb-4">
+      <div class="fw-semibold">Qué significa exactamente "app Spring Boot base con MVC funcional"</div>
+      <div class="small-muted">
+        Es lo que pide el programa para esta entrega, y se traduce en cinco cosas concretas: <strong>(1)</strong> el
+        proyecto arranca; <strong>(2)</strong> el código está organizado en paquetes (<code>controller</code>,
+        <code>service</code>, <code>model</code>) y no todo suelto; <strong>(3)</strong> hay endpoints que responden;
+        <strong>(4)</strong> hay un formulario web que los consume; <strong>(5)</strong> todo está en GitHub con
+        README e historial de commits. <strong>No</strong> incluye base de datos (Semana 12), Thymeleaf (Semana 10)
+        ni despliegue (Semana 14): no se evalúa lo que aún no se ha enseñado.
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">Parte guiada — deja tu proyecto listo para el hito</h2>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso1">Paso 1 — Ubica tu punto de partida</h3>
+        <p class="small-muted">Abre en VS Code tu proyecto real (el de las Semanas 7 y 8) y ejecútalo. Anota tu <strong>paquete base</strong>: es la línea <code>package</code> de tu archivo <code>...Application.java</code>. Todo lo que crees hoy irá dentro de él.</p>
+        <pre><code># Ejemplo (el tuyo será distinto):
+Paquete base : gt.edu.url.guarderiaesperanza
+Carpeta base : src/main/java/gt/edu/url/guarderiaesperanza/
+Clase principal: GuarderiaEsperanzaApplication.java</code></pre>
+        <div class="callout success mb-0">✅ Checkpoint: el proyecto arranca ("Started ... Application") y tienes anotado tu paquete base exacto.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso2">Paso 2 — Crea las tres carpetas de la estructura MVC</h3>
+        <p class="small-muted">Dentro de tu carpeta base (no fuera de ella), crea tres carpetas. En VS Code: clic derecho sobre la carpeta base → <em>New Folder</em>.</p>
+        <pre><code>src/main/java/gt/edu/url/guarderiaesperanza/
+├── GuarderiaEsperanzaApplication.java   (ya existía)
+├── controller/     ← nueva
+├── service/        ← nueva
+└── model/          ← nueva</code></pre>
+        <div class="callout warning mb-2">
+          <div class="fw-semibold">El error que hay que evitar aquí</div>
+          <div class="small-muted">Las tres carpetas van <strong>dentro</strong> de la carpeta que contiene tu <code>...Application.java</code>. Si las creas al mismo nivel o más arriba, el proyecto compilará pero Spring no encontrará tus clases y las rutas responderán 404, sin ningún mensaje de error. Ver el <a href="cheatsheet.html">Cheat Sheet</a>, pestaña "Anatomía".</div>
+        </div>
+        <div class="callout success mb-0">✅ Checkpoint: las tres carpetas existen dentro de tu paquete base.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso3">Paso 3 — Crea tu clase de modelo</h3>
+        <p class="small-muted">Archivo <code>model/</code><em>TuClase</em><code>.java</code>. Elige algo real de tu institución: <code>Visitante</code>, <code>Nino</code>, <code>Paciente</code>, <code>Donante</code>… Datos puros, sin anotaciones.</p>
+        <pre><code>package gt.edu.url.guarderiaesperanza.model;   // ← tu paquete base + .model
+
+public class Visitante {
+
+    private String nombre;
+
+    public Visitante(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+}</code></pre>
+        <div class="callout success mb-0">✅ Checkpoint: la clase no tiene errores en rojo. No lleva <code>import</code> ni anotaciones: es normal.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso4">Paso 4 — Crea tu clase de servicio (la capa de negocio)</h3>
+        <p class="small-muted">Archivo <code>service/BienvenidaService.java</code>. Aquí se decide <em>qué dice</em> tu aplicación: es la capa que la Semana 6 llamó "negocio".</p>
+        <pre><code>package gt.edu.url.guarderiaesperanza.service;
+
+import org.springframework.stereotype.Service;
+
+import gt.edu.url.guarderiaesperanza.model.Visitante;
+
+@Service
+public class BienvenidaService {
+
+    private static final String INSTITUCION = "Guardería Esperanza";  // ← tu institución real
+
+    public String mensajeGeneral() {
+        return "¡Bienvenido(a) a " + INSTITUCION + "!";
+    }
+
+    public String mensajePara(String nombre) {
+        Visitante visitante = new Visitante(nombre);
+        return "Hola, " + visitante.getNombre()
+                + ". Gracias por visitar " + INSTITUCION + ".";
+    }
+}</code></pre>
+        <div class="callout success mb-0">✅ Checkpoint: la clase tiene <code>@Service</code> con su <code>import</code>, y el <code>import</code> de tu propia clase de modelo.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso5">Paso 5 — Mueve y ajusta tu controlador</h3>
+        <p class="small-muted">Si tu controlador de la Semana 8 quedó suelto junto a <code>...Application.java</code>, muévelo a <code>controller/</code> y corrige su línea <code>package</code>. Luego haz que <strong>delegue en el servicio</strong> en vez de armar el texto él mismo.</p>
+        <pre><code>package gt.edu.url.guarderiaesperanza.controller;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import gt.edu.url.guarderiaesperanza.service.BienvenidaService;
+
+@RestController
+public class BienvenidaController {
+
+    private final BienvenidaService bienvenidaService;
+
+    public BienvenidaController(BienvenidaService bienvenidaService) {
+        this.bienvenidaService = bienvenidaService;
+    }
+
+    @GetMapping("/api/saludo")
+    public String saludo() {
+        return bienvenidaService.mensajeGeneral();
+    }
+
+    @GetMapping("/api/bienvenida")
+    public String bienvenida(@RequestParam(defaultValue = "visitante") String nombre) {
+        return bienvenidaService.mensajePara(nombre);
+    }
+}</code></pre>
+        <div class="callout mb-2">
+          <div class="fw-semibold">Por qué esto ya es "MVC funcional"</div>
+          <div class="small-muted">El controlador <em>recibe</em> la petición, el servicio <em>decide</em> la respuesta y el modelo <em>guarda</em> los datos. Cada capa hace una cosa. Eso es exactamente lo que se diseñó en las Semanas 5 y 6, ahora funcionando en código.</div>
+        </div>
+        <div class="callout success mb-0">✅ Checkpoint: ejecutas el proyecto y ambas rutas responden con el nombre de tu institución real.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso6">Paso 6 — Verifica tu formulario web</h3>
+        <p class="small-muted">Confirma que existe <code>src/main/resources/static/index.html</code> con el formulario de la Semana 8, apuntando a tu endpoint. Si te falta, cópialo completo del <a href="ejercicios.html">Kit de archivos</a> (archivos 10 y 11) — incluye también el CSS, que suma en la evaluación entre pares.</p>
+        <div class="callout success mb-0">✅ Checkpoint: en <code>localhost:8080</code> aparece tu formulario y, al enviarlo, el mensaje aparece sin recargar la página.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso7">Paso 7 — README y <code>.gitignore</code></h3>
+        <p class="small-muted">Dos archivos pequeños que pesan mucho en la rúbrica y en el peer review. Ambos están completos en el <a href="ejercicios.html">Kit</a> (archivos 8 y 9): copia, pega y reemplaza los datos entre corchetes por los tuyos.</p>
+        <ul class="small-muted mb-2">
+          <li><strong>README.md</strong>: qué es el proyecto, tecnologías, cómo ejecutarlo, tabla de endpoints y tu nombre.</li>
+          <li><strong>.gitignore</strong>: evita subir la carpeta <code>target/</code>, que hace pesar el repositorio de más.</li>
+        </ul>
+        <div class="callout success mb-0">✅ Checkpoint: al abrir tu repositorio en GitHub.com, el README se ve formateado en la página principal y no aparece la carpeta <code>target/</code>.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso8">Paso 8 — Publica y verifica como lo haría otra persona</h3>
+        <p class="small-muted">Haz commit y push a tu rama <code>development</code>. Después, la prueba definitiva:</p>
+        <pre><code>git add .
+git commit -m "Organiza el proyecto en capas: modelo, servicio y controlador"
+git push origin development</code></pre>
+        <p class="small-muted mb-2"><strong>Prueba final:</strong> abre tu repositorio en GitHub.com como si fueras otra persona. ¿Se entiende qué es el proyecto? ¿Están los archivos de las tres capas? ¿El README explica cómo ejecutarlo? Eso es exactamente lo que verá quien te evalúe en el <a href="evaluacion_pares.html">peer review</a>.</p>
+        <div class="callout success mb-0">✅ Checkpoint: tu rama en GitHub muestra las carpetas <code>controller</code>, <code>service</code>, <code>model</code> y <code>static</code>, más el README.</div>
+      </div>
+    </div>
+
+    <details class="mb-4">
+      <summary class="fw-semibold">Solución de problemas frecuentes de este hito</summary>
+      <div class="table-responsive mt-2">
+        <table class="table table-sm small mb-0">
+          <thead><tr><th>Situación</th><th>Qué hacer</th></tr></thead>
+          <tbody>
+            <tr><td>Moví el controlador y ahora todo marca error en rojo</td><td>La línea <code>package</code> quedó desactualizada: debe terminar en <code>.controller</code>. Corrígela y guarda.</td></tr>
+            <tr><td>El controlador no encuentra <code>BienvenidaService</code></td><td>Falta el <code>import</code> de tu propia clase (van en paquetes distintos). Pulsa <kbd>Ctrl</kbd>+<kbd>.</kbd> sobre el nombre subrayado.</td></tr>
+            <tr><td><code>required a bean of type … that could not be found</code></td><td>A la clase del servicio le falta <code>@Service</code>, o quedó fuera del paquete base.</td></tr>
+            <tr><td>Mi proyecto de la Semana 7/8 nunca quedó terminado</td><td>Usa el <a href="ejercicios.html">Kit de archivos completos</a>: trae todos los archivos enteros. Cambia el nombre del paquete por el tuyo y el nombre de la institución.</td></tr>
+            <tr><td>Subí todo a <code>main</code> y no a <code>development</code></td><td>No invalida la entrega. Indícalo en la Parte D y crea la rama para los siguientes avances.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <hr class="my-4" />
+    <h2 class="h4 section-title mb-3">📋 Entregable — completa esto para tu calificación</h2>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title mb-3">Datos del estudiante</h3>
+        <div class="row g-3">
+          <div class="col-md-5">
+            <label class="form-label small fw-semibold">Nombre completo</label>
+            <input class="form-control fill-line" type="text" />
+          </div>
+          <div class="col-md-3">
+            <label class="form-label small fw-semibold">Carné</label>
+            <input class="form-control fill-line" type="text" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label small fw-semibold">Institución del proyecto</label>
+            <input class="form-control fill-line" type="text" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte A — Estructura del proyecto</h3>
+        <p class="small-muted">Escribe tu paquete base y el árbol de carpetas de <code>src/main/</code> tal como quedó (puedes copiarlo del explorador de VS Code):</p>
+        <textarea class="code-area" rows="10" placeholder="Paquete base: ...&#10;&#10;src/main/&#10;├── java/...&#10;└── resources/..."></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte B — Código de las tres capas</h3>
+        <p class="small-muted mb-1"><strong>B1.</strong> Tu clase de modelo, completa (con su línea <code>package</code>):</p>
+        <textarea class="code-area mb-3" rows="8"></textarea>
+        <p class="small-muted mb-1"><strong>B2.</strong> Tu clase de servicio, completa (con <code>package</code> e <code>import</code>):</p>
+        <textarea class="code-area mb-3" rows="10"></textarea>
+        <p class="small-muted mb-1"><strong>B3.</strong> Tu clase controladora, completa (con <code>package</code> e <code>import</code>):</p>
+        <textarea class="code-area" rows="12"></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte C — Evidencia de que funciona</h3>
+        <p class="small-muted mb-1">Las URL que probaste y la respuesta exacta de cada una, y qué mensaje muestra tu formulario al enviarlo:</p>
+        <textarea class="code-area" rows="7" placeholder="http://localhost:8080/api/saludo → ...&#10;http://localhost:8080/api/bienvenida?nombre=... → ...&#10;Formulario en localhost:8080 → ..."></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte D — Tu repositorio</h3>
+        <p class="small-muted mb-1">Enlace al repositorio, rama donde está el avance, cantidad aproximada de commits y confirmación de que tienes README y <code>.gitignore</code>:</p>
+        <textarea class="code-area" rows="6" placeholder="Repositorio: https://github.com/...&#10;Rama: development&#10;Commits: ...&#10;README: sí / no  ·  .gitignore: sí / no"></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte E — Reflexión</h3>
+        <ol class="small">
+          <li class="mb-2">
+            <strong>Compromiso profesional:</strong> si otra persona abriera hoy tu repositorio sin conocerte, ¿qué entendería y qué le costaría entender? ¿Qué cambiarías por eso?
+            <textarea class="form-control mt-1" rows="3"></textarea>
+          </li>
+          <li class="mb-2">
+            <strong>Apertura a la mejora:</strong> ¿qué te señaló tu compañero en la <a href="evaluacion_pares.html">evaluación entre pares</a> y qué hiciste con esa observación antes de entregar?
+            <textarea class="form-control mt-1" rows="3"></textarea>
+          </li>
+          <li>
+            <strong>Síntesis del primer tramo:</strong> de las cuatro unidades (Java, Git/GitHub, MVC y capas, Spring Boot), ¿cuál sientes más firme y cuál necesitas reforzar antes de la Semana 10?
+            <textarea class="form-control mt-1" rows="3"></textarea>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Lista de cotejo (marca antes de entregar)</h3>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck1" /><label class="form-check-label small" for="ck1">Mi proyecto arranca sin errores y muestra "Started ... Application".</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck2" /><label class="form-check-label small" for="ck2">Tengo las carpetas <code>controller</code>, <code>service</code> y <code>model</code> dentro de mi paquete base.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck3" /><label class="form-check-label small" for="ck3">Mis endpoints responden y usan el nombre real de mi institución.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck4" /><label class="form-check-label small" for="ck4">El controlador delega en el servicio en lugar de resolverlo todo él mismo.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck5" /><label class="form-check-label small" for="ck5">Mi formulario en <code>static/index.html</code> funciona sin recargar la página.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck6" /><label class="form-check-label small" for="ck6">Tengo README con instrucciones de ejecución y <code>.gitignore</code>.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck7" /><label class="form-check-label small" for="ck7">Todo está subido a GitHub y el enlace abre correctamente.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck8" /><label class="form-check-label small" for="ck8">Exporté el PDF como <code>Guia9_EntregaParcial2_TuNombre.pdf</code>.</label></div>
+      </div>
+    </div>
+
+    <div class="callout danger">
+      <div class="fw-semibold">Cómo se califica (dos rúbricas sobre la misma entrega)</div>
+      <div class="row g-3 mt-1">
+        <div class="col-md-7">
+          <div class="table-responsive">
+            <table class="table table-sm small mb-0">
+              <thead><tr><th>★ Entrega Parcial 2 — Avance del proyecto</th><th class="text-end">Pts</th></tr></thead>
+              <tbody>
+                <tr><td>El proyecto arranca y la estructura de paquetes es correcta (Partes A y C)</td><td class="text-end">1.0</td></tr>
+                <tr><td>Controlador con endpoints funcionando y bien ubicado (Parte B3)</td><td class="text-end">1.5</td></tr>
+                <tr><td>Capas de modelo y servicio presentes y usadas de verdad (Partes B1 y B2)</td><td class="text-end">1.0</td></tr>
+                <tr><td>Formulario web funcionando (Parte C)</td><td class="text-end">0.5</td></tr>
+                <tr><td>Repositorio: README, <code>.gitignore</code>, rama e historial de commits (Parte D)</td><td class="text-end">1.0</td></tr>
+                <tr class="fw-bold"><td>Subtotal del hito</td><td class="text-end">5.0</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="table-responsive">
+            <table class="table table-sm small mb-0">
+              <thead><tr><th>Guía de Aprendizaje 9</th><th class="text-end">Pts</th></tr></thead>
+              <tbody>
+                <tr><td>Plantilla completa (Partes A–D sin vacíos)</td><td class="text-end">0.6</td></tr>
+                <tr><td>Reflexión honesta y concreta (Parte E)</td><td class="text-end">0.4</td></tr>
+                <tr class="fw-bold"><td>Subtotal de la guía</td><td class="text-end">1.0</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="small-muted mt-2">Se valora que el proyecto <strong>realmente exista y funcione</strong>, no solo que se describa. Entregar tarde: −25% por día.</div>
+    </div>
+
+    <div class="d-flex gap-2 mt-3 no-print">
+      <button class="btn btn-dark btn-lg btn-export" onclick="window.print()">Exportar a PDF</button>
+      <a class="btn btn-outline-primary btn-lg" href="index.html">Volver al inicio</a>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Proyecto — Guía 9 + ★ Entrega Parcial 2 · Semana 9 (formato 18 semanas) · Fecha límite: antes de la Sesión 10
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

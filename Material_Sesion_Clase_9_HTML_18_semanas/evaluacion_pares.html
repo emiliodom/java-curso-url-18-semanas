@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Evaluación entre pares — Ronda 1 (Semana 9)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 9 — Hito Parcial</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="examen.html">Examen</a></li>
+          <li class="nav-item"><a class="nav-link active" href="evaluacion_pares.html">Pares</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Evaluación entre pares · Ronda 1 · 5 puntos</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Revisa el proyecto de un compañero</h1>
+          <div class="small-muted">Esta es la <strong>primera de las dos rondas</strong> de peer review del curso (la segunda es en la Semana 18). Se te califica por la <strong>calidad de la evaluación que entregas</strong>: qué tan bien aplicas la rúbrica y qué tan útiles son tus comentarios — no por el estado del proyecto que te tocó revisar.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 980px;">
+
+    <div class="callout mb-4">
+      <div class="fw-semibold">Cómo se hace esta revisión (10 minutos)</div>
+      <ol class="small-muted mb-0">
+        <li>Recibe del profesor el nombre del compañero que te toca revisar y el enlace de su repositorio.</li>
+        <li>Abre el repositorio en el navegador y recórrelo con calma: README, carpetas, archivos, historial de commits.</li>
+        <li>Marca cada criterio de la rúbrica con honestidad.</li>
+        <li>Escribe <strong>2 fortalezas y 2 sugerencias</strong> concretas.</li>
+        <li>Exporta a PDF y súbelo al aula virtual.</li>
+      </ol>
+    </div>
+
+    <div class="callout warning mb-4">
+      <div class="fw-semibold">Antes de escribir un solo comentario: cómo se da retroalimentación útil</div>
+      <div class="table-responsive mt-2">
+        <table class="table table-sm small mb-2">
+          <thead><tr><th style="width:50%">❌ Comentario que no sirve</th><th>✅ Comentario que sí sirve</th></tr></thead>
+          <tbody>
+            <tr><td>"Está mal hecho."</td><td>"El endpoint <code>/api/saludo</code> me respondió 404; revisa si el controlador quedó dentro del paquete base."</td></tr>
+            <tr><td>"El README es malo."</td><td>"El README no dice cómo ejecutar el proyecto; agregar los 3 pasos ayudaría a quien lo clone por primera vez."</td></tr>
+            <tr><td>"Todo bien, muy bueno. 👍"</td><td>"La separación en <code>controller</code> y <code>service</code> está muy clara; me sirvió de ejemplo para ordenar el mío."</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="small-muted">La diferencia está en tres cosas: <strong>menciona algo concreto</strong> (un archivo, una ruta, una carpeta), <strong>describe qué observaste</strong> y, si es una sugerencia, <strong>propone qué haría falta</strong>. Un comentario que la persona no puede usar para mejorar, no cuenta como retroalimentación.</div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h2 class="h5 section-title mb-3">Datos de la revisión</h2>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label small fw-semibold">Tu nombre (quien evalúa)</label>
+            <input class="form-control fill-line" type="text" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label small fw-semibold">Nombre del compañero evaluado</label>
+            <input class="form-control fill-line" type="text" />
+          </div>
+          <div class="col-md-8">
+            <label class="form-label small fw-semibold">Enlace del repositorio revisado</label>
+            <input class="form-control fill-line" type="text" placeholder="https://github.com/usuario/repositorio" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label small fw-semibold">Fecha</label>
+            <input class="form-control fill-line" type="text" placeholder="05/09/2026" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">Rúbrica compartida — 5 criterios de 1 punto</h2>
+    <p class="small-muted mb-3">Para cada criterio marca una sola opción. Si algo no lo pudiste verificar (por ejemplo, no lograste ejecutar el proyecto), márcalo como "parcial" y explícalo en los comentarios: no penalices lo que no comprobaste.</p>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h6 fw-bold">Criterio 1 — El repositorio se puede abrir y se entiende <span class="badge text-bg-secondary">1 pt</span></h3>
+        <div class="form-check"><input class="form-check-input" type="radio" name="c1" id="c1a" /><label class="form-check-label small" for="c1a"><strong>1.0</strong> — El enlace abre, el repositorio es público y tiene un README que explica qué es el proyecto y cómo ejecutarlo.</label></div>
+        <div class="form-check"><input class="form-check-input" type="radio" name="c1" id="c1b" /><label class="form-check-label small" for="c1b"><strong>0.5</strong> — El repositorio abre, pero el README está incompleto o no explica cómo ejecutar el proyecto.</label></div>
+        <div class="form-check"><input class="form-check-input" type="radio" name="c1" id="c1c" /><label class="form-check-label small" for="c1c"><strong>0.0</strong> — El enlace no abre, el repositorio es privado, o no hay README.</label></div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h6 fw-bold">Criterio 2 — Estructura del proyecto Spring Boot <span class="badge text-bg-secondary">1 pt</span></h3>
+        <div class="form-check"><input class="form-check-input" type="radio" name="c2" id="c2a" /><label class="form-check-label small" for="c2a"><strong>1.0</strong> — Están el <code>pom.xml</code>, la clase <code>...Application.java</code> y la carpeta <code>src/main/</code> completa, y el código está organizado en paquetes (<code>controller</code>, <code>service</code>, <code>model</code>).</label></div>
+        <div class="form-check"><input class="form-check-input" type="radio" name="c2" id="c2b" /><label class="form-check-label small" for="c2b"><strong>0.5</strong> — El proyecto está, pero todas las clases están sueltas en un mismo paquete, sin organizar.</label></div>
+        <div class="form-check"><input class="form-check-input" type="radio" name="c2" id="c2c" /><label class="form-check-label small" for="c2c"><strong>0.0</strong> — Falta el proyecto Spring Boot o solo hay archivos sueltos.</label></div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h6 fw-bold">Criterio 3 — Controlador y endpoints <span class="badge text-bg-secondary">1 pt</span></h3>
+        <div class="form-check"><input class="form-check-input" type="radio" name="c3" id="c3a" /><label class="form-check-label small" for="c3a"><strong>1.0</strong> — Hay una clase con <code>@RestController</code>, al menos dos rutas <code>@GetMapping</code> (una con <code>@RequestParam</code>), y los textos corresponden a la institución real del proyecto.</label></div>
+        <div class="form-check"><input class="form-check-input" type="radio" name="c3" id="c3b" /><label class="form-check-label small" for="c3b"><strong>0.5</strong> — Hay controlador con una sola ruta, o los textos siguen siendo los del ejemplo de clase.</label></div>
+        <div class="form-check"><input class="form-check-input" type="radio" name="c3" id="c3c" /><label class="form-check-label small" for="c3c"><strong>0.0</strong> — No hay ninguna clase controladora.</label></div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h6 fw-bold">Criterio 4 — Formulario web y capas <span class="badge text-bg-secondary">1 pt</span></h3>
+        <div class="form-check"><input class="form-check-input" type="radio" name="c4" id="c4a" /><label class="form-check-label small" for="c4a"><strong>1.0</strong> — Existe <code>static/index.html</code> con el formulario, y el controlador delega en una clase de servicio (<code>@Service</code>) en lugar de resolverlo todo él mismo.</label></div>
+        <div class="form-check"><input class="form-check-input" type="radio" name="c4" id="c4b" /><label class="form-check-label small" for="c4b"><strong>0.5</strong> — Está el formulario pero no la capa de servicio, o al revés.</label></div>
+        <div class="form-check"><input class="form-check-input" type="radio" name="c4" id="c4c" /><label class="form-check-label small" for="c4c"><strong>0.0</strong> — No hay formulario ni separación en capas.</label></div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h6 fw-bold">Criterio 5 — Historial de trabajo en GitHub <span class="badge text-bg-secondary">1 pt</span></h3>
+        <div class="form-check"><input class="form-check-input" type="radio" name="c5" id="c5a" /><label class="form-check-label small" for="c5a"><strong>1.0</strong> — Hay varios commits con mensajes descriptivos, se usó al menos una rama además de <code>main</code>, y no se subió la carpeta <code>target/</code>.</label></div>
+        <div class="form-check"><input class="form-check-input" type="radio" name="c5" id="c5b" /><label class="form-check-label small" for="c5b"><strong>0.5</strong> — Hay commits, pero con mensajes poco claros ("cambios", "avance"), o se subió <code>target/</code> por falta de <code>.gitignore</code>.</label></div>
+        <div class="form-check"><input class="form-check-input" type="radio" name="c5" id="c5c" /><label class="form-check-label small" for="c5c"><strong>0.0</strong> — Un solo commit con todo, sin historial de trabajo.</label></div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="row g-3 align-items-end">
+          <div class="col-md-4">
+            <label class="form-label small fw-semibold">Puntaje total que asignas (de 5.0)</label>
+            <input class="form-control fill-line" type="text" placeholder="Ej. 4.5" />
+          </div>
+          <div class="col-md-8 small-muted">
+            Suma los cinco criterios. Recuerda: este puntaje es una <strong>retroalimentación entre compañeros</strong>;
+            la nota final del proyecto la asigna el profesor.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="my-4" />
+    <h2 class="h4 section-title mb-3">Comentarios — lo más importante de esta actividad</h2>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h6 fw-bold">✅ Dos fortalezas</h3>
+        <p class="small-muted mb-2">Algo que este proyecto hace bien y que a ti te sirve de referencia. Sé específico: menciona el archivo, la carpeta o la ruta.</p>
+        <label class="form-label small fw-semibold">Fortaleza 1</label>
+        <textarea class="form-control mb-3" rows="3"></textarea>
+        <label class="form-label small fw-semibold">Fortaleza 2</label>
+        <textarea class="form-control" rows="3"></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h6 fw-bold">🔧 Dos sugerencias de mejora</h3>
+        <p class="small-muted mb-2">Algo que se puede mejorar <strong>antes de la Entrega Parcial 2</strong>. Escríbelo de forma que la persona sepa exactamente qué hacer.</p>
+        <label class="form-label small fw-semibold">Sugerencia 1</label>
+        <textarea class="form-control mb-3" rows="3" placeholder="Ej.: En el README falta la sección de cómo ejecutar el proyecto; con los 3 pasos del comando mvnw bastaría."></textarea>
+        <label class="form-label small fw-semibold">Sugerencia 2</label>
+        <textarea class="form-control" rows="3"></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h6 fw-bold">🪞 Lo que aprendiste revisando</h3>
+        <p class="small-muted mb-2">Revisar el trabajo de otro es también una forma de estudiar. ¿Viste algo que vas a corregir o incorporar en tu propio proyecto?</p>
+        <textarea class="form-control" rows="3"></textarea>
+      </div>
+    </div>
+
+    <div class="callout warning">
+      <div class="fw-semibold">Cómo se califica tu evaluación (5 puntos)</div>
+      <div class="table-responsive mt-2">
+        <table class="table table-sm small mb-0">
+          <thead><tr><th>Criterio</th><th class="text-end">Puntos</th></tr></thead>
+          <tbody>
+            <tr><td>Aplicaste los 5 criterios de la rúbrica, con coherencia entre lo marcado y lo comentado</td><td class="text-end">2.0</td></tr>
+            <tr><td>Las 2 fortalezas son específicas (mencionan archivos, rutas o decisiones concretas)</td><td class="text-end">1.0</td></tr>
+            <tr><td>Las 2 sugerencias son accionables: dicen qué falta y qué haría falta hacer</td><td class="text-end">1.5</td></tr>
+            <tr><td>La reflexión final muestra qué aprendiste del proyecto revisado</td><td class="text-end">0.5</td></tr>
+            <tr class="fw-bold"><td>Total</td><td class="text-end">5.0</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout success mt-3">
+      <div class="fw-semibold">Y cuando te toque recibir la revisión…</div>
+      <div class="small-muted">
+        El valor de la semana es <strong>apertura a la mejora</strong>: recibir una observación sobre tu proyecto no
+        es un juicio sobre ti. Tienes hasta la entrega de la <a href="proyecto.html">Entrega Parcial 2</a> para
+        aplicar lo que te señalen — de hecho, esa es la razón por la que el peer review ocurre <em>antes</em> de la
+        fecha de entrega y no después.
+      </div>
+    </div>
+
+    <div class="d-flex gap-2 mt-3 no-print">
+      <button class="btn btn-warning btn-lg btn-export" onclick="window.print()">Exportar a PDF</button>
+      <a class="btn btn-outline-primary btn-lg" href="index.html">Volver al inicio</a>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Evaluación entre pares — Ronda 1 · Semana 9 (formato 18 semanas) · 5 puntos · La Ronda 2 es en la Semana 18
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

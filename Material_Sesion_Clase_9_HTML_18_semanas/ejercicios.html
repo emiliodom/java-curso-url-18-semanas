@@ -1,0 +1,720 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ejercicios y Kit de archivos — Semana 9 (Repaso integrado)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 9 — Hito Parcial</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link active" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="examen.html">Examen</a></li>
+          <li class="nav-item"><a class="nav-link" href="evaluacion_pares.html">Pares</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Ejercicios · Semana 9 · Repaso integrado de las 8 semanas</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Ocho ejercicios en escalera — y todo el código, completo</h1>
+          <div class="small-muted">Dos pestañas: los <strong>ejercicios</strong>, que suben de dificultad paso a paso, y el <strong>Kit de archivos completos</strong>, donde cada archivo aparece entero — con su línea <code>package</code>, sus <code>import</code> y la ruta exacta de la carpeta donde va. Proyecto de práctica: <code>repaso-spring</code> · Institución de ejemplo: <strong>Banco de Alimentos San Miguel</strong>.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <ul class="nav nav-tabs mb-4 no-print" id="ejerciciosTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="tab-ejercicios-btn" data-bs-toggle="tab" data-bs-target="#tab-ejercicios" type="button" role="tab">🪜 Ejercicios paso a paso</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-kit-btn" data-bs-toggle="tab" data-bs-target="#tab-kit" type="button" role="tab">📦 Kit de archivos completos</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="ejerciciosTabsContent">
+
+      <!-- ============ PESTAÑA 1: EJERCICIOS ============ -->
+      <div class="tab-pane fade show active" id="tab-ejercicios" role="tabpanel">
+
+        <div class="callout mb-3">
+          <div class="fw-semibold">Cómo está armada esta escalera</div>
+          <div class="small-muted">
+            Los ejercicios van de menos a más: los primeros se resuelven en un minuto, los últimos exigen juntar
+            varias piezas. Ninguno pide algo que no se haya visto entre las Semanas 1 y 8. Si te trabas en
+            cualquiera, el <a href="#" onclick="document.getElementById('tab-kit-btn').click(); return false;">Kit
+            de archivos completos</a> tiene el archivo entero para comparar contra el tuyo.
+          </div>
+        </div>
+
+        <div class="callout warning mb-4">
+          <div class="fw-semibold">La pregunta ancla de esta semana</div>
+          <div class="small-muted">Antes de pedir ayuda con un endpoint que "no funciona", pregúntate las tres cosas en este orden: <strong>(1)</strong> ¿el archivo está dentro del paquete base del proyecto? <strong>(2)</strong> ¿la línea <code>package</code> coincide exactamente con la carpeta donde está el archivo? <strong>(3)</strong> ¿están los <code>import</code> que necesitan las anotaciones? El 90% de los errores de las Semanas 7 y 8 fueron una de esas tres.</div>
+        </div>
+
+        <div class="row g-3">
+
+          <div class="col-lg-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <h2 class="h5 section-title">Ejercicio 1 — Tu entorno sigue vivo <span class="badge text-bg-success">Nivel 1</span></h2>
+                <p class="small-muted mb-2">Abre una terminal y ejecuta los tres comandos de verificación:</p>
+                <pre><code>java -version
+git --version
+code --version</code></pre>
+                <p class="small-muted mb-1"><strong>Tu turno:</strong> ¿los tres responden con un número de versión?</p>
+                <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: los tres comandos responden. Si alguno falla, resuélvelo antes de seguir — todo lo demás depende de ellos.</span></div>
+                <details>
+                  <summary class="fw-semibold">Solución</summary>
+                  <div class="mt-2 small-muted">Debes ver algo como <code>openjdk version "21..."</code>, <code>git version 2.x</code> y una versión de VS Code. Si <code>java</code> no se reconoce, repite el <a href="../Material_Sesion_Clase_1_HTML_18_semanas/instalacion.html#paso2">Paso 2 de la Semana 1</a>.</div>
+                </details>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <h2 class="h5 section-title">Ejercicio 2 — Java puro: lee y predice <span class="badge text-bg-success">Nivel 1</span></h2>
+                <p class="small-muted mb-2">Este archivo va en <code>src/main/java/gt/edu/url/repasospring/Practica.java</code>:</p>
+                <pre><code>package gt.edu.url.repasospring;
+
+public class Practica {
+    public static void main(String[] args) {
+        int donaciones = 7;
+        String institucion = "Banco de Alimentos San Miguel";
+
+        for (int i = 1; i &lt;= 3; i++) {
+            donaciones = donaciones + 5;
+        }
+
+        if (donaciones &gt;= 20) {
+            System.out.println(institucion + ": meta alcanzada (" + donaciones + ")");
+        } else {
+            System.out.println(institucion + ": faltan " + (20 - donaciones));
+        }
+    }
+}</code></pre>
+                <p class="small-muted mb-1"><strong>Tu turno:</strong> predice la salida <em>antes</em> de ejecutarlo. Luego ejecútalo con el botón ▶ Run.</p>
+                <details>
+                  <summary class="fw-semibold">Solución</summary>
+                  <div class="mt-2 small-muted">El ciclo suma 5 tres veces: 7 + 15 = 22. Como 22 ≥ 20, imprime <code>Banco de Alimentos San Miguel: meta alcanzada (22)</code>.<br /><strong>Fíjate:</strong> este archivo <em>no tiene ningún <code>import</code></em>, y funciona. <code>String</code> y <code>System</code> vienen de <code>java.lang</code>, que Java incluye siempre sin pedirlo.</div>
+                </details>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <h2 class="h5 section-title">Ejercicio 3 — Anatomía: carpeta = paquete <span class="badge text-bg-primary">Nivel 2</span></h2>
+                <p class="small-muted mb-2">Copia del Kit el archivo <code>BienvenidaController.java</code> a su ruta correcta y ejecuta el proyecto. Confirma que <code>localhost:8080/api/saludo</code> responde.</p>
+                <p class="small-muted mb-2"><strong>Ahora rómpelo a propósito:</strong> cambia solo la primera línea del archivo, de <code>package gt.edu.url.repasospring.controller;</code> a <code>package gt.edu.url.otro;</code> (sin mover el archivo de carpeta).</p>
+                <p class="small-muted mb-1"><strong>Tu turno:</strong> ¿qué error aparece y por qué?</p>
+                <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: entiendes que la línea <code>package</code> debe reflejar la carpeta real del archivo. Deja el archivo como estaba antes de continuar.</span></div>
+                <details>
+                  <summary class="fw-semibold">Solución</summary>
+                  <div class="mt-2 small-muted">VS Code marca el archivo en rojo con un mensaje del tipo <code>The declared package "gt.edu.url.otro" does not match the expected package "gt.edu.url.repasospring.controller"</code>, y el proyecto no compila. La regla es literal: <strong>la ruta de carpetas y la línea <code>package</code> son la misma cosa escrita de dos maneras</strong> — carpetas separadas por <code>/</code>, paquete separado por puntos.</div>
+                </details>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <h2 class="h5 section-title">Ejercicio 4 — El endpoint invisible <span class="badge text-bg-primary">Nivel 2</span></h2>
+                <p class="small-muted mb-2">Con el proyecto funcionando, <strong>mueve</strong> la carpeta <code>controller</code> completa fuera del paquete base: de <code>src/main/java/gt/edu/url/repasospring/controller/</code> a <code>src/main/java/gt/edu/url/controller/</code>, y corrige la línea <code>package</code> para que coincida (<code>package gt.edu.url.controller;</code>). El proyecto <em>sí</em> compila. Ejecútalo y visita <code>/api/saludo</code>.</p>
+                <p class="small-muted mb-1"><strong>Tu turno:</strong> el código compila sin errores… pero la ruta responde 404. ¿Por qué?</p>
+                <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: sabes distinguir "error de compilación" de "endpoint que Spring nunca encontró". Regresa la carpeta a su lugar y confirma que vuelve a responder.</span></div>
+                <details>
+                  <summary class="fw-semibold">Solución</summary>
+                  <div class="mt-2 small-muted">
+                    <code>@SpringBootApplication</code> le dice a Spring: "busca componentes en <strong>mi paquete y en todo lo que cuelgue debajo</strong>". Tu clase <code>...Application.java</code> está en <code>gt.edu.url.repasospring</code>, así que Spring revisa <code>gt.edu.url.repasospring.*</code>. Al mover el controlador a <code>gt.edu.url.controller</code>, quedó <em>fuera</em> de esa rama: Java lo compila igual, pero Spring nunca lo registra y la ruta no existe.<br />
+                    <strong>Esta es la causa más común de "mi endpoint no funciona y no entiendo por qué":</strong> no hay mensaje de error, simplemente el 404. Regla práctica: todas tus clases van dentro del paquete de la clase <code>Application</code>, o en subcarpetas de ella.
+                  </div>
+                </details>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <h2 class="h5 section-title">Ejercicio 5 — Escribe un endpoint sin copiar <span class="badge text-bg-warning">Nivel 3</span></h2>
+                <p class="small-muted mb-2">En <code>BienvenidaController</code>, agrega un tercer método que responda en <code>/api/horario</code> con el horario de atención del Banco de Alimentos (inventa el texto). Escríbelo tú, sin copiar del Kit.</p>
+                <p class="small-muted mb-1"><strong>Tu turno:</strong> ¿necesitaste agregar algún <code>import</code> nuevo? ¿Por qué sí o por qué no?</p>
+                <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: <code>/api/horario</code> responde tu texto en el navegador.</span></div>
+                <details>
+                  <summary class="fw-semibold">Solución</summary>
+                  <div class="mt-2 small-muted">
+                    No hace falta ningún import nuevo: <code>@GetMapping</code> ya estaba importado para los otros métodos, y un <code>import</code> sirve para <em>todo el archivo</em>, no por método.
+<pre class="mt-2"><code>@GetMapping("/api/horario")
+public String horario() {
+    return "Atendemos de lunes a viernes, de 8:00 a 16:00.";
+}</code></pre>
+                    <strong>Truco de VS Code:</strong> si escribes una anotación y aparece subrayada en rojo, pulsa <kbd>Ctrl</kbd>+<kbd>.</kbd> sobre ella y elige "Import…" — el editor agrega la línea correcta por ti.
+                  </div>
+                </details>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <h2 class="h5 section-title">Ejercicio 6 — Dos parámetros a la vez <span class="badge text-bg-warning">Nivel 3</span></h2>
+                <p class="small-muted mb-2">Agrega un método en <code>/api/donacion</code> que reciba <strong>dos</strong> parámetros: <code>nombre</code> (texto, por defecto "anónimo") y <code>libras</code> (número entero, por defecto 0), y devuelva un mensaje de agradecimiento que los use.</p>
+                <p class="small-muted mb-1"><strong>Tu turno:</strong> pruébalo con <code>/api/donacion?nombre=Ana&amp;libras=12</code>. ¿Qué separa un parámetro del siguiente en la URL?</p>
+                <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: la ruta responde usando ambos valores, y también responde (con los valores por defecto) si la visitas sin parámetros.</span></div>
+                <details>
+                  <summary class="fw-semibold">Solución</summary>
+                  <div class="mt-2 small-muted">
+                    Los parámetros se separan con <code>&amp;</code>. El primero va después de <code>?</code>.
+<pre class="mt-2"><code>@GetMapping("/api/donacion")
+public String donacion(
+        @RequestParam(defaultValue = "anónimo") String nombre,
+        @RequestParam(defaultValue = "0") int libras) {
+    return "Gracias, " + nombre + ", por donar " + libras + " libras de alimento.";
+}</code></pre>
+                    Fíjate que <code>defaultValue</code> siempre se escribe entre comillas (<code>"0"</code>), aunque el parámetro sea un número: Spring lo convierte de texto a <code>int</code> por ti.
+                  </div>
+                </details>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <h2 class="h5 section-title">Ejercicio 7 — Las tres capas hablando <span class="badge text-bg-danger">Nivel 4</span></h2>
+                <p class="small-muted mb-2">Copia del Kit los archivos <code>Visitante.java</code> (modelo) y <code>BienvenidaService.java</code> (servicio) a sus rutas, y ajusta el controlador para que <strong>le pida el mensaje al servicio</strong> en vez de armarlo él mismo (el Kit trae esa versión).</p>
+                <p class="small-muted mb-1"><strong>Tu turno:</strong> ¿qué línea del controlador demuestra que ya no arma el texto por su cuenta? ¿Qué capa quedó a cargo de esa decisión?</p>
+                <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: la aplicación responde igual que antes, pero ahora el texto lo decide el servicio. Esto es lo que la Entrega Parcial 2 llama "MVC funcional".</span></div>
+                <details>
+                  <summary class="fw-semibold">Solución</summary>
+                  <div class="mt-2 small-muted">
+                    La línea es <code>return bienvenidaService.mensajePara(nombre);</code> — el controlador <em>delega</em>. La capa de negocio (el <code>@Service</code>) quedó a cargo del contenido del mensaje; el controlador solo recibe la petición y devuelve lo que el servicio le da. Es exactamente la separación de responsabilidades de la Semana 6: quien recibe no es quien decide.<br />
+                    <strong>Sobre el constructor:</strong> el controlador recibe el servicio por su constructor y Spring se lo entrega solo. No tienes que escribir <code>new BienvenidaService()</code> en ningún lado — esa es la parte que Spring automatiza por ti.
+                  </div>
+                </details>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <h2 class="h5 section-title">Ejercicio 8 — Integrador: rama, formulario y push <span class="badge text-bg-danger">Nivel 4</span></h2>
+                <p class="small-muted mb-2">Cierra el ciclo completo, tal como lo pide el hito:</p>
+                <ol class="small-muted mb-2">
+                  <li>Crea la rama <code>practica-semana9</code> en tu repositorio de práctica.</li>
+                  <li>Copia del Kit <code>static/index.html</code> y <code>static/estilos.css</code>.</li>
+                  <li>Ajusta el formulario para que llame a tu endpoint <code>/api/donacion</code> del Ejercicio 6.</li>
+                  <li>Verifica en <code>localhost:8080</code> que el mensaje aparece sin recargar la página.</li>
+                  <li>Haz commit y push de la rama.</li>
+                </ol>
+                <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: tu rama está en GitHub y el formulario funciona en local. Ese es, en miniatura, todo lo que evalúa la Entrega Parcial 2.</span></div>
+                <details>
+                  <summary class="fw-semibold">Ejemplo de solución (comandos)</summary>
+                  <div class="mt-2 small-muted">
+<pre><code>git checkout -b practica-semana9
+git add .
+git commit -m "Agrega formulario y endpoint de donaciones"
+git push -u origin practica-semana9</code></pre>
+                    En GitHub Desktop es el mismo flujo: <em>Current Branch → New Branch</em>, escribir el resumen del commit, <em>Commit to practica-semana9</em> y <em>Publish branch</em>. Ambas rutas producen exactamente el mismo resultado en GitHub.com.
+                  </div>
+                </details>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="callout success mt-4">
+          <div class="fw-semibold">¿Terminaste los 8?</div>
+          <div class="small-muted">Estás en condiciones de resolver el <a href="examen.html">examen parcial</a> — sobre todo sus secciones 2 y 3, que preguntan exactamente por esto — y de armar la <a href="proyecto.html">Entrega Parcial 2</a>. Si algo quedó a medias, el <a href="#" onclick="document.getElementById('tab-kit-btn').click(); return false;">Kit</a> tiene cada archivo completo para comparar.</div>
+        </div>
+      </div>
+
+      <!-- ============ PESTAÑA 2: KIT ============ -->
+      <div class="tab-pane fade" id="tab-kit" role="tabpanel">
+
+        <div class="callout mb-4">
+          <div class="fw-semibold">Qué es este Kit y cómo usarlo</div>
+          <div class="small-muted">
+            Aquí está <strong>cada archivo del proyecto de práctica, completo</strong> — no fragmentos. Cada uno
+            viene con: la <strong>ruta exacta</strong> donde debe guardarse, su línea <code>package</code>, todos sus
+            <code>import</code>, y una explicación de por qué está cada pieza. Copia, pega y ajusta los textos al
+            nombre de tu institución. Los mismos archivos sirven para tu proyecto real: solo cambia
+            <code>repasospring</code> por el paquete de tu proyecto.
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit0">0. De dónde sale el nombre del paquete</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-2">Cuando generaste el proyecto en Spring Initializr escribiste dos datos. De ahí sale todo lo demás:</p>
+            <div class="table-responsive">
+              <table class="table table-sm small">
+                <thead><tr><th>Lo que escribiste en Initializr</th><th>Valor de ejemplo</th><th>En qué se convierte</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Group</strong></td><td><code>gt.edu.url</code></td><td>El inicio del paquete y de las carpetas</td></tr>
+                  <tr><td><strong>Artifact</strong></td><td><code>repaso-spring</code></td><td>Se le quitan los guiones → <code>repasospring</code></td></tr>
+                  <tr><td colspan="2"><strong>Paquete base resultante</strong></td><td><code>gt.edu.url.repasospring</code></td></tr>
+                  <tr><td colspan="2"><strong>Carpeta resultante</strong></td><td><code>src/main/java/gt/edu/url/repasospring/</code></td></tr>
+                  <tr><td colspan="2"><strong>Clase principal resultante</strong></td><td><code>RepasoSpringApplication.java</code></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="callout warning mb-0">
+              <div class="fw-semibold">La regla de oro: carpeta = paquete</div>
+              <div class="small-muted">Un punto en el <code>package</code> equivale a una carpeta. <code>package gt.edu.url.repasospring.controller;</code> significa que el archivo está guardado en <code>src/main/java/<strong>gt/edu/url/repasospring/controller</strong>/</code>. Si no coinciden, el proyecto no compila. Y si el archivo queda <em>fuera</em> de <code>gt.edu.url.repasospring</code>, compila pero Spring no lo ve.</div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit1">1. El árbol completo del proyecto</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-2">Así debe verse tu proyecto al terminar. Las 5 líneas marcadas con ← son las que tú creas; el resto lo generó Spring Initializr.</p>
+            <pre><code>repaso-spring/
+├── .gitignore                        ← lo revisas (archivo 8)
+├── mvnw  ·  mvnw.cmd                 (generado)
+├── pom.xml                           ← lo revisas (archivo 2)
+├── README.md                         ← lo escribes tú (archivo 9)
+└── src/
+    ├── main/
+    │   ├── java/
+    │   │   └── gt/edu/url/repasospring/
+    │   │       ├── RepasoSpringApplication.java     (generado — archivo 3)
+    │   │       ├── controller/
+    │   │       │   └── BienvenidaController.java    ← lo creas tú (archivo 4)
+    │   │       ├── service/
+    │   │       │   └── BienvenidaService.java       ← lo creas tú (archivo 5)
+    │   │       └── model/
+    │   │           └── Visitante.java               ← lo creas tú (archivo 6)
+    │   └── resources/
+    │       ├── application.properties               (generado — archivo 7)
+    │       └── static/
+    │           ├── index.html                       ← lo creas tú (archivo 10)
+    │           └── estilos.css                      ← lo creas tú (archivo 11)
+    └── test/                                        (generado, no lo usamos todavía)</code></pre>
+            <div class="small-muted">Para crear una carpeta nueva en VS Code: clic derecho sobre <code>repasospring</code> → <em>New Folder</em> → escribe <code>controller</code>. Para crear el archivo: clic derecho sobre la carpeta nueva → <em>New File</em> → <code>BienvenidaController.java</code>.</div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit2">2. <code>pom.xml</code> <span class="small-muted fw-normal">— raíz del proyecto</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-2">Este archivo ya existe (lo generó Initializr). No lo escribas de cero: úsalo para <strong>comparar</strong> si algo se rompió. Lo único que necesitas verificar es que esté la dependencia <code>spring-boot-starter-web</code>.</p>
+            <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+    &lt;parent&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;
+        &lt;version&gt;3.3.4&lt;/version&gt;
+        &lt;relativePath/&gt;
+    &lt;/parent&gt;
+
+    &lt;groupId&gt;gt.edu.url&lt;/groupId&gt;
+    &lt;artifactId&gt;repaso-spring&lt;/artifactId&gt;
+    &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
+    &lt;name&gt;repaso-spring&lt;/name&gt;
+    &lt;description&gt;Proyecto de repaso - Semana 9&lt;/description&gt;
+
+    &lt;properties&gt;
+        &lt;java.version&gt;21&lt;/java.version&gt;
+    &lt;/properties&gt;
+
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+
+    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+                &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+&lt;/project&gt;</code></pre>
+            <div class="callout warning mb-0">
+              <div class="fw-semibold">El número de versión de tu archivo será distinto — y está bien</div>
+              <div class="small-muted">La línea <code>&lt;version&gt;3.3.4&lt;/version&gt;</code> del bloque <code>parent</code> la escribe Spring Initializr según la fecha en que generaste el proyecto. <strong>No la cambies a mano</strong> para que coincida con este ejemplo: cambiar esa versión puede romper el proyecto. Solo verifica que exista el bloque <code>spring-boot-starter-web</code>.</div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit3">3. <code>RepasoSpringApplication.java</code></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/java/gt/edu/url/repasospring/RepasoSpringApplication.java</code></p>
+            <p class="small-muted mb-2">Generado por Initializr. Es el interruptor de encendido: no lo modifiques.</p>
+            <pre><code>package gt.edu.url.repasospring;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class RepasoSpringApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(RepasoSpringApplication.class, args);
+    }
+}</code></pre>
+            <div class="small-muted">Este archivo define el <strong>paquete base</strong> (<code>gt.edu.url.repasospring</code>). Todo lo que crees debe vivir aquí o en subcarpetas, o Spring no lo encontrará.</div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit4">4. <code>BienvenidaController.java</code> <span class="badge text-bg-primary">lo creas tú</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/java/gt/edu/url/repasospring/<strong>controller</strong>/BienvenidaController.java</code></p>
+            <pre><code>package gt.edu.url.repasospring.controller;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import gt.edu.url.repasospring.service.BienvenidaService;
+
+@RestController
+public class BienvenidaController {
+
+    private final BienvenidaService bienvenidaService;
+
+    // Spring entrega el servicio automáticamente por este constructor.
+    public BienvenidaController(BienvenidaService bienvenidaService) {
+        this.bienvenidaService = bienvenidaService;
+    }
+
+    @GetMapping("/api/saludo")
+    public String saludo() {
+        return bienvenidaService.mensajeGeneral();
+    }
+
+    @GetMapping("/api/bienvenida")
+    public String bienvenida(@RequestParam(defaultValue = "visitante") String nombre) {
+        return bienvenidaService.mensajePara(nombre);
+    }
+}</code></pre>
+            <h3 class="h6 fw-bold mt-3">Qué hace cada <code>import</code> de este archivo</h3>
+            <div class="table-responsive">
+              <table class="table table-sm small mb-0">
+                <thead><tr><th>Línea</th><th>Para qué sirve</th><th>Si falta…</th></tr></thead>
+                <tbody>
+                  <tr><td><code>…annotation.RestController</code></td><td>Habilita la anotación <code>@RestController</code></td><td><code>cannot find symbol: RestController</code></td></tr>
+                  <tr><td><code>…annotation.GetMapping</code></td><td>Habilita <code>@GetMapping</code></td><td><code>cannot find symbol: GetMapping</code></td></tr>
+                  <tr><td><code>…annotation.RequestParam</code></td><td>Habilita <code>@RequestParam</code></td><td><code>cannot find symbol: RequestParam</code></td></tr>
+                  <tr><td><code>gt.edu.url.repasospring.service.BienvenidaService</code></td><td>Permite usar <strong>tu propia clase</strong>, que vive en otro paquete</td><td><code>cannot find symbol: BienvenidaService</code></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit5">5. <code>BienvenidaService.java</code> <span class="badge text-bg-primary">lo creas tú</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/java/gt/edu/url/repasospring/<strong>service</strong>/BienvenidaService.java</code></p>
+            <p class="small-muted mb-2">La capa de negocio de la Semana 6, ahora en código: aquí se decide <em>qué dice</em> la aplicación.</p>
+            <pre><code>package gt.edu.url.repasospring.service;
+
+import org.springframework.stereotype.Service;
+
+import gt.edu.url.repasospring.model.Visitante;
+
+@Service
+public class BienvenidaService {
+
+    private static final String INSTITUCION = "Banco de Alimentos San Miguel";
+
+    public String mensajeGeneral() {
+        return "¡Bienvenido(a) al " + INSTITUCION + "!";
+    }
+
+    public String mensajePara(String nombre) {
+        Visitante visitante = new Visitante(nombre);
+        return "Hola, " + visitante.getNombre()
+                + ". Gracias por apoyar al " + INSTITUCION + ".";
+    }
+}</code></pre>
+            <div class="small-muted"><code>@Service</code> le avisa a Spring: "esta clase es una pieza de la aplicación, créala y entrégasela a quien la pida". Por eso el controlador puede recibirla en su constructor sin escribir <code>new</code> en ningún lado.</div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit6">6. <code>Visitante.java</code> <span class="badge text-bg-primary">lo creas tú</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/java/gt/edu/url/repasospring/<strong>model</strong>/Visitante.java</code></p>
+            <p class="small-muted mb-2">El modelo: datos puros, sin lógica ni anotaciones. Es la clase Java "de toda la vida" de la Semana 2.</p>
+            <pre><code>package gt.edu.url.repasospring.model;
+
+public class Visitante {
+
+    private String nombre;
+
+    public Visitante(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+}</code></pre>
+            <div class="small-muted"><strong>Ningún <code>import</code>, ninguna anotación:</strong> solo usa <code>String</code>, que Java incluye siempre. Que un archivo no tenga imports no significa que esté incompleto.</div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit7">7. <code>application.properties</code></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/resources/application.properties</code></p>
+            <pre><code>spring.application.name=repaso-spring
+
+# Descomenta la siguiente línea si el puerto 8080 ya está ocupado:
+# server.port=8081</code></pre>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit8">8. <code>.gitignore</code></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> raíz del proyecto (junto a <code>pom.xml</code>)</p>
+            <p class="small-muted mb-2">Evita subir a GitHub archivos que se regeneran solos. Si no lo tienes, tu repositorio se llena de basura y eso <strong>sí</strong> se nota en la evaluación entre pares.</p>
+            <pre><code>target/
+!.mvn/wrapper/maven-wrapper.jar
+
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+*.log
+.DS_Store</code></pre>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit9">9. <code>README.md</code> <span class="badge text-bg-dark">clave para el hito</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> raíz del repositorio</p>
+            <p class="small-muted mb-2">Plantilla lista: reemplaza lo que está entre corchetes. La rúbrica del peer review y la del hito revisan este archivo.</p>
+            <pre><code># [Nombre de tu institución]
+
+Proyecto del curso Introducción al Desarrollo Web con Java (Programación I),
+Universidad Rafael Landívar — PEM en TIC.
+
+## Descripción
+
+Aplicación web para el registro y gestión de [describe en dos líneas qué
+hace tu institución y qué resolverá la aplicación].
+
+## Tecnologías
+
+- Java 21
+- Spring Boot (Spring Web)
+- Maven
+
+## Cómo ejecutar el proyecto
+
+1. Clonar el repositorio.
+2. Abrir la carpeta en VS Code.
+3. Ejecutar `mvnw spring-boot:run` (Windows) o `./mvnw spring-boot:run` (Mac/Linux).
+4. Abrir http://localhost:8080 en el navegador.
+
+## Endpoints disponibles
+
+| Ruta | Qué devuelve |
+| --- | --- |
+| `/` | Formulario web de bienvenida |
+| `/api/saludo` | Mensaje de bienvenida de la institución |
+| `/api/bienvenida?nombre=Ana` | Mensaje personalizado |
+
+## Estado del proyecto
+
+Entrega Parcial 2 — aplicación base con estructura MVC funcional.
+
+## Autor
+
+[Tu nombre completo] — [tu carné]</code></pre>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit10">10. <code>static/index.html</code> <span class="badge text-bg-primary">lo creas tú</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/resources/static/index.html</code></p>
+            <p class="small-muted mb-2">Spring Boot sirve este archivo automáticamente en <code>http://localhost:8080</code>, sin configurar nada.</p>
+            <pre><code>&lt;!doctype html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8" /&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1" /&gt;
+  &lt;title&gt;Banco de Alimentos San Miguel&lt;/title&gt;
+  &lt;link rel="stylesheet" href="estilos.css" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;main&gt;
+    &lt;h1&gt;Banco de Alimentos San Miguel&lt;/h1&gt;
+    &lt;p&gt;Escribe tu nombre para recibir un saludo de nuestro equipo.&lt;/p&gt;
+
+    &lt;form id="formBienvenida"&gt;
+      &lt;label for="nombre"&gt;Tu nombre:&lt;/label&gt;
+      &lt;input type="text" id="nombre" name="nombre" required /&gt;
+      &lt;button type="submit"&gt;Enviar&lt;/button&gt;
+    &lt;/form&gt;
+
+    &lt;p id="resultado"&gt;&lt;/p&gt;
+  &lt;/main&gt;
+
+  &lt;script&gt;
+    document.getElementById('formBienvenida').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var nombre = document.getElementById('nombre').value;
+
+      fetch('/api/bienvenida?nombre=' + encodeURIComponent(nombre))
+        .then(function (respuesta) { return respuesta.text(); })
+        .then(function (texto) {
+          document.getElementById('resultado').textContent = texto;
+        })
+        .catch(function () {
+          document.getElementById('resultado').textContent =
+            'No se pudo conectar con el servidor. ¿Está corriendo el proyecto?';
+        });
+    });
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            <div class="small-muted">El bloque <code>.catch(...)</code> es nuevo respecto a la Semana 8: muestra un mensaje claro si el servidor no responde, en vez de dejar la página en silencio. Es una mejora pequeña que se nota mucho en la evaluación entre pares.</div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit11">11. <code>static/estilos.css</code> <span class="badge text-bg-primary">lo creas tú</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/resources/static/estilos.css</code></p>
+            <pre><code>body {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: #f6f8fb;
+  margin: 0;
+  padding: 2rem 1rem;
+}
+
+main {
+  max-width: 520px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(16, 24, 40, 0.08);
+}
+
+h1 {
+  color: #0b3d91;
+  font-size: 1.5rem;
+  margin-top: 0;
+}
+
+form {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+input {
+  flex: 1;
+  min-width: 200px;
+  padding: 0.6rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+}
+
+button {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  background: #0d6efd;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0b5ed7;
+}
+
+#resultado {
+  margin-top: 1rem;
+  font-weight: 600;
+  color: #14532d;
+}</code></pre>
+          </div>
+        </div>
+
+        <div class="callout success">
+          <div class="fw-semibold">Para tu proyecto real</div>
+          <div class="small-muted">
+            Usa exactamente estos archivos, cambiando dos cosas: <strong>(1)</strong> <code>repasospring</code> por el
+            paquete de tu proyecto (el que aparece en tu <code>...Application.java</code>), y <strong>(2)</strong> el
+            nombre de la institución por el de tu Ficha del Proyecto. Nada más. La guía paso a paso aplicada a tu
+            repositorio está en <a href="proyecto.html">Proyecto</a>.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Ejercicios y Kit — Semana 9 · Repaso integrado (formato 18 semanas) · Aplica esto a tu proyecto en <a href="proyecto.html">Proyecto</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

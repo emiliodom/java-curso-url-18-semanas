@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz de repaso — Semana 9 (S1–S8)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 9 — Hito Parcial</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="examen.html">Examen</a></li>
+          <li class="nav-item"><a class="nav-link" href="evaluacion_pares.html">Pares</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Quiz de repaso · Las 8 semanas completas</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Repaso rápido y simulacro del examen parcial</h1>
+          <div class="small-muted" id="quizTypeLabel">Repaso rápido · 10 preguntas · no cuenta para nota</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 900px;">
+
+    <div class="callout warning mb-3 no-print">
+      <div class="fw-semibold">Este quiz NO es el examen parcial</div>
+      <div class="small-muted">Es tu herramienta de estudio y la evidencia de la <strong>Actividad en clase</strong> (0.66 pts). El examen parcial real, que vale 15 puntos, está en <a href="examen.html">examen.html</a> y lo califica el profesor. Usa el modo "Simulacro" tantas veces como quieras antes de resolverlo.</div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="row g-3 align-items-end">
+          <div class="col-md-6">
+            <label class="form-label fw-semibold" for="quizType">¿Qué modo vas a resolver?</label>
+            <select id="quizType" class="form-select" onchange="renderQuiz()">
+              <option value="presaberes">🟡 Repaso rápido (10 preguntas, no cuenta para nota)</option>
+              <option value="final">🔴 Simulacro del examen parcial (15 preguntas)</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold" for="studentName">Nombre del estudiante (aparecerá en el PDF)</label>
+            <input id="studentName" class="form-control" type="text" placeholder="Nombre y apellido" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout mb-3 no-print">
+      <div class="fw-semibold">¿Cómo funciona?</div>
+      <div class="small-muted">Las preguntas se sortean <strong>al azar</strong> de un banco de más de 30, que cubre las cuatro unidades: Java, Git/GitHub, MVC y capas, y Spring Boot. Pulsa "🔀 Nuevas preguntas" para practicar con otro sorteo — mientras más veces lo repitas, más del banco vas a recorrer.</div>
+    </div>
+
+    <div id="quizContainer"></div>
+
+    <div id="scoreBanner" class="score-banner"></div>
+
+    <div class="d-flex gap-2 flex-wrap mt-3 no-print">
+      <button class="btn btn-primary btn-lg" onclick="gradeQuiz()">Calificar</button>
+      <button class="btn btn-outline-secondary" onclick="resetQuiz()">Reintentar (mismas preguntas)</button>
+      <button class="btn btn-outline-info" onclick="regenerateQuiz()">🔀 Nuevas preguntas</button>
+      <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      <a class="btn btn-outline-primary ms-auto" href="examen.html">Ir al examen parcial →</a>
+    </div>
+
+    <div class="callout warning mt-4 no-print">
+      <div class="fw-semibold">Instrucciones de entrega (evidencia de la Actividad en clase)</div>
+      <ol class="small-muted mb-0">
+        <li>Escribe tu nombre en la casilla de arriba.</li>
+        <li>Resuelve el modo <strong>Simulacro</strong>, pulsa <strong>Calificar</strong> y revisa la retroalimentación.</li>
+        <li>Pulsa <strong>Exportar a PDF</strong> y guarda el archivo como <code>QuizS9_TuNombre.pdf</code>.</li>
+        <li>Súbelo al aula virtual junto con el PDF del <a href="challenge.html">Challenge</a>.</li>
+      </ol>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Quiz de repaso — Semana 9 · Repaso integrado S1–S8 (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script>
+    // ===== Banco de preguntas de la Semana 9 (repaso integrado S1–S8) =====
+    // level: 'presaberes' (repaso rápido) | 'final' (simulacro) | 'ambas'
+    var QUESTION_BANK = [
+      // ---------- Solo repaso rápido ----------
+      {
+        level: 'presaberes',
+        pregunta: '(S1) ¿Qué tipo de dato usarías para guardar el nombre de una institución?',
+        opciones: [{ v: 'a', t: 'String' }, { v: 'b', t: 'int' }, { v: 'c', t: 'boolean' }],
+        correcta: 'a',
+        fbOk: 'Correcto: String guarda texto.',
+        fbKo: 'Es String. int guarda números enteros y boolean guarda verdadero/falso.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: '(S1) ¿Qué hace la palabra final en "final int MAXIMO = 30;"?',
+        opciones: [{ v: 'a', t: 'Convierte la variable en una constante que ya no puede cambiar' }, { v: 'b', t: 'Borra la variable al terminar' }, { v: 'c', t: 'Hace que la variable sea más rápida' }],
+        correcta: 'a',
+        fbOk: 'Correcto: final indica que ese valor no volverá a cambiar.',
+        fbKo: 'Convierte la variable en constante: su valor ya no se puede modificar después.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: '(S2) ¿Cuál es la diferencia entre una clase y un objeto?',
+        opciones: [{ v: 'a', t: 'La clase es el molde; el objeto es una pieza concreta hecha con ese molde' }, { v: 'b', t: 'Son exactamente lo mismo' }, { v: 'c', t: 'El objeto es el molde y la clase la pieza' }],
+        correcta: 'a',
+        fbOk: 'Correcto: la clase define cómo son las cosas; el objeto es una de esas cosas ya creada.',
+        fbKo: 'La clase es el molde (define atributos y métodos) y el objeto es una instancia concreta creada con new.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: '(S3) ¿Qué es un commit?',
+        opciones: [{ v: 'a', t: 'Una foto del proyecto en un momento dado, con un mensaje que la describe' }, { v: 'b', t: 'Una copia del proyecto en la nube' }, { v: 'c', t: 'Un respaldo automático diario' }],
+        correcta: 'a',
+        fbOk: 'Correcto: cada commit registra un estado del proyecto con su mensaje.',
+        fbKo: 'Es una foto del proyecto con un mensaje. Subirlo a la nube es otra acción distinta: el push.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: '(S4) ¿Para qué sirve trabajar en una rama distinta de main?',
+        opciones: [{ v: 'a', t: 'Para avanzar sin romper la versión estable del proyecto' }, { v: 'b', t: 'Para que el proyecto pese menos' }, { v: 'c', t: 'Para ocultar el código a los demás' }],
+        correcta: 'a',
+        fbOk: 'Correcto: la rama aísla tu trabajo hasta que esté listo para integrarse.',
+        fbKo: 'Para trabajar sin afectar la versión estable (main) hasta que el cambio esté probado.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: '(S5) En el patrón MVC, ¿qué letra corresponde a lo que el usuario ve en pantalla?',
+        opciones: [{ v: 'a', t: 'La V, de Vista' }, { v: 'b', t: 'La M, de Modelo' }, { v: 'c', t: 'La C, de Controlador' }],
+        correcta: 'a',
+        fbOk: 'Correcto: la Vista es la parte visible para el usuario.',
+        fbKo: 'Es la V (Vista). El Modelo son los datos y el Controlador coordina el flujo.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: '(S6) ¿Cuál es la idea central de la arquitectura en capas?',
+        opciones: [{ v: 'a', t: 'Que cada parte tenga una responsabilidad clara y no invada la de otra' }, { v: 'b', t: 'Que el código se escriba en un solo archivo grande' }, { v: 'c', t: 'Que la aplicación sea más rápida' }],
+        correcta: 'a',
+        fbOk: 'Correcto: separar responsabilidades hace el proyecto más fácil de entender y mantener.',
+        fbKo: 'Separar responsabilidades: cada capa hace una cosa y no se mete en el trabajo de las otras.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: '(S7) ¿Qué herramienta usamos para generar el esqueleto de un proyecto Spring Boot?',
+        opciones: [{ v: 'a', t: 'Spring Initializr (start.spring.io)' }, { v: 'b', t: 'GitHub Desktop' }, { v: 'c', t: 'Postman' }],
+        correcta: 'a',
+        fbOk: 'Correcto: Initializr genera el proyecto con los parámetros que elijas.',
+        fbKo: 'Es Spring Initializr. GitHub Desktop maneja el repositorio y Postman prueba endpoints.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: '(S7) ¿Qué significa ver "Started ... Application in 2.3 seconds" en la terminal?',
+        opciones: [{ v: 'a', t: 'Que el servidor arrancó correctamente' }, { v: 'b', t: 'Que hubo un error de compilación' }, { v: 'c', t: 'Que el proyecto se subió a internet' }],
+        correcta: 'a',
+        fbOk: 'Correcto: es la línea que confirma que la aplicación está corriendo.',
+        fbKo: 'Que el servidor arrancó bien. Nada se sube a internet: la aplicación corre solo en tu computadora.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: '(S8) ¿Qué anotación marca una clase que responde a peticiones web con datos?',
+        opciones: [{ v: 'a', t: '@RestController' }, { v: 'b', t: '@Service' }, { v: 'c', t: '@SpringBootApplication' }],
+        correcta: 'a',
+        fbOk: 'Correcto: @RestController recibe peticiones y devuelve datos.',
+        fbKo: 'Es @RestController. @Service marca la capa de negocio y @SpringBootApplication enciende el proyecto.'
+      },
+
+      // ---------- Ambas ----------
+      {
+        level: 'ambas',
+        pregunta: '(S1) ¿Qué imprime este código?  int a = 7; int b = 2; System.out.println(a / b);',
+        opciones: [{ v: 'a', t: '3' }, { v: 'b', t: '3.5' }, { v: 'c', t: '4' }],
+        correcta: 'a',
+        fbOk: 'Correcto: al dividir dos int, Java descarta la parte decimal.',
+        fbKo: 'Imprime 3. La división entre dos enteros da un entero: la parte decimal se descarta (no se redondea).'
+      },
+      {
+        level: 'ambas',
+        pregunta: '(S2) ¿Cómo se compara correctamente si dos textos son iguales en Java?',
+        opciones: [{ v: 'a', t: 'nombre.equals("Ana")' }, { v: 'b', t: 'nombre == "Ana"' }, { v: 'c', t: 'nombre = "Ana"' }],
+        correcta: 'a',
+        fbOk: 'Correcto: para textos se usa .equals().',
+        fbKo: 'Se usa .equals(). El == compara referencias y el = asigna un valor, no compara.'
+      },
+      {
+        level: 'ambas',
+        pregunta: '(S3–S4) Hiciste commit de tus cambios, pero tu compañero no los ve en GitHub. ¿Qué falta?',
+        opciones: [{ v: 'a', t: 'Hacer push' }, { v: 'b', t: 'Reiniciar la computadora' }, { v: 'c', t: 'Volver a clonar el repositorio' }],
+        correcta: 'a',
+        fbOk: 'Correcto: el commit guarda localmente; el push lo envía a GitHub.',
+        fbKo: 'Falta el push. El commit guarda en tu máquina; hasta que no haces push, GitHub no tiene nada nuevo.'
+      },
+      {
+        level: 'ambas',
+        pregunta: '(S5–S6) El formulario de una página calcula por su cuenta si un horario está disponible. ¿Qué problema hay?',
+        opciones: [{ v: 'a', t: 'Se está saltando capas: esa regla le corresponde a la capa de negocio' }, { v: 'b', t: 'Ninguno, es lo correcto' }, { v: 'c', t: 'Que el formulario debería guardar también en la base de datos' }],
+        correcta: 'a',
+        fbOk: 'Correcto: la Vista muestra; las reglas se deciden en el Servicio.',
+        fbKo: 'Es el antipatrón de saltarse capas: la Vista no debe decidir reglas de negocio, eso le toca al Servicio.'
+      },
+      {
+        level: 'ambas',
+        pregunta: '(S8) ¿Qué anotación conecta la URL /api/saludo con un método Java?',
+        opciones: [{ v: 'a', t: '@GetMapping("/api/saludo")' }, { v: 'b', t: '@RequestParam("/api/saludo")' }, { v: 'c', t: '@Service("/api/saludo")' }],
+        correcta: 'a',
+        fbOk: 'Correcto: @GetMapping define la ruta para peticiones GET.',
+        fbKo: 'Es @GetMapping. @RequestParam lee parámetros de la URL y @Service marca la capa de negocio.'
+      },
+      {
+        level: 'ambas',
+        pregunta: '(S9) ¿Dónde debe guardarse una clase para que Spring la encuentre?',
+        opciones: [{ v: 'a', t: 'Dentro del paquete de la clase ...Application, o en una subcarpeta de ese paquete' }, { v: 'b', t: 'En cualquier carpeta del proyecto, da igual' }, { v: 'c', t: 'Siempre en src/main/resources' }],
+        correcta: 'a',
+        fbOk: 'Correcto: Spring escanea el paquete base y todo lo que cuelga de él.',
+        fbKo: 'Dentro del paquete base (el de tu ...Application.java) o en subcarpetas suyas. Fuera de ahí, Spring no la registra.'
+      },
+      {
+        level: 'ambas',
+        pregunta: '(S9) La primera línea de un archivo Java dice "package gt.edu.url.proyecto.controller;". ¿Dónde está guardado ese archivo?',
+        opciones: [{ v: 'a', t: 'En src/main/java/gt/edu/url/proyecto/controller/' }, { v: 'b', t: 'En src/main/resources/controller/' }, { v: 'c', t: 'En la raíz del proyecto' }],
+        correcta: 'a',
+        fbOk: 'Correcto: cada punto del paquete es una carpeta dentro de src/main/java.',
+        fbKo: 'En src/main/java/gt/edu/url/proyecto/controller/. Cada punto del package equivale a una carpeta.'
+      },
+      {
+        level: 'ambas',
+        pregunta: '(S8) ¿Dónde se coloca un archivo index.html para que Spring Boot lo muestre en localhost:8080?',
+        opciones: [{ v: 'a', t: 'src/main/resources/static/' }, { v: 'b', t: 'src/main/java/' }, { v: 'c', t: 'En la carpeta target/' }],
+        correcta: 'a',
+        fbOk: 'Correcto: todo lo de static/ se sirve tal cual, sin configuración extra.',
+        fbKo: 'En src/main/resources/static/. La carpeta java/ es para código y target/ se regenera sola.'
+      },
+      {
+        level: 'ambas',
+        pregunta: '(S7) ¿Para qué sirve el archivo application.properties?',
+        opciones: [{ v: 'a', t: 'Para configurar la aplicación con pares clave=valor, como el puerto' }, { v: 'b', t: 'Para escribir el código de los controladores' }, { v: 'c', t: 'Para listar las dependencias del proyecto' }],
+        correcta: 'a',
+        fbOk: 'Correcto: ahí van configuraciones como server.port o spring.application.name.',
+        fbKo: 'Para configuración (clave=valor). Las dependencias se declaran en pom.xml y el código va en archivos .java.'
+      },
+      {
+        level: 'ambas',
+        pregunta: '(S6) En la cadena de capas, ¿a quién debe pedirle datos un controlador?',
+        opciones: [{ v: 'a', t: 'Al servicio' }, { v: 'b', t: 'Directamente al repositorio, para ahorrar pasos' }, { v: 'c', t: 'A la vista' }],
+        correcta: 'a',
+        fbOk: 'Correcto: Controlador → Servicio → Repositorio, sin saltarse eslabones.',
+        fbKo: 'Al servicio. Ir directo al repositorio es justamente el antipatrón de saltarse capas.'
+      },
+
+      // ---------- Solo simulacro ----------
+      {
+        level: 'final',
+        pregunta: 'Tu endpoint compila sin errores y el proyecto arranca bien, pero /api/saludo responde 404. ¿Cuál es la causa más probable?',
+        opciones: [{ v: 'a', t: 'La clase del controlador quedó fuera del paquete base y Spring no la registró' }, { v: 'b', t: 'El JDK no está instalado' }, { v: 'c', t: 'Falta la dependencia de base de datos' }],
+        correcta: 'a',
+        fbOk: 'Correcto: es el error silencioso más común. Compila, pero Spring nunca ve la clase.',
+        fbKo: 'La clase quedó fuera del paquete base (o la URL no coincide letra por letra). Si el JDK faltara, el proyecto no arrancaría.'
+      },
+      {
+        level: 'final',
+        pregunta: '¿Qué import necesitas para poder escribir @RestController?',
+        opciones: [{ v: 'a', t: 'import org.springframework.web.bind.annotation.RestController;' }, { v: 'b', t: 'import java.util.RestController;' }, { v: 'c', t: 'Ninguno, viene incluido en Java' }],
+        correcta: 'a',
+        fbOk: 'Correcto. Sin ese import aparece "cannot find symbol: RestController".',
+        fbKo: 'Es org.springframework.web.bind.annotation.RestController. No pertenece a Java, sino a Spring, así que siempre requiere import.'
+      },
+      {
+        level: 'final',
+        pregunta: '¿Cuál de estos archivos NO lleva línea package?',
+        opciones: [{ v: 'a', t: 'src/main/resources/static/index.html' }, { v: 'b', t: 'BienvenidaController.java' }, { v: 'c', t: 'Visitante.java' }],
+        correcta: 'a',
+        fbOk: 'Correcto: package es exclusivo de los archivos .java.',
+        fbKo: 'El index.html. La línea package solo existe en archivos Java, no en HTML, CSS ni properties.'
+      },
+      {
+        level: 'final',
+        pregunta: 'Una clase Visitante solo tiene atributos, constructor y getters, sin ninguna anotación. ¿Es un error?',
+        opciones: [{ v: 'a', t: 'No: es la capa de modelo, datos puros sin lógica' }, { v: 'b', t: 'Sí: toda clase necesita una anotación de Spring' }, { v: 'c', t: 'Sí: le falta @RestController' }],
+        correcta: 'a',
+        fbOk: 'Correcto: el modelo no necesita anotaciones para cumplir su función.',
+        fbKo: 'No es error. El modelo son datos puros; las anotaciones marcan piezas que Spring debe administrar, y un modelo simple no lo requiere.'
+      },
+      {
+        level: 'final',
+        pregunta: '¿Qué hace @RequestParam(defaultValue = "visitante") String nombre?',
+        opciones: [{ v: 'a', t: 'Lee ?nombre= de la URL y usa "visitante" si no viene' }, { v: 'b', t: 'Guarda "visitante" en la base de datos' }, { v: 'c', t: 'Obliga a que la URL siempre traiga el parámetro' }],
+        correcta: 'a',
+        fbOk: 'Correcto: el defaultValue evita que la petición falle si el parámetro no llega.',
+        fbKo: 'Lee el parámetro de la URL y usa el valor por defecto si no viene. Precisamente evita obligar a enviarlo.'
+      },
+      {
+        level: 'final',
+        pregunta: 'En el formulario de la Semana 8, ¿qué hace e.preventDefault()?',
+        opciones: [{ v: 'a', t: 'Evita que la página se recargue al enviar el formulario' }, { v: 'b', t: 'Envía los datos al servidor' }, { v: 'c', t: 'Valida que el campo no esté vacío' }],
+        correcta: 'a',
+        fbOk: 'Correcto: sin él, el navegador recarga la página y se pierde la respuesta.',
+        fbKo: 'Evita la recarga de la página. Quien envía los datos es fetch(), y la validación la hace el atributo required.'
+      },
+      {
+        level: 'final',
+        pregunta: 'Tu repositorio en GitHub pesa cientos de megabytes. ¿Qué es lo más probable?',
+        opciones: [{ v: 'a', t: 'Se subió la carpeta target/ por falta de .gitignore' }, { v: 'b', t: 'Tienes demasiados commits' }, { v: 'c', t: 'El README es muy largo' }],
+        correcta: 'a',
+        fbOk: 'Correcto: target/ contiene archivos compilados que se regeneran solos y no deben subirse.',
+        fbKo: 'Se subió target/. Esa carpeta se regenera al compilar, por eso el .gitignore debe excluirla.'
+      },
+      {
+        level: 'final',
+        pregunta: 'El controlador recibe el servicio en su constructor y nunca escribes new BienvenidaService(). ¿Por qué funciona?',
+        opciones: [{ v: 'a', t: 'Porque la clase tiene @Service y Spring la crea y se la entrega al controlador' }, { v: 'b', t: 'Porque Java crea los objetos automáticamente' }, { v: 'c', t: 'Porque el servicio es estático' }],
+        correcta: 'a',
+        fbOk: 'Correcto: Spring administra esas piezas y las entrega a quien las pida en su constructor.',
+        fbKo: 'Porque @Service le indica a Spring que administre esa clase y se la entregue al controlador. Java por sí solo no crea objetos.'
+      },
+      {
+        level: 'final',
+        pregunta: 'Visitas /api/Bienvenida pero tu método dice @GetMapping("/api/bienvenida"). ¿Qué pasa?',
+        opciones: [{ v: 'a', t: 'Responde 404: las rutas distinguen mayúsculas de minúsculas' }, { v: 'b', t: 'Funciona igual, la coincidencia no distingue mayúsculas' }, { v: 'c', t: 'El proyecto deja de compilar' }],
+        correcta: 'a',
+        fbOk: 'Correcto: la coincidencia es exacta, carácter por carácter.',
+        fbKo: 'Responde 404. La ruta debe coincidir exactamente, incluidas mayúsculas y minúsculas.'
+      },
+      {
+        level: 'final',
+        pregunta: '¿Cuál de estas afirmaciones sobre la Entrega Parcial 2 es correcta?',
+        opciones: [{ v: 'a', t: 'Debe incluir la app Spring Boot base con estructura MVC funcional publicada en GitHub' }, { v: 'b', t: 'Debe incluir la base de datos ya conectada' }, { v: 'c', t: 'Debe estar desplegada en internet' }],
+        correcta: 'a',
+        fbOk: 'Correcto: base con MVC funcional en GitHub. Base de datos y despliegue llegan en las Semanas 12 y 14.',
+        fbKo: 'La app base con MVC funcional en GitHub. La base de datos (Semana 12) y el despliegue (Semana 14) todavía no se evalúan.'
+      },
+      {
+        level: 'final',
+        pregunta: '¿Qué dependencia del pom.xml permite escribir controladores web?',
+        opciones: [{ v: 'a', t: 'spring-boot-starter-web' }, { v: 'b', t: 'spring-boot-starter-data-jpa' }, { v: 'c', t: 'spring-boot-starter-security' }],
+        correcta: 'a',
+        fbOk: 'Correcto: incluye Tomcat embebido y el soporte para @RestController.',
+        fbKo: 'Es spring-boot-starter-web. Las otras dos son para base de datos y seguridad, temas de semanas posteriores.'
+      },
+      {
+        level: 'final',
+        pregunta: 'Un compañero te pide revisar su proyecto y su README solo dice "proyecto de la clase". Como evaluador, ¿cuál es la observación más útil?',
+        opciones: [{ v: 'a', t: 'Sugerir que agregue cómo ejecutar el proyecto y qué endpoints tiene' }, { v: 'b', t: 'Escribir que el README está mal hecho' }, { v: 'c', t: 'No comentar nada, para no incomodarlo' }],
+        correcta: 'a',
+        fbOk: 'Correcto: una observación es útil cuando dice qué falta y cómo mejorarlo.',
+        fbKo: 'Sugerir qué agregar concretamente. Decir "está mal" no ayuda, y callar impide que mejore antes de la entrega.'
+      }
+    ];
+    var QUIZ_CONFIG = { presaberesCount: 10, finalCount: 15 };
+  </script>
+  <script src="quiz.js"></script>
+  <script>
+    // Ajustes de esta semana sobre el motor genérico (quiz.js se usa sin modificar):
+    //
+    // 1. Orden de las opciones al azar. En el banco, la opción correcta siempre está
+    //    escrita de primera ('a') para que sea fácil de revisar y mantener; si se
+    //    mostraran en ese orden, la respuesta correcta sería siempre la primera y el
+    //    simulacro se podría "aprobar" sin leer. Barajamos las opciones antes de cada
+    //    render: el valor .v de cada opción no cambia, así que la calificación sigue
+    //    siendo correcta, solo cambia la posición en pantalla.
+    // 2. Etiquetas propias: el motor genérico dice "Presaberes"/"Final de clase";
+    //    aquí los modos se llaman "Repaso rápido" y "Simulacro del examen parcial".
+    function barajarOpciones() {
+      (window.QUESTION_BANK || []).forEach(function (q) {
+        for (var i = q.opciones.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var t = q.opciones[i]; q.opciones[i] = q.opciones[j]; q.opciones[j] = t;
+        }
+      });
+    }
+
+    var _renderBase = window.renderQuiz;
+    window.renderQuiz = function () {
+      barajarOpciones();
+      _renderBase();
+      var type = document.getElementById('quizType').value;
+      var n = document.querySelectorAll('.quiz-q').length;
+      var label = document.getElementById('quizTypeLabel');
+      if (label) {
+        label.textContent = type === 'presaberes'
+          ? 'Repaso rápido · ' + n + ' preguntas · no cuenta para nota'
+          : 'Simulacro del examen parcial · ' + n + ' preguntas · evidencia de la Actividad en clase';
+      }
+    };
+    renderQuiz();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

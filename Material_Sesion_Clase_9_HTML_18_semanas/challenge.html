@@ -1,0 +1,801 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Challenge — Repaso integrado (Semana 9)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 9 — Hito Parcial</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link active" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="examen.html">Examen</a></li>
+          <li class="nav-item"><a class="nav-link" href="evaluacion_pares.html">Pares</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Challenge · Semana 9 · Escuela de Música Clave de Sol</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Dos retos de repaso: clasificar y ordenar</h1>
+          <div class="small-muted">Dos pestañas: <strong>"Clasifica las piezas"</strong> (¿a qué unidad de las 8 semanas pertenece cada concepto?) y <strong>"Del cero al hito"</strong> (ordena el ciclo completo, desde crear el repositorio hasta el endpoint funcionando en GitHub). Ambas cuentan como evidencia de la Actividad en clase.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="exportChallengePdf()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <ul class="nav nav-tabs mb-4 no-print" id="challengeTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="tab-clasifica-btn" data-bs-toggle="tab" data-bs-target="#tab-clasifica" type="button" role="tab">🧩 Clasifica las piezas</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-secuencia-btn" data-bs-toggle="tab" data-bs-target="#tab-secuencia" type="button" role="tab">🪜 Del cero al hito</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="challengeTabsContent">
+
+      <!-- ============ PESTAÑA 1: CLASIFICACIÓN ============ -->
+      <div class="tab-pane fade show active" id="tab-clasifica" role="tabpanel">
+        <div class="row g-3">
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="h5 section-title">Cómo jugar</h2>
+                <ol class="small mb-0">
+                  <li>Elige un nivel: <strong>Fácil → Medio → Difícil</strong>.</li>
+                  <li>La Escuela de Música Clave de Sol quiere ordenar todo lo aprendido en el curso por unidad.</li>
+                  <li>Arrastra cada pieza a su caja (o toca: primero la pieza, luego la caja).</li>
+                  <li>Cada caja acepta <strong>varias piezas</strong>.</li>
+                  <li>Pulsa <strong>Verificar</strong> para tu puntaje.</li>
+                </ol>
+              </div>
+            </div>
+            <div class="callout warning mt-3">
+              <div class="fw-semibold">Ojo en Medio y Difícil</div>
+              <div class="small-muted">Aparecen piezas de <strong>semanas futuras</strong> (Thymeleaf, base de datos, despliegue, seguridad). No pertenecen a ninguna caja: <strong>déjalas en el banco</strong>. Reconocer lo que aún no toca también es parte del repaso.</div>
+            </div>
+            <div class="card mt-3">
+              <div class="card-body">
+                <h2 class="h6 section-title">Tu progreso</h2>
+                <div class="small">
+                  <div>🟡 Fácil: <span id="progc-facil">sin intentar</span></div>
+                  <div>🟠 Medio: <span id="progc-medio">sin intentar</span></div>
+                  <div>🔴 Difícil: <span id="progc-dificil">sin intentar</span></div>
+                </div>
+                <label class="form-label fw-semibold mt-3 mb-1" for="studentName">Nombre (para el PDF)</label>
+                <input id="studentName" class="form-control form-control-sm" type="text" placeholder="Nombre y apellido" />
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-8">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3 no-print">
+                  <div class="btn-group" role="group" aria-label="Nivel">
+                    <button class="btn btn-outline-primary levelc-btn active" data-level="facil" onclick="loadLevelC('facil')">🟡 Fácil</button>
+                    <button class="btn btn-outline-primary levelc-btn" data-level="medio" onclick="loadLevelC('medio')">🟠 Medio</button>
+                    <button class="btn btn-outline-primary levelc-btn" data-level="dificil" onclick="loadLevelC('dificil')">🔴 Difícil</button>
+                  </div>
+                  <span class="badge text-bg-secondary" id="attemptsBadgeC">Verificaciones: 0</span>
+                </div>
+
+                <div class="callout mb-3">
+                  <div class="fw-semibold">Misión — <span id="levelNameC"></span></div>
+                  <div class="small-muted" id="levelMissionC"></div>
+                </div>
+
+                <h3 class="h6 fw-bold">Banco de piezas</h3>
+                <div id="poolC" class="dd-pool mb-3" aria-label="Banco de piezas"></div>
+
+                <h3 class="h6 fw-bold">Cajas por unidad</h3>
+                <div id="boardC" class="mvc-board mb-3"></div>
+
+                <div id="resultBannerC" class="score-banner"></div>
+
+                <div class="d-flex gap-2 flex-wrap no-print mt-3">
+                  <button class="btn btn-primary" onclick="verifyC()">✔ Verificar</button>
+                  <button class="btn btn-outline-secondary" onclick="loadLevelC(currentLevelC)">↺ Reiniciar nivel</button>
+                  <button class="btn btn-outline-warning" id="solutionBtnC" onclick="showSolutionC()" disabled>💡 Ver solución (tras 3 verificaciones)</button>
+                </div>
+
+                <details class="mt-3">
+                  <summary class="fw-semibold">¿Qué deberías concluir de este nivel?</summary>
+                  <pre class="mt-2" style="white-space: pre-wrap;"><code id="expectedOutputC"></code></pre>
+                </details>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ PESTAÑA 2: SECUENCIA ============ -->
+      <div class="tab-pane fade" id="tab-secuencia" role="tabpanel">
+        <div class="row g-3">
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="h5 section-title">Cómo jugar</h2>
+                <ol class="small mb-0">
+                  <li>Elige un nivel y lee la misión.</li>
+                  <li>Arrastra los pasos a las líneas numeradas, en el orden correcto.</li>
+                  <li>Cada suelta te avisa si el paso va antes, después, o si no aplica.</li>
+                  <li>Pulsa <strong>Verificar</strong> para tu puntaje.</li>
+                </ol>
+              </div>
+            </div>
+            <div class="callout mt-3">
+              <div class="fw-semibold">Por qué importa el orden</div>
+              <div class="small-muted">Este es exactamente el recorrido que hiciste entre las Semanas 3 y 8, y el que tu proyecto debe reflejar para la Entrega Parcial 2. Si lo ordenas sin dudar, tienes claro el flujo completo del trabajo.</div>
+            </div>
+            <div class="card mt-3">
+              <div class="card-body">
+                <h2 class="h6 section-title">Tu progreso</h2>
+                <div class="small">
+                  <div>🟡 Fácil: <span id="progs-facil">sin intentar</span></div>
+                  <div>🟠 Medio: <span id="progs-medio">sin intentar</span></div>
+                  <div>🔴 Difícil: <span id="progs-dificil">sin intentar</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-8">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3 no-print">
+                  <div class="btn-group" role="group" aria-label="Nivel">
+                    <button class="btn btn-outline-primary levels-btn active" data-level="facil" onclick="loadLevelS('facil')">🟡 Fácil</button>
+                    <button class="btn btn-outline-primary levels-btn" data-level="medio" onclick="loadLevelS('medio')">🟠 Medio</button>
+                    <button class="btn btn-outline-primary levels-btn" data-level="dificil" onclick="loadLevelS('dificil')">🔴 Difícil</button>
+                  </div>
+                  <span class="badge text-bg-secondary" id="attemptsBadgeS">Verificaciones: 0</span>
+                </div>
+
+                <div class="callout mb-3">
+                  <div class="fw-semibold">Misión — <span id="levelNameS"></span></div>
+                  <div class="small-muted" id="levelMissionS"></div>
+                </div>
+
+                <h3 class="h6 fw-bold">Banco de pasos</h3>
+                <div id="poolS" class="dd-pool mb-3" aria-label="Banco de pasos"></div>
+
+                <h3 class="h6 fw-bold">Tu secuencia (pasos 1 a <span id="lineCountS"></span>)</h3>
+                <div id="targetS" class="dd-target mb-3" aria-label="Secuencia a armar"></div>
+
+                <div id="resultBannerS" class="score-banner"></div>
+
+                <div class="d-flex gap-2 flex-wrap no-print mt-3">
+                  <button class="btn btn-primary" onclick="verifyS()">✔ Verificar</button>
+                  <button class="btn btn-outline-secondary" onclick="loadLevelS(currentLevelS)">↺ Reiniciar nivel</button>
+                  <button class="btn btn-outline-warning" id="solutionBtnS" onclick="showSolutionS()" disabled>💡 Ver solución (tras 3 verificaciones)</button>
+                  <button class="btn btn-outline-dark btn-export ms-auto" onclick="exportChallengePdf()">Exportar a PDF</button>
+                </div>
+
+                <details class="mt-3">
+                  <summary class="fw-semibold">¿Qué deberías ver al terminar esta secuencia?</summary>
+                  <pre class="mt-2" style="white-space: pre-wrap;"><code id="expectedOutputS"></code></pre>
+                  <div class="small-muted">Cuando logres 100%, aplica exactamente esta secuencia a tu proyecto real en <a href="proyecto.html">Proyecto</a>.</div>
+                </details>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Challenge — Semana 9 · Repaso integrado, Escuela de Música Clave de Sol (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="toast.js"></script>
+  <script>
+    // ============================================================
+    // Utilidades compartidas por las dos pestañas
+    // ============================================================
+    function shuffle(arr) {
+      var a = arr.slice();
+      for (var i = a.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = a[i]; a[i] = a[j]; a[j] = t;
+      }
+      return a;
+    }
+
+    function basePiece(text) {
+      var el = document.createElement('div');
+      el.className = 'dd-piece';
+      el.textContent = text;
+      el.setAttribute('draggable', 'true');
+      el.dataset.text = text;
+      el.addEventListener('dragstart', function (e) {
+        el.classList.add('dragging');
+        e.dataTransfer.setData('text/plain', '');
+        window._dragged = el;
+      });
+      el.addEventListener('dragend', function () {
+        el.classList.remove('dragging');
+        window._dragged = null;
+      });
+      return el;
+    }
+
+    // ============================================================
+    // PESTAÑA 1 — CLASIFICACIÓN (sufijo C)
+    // ============================================================
+    var ZONE_LABELS_C = {
+      java: '☕ Java (S1–S2)',
+      git: '🌿 Git y GitHub (S3–S4)',
+      arquitectura: '🏛️ MVC y capas (S5–S6)',
+      spring: '🍃 Spring Boot (S7–S8)'
+    };
+
+    var ZONE_TIPS_C = {
+      java: 'Correcto: es parte del lenguaje Java en sí.',
+      git: 'Correcto: es parte del control de versiones.',
+      arquitectura: 'Correcto: es una idea de diseño, no una herramienta concreta.',
+      spring: 'Correcto: es una pieza específica del framework Spring Boot.'
+    };
+
+    var LEVELS_C = {
+      facil: {
+        name: 'Fácil — Tres unidades básicas',
+        mission: 'Clasifica 6 piezas entre Java, Git/GitHub y Spring Boot. Todas pertenecen a alguna caja.',
+        zones: ['java', 'git', 'spring'],
+        items: [
+          { text: 'int, double, boolean y String', zone: 'java' },
+          { text: 'El ciclo for para repetir instrucciones', zone: 'java' },
+          { text: 'git commit -m "Agrega el controlador"', zone: 'git' },
+          { text: 'Trabajar en la rama development', zone: 'git' },
+          { text: '@RestController', zone: 'spring' },
+          { text: '@GetMapping("/api/clases")', zone: 'spring' }
+        ],
+        distractors: [],
+        output: 'Java es el lenguaje; Git/GitHub es cómo guardas y compartes el trabajo; Spring Boot es el framework que convierte tu código en una aplicación web.'
+      },
+      medio: {
+        name: 'Medio — Entra la arquitectura (y las trampas)',
+        mission: 'Ahora son 4 cajas y aparecen 2 piezas de semanas futuras. Esas se quedan en el banco.',
+        zones: ['java', 'git', 'arquitectura', 'spring'],
+        items: [
+          { text: 'Crear un objeto con new Alumno("Ana")', zone: 'java' },
+          { text: 'Usar .equals() para comparar dos textos', zone: 'java' },
+          { text: 'Un Pull Request para que revisen tus cambios', zone: 'git' },
+          { text: 'El archivo .gitignore', zone: 'git' },
+          { text: 'Separar Vista, Controlador y Servicio', zone: 'arquitectura' },
+          { text: 'El antipatrón de saltarse capas', zone: 'arquitectura' },
+          { text: 'La carpeta static/ donde vive el formulario', zone: 'spring' },
+          { text: 'spring-boot-starter-web en el pom.xml', zone: 'spring' }
+        ],
+        distractors: [
+          { text: 'Una plantilla Thymeleaf con th:each', zone: 'trap' },
+          { text: '@Entity para guardar registros en una base de datos', zone: 'trap' }
+        ],
+        output: 'Las dos piezas del banco (Thymeleaf y @Entity) son de las Semanas 10 y 12: todavía no forman parte de tu proyecto, y por eso tampoco entran al examen parcial.'
+      },
+      dificil: {
+        name: 'Difícil — Las 4 unidades completas',
+        mission: 'Diez piezas en 4 cajas, con 3 trampas de semanas futuras. Lee con cuidado: algunas parecen de una unidad y son de otra.',
+        zones: ['java', 'git', 'arquitectura', 'spring'],
+        items: [
+          { text: 'final int CUPO_MAXIMO = 25;', zone: 'java' },
+          { text: 'Un método que devuelve un String', zone: 'java' },
+          { text: 'git push origin development', zone: 'git' },
+          { text: 'Resolver un conflicto al combinar dos ramas', zone: 'git' },
+          { text: 'La clase Alumno: solo atributos, constructor y getters', zone: 'arquitectura' },
+          { text: 'La regla "un alumno no puede inscribirse dos veces" vive en el Servicio', zone: 'arquitectura' },
+          { text: '@RequestParam(defaultValue = "visitante")', zone: 'spring' },
+          { text: 'La línea "Started ... Application in 2.3 seconds"', zone: 'spring' },
+          { text: '@Service sobre la clase de la capa de negocio', zone: 'spring' },
+          { text: 'application.properties con server.port=8081', zone: 'spring' }
+        ],
+        distractors: [
+          { text: 'Desplegar la aplicación en Render para que esté en internet', zone: 'trap' },
+          { text: 'Configurar Spring Security para el inicio de sesión', zone: 'trap' },
+          { text: 'Escribir una consulta a la base de datos con JPA', zone: 'trap' }
+        ],
+        output: 'La clase Alumno se clasifica en MVC/capas porque su valor aquí es ser la capa de Modelo (datos puros). @Service, en cambio, es una anotación concreta de Spring Boot. Las 3 trampas corresponden a las Semanas 12, 13/15 y 14.'
+      }
+    };
+
+    var currentLevelC = 'facil';
+    var attemptsC = 0;
+    var progressC = { facil: null, medio: null, dificil: null };
+    var selectedC = null;
+
+    function makePieceC(text, zone) {
+      var el = basePiece(text);
+      el.dataset.zone = zone;
+      el.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (selectedC === el) {
+          el.classList.remove('selected');
+          selectedC = null;
+        } else {
+          if (selectedC) selectedC.classList.remove('selected');
+          selectedC = el;
+          el.classList.add('selected');
+        }
+      });
+      return el;
+    }
+
+    function feedbackC(piece, zoneKey) {
+      var pieceZone = piece.dataset.zone;
+      if (pieceZone === zoneKey) {
+        return { ok: true, type: 'ok', msg: '✓ ' + (ZONE_LABELS_C[zoneKey] || zoneKey) + '. ' + (ZONE_TIPS_C[zoneKey] || '') };
+      }
+      if (pieceZone === 'trap') {
+        return { ok: false, type: 'bad', msg: 'Esa pieza es de una semana futura (Thymeleaf, base de datos, despliegue o seguridad). Déjala en el banco.' };
+      }
+      return { ok: false, type: 'warn', msg: 'Esa pieza pertenece a ' + (ZONE_LABELS_C[pieceZone] || pieceZone) + ', no a ' + (ZONE_LABELS_C[zoneKey] || zoneKey) + '.' };
+    }
+
+    function placeInZoneC(piece, zoneEl, zoneKey) {
+      zoneEl.appendChild(piece);
+      piece.classList.remove('selected');
+      selectedC = null;
+      var fb = feedbackC(piece, zoneKey);
+      piece.classList.remove('correct-piece', 'incorrect-piece');
+      piece.classList.add(fb.ok ? 'correct-piece' : 'incorrect-piece');
+      showToast(fb.msg, fb.type);
+    }
+
+    function setupPoolC(zone) {
+      zone.addEventListener('dragover', function (e) { e.preventDefault(); });
+      zone.addEventListener('drop', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var piece = window._dragged;
+        if (!piece || !piece.dataset.zone) return;
+        piece.classList.remove('correct-piece', 'incorrect-piece');
+        zone.appendChild(piece);
+      });
+      zone.addEventListener('click', function (e) {
+        if (!selectedC || e.target !== zone) return;
+        selectedC.classList.remove('correct-piece', 'incorrect-piece', 'selected');
+        zone.appendChild(selectedC);
+        selectedC = null;
+      });
+    }
+
+    function setupZoneC(zoneEl, zoneKey) {
+      zoneEl.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        zoneEl.classList.add('over');
+      });
+      zoneEl.addEventListener('dragleave', function () { zoneEl.classList.remove('over'); });
+      zoneEl.addEventListener('drop', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        zoneEl.classList.remove('over');
+        var piece = window._dragged;
+        if (!piece || !piece.dataset.zone) return;
+        placeInZoneC(piece, zoneEl, zoneKey);
+      });
+      zoneEl.addEventListener('click', function () {
+        if (!selectedC) return;
+        placeInZoneC(selectedC, zoneEl, zoneKey);
+      });
+    }
+
+    function loadLevelC(key) {
+      currentLevelC = key;
+      attemptsC = 0;
+      selectedC = null;
+      document.getElementById('attemptsBadgeC').textContent = 'Verificaciones: 0';
+      document.getElementById('solutionBtnC').disabled = true;
+
+      var level = LEVELS_C[key];
+      document.getElementById('levelNameC').textContent = level.name;
+      document.getElementById('levelMissionC').textContent = level.mission;
+      document.getElementById('expectedOutputC').textContent = level.output;
+
+      document.querySelectorAll('.levelc-btn').forEach(function (b) {
+        b.classList.toggle('active', b.dataset.level === key);
+      });
+
+      var banner = document.getElementById('resultBannerC');
+      banner.className = 'score-banner';
+      banner.innerHTML = '';
+
+      var board = document.getElementById('boardC');
+      board.innerHTML = '';
+      level.zones.forEach(function (zoneKey) {
+        var zoneEl = document.createElement('div');
+        zoneEl.className = 'mvc-zone';
+        zoneEl.id = 'zonec-' + zoneKey;
+        var title = document.createElement('div');
+        title.className = 'mvc-zone-title';
+        title.textContent = ZONE_LABELS_C[zoneKey] || zoneKey;
+        zoneEl.appendChild(title);
+        setupZoneC(zoneEl, zoneKey);
+        board.appendChild(zoneEl);
+      });
+
+      var pool = document.getElementById('poolC');
+      pool.innerHTML = '';
+      var pieces = level.items.map(function (l) { return makePieceC(l.text, l.zone); })
+        .concat((level.distractors || []).map(function (d) { return makePieceC(d.text, d.zone); }));
+      shuffle(pieces).forEach(function (p) { pool.appendChild(p); });
+
+      showToast('Nivel "' + level.name + '" listo. Arrastra la primera pieza.', 'info', 3000);
+    }
+
+    function verifyC() {
+      attemptsC++;
+      document.getElementById('attemptsBadgeC').textContent = 'Verificaciones: ' + attemptsC;
+      if (attemptsC >= 3) document.getElementById('solutionBtnC').disabled = false;
+
+      var level = LEVELS_C[currentLevelC];
+      var pool = document.getElementById('poolC');
+      var allPieces = document.querySelectorAll('#boardC .dd-piece, #poolC .dd-piece');
+      var correct = 0;
+
+      allPieces.forEach(function (piece) {
+        var inPool = piece.parentElement === pool;
+        var zoneKey = inPool ? null : piece.parentElement.id.replace('zonec-', '');
+        var isCorrect = piece.dataset.zone === 'trap' ? inPool : (zoneKey === piece.dataset.zone);
+        piece.classList.remove('correct-piece', 'incorrect-piece');
+        if (!inPool || piece.dataset.zone === 'trap') {
+          piece.classList.add(isCorrect ? 'correct-piece' : 'incorrect-piece');
+        }
+        if (isCorrect) correct++;
+      });
+
+      var total = allPieces.length;
+      var pct = Math.round((correct / total) * 100);
+      progressC[currentLevelC] = { pct: pct, attempts: attemptsC };
+      document.getElementById('progc-' + currentLevelC).textContent =
+        pct + '% (' + attemptsC + ' verificación' + (attemptsC === 1 ? '' : 'es') + ')';
+
+      var banner = document.getElementById('resultBannerC');
+      var msg;
+      if (pct === 100) {
+        msg = '🎉 ¡Todas las piezas en su unidad correcta!';
+        showToast('¡Nivel completado! ' + level.name, 'ok', 5000);
+      } else if (pct >= 60) {
+        msg = 'Casi. Revisa las piezas en rojo — el toast de cada una te dice a qué unidad pertenece.';
+      } else {
+        msg = 'Pregúntate de cada pieza: ¿es del lenguaje Java, del control de versiones, una idea de diseño, o una pieza concreta de Spring Boot?';
+      }
+      banner.className = 'score-banner show alert ' + (pct === 100 ? 'alert-success' : pct >= 60 ? 'alert-warning' : 'alert-danger');
+      banner.innerHTML =
+        '<div class="h5 mb-1">' + level.name + ' — ' + correct + ' / ' + total + ' piezas (' + pct + '%)</div>' +
+        '<div>' + msg + '</div>' +
+        '<div class="small mt-1">Verificaciones: ' + attemptsC + ' · Fecha: ' + new Date().toLocaleString('es-GT') + '</div>';
+    }
+
+    function showSolutionC() {
+      var pool = document.getElementById('poolC');
+      document.querySelectorAll('#boardC .dd-piece').forEach(function (p) { pool.appendChild(p); });
+      pool.querySelectorAll('.dd-piece').forEach(function (piece) {
+        piece.classList.remove('correct-piece', 'incorrect-piece');
+        if (piece.dataset.zone !== 'trap') {
+          var target = document.getElementById('zonec-' + piece.dataset.zone);
+          if (target) {
+            target.appendChild(piece);
+            piece.classList.add('correct-piece');
+          }
+        }
+      });
+      var banner = document.getElementById('resultBannerC');
+      banner.className = 'score-banner show alert alert-warning';
+      banner.innerHTML = '<div class="fw-semibold">Solución mostrada (no cuenta como logro propio).</div><div class="small">Estúdiala, pulsa "Reiniciar nivel" e inténtalo de nuevo sin ayuda.</div>';
+      showToast('Solución mostrada — vuelve a intentarlo sin ayuda.', 'info');
+    }
+
+    // ============================================================
+    // PESTAÑA 2 — SECUENCIA (sufijo S)
+    // ============================================================
+    var CAT_LABELS_S = {
+      repo: 'preparar el repositorio',
+      generar: 'generar el proyecto',
+      rama: 'trabajar en una rama',
+      codigo: 'escribir el código',
+      vista: 'crear la vista (formulario)',
+      ejecutar: 'ejecutar y probar',
+      publicar: 'publicar en GitHub'
+    };
+
+    var CAT_TIPS_S = {
+      repo: 'Sin repositorio no hay dónde guardar el avance.',
+      generar: 'Ya tienes el esqueleto del proyecto.',
+      rama: 'Tu trabajo queda aislado de la versión estable.',
+      codigo: 'El proyecto ya hace algo propio.',
+      vista: 'Ahora una persona puede usarlo sin escribir URLs.',
+      ejecutar: 'Confirmaste que funciona antes de publicarlo.',
+      publicar: 'Tu avance ya es visible y evaluable.'
+    };
+
+    var LEVELS_S = {
+      facil: {
+        name: 'Fácil — El camino corto',
+        mission: 'La Escuela de Música Clave de Sol quiere su primera aplicación en línea. Ordena los 4 pasos mínimos.',
+        lines: [
+          { text: 'Crear el repositorio del proyecto en GitHub', cat: 'repo' },
+          { text: 'Generar el proyecto en start.spring.io con la dependencia Spring Web', cat: 'generar' },
+          { text: 'Ejecutar el proyecto y confirmar "Started ... Application"', cat: 'ejecutar' },
+          { text: 'Hacer commit y push del proyecto a GitHub', cat: 'publicar' }
+        ],
+        distractors: [],
+        output: 'Con estos 4 pasos ya tienes un proyecto que arranca y que existe en GitHub. Es exactamente lo que se hizo en la Semana 7.'
+      },
+      medio: {
+        name: 'Medio — Con rama y controlador',
+        mission: 'Ahora el proyecto debe responder algo propio y el trabajo debe ir en su rama. Hay 2 pasos que no tocan esta semana.',
+        lines: [
+          { text: 'Crear el repositorio del proyecto en GitHub', cat: 'repo' },
+          { text: 'Generar el proyecto en start.spring.io con la dependencia Spring Web', cat: 'generar' },
+          { text: 'Crear y cambiarse a la rama development', cat: 'rama' },
+          { text: 'Escribir la clase @RestController dentro del paquete base', cat: 'codigo' },
+          { text: 'Ejecutar el proyecto y probar la ruta en el navegador', cat: 'ejecutar' },
+          { text: 'Hacer commit y push de la rama a GitHub', cat: 'publicar' }
+        ],
+        distractors: [
+          { text: 'Conectar una base de datos para guardar los alumnos', cat: 'trap' },
+          { text: 'Crear una plantilla Thymeleaf para la lista de clases', cat: 'trap' }
+        ],
+        output: 'Este es el flujo de la Semana 8: el proyecto ya responde con contenido propio y el avance viaja en su rama. Guardar datos y usar Thymeleaf son Semanas 12 y 10.'
+      },
+      dificil: {
+        name: 'Difícil — El ciclo completo hasta el hito',
+        mission: 'Todo el recorrido que evalúa la Entrega Parcial 2, en 8 pasos. Hay 3 trampas de semanas futuras.',
+        lines: [
+          { text: 'Crear el repositorio del proyecto en GitHub', cat: 'repo' },
+          { text: 'Generar el proyecto en start.spring.io con la dependencia Spring Web', cat: 'generar' },
+          { text: 'Crear y cambiarse a la rama development', cat: 'rama' },
+          { text: 'Crear el paquete model y la clase de datos (por ejemplo, Alumno)', cat: 'codigo' },
+          { text: 'Crear el paquete service con la clase anotada @Service', cat: 'codigo' },
+          { text: 'Crear el paquete controller con la clase @RestController que llama al servicio', cat: 'codigo' },
+          { text: 'Crear static/index.html con el formulario que consulta el endpoint', cat: 'vista' },
+          { text: 'Ejecutar, probar en el navegador y hacer commit y push a GitHub', cat: 'publicar' }
+        ],
+        distractors: [
+          { text: 'Agregar @Entity y un repositorio JPA para guardar en base de datos', cat: 'trap' },
+          { text: 'Desplegar la aplicación en Render o Railway', cat: 'trap' },
+          { text: 'Agregar inicio de sesión con Spring Security', cat: 'trap' }
+        ],
+        output: 'Este es el contenido exacto de la Entrega Parcial 2: modelo, servicio, controlador y formulario, en su rama y publicados en GitHub. Base de datos, despliegue y seguridad son las Semanas 12, 14 y 13/15.'
+      }
+    };
+
+    var currentLevelS = 'facil';
+    var attemptsS = 0;
+    var progressS = { facil: null, medio: null, dificil: null };
+    var selectedS = null;
+
+    function makePieceS(text, cat, order) {
+      var el = basePiece(text);
+      el.dataset.cat = cat;
+      el.dataset.order = order === undefined ? '-1' : String(order);
+      el.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (selectedS === el) {
+          el.classList.remove('selected');
+          selectedS = null;
+        } else {
+          if (selectedS) selectedS.classList.remove('selected');
+          selectedS = el;
+          el.classList.add('selected');
+        }
+      });
+      return el;
+    }
+
+    function feedbackS(piece, slotIndex) {
+      var level = LEVELS_S[currentLevelS];
+      var expected = level.lines[slotIndex];
+
+      if (piece.dataset.text === expected.text) {
+        return { ok: true, type: 'ok', msg: '✓ Paso correcto (' + (CAT_LABELS_S[expected.cat] || expected.cat) + '). ' + (CAT_TIPS_S[expected.cat] || '') };
+      }
+      if (piece.dataset.cat === 'trap') {
+        return { ok: false, type: 'bad', msg: 'Ese paso pertenece a una semana futura (base de datos, despliegue o seguridad). Déjalo en el banco.' };
+      }
+
+      var order = parseInt(piece.dataset.order, 10);
+      var label = CAT_LABELS_S[piece.dataset.cat] || piece.dataset.cat;
+      if (order < slotIndex) return { ok: false, type: 'warn', msg: 'Ese paso (' + label + ') va más temprano en la secuencia.' };
+      if (order > slotIndex) return { ok: false, type: 'warn', msg: 'Ese paso (' + label + ') todavía no toca aquí. Va más adelante.' };
+      return { ok: false, type: 'info', msg: 'Vas en la etapa correcta (' + label + '), pero no es exactamente ese paso.' };
+    }
+
+    function placeInSlotS(piece, slot) {
+      var existing = slot.querySelector('.dd-piece');
+      if (existing) document.getElementById('poolS').appendChild(existing);
+      slot.appendChild(piece);
+      piece.classList.remove('selected');
+      selectedS = null;
+
+      var slotIndex = Array.prototype.indexOf.call(document.querySelectorAll('#targetS .dd-slot'), slot);
+      var fb = feedbackS(piece, slotIndex);
+      slot.classList.remove('correct', 'incorrect');
+      slot.classList.add(fb.ok ? 'correct' : 'incorrect');
+      showToast(fb.msg, fb.type);
+    }
+
+    function setupDropzoneS(zone, isSlot) {
+      zone.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        if (isSlot) zone.classList.add('over');
+      });
+      zone.addEventListener('dragleave', function () { zone.classList.remove('over'); });
+      zone.addEventListener('drop', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        zone.classList.remove('over');
+        var piece = window._dragged;
+        if (!piece || !piece.dataset.cat) return;
+        if (isSlot) placeInSlotS(piece, zone);
+        else zone.appendChild(piece);
+      });
+      zone.addEventListener('click', function (e) {
+        if (!selectedS) return;
+        if (isSlot) {
+          placeInSlotS(selectedS, zone);
+        } else if (e.target === zone) {
+          zone.appendChild(selectedS);
+          selectedS.classList.remove('selected');
+          selectedS = null;
+        }
+      });
+    }
+
+    function loadLevelS(key) {
+      currentLevelS = key;
+      attemptsS = 0;
+      selectedS = null;
+      document.getElementById('attemptsBadgeS').textContent = 'Verificaciones: 0';
+      document.getElementById('solutionBtnS').disabled = true;
+
+      var level = LEVELS_S[key];
+      document.getElementById('levelNameS').textContent = level.name;
+      document.getElementById('levelMissionS').textContent = level.mission;
+      document.getElementById('lineCountS').textContent = level.lines.length;
+      document.getElementById('expectedOutputS').textContent = level.output;
+
+      document.querySelectorAll('.levels-btn').forEach(function (b) {
+        b.classList.toggle('active', b.dataset.level === key);
+      });
+
+      var banner = document.getElementById('resultBannerS');
+      banner.className = 'score-banner';
+      banner.innerHTML = '';
+
+      var target = document.getElementById('targetS');
+      target.innerHTML = '';
+      level.lines.forEach(function () {
+        var slot = document.createElement('div');
+        slot.className = 'dd-slot';
+        setupDropzoneS(slot, true);
+        target.appendChild(slot);
+      });
+
+      var pool = document.getElementById('poolS');
+      pool.innerHTML = '';
+      var pieces = level.lines.map(function (l, i) { return makePieceS(l.text, l.cat, i); })
+        .concat(level.distractors.map(function (d) { return makePieceS(d.text, 'trap', -1); }));
+      shuffle(pieces).forEach(function (p) { pool.appendChild(p); });
+    }
+
+    function verifyS() {
+      attemptsS++;
+      document.getElementById('attemptsBadgeS').textContent = 'Verificaciones: ' + attemptsS;
+      if (attemptsS >= 3) document.getElementById('solutionBtnS').disabled = false;
+
+      var level = LEVELS_S[currentLevelS];
+      var slots = document.querySelectorAll('#targetS .dd-slot');
+      var correct = 0;
+      slots.forEach(function (slot, i) {
+        var piece = slot.querySelector('.dd-piece');
+        slot.classList.remove('correct', 'incorrect');
+        if (piece && piece.dataset.text === level.lines[i].text) {
+          correct++;
+          slot.classList.add('correct');
+        } else {
+          slot.classList.add('incorrect');
+        }
+      });
+
+      var total = level.lines.length;
+      var pct = Math.round((correct / total) * 100);
+      progressS[currentLevelS] = { pct: pct, attempts: attemptsS };
+      document.getElementById('progs-' + currentLevelS).textContent =
+        pct + '% (' + attemptsS + ' verificación' + (attemptsS === 1 ? '' : 'es') + ')';
+
+      var banner = document.getElementById('resultBannerS');
+      var msg;
+      if (pct === 100) {
+        msg = '🎉 ¡Secuencia completa! Ese es el ciclo de trabajo del proyecto, de principio a fin.';
+        showToast('¡Nivel completado! ' + level.name, 'ok', 5000);
+      } else if (pct >= 60) {
+        msg = 'Casi. Revisa los toasts: te dicen si un paso va antes, después, o si es de otra semana.';
+      } else {
+        msg = 'Piensa en el orden natural: primero dónde guardar, luego qué generar, después qué escribir, y al final probar y publicar.';
+      }
+      banner.className = 'score-banner show alert ' + (pct === 100 ? 'alert-success' : pct >= 60 ? 'alert-warning' : 'alert-danger');
+      banner.innerHTML =
+        '<div class="h5 mb-1">' + level.name + ' — ' + correct + ' / ' + total + ' pasos (' + pct + '%)</div>' +
+        '<div>' + msg + '</div>' +
+        '<div class="small mt-1">Verificaciones: ' + attemptsS + ' · Fecha: ' + new Date().toLocaleString('es-GT') + '</div>';
+    }
+
+    function showSolutionS() {
+      var level = LEVELS_S[currentLevelS];
+      var pool = document.getElementById('poolS');
+      var slots = document.querySelectorAll('#targetS .dd-slot');
+      document.querySelectorAll('#targetS .dd-piece').forEach(function (p) { pool.appendChild(p); });
+      level.lines.forEach(function (line, i) {
+        var piece = Array.prototype.find.call(pool.querySelectorAll('.dd-piece'), function (p) {
+          return p.dataset.text === line.text;
+        });
+        if (piece) {
+          slots[i].appendChild(piece);
+          slots[i].classList.remove('incorrect');
+          slots[i].classList.add('correct');
+        }
+      });
+      var banner = document.getElementById('resultBannerS');
+      banner.className = 'score-banner show alert alert-warning';
+      banner.innerHTML = '<div class="fw-semibold">Solución mostrada (no cuenta como logro propio).</div><div class="small">Estúdiala, pulsa "Reiniciar nivel" e inténtalo de nuevo sin ayuda.</div>';
+      showToast('Solución mostrada — vuelve a intentarlo sin ayuda.', 'info');
+    }
+
+    // ============================================================
+    // Exportación
+    // ============================================================
+    function exportChallengePdf() {
+      var name = document.getElementById('studentName').value || '';
+      var intentoC = Object.keys(progressC).some(function (k) { return progressC[k]; });
+      var intentoS = Object.keys(progressS).some(function (k) { return progressS[k]; });
+      if (!intentoC && !intentoS) {
+        showToast('Verifica al menos un nivel de cualquiera de las dos pestañas antes de exportar.', 'warn');
+        return;
+      }
+      if (!name.trim()) {
+        showToast('Escribe tu nombre en la casilla "Nombre (para el PDF)" de la primera pestaña.', 'warn');
+        document.getElementById('tab-clasifica-btn').click();
+        document.getElementById('studentName').focus();
+        return;
+      }
+      window.print();
+    }
+
+    // Arranque
+    setupPoolC(document.getElementById('poolC'));
+    setupDropzoneS(document.getElementById('poolS'), false);
+    loadLevelC('facil');
+    loadLevelS('facil');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

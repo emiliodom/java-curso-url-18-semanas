@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Examen parcial — Semana 9 (unidades 1–4)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Cronómetro fijo mientras se resuelve el examen */
+    .timer-bar {
+      position: sticky;
+      top: 0;
+      z-index: 1020;
+      background: #111827;
+      color: #e6edf3;
+      border-radius: 0 0 0.75rem 0.75rem;
+      padding: 0.6rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-weight: 600;
+    }
+    .timer-bar.warn { background: #b45309; }
+    .timer-bar.danger { background: #b91c1c; }
+    .timer-num { font-size: 1.4rem; font-variant-numeric: tabular-nums; }
+    .pregunta-examen {
+      background: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 0.75rem;
+      padding: 1rem 1.25rem;
+      margin-bottom: 0.85rem;
+    }
+    .pregunta-examen.sin-responder { border-color: #f59e0b; }
+    .pregunta-examen.res-ok { border-color: var(--ok); box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2); }
+    .pregunta-examen.res-mal { border-color: var(--bad); box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.18); }
+    .num-pregunta {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 1.75rem; height: 1.75rem; border-radius: 50%;
+      background: rgba(13, 110, 253, 0.12); color: #0b3d91;
+      font-weight: 800; font-size: 0.85rem; margin-right: 0.5rem;
+    }
+    @media print {
+      .timer-bar { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top no-print">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 9 — Hito Parcial</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link active" href="examen.html">Examen</a></li>
+          <li class="nav-item"><a class="nav-link" href="evaluacion_pares.html">Pares</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Cronómetro (solo visible durante el examen) -->
+  <div class="container" id="timerWrap" style="display:none;">
+    <div class="timer-bar" id="timerBar">
+      <div>⏳ Tiempo restante</div>
+      <div class="timer-num" id="timerNum">20:00</div>
+      <div class="small" id="timerAviso">El examen se entrega solo al llegar a cero.</div>
+    </div>
+  </div>
+
+  <header class="hero py-4 no-print" id="heroExamen">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Examen parcial · Unidades 1–4 · 15 puntos</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Examen de mitad de curso</h1>
+          <div class="small-muted"><strong>20 preguntas de opción múltiple · 20 minutos · 2 intentos como máximo.</strong> Se califica automáticamente al entregar.</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 900px;">
+
+    <!-- ============ PANTALLA 1: IDENTIFICACIÓN ============ -->
+    <section id="pantallaInicio">
+
+      <div class="callout danger mb-4">
+        <div class="fw-semibold h6 mb-2">Antes de empezar, lee esto completo</div>
+        <ul class="small-muted mb-0">
+          <li>El examen tiene <strong>3 secciones y 20 preguntas</strong>, todas de opción múltiple.</li>
+          <li>Tienes <strong>20 minutos</strong>. El cronómetro empieza al pulsar "Comenzar" y no se detiene si cierras la pestaña.</li>
+          <li>Al llegar a cero, el examen <strong>se entrega solo</strong> con lo que lleves contestado.</li>
+          <li>Puedes resolverlo <strong>máximo 2 veces</strong>. Se registra cada intento con tu carné.</li>
+          <li>Al entregar verás tu punteo y qué preguntas fallaste, pero <strong>no cuál era la respuesta correcta</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-body">
+          <h2 class="h5 section-title mb-3">Tus datos</h2>
+          <div class="row g-3">
+            <div class="col-md-7">
+              <label class="form-label small fw-semibold" for="inNombre">Nombre completo</label>
+              <input class="form-control" type="text" id="inNombre" placeholder="Nombre y apellido" />
+            </div>
+            <div class="col-md-5">
+              <label class="form-label small fw-semibold" for="inCarne">Carné</label>
+              <input class="form-control" type="text" id="inCarne" placeholder="Ej. 1234567" />
+              <div class="form-text">Con este carné se registran tus intentos. Escríbelo bien.</div>
+            </div>
+          </div>
+
+          <div class="callout warning mt-3 mb-0">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="chkHonestidad" />
+              <label class="form-check-label small" for="chkHonestidad">
+                <strong>Compromiso de honestidad académica.</strong> Declaro que resuelvo este examen de forma
+                individual y sin ayuda de otras personas. Como futuro docente, asumo que la integridad que
+                practico hoy es la que después voy a pedirle a mis propios estudiantes.
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="avisoInicio"></div>
+
+      <div class="d-flex gap-2 flex-wrap">
+        <button class="btn btn-danger btn-lg" id="btnComenzar" onclick="comenzarExamen()">Comenzar examen</button>
+        <a class="btn btn-outline-secondary btn-lg" href="quiz.html">Practicar antes con el simulacro</a>
+      </div>
+    </section>
+
+    <!-- ============ PANTALLA 2: EXAMEN ============ -->
+    <section id="pantallaExamen" style="display:none;">
+      <div class="callout mb-4" id="cabeceraExamen"></div>
+      <div id="contenidoExamen"></div>
+
+      <div class="callout warning mt-4 no-print" id="avisoEntrega"></div>
+
+      <div class="d-flex gap-2 flex-wrap mt-3 no-print">
+        <button class="btn btn-danger btn-lg" id="btnEntregar" onclick="entregarExamen(false)">Entregar examen</button>
+        <span class="align-self-center small-muted" id="contadorRespondidas"></span>
+      </div>
+    </section>
+
+    <!-- ============ PANTALLA 3: RESULTADO ============ -->
+    <section id="pantallaResultado" style="display:none;">
+      <div id="bloqueResultado"></div>
+
+      <div class="d-flex gap-2 flex-wrap mt-4 no-print">
+        <button class="btn btn-outline-dark btn-lg btn-export" onclick="window.print()">Exportar a PDF</button>
+        <a class="btn btn-outline-primary btn-lg" href="index.html">Volver al inicio</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Examen parcial — Semana 9 · Unidades 1–4 (formato 18 semanas) · 15 puntos · 20 minutos · máximo 2 intentos
+    </div>
+  </footer>
+
+  <script>
+    // ============================================================
+    // Configuración
+    // ============================================================
+    var API = '../examen_parcial/';
+
+    // El código con errores de la Sección 2 vive aquí (es material de lectura,
+    // no contiene ninguna respuesta). Las preguntas vienen del servidor.
+    var CODIGO_SECCION2 =
+      ' 1  package gt.edu.url.clavedesol.controlador;\n' +
+      ' 2\n' +
+      ' 3  import org.springframework.web.bind.annotation.GetMapping;\n' +
+      ' 4\n' +
+      ' 5  @Controlador\n' +
+      ' 6  public class clasescontroller {\n' +
+      ' 7\n' +
+      ' 8      @GetMapping(/api/clases)\n' +
+      ' 9      public String listarClases() {\n' +
+      '10          return "Clases disponibles"\n' +
+      '11      }\n' +
+      '12  }';
+
+    var estado = {
+      carne: '', nombre: '', examen: null, intento: 1,
+      inicio: null, restante: 0, timer: null, entregado: false
+    };
+
+    function el(id) { return document.getElementById(id); }
+
+    function aviso(contenedor, tipo, titulo, texto) {
+      el(contenedor).innerHTML =
+        '<div class="callout ' + tipo + ' mb-3"><div class="fw-semibold">' + titulo + '</div>' +
+        '<div class="small-muted">' + texto + '</div></div>';
+    }
+
+    // ============================================================
+    // Pantalla 1 → verificar carné y traer el examen
+    // ============================================================
+    function comenzarExamen() {
+      var nombre = el('inNombre').value.trim();
+      var carne = el('inCarne').value.trim();
+
+      if (!nombre) { aviso('avisoInicio', 'warning', 'Falta tu nombre', 'Escribe tu nombre completo para continuar.'); el('inNombre').focus(); return; }
+      if (!carne) { aviso('avisoInicio', 'warning', 'Falta tu carné', 'Escribe tu carné para continuar.'); el('inCarne').focus(); return; }
+      if (!el('chkHonestidad').checked) {
+        aviso('avisoInicio', 'warning', 'Falta el compromiso de honestidad', 'Marca la casilla del compromiso para poder comenzar.');
+        return;
+      }
+
+      el('btnComenzar').disabled = true;
+      el('btnComenzar').textContent = 'Verificando…';
+      aviso('avisoInicio', '', 'Un momento', 'Verificando tu carné con el servidor…');
+
+      fetch(API + 'verificar.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre: nombre, carne: carne })
+      })
+        .then(function (r) { return r.json().then(function (d) { return { status: r.status, data: d }; }); })
+        .then(function (res) {
+          var d = res.data;
+          if (!d.ok) {
+            el('btnComenzar').disabled = false;
+            el('btnComenzar').textContent = 'Comenzar examen';
+            aviso('avisoInicio', d.agotado ? 'danger' : 'warning',
+              d.agotado ? 'Ya no tienes intentos disponibles' : 'No se pudo comenzar',
+              d.error || 'Intenta de nuevo.');
+            return;
+          }
+          estado.carne = d.carne;
+          estado.nombre = d.nombre;
+          estado.examen = d.examen;
+          estado.intento = d.intento_actual;
+          estado.restante = (d.minutos || 20) * 60;
+          mostrarExamen(d);
+        })
+        .catch(function () {
+          el('btnComenzar').disabled = false;
+          el('btnComenzar').textContent = 'Comenzar examen';
+          aviso('avisoInicio', 'danger', 'No hay conexión con el servidor del examen',
+            'Esta página necesita el módulo <code>examen_parcial/</code> corriendo en el servidor para poder calificar. ' +
+            'Avísale al profesor: es posible que el sitio se haya abierto como archivo local en vez de por el servidor.');
+        });
+    }
+
+    // ============================================================
+    // Pantalla 2 → dibujar el examen
+    // ============================================================
+    function mostrarExamen(d) {
+      el('pantallaInicio').style.display = 'none';
+      el('heroExamen').style.display = 'none';
+      el('pantallaExamen').style.display = 'block';
+      el('timerWrap').style.display = 'block';
+
+      el('cabeceraExamen').innerHTML =
+        '<div class="fw-semibold">' + estado.nombre + ' · Carné ' + estado.carne + '</div>' +
+        '<div class="small-muted">Intento <strong>' + estado.intento + '</strong> de ' + d.intentos_maximos +
+        ' · 20 preguntas · ' + d.maximo + ' puntos · Responde todas: una pregunta sin contestar cuenta como incorrecta.</div>';
+
+      var html = '';
+      var numero = 0;
+
+      estado.examen.secciones.forEach(function (sec) {
+        html += '<h2 class="h4 section-title mt-4 mb-1">' + sec.nombre + '</h2>';
+        html += '<p class="small-muted">' + sec.descripcion +
+          ' <span class="badge text-bg-secondary">' + sec.preguntas.length + ' preguntas · ' +
+          (sec.preguntas.length * sec.puntos_por_pregunta).toFixed(1) + ' pts</span></p>';
+
+        // La sección 2 muestra primero el código con errores
+        if (sec.id === 's2') {
+          html += '<div class="card mb-3"><div class="card-body">' +
+            '<div class="small-muted mb-2">Archivo <code>ClasesController.java</code>, guardado en ' +
+            '<code>src/main/java/gt/edu/url/clavedesol/<strong>controller</strong>/</code>. ' +
+            'Este archivo <strong>no compila</strong>: tiene cinco errores.</div>' +
+            '<pre style="margin-bottom:0;"><code>' + CODIGO_SECCION2 + '</code></pre>' +
+            '</div></div>';
+        }
+
+        sec.preguntas.forEach(function (p) {
+          numero++;
+          html += '<div class="pregunta-examen" id="q-' + p.id + '" data-qid="' + p.id + '">';
+          html += '<div class="fw-semibold mb-2"><span class="num-pregunta">' + numero + '</span>' + p.texto + '</div>';
+          p.opciones.forEach(function (op) {
+            var inputId = 'op-' + p.id + '-' + op.id;
+            html += '<div class="form-check">' +
+              '<input class="form-check-input" type="radio" name="r-' + p.id + '" id="' + inputId +
+              '" value="' + op.id + '" onchange="marcarRespondida(\'' + p.id + '\')" />' +
+              '<label class="form-check-label" for="' + inputId + '">' + op.texto + '</label>' +
+              '</div>';
+          });
+          html += '</div>';
+        });
+      });
+
+      el('contenidoExamen').innerHTML = html;
+      el('avisoEntrega').innerHTML =
+        '<div class="fw-semibold">Antes de entregar</div>' +
+        '<div class="small-muted">Revisa que no te quede ninguna pregunta sin marcar. ' +
+        'Al entregar no podrás cambiar tus respuestas' +
+        (d.intentos_maximos - estado.intento > 0
+          ? ', pero todavía te quedará ' + (d.intentos_maximos - estado.intento) + ' intento más.'
+          : ': este es tu último intento.') + '</div>';
+
+      actualizarContador();
+      iniciarCronometro();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function marcarRespondida(qid) {
+      var caja = el('q-' + qid);
+      if (caja) caja.classList.remove('sin-responder');
+      actualizarContador();
+    }
+
+    function totalPreguntas() {
+      var n = 0;
+      estado.examen.secciones.forEach(function (s) { n += s.preguntas.length; });
+      return n;
+    }
+
+    function recolectarRespuestas() {
+      var res = {};
+      estado.examen.secciones.forEach(function (sec) {
+        sec.preguntas.forEach(function (p) {
+          var marcada = document.querySelector('input[name="r-' + p.id + '"]:checked');
+          if (marcada) res[p.id] = marcada.value;
+        });
+      });
+      return res;
+    }
+
+    function actualizarContador() {
+      var respondidas = Object.keys(recolectarRespuestas()).length;
+      var total = totalPreguntas();
+      el('contadorRespondidas').innerHTML = 'Respondidas: <strong>' + respondidas + '</strong> de ' + total +
+        (respondidas < total ? ' · te faltan ' + (total - respondidas) : ' · ¡todas listas!');
+    }
+
+    // ============================================================
+    // Cronómetro
+    // ============================================================
+    function iniciarCronometro() {
+      estado.inicio = Date.now();
+      pintarTiempo();
+      estado.timer = setInterval(function () {
+        estado.restante--;
+        pintarTiempo();
+        if (estado.restante <= 0) {
+          clearInterval(estado.timer);
+          entregarExamen(true);
+        }
+      }, 1000);
+    }
+
+    function pintarTiempo() {
+      var m = Math.floor(Math.max(0, estado.restante) / 60);
+      var s = Math.max(0, estado.restante) % 60;
+      el('timerNum').textContent = m + ':' + (s < 10 ? '0' : '') + s;
+      var barra = el('timerBar');
+      barra.classList.remove('warn', 'danger');
+      if (estado.restante <= 60) {
+        barra.classList.add('danger');
+        el('timerAviso').textContent = '¡Último minuto! Marca lo que te falte.';
+      } else if (estado.restante <= 300) {
+        barra.classList.add('warn');
+        el('timerAviso').textContent = 'Quedan menos de 5 minutos.';
+      }
+    }
+
+    // ============================================================
+    // Entregar y calificar
+    // ============================================================
+    function entregarExamen(automatico) {
+      if (estado.entregado) return;
+
+      var respuestas = recolectarRespuestas();
+      var total = totalPreguntas();
+      var faltan = total - Object.keys(respuestas).length;
+
+      if (!automatico && faltan > 0) {
+        // Resaltar las que faltan y pedir confirmación
+        estado.examen.secciones.forEach(function (sec) {
+          sec.preguntas.forEach(function (p) {
+            if (!respuestas[p.id]) el('q-' + p.id).classList.add('sin-responder');
+          });
+        });
+        var sigue = window.confirm('Te faltan ' + faltan + ' pregunta(s) por responder y contarán como incorrectas.\n\n¿Quieres entregar de todas formas?');
+        if (!sigue) {
+          var primera = document.querySelector('.pregunta-examen.sin-responder');
+          if (primera) primera.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+      }
+
+      estado.entregado = true;
+      if (estado.timer) clearInterval(estado.timer);
+      el('btnEntregar').disabled = true;
+      el('btnEntregar').textContent = 'Calificando…';
+
+      var duracion = Math.round((Date.now() - estado.inicio) / 1000);
+
+      fetch(API + 'calificar.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          carne: estado.carne, nombre: estado.nombre,
+          respuestas: respuestas, duracion_seg: duracion
+        })
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          if (!d.ok) {
+            el('btnEntregar').disabled = false;
+            el('btnEntregar').textContent = 'Entregar examen';
+            estado.entregado = false;
+            aviso('avisoEntrega', 'danger', 'No se pudo registrar tu examen', d.error || 'Intenta de nuevo.');
+            return;
+          }
+          mostrarResultado(d, automatico);
+        })
+        .catch(function () {
+          el('btnEntregar').disabled = false;
+          el('btnEntregar').textContent = 'Entregar examen';
+          estado.entregado = false;
+          aviso('avisoEntrega', 'danger', 'No se pudo conectar con el servidor',
+            'Tus respuestas siguen en pantalla. Revisa la conexión y vuelve a pulsar "Entregar examen". ' +
+            'Si el problema continúa, avísale al profesor de inmediato.');
+        });
+    }
+
+    function mostrarResultado(d, automatico) {
+      el('pantallaExamen').style.display = 'none';
+      el('timerWrap').style.display = 'none';
+      el('pantallaResultado').style.display = 'block';
+
+      var pct = d.porcentaje;
+      var clase = pct >= 80 ? 'success' : (pct >= 60 ? 'warning' : 'danger');
+
+      var html = '';
+
+      if (automatico) {
+        html += '<div class="callout warning mb-3"><div class="fw-semibold">Se acabó el tiempo</div>' +
+          '<div class="small-muted">El examen se entregó automáticamente con lo que tenías contestado.</div></div>';
+      }
+
+      html += '<div class="callout ' + clase + ' mb-4">' +
+        '<div class="h4 fw-bold mb-1">' + d.punteo.toFixed(2) + ' / ' + d.maximo + ' puntos (' + pct + '%)</div>' +
+        '<div class="small-muted">' + estado.nombre + ' · Carné ' + estado.carne +
+        ' · Intento ' + d.intento + ' de ' + d.intentos_maximos +
+        ' · Acertaste ' + d.correctas + ' de ' + d.preguntas + ' preguntas' +
+        ' · ' + new Date().toLocaleString('es-GT') + '</div></div>';
+
+      html += '<div class="card mb-3"><div class="card-body">' +
+        '<h2 class="h5 section-title mb-3">Cómo te fue en cada sección</h2>' +
+        '<div class="table-responsive"><table class="table table-sm small mb-0">' +
+        '<thead><tr><th>Sección</th><th class="text-center">Aciertos</th><th class="text-end">Puntos</th></tr></thead><tbody>';
+      d.secciones.forEach(function (s) {
+        html += '<tr><td>' + s.nombre + '</td>' +
+          '<td class="text-center">' + s.correctas + ' / ' + s.total + '</td>' +
+          '<td class="text-end fw-semibold">' + s.puntos.toFixed(2) + ' / ' + s.maximo.toFixed(2) + '</td></tr>';
+      });
+      html += '</tbody></table></div></div></div>';
+
+      // Detalle por pregunta: acierto/fallo, sin revelar la respuesta correcta
+      html += '<div class="card mb-3"><div class="card-body">' +
+        '<h2 class="h5 section-title mb-2">Pregunta por pregunta</h2>' +
+        '<p class="small-muted">Se te indica cuáles fallaste, pero no cuál era la respuesta correcta: ' +
+        'si te queda un intento, sigue siendo un examen. Repasa esos temas en el ' +
+        '<a href="cheatsheet.html">Cheat Sheet</a> antes de volver a intentarlo.</p><div class="d-flex flex-wrap gap-2">';
+
+      var numero = 0;
+      estado.examen.secciones.forEach(function (sec) {
+        sec.preguntas.forEach(function (p) {
+          numero++;
+          var r = d.detalle[p.id] || {};
+          var icono = r.correcta ? '✅' : (r.respondio ? '❌' : '⬜');
+          var bg = r.correcta ? 'text-bg-success' : (r.respondio ? 'text-bg-danger' : 'text-bg-secondary');
+          html += '<span class="badge ' + bg + '">' + icono + ' ' + numero + '</span>';
+        });
+      });
+      html += '</div><div class="small-muted mt-2">✅ correcta · ❌ incorrecta · ⬜ sin responder</div></div></div>';
+
+      if (d.restantes > 0) {
+        html += '<div class="callout warning"><div class="fw-semibold">Te queda ' + d.restantes + ' intento</div>' +
+          '<div class="small-muted">Puedes volver a resolver el examen una vez más. Recarga esta página y vuelve a entrar con tu mismo carné. ' +
+          'Se registran los dos intentos.</div></div>';
+      } else {
+        html += '<div class="callout"><div class="fw-semibold">Este era tu último intento</div>' +
+          '<div class="small-muted">Tu resultado quedó registrado. Si crees que hubo algún problema, avísale al profesor.</div></div>';
+      }
+
+      html += '<div class="callout success mt-3"><div class="fw-semibold">Para tu archivo</div>' +
+        '<div class="small-muted">Pulsa "Exportar a PDF" y guarda el comprobante como ' +
+        '<code>ExamenParcial_' + estado.carne + '.pdf</code>. Tu punteo ya quedó registrado en el servidor, ' +
+        'así que el PDF es solo tu respaldo.</div></div>';
+
+      el('bloqueResultado').innerHTML = html;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Aviso si intenta salirse con el examen abierto
+    window.addEventListener('beforeunload', function (e) {
+      if (estado.examen && !estado.entregado) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cheat Sheet — Semana 9 (Repaso integrado S1–S8)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 9 — Hito Parcial</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link active" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="examen.html">Examen</a></li>
+          <li class="nav-item"><a class="nav-link" href="evaluacion_pares.html">Pares</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Cheat Sheet · Semana 9 · Todo lo visto, en una página</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Repaso integrado, anatomía de un archivo y errores frecuentes</h1>
+          <div class="small-muted">Tres pestañas: el repaso de las 8 semanas para el examen, la <strong>anatomía de un archivo Java</strong> (paquetes, imports y por qué un endpoint "desaparece"), y el catálogo de errores con su solución.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <ul class="nav nav-tabs mb-4 no-print" id="cheatTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="tab-repaso-btn" data-bs-toggle="tab" data-bs-target="#tab-repaso" type="button" role="tab">🔁 Repaso integrado S1–S8</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-anatomia-btn" data-bs-toggle="tab" data-bs-target="#tab-anatomia" type="button" role="tab">🧬 Anatomía de un archivo Java</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-errores-btn" data-bs-toggle="tab" data-bs-target="#tab-errores" type="button" role="tab">🧯 Errores frecuentes</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="cheatTabsContent">
+
+      <!-- ===== TAB 1: REPASO ===== -->
+      <div class="tab-pane fade show active" id="tab-repaso" role="tabpanel">
+
+        <h2 class="h4 section-title mb-3" id="repasoA">☕ Unidad 1 — Java (Semanas 1–2)</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-sm small mb-3">
+                <thead><tr><th>Concepto</th><th>En una línea</th><th>Ejemplo</th></tr></thead>
+                <tbody>
+                  <tr><td>Variable</td><td>Una caja con nombre que guarda un valor</td><td><code>int edad = 12;</code></td></tr>
+                  <tr><td>Tipos básicos</td><td><code>int</code> enteros · <code>double</code> decimales · <code>boolean</code> verdadero/falso · <code>String</code> texto</td><td><code>String nombre = "Ana";</code></td></tr>
+                  <tr><td>Constante</td><td>Valor que no cambia</td><td><code>final int MAXIMO = 30;</code></td></tr>
+                  <tr><td>Casting</td><td>Convertir de un tipo a otro</td><td><code>int n = (int) 3.9; // 3</code></td></tr>
+                  <tr><td>Condicional</td><td>Decide entre caminos</td><td><code>if (edad &gt;= 18) { … } else { … }</code></td></tr>
+                  <tr><td>Ciclo</td><td>Repite instrucciones</td><td><code>for (int i = 0; i &lt; 5; i++) { … }</code></td></tr>
+                  <tr><td>Método</td><td>Bloque de código con nombre que puede devolver algo</td><td><code>public String saludo() { return "Hola"; }</code></td></tr>
+                  <tr><td>Clase y objeto</td><td>La clase es el molde; el objeto es la pieza hecha con ese molde</td><td><code>Visitante v = new Visitante("Ana");</code></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="callout mb-0">
+              <div class="fw-semibold">Lo que más se confunde</div>
+              <div class="small-muted"><code>=</code> asigna un valor; <code>==</code> compara. Y para comparar textos en Java se usa <code>.equals()</code>, no <code>==</code>.</div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="repasoB">🌿 Unidad 2 — Git y GitHub (Semanas 3–4)</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-sm small mb-3">
+                <thead><tr><th>Acción</th><th>Comando</th><th>En GitHub Desktop</th></tr></thead>
+                <tbody>
+                  <tr><td>Ver qué cambió</td><td><code>git status</code></td><td>Pestaña "Changes"</td></tr>
+                  <tr><td>Preparar cambios</td><td><code>git add .</code></td><td>Marcar las casillas de los archivos</td></tr>
+                  <tr><td>Guardar una foto del proyecto</td><td><code>git commit -m "mensaje"</code></td><td>Escribir resumen → "Commit to…"</td></tr>
+                  <tr><td>Subir a GitHub</td><td><code>git push</code></td><td>"Push origin" / "Publish branch"</td></tr>
+                  <tr><td>Traer cambios del remoto</td><td><code>git pull</code></td><td>"Fetch origin" → "Pull origin"</td></tr>
+                  <tr><td>Crear y cambiar de rama</td><td><code>git checkout -b nombre-rama</code></td><td>"Current Branch" → "New Branch"</td></tr>
+                  <tr><td>Ver el historial</td><td><code>git log --oneline</code></td><td>Pestaña "History"</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="callout mb-0">
+              <div class="fw-semibold">Las tres ideas que evalúa el examen</div>
+              <div class="small-muted"><strong>(1)</strong> Un commit es una foto con mensaje, no un respaldo del día. <strong>(2)</strong> Se trabaja en una rama (<code>development</code>) para no romper <code>main</code>. <strong>(3)</strong> Un Pull Request es la solicitud de revisión antes de mezclar ramas.</div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="repasoC">🏛️ Unidad 3 — MVC y arquitectura en capas (Semanas 5–6)</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-sm small mb-3">
+                <thead><tr><th>Pieza</th><th>Responsabilidad</th><th>En tu proyecto</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Vista</strong></td><td>Lo que el usuario ve</td><td><code>static/index.html</code></td></tr>
+                  <tr><td><strong>Controlador</strong></td><td>Recibe la petición y decide a quién pedirle la respuesta</td><td><code>controller/BienvenidaController.java</code></td></tr>
+                  <tr><td><strong>Servicio</strong> (negocio)</td><td>Aplica las reglas y decide el contenido</td><td><code>service/BienvenidaService.java</code></td></tr>
+                  <tr><td><strong>Modelo</strong> (entidad)</td><td>Los datos, sin lógica</td><td><code>model/Visitante.java</code></td></tr>
+                  <tr><td><strong>Repositorio</strong></td><td>Guarda y recupera datos</td><td>Todavía no — llega en la Semana 12</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="callout warning mb-0">
+              <div class="fw-semibold">El antipatrón que hay que saber nombrar: "saltarse capas"</div>
+              <div class="small-muted">Ocurre cuando una capa habla con otra que no le corresponde (por ejemplo, el controlador armando reglas de negocio, o la vista calculando datos). La cadena correcta es: <strong>Vista → Controlador → Servicio → (Repositorio)</strong>, y de regreso.</div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="repasoD">🍃 Unidad 4 — Spring Boot (Semanas 7–8)</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-sm small mb-3">
+                <thead><tr><th>Anotación / pieza</th><th>Qué hace</th></tr></thead>
+                <tbody>
+                  <tr><td><code>@SpringBootApplication</code></td><td>Enciende la aplicación y define el paquete base donde Spring buscará todo lo demás</td></tr>
+                  <tr><td><code>@RestController</code></td><td>Marca una clase como receptora de peticiones que responde con datos (texto/JSON)</td></tr>
+                  <tr><td><code>@GetMapping("/ruta")</code></td><td>Conecta una URL exacta con un método, solo para peticiones GET</td></tr>
+                  <tr><td><code>@RequestParam</code></td><td>Lee un valor de la URL después del <code>?</code> (<code>?nombre=Ana</code>)</td></tr>
+                  <tr><td><code>@Service</code></td><td>Marca la clase de la capa de negocio para que Spring la cree y la entregue</td></tr>
+                  <tr><td><code>spring-boot-starter-web</code></td><td>La dependencia del <code>pom.xml</code> que trae Tomcat y todo lo necesario para la web</td></tr>
+                  <tr><td><code>application.properties</code></td><td>Configuración en pares <code>clave=valor</code> (puerto, nombre de la app)</td></tr>
+                  <tr><td><code>src/main/resources/static/</code></td><td>Carpeta de archivos públicos: HTML, CSS y JS servidos tal cual</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="callout mb-0">
+              <div class="fw-semibold">El recorrido de una petición, en una línea</div>
+              <div class="small-muted">El navegador pide una URL → el <strong>DispatcherServlet</strong> de Spring busca un método cuya ruta coincida <em>exactamente</em> → si lo encuentra, ejecuta tu método y devuelve su resultado; si no, responde <strong>404</strong>.</div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="repasoAmb">🌐 Ambientes de trabajo: desarrollo y producción</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-2">Este tema <strong>sí entra al examen</strong> aunque no se haya trabajado con código: es vocabulario profesional básico, y como futuros docentes de tecnología les va a tocar explicarlo. Un mismo sistema vive en copias separadas, cada una con un propósito:</p>
+            <div class="table-responsive">
+              <table class="table table-sm small mb-3">
+                <thead><tr><th>Ambiente</th><th>Para qué es</th><th>Quién lo usa</th><th>Con qué datos</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Desarrollo</strong></td><td>Escribir y probar código nuevo; aquí se rompen cosas a propósito</td><td>Quien programa</td><td>Datos inventados de prueba</td></tr>
+                  <tr><td><strong>Pruebas</strong></td><td>Revisar que lo nuevo funcione antes de publicarlo</td><td>El equipo, antes de publicar</td><td>Datos de prueba parecidos a los reales</td></tr>
+                  <tr><td><strong>Producción</strong></td><td>La versión que está en uso de verdad</td><td>Las personas de la institución</td><td>Datos reales</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="small-muted mb-2">Tu proyecto vive hoy en <strong>desarrollo</strong>: corre en <code>localhost</code>, en tu computadora. Cuando lo publiquemos en internet (Semana 14) existirá también su versión de <strong>producción</strong>.</p>
+            <div class="callout danger mb-0">
+              <div class="fw-semibold">La regla de oro: no se toca producción "en caliente"</div>
+              <div class="small-muted">
+                Modificar directamente los archivos de producción mientras la gente está usando el sistema es una
+                de las peores prácticas que existen: si el cambio falla, el sistema se cae para todos y no hay
+                forma ordenada de regresar. El camino correcto siempre es el mismo: <strong>se cambia en
+                desarrollo → se prueba → se publica a producción</strong>, y el historial queda en Git por si hay
+                que revertir. Es exactamente para lo que sirven las ramas que usas desde la Semana 4.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="repasoE">⏭ Lo que todavía NO toca (y por eso no entra al examen)</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-sm small mb-0">
+                <thead><tr><th>Tema</th><th>Cuándo llega</th></tr></thead>
+                <tbody>
+                  <tr><td>Thymeleaf y formularios que envían datos (<code>@PostMapping</code>)</td><td>Semana 10</td></tr>
+                  <tr><td>Validación de datos y manejo de errores</td><td>Semana 11</td></tr>
+                  <tr><td>Base de datos, JPA y <code>@Entity</code></td><td>Semana 12</td></tr>
+                  <tr><td>Despliegue en la nube</td><td>Semana 14</td></tr>
+                  <tr><td>Seguridad y autenticación</td><td>Semanas 13 y 15</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ===== TAB 2: ANATOMÍA ===== -->
+      <div class="tab-pane fade" id="tab-anatomia" role="tabpanel">
+
+        <div class="callout mb-4">
+          <div class="fw-semibold">Por qué esta pestaña existe</div>
+          <div class="small-muted">
+            En las Semanas 7 y 8 vimos anotaciones sueltas (<code>@RestController</code>, <code>@GetMapping</code>)
+            sin detenernos en las dos líneas que van <em>antes</em> de todo archivo Java: el <code>package</code> y
+            los <code>import</code>. Son la causa de la mayoría de los "no me funciona y no sé por qué". Aquí están
+            explicadas de una vez y para siempre.
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="anaA">A. Las cuatro partes de todo archivo Java</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <pre><code>package gt.edu.url.repasospring.controller;          ← 1. DÓNDE vive este archivo
+
+import org.springframework.web.bind.annotation.GetMapping;      ← 2. QUÉ necesita
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController                                      ← 3. QUÉ ES para Spring
+public class BienvenidaController {                  ← 4. EL CÓDIGO
+
+    @GetMapping("/api/saludo")
+    public String saludo() {
+        return "¡Bienvenido(a)!";
+    }
+}</code></pre>
+            <div class="table-responsive">
+              <table class="table table-sm small mb-0">
+                <thead><tr><th>#</th><th>Parte</th><th>Regla</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td><code>package</code></td><td>Siempre la primera línea. Debe coincidir con la carpeta real del archivo.</td></tr>
+                  <tr><td>2</td><td><code>import</code></td><td>Uno por cada clase o anotación "de afuera" que uses. Valen para todo el archivo.</td></tr>
+                  <tr><td>3</td><td>Anotación</td><td>Le dice a Spring qué papel juega la clase. Requiere su <code>import</code>.</td></tr>
+                  <tr><td>4</td><td>Clase</td><td>El nombre de la clase debe ser <strong>idéntico</strong> al nombre del archivo (sin <code>.java</code>).</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="anaB">B. Carpeta = paquete (la traducción exacta)</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <pre><code>Carpeta real:   src/main/java/gt/edu/url/repasospring/controller/BienvenidaController.java
+                              └───┬──┘ └┬┘ └┬┘ └─────┬─────┘ └────┬────┘
+Línea package:  package        gt   .  edu . url . repasospring . controller ;</code></pre>
+            <div class="small-muted mb-3">Cada <code>/</code> de la carpeta es un <code>.</code> en el paquete. Todo lo que va después de <code>src/main/java/</code> forma el nombre del paquete; el nombre del archivo no entra.</div>
+            <div class="callout warning mb-0">
+              <div class="fw-semibold">Los dos errores distintos que produce equivocarse aquí</div>
+              <div class="small-muted">
+                <strong>(1) No coinciden carpeta y <code>package</code>:</strong> el proyecto <em>no compila</em>, VS Code lo marca en rojo de inmediato. Molesto pero fácil de ver.<br />
+                <strong>(2) Coinciden, pero el archivo quedó fuera del paquete base:</strong> el proyecto compila y arranca sin una sola advertencia… y la ruta responde 404. Este es el difícil, porque nada te avisa.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="anaC">C. Por qué un endpoint correcto puede "no existir"</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-2"><code>@SpringBootApplication</code> hace, entre otras cosas, un <em>escaneo de componentes</em>: revisa su propio paquete y todos los subpaquetes, buscando clases anotadas. Lo que quede fuera de esa rama, no existe para Spring.</p>
+            <pre><code>gt.edu.url.repasospring            ← aquí está ...Application.java (paquete base)
+├── controller  ✅ Spring lo revisa   (está debajo del paquete base)
+├── service     ✅ Spring lo revisa
+├── model       ✅ Spring lo revisa
+│
+gt.edu.url.otro                    ❌ Spring NO lo revisa (está fuera de la rama)</code></pre>
+            <div class="callout success mb-0">
+              <div class="fw-semibold">Regla práctica para no fallar nunca</div>
+              <div class="small-muted">Crea todas tus carpetas <strong>dentro</strong> de la carpeta que contiene tu archivo <code>...Application.java</code>. Si tu controlador está al lado de esa clase o en una subcarpeta suya, Spring siempre lo encontrará.</div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="anaD">D. Cuándo hace falta un <code>import</code> y cuándo no</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-sm small mb-3">
+                <thead><tr><th>Situación</th><th>¿Necesita import?</th><th>Ejemplo</th></tr></thead>
+                <tbody>
+                  <tr><td>Clases básicas de Java (<code>java.lang</code>)</td><td class="text-success fw-semibold">No</td><td><code>String</code>, <code>System</code>, <code>Integer</code>, <code>Math</code></td></tr>
+                  <tr><td>Otra clase del <strong>mismo</strong> paquete</td><td class="text-success fw-semibold">No</td><td>Dos clases dentro de <code>…/service/</code></td></tr>
+                  <tr><td>Clase tuya en <strong>otro</strong> paquete</td><td class="text-danger fw-semibold">Sí</td><td><code>import gt.edu.url.repasospring.model.Visitante;</code></td></tr>
+                  <tr><td>Cualquier anotación de Spring</td><td class="text-danger fw-semibold">Sí</td><td><code>import org.springframework.web.bind.annotation.RestController;</code></td></tr>
+                  <tr><td>Utilidades de Java (<code>java.util</code>)</td><td class="text-danger fw-semibold">Sí</td><td><code>import java.util.List;</code></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 class="h6 fw-bold">Los imports que vas a usar esta semana, tal cual</h3>
+            <pre><code>// Para la clase principal (ya vienen escritos)
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+// Para un controlador REST
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+// Para un servicio
+import org.springframework.stereotype.Service;</code></pre>
+            <div class="callout mb-0">
+              <div class="fw-semibold">No los memorices: deja que VS Code los escriba</div>
+              <div class="small-muted">Escribe la anotación (por ejemplo <code>@Service</code>); aparecerá subrayada en rojo. Pon el cursor encima, pulsa <kbd>Ctrl</kbd>+<kbd>.</kbd> y elige la opción "Import…". VS Code agrega la línea correcta arriba. Para ordenarlos todos: <kbd>Shift</kbd>+<kbd>Alt</kbd>+<kbd>O</kbd>.</div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="anaE">E. Dónde va cada tipo de archivo</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-sm small mb-0">
+                <thead><tr><th>Si vas a crear…</th><th>Va en…</th><th>Con la línea package…</th></tr></thead>
+                <tbody>
+                  <tr><td>Un controlador</td><td><code>…/repasospring/controller/</code></td><td><code>package gt.edu.url.repasospring.controller;</code></td></tr>
+                  <tr><td>Un servicio</td><td><code>…/repasospring/service/</code></td><td><code>package gt.edu.url.repasospring.service;</code></td></tr>
+                  <tr><td>Un modelo</td><td><code>…/repasospring/model/</code></td><td><code>package gt.edu.url.repasospring.model;</code></td></tr>
+                  <tr><td>Una página HTML, CSS o imagen</td><td><code>src/main/resources/static/</code></td><td>— (no llevan package)</td></tr>
+                  <tr><td>Configuración</td><td><code>src/main/resources/application.properties</code></td><td>— (no lleva package)</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ===== TAB 3: ERRORES ===== -->
+      <div class="tab-pane fade" id="tab-errores" role="tabpanel">
+
+        <div class="callout mb-4">
+          <div class="fw-semibold">Cómo usar esta tabla</div>
+          <div class="small-muted">Busca el mensaje que te aparece (o el síntoma, si no hay mensaje). Los errores están ordenados de los más frecuentes a los menos. Cuando el error no dice nada — el proyecto arranca pero no funciona — revisa las filas marcadas con 🔇.</div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h2 class="h5 section-title mb-3">Errores de Java y Spring Boot</h2>
+            <div class="table-responsive">
+              <table class="table table-sm small mb-0">
+                <thead><tr><th style="width:32%">Mensaje o síntoma</th><th>Qué significa</th><th>Cómo se arregla</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td>🔇 <strong>La ruta responde 404 (Whitelabel) pero el código está bien</strong></td>
+                    <td>Spring nunca registró tu controlador: quedó fuera del paquete base</td>
+                    <td>Mueve la clase dentro del paquete de tu <code>...Application.java</code> (o una subcarpeta) y ajusta la línea <code>package</code>.</td>
+                  </tr>
+                  <tr>
+                    <td>🔇 <strong>La ruta responde 404 y el controlador sí está bien ubicado</strong></td>
+                    <td>La URL no coincide letra por letra con <code>@GetMapping</code></td>
+                    <td>Compara mayúsculas, acentos, guiones y la barra inicial. <code>/api/Saludo</code> ≠ <code>/api/saludo</code>.</td>
+                  </tr>
+                  <tr>
+                    <td><code>cannot find symbol: class RestController</code></td>
+                    <td>Falta el <code>import</code> de esa anotación</td>
+                    <td><kbd>Ctrl</kbd>+<kbd>.</kbd> sobre la palabra subrayada → "Import…".</td>
+                  </tr>
+                  <tr>
+                    <td><code>The declared package … does not match the expected package …</code></td>
+                    <td>La línea <code>package</code> no corresponde a la carpeta del archivo</td>
+                    <td>Corrige la línea <code>package</code> (o mueve el archivo a la carpeta que esa línea indica).</td>
+                  </tr>
+                  <tr>
+                    <td><code>Web server failed to start. Port 8080 was already in use.</code></td>
+                    <td>Otra copia del proyecto sigue corriendo</td>
+                    <td>Detén la anterior con <kbd>Ctrl</kbd>+<kbd>C</kbd> en su terminal, o pon <code>server.port=8081</code> en <code>application.properties</code>.</td>
+                  </tr>
+                  <tr>
+                    <td><code>class … is public, should be declared in a file named ….java</code></td>
+                    <td>El nombre de la clase y el del archivo no son iguales</td>
+                    <td>Renombra el archivo o la clase para que coincidan exactamente, mayúsculas incluidas.</td>
+                  </tr>
+                  <tr>
+                    <td><code>Parameter 0 of constructor … required a bean of type … that could not be found</code></td>
+                    <td>El controlador pide un servicio que Spring no conoce</td>
+                    <td>Verifica que la clase del servicio tenga <code>@Service</code> y esté dentro del paquete base.</td>
+                  </tr>
+                  <tr>
+                    <td><code>Required request parameter 'nombre' is not present</code></td>
+                    <td>El parámetro es obligatorio y no vino en la URL</td>
+                    <td>Agrega <code>@RequestParam(defaultValue = "…")</code> o incluye siempre el parámetro.</td>
+                  </tr>
+                  <tr>
+                    <td>El botón ▶ Run no aparece sobre <code>main</code></td>
+                    <td>VS Code no reconoció el proyecto como Maven/Java</td>
+                    <td>Abre la carpeta <strong>raíz</strong> (la que tiene <code>pom.xml</code>), no una subcarpeta.</td>
+                  </tr>
+                  <tr>
+                    <td>Cambié el código pero el navegador muestra lo anterior</td>
+                    <td>El proyecto no se reinició, o es caché del navegador</td>
+                    <td>Detén y vuelve a ejecutar; refresca con <kbd>Ctrl</kbd>+<kbd>F5</kbd>.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h2 class="h5 section-title mb-3">Errores del formulario (HTML + JavaScript)</h2>
+            <div class="table-responsive">
+              <table class="table table-sm small mb-0">
+                <thead><tr><th style="width:32%">Síntoma</th><th>Qué significa</th><th>Cómo se arregla</th></tr></thead>
+                <tbody>
+                  <tr><td>La página se recarga al enviar el formulario</td><td>Falta <code>e.preventDefault()</code></td><td>Agrégalo como primera línea del <code>addEventListener('submit', …)</code>.</td></tr>
+                  <tr><td>🔇 No pasa nada al pulsar el botón</td><td>Error de JavaScript o <code>id</code> mal escrito</td><td>Abre la consola con <kbd>F12</kbd>: el error aparece ahí en rojo.</td></tr>
+                  <tr><td><code>localhost:8080</code> muestra 404 en vez del formulario</td><td>El archivo no está en <code>static/</code> o no se llama <code>index.html</code></td><td>Confirma la ruta <code>src/main/resources/static/index.html</code> y reinicia.</td></tr>
+                  <tr><td>El CSS no se aplica</td><td>La ruta del <code>&lt;link&gt;</code> no coincide con el nombre del archivo</td><td>Ambos archivos van en <code>static/</code>; usa <code>href="estilos.css"</code>, sin carpetas.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h2 class="h5 section-title mb-3">Errores de Git y GitHub</h2>
+            <div class="table-responsive">
+              <table class="table table-sm small mb-0">
+                <thead><tr><th style="width:32%">Síntoma</th><th>Qué significa</th><th>Cómo se arregla</th></tr></thead>
+                <tbody>
+                  <tr><td>Mi compañero no ve mis cambios</td><td>Hiciste commit pero no push</td><td><code>git push</code> (o "Push origin" en GitHub Desktop).</td></tr>
+                  <tr><td>El repositorio pesa muchísimo</td><td>Se subió la carpeta <code>target/</code></td><td>Agrega el <code>.gitignore</code> del <a href="ejercicios.html">Kit</a> y vuelve a comitear.</td></tr>
+                  <tr><td>Subí todo a <code>main</code> por error</td><td>No cambiaste de rama antes de trabajar</td><td>No es grave para esta entrega; crea la rama ahora y avísalo en el README.</td></tr>
+                  <tr><td>GitHub Desktop no ve mis archivos nuevos</td><td>Los guardaste fuera de la carpeta del repositorio</td><td>Mueve el proyecto dentro de la carpeta local del repositorio.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout success">
+          <div class="fw-semibold">Antes de pedir ayuda, ten esto listo</div>
+          <div class="small-muted">
+            <strong>(1)</strong> El mensaje de error completo (copiado, no descrito). <strong>(2)</strong> La ruta
+            exacta del archivo donde ocurre. <strong>(3)</strong> Qué cambiaste justo antes de que dejara de
+            funcionar. Con esas tres cosas, casi cualquier error de esta lista se resuelve en un minuto — y es,
+            además, la forma profesional de reportar un problema.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Cheat Sheet — Semana 9 · Repaso integrado de las primeras 8 semanas (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

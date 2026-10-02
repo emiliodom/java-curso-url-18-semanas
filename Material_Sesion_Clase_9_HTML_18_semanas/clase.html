@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guía Docente — Semana 9 (70 min)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 9 — Hito Parcial</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link active" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="examen.html">Examen</a></li>
+          <li class="nav-item"><a class="nav-link" href="evaluacion_pares.html">Pares</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Guía Docente · Sesión sincrónica de 70 minutos</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Semana 9 — Examen parcial y entrega de avance</h1>
+          <div class="small-muted">Sábado 5 de septiembre de 2026 · 11:10–12:20 · En línea · <strong>Sesión de evaluación, no de contenido nuevo.</strong> Cuatro instrumentos caen esta semana (21.66 pts). Ningún tema nuevo se introduce: todo lo evaluado se enseñó entre las Semanas 1 y 8.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <div class="row g-3">
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="h5 section-title">Objetivos (hoy)</h2>
+            <ul class="mb-0">
+              <li>Repasar de forma integrada Java, GitHub, MVC/capas y Spring Boot en 15 minutos.</li>
+              <li>Aplicar el <strong>examen parcial completo</strong> en clase (20 preguntas de opción múltiple, 20 minutos), con condiciones claras de honestidad académica.</li>
+              <li>Organizar y ejecutar la <strong>Ronda 1</strong> de evaluación entre pares con la rúbrica compartida.</li>
+              <li>Dejar explícito, punto por punto, qué debe contener la <strong>★ Entrega Parcial 2</strong>.</li>
+              <li>Detectar quién viene atrasado y canalizarlo al Kit de archivos completos.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h2 class="h5 section-title">Distribución del tiempo (70 min)</h2>
+            <table class="table table-sm small mb-0">
+              <tbody>
+                <tr><td><span class="time-chip">00–05</span></td><td>Bienvenida + encuadre del hito (qué se evalúa hoy)</td></tr>
+                <tr><td><span class="time-chip">05–20</span></td><td>Repaso integrado relámpago: Java → Git → MVC/capas → Spring Boot</td></tr>
+                <tr><td><span class="time-chip">20–28</span></td><td>Challenge de repaso (clasificar + ordenar)</td></tr>
+                <tr><td><span class="time-chip">28–30</span></td><td>Pausa activa</td></tr>
+                <tr><td><span class="time-chip">30–50</span></td><td><strong>Examen parcial</strong> (20 preguntas, autocalificable)</td></tr>
+                <tr><td><span class="time-chip">50–62</span></td><td><strong>Evaluación entre pares — Ronda 1</strong></td></tr>
+                <tr><td><span class="time-chip">62–70</span></td><td>Checklist de la Entrega Parcial 2 + cierre</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h2 class="h5 section-title">Normas rápidas</h2>
+            <ul class="mb-0">
+              <li>Hoy <strong>no se enseña nada nuevo</strong>. Si surge una duda de contenido, se resuelve con el <a href="cheatsheet.html">Cheat Sheet</a> y se sigue.</li>
+              <li>Durante el examen: cámara encendida si la plataforma lo permite, material cerrado, 20 minutos con cronómetro en pantalla (se entrega solo al llegar a cero).</li>
+              <li>En el peer review nadie evalúa a su propia pareja de trabajo; se asignan parejas cruzadas.</li>
+              <li>Pregunta ancla de la sesión: <em>"¿tu repositorio se puede abrir, clonar y ejecutar por otra persona sin que tú expliques nada?"</em></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout warning mt-3">
+          <div class="fw-semibold">Checklist antes de iniciar (docente)</div>
+          <ul class="small-muted mb-0">
+            <li>Tener la lista de <strong>parejas cruzadas</strong> para el peer review ya definida antes de la sesión (evita perder 5 minutos organizando).</li>
+            <li>Pedir por el grupo, un día antes, que cada quien tenga <strong>el enlace de su repositorio a la mano</strong> — sin eso, la Ronda 1 no funciona.</li>
+            <li><strong>Desplegar el módulo <code>examen_parcial/</code> en el hosting y probarlo con un carné falso ANTES de la sesión.</strong> El examen se califica en el servidor: si el módulo no está publicado, la página no puede calificar y la sesión se cae. Ver <code>examen_parcial/README.md</code>.</li>
+            <li>Recordarle al grupo que llegue con su <strong>número de carné</strong> a la mano: es lo que identifica cada intento.</li>
+            <li>Revisar quiénes no entregaron las Guías 7 y 8: son los que llegarán sin proyecto que mostrar hoy.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="h4 section-title">Guion minuto a minuto (70 min)</h2>
+
+            <div class="accordion" id="acc">
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#c1">
+                    <span class="time-chip me-2">00–05</span> 1) Bienvenida + encuadre del hito
+                  </button>
+                </h2>
+                <div id="c1" class="accordion-collapse collapse show" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ol>
+                      <li>Proyecta la tabla de las 4 entregas de la semana (está en el <a href="index.html">hub</a>) y dedica un minuto a decir en voz alta cuánto vale cada una.</li>
+                      <li>Marca el tono: <em>"hoy no aprendemos algo nuevo; hoy demostramos, corregimos y entregamos. Es la semana que amarra las primeras 8"</em>.</li>
+                      <li>Aclara la logística de las tres entregas de hoy: examen parcial (en clase, se califica solo), peer review (en clase), Entrega Parcial 2 (antes de la Sesión 10).</li>
+                    </ol>
+                    <div class="callout mb-0">
+                      <div class="fw-semibold">Mensaje clave para bajar la ansiedad</div>
+                      <div class="small-muted">Vale la pena decirlo explícitamente: el examen cubre <strong>solo lo que ya se trabajó en clase y en las guías</strong>, es de opción múltiple, y quien resolvió el simulacro del <a href="quiz.html">Quiz</a> ya lo tiene prácticamente ganado. Además hay <strong>dos intentos</strong>: el primero no es definitivo.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c2">
+                    <span class="time-chip me-2">05–20</span> 2) Repaso integrado relámpago (4 bloques)
+                  </button>
+                </h2>
+                <div id="c2" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">Cuatro bloques de ~4 minutos. En cada uno: una idea central, un ejemplo en pantalla y una pregunta al chat. No profundizar — si alguien se atora, remitir al <a href="cheatsheet.html">Cheat Sheet</a>.</p>
+                    <div class="table-responsive">
+                      <table class="table table-sm small">
+                        <thead><tr><th>Bloque</th><th>Idea central</th><th>Pregunta al chat</th></tr></thead>
+                        <tbody>
+                          <tr>
+                            <td><strong>☕ Java</strong> (S1–S2)</td>
+                            <td>Tipos, condicionales, ciclos, métodos y clases: el lenguaje en el que está escrito todo lo demás.</td>
+                            <td>"¿Qué diferencia hay entre <code>int</code> y <code>String</code>?"</td>
+                          </tr>
+                          <tr>
+                            <td><strong>🌿 Git/GitHub</strong> (S3–S4)</td>
+                            <td>Commits como fotos del proyecto; ramas para trabajar sin romper <code>main</code>; Pull Request para revisar.</td>
+                            <td>"¿En qué rama debe estar tu avance?"</td>
+                          </tr>
+                          <tr>
+                            <td><strong>🏛️ MVC y capas</strong> (S5–S6)</td>
+                            <td>Separar responsabilidades: quién muestra, quién decide, quién guarda. El antipatrón es saltarse capas.</td>
+                            <td>"¿A qué capa pertenece un formulario?"</td>
+                          </tr>
+                          <tr>
+                            <td><strong>🍃 Spring Boot</strong> (S7–S8)</td>
+                            <td>Initializr genera el esqueleto, <code>@SpringBootApplication</code> lo enciende, <code>@RestController</code> + <code>@GetMapping</code> lo hacen responder.</td>
+                            <td>"¿Qué anotación conecta una URL con un método?"</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="callout warning mb-0">
+                      <div class="fw-semibold">Punto que conviene reforzar sí o sí (2 min)</div>
+                      <div class="small-muted">La confusión más costosa de las Semanas 7–8 no fue una anotación, sino <strong>dónde va el archivo</strong>: si la clase del controlador queda fuera del paquete base (el del <code>...Application.java</code>), Spring no la encuentra y la ruta responde 404 aunque el código esté perfecto. Muestra en pantalla la regla "<em>carpeta = paquete</em>" del <a href="cheatsheet.html">Cheat Sheet</a>, pestaña "Anatomía".</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c3">
+                    <span class="time-chip me-2">20–28</span> 3) Challenge de repaso
+                  </button>
+                </h2>
+                <div id="c3" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ol>
+                      <li>Comparte el <a href="challenge.html">Challenge</a> — 2 pestañas: "Clasifica las piezas" (¿a qué unidad pertenece cada concepto?) y "Del cero al hito" (ordena el ciclo completo del proyecto).</li>
+                      <li>Pide que completen al menos el nivel <strong>Medio</strong> de la primera pestaña y exporten el PDF: junto con el quiz, es la evidencia de la <strong>Actividad en clase — Sesión 9</strong> (0.66 pts).</li>
+                      <li>Mientras trabajan, circula por las salas detectando quién no tiene el proyecto corriendo: son los que necesitan el Kit hoy mismo.</li>
+                    </ol>
+                    <div class="callout mb-0">
+                      <div class="fw-semibold">Uso diagnóstico del challenge</div>
+                      <div class="small-muted">Las piezas trampa son conceptos de semanas <em>futuras</em> (Thymeleaf, JPA, despliegue, seguridad). Quien las coloca dentro de una unidad está mezclando lo visto con lo que aún no toca — vale la pena aclararlo en voz alta al cerrar la actividad.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c4">
+                    <span class="time-chip me-2">28–30</span> 4) Pausa activa (2 min)
+                  </button>
+                </h2>
+                <div id="c4" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>Estirar, agua, respirar. Es la pausa previa al examen: bájale al ritmo a propósito.</li>
+                      <li>Recordatorio operativo: tener abierto <code>examen.html</code> y cerrar el resto de pestañas del material.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c5">
+                    <span class="time-chip me-2">30–50</span> 5) Examen parcial (20 min, autocalificable)
+                  </button>
+                </h2>
+                <div id="c5" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">Comparte <a href="examen.html">examen.html</a>. Son <strong>20 preguntas de opción múltiple</strong> en 3 secciones, con cronómetro de 20 minutos y calificación automática al entregar.</p>
+                    <div class="table-responsive">
+                      <table class="table table-sm small">
+                        <thead><tr><th>Sección</th><th>Contenido</th><th class="text-center">Preguntas</th><th class="text-end">Pts</th></tr></thead>
+                        <tbody>
+                          <tr><td>1</td><td>Conceptos: GitHub, Java, Spring Boot y su librería web, endpoints, ambientes de desarrollo y producción</td><td class="text-center">10</td><td class="text-end">6</td></tr>
+                          <tr><td>2</td><td>Encontrar 5 errores en un archivo Java (uno por línea señalada)</td><td class="text-center">5</td><td class="text-end">4</td></tr>
+                          <tr><td>3</td><td>Estructura mínima necesaria para que un endpoint responda</td><td class="text-center">5</td><td class="text-end">5</td></tr>
+                          <tr class="fw-bold"><td colspan="2">Total</td><td class="text-center">20</td><td class="text-end">15</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <ol>
+                      <li>Pide que escriban <strong>nombre y carné</strong>: el carné identifica sus intentos.</li>
+                      <li>Lee en voz alta el <strong>compromiso de honestidad académica</strong> y pide que marquen la casilla.</li>
+                      <li>Explica el cronómetro: 20 minutos en pantalla, y al llegar a cero <strong>el examen se entrega solo</strong> con lo contestado.</li>
+                      <li>Aclara que tienen <strong>2 intentos</strong> y que se registran los dos; por defecto cuenta el mejor.</li>
+                      <li>No hace falta que suban nada: el punteo queda registrado en el servidor al entregar.</li>
+                    </ol>
+                    <div class="callout danger">
+                      <div class="fw-semibold">Requisito técnico que debe estar resuelto ANTES de la sesión</div>
+                      <div class="small-muted">El examen se califica en el servidor (la clave de respuestas no está en la página, justamente para que no se pueda ver con "ver código fuente"). Eso significa que el módulo <code>examen_parcial/</code> debe estar <strong>publicado en el hosting</strong> y probado. Si no lo está, la página avisa "no hay conexión con el servidor del examen" y nadie puede resolverlo. Pasos en <code>examen_parcial/README.md</code>.</div>
+                    </div>
+                    <div class="callout warning">
+                      <div class="fw-semibold">Qué ve el estudiante al entregar</div>
+                      <div class="small-muted">Su punteo total, cuánto sacó por sección, y qué preguntas falló — pero <strong>no</strong> cuál era la respuesta correcta. Es deliberado: si le queda un intento, el segundo debe seguir siendo un examen y no un ejercicio de memoria.</div>
+                    </div>
+                    <div class="callout mb-0">
+                      <div class="fw-semibold">Valor de la semana en acción: honestidad y responsabilidad</div>
+                      <div class="small-muted">Vale la pena nombrar el porqué, no solo la regla: quienes van a ser docentes de tecnología serán los que después definan las reglas de honestidad de sus propios estudiantes. Vivirlas hoy es parte de la formación.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c6">
+                    <span class="time-chip me-2">50–62</span> 6) Evaluación entre pares — Ronda 1
+                  </button>
+                </h2>
+                <div id="c6" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">Comparte <a href="evaluacion_pares.html">evaluacion_pares.html</a> y publica la lista de parejas cruzadas (ya preparada antes de la sesión).</p>
+                    <ol>
+                      <li><strong>Minutos 50–52:</strong> cada quien pega el enlace de su repositorio en el chat, junto al nombre de quien lo va a revisar.</li>
+                      <li><strong>Minutos 52–60:</strong> revisión individual con la rúbrica (5 criterios de 1 pt). Cada evaluador abre el repositorio asignado y lo recorre.</li>
+                      <li><strong>Minutos 60–62:</strong> se completan los comentarios: <strong>2 fortalezas + 2 sugerencias</strong>, y se exporta el PDF.</li>
+                    </ol>
+                    <div class="callout warning">
+                      <div class="fw-semibold">Modela un comentario constructivo antes de soltarlos (30 segundos)</div>
+                      <div class="small-muted">Contrasta en pantalla: <em>"está mal hecho"</em> (inútil) contra <em>"el endpoint <code>/api/saludo</code> me dio 404; revisa si el controlador quedó dentro del paquete base"</em> (accionable). La rúbrica exige comentarios del segundo tipo.</div>
+                    </div>
+                    <div class="callout mb-0">
+                      <div class="fw-semibold">Si alguien no tiene repositorio que mostrar</div>
+                      <div class="small-muted">No lo dejes sin actividad: que revise el repositorio de otro compañero de todas formas (el peer review se califica por la <strong>calidad de la evaluación que entrega</strong>, no por el estado de su propio proyecto) y anota el caso para seguimiento con la Entrega Parcial 2.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c7">
+                    <span class="time-chip me-2">62–70</span> 7) Checklist de la Entrega Parcial 2 + cierre
+                  </button>
+                </h2>
+                <div id="c7" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ol>
+                      <li>Proyecta el checklist de <a href="proyecto.html">proyecto.html</a> y recórrelo punto por punto (2 minutos): estructura de paquetes, controlador, servicio, modelo, formulario, README, <code>.gitignore</code>, ramas y commits.</li>
+                      <li>Deja clarísimo el <strong>doble valor</strong>: Guía 9 (1 pt) + Entrega Parcial 2 (5 pts), una sola entrega.</li>
+                      <li>Señala el <a href="ejercicios.html">Kit de archivos completos</a> como el recurso de rescate para quien vaya atrasado: trae cada archivo entero, con su <code>package</code>, sus <code>import</code> y su ruta exacta.</li>
+                      <li>Ticket de salida en el chat: <strong>1 cosa que ya domino + 1 cosa que voy a corregir esta semana</strong>.</li>
+                      <li>Invitación a la <a href="../evaluacion_docente/index.html">evaluación anónima de la sesión</a>.</li>
+                      <li>Puente a la Semana 10: "con la base ya evaluada, empezamos a generar HTML desde el servidor con Thymeleaf y a recibir datos con formularios reales".</li>
+                    </ol>
+                    <div class="callout success mb-0">
+                      <div class="fw-semibold">Cierre del ciclo de retroalimentación</div>
+                      <div class="small-muted">Anuncia cuándo devolverás las rúbricas del peer review. Recibir la retroalimentación de un compañero <em>y poder aplicarla antes de la Entrega Parcial 2</em> es justamente el valor "apertura a la mejora" que evalúa el programa esta semana.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="callout success mt-3">
+          <div class="fw-semibold">Plan B (si la sesión se cae o el tiempo se acorta)</div>
+          <div class="small-muted">
+            Prioridad de recorte, en este orden: (1) el Challenge se manda como trabajo autónomo; (2) el repaso
+            integrado se reduce a los bloques de MVC y Spring Boot; (3) el peer review se traslada a trabajo
+            asincrónico con fecha de 48 horas. Lo único que <strong>no</strong> debe recortarse es el
+            examen y el encuadre del checklist de la Entrega Parcial 2 — sin ese encuadre, el hito llega incompleto.
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Guía Docente — Semana 9 (formato 18 semanas · 70 min) · Ejercicios y Kit en <a href="ejercicios.html">ejercicios.html</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
