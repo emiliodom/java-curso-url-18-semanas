@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guía Docente — Semana 8 (70 min)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 8 — Spring Boot: primer servicio</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link active" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Guía Docente · Sesión sincrónica de 70 minutos</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Semana 8 — Spring Boot: configuración y primer servicio</h1>
+          <div class="small-muted">Sábado 29 de agosto de 2026 · 11:10–12:20 · En línea · Límite de alcance: hoy solo se escriben rutas <strong>GET</strong> (sin formularios de guardado ni <code>@PostMapping</code>); sin Thymeleaf (Semana 10) y sin base de datos/JPA (Semana 12). El "formulario" de hoy es HTML + JavaScript puro que consulta el endpoint — no guarda nada todavía.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <div class="row g-3">
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="h5 section-title">Objetivos (hoy)</h2>
+            <ul class="mb-0">
+              <li>Repasar el proyecto de la Semana 7 y confirmar que sigue arrancando.</li>
+              <li>Explicar qué es un <em>Starter</em> de Spring Boot y qué trajo <code>spring-boot-starter-web</code> al <code>pom.xml</code>.</li>
+              <li>Escribir la primera clase <code>@RestController</code> con dos rutas <code>@GetMapping</code> (una fija y una con <code>@RequestParam</code>).</li>
+              <li>Probar ambas rutas en el navegador y con Postman (o Thunder Client).</li>
+              <li>Construir un formulario HTML sencillo que llame al endpoint con <code>fetch</code> y muestre la respuesta sin recargar la página.</li>
+              <li>Confirmar el hábito de comitear/subir a GitHub según se avanza, no solo al final.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h2 class="h5 section-title">Distribución del tiempo (70 min)</h2>
+            <table class="table table-sm small mb-0">
+              <tbody>
+                <tr><td><span class="time-chip">00–05</span></td><td>Bienvenida + Quiz (Presaberes)</td></tr>
+                <tr><td><span class="time-chip">05–12</span></td><td>Repaso Semana 7 + qué es un Starter + qué es <code>@RestController</code></td></tr>
+                <tr><td><span class="time-chip">12–24</span></td><td>Primer <code>@RestController</code> en vivo: dos rutas GET</td></tr>
+                <tr><td><span class="time-chip">24–30</span></td><td>Probar en el navegador y con Postman/Thunder Client</td></tr>
+                <tr><td><span class="time-chip">30–32</span></td><td>Pausa activa</td></tr>
+                <tr><td><span class="time-chip">32–48</span></td><td>Tu primer formulario web (HTML + <code>fetch</code>) hablándole al endpoint</td></tr>
+                <tr><td><span class="time-chip">48–58</span></td><td>Challenge (ordena los pasos + simulador de una petición) + práctica guiada</td></tr>
+                <tr><td><span class="time-chip">58–65</span></td><td>Quiz (Final de clase)</td></tr>
+                <tr><td><span class="time-chip">65–70</span></td><td>Cierre + lanzamiento de la Guía 8</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h2 class="h5 section-title">Normas rápidas</h2>
+            <ul class="mb-0">
+              <li>Hoy no se escribe ningún <code>@PostMapping</code> ni se guarda nada — solo rutas <code>GET</code> que responden con texto.</li>
+              <li>Pregunta ancla nueva: <em>"¿la URL que escribiste coincide exactamente con la ruta de tu <code>@GetMapping</code>? Java distingue mayúsculas/minúsculas."</em></li>
+              <li>El formulario de hoy es HTML normal en <code>static/index.html</code> — no es Thymeleaf (eso llega en la Semana 10). Es JavaScript puro (<code>fetch</code>) hablándole a tu propio backend.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout warning mt-3">
+          <div class="fw-semibold">Checklist antes de iniciar (docente)</div>
+          <ul class="small-muted mb-0">
+            <li>Tener a la mano un proyecto Spring Boot ya generado (con Spring Web) para la demo en vivo — puede ser el mismo de la Semana 7.</li>
+            <li>Decidir con anticipación el dominio de ejemplo de hoy: <strong>Comedor Solidario Manos Unidas</strong>.</li>
+            <li>Instalar Postman (opcional) o tener lista la extensión "Thunder Client" en VS Code, para no perder tiempo de clase instalando.</li>
+            <li>Plan B listo si Postman/Thunder Client no está disponible (ver más abajo): el navegador alcanza para todo lo de hoy.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="h4 section-title">Guion minuto a minuto (70 min)</h2>
+
+            <div class="accordion" id="acc">
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#c1">
+                    <span class="time-chip me-2">00–05</span> 1) Bienvenida + Quiz (Presaberes)
+                  </button>
+                </h2>
+                <div id="c1" class="accordion-collapse collapse show" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ol>
+                      <li>Saluda y marca el cambio: <em>"la semana pasada tu proyecto arrancaba y respondía con una página de error genérica; hoy le enseñas a responder con tus propias palabras"</em>.</li>
+                      <li>Comparte el enlace del <a href="quiz.html">Quiz</a> — pide que elijan <strong>"Presaberes"</strong> en el menú desplegable (4 minutos, individual).</li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c2">
+                    <span class="time-chip me-2">05–12</span> 2) Repaso Semana 7 + Starter + <code>@RestController</code>
+                  </button>
+                </h2>
+                <div id="c2" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">Repaso relámpago (2 min): abre el proyecto de la Semana 7, ejecútalo, confirma "Started ... Application" y visita <code>localhost:8080</code> — sigue apareciendo la Whitelabel Error Page. Pregunta al grupo: <em>"¿por qué seguimos viendo esta página?"</em> (respuesta esperada: porque ninguna ruta ha sido definida todavía).</p>
+                    <p class="small-muted mb-2">Abre <code>pom.xml</code> y ubica la dependencia agregada la semana pasada:</p>
+                    <pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+                    <div class="callout mt-2">
+                      <div class="fw-semibold">Qué es un "Starter"</div>
+                      <div class="small-muted">Un <em>Starter</em> es un paquete de dependencias ya combinadas para un propósito (aquí, "construir aplicaciones web"). <code>spring-boot-starter-web</code> trae, entre otras cosas, Tomcat embebido y todo lo necesario para escribir controladores REST — es la misma pieza que ya tenías desde el Paso 2 de Spring Initializr en la Semana 7, sin agregar nada nuevo hoy.</div>
+                    </div>
+                    <p class="small-muted mt-2 mb-1">Elevator pitch de <code>@RestController</code>: en la arquitectura en capas (Semanas 5–6), es la anotación que marca una clase como parte de la <strong>capa de presentación/controlador</strong> — recibe peticiones HTTP y devuelve una respuesta (texto, JSON, etc.) directamente, sin pasar por una vista HTML como haría un controlador MVC tradicional con Thymeleaf.</p>
+                    <div class="callout warning mt-2">
+                      <div class="fw-semibold">Conexión con la Semana 6 (antipatrón de saltarse capas)</div>
+                      <div class="small-muted">Hoy, por simplicidad, el controlador va a construir la respuesta directamente. En proyectos reales, un controlador NO debería contener lógica de negocio pesada — eso vive en la capa de Servicio. Lo veremos formalmente cuando el proyecto crezca; hoy el controlador es simple a propósito.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c3">
+                    <span class="time-chip me-2">12–24</span> 3) Primer <code>@RestController</code> en vivo
+                  </button>
+                </h2>
+                <div id="c3" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">Dentro de <code>src/main/java/.../</code>, junto a la clase <code>...Application.java</code>, crea una nueva clase <code>BienvenidaController.java</code> (dominio de ejemplo: <strong>Comedor Solidario Manos Unidas</strong>):</p>
+                    <pre><code>package gt.edu.url.laboratoriospring;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class BienvenidaController {
+
+    @GetMapping("/api/saludo")
+    public String saludo() {
+        return "¡Bienvenido(a) al Comedor Solidario Manos Unidas!";
+    }
+
+    @GetMapping("/api/bienvenida")
+    public String bienvenida(@RequestParam(defaultValue = "visitante") String nombre) {
+        return "Hola, " + nombre + ". Gracias por apoyar al Comedor Solidario Manos Unidas.";
+    }
+}</code></pre>
+                    <div class="table-responsive mt-2">
+                      <table class="table table-sm small mb-0">
+                        <thead><tr><th>Pieza</th><th>Qué hace</th></tr></thead>
+                        <tbody>
+                          <tr><td><code>@RestController</code></td><td>Marca la clase completa como un controlador que responde directamente con datos (texto/JSON), no con una vista.</td></tr>
+                          <tr><td><code>@GetMapping("/api/saludo")</code></td><td>Conecta la ruta <code>/api/saludo</code> con este método, solo para peticiones <strong>GET</strong>.</td></tr>
+                          <tr><td><code>@RequestParam(defaultValue = "visitante")</code></td><td>Lee un parámetro de la URL (ej. <code>?nombre=Ana</code>); si no viene, usa el valor por defecto — así el endpoint no falla si lo visitas sin parámetro.</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p class="small-muted mt-2 mb-0">Guarda, reinicia el proyecto (⏹ y ▶ Run de nuevo) y confirma en el log que sigue arrancando sin errores.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c4">
+                    <span class="time-chip me-2">24–30</span> 4) Probar en el navegador y con Postman
+                  </button>
+                </h2>
+                <div id="c4" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">En el navegador, visita:</p>
+                    <pre><code>http://localhost:8080/api/saludo
+http://localhost:8080/api/bienvenida
+http://localhost:8080/api/bienvenida?nombre=Marta</code></pre>
+                    <div class="callout success mb-2">
+                      <div class="fw-semibold">✅ Señal de éxito</div>
+                      <div class="small-muted">Ya no aparece la Whitelabel Error Page — el navegador muestra el texto que devolvió el método. La Semana 7 terminó aquí; hoy ya llegamos más lejos.</div>
+                    </div>
+                    <p class="small-muted mb-2">Ahora la misma prueba con Postman (o la extensión "Thunder Client" de VS Code, más liviana): crea una petición <strong>GET</strong> a <code>http://localhost:8080/api/bienvenida?nombre=Marta</code> y muestra el resultado, resaltando que también se ven los <em>headers</em> de la respuesta.</p>
+                    <div class="callout mb-0">
+                      <div class="fw-semibold">¿Por qué usar Postman si el navegador ya funciona?</div>
+                      <div class="small-muted">Para rutas <code>GET</code> simples como las de hoy, el navegador es suficiente. Postman se vuelve indispensable más adelante en el curso, cuando existan rutas <code>POST</code>/<code>PUT</code> que envían datos en el cuerpo de la petición (no en la URL) — algo que un navegador no puede hacer con solo escribir una dirección.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c5">
+                    <span class="time-chip me-2">30–32</span> 5) Pausa activa (2 min)
+                  </button>
+                </h2>
+                <div id="c5" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>Estirar manos y espalda, agua, mirar lejos de la pantalla 20 segundos.</li>
+                      <li>Micro-check en el chat: "en una palabra, ¿qué anotación conecta una URL con un método Java?"</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c6">
+                    <span class="time-chip me-2">32–48</span> 6) Tu primer formulario web
+                  </button>
+                </h2>
+                <div id="c6" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">Spring Boot sirve automáticamente cualquier archivo dentro de <code>src/main/resources/static/</code>. Crea ahí un archivo <code>index.html</code>:</p>
+                    <pre><code>&lt;!doctype html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8" /&gt;
+  &lt;title&gt;Comedor Solidario Manos Unidas&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Comedor Solidario Manos Unidas&lt;/h1&gt;
+  &lt;form id="formBienvenida"&gt;
+    &lt;label for="nombre"&gt;Tu nombre:&lt;/label&gt;
+    &lt;input type="text" id="nombre" name="nombre" required /&gt;
+    &lt;button type="submit"&gt;Enviar saludo&lt;/button&gt;
+  &lt;/form&gt;
+  &lt;p id="resultado"&gt;&lt;/p&gt;
+
+  &lt;script&gt;
+    document.getElementById('formBienvenida').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var nombre = document.getElementById('nombre').value;
+      fetch('/api/bienvenida?nombre=' + encodeURIComponent(nombre))
+        .then(function (respuesta) { return respuesta.text(); })
+        .then(function (texto) { document.getElementById('resultado').textContent = texto; });
+    });
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                    <div class="table-responsive mt-2">
+                      <table class="table table-sm small mb-0">
+                        <thead><tr><th>Pieza del JavaScript</th><th>Qué hace</th></tr></thead>
+                        <tbody>
+                          <tr><td><code>e.preventDefault()</code></td><td>Evita que el formulario recargue la página al enviarse — así la respuesta aparece sin perder el contexto.</td></tr>
+                          <tr><td><code>fetch('/api/bienvenida?nombre=...')</code></td><td>Hace, en JavaScript, la misma petición GET que hicimos a mano en el navegador y en Postman.</td></tr>
+                          <tr><td><code>.then(...text())</code></td><td>Lee la respuesta como texto plano (el método del controlador devuelve un <code>String</code>, no JSON).</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p class="small-muted mt-2 mb-0">Reinicia el proyecto y visita <code>http://localhost:8080</code> (sin ninguna ruta después) — Spring Boot muestra automáticamente ese <code>index.html</code>. Escribe un nombre, pulsa "Enviar saludo" y observa el mensaje aparecer sin recargar la página.</p>
+                    <div class="callout warning mt-2">
+                      <div class="fw-semibold">Esto NO es Thymeleaf</div>
+                      <div class="small-muted"><code>index.html</code> es un archivo estático común y corriente; el navegador lo descarga tal cual y JavaScript hace el resto. Thymeleaf (Semana 10) permitirá que el propio servidor genere HTML dinámico con datos de Java — una forma distinta y más potente de construir vistas.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c7">
+                    <span class="time-chip me-2">48–58</span> 7) Challenge + práctica guiada
+                  </button>
+                </h2>
+                <div id="c7" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ol>
+                      <li>Comparte el enlace del <a href="challenge.html">Challenge</a> — tiene 2 pestañas: <strong>Ordena los pasos</strong> y <strong>Simulador de una petición</strong>.</li>
+                      <li>Modela en pantalla el escenario "ruta mal escrita (404)" del simulador una vez (2 min).</li>
+                      <li>Los estudiantes resuelven ambas pestañas por su cuenta — 6 min.</li>
+                      <li>Quien termine antes: continúa con los <a href="ejercicios.html">Ejercicios</a> en su propia máquina, y hace su primer commit del controlador y el formulario en su proyecto de práctica.</li>
+                    </ol>
+                    <div class="callout warning">
+                      <div class="fw-semibold">Preguntas guía (docente, mientras circula por salas)</div>
+                      <div class="small-muted">¿Qué pasa si escribes <code>/Api/saludo</code> con mayúscula? ¿Qué diferencia hay entre probar una ruta en el navegador y probarla en Postman?</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c8">
+                    <span class="time-chip me-2">58–65</span> 8) Quiz (Final de clase)
+                  </button>
+                </h2>
+                <div id="c8" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ol>
+                      <li>Comparte de nuevo el enlace del <a href="quiz.html">Quiz</a> — esta vez pide que elijan <strong>"Final de clase"</strong> en el menú (10 preguntas, individual, 7 min).</li>
+                      <li>Al terminar, cada estudiante pulsa <em>Calificar</em>, revisa la retroalimentación y <strong>exporta su resultado a PDF</strong>.</li>
+                      <li>Los PDF del quiz y del challenge = evidencia de la <strong>Actividad en clase – Sesión 8</strong>.</li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c9">
+                    <span class="time-chip me-2">65–70</span> 9) Cierre + lanzamiento de la Guía 8
+                  </button>
+                </h2>
+                <div id="c9" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>Síntesis en 3 frases: <code>@RestController</code> + <code>@GetMapping</code> conectan una URL con un método Java; el navegador y Postman prueban esa ruta; un HTML estático con <code>fetch</code> le habla al servicio sin recargar la página.</li>
+                      <li>Ticket de salida en el chat: <strong>1 aprendizaje + 1 duda</strong>.</li>
+                      <li>Invitación a la <a href="../evaluacion_docente/index.html">evaluación anónima de la sesión</a>.</li>
+                      <li>Presenta el <a href="proyecto.html">Proyecto (Entregable de la Guía 8)</a>: agregar un endpoint y un formulario reales al proyecto del estudiante, y subirlos a GitHub — fecha límite antes de la Sesión 9 (5 de septiembre de 2026).</li>
+                      <li>Puente a la semana 9: repaso general y Entrega Parcial 2 (avance acumulado del proyecto).</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="callout success mt-3">
+          <div class="fw-semibold">Plan B (si Postman/Thunder Client no está disponible durante la sesión)</div>
+          <div class="small-muted">
+            Todo lo de hoy se puede probar completamente con el navegador: las rutas <code>GET</code> de esta
+            semana no necesitan un cliente HTTP especial. Presenta Postman como una herramienta útil, no como
+            un requisito bloqueante — si alguien no logra instalarlo hoy, puede seguir la sesión sin problema y
+            resolverlo después con el <a href="cheatsheet.html">Cheat Sheet</a>.
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Guía Docente — Semana 8 (formato 18 semanas · 70 min) · Ejercicios en <a href="ejercicios.html">ejercicios.html</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Proyecto — Entregable de la Guía 8 (Semana 8)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 8 — Spring Boot: primer servicio</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link active" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Proyecto · Entregable de la Guía de Aprendizaje 8 (1 pt)</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Tu primer endpoint y formulario, reales, en tu proyecto</h1>
+          <div class="small-muted">Esta página tiene dos partes: primero una <strong>guía paso a paso</strong> para agregar un <code>@RestController</code> y un formulario web a tu proyecto real, y al final la <strong>plantilla calificable</strong> que debes completar y entregar. Fecha límite: <strong>antes de la Sesión 9 (5 de septiembre de 2026)</strong>. Esta semana no tiene Entrega Parcial adicional — el siguiente hito es la Entrega Parcial 2, en la Semana 9.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 980px;">
+
+    <div class="callout warning mb-4">
+      <div class="fw-semibold">Antes de empezar</div>
+      <div class="small-muted">Necesitas: el proyecto Spring Boot que generaste y subiste a GitHub en la <a href="../Material_Sesion_Clase_7_HTML_18_semanas/index.html">Semana 7</a>, corriendo en tu máquina, y tu <a href="../ficha_proyecto.html">Ficha del Proyecto</a> (nombre de la entidad/institución) a la mano. Hoy no se guarda ningún dato — solo consultas (GET). El guardado real llega más adelante en el curso.</div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">Parte guiada — agrega tu primer servicio real</h2>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso1">Paso 1 — Abre tu proyecto real de la Semana 7</h3>
+        <p class="small-muted">Abre en VS Code la carpeta de tu proyecto Spring Boot real (el que generaste con el Group/Artifact de tu institución) y ejecútalo para confirmar que sigue arrancando.</p>
+        <div class="callout success mb-0">✅ Checkpoint: en la terminal aparece "Started ... Application in X seconds" y <code>localhost:8080</code> sigue mostrando la Whitelabel Error Page (todavía no hay rutas).</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso2">Paso 2 — Crea tu <code>@RestController</code> con datos reales de tu proyecto</h3>
+        <p class="small-muted">Crea una clase controladora (ej. <code>BienvenidaController.java</code>) junto a tu clase <code>Application.java</code>, usando el nombre real de tu entidad/institución:</p>
+        <pre><code>@RestController
+public class BienvenidaController {
+
+    @GetMapping("/api/saludo")
+    public String saludo() {
+        return "¡Bienvenido(a) a Guardería Esperanza!"; // usa el nombre real de tu institución
+    }
+
+    @GetMapping("/api/bienvenida")
+    public String bienvenida(@RequestParam(defaultValue = "visitante") String nombre) {
+        return "Hola, " + nombre + ". Gracias por visitar Guardería Esperanza.";
+    }
+}</code></pre>
+        <div class="callout success mb-0">✅ Checkpoint: reiniciaste el proyecto y ambas rutas responden en el navegador con texto relacionado a tu institución real (no con datos de ejemplo genéricos).</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso3">Paso 3 — Pruébalo con Postman o Thunder Client</h3>
+        <p class="small-muted">Crea una petición GET a tu ruta <code>/api/bienvenida?nombre=...</code> en Postman (o la extensión "Thunder Client" de VS Code) y confirma el código de estado 200 OK.</p>
+        <div class="callout success mb-0">✅ Checkpoint: viste la respuesta correcta y el código 200 OK en Postman/Thunder Client, además del navegador.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso4">Paso 4 — Construye tu formulario web</h3>
+        <p class="small-muted">Crea <code>src/main/resources/static/index.html</code> con un formulario y JavaScript (<code>fetch</code>) que llame a tu endpoint (código completo en el <a href="cheatsheet.html">Cheat Sheet</a>, sección A) — cambia los textos por el nombre real de tu institución.</p>
+        <div class="callout success mb-0">✅ Checkpoint: al visitar <code>localhost:8080</code>, aparece tu formulario; al escribir un nombre y enviarlo, el mensaje aparece sin recargar la página.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso5">Paso 5 — Sube los cambios a tu repositorio real</h3>
+        <p class="small-muted">En GitHub Desktop, dentro de tu rama <code>development</code>: confirma el cambio ("Commit to development") con el resumen <em>"Agrega BienvenidaController y formulario web"</em>, y publica/sincroniza la rama.</p>
+        <div class="callout success mb-0">✅ Checkpoint: tu rama <code>development</code> en GitHub.com muestra tu nueva clase controladora y el archivo <code>static/index.html</code>.</div>
+      </div>
+    </div>
+
+    <details class="mb-4">
+      <summary class="fw-semibold">Solución de problemas frecuentes</summary>
+      <div class="table-responsive mt-2">
+        <table class="table table-sm small mb-0">
+          <thead><tr><th>Situación</th><th>Qué hacer</th></tr></thead>
+          <tbody>
+            <tr><td>Whitelabel Error Page al visitar mi propia ruta</td><td>Compara letra por letra con <code>@GetMapping("...")</code> (mayúsculas incluidas) y reinicia el proyecto tras cada cambio.</td></tr>
+            <tr><td>El formulario no muestra ningún mensaje</td><td>Revisa la consola del navegador (F12) — casi siempre es un error de sintaxis en el JavaScript o una ruta mal escrita en el <code>fetch</code>.</td></tr>
+            <tr><td>"Port 8080 was already in use"</td><td>Ya tienes otra copia corriendo (tal vez del proyecto de práctica). Deténla o usa otro puerto temporalmente con <code>server.port</code>.</td></tr>
+            <tr><td>GitHub Desktop no detecta los archivos nuevos</td><td>Verifica que <code>BienvenidaController.java</code> y <code>static/index.html</code> están DENTRO de la carpeta de tu repositorio local.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <hr class="my-4" />
+    <h2 class="h4 section-title mb-3">📋 Entregable — completa esto para tu calificación</h2>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title mb-3">Datos del estudiante</h3>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label small fw-semibold">Nombre completo</label>
+            <input class="form-control fill-line" type="text" />
+          </div>
+          <div class="col-md-3">
+            <label class="form-label small fw-semibold">Carné</label>
+            <input class="form-control fill-line" type="text" />
+          </div>
+          <div class="col-md-3">
+            <label class="form-label small fw-semibold">Fecha de entrega</label>
+            <input class="form-control fill-line" type="text" placeholder="dd/mm/2026" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte A — Tu <code>@RestController</code> (25%)</h3>
+        <p class="small-muted">Pega el código completo de tu clase controladora, con al menos dos rutas <code>@GetMapping</code> (una con <code>@RequestParam</code>):</p>
+        <textarea class="code-area" rows="8"></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte B — Evidencia de las pruebas (25%)</h3>
+        <p class="small-muted">Describe (o pega captura) lo que viste al probar tus rutas en el navegador y en Postman/Thunder Client (incluye el código de estado):</p>
+        <textarea class="code-area" rows="6"></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte C — Tu formulario web (25%)</h3>
+        <p class="small-muted">Pega el código de tu <code>static/index.html</code> (o la parte relevante) y describe qué mensaje aparece al enviarlo:</p>
+        <textarea class="code-area" rows="8"></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte D — Subida a GitHub (15%)</h3>
+        <p class="small-muted">Pega el enlace directo a los archivos nuevos (controlador y formulario) dentro de tu rama <code>development</code> en GitHub:</p>
+        <textarea class="code-area" rows="4"></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte E — Reflexión (10%)</h3>
+        <ol class="small">
+          <li class="mb-2">
+            <strong>Rigurosidad técnica:</strong> ¿por qué crees que Spring exige que la URL coincida EXACTAMENTE con lo escrito en <code>@GetMapping</code>, en vez de ser flexible con mayúsculas/minúsculas?
+            <textarea class="form-control mt-1" rows="3"></textarea>
+          </li>
+          <li>
+            <strong>Profesionalismo en el control de versiones:</strong> ¿en qué momento de hoy hiciste (o deberías haber hecho) un commit, y por qué en ese punto y no antes o después?
+            <textarea class="form-control mt-1" rows="3"></textarea>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Lista de cotejo (marca antes de entregar)</h3>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck1" /><label class="form-check-label small" for="ck1">Mi controlador tiene al menos dos rutas GET, una con @RequestParam.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck2" /><label class="form-check-label small" for="ck2">Probé ambas rutas en el navegador y en Postman/Thunder Client.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck3" /><label class="form-check-label small" for="ck3">Mi formulario en static/index.html llama al endpoint con fetch y muestra la respuesta sin recargar.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck4" /><label class="form-check-label small" for="ck4">Subí los archivos nuevos a mi rama development en GitHub.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck5" /><label class="form-check-label small" for="ck5">Exporté el PDF con el nombre <code>Guia8_TuNombre.pdf</code>.</label></div>
+      </div>
+    </div>
+
+    <div class="callout warning">
+      <div class="fw-semibold">Rúbrica rápida (1 punto total)</div>
+      <div class="small-muted">Parte A: 0.25 · Parte B: 0.25 · Parte C: 0.25 · Parte D: 0.15 · Parte E: 0.10. Se valora que el endpoint y el formulario realmente existan y funcionen (no solo que se describan), que los textos usen el nombre real de tu institución, y la honestidad de la reflexión. Entregar tarde: −25% por día.</div>
+    </div>
+
+    <div class="d-flex gap-2 mt-3 no-print">
+      <button class="btn btn-primary btn-lg btn-export" onclick="window.print()">Exportar a PDF</button>
+      <a class="btn btn-outline-primary btn-lg" href="index.html">Volver al inicio</a>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Proyecto — Entregable de la Guía 8 · Semana 8 (formato 18 semanas) · Fecha límite: antes de la Sesión 9
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ejercicios — Semana 8 (Spring Boot: primer servicio)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 8 — Spring Boot: primer servicio</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link active" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Guía de ejercicios · Semana 8 · 100% en tu propia computadora</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Tu primer servicio REST, de verdad, corriendo en tu máquina</h1>
+          <div class="small-muted">Estos 7 ejercicios se hacen en tu <strong>proyecto de práctica</strong> <code>laboratorio-spring</code> (el mismo de la Semana 7, o uno nuevo con la dependencia Spring Web). Dominio de ejemplo: <strong>Comedor Solidario Manos Unidas</strong>. Cada uno tiene una pista, un checkpoint y una solución en <code>&lt;details&gt;</code> por si te atoras.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <div class="callout mb-3">
+      <div class="fw-semibold">Antes de empezar: la pregunta ancla de esta semana</div>
+      <div class="small-muted">En cada ejercicio pregúntate: <strong>¿la URL que escribí coincide EXACTAMENTE con el texto dentro de <code>@GetMapping("...")</code>?</strong> Java (y las rutas web) distinguen mayúsculas de minúsculas.</div>
+    </div>
+
+    <div class="row g-3">
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 1 — Confirma que tu proyecto sigue vivo <span class="badge text-bg-success">Calentamiento</span></h2>
+            <p class="small-muted mb-2">Abre tu proyecto <code>laboratorio-spring</code> de la Semana 7 (o genera uno nuevo con Spring Web) y ejecútalo.</p>
+            <p class="small-muted mb-1"><strong>Tu turno:</strong> ¿qué ves en <code>localhost:8080</code> ahora mismo, antes de tocar nada hoy?</p>
+            <details>
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small-muted">La Whitelabel Error Page (404) — es lo esperado, todavía no existe ningún <code>@RestController</code> en el proyecto. Eso cambia en el Ejercicio 2.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 2 — Tu primer <code>@RestController</code> <span class="badge text-bg-primary">Real</span></h2>
+            <p class="small-muted mb-2">Crea una clase <code>SaludoController.java</code> junto a tu clase <code>...Application.java</code>:</p>
+            <pre><code>@RestController
+public class SaludoController {
+
+    @GetMapping("/api/saludo")
+    public String saludo() {
+        return "¡Bienvenido(a) al Comedor Solidario Manos Unidas!";
+    }
+}</code></pre>
+            <p class="small-muted mb-1"><strong>Tu turno:</strong> reinicia el proyecto y visita <code>localhost:8080/api/saludo</code>. ¿Qué ves?</p>
+            <details>
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small-muted">El texto exacto que devuelve el método: "¡Bienvenido(a) al Comedor Solidario Manos Unidas!" — sin comillas, como texto plano en la página. Ya no aparece la Whitelabel Error Page.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 3 — Endpoint con parámetro <span class="badge text-bg-primary">Real</span></h2>
+            <p class="small-muted mb-2">En la misma clase, agrega un segundo método:</p>
+            <pre><code>@GetMapping("/api/bienvenida")
+public String bienvenida(@RequestParam(defaultValue = "visitante") String nombre) {
+    return "Hola, " + nombre + ". Gracias por apoyar al Comedor Solidario Manos Unidas.";
+}</code></pre>
+            <p class="small-muted mb-1"><strong>Tu turno:</strong> visita <code>/api/bienvenida</code> (sin parámetro) y luego <code>/api/bienvenida?nombre=Carla</code>. ¿Qué cambia?</p>
+            <details>
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small-muted">Sin parámetro, usa el valor por defecto "visitante". Con <code>?nombre=Carla</code>, el mensaje dice "Hola, Carla...". <code>@RequestParam</code> lee lo que va después del <code>?</code> en la URL.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 4 — Pruébalo con Postman (o Thunder Client) <span class="badge text-bg-warning">Herramienta</span></h2>
+            <p class="small-muted mb-2">Crea una petición <strong>GET</strong> a <code>http://localhost:8080/api/bienvenida?nombre=Luis</code> en Postman o en la extensión "Thunder Client" de VS Code.</p>
+            <p class="small-muted mb-1"><strong>Tu turno:</strong> además del texto de respuesta, ¿qué otra información ves que el navegador normalmente no te muestra tan claro?</p>
+            <details>
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small-muted">El código de estado (200 OK), los <em>headers</em> de la respuesta (ej. <code>Content-Type</code>) y el tiempo que tardó la petición. Esto será clave más adelante, cuando trabajes con rutas <code>POST</code> que Postman puede probar y el navegador no.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 5 — Tu primer formulario web <span class="badge text-bg-primary">Real</span></h2>
+            <p class="small-muted mb-2">Crea <code>src/main/resources/static/index.html</code> con un formulario y JavaScript que llame a <code>/api/bienvenida</code> con <code>fetch</code> (ver el código completo en el <a href="cheatsheet.html">Cheat Sheet</a>, sección A).</p>
+            <p class="small-muted mb-1"><strong>Tu turno:</strong> reinicia el proyecto, visita <code>localhost:8080</code> (sin ninguna ruta) y prueba el formulario. ¿Se recarga la página al enviarlo?</p>
+            <details>
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small-muted">No se recarga — <code>e.preventDefault()</code> lo evita, y <code>fetch</code> hace la petición en segundo plano. El mensaje de respuesta aparece dentro de <code>&lt;p id="resultado"&gt;</code>.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 6 — Provoca un error de ruta <span class="badge text-bg-warning">Interpretar</span></h2>
+            <p class="small-muted mb-2">Visita a propósito <code>localhost:8080/api/Bienvenida</code> (con mayúscula) o <code>localhost:8080/api/bienvenidaa</code> (con una letra de más).</p>
+            <p class="small-muted mb-1"><strong>Tu turno:</strong> ¿qué página aparece y por qué, aunque tu código esté correcto?</p>
+            <details>
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small-muted">Vuelve a aparecer la Whitelabel Error Page (404): Spring Boot busca una ruta EXACTA a lo escrito en <code>@GetMapping</code>. Un solo carácter distinto ya no coincide — es el error más común de la semana.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 7 — Reto integrador: un tercer endpoint + commit <span class="badge text-bg-danger">Integrador</span></h2>
+            <p class="small-muted mb-2">Agrega un tercer método <code>@GetMapping("/api/menu-del-dia")</code> que devuelva el nombre de un platillo cualquiera (inventado). Prueba las 3 rutas. Sube el proyecto de práctica a un repositorio de GitHub (o commitea si ya lo tenías ahí) con el mensaje <em>"Agrega SaludoController y formulario web"</em>.</p>
+            <p class="small-muted mb-1"><strong>Tu turno:</strong> ¿por qué es buena práctica comitear ahora, en vez de esperar a tener 10 endpoints?</p>
+            <details>
+              <summary class="fw-semibold">Ejemplo de solución</summary>
+              <div class="mt-2 small-muted">Commits pequeños y frecuentes son más fáciles de revisar, de revertir si algo sale mal, y muestran el progreso real del trabajo — el mismo hábito que practicaste en las Semanas 3–4 con ramas y Pull Requests.</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="callout success mt-4">
+      <div class="fw-semibold">¿Terminaste todo?</div>
+      <div class="small-muted">Pasa al <a href="challenge.html">Challenge</a> (pestaña "Simulador de una petición" para ver cómo viaja una petición sin escribir más código), revisa el <strong>Anexo</strong> del <a href="cheatsheet.html">Cheat Sheet</a> (adelanto de estilo y guardado en base de datos), o aplica exactamente estos mismos pasos a tu proyecto real en <a href="proyecto.html">Proyecto</a>.</div>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Ejercicios — Semana 8 · Spring Boot: configuración y primer servicio (formato 18 semanas) · Aplica esto a tu proyecto en <a href="proyecto.html">Proyecto</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Challenge — Ordena los pasos y simulador de una petición (Semana 8)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 8 — Spring Boot: primer servicio</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link active" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Challenge · Semana 8 · Ludoteca Los Soñadores</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Dos retos: publicar un endpoint y seguir una petición</h1>
+          <div class="small-muted">Dos pestañas: un juego de secuencia (el orden correcto para publicar y probar un endpoint) y un <strong>simulador de una petición</strong> que ilumina, paso a paso, por dónde viaja un GET desde el formulario hasta el controlador y de vuelta.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="exportChallengePdf()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <ul class="nav nav-tabs mb-4 no-print" id="challengeTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="tab-secuencia-btn" data-bs-toggle="tab" data-bs-target="#tab-secuencia" type="button" role="tab">🧩 Ordena los pasos</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-simulador-btn" data-bs-toggle="tab" data-bs-target="#tab-simulador" type="button" role="tab">⚙️ Simulador de una petición</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="challengeTabsContent">
+
+      <!-- ================= PESTAÑA 1: SECUENCIA ================= -->
+      <div class="tab-pane fade show active" id="tab-secuencia" role="tabpanel">
+        <div class="row g-3">
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="h5 section-title">Cómo jugar</h2>
+                <ol class="small mb-0">
+                  <li>Elige un nivel: <strong>Fácil → Medio → Difícil</strong>.</li>
+                  <li>Lee la <strong>misión</strong>: la Ludoteca Los Soñadores necesita publicar su primer endpoint.</li>
+                  <li>Arrastra los pasos del banco a las líneas numeradas (o toca: primero el paso, luego el destino).</li>
+                  <li>Cada suelta te avisa al instante si vas bien, si el paso va antes/después, o si no aplica.</li>
+                  <li>Cuando todas las líneas estén en verde, pulsa <strong>Verificar</strong> para tu puntaje final.</li>
+                  <li>Al terminar: escribe tu nombre y <strong>Exportar a PDF</strong>.</li>
+                </ol>
+              </div>
+            </div>
+            <div class="callout warning mt-3">
+              <div class="fw-semibold">Ojo en Medio y Difícil</div>
+              <div class="small-muted">Hay <strong>pasos trampa</strong>: cosas que suenan técnicas pero le tocan a otra semana (base de datos, Thymeleaf, guardar datos). Déjalos en el banco.</div>
+            </div>
+            <div class="card mt-3">
+              <div class="card-body">
+                <h2 class="h6 section-title">Tu progreso</h2>
+                <div id="progressList" class="small">
+                  <div>🟡 Fácil: <span id="prog-facil">sin intentar</span></div>
+                  <div>🟠 Medio: <span id="prog-medio">sin intentar</span></div>
+                  <div>🔴 Difícil: <span id="prog-dificil">sin intentar</span></div>
+                </div>
+                <label class="form-label fw-semibold mt-3 mb-1" for="studentName">Nombre (para el PDF)</label>
+                <input id="studentName" class="form-control form-control-sm" type="text" placeholder="Nombre y apellido" />
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-8">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3 no-print">
+                  <div class="btn-group" role="group" aria-label="Nivel">
+                    <button class="btn btn-outline-primary level-btn active" data-level="facil" onclick="loadLevel('facil')">🟡 Fácil</button>
+                    <button class="btn btn-outline-primary level-btn" data-level="medio" onclick="loadLevel('medio')">🟠 Medio</button>
+                    <button class="btn btn-outline-primary level-btn" data-level="dificil" onclick="loadLevel('dificil')">🔴 Difícil</button>
+                  </div>
+                  <span class="badge text-bg-secondary" id="attemptsBadge">Verificaciones: 0</span>
+                </div>
+
+                <div class="callout mb-3">
+                  <div class="fw-semibold">Misión — <span id="levelName"></span></div>
+                  <div class="small-muted" id="levelMission"></div>
+                </div>
+
+                <h3 class="h6 fw-bold">Banco de pasos</h3>
+                <div id="pool" class="dd-pool mb-3" aria-label="Banco de pasos"></div>
+
+                <h3 class="h6 fw-bold">Tu secuencia (pasos 1 a <span id="lineCount"></span>)</h3>
+                <div id="target" class="dd-target mb-3" aria-label="Secuencia a armar"></div>
+
+                <div id="resultBanner" class="score-banner"></div>
+
+                <div class="d-flex gap-2 flex-wrap no-print mt-3">
+                  <button class="btn btn-primary" onclick="verify()">✔ Verificar</button>
+                  <button class="btn btn-outline-secondary" onclick="loadLevel(currentLevelKey)">↺ Reiniciar nivel</button>
+                  <button class="btn btn-outline-warning" id="solutionBtn" onclick="showSolution()" disabled>💡 Ver solución (tras 3 verificaciones)</button>
+                  <button class="btn btn-outline-dark btn-export ms-auto" onclick="exportChallengePdf()">Exportar a PDF</button>
+                </div>
+
+                <details class="mt-3">
+                  <summary class="fw-semibold">¿Qué deberías ver al terminar esta secuencia?</summary>
+                  <pre class="mt-2" style="white-space: pre-wrap;"><code id="expectedOutput"></code></pre>
+                  <div class="small-muted">Cuando logres 100%, repite exactamente esta secuencia con tu proyecto real en <a href="proyecto.html">Proyecto</a>.</div>
+                </details>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= PESTAÑA 2: SIMULADOR DE UNA PETICIÓN ================= -->
+      <div class="tab-pane fade" id="tab-simulador" role="tabpanel">
+        <div class="row g-3">
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="h5 section-title">Sigue la petición</h2>
+                <p class="small-muted">Elige un escenario del formulario de la Ludoteca Los Soñadores y pulsa <strong>"Siguiente paso"</strong> para ver, en vivo, por dónde viaja una petición GET.</p>
+                <label class="form-label small fw-semibold" for="scenarioSelect">Escenario</label>
+                <select id="scenarioSelect" class="form-select mb-3" onchange="reiniciarSimulador()">
+                  <option value="exitoso">✅ Petición exitosa</option>
+                  <option value="error">⚠️ Ruta mal escrita (404)</option>
+                </select>
+                <div class="d-flex gap-2 flex-wrap">
+                  <button class="btn btn-primary" id="nextStepBtn" onclick="siguientePaso()">▶ Siguiente paso</button>
+                  <button class="btn btn-outline-secondary" onclick="reiniciarSimulador()">↺ Reiniciar</button>
+                </div>
+              </div>
+            </div>
+            <div class="callout mt-3">
+              <div class="fw-semibold">Qué observar</div>
+              <div class="small-muted">En el escenario exitoso, fíjate que Spring solo puede llegar al Controlador si encuentra una ruta que coincida EXACTAMENTE. En el escenario con error, la petición nunca llega al Controlador — se detiene un paso antes.</div>
+            </div>
+          </div>
+
+          <div class="col-lg-8">
+            <div class="card">
+              <div class="card-body">
+                <h3 class="h6 fw-bold mb-2">Mapa de la petición (se ilumina la etapa activa)</h3>
+                <div class="layer-map mb-3">
+                  <div class="layer-card presentacion" id="box-formulario">
+                    <div class="layer-title">🧸 Formulario <span class="small-muted fw-normal">— Navegador</span></div>
+                    <span class="role-chip">Arma la URL</span><span class="role-chip">Envía la petición GET</span>
+                  </div>
+                  <div class="layer-arrow">↕</div>
+                  <div class="layer-card negocio" id="box-dispatcher">
+                    <div class="layer-title">🚦 DispatcherServlet <span class="small-muted fw-normal">— Spring</span></div>
+                    <span class="role-chip">Recibe toda petición que entra</span><span class="role-chip">Busca una ruta que coincida EXACTO</span>
+                  </div>
+                  <div class="layer-arrow">↕</div>
+                  <div class="layer-card datos" id="box-controlador">
+                    <div class="layer-title">⚙️ @RestController <span class="small-muted fw-normal">— Tu código</span></div>
+                    <span class="role-chip">Ejecuta el método</span><span class="role-chip">Arma la respuesta</span>
+                  </div>
+                </div>
+
+                <h3 class="h6 fw-bold">Registro de la simulación</h3>
+                <div id="simLog" class="sim-log"></div>
+              </div>
+            </div>
+            <div class="callout success mt-3" id="simExplain" style="display:none;"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Challenge — Semana 8 · Spring Boot: configuración y primer servicio, Ludoteca Los Soñadores (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="toast.js"></script>
+  <script>
+    // ===== PESTAÑA 1: Secuencia =====
+    var CATEGORY_LABELS = {
+      crear: 'crear la clase controladora',
+      mapear: 'definir la ruta (@GetMapping)',
+      ejecutar: 'ejecutar el proyecto',
+      probar: 'probar la ruta',
+      formulario: 'construir el formulario web',
+      github: 'subir los cambios a GitHub'
+    };
+
+    var CATEGORY_TIPS_OK = {
+      crear: 'Ya tienes la clase lista para recibir rutas.',
+      mapear: 'La URL ya está conectada con un método Java.',
+      ejecutar: 'El servidor está corriendo con tu nuevo código.',
+      probar: 'Confirmaste el resultado en el lugar correcto.',
+      formulario: 'Tu página ya le puede hablar al backend sin recargar.',
+      github: 'Tu avance ya no vive solo en tu computadora.'
+    };
+
+    var LEVELS = {
+      facil: {
+        name: 'Fácil — Tu primer endpoint',
+        mission: 'La Ludoteca Los Soñadores nunca ha tenido un endpoint propio. Ordena los 4 pasos mínimos para publicar uno.',
+        lines: [
+          { text: 'Crear una clase nueva y anotarla con @RestController', cat: 'crear' },
+          { text: 'Escribir un método con @GetMapping("/api/saludo") que devuelva un texto', cat: 'mapear' },
+          { text: 'Ejecutar (o reiniciar) el proyecto', cat: 'ejecutar' },
+          { text: 'Visitar /api/saludo en el navegador y confirmar el texto de respuesta', cat: 'probar' }
+        ],
+        distractors: [],
+        output: 'El navegador mostraría el texto exacto que devuelve el método — ya no la Whitelabel Error Page.'
+      },
+      medio: {
+        name: 'Medio — Prueba también con Postman',
+        mission: 'Ahora se agrega la prueba con una herramienta de peticiones, y aparecen los primeros pasos trampa.',
+        lines: [
+          { text: 'Crear una clase nueva y anotarla con @RestController', cat: 'crear' },
+          { text: 'Escribir un método con @GetMapping("/api/saludo") que devuelva un texto', cat: 'mapear' },
+          { text: 'Ejecutar (o reiniciar) el proyecto', cat: 'ejecutar' },
+          { text: 'Visitar /api/saludo en el navegador y confirmar el texto de respuesta', cat: 'probar' },
+          { text: 'Probar la misma ruta en Postman o Thunder Client', cat: 'probar' }
+        ],
+        distractors: [
+          { text: 'Instalar una base de datos para guardar las visitas', cat: 'trap' },
+          { text: 'Crear una plantilla Thymeleaf para la vista', cat: 'trap' }
+        ],
+        output: 'Verías el mismo texto en el navegador y en Postman/Thunder Client — pero ahí también verías el código de estado 200 OK y los headers de la respuesta.'
+      },
+      dificil: {
+        name: 'Difícil — Endpoint con parámetro + formulario + GitHub',
+        mission: 'El flujo completo: dos rutas, un formulario que las consume, y el hábito de subir el avance a GitHub. Hay 3 pasos trampa que no le tocan a esta semana.',
+        lines: [
+          { text: 'Crear una clase nueva y anotarla con @RestController', cat: 'crear' },
+          { text: 'Escribir un método con @GetMapping("/api/saludo") con texto fijo', cat: 'mapear' },
+          { text: 'Agregar un segundo método con @GetMapping("/api/bienvenida") y @RequestParam', cat: 'mapear' },
+          { text: 'Ejecutar (o reiniciar) el proyecto', cat: 'ejecutar' },
+          { text: 'Probar ambas rutas en el navegador y en Postman', cat: 'probar' },
+          { text: 'Crear static/index.html con un formulario que use fetch para llamar al endpoint', cat: 'formulario' },
+          { text: 'Comitear y subir (push) los cambios a GitHub', cat: 'github' }
+        ],
+        distractors: [
+          { text: 'Crear una entidad @Entity para guardar los datos en una base de datos', cat: 'trap' },
+          { text: 'Escribir una plantilla Thymeleaf para la vista', cat: 'trap' },
+          { text: 'Agregar un @PostMapping para guardar los datos enviados', cat: 'trap' }
+        ],
+        output: 'Verías dos rutas funcionando, un formulario en localhost:8080 que muestra la respuesta sin recargar, y el código nuevo visible en tu repositorio de GitHub — sin base de datos, sin Thymeleaf y sin guardar nada todavía.'
+      }
+    };
+
+    var currentLevelKey = 'facil';
+    var attempts = 0;
+    var progress = { facil: null, medio: null, dificil: null };
+    var selectedPiece = null;
+
+    function shuffle(arr) {
+      var a = arr.slice();
+      for (var i = a.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = a[i]; a[i] = a[j]; a[j] = t;
+      }
+      return a;
+    }
+
+    function makePiece(text, cat, order) {
+      var el = document.createElement('div');
+      el.className = 'dd-piece';
+      el.textContent = text;
+      el.setAttribute('draggable', 'true');
+      el.dataset.text = text;
+      el.dataset.cat = cat;
+      el.dataset.order = order === undefined ? '-1' : String(order);
+      el.addEventListener('dragstart', function (e) {
+        el.classList.add('dragging');
+        e.dataTransfer.setData('text/plain', '');
+        window._dragged = el;
+      });
+      el.addEventListener('dragend', function () {
+        el.classList.remove('dragging');
+        window._dragged = null;
+      });
+      el.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (selectedPiece === el) {
+          el.classList.remove('selected');
+          selectedPiece = null;
+        } else {
+          if (selectedPiece) selectedPiece.classList.remove('selected');
+          selectedPiece = el;
+          el.classList.add('selected');
+        }
+      });
+      return el;
+    }
+
+    function feedbackForDrop(piece, slotIndex) {
+      var level = LEVELS[currentLevelKey];
+      var expected = level.lines[slotIndex];
+
+      if (piece.dataset.text === expected.text) {
+        var label = CATEGORY_LABELS[expected.cat] || expected.cat;
+        return { ok: true, type: 'ok', msg: '✓ Paso correcto (' + label + '). ' + (CATEGORY_TIPS_OK[expected.cat] || '') };
+      }
+
+      if (piece.dataset.cat === 'trap') {
+        return { ok: false, type: 'bad', msg: 'Ese paso no aplica esta semana (le toca a otra semana: base de datos, Thymeleaf o guardado). Déjalo en el banco.' };
+      }
+
+      var order = parseInt(piece.dataset.order, 10);
+      var pieceLabel = CATEGORY_LABELS[piece.dataset.cat] || piece.dataset.cat;
+
+      if (order < slotIndex) {
+        return { ok: false, type: 'warn', msg: 'Ese paso (' + pieceLabel + ') ya debía haber pasado antes. Va más temprano.' };
+      }
+      if (order > slotIndex) {
+        return { ok: false, type: 'warn', msg: 'Ese paso (' + pieceLabel + ') todavía no toca aquí. Va más adelante.' };
+      }
+      return { ok: false, type: 'info', msg: 'Vas en la etapa correcta (' + pieceLabel + '), pero no es exactamente ese paso. Revisa el texto con cuidado.' };
+    }
+
+    function placePiece(piece, slot) {
+      var existing = slot.querySelector('.dd-piece');
+      if (existing) document.getElementById('pool').appendChild(existing);
+      slot.appendChild(piece);
+      piece.classList.remove('selected');
+      selectedPiece = null;
+
+      var slotIndex = Array.prototype.indexOf.call(document.querySelectorAll('#target .dd-slot'), slot);
+      var fb = feedbackForDrop(piece, slotIndex);
+      slot.classList.remove('correct', 'incorrect');
+      slot.classList.add(fb.ok ? 'correct' : 'incorrect');
+      showToast(fb.msg, fb.type);
+    }
+
+    function setupDropzone(zone, isSlot) {
+      zone.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        if (isSlot) zone.classList.add('over');
+      });
+      zone.addEventListener('dragleave', function () {
+        zone.classList.remove('over');
+      });
+      zone.addEventListener('drop', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        zone.classList.remove('over');
+        var piece = window._dragged;
+        if (!piece) return;
+        if (isSlot) placePiece(piece, zone);
+        else zone.appendChild(piece);
+      });
+      zone.addEventListener('click', function (e) {
+        if (!selectedPiece) return;
+        if (isSlot) {
+          placePiece(selectedPiece, zone);
+        } else if (e.target === zone) {
+          zone.appendChild(selectedPiece);
+          selectedPiece.classList.remove('selected');
+          selectedPiece = null;
+        }
+      });
+    }
+
+    function loadLevel(key) {
+      currentLevelKey = key;
+      attempts = 0;
+      selectedPiece = null;
+      document.getElementById('attemptsBadge').textContent = 'Verificaciones: 0';
+      document.getElementById('solutionBtn').disabled = true;
+
+      var level = LEVELS[key];
+      document.getElementById('levelName').textContent = level.name;
+      document.getElementById('levelMission').textContent = level.mission;
+      document.getElementById('lineCount').textContent = level.lines.length;
+      document.getElementById('expectedOutput').textContent = level.output;
+
+      document.querySelectorAll('.level-btn').forEach(function (b) {
+        b.classList.toggle('active', b.dataset.level === key);
+      });
+
+      var banner = document.getElementById('resultBanner');
+      banner.className = 'score-banner';
+      banner.innerHTML = '';
+
+      var target = document.getElementById('target');
+      target.innerHTML = '';
+      level.lines.forEach(function () {
+        var slot = document.createElement('div');
+        slot.className = 'dd-slot';
+        setupDropzone(slot, true);
+        target.appendChild(slot);
+      });
+
+      var pool = document.getElementById('pool');
+      pool.innerHTML = '';
+      var pieces = level.lines.map(function (l, i) { return makePiece(l.text, l.cat, i); })
+        .concat(level.distractors.map(function (d) { return makePiece(d.text, 'trap', -1); }));
+      shuffle(pieces).forEach(function (p) { pool.appendChild(p); });
+
+      showToast('Nivel "' + level.name + '" listo. Arrastra el primer paso.', 'info', 3000);
+    }
+
+    function verify() {
+      attempts++;
+      document.getElementById('attemptsBadge').textContent = 'Verificaciones: ' + attempts;
+      if (attempts >= 3) document.getElementById('solutionBtn').disabled = false;
+
+      var level = LEVELS[currentLevelKey];
+      var slots = document.querySelectorAll('#target .dd-slot');
+      var correct = 0;
+      slots.forEach(function (slot, i) {
+        var piece = slot.querySelector('.dd-piece');
+        slot.classList.remove('correct', 'incorrect');
+        if (piece && piece.dataset.text === level.lines[i].text) {
+          correct++;
+          slot.classList.add('correct');
+        } else {
+          slot.classList.add('incorrect');
+        }
+      });
+
+      var total = level.lines.length;
+      var pct = Math.round((correct / total) * 100);
+      progress[currentLevelKey] = { pct: pct, attempts: attempts };
+      var progEl = document.getElementById('prog-' + currentLevelKey);
+      progEl.textContent = pct + '% (' + attempts + ' verificación' + (attempts === 1 ? '' : 'es') + ')';
+
+      var banner = document.getElementById('resultBanner');
+      var msg;
+      if (pct === 100) {
+        msg = '🎉 ¡Secuencia completa! Así se publica y prueba un endpoint desde cero.';
+        showToast('¡Nivel completado! ' + level.name, 'ok', 5000);
+      } else if (pct >= 60) {
+        msg = 'Casi. Revisa los toasts de cada paso: te dicen si algo va antes, después, o si es una acción trampa.';
+      } else {
+        msg = 'Respira y piensa el orden: primero creas la clase, luego defines la ruta, luego ejecutas, y al final pruebas.';
+      }
+      banner.className = 'score-banner show alert ' + (pct === 100 ? 'alert-success' : pct >= 60 ? 'alert-warning' : 'alert-danger');
+      banner.innerHTML =
+        '<div class="h5 mb-1">' + level.name + ' — ' + correct + ' / ' + total + ' pasos (' + pct + '%)</div>' +
+        '<div>' + msg + '</div>' +
+        '<div class="small mt-1">Verificaciones: ' + attempts + ' · Fecha: ' + new Date().toLocaleString('es-GT') + '</div>';
+    }
+
+    function showSolution() {
+      var level = LEVELS[currentLevelKey];
+      var pool = document.getElementById('pool');
+      var slots = document.querySelectorAll('#target .dd-slot');
+      document.querySelectorAll('#target .dd-piece').forEach(function (p) { pool.appendChild(p); });
+      level.lines.forEach(function (line, i) {
+        var piece = Array.prototype.find.call(pool.querySelectorAll('.dd-piece'), function (p) {
+          return p.dataset.text === line.text;
+        });
+        if (piece) {
+          slots[i].appendChild(piece);
+          slots[i].classList.remove('incorrect');
+          slots[i].classList.add('correct');
+        }
+      });
+      var banner = document.getElementById('resultBanner');
+      banner.className = 'score-banner show alert alert-warning';
+      banner.innerHTML = '<div class="fw-semibold">Solución mostrada (no cuenta como logro propio).</div><div class="small">Estúdiala, pulsa "Reiniciar nivel" e inténtalo de nuevo sin ayuda.</div>';
+      showToast('Solución mostrada — vuelve a intentarlo sin ayuda.', 'info');
+    }
+
+    function exportChallengePdf() {
+      var name = document.getElementById('studentName').value || '';
+      var attempted = Object.keys(progress).some(function (k) { return progress[k]; });
+      if (!attempted) {
+        showToast('Verifica al menos un nivel de "Ordena los pasos" antes de exportar.', 'warn');
+        return;
+      }
+      if (!name.trim()) {
+        showToast('Escribe tu nombre en la casilla "Nombre (para el PDF)".', 'warn');
+        document.getElementById('studentName').focus();
+        return;
+      }
+      window.print();
+    }
+
+    setupDropzone(document.getElementById('pool'), false);
+    loadLevel('facil');
+
+    // ===== PESTAÑA 2: Simulador de una petición =====
+    var SCENARIOS = {
+      exitoso: [
+        { layer: 'formulario', msg: '🧸 Formulario: el usuario escribe "Sofía" y pulsa "Enviar saludo". El navegador arma GET /api/bienvenida?nombre=Sofía.' },
+        { layer: 'dispatcher', msg: '🚦 DispatcherServlet: recibe la petición y busca un método anotado con @GetMapping("/api/bienvenida")... lo encuentra.' },
+        { layer: 'controlador', msg: '⚙️ @RestController: ejecuta bienvenida("Sofía") y arma el texto "Hola, Sofía. Gracias por apoyar a la Ludoteca Los Soñadores."' },
+        { layer: 'dispatcher', msg: '🚦 DispatcherServlet: envía la respuesta de regreso con código 200 OK.' },
+        { layer: 'formulario', msg: '🧸 Formulario: fetch() recibe el texto y lo muestra en la página, sin recargarla.' }
+      ],
+      error: [
+        { layer: 'formulario', msg: '🧸 Formulario: por un error de escritura en el código, el fetch apunta a GET /api/Bienvenida (con mayúscula) en vez de /api/bienvenida.' },
+        { layer: 'dispatcher', msg: '🚦 DispatcherServlet: busca un método con @GetMapping("/api/Bienvenida") EXACTO... no encuentra ninguno.' },
+        { layer: 'dispatcher', msg: '🚦 DispatcherServlet: nunca llega a llamar al @RestController — responde directamente con 404.' },
+        { layer: 'formulario', msg: '🧸 Formulario: fetch() recibe una página de error (Whitelabel) en vez del saludo esperado.' }
+      ]
+    };
+    var simIndex = -1;
+
+    function limpiarResaltado() {
+      ['formulario', 'dispatcher', 'controlador'].forEach(function (l) {
+        var el = document.getElementById('box-' + l);
+        if (el) el.classList.remove('active-step');
+      });
+    }
+
+    function logSim(msg) {
+      var box = document.getElementById('simLog');
+      var line = document.createElement('div');
+      line.className = 'sim-line hl';
+      line.textContent = msg;
+      box.appendChild(line);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function siguientePaso() {
+      var scenario = SCENARIOS[document.getElementById('scenarioSelect').value];
+      if (simIndex >= scenario.length - 1) {
+        showToast('Escenario terminado. Pulsa "Reiniciar" para verlo de nuevo o elige otro escenario.', 'info');
+        return;
+      }
+      simIndex++;
+      limpiarResaltado();
+      var step = scenario[simIndex];
+      var el = document.getElementById('box-' + step.layer);
+      if (el) el.classList.add('active-step');
+      logSim((simIndex + 1) + '. ' + step.msg);
+      if (simIndex === scenario.length - 1) {
+        document.getElementById('nextStepBtn').textContent = '✔ Escenario completo';
+        var explainBox = document.getElementById('simExplain');
+        explainBox.style.display = 'block';
+        explainBox.innerHTML = document.getElementById('scenarioSelect').value === 'exitoso'
+          ? '<div class="fw-semibold">Qué pasó</div><div class="small-muted">La petición pasó por las 3 etapas porque la ruta coincidió exactamente. El @RestController solo se ejecuta cuando el DispatcherServlet encuentra una coincidencia perfecta.</div>'
+          : '<div class="fw-semibold">Qué pasó</div><div class="small-muted">La petición nunca llegó al @RestController — el DispatcherServlet no encontró ninguna ruta que coincidiera EXACTO con "/api/Bienvenida" y respondió 404 por su cuenta.</div>';
+        showToast('Simulación completa. Lee la explicación bajo el mapa.', 'ok', 5000);
+      }
+    }
+
+    function reiniciarSimulador() {
+      simIndex = -1;
+      limpiarResaltado();
+      document.getElementById('simLog').innerHTML = '';
+      document.getElementById('nextStepBtn').textContent = '▶ Siguiente paso';
+      document.getElementById('simExplain').style.display = 'none';
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

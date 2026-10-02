@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz — Semana 8 (Presaberes y Final)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 8 — Spring Boot: primer servicio</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Quiz de la semana · Elige el modo con el menú</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Presaberes y Quiz Final, en un solo lugar</h1>
+          <div class="small-muted" id="quizTypeLabel">Presaberes · 8 preguntas · no cuenta para nota</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 900px;">
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="row g-3 align-items-end">
+          <div class="col-md-6">
+            <label class="form-label fw-semibold" for="quizType">¿Qué quiz vas a resolver?</label>
+            <select id="quizType" class="form-select" onchange="renderQuiz()">
+              <option value="presaberes">🟡 Presaberes (inicio de clase, no cuenta para nota)</option>
+              <option value="final">🔴 Final de clase (evidencia de la Actividad en clase)</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold" for="studentName">Nombre del estudiante (aparecerá en el PDF)</label>
+            <input id="studentName" class="form-control" type="text" placeholder="Nombre y apellido" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout mb-3 no-print">
+      <div class="fw-semibold">¿Cómo funciona?</div>
+      <div class="small-muted">Cada vez que cambias de modo (o pulsas "🔀 Nuevas preguntas") se eligen preguntas <strong>al azar</strong> de un banco más grande — es normal que no veas siempre las mismas. Los dos modos comparten varios conceptos a propósito, para que Presaberes te prepare de verdad para el Final.</div>
+    </div>
+
+    <div id="quizContainer"></div>
+
+    <div id="scoreBanner" class="score-banner"></div>
+
+    <div class="d-flex gap-2 flex-wrap mt-3 no-print">
+      <button class="btn btn-primary btn-lg" onclick="gradeQuiz()">Calificar</button>
+      <button class="btn btn-outline-secondary" onclick="resetQuiz()">Reintentar (mismas preguntas)</button>
+      <button class="btn btn-outline-info" onclick="regenerateQuiz()">🔀 Nuevas preguntas</button>
+      <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      <a class="btn btn-outline-primary ms-auto" href="clase.html">Continuar a la clase →</a>
+    </div>
+
+    <div class="callout warning mt-4 no-print">
+      <div class="fw-semibold">Instrucciones de entrega (si estás en modo Final)</div>
+      <ol class="small-muted mb-0">
+        <li>Escribe tu nombre en la casilla de arriba.</li>
+        <li>Pulsa <strong>Calificar</strong> y revisa la retroalimentación de cada pregunta.</li>
+        <li>Pulsa <strong>Exportar a PDF</strong> y guarda el archivo como <code>QuizFinal_S8_TuNombre.pdf</code>.</li>
+        <li>Súbelo al aula virtual junto con el PDF del <a href="challenge.html">Challenge</a>.</li>
+      </ol>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Quiz — Semana 8 · Spring Boot: configuración y primer servicio (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script>
+    // ===== Banco de preguntas de la Semana 8 =====
+    // level: 'presaberes' (solo diagnóstico) | 'final' (solo cierre) | 'ambas'
+    var QUESTION_BANK = [
+      // ---- Solo Presaberes (repaso + intuición) ----
+      {
+        level: 'presaberes',
+        pregunta: '(Repaso Semana 7) La semana pasada, al visitar localhost:8080 aparecía una Whitelabel Error Page. ¿Por qué?',
+        opciones: [{ v: 'a', t: 'Porque ninguna ruta (endpoint) estaba definida todavía' }, { v: 'b', t: 'Porque el JDK no estaba instalado' }, { v: 'c', t: 'Porque el proyecto nunca arrancó' }],
+        correcta: 'a',
+        fbOk: 'Correcto: el servidor sí estaba corriendo, solo faltaba decirle qué responder en esa ruta.',
+        fbKo: 'Porque no había ninguna ruta definida. El servidor sí estaba corriendo — eso es justo lo que resolvemos hoy.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: '¿Qué crees que hace falta para que tu proyecto Spring Boot "responda" en vez de mostrar un error?',
+        opciones: [{ v: 'a', t: 'Una clase que reciba la petición y devuelva algo' }, { v: 'b', t: 'Instalar un nuevo lenguaje de programación' }, { v: 'c', t: 'Reinstalar el JDK' }],
+        correcta: 'a',
+        fbOk: 'Correcto: eso es exactamente lo que hace un controlador — recibe la petición y responde.',
+        fbKo: 'Hace falta una clase (controlador) que reciba la petición HTTP y devuelva una respuesta — hoy la escribes por primera vez.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: '¿Alguna vez has llenado un formulario en una página web (aunque sea de otra materia o app)?',
+        opciones: [{ v: 'a', t: 'Sí' }, { v: 'b', t: 'No, sería mi primera vez' }, { v: 'c', t: 'No estoy seguro/a' }],
+        correcta: 'a',
+        fbOk: 'Cualquier respuesta es válida aquí — es solo diagnóstica. Hoy construyes uno propio, muy simple.',
+        fbKo: 'Cualquier respuesta era válida 🙂 — hoy vas a construir un formulario propio, sencillo, que le habla a tu proyecto.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: '¿Qué crees que significa la palabra "GET" en el contexto de una página o API web?',
+        opciones: [{ v: 'a', t: 'Pedir/consultar información, sin modificar nada en el servidor' }, { v: 'b', t: 'Borrar información del servidor' }, { v: 'c', t: 'Un nombre de variable cualquiera' }],
+        correcta: 'a',
+        fbOk: 'Correcto: GET es el método HTTP para consultar, no para modificar ni guardar datos.',
+        fbKo: 'GET significa "consultar/pedir" información. No modifica ni guarda nada en el servidor — por eso es seguro visitarlo desde el navegador.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: '¿Qué es Postman, en términos simples?',
+        opciones: [{ v: 'a', t: 'Una herramienta para armar y enviar peticiones HTTP y ver su respuesta' }, { v: 'b', t: 'Un lenguaje de programación' }, { v: 'c', t: 'Una base de datos' }],
+        correcta: 'a',
+        fbOk: 'Correcto: te deja construir peticiones (GET, POST, etc.) sin escribir código, y ver la respuesta completa.',
+        fbKo: 'Es una herramienta para construir y enviar peticiones HTTP (como visitar una URL, pero con más control) y ver la respuesta completa.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: 'Si tu proyecto ya arranca correctamente desde la Semana 7, ¿qué falta agregar para tener un servicio REST básico?',
+        opciones: [{ v: 'a', t: 'Una clase anotada como controlador, con al menos una ruta' }, { v: 'b', t: 'Reinstalar Maven' }, { v: 'c', t: 'Cambiar de JDK' }],
+        correcta: 'a',
+        fbOk: 'Correcto: no hace falta reinstalar nada — solo agregar código Java nuevo.',
+        fbKo: 'Solo falta una clase controladora con al menos una ruta — nada de instalación adicional.'
+      },
+      // ---- Ambas (conceptos centrales) ----
+      {
+        level: 'ambas',
+        pregunta: '¿Qué anotación marca una clase como un controlador que devuelve datos directamente (texto/JSON), sin una vista HTML del servidor?',
+        opciones: [{ v: 'a', t: '@RestController' }, { v: 'b', t: '@SpringBootApplication' }, { v: 'c', t: '@Entity' }],
+        correcta: 'a',
+        fbOk: 'Correcto: @RestController es la anotación de hoy.',
+        fbKo: 'Es @RestController. @SpringBootApplication enciende el proyecto entero (Semana 7); @Entity es de bases de datos (Semana 12).'
+      },
+      {
+        level: 'ambas',
+        pregunta: '¿Qué anotación conecta una URL con un método Java, solo para peticiones GET?',
+        opciones: [{ v: 'a', t: '@GetMapping("/ruta")' }, { v: 'b', t: '@RequestParam' }, { v: 'c', t: '@Autowired' }],
+        correcta: 'a',
+        fbOk: 'Correcto: @GetMapping define la ruta exacta y el método HTTP.',
+        fbKo: 'Es @GetMapping("/ruta"). @RequestParam lee parámetros de la URL, no define la ruta en sí.'
+      },
+      {
+        level: 'ambas',
+        pregunta: 'Tu método tiene @GetMapping("/api/saludo") pero visitas /api/Saludo (con mayúscula). ¿Qué pasa?',
+        opciones: [{ v: 'a', t: 'Aparece un error 404, porque las rutas distinguen mayúsculas/minúsculas' }, { v: 'b', t: 'Funciona igual, no importa' }, { v: 'c', t: 'El proyecto deja de arrancar' }],
+        correcta: 'a',
+        fbOk: 'Correcto: la ruta debe coincidir EXACTAMENTE, letra por letra.',
+        fbKo: 'Aparece un 404 (Whitelabel Error Page). Las rutas deben coincidir exactamente, incluidas mayúsculas y minúsculas.'
+      },
+      {
+        level: 'ambas',
+        pregunta: '¿Para qué sirve @RequestParam(defaultValue = "visitante")?',
+        opciones: [{ v: 'a', t: 'Da un valor por defecto si el parámetro no viene en la URL' }, { v: 'b', t: 'Guarda el parámetro en una base de datos' }, { v: 'c', t: 'Cambia el puerto del servidor' }],
+        correcta: 'a',
+        fbOk: 'Correcto: evita errores cuando alguien visita la ruta sin ese parámetro.',
+        fbKo: 'Da un valor por defecto cuando el parámetro no viene en la URL — así el método no falla.'
+      },
+      {
+        level: 'ambas',
+        pregunta: '¿Dónde debe vivir un archivo estático (como tu index.html con el formulario) para que Spring Boot lo sirva automáticamente?',
+        opciones: [{ v: 'a', t: 'src/main/resources/static/' }, { v: 'b', t: 'src/main/java/' }, { v: 'c', t: 'La raíz del proyecto, fuera de src' }],
+        correcta: 'a',
+        fbOk: 'Correcto: todo dentro de static/ se sirve tal cual, sin procesar.',
+        fbKo: 'Es src/main/resources/static/. Spring Boot lo sirve automáticamente sin configuración adicional.'
+      },
+      {
+        level: 'ambas',
+        pregunta: '¿Qué hace e.preventDefault() en el JavaScript del formulario de hoy?',
+        opciones: [{ v: 'a', t: 'Evita que la página se recargue al enviar el formulario' }, { v: 'b', t: 'Borra los datos del formulario' }, { v: 'c', t: 'Envía el formulario dos veces' }],
+        correcta: 'a',
+        fbOk: 'Correcto: sin esa línea, el navegador recargaría la página al enviar el formulario, perdiendo el resultado.',
+        fbKo: 'Evita la recarga de la página al enviar el formulario, para poder mostrar la respuesta con JavaScript.'
+      },
+      // ---- Solo Final (más técnico) ----
+      {
+        level: 'final',
+        pregunta: '¿Qué función de JavaScript usamos hoy para llamar al endpoint desde el formulario?',
+        opciones: [{ v: 'a', t: 'fetch()' }, { v: 'b', t: 'import()' }, { v: 'c', t: 'require()' }],
+        correcta: 'a',
+        fbOk: 'Correcto: fetch() hace la petición HTTP desde JavaScript.',
+        fbKo: 'Es fetch(). Hace en JavaScript la misma petición que harías escribiendo la URL en el navegador.'
+      },
+      {
+        level: 'final',
+        pregunta: '¿Qué dependencia del pom.xml (agregada en la Semana 7) hace posible escribir controladores REST hoy?',
+        opciones: [{ v: 'a', t: 'spring-boot-starter-web' }, { v: 'b', t: 'spring-boot-starter-data-jpa' }, { v: 'c', t: 'spring-boot-starter-thymeleaf' }],
+        correcta: 'a',
+        fbOk: 'Correcto: es el Starter de aplicaciones web, incluye Tomcat y todo lo necesario para @RestController.',
+        fbKo: 'Es spring-boot-starter-web. Las otras dos son para persistencia (Semana 12) y vistas Thymeleaf (Semana 10) — todavía no las agregamos.'
+      },
+      {
+        level: 'final',
+        pregunta: 'Visitas /api/bienvenida?nombre=Marta en Postman y en el navegador. ¿Qué información ves en Postman que el navegador no muestra tan claro?',
+        opciones: [{ v: 'a', t: 'El código de estado HTTP y los headers de la respuesta' }, { v: 'b', t: 'El código fuente Java del controlador' }, { v: 'c', t: 'La contraseña del servidor' }],
+        correcta: 'a',
+        fbOk: 'Correcto: Postman expone el código de estado, headers y tiempo de respuesta de forma clara.',
+        fbKo: 'El código de estado (ej. 200 OK) y los headers de la respuesta. El código fuente nunca se envía al cliente.'
+      },
+      {
+        level: 'final',
+        pregunta: '¿Por qué el formulario de esta semana NO usa @PostMapping?',
+        opciones: [{ v: 'a', t: 'Porque hoy solo consultamos datos (GET); guardar datos con POST llega más adelante' }, { v: 'b', t: 'Porque @PostMapping no existe en Spring Boot' }, { v: 'c', t: 'Porque un formulario nunca puede usar POST' }],
+        correcta: 'a',
+        fbOk: 'Correcto: el alcance de hoy es solo consultar (GET), no guardar.',
+        fbKo: 'Porque hoy el alcance es solo consultar información (GET). Guardar datos con POST se explica formalmente más adelante en el curso.'
+      },
+      {
+        level: 'final',
+        pregunta: 'Detecta el límite de esta semana: ¿qué NO deberías escribir todavía en tu proyecto?',
+        opciones: [{ v: 'a', t: 'Una plantilla Thymeleaf o una entidad conectada a una base de datos' }, { v: 'b', t: 'Una clase con @RestController' }, { v: 'c', t: 'Un archivo HTML dentro de static/' }],
+        correcta: 'a',
+        fbOk: 'Correcto: Thymeleaf (Semana 10) y JPA/base de datos (Semana 12) son temas futuros.',
+        fbKo: 'No deberías escribir Thymeleaf ni una entidad de base de datos todavía — esos temas llegan en las Semanas 10 y 12.'
+      },
+      {
+        level: 'final',
+        pregunta: 'Tu compañero prueba /api/bienvenida en el navegador y funciona, pero al compartir el proyecto por GitHub, otro compañero no ve el cambio. ¿Qué es lo más probable que faltó?',
+        opciones: [{ v: 'a', t: 'Comitear y subir (push) los archivos nuevos al repositorio' }, { v: 'b', t: 'Reinstalar el JDK' }, { v: 'c', t: 'Cambiar el puerto del servidor' }],
+        correcta: 'a',
+        fbOk: 'Correcto: sin commit + push, los cambios solo existen en la máquina local.',
+        fbKo: 'Faltó comitear y subir los cambios a GitHub — el código nuevo solo existía en la máquina local hasta ese paso.'
+      }
+    ];
+    var QUIZ_CONFIG = { presaberesCount: 8, finalCount: 10 };
+  </script>
+  <script src="quiz.js"></script>
+  <script>renderQuiz();</script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

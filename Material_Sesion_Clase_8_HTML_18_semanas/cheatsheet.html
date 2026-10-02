@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cheat Sheet — Semana 8 (Spring Boot: primer servicio)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 8 — Spring Boot: primer servicio</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link active" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Cheat Sheet · Semana 8 · <code>@RestController</code> y tu primer formulario</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Referencia rápida — anotaciones, comandos y un adelanto</h1>
+          <div class="small-muted">Tres pestañas: conceptos y código de hoy, comandos + solución de problemas, y un <strong>Anexo</strong> opcional con un adelanto (sin implementar todavía) de estilo y guardado real en base de datos.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <ul class="nav nav-tabs mb-4 no-print" id="cheatTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="tab-conceptos-btn" data-bs-toggle="tab" data-bs-target="#tab-conceptos" type="button" role="tab">📘 Conceptos y código</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-comandos-btn" data-bs-toggle="tab" data-bs-target="#tab-comandos" type="button" role="tab">🧯 Comandos y solución de problemas</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-anexo-btn" data-bs-toggle="tab" data-bs-target="#tab-anexo" type="button" role="tab">🎁 Anexo: estilo y base de datos</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="cheatTabsContent">
+
+      <div class="tab-pane fade show active" id="tab-conceptos" role="tabpanel">
+
+        <h2 class="h4 section-title mb-3" id="seccionA">A. Código completo de hoy: controlador + formulario</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-2"><code>src/main/java/.../BienvenidaController.java</code>:</p>
+            <pre><code>@RestController
+public class BienvenidaController {
+
+    @GetMapping("/api/saludo")
+    public String saludo() {
+        return "¡Bienvenido(a) al Comedor Solidario Manos Unidas!";
+    }
+
+    @GetMapping("/api/bienvenida")
+    public String bienvenida(@RequestParam(defaultValue = "visitante") String nombre) {
+        return "Hola, " + nombre + ". Gracias por apoyar al Comedor Solidario Manos Unidas.";
+    }
+}</code></pre>
+            <p class="small-muted mb-2 mt-3"><code>src/main/resources/static/index.html</code>:</p>
+            <pre><code>&lt;!doctype html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8" /&gt;
+  &lt;title&gt;Comedor Solidario Manos Unidas&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Comedor Solidario Manos Unidas&lt;/h1&gt;
+  &lt;form id="formBienvenida"&gt;
+    &lt;label for="nombre"&gt;Tu nombre:&lt;/label&gt;
+    &lt;input type="text" id="nombre" name="nombre" required /&gt;
+    &lt;button type="submit"&gt;Enviar saludo&lt;/button&gt;
+  &lt;/form&gt;
+  &lt;p id="resultado"&gt;&lt;/p&gt;
+
+  &lt;script&gt;
+    document.getElementById('formBienvenida').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var nombre = document.getElementById('nombre').value;
+      fetch('/api/bienvenida?nombre=' + encodeURIComponent(nombre))
+        .then(function (respuesta) { return respuesta.text(); })
+        .then(function (texto) { document.getElementById('resultado').textContent = texto; });
+    });
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="seccionB">B. Anotaciones de hoy</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-sm small mb-0">
+                <thead><tr><th>Anotación</th><th>Qué hace</th></tr></thead>
+                <tbody>
+                  <tr><td><code>@RestController</code></td><td>Marca la clase como un controlador que devuelve datos directamente (texto/JSON), sin pasar por una vista HTML del lado del servidor.</td></tr>
+                  <tr><td><code>@GetMapping("/ruta")</code></td><td>Conecta una URL exacta con un método Java, solo para peticiones HTTP <strong>GET</strong>.</td></tr>
+                  <tr><td><code>@RequestParam</code></td><td>Lee un valor que viene después del <code>?</code> en la URL (ej. <code>?nombre=Ana</code>) y lo entrega como parámetro del método.</td></tr>
+                  <tr><td><code>@RequestParam(defaultValue = "...")</code></td><td>Da un valor por defecto si el parámetro no viene en la URL, evitando errores.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="seccionC">C. ¿Dónde va cada archivo?</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <pre><code>mi-proyecto/
+└── src/main/
+    ├── java/.../BienvenidaController.java   ← tu nueva clase @RestController
+    └── resources/
+        ├── application.properties           ← configuración (Semana 7)
+        └── static/index.html                ← formulario servido automáticamente en "/"</code></pre>
+            <div class="small-muted">Todo lo que pongas dentro de <code>static/</code> se sirve tal cual, sin procesar — es HTML, CSS y JavaScript normales. No necesitas configurar nada extra para que Spring Boot lo encuentre.</div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="seccionD">D. Qué SÍ toca hoy y qué NO (para no adelantarse)</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="callout success mb-0">
+                  <div class="fw-semibold">✅ Semana 8 (hoy)</div>
+                  <div class="small-muted"><code>@RestController</code>, rutas <code>@GetMapping</code>, <code>@RequestParam</code>, un formulario HTML estático con <code>fetch</code> que consulta el endpoint (sin guardar nada), probar con navegador y Postman.</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="callout warning mb-0">
+                  <div class="fw-semibold">⏭ Todavía no</div>
+                  <div class="small-muted">Guardar datos (<code>@PostMapping</code> con persistencia) · vistas con Thymeleaf (Semana 10) · base de datos con JPA (Semana 12). Un adelanto sin implementar está en la pestaña "Anexo".</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="seccionE">E. Confusiones frecuentes</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-sm small mb-0">
+                <thead><tr><th>Confusión</th><th>Aclaración</th></tr></thead>
+                <tbody>
+                  <tr><td>"Mi formulario recarga la página y no muestra nada"</td><td>Falta <code>e.preventDefault()</code> en el <code>submit</code>, o el <code>fetch</code> tiene un error de sintaxis — revisa la consola del navegador (F12).</td></tr>
+                  <tr><td>"¿<code>index.html</code> de <code>static/</code> es lo mismo que Thymeleaf?"</td><td>No. Es un archivo estático fijo; Thymeleaf (Semana 10) genera HTML dinámico desde el servidor con datos de Java.</td></tr>
+                  <tr><td>"¿Por qué el método devuelve <code>String</code> y no JSON?"</td><td>Para mantenerlo simple hoy. <code>@RestController</code> también puede devolver objetos que se convierten en JSON automáticamente — lo verás cuando el proyecto crezca.</td></tr>
+                  <tr><td>"Cambié el código pero el navegador muestra lo de antes"</td><td>Reinicia el proyecto (⏹ y ▶ Run de nuevo) y refresca con Ctrl+F5 para evitar la caché del navegador.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="tab-pane fade" id="tab-comandos" role="tabpanel">
+
+        <div class="callout mb-4">
+          <div class="fw-semibold">Antes de estos comandos</div>
+          <div class="small-muted">Todos se escriben en la <strong>terminal integrada de VS Code</strong>, estando dentro de la carpeta del proyecto. El servidor debe estar corriendo para probar cualquier ruta.</div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h2 class="h5 section-title mb-3">Ejecutar y detener el proyecto</h2>
+            <pre><code># Windows
+mvnw spring-boot:run
+
+# Mac/Linux
+./mvnw spring-boot:run
+
+# Detener: Ctrl + C en la misma terminal</code></pre>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h2 class="h5 section-title mb-3">Probar una ruta GET desde la terminal (alternativa a Postman)</h2>
+            <pre><code>curl "http://localhost:8080/api/bienvenida?nombre=Ana"</code></pre>
+            <div class="small-muted">Útil si no quieres instalar nada adicional: <code>curl</code> ya viene incluido en la terminal de Windows 10/11, macOS y Linux.</div>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h2 class="h5 section-title mb-3">Herramientas para probar endpoints (elige una)</h2>
+            <div class="env-step">
+              <div class="env-num">1</div>
+              <div>
+                <div class="fw-semibold">El navegador</div>
+                <div class="small-muted">Suficiente para cualquier ruta <code>GET</code> como las de hoy — solo escribe la URL.</div>
+              </div>
+            </div>
+            <div class="env-step">
+              <div class="env-num">2</div>
+              <div>
+                <div class="fw-semibold">Postman (gratis)</div>
+                <div class="small-muted">Descárgalo en <a href="https://www.postman.com/downloads/" target="_blank" rel="noreferrer">postman.com/downloads</a>. Aplicación aparte, la más usada en la industria.</div>
+              </div>
+            </div>
+            <div class="env-step">
+              <div class="env-num">3</div>
+              <div>
+                <div class="fw-semibold">Thunder Client (extensión de VS Code)</div>
+                <div class="small-muted">Icono de Extensiones → busca "Thunder Client" → Install. Más liviana: no sales del editor.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <details class="mb-4" open>
+          <summary class="fw-semibold">Solución de problemas frecuentes</summary>
+          <div class="table-responsive mt-2">
+            <table class="table table-sm small mb-0">
+              <thead><tr><th>Mensaje / síntoma</th><th>Qué significa</th><th>Qué hacer</th></tr></thead>
+              <tbody>
+                <tr><td>Whitelabel Error Page al visitar tu propia ruta</td><td>La URL no coincide exactamente con el texto de <code>@GetMapping</code>, o el proyecto no se reinició después del cambio</td><td>Compara letra por letra (mayúsculas incluidas) y reinicia el proyecto.</td></tr>
+                <tr><td><code>Whitespace error</code> o <code>required parameter 'nombre' is not present</code></td><td>El parámetro no tiene <code>defaultValue</code> y no llegó en la URL</td><td>Agrega <code>@RequestParam(defaultValue = "...")</code> o siempre envía el parámetro.</td></tr>
+                <tr><td>El formulario no hace nada al pulsar el botón</td><td>Error de JavaScript (revisa la consola con F12) o el archivo no está en <code>static/</code></td><td>Verifica la ruta exacta del archivo y revisa errores en la consola del navegador.</td></tr>
+                <tr><td>"Port 8080 was already in use"</td><td>Ya hay otra copia corriendo (visto en la Semana 7)</td><td>Detén el proceso anterior o cambia <code>server.port</code> en <code>application.properties</code>.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <div class="callout success">
+          <div class="fw-semibold">¿Todo listo?</div>
+          <div class="small-muted">Si visitaste <code>/api/saludo</code> y <code>/api/bienvenida?nombre=...</code> en el navegador, los probaste también en Postman/Thunder Client, y tu formulario en <code>localhost:8080</code> muestra la respuesta sin recargar, ya cumpliste el objetivo de hoy.</div>
+        </div>
+
+      </div>
+
+      <div class="tab-pane fade" id="tab-anexo" role="tabpanel">
+
+        <div class="callout warning mb-4">
+          <div class="fw-semibold">Esto es solo un adelanto — no es parte de la entrega de hoy</div>
+          <div class="small-muted">Las dos secciones de abajo muestran hacia dónde va el curso. No necesitas escribir ni entregar nada de esto esta semana; están aquí para que veas el panorama completo del formulario que ya construiste.</div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="seccionEstilo">Adelanto 1 — Dar estilo a tu formulario (esto SÍ lo puedes hacer hoy)</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-2">A diferencia de la base de datos, darle estilo a <code>static/index.html</code> no depende de ningún tema futuro — es CSS normal, como en cualquier página web. Puedes agregar un archivo <code>static/estilos.css</code>:</p>
+            <pre><code>body { font-family: system-ui, sans-serif; max-width: 480px; margin: 3rem auto; padding: 0 1rem; }
+h1 { color: #0b3d91; }
+form { display: flex; gap: 0.5rem; margin-top: 1rem; }
+input { flex: 1; padding: 0.5rem; }
+button { padding: 0.5rem 1rem; }
+#resultado { margin-top: 1rem; font-weight: 600; }</code></pre>
+            <p class="small-muted mb-0">Y enlazarlo dentro del <code>&lt;head&gt;</code> de tu <code>index.html</code>: <code>&lt;link rel="stylesheet" href="estilos.css" /&gt;</code>. Spring Boot lo sirve automáticamente, igual que el HTML.</p>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="seccionDB">Adelanto 2 — Cómo se vería con guardado real en base de datos (Semana 12, NO lo hagas hoy)</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-2">Cuando el curso llegue a JPA (Semana 12), el mismo formulario podría enviar sus datos a un endpoint que sí los guarde de verdad, con una anotación nueva (<code>@PostMapping</code>) y una entidad conectada a una base de datos:</p>
+            <pre><code>// Vista previa — todavía NO existe "Entidad" ni base de datos en tu proyecto
+@PostMapping("/api/visitas")
+public Visita registrarVisita(@RequestBody Visita visita) {
+    return visitaRepository.save(visita); // guardado real — llega en la Semana 12
+}</code></pre>
+            <div class="small-muted">Hoy tu formulario usa <code>GET</code> y solo <em>consulta</em> — nada se guarda entre una visita y otra del navegador. <code>@PostMapping</code>, <code>@RequestBody</code> y <code>save()</code> son piezas que se explican formalmente cuando lleguen su tema (rutas de guardado en la Semana 10, persistencia en la Semana 12).</div>
+          </div>
+        </div>
+
+        <div class="callout mb-0">
+          <div class="fw-semibold">Por qué no lo hacemos todavía</div>
+          <div class="small-muted">Igual que con Thymeleaf y JPA la semana pasada: cada pieza se agrega cuando toca su tema, para entenderla bien antes de mezclarla con las demás. Adelantar <code>@PostMapping</code> o una base de datos hoy generaría más confusión que aprendizaje.</div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Cheat Sheet — Semana 8 · Spring Boot: configuración y primer servicio (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
