@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cheat Sheet — Semana 11 (Validación y errores)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 11 — Validación</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link active" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Cheat Sheet · Semana 11 · Validación, errores y accesibilidad</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Referencia rápida — anotaciones, mensajes y errores</h1>
+          <div class="small-muted">Tres pestañas: las anotaciones <strong>con su paquete completo</strong>, cómo mostrar los errores de forma clara y accesible, y el catálogo de errores frecuentes de esta semana.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <ul class="nav nav-tabs mb-4 no-print" id="cheatTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="tab-anotaciones-btn" data-bs-toggle="tab" data-bs-target="#tab-anotaciones" type="button" role="tab">📘 Anotaciones y paquetes</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-mensajes-btn" data-bs-toggle="tab" data-bs-target="#tab-mensajes" type="button" role="tab">💬 Mostrar errores y accesibilidad</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-errores-btn" data-bs-toggle="tab" data-bs-target="#tab-errores" type="button" role="tab">🧯 Errores frecuentes</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="cheatTabsContent">
+
+      <!-- ===== TAB 1 ===== -->
+      <div class="tab-pane fade show active" id="tab-anotaciones" role="tabpanel">
+
+        <div class="callout warning mb-4">
+          <div class="fw-semibold">Antes que nada: la dependencia</div>
+          <div class="small-muted">Ninguna anotación de esta pestaña funciona si falta este bloque en el <code>pom.xml</code>. Y lo peor es que <strong>no da error</strong>: el proyecto arranca y simplemente no valida.</div>
+          <pre class="mt-2 mb-0"><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-validation&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="anA">A. Las anotaciones, con su import completo</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-sm small mb-3">
+                <thead><tr><th style="width:18%">Anotación</th><th style="width:34%">Import</th><th>Qué exige y ejemplo</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><code>@NotBlank</code></td>
+                    <td><code>jakarta.validation.constraints.NotBlank</code></td>
+                    <td>Texto obligatorio: ni nulo, ni vacío, ni solo espacios.<br /><code>@NotBlank(message = "El nombre es obligatorio.")</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>@NotNull</code></td>
+                    <td><code>jakarta.validation.constraints.NotNull</code></td>
+                    <td>Que el valor exista. Para números, fechas y listas.<br /><code>@NotNull(message = "La edad es obligatoria.")</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>@Size</code></td>
+                    <td><code>jakarta.validation.constraints.Size</code></td>
+                    <td>Largo de un texto (o de una lista).<br /><code>@Size(min = 3, max = 40, message = "...")</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>@Min</code></td>
+                    <td><code>jakarta.validation.constraints.Min</code></td>
+                    <td>Valor numérico mínimo.<br /><code>@Min(value = 5, message = "...")</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>@Max</code></td>
+                    <td><code>jakarta.validation.constraints.Max</code></td>
+                    <td>Valor numérico máximo.<br /><code>@Max(value = 17, message = "...")</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>@Email</code></td>
+                    <td><code>jakarta.validation.constraints.Email</code></td>
+                    <td>Formato de correo. <strong>Acepta el campo vacío</strong>, así que casi siempre va con <code>@NotBlank</code>.<br /><code>@Email(message = "...")</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>@Pattern</code></td>
+                    <td><code>jakarta.validation.constraints.Pattern</code></td>
+                    <td>Que el texto siga un patrón.<br /><code>@Pattern(regexp = "[0-9]{8}", message = "...")</code></td>
+                  </tr>
+                  <tr class="table-light">
+                    <td><code>@Valid</code></td>
+                    <td><code>jakarta.validation.Valid</code><br /><span class="small-muted">(ojo: sin <code>.constraints</code>)</span></td>
+                    <td>En el <strong>controlador</strong>: "revisa este objeto antes de entrar al método".</td>
+                  </tr>
+                  <tr class="table-light">
+                    <td><code>BindingResult</code></td>
+                    <td><code>org.springframework.validation.BindingResult</code></td>
+                    <td>En el <strong>controlador</strong>: el reporte de qué falló. Es de Spring, no de Jakarta.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="callout danger mb-0">
+              <div class="fw-semibold">Es <code>jakarta</code>, no <code>javax</code></div>
+              <div class="small-muted">Muchos tutoriales y videos en internet usan <code>javax.validation...</code>, que era el nombre en versiones anteriores. Tu proyecto usa <strong>Spring Boot 3</strong>, donde el paquete se llama <code>jakarta</code>. Si copias un ejemplo con <code>javax</code>, el import queda en rojo y no compila.</div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="anB">B. <code>@NotNull</code> vs <code>@NotBlank</code> vs <code>@NotEmpty</code></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-2">Las tres suenan igual y no lo son. Esta tabla dice qué acepta y qué rechaza cada una:</p>
+            <div class="table-responsive">
+              <table class="table table-sm small mb-3">
+                <thead><tr><th>Valor recibido</th><th><code>@NotNull</code></th><th><code>@NotEmpty</code></th><th><code>@NotBlank</code></th></tr></thead>
+                <tbody>
+                  <tr><td>Nulo (la casilla no vino)</td><td class="text-danger fw-semibold">Rechaza</td><td class="text-danger fw-semibold">Rechaza</td><td class="text-danger fw-semibold">Rechaza</td></tr>
+                  <tr><td>Texto vacío <code>""</code></td><td class="text-success fw-semibold">Acepta</td><td class="text-danger fw-semibold">Rechaza</td><td class="text-danger fw-semibold">Rechaza</td></tr>
+                  <tr><td>Solo espacios <code>"   "</code></td><td class="text-success fw-semibold">Acepta</td><td class="text-success fw-semibold">Acepta</td><td class="text-danger fw-semibold">Rechaza</td></tr>
+                  <tr><td>Texto con contenido</td><td class="text-success fw-semibold">Acepta</td><td class="text-success fw-semibold">Acepta</td><td class="text-success fw-semibold">Acepta</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="callout success mb-0">
+              <div class="fw-semibold">Regla práctica para no equivocarse</div>
+              <div class="small-muted">Para <strong>texto</strong> que viene de un formulario, usa siempre <code>@NotBlank</code> (es la más estricta y evita el truco de escribir un espacio). Para <strong>números, fechas y listas</strong>, usa <code>@NotNull</code>, porque <code>@NotBlank</code> ni siquiera aplica a esos tipos.</div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="anC">C. Los dos detalles que hacen perder más tiempo</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <h3 class="h6 fw-bold">1. Campos numéricos: <code>Integer</code>, nunca <code>int</code></h3>
+            <div class="table-responsive">
+              <table class="table table-sm small mb-3">
+                <thead><tr><th></th><th><code>private int edad;</code></th><th><code>private Integer edad;</code></th></tr></thead>
+                <tbody>
+                  <tr><td>Si la casilla viene vacía</td><td>Spring no puede convertir "" a número → error técnico en inglés</td><td>Queda en nulo → <code>@NotNull</code> da <strong>tu</strong> mensaje</td></tr>
+                  <tr><td>Anotación que necesita</td><td>(no alcanza a ejecutarse)</td><td><code>@NotNull</code> + <code>@Min</code>/<code>@Max</code></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="callout mb-3">
+              <div class="small-muted">Lo mismo aplica a <code>Long</code> en vez de <code>long</code> y <code>Double</code> en vez de <code>double</code>: en formularios siempre la versión <strong>con mayúscula</strong>.</div>
+            </div>
+
+            <h3 class="h6 fw-bold">2. El orden de <code>BindingResult</code> es obligatorio</h3>
+            <pre><code>// ✅ CORRECTO: BindingResult pegado al objeto validado
+public String registrar(@Valid @ModelAttribute Jugador jugador,
+                        BindingResult resultado,
+                        Model model) { ... }
+
+// ❌ INCORRECTO: hay un parámetro en medio → la aplicación truena
+public String registrar(@Valid @ModelAttribute Jugador jugador,
+                        Model model,
+                        BindingResult resultado) { ... }</code></pre>
+            <div class="small-muted">Si necesitas <code>Model</code> u otros parámetros, van <strong>después</strong>. La regla es: cada objeto validado lleva su <code>BindingResult</code> inmediatamente detrás, como una sombra.</div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="anD">D. Qué SÍ toca hoy y qué NO</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="callout success mb-0">
+                  <div class="fw-semibold">✅ Semana 11 (hoy)</div>
+                  <div class="small-muted">Anotaciones de Bean Validation en el modelo, <code>@Valid</code> + <code>BindingResult</code> en el controlador, mensajes con <code>th:errors</code>, accesibilidad básica y una página de error propia.</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="callout warning mb-0">
+                  <div class="fw-semibold">⏭ Todavía no</div>
+                  <div class="small-muted">Guardar en base de datos (Semana 12) · editar y borrar registros (Semana 13) · validaciones propias hechas a la medida y validación entre varios campos a la vez (más adelante en tu formación).</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ===== TAB 2 ===== -->
+      <div class="tab-pane fade" id="tab-mensajes" role="tabpanel">
+
+        <h2 class="h4 section-title mb-3" id="msgA">A. Los ayudantes de Thymeleaf para errores</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-sm small mb-3">
+                <thead><tr><th>Expresión</th><th>Qué hace</th></tr></thead>
+                <tbody>
+                  <tr><td><code>th:errors="*{campo}"</code></td><td>Escribe el mensaje de error de ese campo (el del <code>message = "..."</code>).</td></tr>
+                  <tr><td><code>th:errorclass="clase"</code></td><td>Agrega esa clase CSS a la casilla <strong>solo si ese campo falló</strong>.</td></tr>
+                  <tr><td><code>${#fields.hasErrors('campo')}</code></td><td>¿Este campo tiene errores? Devuelve verdadero o falso.</td></tr>
+                  <tr><td><code>${#fields.hasAnyErrors()}</code></td><td>¿Falló algún campo del formulario? Sirve para el resumen de arriba.</td></tr>
+                  <tr><td><code>${#fields.allErrors()}</code></td><td>La lista de todos los mensajes, para recorrerla con <code>th:each</code>.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="small-muted mb-2">El patrón completo de un campo, tal como queda en la plantilla:</p>
+            <pre><code>&lt;label for="edad"&gt;Edad&lt;/label&gt;
+&lt;input type="number" id="edad" th:field="*{edad}"
+       th:errorclass="campo-error"
+       aria-describedby="edad-error" /&gt;
+&lt;p id="edad-error" class="mensaje-error"
+   th:if="${#fields.hasErrors('edad')}"
+   th:errors="*{edad}"&gt;Texto de ejemplo&lt;/p&gt;</code></pre>
+            <div class="callout warning mb-0">
+              <div class="fw-semibold"><code>#fields</code> solo existe dentro del formulario</div>
+              <div class="small-muted">Estas expresiones funcionan dentro de la etiqueta que tiene <code>th:object</code> (o dentro del <code>&lt;form&gt;</code>). Si las usas fuera, Thymeleaf no sabe de qué objeto hablas y da error.</div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="msgB">B. Accesibilidad: las cuatro reglas de hoy</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-sm small mb-3">
+                <thead><tr><th>Regla</th><th>Cómo se hace</th><th>A quién ayuda</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Etiqueta asociada</strong></td>
+                    <td><code>&lt;label for="edad"&gt;</code> con el mismo texto que el <code>id="edad"</code> de la casilla</td>
+                    <td>Lectores de pantalla (anuncian de qué campo se trata) y cualquiera: al tocar la etiqueta se enfoca el campo</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Error ligado al campo</strong></td>
+                    <td><code>aria-describedby="edad-error"</code> en la casilla, y ese mismo <code>id</code> en el párrafo del error</td>
+                    <td>Quien usa lector de pantalla: oye el mensaje junto al campo, no suelto al final</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Aviso anunciado</strong></td>
+                    <td><code>role="alert"</code> en el resumen de errores</td>
+                    <td>El lector lo lee en cuanto aparece, sin que la persona tenga que ir a buscarlo</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Nunca solo color</strong></td>
+                    <td>Borde rojo <em>y</em> texto del error <em>y</em> un símbolo (▲) o la palabra "Error"</td>
+                    <td>Personas con daltonismo, y quien mira la pantalla bajo el sol</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="callout mb-0">
+              <div class="fw-semibold">Y el foco visible</div>
+              <div class="small-muted">No quites el borde que aparece al navegar con la tecla Tab. Si el diseño no te gusta, cámbialo (<code>outline: 3px solid #2563eb;</code>), pero no lo elimines: quien no usa ratón se queda sin saber dónde está parado.</div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="msgC">C. Cómo se escribe un buen mensaje de error</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-sm small mb-3">
+                <thead><tr><th style="width:42%">❌ Mensaje que no sirve</th><th>✅ Mensaje que sí sirve</th></tr></thead>
+                <tbody>
+                  <tr><td>"Error"</td><td>"El nombre es obligatorio."</td></tr>
+                  <tr><td>"must not be blank"</td><td>"El nombre es obligatorio."</td></tr>
+                  <tr><td>"Dato inválido"</td><td>"El teléfono debe tener exactamente 8 dígitos, sin espacios ni guiones."</td></tr>
+                  <tr><td>"Edad incorrecta"</td><td>"Esta categoría admite hasta 17 años."</td></tr>
+                  <tr><td>"Formato de correo no cumple con el patrón"</td><td>"Escribe un correo válido, por ejemplo: nombre@correo.com"</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="callout success mb-0">
+              <div class="fw-semibold">La prueba de los tres segundos</div>
+              <div class="small-muted">Un buen mensaje responde, en tres segundos y sin tecnicismos: <strong>qué campo</strong> está mal, <strong>por qué</strong>, y <strong>qué hacer</strong> para arreglarlo. Si tu mensaje no responde las tres, reescríbelo. Y si el formato es raro (un teléfono, un código), muestra un ejemplo dentro del mensaje.</div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="msgD">D. Buenas prácticas de UX en formularios</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <ul class="small-muted mb-0">
+              <li><strong>No borres lo que ya escribieron.</strong> Devuelve la plantilla, no un <code>redirect</code>. Es la regla número uno.</li>
+              <li><strong>Marca el campo que falló</strong>, no solo un aviso general: en un formulario de ocho campos, "hay errores" no sirve de nada.</li>
+              <li><strong>Di las reglas antes, no después.</strong> Si el teléfono son 8 dígitos, ponlo en la etiqueta: "Teléfono (8 dígitos)". Mejor prevenir el error que explicarlo.</li>
+              <li><strong>Pide solo lo necesario.</strong> Cada campo extra es una oportunidad más de equivocarse y de abandonar el formulario.</li>
+              <li><strong>Usa el tipo correcto de casilla</strong> (<code>type="number"</code>, <code>type="email"</code>): en el celular aparece el teclado adecuado.</li>
+              <li><strong>No presumas de la validación del navegador.</strong> Es una comodidad; la del servidor es la que protege de verdad, porque el navegador se puede saltar.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ===== TAB 3 ===== -->
+      <div class="tab-pane fade" id="tab-errores" role="tabpanel">
+
+        <div class="callout mb-4">
+          <div class="fw-semibold">Cómo usar esta tabla</div>
+          <div class="small-muted">Los errores marcados con 🔇 <strong>no muestran ningún mensaje</strong>: la aplicación funciona pero no hace lo que esperabas. Revísalos primero cuando "todo parece bien pero no valida".</div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h2 class="h5 section-title mb-3">Errores de validación</h2>
+            <div class="table-responsive">
+              <table class="table table-sm small mb-0">
+                <thead><tr><th style="width:33%">Mensaje o síntoma</th><th>Qué significa</th><th>Cómo se arregla</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td>🔇 <strong>Anoté el modelo pero no valida nada</strong></td>
+                    <td>Falta la dependencia <code>spring-boot-starter-validation</code>, o falta <code>@Valid</code> en el controlador</td>
+                    <td>Revisa las dos cosas en ese orden. Son la causa del 90% de los "no me valida".</td>
+                  </tr>
+                  <tr>
+                    <td>La aplicación truena al enviar el formulario</td>
+                    <td><code>BindingResult</code> no está inmediatamente después del objeto validado</td>
+                    <td>Ponlo pegado al objeto; los demás parámetros (<code>Model</code>, etc.) van después.</td>
+                  </tr>
+                  <tr>
+                    <td>🔇 <strong>No guarda, pero tampoco muestra ningún mensaje</strong></td>
+                    <td>La validación sí funciona; falta mostrarla en la plantilla</td>
+                    <td>Agrega <code>th:errors="*{campo}"</code> debajo de cada casilla.</td>
+                  </tr>
+                  <tr>
+                    <td>Sale un mensaje en inglés tipo <code>must not be blank</code></td>
+                    <td>La anotación no tiene <code>message</code></td>
+                    <td>Agrégalo: <code>@NotBlank(message = "El nombre es obligatorio.")</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>Failed to convert value of type 'String' to 'int'</code></td>
+                    <td>Campo numérico declarado como <code>int</code> y la casilla llegó vacía</td>
+                    <td>Cámbialo a <code>Integer</code> y valida con <code>@NotNull</code>.</td>
+                  </tr>
+                  <tr>
+                    <td>🔇 El campo de correo vacío pasa sin problema</td>
+                    <td><code>@Email</code> acepta el vacío por diseño</td>
+                    <td>Agrégale <code>@NotBlank</code> si además debe ser obligatorio.</td>
+                  </tr>
+                  <tr>
+                    <td>Un campo opcional con <code>@Pattern</code> siempre da error</td>
+                    <td><code>@Pattern</code> sí revisa la cadena vacía y la rechaza</td>
+                    <td>Permite el vacío en el patrón: <code>regexp = "|[0-9]{8}"</code>.</td>
+                  </tr>
+                  <tr>
+                    <td>El navegador no me deja ni enviar para probar</td>
+                    <td>Los <code>required</code> del HTML bloquean antes del servidor</td>
+                    <td>Agrega <code>novalidate</code> al <code>&lt;form&gt;</code> mientras pruebas.</td>
+                  </tr>
+                  <tr>
+                    <td>🔇 Se pierde todo lo escrito al fallar la validación</td>
+                    <td>El controlador hace <code>redirect</code> en vez de devolver la plantilla</td>
+                    <td>Usa <code>return "formulario";</code> cuando <code>resultado.hasErrors()</code>.</td>
+                  </tr>
+                  <tr>
+                    <td>El import de <code>NotBlank</code> queda en rojo</td>
+                    <td>Se copió de un tutorial con <code>javax</code></td>
+                    <td>Cámbialo a <code>jakarta.validation.constraints.NotBlank</code>.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h2 class="h5 section-title mb-3">Errores de la plantilla y la página de error</h2>
+            <div class="table-responsive">
+              <table class="table table-sm small mb-0">
+                <thead><tr><th style="width:33%">Síntoma</th><th>Qué significa</th><th>Cómo se arregla</th></tr></thead>
+                <tbody>
+                  <tr><td>Error al abrir el formulario, hablando de <code>#fields</code></td><td>Se usó <code>#fields</code> fuera del elemento con <code>th:object</code></td><td>Mueve esa parte dentro del <code>&lt;form&gt;</code>.</td></tr>
+                  <tr><td>El resumen de errores aparece siempre, aunque no haya errores</td><td>Falta el <code>th:if="${#fields.hasAnyErrors()}"</code></td><td>Agrégalo al <code>div</code> del resumen.</td></tr>
+                  <tr><td>La casilla no se pone roja</td><td>Falta <code>th:errorclass</code>, o la clase no existe en el CSS</td><td>Revisa que <code>.campo-error</code> esté definida en <code>estilos.css</code>.</td></tr>
+                  <tr><td>Sigo viendo la página blanca de Spring en vez de la mía</td><td>Falta el archivo o falta desactivar la genérica</td><td>Confirma <code>templates/error.html</code> y agrega <code>server.error.whitelabel.enabled=false</code>.</td></tr>
+                  <tr><td>El <code>select</code> guarda la primera opción aunque no elija nada</td><td>Falta la opción vacía</td><td>Agrega <code>&lt;option value=""&gt;-- Elige una --&lt;/option&gt;</code> al inicio.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout success">
+          <div class="fw-semibold">Ruta de diagnóstico en 30 segundos</div>
+          <div class="small-muted">
+            <strong>1.</strong> ¿Está la dependencia en el <code>pom.xml</code>?
+            <strong>2.</strong> ¿Está <code>@Valid</code> antes del objeto en el controlador?
+            <strong>3.</strong> ¿Está <code>BindingResult</code> pegado justo después?
+            <strong>4.</strong> ¿La plantilla tiene <code>th:errors</code> en ese campo?
+            <strong>5.</strong> ¿El campo numérico es <code>Integer</code> y no <code>int</code>?
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Cheat Sheet — Semana 11 · Validación, errores y experiencia de usuario (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

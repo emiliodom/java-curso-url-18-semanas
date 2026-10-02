@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Proyecto — Entregable de la Guía 11 (Semana 11)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 11 — Validación</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link active" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Proyecto · Entregable de la Guía de Aprendizaje 11 (1 pt)</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Tu formulario, ahora con validación y mensajes claros</h1>
+          <div class="small-muted">Primero la <strong>guía paso a paso</strong> para validar el formulario de tu proyecto real, y al final la <strong>plantilla calificable</strong>. Fecha límite: <strong>antes de la Sesión 12 (3 de octubre de 2026)</strong>. Esta semana no tiene Entrega Parcial — el siguiente hito es la Entrega Parcial 3, en la Semana 14.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 980px;">
+
+    <div class="callout warning mb-4">
+      <div class="fw-semibold">Antes de empezar</div>
+      <div class="small-muted">Necesitas el <strong>módulo de registro de la Semana 10</strong> funcionando (formulario que guarda + lista). Si quedó incompleto, recupéralo con el <a href="ejercicios.html">Kit de archivos completos</a>, que trae los 9 archivos enteros con sus <code>import</code>.</div>
+    </div>
+
+    <div class="card mb-4 border-primary">
+      <div class="card-body">
+        <h2 class="h5 section-title">Paso 0 — Decide TUS reglas antes de escribir código</h2>
+        <p class="small-muted mb-2">Lo que se evalúa no es copiar anotaciones, sino que las reglas <strong>tengan sentido para tu institución</strong>. Antes de tocar Java, llena mentalmente esta tabla con tu entidad:</p>
+        <div class="table-responsive">
+          <table class="table table-sm small mb-2">
+            <thead><tr><th>Campo</th><th>¿Qué regla real tiene?</th><th>Anotación</th></tr></thead>
+            <tbody>
+              <tr><td>Nombre</td><td>Obligatorio, y con un mínimo razonable de letras</td><td><code>@NotBlank</code> + <code>@Size</code></td></tr>
+              <tr><td>Edad</td><td>Depende de tu institución: una guardería no admite 40 años; un centro de adultos mayores no admite 5</td><td><code>@NotNull</code> + <code>@Min</code> + <code>@Max</code></td></tr>
+              <tr><td>Teléfono</td><td>8 dígitos en Guatemala, sin guiones ni espacios</td><td><code>@NotBlank</code> + <code>@Pattern</code></td></tr>
+              <tr><td>Correo</td><td>Con formato válido (y obligatorio, si tu institución lo necesita)</td><td><code>@Email</code> + <code>@NotBlank</code></td></tr>
+              <tr><td>Un campo de texto largo</td><td>Que no exceda un máximo razonable</td><td><code>@Size(max = ...)</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout mb-0">
+          <div class="small-muted"><strong>Ejemplo de regla con sentido vs. sin sentido:</strong> en una guardería, <code>@Max(value = 6)</code> para la edad tiene sentido y demuestra que pensaste en tu institución. Un <code>@Max(value = 999)</code> puesto "por si acaso" no valida nada real. La rúbrica mira justamente eso.</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">Parte guiada — valida tu formulario</h2>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso1">Paso 1 — Agrega la dependencia de validación</h3>
+        <p class="small-muted">En tu <code>pom.xml</code>, dentro de <code>&lt;dependencies&gt;</code>:</p>
+        <pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-validation&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+        <div class="callout danger mb-2">
+          <div class="fw-semibold">Si te saltas este paso, nada de lo demás funciona — y no da error</div>
+          <div class="small-muted">Sin esta dependencia puedes escribir todas las anotaciones que quieras: el proyecto compila, arranca y <strong>sigue guardando basura en silencio</strong>. Es el error más difícil de detectar de la semana.</div>
+        </div>
+        <div class="callout success mb-0">✅ Checkpoint: el proyecto arranca con "Started ... Application" después de agregarla.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso2">Paso 2 — Anota tu modelo con TUS reglas</h3>
+        <p class="small-muted mb-2">Agrega los <code>import</code> y las anotaciones a tu clase de modelo. Recuerda cambiar los campos numéricos de <code>int</code> a <code>Integer</code>:</p>
+        <pre><code>import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
+@NotBlank(message = "El nombre del niño es obligatorio.")
+@Size(min = 3, max = 40, message = "El nombre debe tener entre 3 y 40 caracteres.")
+private String nombre;
+
+@NotNull(message = "La edad es obligatoria.")
+@Min(value = 0, message = "La edad no puede ser negativa.")
+@Max(value = 6, message = "La guardería atiende niños de hasta 6 años.")
+private Integer edad;</code></pre>
+        <p class="small-muted mb-2">Escribe <strong>tus propios mensajes en español</strong>: son los que va a leer una persona real de tu institución.</p>
+        <div class="callout success mb-0">✅ Checkpoint: tu modelo tiene al menos <strong>4 reglas</strong> repartidas en <strong>3 campos distintos</strong>, y los campos numéricos son <code>Integer</code>.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso3">Paso 3 — Activa la revisión en el controlador</h3>
+        <p class="small-muted mb-2">Agrega los dos <code>import</code> y modifica tu método POST:</p>
+        <pre><code>import jakarta.validation.Valid;
+import org.springframework.validation.BindingResult;
+
+@PostMapping("/ninos")
+public String registrarNino(@Valid @ModelAttribute Nino nino,
+                            BindingResult resultado) {
+    if (resultado.hasErrors()) {
+        return "formulario";      // devolver la plantilla, NO redirect
+    }
+    ninoService.guardar(nino);
+    return "redirect:/ninos";
+}</code></pre>
+        <div class="callout warning mb-2">
+          <div class="fw-semibold">Dos reglas que no se pueden romper</div>
+          <div class="small-muted"><strong>(1)</strong> <code>BindingResult</code> va <em>inmediatamente después</em> del objeto validado; si pones otro parámetro en medio, la aplicación truena. <strong>(2)</strong> Cuando hay errores se devuelve la <strong>plantilla</strong>, no un <code>redirect</code>: el redirect borraría los mensajes y lo que el usuario escribió.</div>
+        </div>
+        <div class="callout success mb-0">✅ Checkpoint: al enviar datos inválidos ya no se guarda nada (aunque todavía no se vean los mensajes).</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso4">Paso 4 — Muestra los mensajes en la plantilla</h3>
+        <p class="small-muted mb-2">Para <strong>cada campo</strong> de tu formulario, debajo de su casilla:</p>
+        <pre><code>&lt;p class="mensaje-error"
+   th:if="${#fields.hasErrors('nombre')}"
+   th:errors="*{nombre}"&gt;Error&lt;/p&gt;</code></pre>
+        <p class="small-muted mb-2">Y un resumen al inicio del formulario, que ayuda cuando hay varios errores a la vez:</p>
+        <pre><code>&lt;div class="resumen-errores" role="alert" th:if="${#fields.hasAnyErrors()}"&gt;
+    &lt;p&gt;&lt;strong&gt;Revisa estos datos antes de continuar:&lt;/strong&gt;&lt;/p&gt;
+    &lt;ul&gt;
+        &lt;li th:each="error : ${#fields.allErrors()}" th:text="${error}"&gt;Error&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;</code></pre>
+        <p class="small-muted mb-0">Agrega <code>novalidate</code> al <code>&lt;form&gt;</code> mientras pruebas, para que el navegador no bloquee el envío.</p>
+        <div class="callout success mb-0 mt-2">✅ Checkpoint: al enviar datos inválidos aparecen tus mensajes en español, debajo de cada campo.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso5">Paso 5 — Hazlo accesible</h3>
+        <p class="small-muted mb-2">Cuatro cambios pequeños, todos evaluados en la rúbrica:</p>
+        <ul class="small-muted mb-2">
+          <li>Cada casilla con su <code>&lt;label for="..."&gt;</code> coincidiendo con el <code>id</code>.</li>
+          <li><code>aria-describedby</code> en la casilla, apuntando al <code>id</code> del párrafo de su error.</li>
+          <li><code>role="alert"</code> en el resumen de errores.</li>
+          <li>Estilos de error que <strong>no dependan solo del color</strong>: borde grueso, fondo distinto y un símbolo (▲) antes del mensaje. Copia el bloque de <code>estilos.css</code> del <a href="ejercicios.html">Kit</a> (archivo 10).</li>
+        </ul>
+        <div class="callout success mb-0">✅ Checkpoint: al hacer clic sobre el texto de una etiqueta, se enfoca su casilla. Si no pasa, el <code>for</code> y el <code>id</code> no coinciden.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso6">Paso 6 — Agrega tu página de error</h3>
+        <p class="small-muted mb-2">Crea <code>src/main/resources/templates/error.html</code> con el nombre de tu institución y un enlace de regreso (modelo completo en el <a href="ejercicios.html">Kit</a>, archivo 8). Agrega también en <code>application.properties</code>:</p>
+        <pre><code>server.error.whitelabel.enabled=false</code></pre>
+        <div class="callout success mb-0">✅ Checkpoint: al visitar una dirección inventada aparece tu página, no la página blanca de Spring.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso7">Paso 7 — Prueba como lo haría una persona real</h3>
+        <p class="small-muted mb-2">Haz estas <strong>cuatro pruebas</strong> y anota qué ocurre en cada una (las vas a reportar en el entregable):</p>
+        <ol class="small-muted mb-2">
+          <li>Enviar el formulario <strong>completamente vacío</strong>.</li>
+          <li>Enviar un valor <strong>fuera de rango</strong> (una edad imposible para tu institución).</li>
+          <li>Enviar un <strong>dato con formato inválido</strong> (un correo sin arroba o un teléfono con letras).</li>
+          <li>Llenar bien <strong>todo menos un campo</strong>, y comprobar que <strong>no se borra</strong> lo demás.</li>
+        </ol>
+        <div class="callout success mb-0">✅ Checkpoint: las cuatro se comportan como esperabas. La cuarta es la más importante de todas.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso8">Paso 8 — Sube tu avance a GitHub</h3>
+        <p class="small-muted">En tu rama <code>development</code>: commit con un mensaje descriptivo (por ejemplo <em>"Agrega validación y mensajes de error al registro de niños"</em>) y push.</p>
+        <div class="callout success mb-0">✅ Checkpoint: en GitHub.com se ven tu modelo anotado, tu controlador con <code>@Valid</code> y tus plantillas actualizadas.</div>
+      </div>
+    </div>
+
+    <details class="mb-4">
+      <summary class="fw-semibold">Solución de problemas frecuentes</summary>
+      <div class="table-responsive mt-2">
+        <table class="table table-sm small mb-0">
+          <thead><tr><th>Situación</th><th>Qué hacer</th></tr></thead>
+          <tbody>
+            <tr><td>Anoté todo y sigue guardando datos vacíos</td><td>Revisa, en este orden: la dependencia en el <code>pom.xml</code> y el <code>@Valid</code> en el controlador.</td></tr>
+            <tr><td>La aplicación truena al enviar</td><td><code>BindingResult</code> no está pegado al objeto validado.</td></tr>
+            <tr><td>No se guarda pero no veo ningún mensaje</td><td>Falta <code>th:errors</code> en la plantilla.</td></tr>
+            <tr><td>Sale "must not be blank" en inglés</td><td>A esa anotación le falta su <code>message = "..."</code>.</td></tr>
+            <tr><td><code>Failed to convert ... to 'int'</code></td><td>Cambia ese campo de <code>int</code> a <code>Integer</code>.</td></tr>
+            <tr><td>El import de la anotación queda en rojo</td><td>Lo copiaste con <code>javax</code>; debe ser <code>jakarta</code>.</td></tr>
+            <tr><td>Se pierde todo lo escrito al fallar</td><td>Estás usando <code>redirect</code> en vez de <code>return "formulario";</code></td></tr>
+            <tr><td>Mi módulo de la Semana 10 quedó incompleto</td><td>Usa el <a href="ejercicios.html">Kit de archivos completos</a> y adáptalo a tu entidad.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <hr class="my-4" />
+    <h2 class="h4 section-title mb-3">📋 Entregable — completa esto para tu calificación</h2>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title mb-3">Datos del estudiante</h3>
+        <div class="row g-3">
+          <div class="col-md-5">
+            <label class="form-label small fw-semibold">Nombre completo</label>
+            <input class="form-control fill-line" type="text" />
+          </div>
+          <div class="col-md-3">
+            <label class="form-label small fw-semibold">Carné</label>
+            <input class="form-control fill-line" type="text" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label small fw-semibold">Entidad que valida tu formulario</label>
+            <input class="form-control fill-line" type="text" placeholder="Ej. Nino, Paciente, Donante" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte A — Tus reglas, explicadas (20%)</h3>
+        <p class="small-muted">Por cada regla que agregaste: qué campo protege, qué anotación usaste y <strong>por qué esa regla tiene sentido en tu institución</strong>. Mínimo 4 reglas.</p>
+        <textarea class="code-area" rows="8" placeholder="Campo: edad | Anotación: @Max(value = 6) | Por qué: la guardería solo atiende niños de hasta 6 años, según la Ficha del Proyecto.&#10;Campo: ...&#10;"></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte B — Tu modelo anotado (25%)</h3>
+        <p class="small-muted">Pega la clase completa, con su <code>package</code>, <strong>todos sus <code>import</code></strong> y los campos con sus anotaciones y mensajes:</p>
+        <textarea class="code-area" rows="14"></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte C — Controlador y plantilla (25%)</h3>
+        <p class="small-muted mb-1"><strong>C1.</strong> El método POST completo, con <code>@Valid</code> y <code>BindingResult</code>:</p>
+        <textarea class="code-area mb-3" rows="9"></textarea>
+        <p class="small-muted mb-1"><strong>C2.</strong> El bloque de un campo de tu formulario, con su <code>label</code>, su casilla, su mensaje de error y <code>aria-describedby</code>:</p>
+        <textarea class="code-area" rows="8"></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte D — Las cuatro pruebas (20%)</h3>
+        <p class="small-muted mb-1">Describe (o adjunta capturas de) qué pasó en cada una de las pruebas del Paso 7, y pega el enlace a tu repositorio:</p>
+        <textarea class="code-area" rows="8" placeholder="1. Formulario vacío → ...&#10;2. Valor fuera de rango → ...&#10;3. Formato inválido → ...&#10;4. Todo bien menos un campo → ¿se conservó lo escrito?&#10;Repositorio: https://github.com/..."></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte E — Reflexión (10%)</h3>
+        <ol class="small">
+          <li class="mb-2">
+            <strong>Empatía con el usuario:</strong> imagina a una persona de tu institución llenando este formulario con prisa. ¿Cuál de tus mensajes de error le resultaría más claro y cuál reescribirías? Escribe la versión mejorada.
+            <textarea class="form-control mt-1" rows="3"></textarea>
+          </li>
+          <li>
+            <strong>Rigor en la calidad:</strong> ¿qué dato de tu formulario podría seguir entrando mal a pesar de tus validaciones? (Por ejemplo: un nombre escrito como "aaaa" pasa <code>@NotBlank</code> y <code>@Size</code>.) ¿Cómo lo detectarías?
+            <textarea class="form-control mt-1" rows="3"></textarea>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Lista de cotejo (marca antes de entregar)</h3>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck1" /><label class="form-check-label small" for="ck1">Agregué <code>spring-boot-starter-validation</code> al <code>pom.xml</code>.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck2" /><label class="form-check-label small" for="ck2">Mi modelo tiene al menos 4 reglas en 3 campos distintos, con mensajes propios en español.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck3" /><label class="form-check-label small" for="ck3">Los campos numéricos son <code>Integer</code>, no <code>int</code>.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck4" /><label class="form-check-label small" for="ck4">El controlador usa <code>@Valid</code> con <code>BindingResult</code> inmediatamente después.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck5" /><label class="form-check-label small" for="ck5">Cuando hay errores devuelvo la plantilla, no un <code>redirect</code>, y <strong>no se pierde lo escrito</strong>.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck6" /><label class="form-check-label small" for="ck6">Cada campo tiene <code>label</code> asociado y <code>aria-describedby</code> hacia su mensaje.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck7" /><label class="form-check-label small" for="ck7">El error se comunica con texto y borde, no solo con color.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck8" /><label class="form-check-label small" for="ck8">Tengo mi <code>templates/error.html</code> con el nombre de mi institución.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck9" /><label class="form-check-label small" for="ck9">Subí todo a mi rama <code>development</code> en GitHub.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck10" /><label class="form-check-label small" for="ck10">Exporté el PDF como <code>Guia11_TuNombre.pdf</code>.</label></div>
+      </div>
+    </div>
+
+    <div class="callout warning">
+      <div class="fw-semibold">Rúbrica rápida (1 punto total)</div>
+      <div class="small-muted">Parte A: 0.20 · Parte B: 0.25 · Parte C: 0.25 · Parte D: 0.20 · Parte E: 0.10. Se valora especialmente que <strong>las reglas tengan sentido para tu institución real</strong> (no anotaciones copiadas al azar), que los <strong>mensajes estén en español y sean útiles</strong>, y que <strong>no se pierdan los datos escritos</strong> cuando la validación falla. Entregar tarde: −25% por día.</div>
+    </div>
+
+    <div class="d-flex gap-2 mt-3 no-print">
+      <button class="btn btn-primary btn-lg btn-export" onclick="window.print()">Exportar a PDF</button>
+      <a class="btn btn-outline-primary btn-lg" href="index.html">Volver al inicio</a>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Proyecto — Entregable de la Guía 11 · Semana 11 (formato 18 semanas) · Fecha límite: antes de la Sesión 12
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

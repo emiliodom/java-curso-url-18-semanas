@@ -1,0 +1,849 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ejercicios y Kit de archivos — Semana 11 (Validación y errores)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 11 — Validación</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link active" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Ejercicios · Semana 11 · 100% en tu propia computadora</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">De un formulario que acepta todo a uno que enseña a corregir</h1>
+          <div class="small-muted">Dos pestañas: los <strong>8 ejercicios en escalera</strong> y el <strong>Kit de archivos completos</strong> (cada archivo entero, con su ruta, su <code>package</code> y <strong>todos sus <code>import</code></strong>). Se continúa el proyecto de práctica de la Semana 10: <code>taller-formularios</code> · <strong>Escuela de Fútbol Los Cerritos</strong> · entidad <code>Jugador</code>.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <ul class="nav nav-tabs mb-4 no-print" id="ejerciciosTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="tab-ejercicios-btn" data-bs-toggle="tab" data-bs-target="#tab-ejercicios" type="button" role="tab">🪜 Ejercicios paso a paso</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-kit-btn" data-bs-toggle="tab" data-bs-target="#tab-kit" type="button" role="tab">📦 Kit de archivos completos</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="ejerciciosTabsContent">
+
+      <!-- ============ PESTAÑA 1: EJERCICIOS ============ -->
+      <div class="tab-pane fade show active" id="tab-ejercicios" role="tabpanel">
+
+        <div class="callout mb-3">
+          <div class="fw-semibold">Cómo está armada esta escalera</div>
+          <div class="small-muted">
+            Los ejercicios parten del módulo de registro que construiste la Semana 10 y lo van blindando una regla
+            a la vez: primero compruebas el problema, luego lo arreglas, y al final lo haces accesible. Si tu
+            módulo de la Semana 10 quedó incompleto, cópialo entero del
+            <a href="#" onclick="document.getElementById('tab-kit-btn').click(); return false;">Kit</a> y sigue
+            desde el Ejercicio 2.
+          </div>
+        </div>
+
+        <div class="callout warning mb-4">
+          <div class="fw-semibold">Las tres preguntas ancla de esta semana</div>
+          <div class="small-muted">Cuando una validación "no funcione", revisa en este orden: <strong>(1)</strong> ¿agregaste la dependencia <code>spring-boot-starter-validation</code> al <code>pom.xml</code>? <strong>(2)</strong> ¿el método tiene <code>@Valid</code> antes del objeto y <code>BindingResult</code> <em>inmediatamente después</em>? <strong>(3)</strong> ¿la plantilla muestra los errores con <code>th:errors</code>?</div>
+        </div>
+
+        <div class="row g-3">
+
+          <div class="col-lg-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <h2 class="h5 section-title">Ejercicio 1 — Comprueba el problema <span class="badge text-bg-success">Nivel 1</span></h2>
+                <p class="small-muted mb-2">Ejecuta tu proyecto de la Semana 10 y registra a propósito un jugador imposible: deja el <strong>nombre vacío</strong> (o escribe un solo espacio) y pon <strong>300</strong> en la edad.</p>
+                <p class="small-muted mb-1"><strong>Tu turno:</strong> mira la lista. ¿Se guardó? ¿Qué le pasaría a la institución si esto ocurre cien veces?</p>
+                <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: viste con tus propios ojos que la aplicación acepta datos sin sentido. Ese es el problema que resuelve toda esta semana.</span></div>
+                <details>
+                  <summary class="fw-semibold">Solución</summary>
+                  <div class="mt-2 small-muted">Se guarda sin protestar: el formulario nunca revisó nada. Un solo espacio pasa incluso si el campo tiene <code>required</code> en HTML, porque para el navegador "hay algo escrito". Por eso la validación de verdad se hace en el servidor.</div>
+                </details>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <h2 class="h5 section-title">Ejercicio 2 — Agrega la dependencia <span class="badge text-bg-success">Nivel 1</span></h2>
+                <p class="small-muted mb-2">En el <code>pom.xml</code>, dentro de <code>&lt;dependencies&gt;</code>, agrega el bloque del Kit (archivo 2) y ejecuta el proyecto una vez.</p>
+                <pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-validation&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+                <p class="small-muted mb-1"><strong>Tu turno:</strong> el proyecto arranca igual que antes y nada cambió a simple vista. ¿Para qué sirvió entonces?</p>
+                <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: el proyecto arranca con "Started ... Application" sin errores.</span></div>
+                <details>
+                  <summary class="fw-semibold">Solución</summary>
+                  <div class="mt-2 small-muted">Sirvió para <strong>tener disponibles</strong> las anotaciones de validación y el motor que las ejecuta. Sin esta dependencia puedes escribir <code>@NotBlank</code> y el proyecto compila… pero <strong>no valida nada, en silencio</strong>. Es de los errores más difíciles de descubrir, porque no aparece ningún mensaje.</div>
+                </details>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <h2 class="h5 section-title">Ejercicio 3 — Tu primera regla <span class="badge text-bg-primary">Nivel 2</span></h2>
+                <p class="small-muted mb-2">En <code>Jugador.java</code>, importa y anota solo el nombre:</p>
+                <pre><code>import jakarta.validation.constraints.NotBlank;
+
+@NotBlank(message = "El nombre es obligatorio.")
+private String nombre;</code></pre>
+                <p class="small-muted mb-2">Y en el controlador, activa la revisión (ojo al orden de los parámetros):</p>
+                <pre><code>import jakarta.validation.Valid;
+import org.springframework.validation.BindingResult;
+
+@PostMapping("/jugadores")
+public String registrarJugador(@Valid @ModelAttribute Jugador jugador,
+                               BindingResult resultado) {
+    if (resultado.hasErrors()) {
+        return "formulario";
+    }
+    jugadorService.guardar(jugador);
+    return "redirect:/jugadores";
+}</code></pre>
+                <p class="small-muted mb-1"><strong>Tu turno:</strong> envía el formulario con el nombre vacío. ¿Se guardó? ¿El usuario entiende qué pasó?</p>
+                <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: ya no se guarda el registro vacío.</span></div>
+                <details>
+                  <summary class="fw-semibold">Solución</summary>
+                  <div class="mt-2 small-muted">No se guarda: el formulario simplemente <strong>vuelve a aparecer</strong>. Pero el usuario no tiene idea de por qué, porque todavía no mostramos el mensaje — eso es el Ejercicio 4. Es exactamente la mitad del trabajo: validar sin avisar es casi tan malo como no validar.</div>
+                </details>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <h2 class="h5 section-title">Ejercicio 4 — Muestra el mensaje <span class="badge text-bg-primary">Nivel 2</span></h2>
+                <p class="small-muted mb-2">En <code>templates/formulario.html</code>, debajo de la casilla del nombre:</p>
+                <pre><code>&lt;p class="mensaje-error"
+   th:if="${#fields.hasErrors('nombre')}"
+   th:errors="*{nombre}"&gt;Mensaje de ejemplo&lt;/p&gt;</code></pre>
+                <p class="small-muted mb-2">Agrega también <code>novalidate</code> a la etiqueta <code>&lt;form&gt;</code> para que el navegador no bloquee el envío y puedas ver tu propia validación.</p>
+                <p class="small-muted mb-1"><strong>Tu turno:</strong> envía vacío otra vez. ¿De dónde salió exactamente el texto que aparece?</p>
+                <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: aparece tu mensaje en español debajo de la casilla.</span></div>
+                <details>
+                  <summary class="fw-semibold">Solución</summary>
+                  <div class="mt-2 small-muted">Salió del <code>message = "El nombre es obligatorio."</code> que escribiste en la anotación del modelo. <code>th:errors="*{nombre}"</code> lo busca y lo escribe ahí. Si no pones <code>message</code>, Hibernate Validator usa uno genérico en inglés ("must not be blank"), que es justo lo que no queremos mostrarle a una persona.</div>
+                </details>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <h2 class="h5 section-title">Ejercicio 5 — Rangos y el cambio de <code>int</code> a <code>Integer</code> <span class="badge text-bg-warning">Nivel 3</span></h2>
+                <p class="small-muted mb-2">Primero prueba el problema: con <code>private int edad;</code> todavía, deja la casilla de edad <strong>vacía</strong> y envía. Observa el error.</p>
+                <p class="small-muted mb-2">Ahora cámbialo a <code>Integer</code> y agrega las reglas:</p>
+                <pre><code>import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+
+@NotNull(message = "La edad es obligatoria.")
+@Min(value = 5,  message = "La edad mínima para inscribirse es 5 años.")
+@Max(value = 17, message = "Esta categoría admite hasta 17 años.")
+private Integer edad;</code></pre>
+                <p class="small-muted mb-1"><strong>Tu turno:</strong> ¿por qué con <code>int</code> el mensaje era feo y con <code>Integer</code> sí sale el tuyo?</p>
+                <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: con la casilla vacía sale "La edad es obligatoria."; con 300 sale el mensaje del máximo.</span></div>
+                <details>
+                  <summary class="fw-semibold">Solución</summary>
+                  <div class="mt-2 small-muted">
+                    Un <code>int</code> <strong>no puede estar vacío</strong>: siempre tiene un número. Cuando llega "" del formulario, Spring intenta convertirlo, no puede, y genera un error técnico de conversión <em>antes</em> de llegar a tus reglas — por eso el mensaje es en inglés y habla de tipos.<br />
+                    Un <code>Integer</code> sí admite el valor <em>nulo</em>, así que la conversión funciona (queda en nulo) y entonces <code>@NotNull</code> se ejecuta y da <strong>tu</strong> mensaje.<br />
+                    <strong>Regla práctica:</strong> los campos numéricos que vienen de un formulario se declaran con <code>Integer</code>, <code>Long</code> o <code>Double</code> (con mayúscula), nunca con <code>int</code>/<code>long</code>/<code>double</code>.
+                  </div>
+                </details>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <h2 class="h5 section-title">Ejercicio 6 — Resumen arriba y casilla marcada <span class="badge text-bg-warning">Nivel 3</span></h2>
+                <p class="small-muted mb-2">Agrega al inicio del formulario un resumen de todos los errores, y marca en rojo cada casilla que falló:</p>
+                <pre><code>&lt;div class="resumen-errores" role="alert" th:if="${#fields.hasAnyErrors()}"&gt;
+    &lt;p&gt;Revisa estos datos antes de continuar:&lt;/p&gt;
+    &lt;ul&gt;
+        &lt;li th:each="error : ${#fields.allErrors()}" th:text="${error}"&gt;Error&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;</code></pre>
+                <pre><code>&lt;input type="text" id="nombre" th:field="*{nombre}"
+       th:errorclass="campo-error" /&gt;</code></pre>
+                <p class="small-muted mb-1"><strong>Tu turno:</strong> envía el formulario con el nombre correcto y la edad inválida. Fíjate bien en la casilla del nombre: ¿se borró lo que escribiste?</p>
+                <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: aparece el resumen, la casilla con error se ve en rojo, y los datos correctos siguen escritos.</span></div>
+                <details>
+                  <summary class="fw-semibold">Solución</summary>
+                  <div class="mt-2 small-muted">No se borró: como el controlador devuelve la plantilla (y no un <code>redirect</code>) con el mismo objeto, <code>th:field</code> vuelve a pintar los valores que el usuario ya había escrito. <strong>Esa es la diferencia entre un formulario que ayuda y uno que castiga.</strong> Si en vez de <code>return "formulario";</code> hicieras <code>return "redirect:/jugadores/nuevo";</code>, se perderían los mensajes y todo lo escrito.</div>
+                </details>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <h2 class="h5 section-title">Ejercicio 7 — Hazlo accesible <span class="badge text-bg-warning">Nivel 3</span></h2>
+                <p class="small-muted mb-2">Tres cambios pequeños en cada campo del formulario:</p>
+                <pre><code>&lt;label for="edad"&gt;Edad&lt;/label&gt;
+&lt;input type="number" id="edad" th:field="*{edad}"
+       th:errorclass="campo-error"
+       aria-describedby="edad-error" /&gt;
+&lt;p id="edad-error" class="mensaje-error"
+   th:if="${#fields.hasErrors('edad')}"
+   th:errors="*{edad}"&gt;Error&lt;/p&gt;</code></pre>
+                <p class="small-muted mb-1"><strong>Tu turno:</strong> el <code>for</code> del <code>label</code> y el <code>id</code> de la casilla deben coincidir. Comprueba que funciona haciendo clic <strong>sobre el texto de la etiqueta</strong>: ¿qué pasa?</p>
+                <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: al hacer clic en la etiqueta se enfoca su casilla, y cada mensaje de error está ligado a su campo con <code>aria-describedby</code>.</span></div>
+                <details>
+                  <summary class="fw-semibold">Solución</summary>
+                  <div class="mt-2 small-muted">
+                    El cursor salta a la casilla. Si no salta, el <code>for</code> y el <code>id</code> no coinciden — y eso significa que un lector de pantalla tampoco sabría de qué campo se trata.<br />
+                    <code>aria-describedby="edad-error"</code> le dice al lector de pantalla: "cuando leas esta casilla, lee también el texto que está en el elemento con <code>id="edad-error"</code>". Sin eso, el mensaje queda suelto y la persona no sabe a qué campo pertenece.<br />
+                    Agrega también <code>role="alert"</code> al resumen de errores: hace que el lector lo anuncie en cuanto aparece.
+                  </div>
+                </details>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <h2 class="h5 section-title">Ejercicio 8 — Reto: correo, teléfono y página de error <span class="badge text-bg-danger">Nivel 4</span></h2>
+                <p class="small-muted mb-2">Agrega dos campos nuevos al modelo con sus reglas (ver Kit, archivo 3) y crea <code>templates/error.html</code>:</p>
+                <pre><code>import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
+
+@NotBlank(message = "El correo del encargado es obligatorio.")
+@Email(message = "Escribe un correo válido, por ejemplo: nombre@correo.com")
+private String correoEncargado;
+
+@NotBlank(message = "El teléfono es obligatorio.")
+@Pattern(regexp = "[0-9]{8}",
+         message = "El teléfono debe tener exactamente 8 dígitos, sin espacios ni guiones.")
+private String telefono;</code></pre>
+                <p class="small-muted mb-1"><strong>Tu turno:</strong> ¿por qué <code>@Email</code> necesita además <code>@NotBlank</code> si ya "valida" el correo? Y visita una dirección inventada como <code>/jugadoresss</code>: ¿qué ves ahora?</p>
+                <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: los dos campos nuevos validan con tus mensajes, y una dirección inexistente muestra tu página de error, no la página blanca de Spring.</span></div>
+                <details>
+                  <summary class="fw-semibold">Solución</summary>
+                  <div class="mt-2 small-muted">
+                    Porque <code>@Email</code> <strong>acepta el campo vacío</strong>: solo revisa el formato <em>cuando hay algo escrito</em>. Si quieres que además sea obligatorio, necesitas <code>@NotBlank</code> junto a ella. Es una pareja que casi siempre va junta.<br />
+                    <strong>Ojo con el caso contrario:</strong> <code>@Pattern</code> sí revisa la cadena vacía y la rechaza. Así que si un campo con <code>@Pattern</code> fuera <em>opcional</em>, habría que permitir el vacío en el propio patrón (por ejemplo <code>regexp = "|[0-9]{8}"</code>, donde la primera alternativa es "nada").<br />
+                    La página de error aparece sola: Spring Boot usa <code>templates/error.html</code> automáticamente, sin configurar nada.
+                  </div>
+                </details>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="callout success mt-4">
+          <div class="fw-semibold">¿Terminaste los 8?</div>
+          <div class="small-muted">Tu formulario de práctica ya valida, explica y es accesible. Aplícalo a tu proyecto real en <a href="proyecto.html">Proyecto</a> — con reglas que tengan sentido para tu institución, que es justo lo que evalúa la Guía 11.</div>
+        </div>
+      </div>
+
+      <!-- ============ PESTAÑA 2: KIT ============ -->
+      <div class="tab-pane fade" id="tab-kit" role="tabpanel">
+
+        <div class="callout mb-4">
+          <div class="fw-semibold">Qué es este Kit</div>
+          <div class="small-muted">
+            Los <strong>9 archivos</strong> del módulo ya validado, completos: ruta exacta, línea <code>package</code>,
+            <strong>todos los <code>import</code></strong> y el cuerpo entero. Copia, pega y cambia los nombres por los
+            de tu institución. Para tu proyecto real solo cambias <code>tallerformularios</code> por tu paquete y
+            <code>Jugador</code> por tu entidad.
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit0">0. Tabla de anotaciones — con su paquete</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-2">Todas las anotaciones de validación vienen del paquete <code>jakarta.validation.constraints</code>, salvo <code>@Valid</code> (que está un nivel arriba, en <code>jakarta.validation</code>) y <code>BindingResult</code> (que es de Spring). Esta es la lista completa de lo que se usa esta semana:</p>
+            <div class="table-responsive">
+              <table class="table table-sm small mb-3">
+                <thead><tr><th>Anotación</th><th>Import completo</th><th>Qué exige</th></tr></thead>
+                <tbody>
+                  <tr><td><code>@NotBlank</code></td><td><code>jakarta.validation.constraints.NotBlank</code></td><td>Texto obligatorio: ni nulo, ni vacío, ni solo espacios</td></tr>
+                  <tr><td><code>@NotNull</code></td><td><code>jakarta.validation.constraints.NotNull</code></td><td>Que el valor exista (para números, fechas, listas)</td></tr>
+                  <tr><td><code>@Size</code></td><td><code>jakarta.validation.constraints.Size</code></td><td>Largo mínimo y máximo de un texto o lista</td></tr>
+                  <tr><td><code>@Min</code></td><td><code>jakarta.validation.constraints.Min</code></td><td>Valor numérico mínimo</td></tr>
+                  <tr><td><code>@Max</code></td><td><code>jakarta.validation.constraints.Max</code></td><td>Valor numérico máximo</td></tr>
+                  <tr><td><code>@Email</code></td><td><code>jakarta.validation.constraints.Email</code></td><td>Formato de correo (acepta vacío: combínala con <code>@NotBlank</code>)</td></tr>
+                  <tr><td><code>@Pattern</code></td><td><code>jakarta.validation.constraints.Pattern</code></td><td>Que el texto siga un patrón (teléfono, código, etc.)</td></tr>
+                  <tr><td><code>@Valid</code></td><td><code>jakarta.validation.Valid</code></td><td>En el controlador: "revisa este objeto antes de entrar al método"</td></tr>
+                  <tr><td><code>BindingResult</code></td><td><code>org.springframework.validation.BindingResult</code></td><td>En el controlador: el reporte de qué falló</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="callout warning mb-0">
+              <div class="fw-semibold">Es <code>jakarta</code>, no <code>javax</code></div>
+              <div class="small-muted">En tutoriales y videos viejos verás <code>import javax.validation.constraints.NotBlank;</code>. Eso era para versiones anteriores de Spring Boot. Tu proyecto usa Spring Boot 3, donde el paquete se llama <strong><code>jakarta</code></strong>. Si copias un ejemplo con <code>javax</code>, VS Code marcará el import en rojo y no compilará.</div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit1">1. El árbol del proyecto</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-2">Proyecto <code>taller-formularios</code>, paquete base <code>gt.edu.url.tallerformularios</code>. Las líneas con ← son las que se tocan esta semana.</p>
+            <pre><code>taller-formularios/
+├── pom.xml                          ← agrega la dependencia (archivo 2)
+└── src/main/
+    ├── java/gt/edu/url/tallerformularios/
+    │   ├── TallerFormulariosApplication.java      (sin cambios)
+    │   ├── controller/
+    │   │   └── JugadorController.java             ← archivo 5
+    │   ├── service/
+    │   │   └── JugadorService.java                (sin cambios — archivo 4)
+    │   └── model/
+    │       └── Jugador.java                       ← archivo 3
+    └── resources/
+        ├── application.properties                 (archivo 9)
+        ├── templates/
+        │   ├── formulario.html                    ← archivo 6
+        │   ├── lista.html                         ← archivo 7
+        │   └── error.html                         ← NUEVO esta semana (archivo 8)
+        └── static/
+            └── estilos.css                        ← archivo 10</code></pre>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit2">2. <code>pom.xml</code> — la dependencia que se agrega</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> raíz del proyecto</p>
+            <p class="small-muted mb-2">Pega este bloque <strong>dentro</strong> de <code>&lt;dependencies&gt;</code>, junto a los de <code>spring-boot-starter-web</code> y <code>spring-boot-starter-thymeleaf</code> que ya tienes.</p>
+            <pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-validation&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+            <div class="small-muted">Sin número de versión: lo hereda del bloque <code>&lt;parent&gt;</code>. Al guardar, Maven la descarga (la primera vez tarda).</div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit3">3. <code>Jugador.java</code> — el modelo con sus reglas <span class="badge text-bg-primary">lo modificas tú</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/java/gt/edu/url/tallerformularios/model/Jugador.java</code></p>
+            <pre><code>package gt.edu.url.tallerformularios.model;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
+public class Jugador {
+
+    @NotBlank(message = "El nombre es obligatorio.")
+    @Size(min = 3, max = 40, message = "El nombre debe tener entre 3 y 40 caracteres.")
+    private String nombre;
+
+    // Integer, NO int: así la casilla vacía puede quedar nula y @NotNull da tu mensaje.
+    @NotNull(message = "La edad es obligatoria.")
+    @Min(value = 5,  message = "La edad mínima para inscribirse es 5 años.")
+    @Max(value = 17, message = "Esta categoría admite hasta 17 años.")
+    private Integer edad;
+
+    @NotBlank(message = "Selecciona una posición.")
+    private String posicion;
+
+    // @Email acepta el campo vacío, por eso se acompaña de @NotBlank.
+    @NotBlank(message = "El correo del encargado es obligatorio.")
+    @Email(message = "Escribe un correo válido, por ejemplo: nombre@correo.com")
+    private String correoEncargado;
+
+    @NotBlank(message = "El teléfono es obligatorio.")
+    @Pattern(regexp = "[0-9]{8}",
+             message = "El teléfono debe tener exactamente 8 dígitos, sin espacios ni guiones.")
+    private String telefono;
+
+    // Constructor vacío: obligatorio para que el formulario funcione (Semana 10).
+    public Jugador() {
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public Integer getEdad() {
+        return edad;
+    }
+
+    public void setEdad(Integer edad) {
+        this.edad = edad;
+    }
+
+    public String getPosicion() {
+        return posicion;
+    }
+
+    public void setPosicion(String posicion) {
+        this.posicion = posicion;
+    }
+
+    public String getCorreoEncargado() {
+        return correoEncargado;
+    }
+
+    public void setCorreoEncargado(String correoEncargado) {
+        this.correoEncargado = correoEncargado;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+}</code></pre>
+            <div class="callout mb-0">
+              <div class="fw-semibold">Se pueden poner varias anotaciones al mismo campo</div>
+              <div class="small-muted">La edad tiene tres (<code>@NotNull</code>, <code>@Min</code>, <code>@Max</code>) y se revisan todas. Si el usuario escribe 300, solo falla <code>@Max</code> y solo aparece ese mensaje. Cada anotación revisa una cosa y da su propio texto.</div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit4">4. <code>JugadorService.java</code> <span class="badge text-bg-secondary">sin cambios</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/java/gt/edu/url/tallerformularios/service/JugadorService.java</code></p>
+            <p class="small-muted mb-2">Es el mismo de la Semana 10; se incluye completo para que el Kit sirva por sí solo. La validación ocurre <strong>antes</strong> de llegar aquí, así que el servicio no cambia.</p>
+            <pre><code>package gt.edu.url.tallerformularios.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import gt.edu.url.tallerformularios.model.Jugador;
+
+@Service
+public class JugadorService {
+
+    // La "memoria" de la aplicación: se vacía cada vez que reinicias.
+    private final List&lt;Jugador&gt; jugadores = new ArrayList&lt;&gt;();
+
+    public void guardar(Jugador jugador) {
+        jugadores.add(jugador);
+    }
+
+    public List&lt;Jugador&gt; listarTodos() {
+        return jugadores;
+    }
+
+    public int contar() {
+        return jugadores.size();
+    }
+}</code></pre>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit5">5. <code>JugadorController.java</code> <span class="badge text-bg-primary">lo modificas tú</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/java/gt/edu/url/tallerformularios/controller/JugadorController.java</code></p>
+            <pre><code>package gt.edu.url.tallerformularios.controller;
+
+import jakarta.validation.Valid;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import gt.edu.url.tallerformularios.model.Jugador;
+import gt.edu.url.tallerformularios.service.JugadorService;
+
+@Controller
+public class JugadorController {
+
+    private final JugadorService jugadorService;
+
+    public JugadorController(JugadorService jugadorService) {
+        this.jugadorService = jugadorService;
+    }
+
+    @GetMapping("/jugadores/nuevo")
+    public String mostrarFormulario(Model model) {
+        model.addAttribute("jugador", new Jugador());
+        return "formulario";
+    }
+
+    @PostMapping("/jugadores")
+    public String registrarJugador(@Valid @ModelAttribute Jugador jugador,
+                                   BindingResult resultado) {
+
+        // BindingResult DEBE ir inmediatamente después del objeto validado.
+        if (resultado.hasErrors()) {
+            // Se devuelve la plantilla (NO redirect): así se conservan
+            // los mensajes de error y lo que el usuario ya había escrito.
+            return "formulario";
+        }
+
+        jugadorService.guardar(jugador);
+        return "redirect:/jugadores";
+    }
+
+    @GetMapping("/jugadores")
+    public String listarJugadores(Model model) {
+        model.addAttribute("jugadores", jugadorService.listarTodos());
+        model.addAttribute("total", jugadorService.contar());
+        return "lista";
+    }
+}</code></pre>
+            <div class="table-responsive">
+              <table class="table table-sm small mb-0">
+                <thead><tr><th>Import</th><th>Para qué</th><th>Si falta…</th></tr></thead>
+                <tbody>
+                  <tr><td><code>jakarta.validation.Valid</code></td><td>Habilita <code>@Valid</code></td><td><code>cannot find symbol: Valid</code></td></tr>
+                  <tr><td><code>org.springframework.validation.BindingResult</code></td><td>Habilita el parámetro que recoge los errores</td><td><code>cannot find symbol: BindingResult</code></td></tr>
+                  <tr><td><code>org.springframework.stereotype.Controller</code></td><td><code>@Controller</code> (Semana 10)</td><td><code>cannot find symbol: Controller</code></td></tr>
+                  <tr><td><code>org.springframework.ui.Model</code></td><td>Enviar datos a la plantilla</td><td><code>cannot find symbol: Model</code></td></tr>
+                  <tr><td><code>…annotation.GetMapping</code> / <code>PostMapping</code> / <code>ModelAttribute</code></td><td>Rutas y binding (Semana 10)</td><td><code>cannot find symbol</code></td></tr>
+                  <tr><td><code>…model.Jugador</code> / <code>…service.JugadorService</code></td><td>Tus propias clases, en otros paquetes</td><td><code>cannot find symbol</code></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit6">6. <code>templates/formulario.html</code> <span class="badge text-bg-primary">lo modificas tú</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/resources/templates/formulario.html</code></p>
+            <p class="small-muted mb-2">Versión completa, con resumen de errores, mensajes por campo y accesibilidad.</p>
+            <pre><code>&lt;!doctype html&gt;
+&lt;html lang="es" xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8" /&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1" /&gt;
+  &lt;title&gt;Inscribir jugador&lt;/title&gt;
+  &lt;link rel="stylesheet" th:href="@{/estilos.css}" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;main&gt;
+  &lt;h1&gt;Escuela de Fútbol Los Cerritos&lt;/h1&gt;
+  &lt;h2&gt;Inscribir un jugador&lt;/h2&gt;
+
+  &lt;!-- Resumen de errores: role="alert" hace que el lector de pantalla lo anuncie --&gt;
+  &lt;div class="resumen-errores" role="alert" th:if="${#fields.hasAnyErrors()}"&gt;
+    &lt;p&gt;&lt;strong&gt;Revisa estos datos antes de continuar:&lt;/strong&gt;&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li th:each="error : ${#fields.allErrors()}" th:text="${error}"&gt;Mensaje de error&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+
+  &lt;!-- novalidate: deja que valide el servidor, no el navegador --&gt;
+  &lt;form th:action="@{/jugadores}" th:object="${jugador}" method="post" novalidate&gt;
+
+    &lt;label for="nombre"&gt;Nombre completo&lt;/label&gt;
+    &lt;input type="text" id="nombre" th:field="*{nombre}"
+           th:errorclass="campo-error" aria-describedby="nombre-error" /&gt;
+    &lt;p id="nombre-error" class="mensaje-error"
+       th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"&gt;Error&lt;/p&gt;
+
+    &lt;label for="edad"&gt;Edad (entre 5 y 17 años)&lt;/label&gt;
+    &lt;input type="number" id="edad" th:field="*{edad}"
+           th:errorclass="campo-error" aria-describedby="edad-error" /&gt;
+    &lt;p id="edad-error" class="mensaje-error"
+       th:if="${#fields.hasErrors('edad')}" th:errors="*{edad}"&gt;Error&lt;/p&gt;
+
+    &lt;label for="posicion"&gt;Posición&lt;/label&gt;
+    &lt;select id="posicion" th:field="*{posicion}"
+            th:errorclass="campo-error" aria-describedby="posicion-error"&gt;
+      &lt;option value=""&gt;-- Elige una --&lt;/option&gt;
+      &lt;option value="Portero"&gt;Portero&lt;/option&gt;
+      &lt;option value="Defensa"&gt;Defensa&lt;/option&gt;
+      &lt;option value="Mediocampista"&gt;Mediocampista&lt;/option&gt;
+      &lt;option value="Delantero"&gt;Delantero&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;p id="posicion-error" class="mensaje-error"
+       th:if="${#fields.hasErrors('posicion')}" th:errors="*{posicion}"&gt;Error&lt;/p&gt;
+
+    &lt;label for="correoEncargado"&gt;Correo del encargado&lt;/label&gt;
+    &lt;input type="email" id="correoEncargado" th:field="*{correoEncargado}"
+           th:errorclass="campo-error" aria-describedby="correo-error" /&gt;
+    &lt;p id="correo-error" class="mensaje-error"
+       th:if="${#fields.hasErrors('correoEncargado')}" th:errors="*{correoEncargado}"&gt;Error&lt;/p&gt;
+
+    &lt;label for="telefono"&gt;Teléfono (8 dígitos)&lt;/label&gt;
+    &lt;input type="text" id="telefono" th:field="*{telefono}"
+           th:errorclass="campo-error" aria-describedby="telefono-error" /&gt;
+    &lt;p id="telefono-error" class="mensaje-error"
+       th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"&gt;Error&lt;/p&gt;
+
+    &lt;button type="submit"&gt;Inscribir&lt;/button&gt;
+  &lt;/form&gt;
+
+  &lt;p&gt;&lt;a th:href="@{/jugadores}"&gt;Ver la lista de jugadores&lt;/a&gt;&lt;/p&gt;
+&lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            <div class="callout warning mb-0">
+              <div class="fw-semibold">La opción vacía del <code>select</code> no es un descuido</div>
+              <div class="small-muted"><code>&lt;option value=""&gt;-- Elige una --&lt;/option&gt;</code> existe para que el formulario <strong>no</strong> venga con una posición ya elegida por defecto. Así <code>@NotBlank</code> puede detectar que la persona no seleccionó nada, en vez de guardar "Portero" porque era el primero de la lista.</div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit7">7. <code>templates/lista.html</code> <span class="badge text-bg-secondary">casi sin cambios</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/resources/templates/lista.html</code></p>
+            <p class="small-muted mb-2">El mismo de la Semana 10, con las dos columnas nuevas.</p>
+            <pre><code>&lt;!doctype html&gt;
+&lt;html lang="es" xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8" /&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1" /&gt;
+  &lt;title&gt;Jugadores inscritos&lt;/title&gt;
+  &lt;link rel="stylesheet" th:href="@{/estilos.css}" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;main&gt;
+  &lt;h1&gt;Jugadores inscritos&lt;/h1&gt;
+  &lt;p&gt;Total registrados: &lt;strong th:text="${total}"&gt;0&lt;/strong&gt;&lt;/p&gt;
+
+  &lt;p th:if="${total == 0}"&gt;Todavía no hay jugadores inscritos.&lt;/p&gt;
+
+  &lt;table th:if="${total &gt; 0}"&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th&gt;#&lt;/th&gt;&lt;th&gt;Nombre&lt;/th&gt;&lt;th&gt;Edad&lt;/th&gt;
+        &lt;th&gt;Posición&lt;/th&gt;&lt;th&gt;Correo&lt;/th&gt;&lt;th&gt;Teléfono&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr th:each="jugador, estado : ${jugadores}"&gt;
+        &lt;td th:text="${estado.count}"&gt;1&lt;/td&gt;
+        &lt;td th:text="${jugador.nombre}"&gt;Nombre&lt;/td&gt;
+        &lt;td th:text="${jugador.edad}"&gt;0&lt;/td&gt;
+        &lt;td th:text="${jugador.posicion}"&gt;Posición&lt;/td&gt;
+        &lt;td th:text="${jugador.correoEncargado}"&gt;correo&lt;/td&gt;
+        &lt;td th:text="${jugador.telefono}"&gt;teléfono&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+
+  &lt;p&gt;&lt;a th:href="@{/jugadores/nuevo}"&gt;Inscribir otro jugador&lt;/a&gt;&lt;/p&gt;
+&lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit8">8. <code>templates/error.html</code> <span class="badge text-bg-danger">nuevo esta semana</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/resources/templates/error.html</code></p>
+            <p class="small-muted mb-2">Spring Boot usa este archivo <strong>automáticamente</strong> cuando ocurre un error no controlado (una dirección que no existe, por ejemplo). No hay que configurar nada: basta con que se llame <code>error.html</code> y esté en <code>templates/</code>.</p>
+            <pre><code>&lt;!doctype html&gt;
+&lt;html lang="es" xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8" /&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1" /&gt;
+  &lt;title&gt;Ocurrió un problema&lt;/title&gt;
+  &lt;link rel="stylesheet" th:href="@{/estilos.css}" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;main&gt;
+  &lt;h1&gt;Escuela de Fútbol Los Cerritos&lt;/h1&gt;
+
+  &lt;div class="resumen-errores" role="alert"&gt;
+    &lt;p&gt;&lt;strong&gt;No pudimos mostrar esta página.&lt;/strong&gt;&lt;/p&gt;
+    &lt;p&gt;Es posible que la dirección esté mal escrita o que la página ya no exista.&lt;/p&gt;
+    &lt;p&gt;Código del problema: &lt;span th:text="${status}"&gt;404&lt;/span&gt;&lt;/p&gt;
+  &lt;/div&gt;
+
+  &lt;p&gt;
+    &lt;a th:href="@{/jugadores}"&gt;Ver la lista de jugadores&lt;/a&gt; ·
+    &lt;a th:href="@{/jugadores/nuevo}"&gt;Inscribir un jugador&lt;/a&gt;
+  &lt;/p&gt;
+&lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            <div class="callout mb-0">
+              <div class="fw-semibold">Qué mostrar y qué NO mostrar en una página de error</div>
+              <div class="small-muted">Sí: un mensaje en lenguaje normal, el código del problema y <strong>una salida</strong> (enlaces para seguir navegando). No: el detalle técnico del error ni la traza de Java — a la persona no le sirve y además revela cómo está hecho tu sistema por dentro.</div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit9">9. <code>application.properties</code></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/resources/application.properties</code></p>
+            <pre><code>spring.application.name=taller-formularios
+
+# Mientras desarrollas: ver los cambios del HTML sin reiniciar el proyecto.
+spring.thymeleaf.cache=false
+
+# Permite que tu templates/error.html se use también para los errores 404.
+spring.web.resources.add-mappings=true
+server.error.whitelabel.enabled=false</code></pre>
+            <div class="small-muted">La última línea desactiva la página blanca genérica de Spring, para que se use la tuya.</div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit10">10. <code>static/estilos.css</code> <span class="badge text-bg-primary">lo modificas tú</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/resources/static/estilos.css</code></p>
+            <p class="small-muted mb-2">El de la Semana 10 más los estilos de error. Los colores están elegidos con <strong>buen contraste</strong> (texto oscuro sobre fondo claro), no solo "rojo bonito".</p>
+            <pre><code>body {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: #f6f8fb;
+  margin: 0;
+  padding: 2rem 1rem;
+  color: #1f2937;
+}
+
+main {
+  max-width: 620px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem 1.75rem;
+  box-shadow: 0 10px 30px rgba(16, 24, 40, 0.08);
+}
+
+h1 { color: #0b3d91; font-size: 1.5rem; margin-top: 0; }
+h2 { font-size: 1.1rem; color: #334155; }
+
+form { display: flex; flex-direction: column; gap: 0.3rem; margin: 1rem 0; }
+
+label { font-weight: 600; font-size: 0.9rem; margin-top: 0.75rem; }
+
+input, select {
+  padding: 0.55rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+/* Foco visible: quien navega con el teclado debe saber dónde está parado. */
+input:focus, select:focus, button:focus {
+  outline: 3px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* Casilla con error: borde grueso rojo Y fondo distinto.
+   Nunca solo color: quien no distingue el rojo también debe notarlo. */
+.campo-error {
+  border: 2px solid #b91c1c;
+  background: #fef2f2;
+}
+
+/* Mensaje de error de un campo. El ▲ ayuda a quien no percibe el color. */
+.mensaje-error {
+  color: #b91c1c;
+  font-size: 0.875rem;
+  margin: 0.15rem 0 0 0;
+  font-weight: 600;
+}
+
+.mensaje-error::before {
+  content: "▲ ";
+}
+
+/* Resumen de errores al inicio del formulario. */
+.resumen-errores {
+  background: #fef2f2;
+  border-left: 5px solid #b91c1c;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  color: #7f1d1d;
+}
+
+.resumen-errores ul { margin: 0.25rem 0 0 1rem; padding: 0; }
+
+button {
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  background: #0d6efd;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+button:hover { background: #0b5ed7; }
+
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { text-align: left; padding: 0.5rem; border-bottom: 1px solid #e2e8f0; }
+th { background: #f1f5f9; }
+
+a { color: #0d6efd; }</code></pre>
+          </div>
+        </div>
+
+        <div class="callout success">
+          <div class="fw-semibold">Para tu proyecto real</div>
+          <div class="small-muted">
+            Cambia tres cosas: <strong>(1)</strong> <code>tallerformularios</code> por tu paquete base;
+            <strong>(2)</strong> <code>Jugador</code> por tu entidad y sus campos; <strong>(3)</strong> las reglas
+            por las que tengan sentido en tu institución (la edad de un jugador de fútbol infantil no es la misma
+            que la de un paciente de un dispensario). La guía paso a paso está en
+            <a href="proyecto.html">Proyecto</a>.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Ejercicios y Kit — Semana 11 · Validación, errores y experiencia de usuario (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

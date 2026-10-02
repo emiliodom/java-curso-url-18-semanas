@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guía Docente — Semana 11 (70 min)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 11 — Validación</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link active" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Guía Docente · Sesión sincrónica de 70 minutos</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Semana 11 — Validación, errores y experiencia de usuario</h1>
+          <div class="small-muted">Sábado 26 de septiembre de 2026 · 11:10–12:20 · En línea · Dominio de la demo: <strong>Escuela de Fútbol Los Cerritos</strong> (se continúa el formulario de la Semana 10). Los datos siguen en memoria; la base de datos es la Semana 12. Sin Entrega Parcial esta semana.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <div class="row g-3">
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="h5 section-title">Objetivos (hoy)</h2>
+            <ul class="mb-0">
+              <li>Mostrar, con el formulario de la semana pasada, que hoy se guarda cualquier cosa.</li>
+              <li>Agregar la dependencia <code>spring-boot-starter-validation</code>.</li>
+              <li>Anotar el modelo con Bean Validation (<code>@NotBlank</code>, <code>@NotNull</code>, <code>@Size</code>, <code>@Min</code>, <code>@Max</code>, <code>@Email</code>, <code>@Pattern</code>), diciendo siempre de qué paquete viene cada una.</li>
+              <li>Activar la revisión con <code>@Valid</code> y leer el resultado con <code>BindingResult</code>, respetando su <strong>orden obligatorio</strong>.</li>
+              <li>Mostrar los mensajes en la plantilla con <code>th:errors</code> <strong>sin borrar lo que el usuario escribió</strong>.</li>
+              <li>Aplicar accesibilidad básica: <code>label</code>, <code>aria-describedby</code>, <code>role="alert"</code> y contraste.</li>
+              <li>Agregar una página de error propia (<code>templates/error.html</code>).</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h2 class="h5 section-title">Distribución del tiempo (70 min)</h2>
+            <table class="table table-sm small mb-0">
+              <tbody>
+                <tr><td><span class="time-chip">00–05</span></td><td>Bienvenida + Quiz (Presaberes)</td></tr>
+                <tr><td><span class="time-chip">05–12</span></td><td>Demo "guarda basura" + dependencia de validación</td></tr>
+                <tr><td><span class="time-chip">12–26</span></td><td>Anotaciones en el modelo + <code>@Valid</code> y <code>BindingResult</code></td></tr>
+                <tr><td><span class="time-chip">26–28</span></td><td>Pausa activa</td></tr>
+                <tr><td><span class="time-chip">28–42</span></td><td>Mostrar los errores sin perder los datos</td></tr>
+                <tr><td><span class="time-chip">42–52</span></td><td>UX, accesibilidad y página de error</td></tr>
+                <tr><td><span class="time-chip">52–60</span></td><td>Challenge</td></tr>
+                <tr><td><span class="time-chip">60–67</span></td><td>Quiz (Final de clase)</td></tr>
+                <tr><td><span class="time-chip">67–70</span></td><td>Cierre + lanzamiento de la Guía 11</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h2 class="h5 section-title">Normas rápidas</h2>
+            <ul class="mb-0">
+              <li>Cada anotación que aparezca en pantalla se dice <strong>con su paquete</strong>: "<code>@NotBlank</code>, de <code>jakarta.validation.constraints</code>".</li>
+              <li>Frase ancla de la sesión: <em>"validar no es desconfiar del usuario, es ayudarlo a no equivocarse"</em>.</li>
+              <li>Regla que se repite tres veces porque siempre se olvida: <strong><code>BindingResult</code> va inmediatamente después del objeto validado</strong>.</li>
+              <li>Cuando hay errores <strong>no</strong> se redirige: se devuelve la plantilla, porque el redirect borra los mensajes y lo que el usuario escribió.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout warning mt-3">
+          <div class="fw-semibold">Checklist antes de iniciar (docente)</div>
+          <ul class="small-muted mb-0">
+            <li>Tener el proyecto de demo con la dependencia de validación <strong>ya descargada</strong> (ejecutarlo una vez antes de la sesión): la primera descarga tarda y corta el ritmo.</li>
+            <li>Tener el formulario de la Semana 10 funcionando, para la demo de apertura.</li>
+            <li>Tener a mano el error de <code>BindingResult</code> mal colocado para mostrarlo a propósito (bloque 3).</li>
+            <li>Quien no tenga el módulo de la Semana 10 usa el <a href="ejercicios.html">Kit de archivos completos</a>.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="h4 section-title">Guion minuto a minuto (70 min)</h2>
+
+            <div class="accordion" id="acc">
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#c1">
+                    <span class="time-chip me-2">00–05</span> 1) Bienvenida + Quiz (Presaberes)
+                  </button>
+                </h2>
+                <div id="c1" class="accordion-collapse collapse show" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ol>
+                      <li>Abre con la pregunta incómoda: <em>"¿qué pasa si alguien inscribe a un jugador de 300 años, o deja el nombre vacío?"</em>. Deja que respondan antes de mostrar nada.</li>
+                      <li>Comparte el <a href="quiz.html">Quiz</a> en modo <strong>Presaberes</strong> (4 minutos, individual).</li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c2">
+                    <span class="time-chip me-2">05–12</span> 2) Demo "guarda basura" + dependencia
+                  </button>
+                </h2>
+                <div id="c2" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2"><strong>Demostración de apertura (3 min).</strong> Con el proyecto de la Semana 10 corriendo, llena el formulario a propósito con basura y envíalo:</p>
+                    <ul class="small-muted">
+                      <li>Nombre: <em>(vacío, o un solo espacio)</em></li>
+                      <li>Edad: <code>300</code></li>
+                    </ul>
+                    <p class="small-muted mb-2">Muestra la lista: ahí está el registro, guardado tan campante. Esa imagen es la motivación de toda la sesión — no hace falta explicar más por qué se valida.</p>
+                    <p class="small-muted mb-2">Agrega ahora la dependencia al <code>pom.xml</code>, dentro de <code>&lt;dependencies&gt;</code>:</p>
+                    <pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-validation&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+                    <div class="callout mb-0">
+                      <div class="fw-semibold">Por qué hace falta una dependencia aparte</div>
+                      <div class="small-muted">Las anotaciones de validación <strong>no</strong> vienen con <code>spring-boot-starter-web</code>. Este Starter trae la implementación que las hace funcionar (Hibernate Validator). Si se anota el modelo sin agregarla, el proyecto compila y arranca… pero <strong>no valida nada</strong>, en silencio — un error de los que más tiempo hacen perder.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c3">
+                    <span class="time-chip me-2">12–26</span> 3) Anotaciones + <code>@Valid</code> y <code>BindingResult</code>
+                  </button>
+                </h2>
+                <div id="c3" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2"><strong>Paso 1 — anotar el modelo.</strong> Abre <code>Jugador.java</code> y agrega las reglas. Di el paquete en voz alta al escribir cada <code>import</code>:</p>
+                    <pre><code>import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+public class Jugador {
+
+    @NotBlank(message = "El nombre es obligatorio.")
+    @Size(min = 3, max = 40, message = "El nombre debe tener entre 3 y 40 letras.")
+    private String nombre;
+
+    @NotNull(message = "La edad es obligatoria.")
+    @Min(value = 5,  message = "La edad mínima para inscribirse es 5 años.")
+    @Max(value = 17, message = "Esta categoría admite hasta 17 años.")
+    private Integer edad;
+    ...
+}</code></pre>
+                    <div class="callout warning mb-2">
+                      <div class="fw-semibold">El cambio de <code>int</code> a <code>Integer</code> hay que explicarlo, no esconderlo</div>
+                      <div class="small-muted">Con <code>int</code>, si el usuario deja la casilla vacía Spring no puede convertir "" a número y produce un error técnico feo, antes de que tus reglas se ejecuten. Con <code>Integer</code> el valor puede quedar en <em>nulo</em>, y entonces <code>@NotNull</code> sí puede dar tu mensaje en español. Regla práctica: <strong>los campos numéricos de un formulario se declaran con <code>Integer</code>, no con <code>int</code></strong>.</div>
+                    </div>
+                    <p class="small-muted mb-2"><strong>Paso 2 — pedirle a Spring que revise.</strong> En el controlador:</p>
+                    <pre><code>import jakarta.validation.Valid;
+import org.springframework.validation.BindingResult;
+
+@PostMapping("/jugadores")
+public String registrarJugador(@Valid @ModelAttribute Jugador jugador,
+                               BindingResult resultado) {
+    if (resultado.hasErrors()) {
+        return "formulario";        // vuelve al formulario con los datos y los errores
+    }
+    jugadorService.guardar(jugador);
+    return "redirect:/jugadores";
+}</code></pre>
+                    <div class="table-responsive">
+                      <table class="table table-sm small">
+                        <thead><tr><th>Pieza</th><th>Paquete</th><th>Qué hace</th></tr></thead>
+                        <tbody>
+                          <tr><td><code>@Valid</code></td><td><code>jakarta.validation</code></td><td>Le ordena a Spring revisar las anotaciones del objeto antes de entrar al método.</td></tr>
+                          <tr><td><code>BindingResult</code></td><td><code>org.springframework.validation</code></td><td>Es el reporte de la revisión: qué falló y con qué mensaje.</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="callout danger mb-2">
+                      <div class="fw-semibold">Error que conviene provocar aquí (2 min)</div>
+                      <div class="small-muted">Mueve <code>BindingResult</code> después de otro parámetro (por ejemplo <code>Model model</code>) y envía el formulario: la aplicación truena. <strong><code>BindingResult</code> debe ir inmediatamente después del objeto validado</strong>, pegado a él. Es la regla que más se olvida, y el error no dice "cambiaste el orden".</div>
+                    </div>
+                    <div class="callout mb-0">
+                      <div class="fw-semibold">Y por qué aquí NO se redirige</div>
+                      <div class="small-muted">La Semana 10 terminó insistiendo en redirigir después de guardar. Hoy aparece la excepción: <strong>cuando hay errores se devuelve la plantilla</strong> (<code>return "formulario";</code>). Un <code>redirect</code> haría una petición nueva y en ella se perderían tanto los mensajes como lo que el usuario ya había escrito.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c4">
+                    <span class="time-chip me-2">26–28</span> 4) Pausa activa (2 min)
+                  </button>
+                </h2>
+                <div id="c4" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>Estirar, agua, mirar lejos de la pantalla 20 segundos.</li>
+                      <li>Micro-check en el chat: "¿de qué paquete viene <code>@NotBlank</code>?"</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c5">
+                    <span class="time-chip me-2">28–42</span> 5) Mostrar los errores sin perder los datos
+                  </button>
+                </h2>
+                <div id="c5" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">Hasta aquí ya no guarda basura, pero el usuario <strong>no ve por qué</strong>. Se arregla en la plantilla:</p>
+                    <pre><code>&lt;label for="nombre"&gt;Nombre&lt;/label&gt;
+&lt;input type="text" id="nombre" th:field="*{nombre}"
+       th:errorclass="campo-error" /&gt;
+&lt;p class="mensaje-error" th:if="${#fields.hasErrors('nombre')}"
+   th:errors="*{nombre}"&gt;Mensaje de ejemplo&lt;/p&gt;</code></pre>
+                    <div class="table-responsive">
+                      <table class="table table-sm small">
+                        <thead><tr><th>Atributo</th><th>Qué hace</th></tr></thead>
+                        <tbody>
+                          <tr><td><code>th:errors="*{nombre}"</code></td><td>Escribe el mensaje de error de ese campo (el que pusiste en <code>message = "..."</code>).</td></tr>
+                          <tr><td><code>th:errorclass="campo-error"</code></td><td>Agrega esa clase CSS a la casilla <strong>solo si ese campo falló</strong> — para marcarla en rojo.</td></tr>
+                          <tr><td><code>#fields.hasErrors('nombre')</code></td><td>Pregunta si ese campo tiene errores; sirve para mostrar u ocultar el párrafo.</td></tr>
+                          <tr><td><code>#fields.hasAnyErrors()</code></td><td>Pregunta si <em>algún</em> campo falló; sirve para el resumen de arriba.</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="callout success mb-2">
+                      <div class="fw-semibold">El momento clave de la clase: los datos NO se borran</div>
+                      <div class="small-muted">Envía el formulario con el nombre bien escrito y la edad inválida. Señala en pantalla que <strong>el nombre sigue ahí</strong>: el usuario solo corrige lo que falló. Eso pasa porque se devolvió la plantilla con el mismo objeto, y <code>th:field</code> vuelve a pintar sus valores. Pregunta al grupo: <em>"¿qué sentirías si un formulario largo te borrara todo por un dato malo?"</em> — esa es la parte de experiencia de usuario del programa.</div>
+                    </div>
+                    <p class="small-muted mb-1">Agrega también el resumen de errores al inicio del formulario, que ayuda cuando la página es larga:</p>
+                    <pre><code>&lt;div class="resumen-errores" role="alert" th:if="${#fields.hasAnyErrors()}"&gt;
+    &lt;p&gt;Revisa estos datos antes de continuar:&lt;/p&gt;
+    &lt;ul&gt;
+        &lt;li th:each="error : ${#fields.allErrors()}" th:text="${error}"&gt;Error&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;</code></pre>
+                    <div class="callout warning mb-0">
+                      <div class="fw-semibold">Truco para la demo: <code>novalidate</code></div>
+                      <div class="small-muted">Si el formulario conserva los <code>required</code> del HTML, el navegador bloquea el envío y nunca se ve la validación del servidor. Agrega <code>novalidate</code> a la etiqueta <code>&lt;form&gt;</code> durante la clase para poder demostrarla. Explica que las dos validaciones conviven: la del navegador es comodidad, la del servidor es la que <strong>de verdad</strong> protege los datos.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c6">
+                    <span class="time-chip me-2">42–52</span> 6) UX, accesibilidad y página de error
+                  </button>
+                </h2>
+                <div id="c6" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">Tres mejoras cortas, en este orden:</p>
+                    <div class="table-responsive">
+                      <table class="table table-sm small">
+                        <thead><tr><th>Mejora</th><th>Cómo</th><th>Por qué</th></tr></thead>
+                        <tbody>
+                          <tr><td>Etiquetas bien asociadas</td><td><code>&lt;label for="edad"&gt;</code> con el mismo valor del <code>id</code> de la casilla</td><td>Quien usa lector de pantalla oye qué casilla es; además, al tocar la etiqueta se enfoca el campo</td></tr>
+                          <tr><td>Error anunciado</td><td><code>aria-describedby="edad-error"</code> en la casilla y ese <code>id</code> en el párrafo del error</td><td>El lector de pantalla lee el mensaje junto con el campo, no suelto</td></tr>
+                          <tr><td>No depender solo del color</td><td>Borde rojo <strong>y</strong> texto del error <strong>y</strong> un icono o la palabra "Error:"</td><td>Una persona con daltonismo no distingue el borde rojo del gris</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="callout mb-2">
+                      <div class="fw-semibold">Conexión con su rol docente (vale 1 minuto)</div>
+                      <div class="small-muted">Nombra que esto no es decoración: en un aula real habrá estudiantes con baja visión o daltonismo. Las mismas tres reglas que aplican hoy (etiqueta clara, mensaje que dice qué hacer, no comunicar solo con color) son las que después van a necesitar al preparar materiales para sus propios grupos.</div>
+                    </div>
+                    <p class="small-muted mb-2"><strong>Página de error propia.</strong> Crea <code>src/main/resources/templates/error.html</code>: Spring Boot la usa automáticamente, sin configurar nada, cuando ocurre un error no controlado (por ejemplo una dirección que no existe).</p>
+                    <div class="callout success mb-0">
+                      <div class="fw-semibold">Cierre del bloque</div>
+                      <div class="small-muted">Visita a propósito una dirección inventada (<code>/jugadoresss</code>) y muestra que ya no aparece la página blanca genérica de Spring, sino una con el nombre de la institución y un enlace de regreso. Es un cambio pequeño con un efecto enorme en la percepción del usuario.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c7">
+                    <span class="time-chip me-2">52–60</span> 7) Challenge
+                  </button>
+                </h2>
+                <div id="c7" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ol>
+                      <li>Comparte el <a href="challenge.html">Challenge</a>: pestaña 1 "Elige la validación correcta" y pestaña 2 "Simulador: ¿qué pasa al enviar?".</li>
+                      <li>Modela una vez el escenario <strong>"datos inválidos"</strong> del simulador (2 min): se ve que la petición nunca llega al servicio y que la plantilla se devuelve con los datos intactos.</li>
+                      <li>Resuelven por su cuenta y exportan el PDF (evidencia de la Actividad en clase junto con el quiz).</li>
+                    </ol>
+                    <div class="callout warning mb-0">
+                      <div class="fw-semibold">Pregunta guía mientras circulas</div>
+                      <div class="small-muted">"Si un campo de texto puede quedar vacío pero, cuando viene, no debe pasar de 200 caracteres, ¿qué anotación usas?" (Respuesta: solo <code>@Size(max = 200)</code>; <code>@NotBlank</code> lo volvería obligatorio.)</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c8">
+                    <span class="time-chip me-2">60–67</span> 8) Quiz (Final de clase)
+                  </button>
+                </h2>
+                <div id="c8" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ol>
+                      <li>Comparte de nuevo el <a href="quiz.html">Quiz</a>, esta vez en modo <strong>Final de clase</strong> (12 preguntas, 6 min).</li>
+                      <li>Calificar, revisar la retroalimentación y <strong>exportar a PDF</strong>.</li>
+                      <li>Los PDF del quiz y del challenge = evidencia de la <strong>Actividad en clase – Sesión 11</strong>.</li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c9">
+                    <span class="time-chip me-2">67–70</span> 9) Cierre + lanzamiento de la Guía 11
+                  </button>
+                </h2>
+                <div id="c9" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>Síntesis en 3 frases: las anotaciones de <code>jakarta.validation.constraints</code> declaran las reglas; <code>@Valid</code> + <code>BindingResult</code> las revisan antes de guardar; <code>th:errors</code> se las explica al usuario sin borrarle lo escrito.</li>
+                      <li>Presenta el <a href="proyecto.html">Proyecto (Guía 11)</a>: validar el formulario del proyecto propio con reglas que tengan sentido para esa institución — fecha límite antes de la Sesión 12 (3 de octubre de 2026).</li>
+                      <li>Ticket de salida: <strong>una regla de validación que su institución real necesita</strong> y con qué anotación la haría.</li>
+                      <li>Invitación a la <a href="../evaluacion_docente/index.html">evaluación anónima</a>.</li>
+                      <li>Puente a la Semana 12: "ya tienes datos limpios… que se borran al apagar la aplicación. La próxima semana los guardamos en una base de datos de verdad".</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="callout success mt-3">
+          <div class="fw-semibold">Plan B (si falla la descarga de la dependencia o falta tiempo)</div>
+          <div class="small-muted">
+            Ten el proyecto de demo ya compilado en una segunda ventana para no esperar a Maven. Si hay que
+            recortar, sacrifica el bloque 6 (accesibilidad y página de error) y déjalo como trabajo autónomo con
+            el <a href="ejercicios.html">Kit</a>; lo que <strong>no</strong> debe recortarse es el bloque 5,
+            porque mostrar los errores sin perder los datos es justo lo que evalúa la Guía 11.
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Guía Docente — Semana 11 (formato 18 semanas · 70 min) · Ejercicios y Kit en <a href="ejercicios.html">ejercicios.html</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

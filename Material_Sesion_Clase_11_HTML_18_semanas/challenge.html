@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Challenge — Elige la validación y simulador de envío (Semana 11)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 11 — Validación</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link active" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Challenge · Semana 11 · Centro de Salud Buena Vida</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Dos retos: elegir la regla y ver qué pasa al enviar</h1>
+          <div class="small-muted">Pestaña 1: <strong>¿qué anotación protege cada campo?</strong> Pestaña 2: un <strong>simulador</strong> que compara, paso a paso, qué ocurre cuando los datos son válidos y cuando no lo son — y por qué el servicio ni se entera.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="exportChallengePdf()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <ul class="nav nav-tabs mb-4 no-print" id="challengeTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="tab-clasifica-btn" data-bs-toggle="tab" data-bs-target="#tab-clasifica" type="button" role="tab">🛡️ Elige la validación correcta</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-simulador-btn" data-bs-toggle="tab" data-bs-target="#tab-simulador" type="button" role="tab">⚙️ Simulador: ¿qué pasa al enviar?</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="challengeTabsContent">
+
+      <!-- ============ PESTAÑA 1 ============ -->
+      <div class="tab-pane fade show active" id="tab-clasifica" role="tabpanel">
+        <div class="row g-3">
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="h5 section-title">Cómo jugar</h2>
+                <ol class="small mb-0">
+                  <li>Elige un nivel: <strong>Fácil → Medio → Difícil</strong>.</li>
+                  <li>El Centro de Salud Buena Vida quiere blindar su ficha de pacientes.</li>
+                  <li>Cada pieza es una <strong>regla en palabras</strong>: arrástrala a la anotación que la implementa.</li>
+                  <li>Cada caja acepta <strong>varias piezas</strong>.</li>
+                  <li>Pulsa <strong>Verificar</strong> para tu puntaje.</li>
+                </ol>
+              </div>
+            </div>
+            <div class="callout warning mt-3">
+              <div class="fw-semibold">Ojo en Medio y Difícil</div>
+              <div class="small-muted">Aparecen piezas que <strong>no son validación</strong>: anotaciones de otras semanas (guardar, mostrar, desplegar). No pertenecen a ninguna caja: <strong>déjalas en el banco</strong>.</div>
+            </div>
+            <div class="card mt-3">
+              <div class="card-body">
+                <h2 class="h6 section-title">Tu progreso</h2>
+                <div class="small">
+                  <div>🟡 Fácil: <span id="progc-facil">sin intentar</span></div>
+                  <div>🟠 Medio: <span id="progc-medio">sin intentar</span></div>
+                  <div>🔴 Difícil: <span id="progc-dificil">sin intentar</span></div>
+                </div>
+                <label class="form-label fw-semibold mt-3 mb-1" for="studentName">Nombre (para el PDF)</label>
+                <input id="studentName" class="form-control form-control-sm" type="text" placeholder="Nombre y apellido" />
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-8">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3 no-print">
+                  <div class="btn-group" role="group" aria-label="Nivel">
+                    <button class="btn btn-outline-primary levelc-btn active" data-level="facil" onclick="loadLevelC('facil')">🟡 Fácil</button>
+                    <button class="btn btn-outline-primary levelc-btn" data-level="medio" onclick="loadLevelC('medio')">🟠 Medio</button>
+                    <button class="btn btn-outline-primary levelc-btn" data-level="dificil" onclick="loadLevelC('dificil')">🔴 Difícil</button>
+                  </div>
+                  <span class="badge text-bg-secondary" id="attemptsBadgeC">Verificaciones: 0</span>
+                </div>
+
+                <div class="callout mb-3">
+                  <div class="fw-semibold">Misión — <span id="levelNameC"></span></div>
+                  <div class="small-muted" id="levelMissionC"></div>
+                </div>
+
+                <h3 class="h6 fw-bold">Banco de reglas</h3>
+                <div id="poolC" class="dd-pool mb-3" aria-label="Banco de reglas"></div>
+
+                <h3 class="h6 fw-bold">Anotaciones</h3>
+                <div id="boardC" class="mvc-board mb-3"></div>
+
+                <div id="resultBannerC" class="score-banner"></div>
+
+                <div class="d-flex gap-2 flex-wrap no-print mt-3">
+                  <button class="btn btn-primary" onclick="verifyC()">✔ Verificar</button>
+                  <button class="btn btn-outline-secondary" onclick="loadLevelC(currentLevelC)">↺ Reiniciar nivel</button>
+                  <button class="btn btn-outline-warning" id="solutionBtnC" onclick="showSolutionC()" disabled>💡 Ver solución (tras 3 verificaciones)</button>
+                  <button class="btn btn-outline-dark btn-export ms-auto" onclick="exportChallengePdf()">Exportar a PDF</button>
+                </div>
+
+                <details class="mt-3">
+                  <summary class="fw-semibold">¿Qué deberías concluir de este nivel?</summary>
+                  <pre class="mt-2" style="white-space: pre-wrap;"><code id="expectedOutputC"></code></pre>
+                </details>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ PESTAÑA 2 ============ -->
+      <div class="tab-pane fade" id="tab-simulador" role="tabpanel">
+        <div class="row g-3">
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="h5 section-title">Sigue el envío</h2>
+                <p class="small-muted">Una enfermera registra a un paciente en el Centro de Salud Buena Vida. Compara los dos escenarios y fíjate en <strong>hasta dónde llega</strong> la petición en cada uno.</p>
+                <label class="form-label small fw-semibold" for="scenarioSelect">Escenario</label>
+                <select id="scenarioSelect" class="form-select mb-3" onchange="reiniciarSimulador()">
+                  <option value="validos">✅ Datos válidos</option>
+                  <option value="invalidos">⚠️ Datos inválidos</option>
+                </select>
+                <div class="d-flex gap-2 flex-wrap">
+                  <button class="btn btn-primary" id="nextStepBtn" onclick="siguientePaso()">▶ Siguiente paso</button>
+                  <button class="btn btn-outline-secondary" onclick="reiniciarSimulador()">↺ Reiniciar</button>
+                </div>
+              </div>
+            </div>
+            <div class="callout mt-3">
+              <div class="fw-semibold">Qué observar</div>
+              <div class="small-muted">En el escenario con errores, mira si la caja del <strong>Servicio</strong> llega a iluminarse alguna vez. Y fíjate en lo que pasa con los datos que la enfermera ya había escrito bien.</div>
+            </div>
+          </div>
+
+          <div class="col-lg-8">
+            <div class="card">
+              <div class="card-body">
+                <h3 class="h6 fw-bold mb-2">Recorrido del envío (se ilumina la etapa activa)</h3>
+                <div class="layer-map mb-3">
+                  <div class="layer-card presentacion" id="box-formulario">
+                    <div class="layer-title">🖥️ Formulario <span class="small-muted fw-normal">— lo que ve la enfermera</span></div>
+                    <span class="role-chip">Envía los datos</span><span class="role-chip">Muestra los mensajes</span>
+                  </div>
+                  <div class="layer-arrow">↕</div>
+                  <div class="layer-card negocio" id="box-validacion">
+                    <div class="layer-title">🛡️ @Valid + BindingResult <span class="small-muted fw-normal">— el filtro</span></div>
+                    <span class="role-chip">Ejecuta las reglas del modelo</span><span class="role-chip">Decide si se sigue o no</span>
+                  </div>
+                  <div class="layer-arrow">↕</div>
+                  <div class="layer-card datos" id="box-servicio">
+                    <div class="layer-title">💾 Servicio <span class="small-muted fw-normal">— guarda en memoria</span></div>
+                    <span class="role-chip">guardar(paciente)</span>
+                  </div>
+                </div>
+
+                <h3 class="h6 fw-bold">Registro de la simulación</h3>
+                <div id="simLog" class="sim-log"></div>
+
+                <div class="mt-3">
+                  <span class="badge text-bg-dark">Pacientes guardados: <span id="contador">0</span></span>
+                </div>
+              </div>
+            </div>
+            <div class="callout success mt-3" id="simExplain" style="display:none;"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Challenge — Semana 11 · Validación, errores y experiencia de usuario, Centro de Salud Buena Vida (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="toast.js"></script>
+  <script>
+    // ============================================================
+    // PESTAÑA 1 — Clasificación de reglas por anotación
+    // ============================================================
+    var ZONE_LABELS_C = {
+      notblank: '@NotBlank / @NotNull',
+      rango: '@Min / @Max',
+      email: '@Email',
+      size: '@Size',
+      pattern: '@Pattern'
+    };
+
+    var ZONE_TIPS_C = {
+      notblank: 'Correcto: se trata de exigir que el dato venga.',
+      rango: 'Correcto: es un límite numérico.',
+      email: 'Correcto: es formato de correo electrónico.',
+      size: 'Correcto: es cuestión de largo del texto.',
+      pattern: 'Correcto: el texto debe seguir una forma exacta.'
+    };
+
+    var LEVELS_C = {
+      facil: {
+        name: 'Fácil — Las tres reglas más comunes',
+        mission: 'La ficha del paciente necesita sus primeras reglas. Coloca cada una bajo la anotación que la implementa.',
+        zones: ['notblank', 'rango', 'email'],
+        items: [
+          { text: 'El nombre del paciente no puede quedar vacío', zone: 'notblank' },
+          { text: 'Hay que seleccionar obligatoriamente el tipo de consulta', zone: 'notblank' },
+          { text: 'La edad debe ser de 0 años como mínimo', zone: 'rango' },
+          { text: 'La edad no puede pasar de 120 años', zone: 'rango' },
+          { text: 'El correo de contacto debe tener forma de correo', zone: 'email' },
+          { text: 'El correo del responsable debe incluir arroba y dominio', zone: 'email' }
+        ],
+        distractors: [],
+        output: 'Tres familias de reglas: "que venga el dato" (@NotBlank / @NotNull), "que el número esté en un rango" (@Min / @Max) y "que el texto tenga forma de correo" (@Email).'
+      },
+      medio: {
+        name: 'Medio — Entra el largo del texto',
+        mission: 'Ahora se agrega @Size y aparecen 2 piezas que no son validación: déjalas en el banco.',
+        zones: ['notblank', 'rango', 'email', 'size'],
+        items: [
+          { text: 'El nombre del paciente es obligatorio', zone: 'notblank' },
+          { text: 'El nombre del responsable no puede venir en blanco', zone: 'notblank' },
+          { text: 'El peso registrado no puede ser menor a 1 kilogramo', zone: 'rango' },
+          { text: 'La temperatura no puede pasar de 45 grados', zone: 'rango' },
+          { text: 'El correo de contacto debe tener formato válido', zone: 'email' },
+          { text: 'El motivo de consulta no debe pasar de 200 caracteres', zone: 'size' },
+          { text: 'El nombre debe tener al menos 3 caracteres', zone: 'size' },
+          { text: 'La dirección debe tener entre 10 y 120 caracteres', zone: 'size' }
+        ],
+        distractors: [
+          { text: '@Entity para guardar al paciente en la base de datos', zone: 'trap' },
+          { text: '@GetMapping para mostrar el formulario en pantalla', zone: 'trap' }
+        ],
+        output: 'Cuidado con confundir @NotBlank con @Size: la primera exige que venga algo, la segunda mide cuánto. "Al menos 3 caracteres" es largo, no obligatoriedad. Las dos trampas son de las Semanas 12 y 10.'
+      },
+      dificil: {
+        name: 'Difícil — Las cinco anotaciones',
+        mission: 'Diez reglas y cinco cajas, con 3 piezas que no son validación. Algunas reglas se parecen mucho entre sí: léelas con calma.',
+        zones: ['notblank', 'rango', 'email', 'size', 'pattern'],
+        items: [
+          { text: 'El nombre del paciente es obligatorio', zone: 'notblank' },
+          { text: 'La edad es obligatoria (la casilla no puede venir vacía)', zone: 'notblank' },
+          { text: 'La edad debe estar entre 0 y 120 años', zone: 'rango' },
+          { text: 'El número de consultas previas no puede ser negativo', zone: 'rango' },
+          { text: 'El correo del responsable debe tener formato de correo', zone: 'email' },
+          { text: 'El motivo de consulta no debe pasar de 200 caracteres', zone: 'size' },
+          { text: 'El código de expediente debe tener entre 6 y 10 caracteres', zone: 'size' },
+          { text: 'El teléfono debe ser exactamente 8 dígitos, sin guiones', zone: 'pattern' },
+          { text: 'El código de expediente debe seguir la forma CS-0000', zone: 'pattern' },
+          { text: 'El DPI debe estar formado solo por números', zone: 'pattern' }
+        ],
+        distractors: [
+          { text: '@Service sobre la clase que guarda los pacientes', zone: 'trap' },
+          { text: 'Desplegar la aplicación en Render para que esté en internet', zone: 'trap' },
+          { text: 'JpaRepository para consultar los pacientes guardados', zone: 'trap' }
+        ],
+        output: 'El código de expediente aparece dos veces a propósito: "entre 6 y 10 caracteres" es @Size (cuánto mide), mientras que "la forma CS-0000" es @Pattern (cómo está compuesto). Un mismo campo puede llevar varias anotaciones. Las 3 trampas son de las Semanas 9, 14 y 12.'
+      }
+    };
+
+    var currentLevelC = 'facil';
+    var attemptsC = 0;
+    var progressC = { facil: null, medio: null, dificil: null };
+    var selectedC = null;
+
+    function shuffle(arr) {
+      var a = arr.slice();
+      for (var i = a.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = a[i]; a[i] = a[j]; a[j] = t;
+      }
+      return a;
+    }
+
+    function makePieceC(text, zone) {
+      var el = document.createElement('div');
+      el.className = 'dd-piece';
+      el.textContent = text;
+      el.setAttribute('draggable', 'true');
+      el.dataset.text = text;
+      el.dataset.zone = zone;
+      el.addEventListener('dragstart', function (e) {
+        el.classList.add('dragging');
+        e.dataTransfer.setData('text/plain', '');
+        window._dragged = el;
+      });
+      el.addEventListener('dragend', function () {
+        el.classList.remove('dragging');
+        window._dragged = null;
+      });
+      el.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (selectedC === el) {
+          el.classList.remove('selected');
+          selectedC = null;
+        } else {
+          if (selectedC) selectedC.classList.remove('selected');
+          selectedC = el;
+          el.classList.add('selected');
+        }
+      });
+      return el;
+    }
+
+    function feedbackC(piece, zoneKey) {
+      var pieceZone = piece.dataset.zone;
+      if (pieceZone === zoneKey) {
+        return { ok: true, type: 'ok', msg: '✓ ' + (ZONE_LABELS_C[zoneKey] || zoneKey) + '. ' + (ZONE_TIPS_C[zoneKey] || '') };
+      }
+      if (pieceZone === 'trap') {
+        return { ok: false, type: 'bad', msg: 'Eso no es una validación: es de otra semana (guardar, mostrar o desplegar). Déjalo en el banco.' };
+      }
+      if (zoneKey === 'size' && pieceZone === 'pattern') {
+        return { ok: false, type: 'warn', msg: '@Size mide CUÁNTO mide el texto. Esta regla habla de la FORMA del texto — eso es @Pattern.' };
+      }
+      if (zoneKey === 'pattern' && pieceZone === 'size') {
+        return { ok: false, type: 'warn', msg: '@Pattern define la forma exacta. Esta regla solo habla del largo — eso es @Size.' };
+      }
+      if (zoneKey === 'notblank' && pieceZone === 'size') {
+        return { ok: false, type: 'warn', msg: 'Exigir un mínimo de caracteres es medir el largo: eso es @Size, no @NotBlank.' };
+      }
+      return { ok: false, type: 'warn', msg: 'Esa regla corresponde a ' + (ZONE_LABELS_C[pieceZone] || pieceZone) + ', no a ' + (ZONE_LABELS_C[zoneKey] || zoneKey) + '.' };
+    }
+
+    function placeInZoneC(piece, zoneEl, zoneKey) {
+      zoneEl.appendChild(piece);
+      piece.classList.remove('selected');
+      selectedC = null;
+      var fb = feedbackC(piece, zoneKey);
+      piece.classList.remove('correct-piece', 'incorrect-piece');
+      piece.classList.add(fb.ok ? 'correct-piece' : 'incorrect-piece');
+      showToast(fb.msg, fb.type);
+    }
+
+    function setupPoolC(zone) {
+      zone.addEventListener('dragover', function (e) { e.preventDefault(); });
+      zone.addEventListener('drop', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var piece = window._dragged;
+        if (!piece) return;
+        piece.classList.remove('correct-piece', 'incorrect-piece');
+        zone.appendChild(piece);
+      });
+      zone.addEventListener('click', function (e) {
+        if (!selectedC || e.target !== zone) return;
+        selectedC.classList.remove('correct-piece', 'incorrect-piece', 'selected');
+        zone.appendChild(selectedC);
+        selectedC = null;
+      });
+    }
+
+    function setupZoneC(zoneEl, zoneKey) {
+      zoneEl.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        zoneEl.classList.add('over');
+      });
+      zoneEl.addEventListener('dragleave', function () { zoneEl.classList.remove('over'); });
+      zoneEl.addEventListener('drop', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        zoneEl.classList.remove('over');
+        var piece = window._dragged;
+        if (!piece) return;
+        placeInZoneC(piece, zoneEl, zoneKey);
+      });
+      zoneEl.addEventListener('click', function () {
+        if (!selectedC) return;
+        placeInZoneC(selectedC, zoneEl, zoneKey);
+      });
+    }
+
+    function loadLevelC(key) {
+      currentLevelC = key;
+      attemptsC = 0;
+      selectedC = null;
+      document.getElementById('attemptsBadgeC').textContent = 'Verificaciones: 0';
+      document.getElementById('solutionBtnC').disabled = true;
+
+      var level = LEVELS_C[key];
+      document.getElementById('levelNameC').textContent = level.name;
+      document.getElementById('levelMissionC').textContent = level.mission;
+      document.getElementById('expectedOutputC').textContent = level.output;
+
+      document.querySelectorAll('.levelc-btn').forEach(function (b) {
+        b.classList.toggle('active', b.dataset.level === key);
+      });
+
+      var banner = document.getElementById('resultBannerC');
+      banner.className = 'score-banner';
+      banner.innerHTML = '';
+
+      var board = document.getElementById('boardC');
+      board.innerHTML = '';
+      level.zones.forEach(function (zoneKey) {
+        var zoneEl = document.createElement('div');
+        zoneEl.className = 'mvc-zone';
+        zoneEl.id = 'zonec-' + zoneKey;
+        var title = document.createElement('div');
+        title.className = 'mvc-zone-title';
+        title.textContent = ZONE_LABELS_C[zoneKey] || zoneKey;
+        zoneEl.appendChild(title);
+        setupZoneC(zoneEl, zoneKey);
+        board.appendChild(zoneEl);
+      });
+
+      var pool = document.getElementById('poolC');
+      pool.innerHTML = '';
+      var pieces = level.items.map(function (l) { return makePieceC(l.text, l.zone); })
+        .concat((level.distractors || []).map(function (d) { return makePieceC(d.text, d.zone); }));
+      shuffle(pieces).forEach(function (p) { pool.appendChild(p); });
+
+      showToast('Nivel "' + level.name + '" listo. Arrastra la primera regla.', 'info', 3000);
+    }
+
+    function verifyC() {
+      attemptsC++;
+      document.getElementById('attemptsBadgeC').textContent = 'Verificaciones: ' + attemptsC;
+      if (attemptsC >= 3) document.getElementById('solutionBtnC').disabled = false;
+
+      var level = LEVELS_C[currentLevelC];
+      var pool = document.getElementById('poolC');
+      var allPieces = document.querySelectorAll('#boardC .dd-piece, #poolC .dd-piece');
+      var correct = 0;
+
+      allPieces.forEach(function (piece) {
+        var inPool = piece.parentElement === pool;
+        var zoneKey = inPool ? null : piece.parentElement.id.replace('zonec-', '');
+        var isCorrect = piece.dataset.zone === 'trap' ? inPool : (zoneKey === piece.dataset.zone);
+        piece.classList.remove('correct-piece', 'incorrect-piece');
+        if (!inPool || piece.dataset.zone === 'trap') {
+          piece.classList.add(isCorrect ? 'correct-piece' : 'incorrect-piece');
+        }
+        if (isCorrect) correct++;
+      });
+
+      var total = allPieces.length;
+      var pct = Math.round((correct / total) * 100);
+      progressC[currentLevelC] = { pct: pct, attempts: attemptsC };
+      document.getElementById('progc-' + currentLevelC).textContent =
+        pct + '% (' + attemptsC + ' verificación' + (attemptsC === 1 ? '' : 'es') + ')';
+
+      var banner = document.getElementById('resultBannerC');
+      var msg;
+      if (pct === 100) {
+        msg = '🎉 ¡Todas las reglas con su anotación correcta!';
+        showToast('¡Nivel completado! ' + level.name, 'ok', 5000);
+      } else if (pct >= 60) {
+        msg = 'Casi. Revisa las piezas en rojo — el toast de cada una te dice a qué anotación corresponde.';
+      } else {
+        msg = 'Pregúntate de cada regla: ¿exige que el dato venga, limita un número, mide el largo, o define la forma del texto?';
+      }
+      banner.className = 'score-banner show alert ' + (pct === 100 ? 'alert-success' : pct >= 60 ? 'alert-warning' : 'alert-danger');
+      banner.innerHTML =
+        '<div class="h5 mb-1">' + level.name + ' — ' + correct + ' / ' + total + ' reglas (' + pct + '%)</div>' +
+        '<div>' + msg + '</div>' +
+        '<div class="small mt-1">Verificaciones: ' + attemptsC + ' · Fecha: ' + new Date().toLocaleString('es-GT') + '</div>';
+    }
+
+    function showSolutionC() {
+      var pool = document.getElementById('poolC');
+      document.querySelectorAll('#boardC .dd-piece').forEach(function (p) { pool.appendChild(p); });
+      pool.querySelectorAll('.dd-piece').forEach(function (piece) {
+        piece.classList.remove('correct-piece', 'incorrect-piece');
+        if (piece.dataset.zone !== 'trap') {
+          var target = document.getElementById('zonec-' + piece.dataset.zone);
+          if (target) {
+            target.appendChild(piece);
+            piece.classList.add('correct-piece');
+          }
+        }
+      });
+      var banner = document.getElementById('resultBannerC');
+      banner.className = 'score-banner show alert alert-warning';
+      banner.innerHTML = '<div class="fw-semibold">Solución mostrada (no cuenta como logro propio).</div><div class="small">Estúdiala, pulsa "Reiniciar nivel" e inténtalo de nuevo sin ayuda.</div>';
+      showToast('Solución mostrada — vuelve a intentarlo sin ayuda.', 'info');
+    }
+
+    function exportChallengePdf() {
+      var name = document.getElementById('studentName').value || '';
+      var intento = Object.keys(progressC).some(function (k) { return progressC[k]; });
+      if (!intento) {
+        showToast('Verifica al menos un nivel de la primera pestaña antes de exportar.', 'warn');
+        return;
+      }
+      if (!name.trim()) {
+        showToast('Escribe tu nombre en la casilla "Nombre (para el PDF)".', 'warn');
+        document.getElementById('tab-clasifica-btn').click();
+        document.getElementById('studentName').focus();
+        return;
+      }
+      window.print();
+    }
+
+    // ============================================================
+    // PESTAÑA 2 — Simulador del envío
+    // ============================================================
+    var SCENARIOS = {
+      validos: [
+        { layer: 'formulario', msg: '🖥️ La enfermera llena la ficha: nombre "Ana López", edad 34, correo "ana@correo.com". Pulsa Guardar.', guardados: 0 },
+        { layer: 'validacion', msg: '🛡️ @Valid ejecuta las reglas del modelo: @NotBlank en nombre ✔, @Min/@Max en edad ✔, @Email en correo ✔.', guardados: 0 },
+        { layer: 'validacion', msg: '🛡️ BindingResult queda VACÍO. resultado.hasErrors() devuelve false, así que el método continúa.', guardados: 0 },
+        { layer: 'servicio', msg: '💾 guardar(paciente): Ana López se agrega a la lista en memoria.', guardados: 1 },
+        { layer: 'formulario', msg: '🖥️ El método devuelve "redirect:/pacientes" y el navegador muestra la lista con el registro nuevo.', guardados: 1 }
+      ],
+      invalidos: [
+        { layer: 'formulario', msg: '🖥️ La enfermera deja el nombre VACÍO, escribe edad 300 y un correo sin arroba. Pulsa Guardar.', guardados: 0 },
+        { layer: 'validacion', msg: '🛡️ @Valid ejecuta las reglas: @NotBlank falla en nombre ✘, @Max falla en edad ✘, @Email falla en correo ✘.', guardados: 0 },
+        { layer: 'validacion', msg: '🛡️ BindingResult recoge los 3 mensajes. resultado.hasErrors() devuelve true → el método NO sigue adelante.', guardados: 0 },
+        { layer: 'formulario', msg: '🖥️ Se devuelve "formulario": la MISMA página se dibuja de nuevo, con los 3 mensajes y con la edad 300 todavía escrita para poder corregirla.', guardados: 0 }
+      ]
+    };
+    var simIndex = -1;
+
+    function limpiarResaltado() {
+      ['formulario', 'validacion', 'servicio'].forEach(function (l) {
+        var el = document.getElementById('box-' + l);
+        if (el) el.classList.remove('active-step');
+      });
+    }
+
+    function logSim(msg) {
+      var box = document.getElementById('simLog');
+      var line = document.createElement('div');
+      line.className = 'sim-line hl';
+      line.textContent = msg;
+      box.appendChild(line);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function siguientePaso() {
+      var scenario = SCENARIOS[document.getElementById('scenarioSelect').value];
+      if (simIndex >= scenario.length - 1) {
+        showToast('Escenario terminado. Pulsa "Reiniciar" o elige el otro escenario para comparar.', 'info');
+        return;
+      }
+      simIndex++;
+      limpiarResaltado();
+      var step = scenario[simIndex];
+      var el = document.getElementById('box-' + step.layer);
+      if (el) el.classList.add('active-step');
+      logSim((simIndex + 1) + '. ' + step.msg);
+      document.getElementById('contador').textContent = step.guardados;
+
+      if (simIndex === scenario.length - 1) {
+        document.getElementById('nextStepBtn').textContent = '✔ Escenario completo';
+        var sonValidos = document.getElementById('scenarioSelect').value === 'validos';
+        var box = document.getElementById('simExplain');
+        box.style.display = 'block';
+        box.className = 'callout mt-3 ' + (sonValidos ? 'success' : 'warning');
+        box.innerHTML = sonValidos
+          ? '<div class="fw-semibold">✅ La petición recorrió las tres etapas</div><div class="small-muted">Como no hubo errores, el filtro dejó pasar la petición hasta el servicio y el paciente quedó guardado. Solo entonces se redirige a la lista.</div>'
+          : '<div class="fw-semibold">🛑 El servicio nunca se ejecutó</div><div class="small-muted">Fíjate que la caja del Servicio <strong>jamás se iluminó</strong>: la petición se detuvo en el filtro y nunca llegó a guardar nada. Y como se devolvió la plantilla (y no un <code>redirect</code>), la enfermera conserva lo que ya había escrito y solo corrige lo señalado. Ese es el comportamiento que evalúa la Guía 11.</div>';
+        showToast(sonValidos ? 'Guardado: 1 paciente.' : 'No se guardó nada, y los datos escritos se conservaron.', sonValidos ? 'ok' : 'warn', 5000);
+      }
+    }
+
+    function reiniciarSimulador() {
+      simIndex = -1;
+      limpiarResaltado();
+      document.getElementById('simLog').innerHTML = '';
+      document.getElementById('nextStepBtn').textContent = '▶ Siguiente paso';
+      document.getElementById('simExplain').style.display = 'none';
+      document.getElementById('contador').textContent = '0';
+    }
+
+    // Arranque
+    setupPoolC(document.getElementById('poolC'));
+    loadLevelC('facil');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

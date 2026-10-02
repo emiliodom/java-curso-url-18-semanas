@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Semana 11 — Validación, errores y experiencia de usuario (18 semanas)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 11 — Validación</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-5">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+          <div class="brand-pill mb-3">Semana 11 · Unidad 5b · Validación, errores y experiencia de usuario · 26 de septiembre de 2026</div>
+          <h1 class="display-5 fw-bold mb-3">Que tu formulario no acepte cualquier cosa <span class="small-muted">(70 min)</span></h1>
+          <p class="lead small-muted mb-4">
+            El formulario de la Semana 10 guarda <strong>lo que sea</strong>: un nombre vacío, una edad de 500 años,
+            un correo que no es correo. Hoy aprendes a <strong>validar los datos</strong> con Bean Validation, a
+            <strong>mostrarle al usuario qué corregir</strong> sin que pierda lo que ya escribió, y a hacerlo de
+            forma <strong>accesible</strong>: etiquetas bien puestas, mensajes claros y buen contraste.
+          </p>
+          <div class="d-flex gap-2 flex-wrap">
+            <a class="btn btn-primary btn-lg" href="quiz.html">1. Quiz de Presaberes</a>
+            <a class="btn btn-outline-primary btn-lg" href="clase.html">2. Abrir guía docente</a>
+            <a class="btn btn-outline-dark btn-lg" href="ejercicios.html">3. Abrir ejercicios</a>
+          </div>
+          <div class="mt-4 callout warning">
+            <div class="fw-semibold">Una idea que vale por toda la semana</div>
+            <div class="small-muted">Validar <strong>no</strong> es desconfiar del usuario: es ayudarlo. Una persona que escribe mal un dato no está haciendo trampa, está apurada o no entendió la casilla. Un buen mensaje de error le dice <em>qué</em> pasó y <em>qué hacer</em>, sin borrarle lo que ya había escrito.</div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="card">
+            <div class="card-body">
+              <h2 class="h5 section-title mb-3">Aprendizajes esperados (hoy)</h2>
+              <ul class="mb-0">
+                <li>Aplica <strong>validaciones básicas</strong> en formularios.</li>
+                <li>Maneja errores con <strong>mensajes claros</strong> al usuario.</li>
+                <li>Diseña interfaces sencillas y <strong>accesibles</strong>.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card mt-3">
+            <div class="card-body">
+              <h2 class="h6 section-title mb-2">Ruta del estudiante (70 min)</h2>
+              <ol class="mb-0 small">
+                <li>Quiz — modo Presaberes (5 min)</li>
+                <li>Por qué validar + la dependencia nueva (7 min)</li>
+                <li>Anotaciones en el modelo + <code>@Valid</code> y <code>BindingResult</code> (14 min)</li>
+                <li>Mostrar los errores sin perder los datos (14 min)</li>
+                <li>UX, accesibilidad y página de error (10 min)</li>
+                <li>Challenge + Quiz Final + cierre (18 min)</li>
+              </ol>
+            </div>
+          </div>
+          <div class="small-muted mt-3">Valores de la semana: <strong>empatía con el usuario</strong> (la accesibilidad y la retroalimentación clara como parte esencial de una experiencia inclusiva) y <strong>rigor en la calidad</strong> (validar a conciencia para construir aplicaciones confiables).</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <div class="callout mb-4">
+      <div class="fw-semibold">De dónde venimos y a dónde vamos</div>
+      <div class="table-responsive mt-2">
+        <table class="table table-sm small mb-0">
+          <thead><tr><th>Semana</th><th>Qué hace tu aplicación</th><th>Cómo</th></tr></thead>
+          <tbody>
+            <tr><td>10</td><td>Recibe datos de un formulario y los guarda… sin revisarlos</td><td><code>@Controller</code> + Thymeleaf + <code>@PostMapping</code></td></tr>
+            <tr class="table-primary"><td><strong>11 (hoy)</strong></td><td><strong>Revisa los datos antes de guardar y le explica al usuario qué corregir</strong></td><td>Bean Validation + <code>@Valid</code> + <code>BindingResult</code> + <code>th:errors</code></td></tr>
+            <tr><td>12</td><td>Guarda de verdad, aunque se apague</td><td>Base de datos con JPA</td></tr>
+            <tr><td>13</td><td>Permite además editar y borrar</td><td>CRUD completo</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="small-muted mt-2">Los datos siguen guardándose <strong>en memoria</strong> esta semana (se pierden al reiniciar). Eso cambia en la Semana 12.</div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">Secciones del material</h2>
+    <div class="row g-3">
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <h3 class="h5">1) Quiz</h3>
+              <span class="badge text-bg-warning">Presaberes + Final</span>
+            </div>
+            <p class="small-muted">Un solo quiz con menú desplegable y preguntas al azar sobre anotaciones de validación, <code>@Valid</code>, <code>BindingResult</code>, <code>th:errors</code> y accesibilidad.</p>
+            <a class="btn btn-sm btn-primary" href="quiz.html">Ir</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <h3 class="h5">2) Guía Docente</h3>
+              <span class="badge text-bg-primary">70 min</span>
+            </div>
+            <p class="small-muted">Guion minuto a minuto: la demo de "guardar basura", las anotaciones en vivo, el orden obligatorio de <code>BindingResult</code> y el repaso de accesibilidad.</p>
+            <a class="btn btn-sm btn-primary" href="clase.html">Ir</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <h3 class="h5">3) Ejercicios + Kit</h3>
+              <span class="badge text-bg-success">Todo el código</span>
+            </div>
+            <p class="small-muted">8 ejercicios en escalera y el <strong>Kit de archivos completos</strong>: los 9 archivos del módulo validado, con su ruta, su <code>package</code> y <strong>todos los <code>import</code></strong> de cada anotación.</p>
+            <a class="btn btn-sm btn-primary" href="ejercicios.html">Ir</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <h3 class="h5">4) Cheat Sheet</h3>
+              <span class="badge text-bg-secondary">3 pestañas</span>
+            </div>
+            <p class="small-muted">Tabla de anotaciones <strong>con su paquete</strong>, cómo mostrar los errores en Thymeleaf con accesibilidad, y el catálogo de errores frecuentes de esta semana.</p>
+            <a class="btn btn-sm btn-primary" href="cheatsheet.html">Ir</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <h3 class="h5">5) Challenge</h3>
+              <span class="badge text-bg-success">Juego</span>
+            </div>
+            <p class="small-muted">"Elige la validación correcta" (¿qué anotación protege cada campo?) + un <strong>simulador</strong> que compara qué ocurre al enviar datos válidos y datos inválidos.</p>
+            <a class="btn btn-sm btn-primary" href="challenge.html">Ir</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <h3 class="h5">6) Proyecto (Guía 11)</h3>
+              <span class="badge text-bg-dark">Evidencia</span>
+            </div>
+            <p class="small-muted">Agrega <strong>validación y mensajes de error</strong> al formulario de tu proyecto real, con reglas que tengan sentido para tu institución, y súbelo a GitHub.</p>
+            <a class="btn btn-sm btn-primary" href="proyecto.html">Ir</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warning mt-4">
+      <div class="fw-semibold">¿Cómo se evalúa esta semana?</div>
+      <div class="small-muted">
+        <strong>Actividad en clase – Sesión 11</strong> (quiz final + challenge, 0.66 pts) y
+        <strong>Entrega Guía 11</strong> (formularios del proyecto con validación y mensajes de error, 1 pt).
+        Esta semana <strong>no tiene Entrega Parcial</strong>: los hitos del proyecto son las Semanas 5, 9, 14 y 17,
+        y el siguiente es la Entrega Parcial 3 en la Semana 14.
+      </div>
+    </div>
+
+    <div class="callout success mt-3">
+      <div class="fw-semibold">🔒 Evalúa la sesión (100% anónimo)</div>
+      <div class="small-muted">
+        Al terminar la clase, cuéntanos qué funcionó, qué mejorar y cualquier queja:
+        <a href="../evaluacion_docente/index.html">formulario de evaluación anónima</a>.
+        No se guarda tu nombre, correo ni IP.
+      </div>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted d-flex justify-content-between flex-wrap gap-2">
+      <span>Material Semana 11 — Validación, errores y experiencia de usuario · Formato 18 semanas (70 min por sesión).</span>
+      <span>Curso: Programación I · URL · Sábados 11:10–12:20</span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

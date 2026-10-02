@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz — Semana 11 (Presaberes y Final)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 11 — Validación</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Quiz de la semana · Elige el modo con el menú</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Presaberes y Quiz Final, en un solo lugar</h1>
+          <div class="small-muted" id="quizTypeLabel">Presaberes · 8 preguntas · no cuenta para nota</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 900px;">
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="row g-3 align-items-end">
+          <div class="col-md-6">
+            <label class="form-label fw-semibold" for="quizType">¿Qué quiz vas a resolver?</label>
+            <select id="quizType" class="form-select" onchange="renderQuiz()">
+              <option value="presaberes">🟡 Presaberes (inicio de clase, no cuenta para nota)</option>
+              <option value="final">🔴 Final de clase (evidencia de la Actividad en clase)</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold" for="studentName">Nombre del estudiante (aparecerá en el PDF)</label>
+            <input id="studentName" class="form-control" type="text" placeholder="Nombre y apellido" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout mb-3 no-print">
+      <div class="fw-semibold">¿Cómo funciona?</div>
+      <div class="small-muted">Cada vez que cambias de modo (o pulsas "🔀 Nuevas preguntas") se eligen preguntas <strong>al azar</strong> de un banco más grande, y además el <strong>orden de las opciones cambia</strong>: hay que leer, no memorizar posiciones.</div>
+    </div>
+
+    <div id="quizContainer"></div>
+
+    <div id="scoreBanner" class="score-banner"></div>
+
+    <div class="d-flex gap-2 flex-wrap mt-3 no-print">
+      <button class="btn btn-primary btn-lg" onclick="gradeQuiz()">Calificar</button>
+      <button class="btn btn-outline-secondary" onclick="resetQuiz()">Reintentar (mismas preguntas)</button>
+      <button class="btn btn-outline-info" onclick="regenerateQuiz()">🔀 Nuevas preguntas</button>
+      <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      <a class="btn btn-outline-primary ms-auto" href="clase.html">Continuar a la clase →</a>
+    </div>
+
+    <div class="callout warning mt-4 no-print">
+      <div class="fw-semibold">Instrucciones de entrega (si estás en modo Final)</div>
+      <ol class="small-muted mb-0">
+        <li>Escribe tu nombre en la casilla de arriba.</li>
+        <li>Pulsa <strong>Calificar</strong> y revisa la retroalimentación de cada pregunta.</li>
+        <li>Pulsa <strong>Exportar a PDF</strong> y guarda el archivo como <code>QuizFinal_S11_TuNombre.pdf</code>.</li>
+        <li>Súbelo al aula virtual junto con el PDF del <a href="challenge.html">Challenge</a>.</li>
+      </ol>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Quiz — Semana 11 · Validación, errores y experiencia de usuario (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script>
+    // ===== Banco de preguntas de la Semana 11 =====
+    // level: 'presaberes' | 'final' | 'ambas'
+    // La opción correcta se escribe siempre de primera para poder revisarla fácil;
+    // la página baraja las opciones antes de mostrarlas (ver script más abajo).
+    var QUESTION_BANK = [
+      // ---------- Solo Presaberes ----------
+      {
+        level: 'presaberes',
+        pregunta: '(Repaso S10) ¿Qué hace tu formulario ahora mismo si alguien escribe una edad de 300 años?',
+        opciones: [{ v: 'a', t: 'La guarda sin protestar' }, { v: 'b', t: 'Muestra un error automáticamente' }, { v: 'c', t: 'Apaga la aplicación' }],
+        correcta: 'a',
+        fbOk: 'Correcto: hasta hoy el formulario acepta cualquier cosa. Eso es lo que venimos a resolver.',
+        fbKo: 'La guarda sin protestar. Nada revisa los datos todavía: ese es justo el tema de esta semana.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: '¿Por qué crees que conviene revisar los datos en el servidor y no solo en el navegador?',
+        opciones: [{ v: 'a', t: 'Porque la revisión del navegador se puede saltar; la del servidor no' }, { v: 'b', t: 'Porque el navegador no sabe leer formularios' }, { v: 'c', t: 'Porque el servidor es más rápido' }],
+        correcta: 'a',
+        fbOk: 'Correcto: la del navegador es comodidad, la del servidor es la que de verdad protege.',
+        fbKo: 'Porque la validación del navegador se puede desactivar o esquivar. La del servidor es la única que realmente protege los datos.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: '(Repaso S10) ¿Dónde vive la clase que representa los datos de tu formulario?',
+        opciones: [{ v: 'a', t: 'En el paquete model' }, { v: 'b', t: 'En la carpeta templates' }, { v: 'c', t: 'En el archivo pom.xml' }],
+        correcta: 'a',
+        fbOk: 'Correcto: el modelo. Ahí es donde esta semana se escriben las reglas de validación.',
+        fbKo: 'En el paquete model. Ahí mismo vas a escribir las reglas de validación esta semana.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: 'Si un formulario te rechaza un dato y además te borra todo lo que habías escrito, ¿qué problema tiene?',
+        opciones: [{ v: 'a', t: 'Un problema de experiencia de usuario: castiga en vez de ayudar' }, { v: 'b', t: 'Ninguno, es lo normal' }, { v: 'c', t: 'Un problema de seguridad' }],
+        correcta: 'a',
+        fbOk: 'Correcto: es exactamente lo que vamos a evitar hoy.',
+        fbKo: 'Es un problema de experiencia de usuario. Un buen formulario conserva lo escrito y solo pide corregir lo que falló.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: '¿Qué es una persona usuaria con daltonismo probablemente NO pueda distinguir en tu formulario?',
+        opciones: [{ v: 'a', t: 'Un borde rojo, si el error no se indica también con texto' }, { v: 'b', t: 'El tamaño de la letra' }, { v: 'c', t: 'La posición de los botones' }],
+        correcta: 'a',
+        fbOk: 'Correcto: por eso el error nunca se comunica solo con color.',
+        fbKo: 'El borde rojo. Por eso el error debe indicarse también con texto o un símbolo, no solo con color.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: '¿Para qué sirve la etiqueta <code>&lt;label&gt;</code> de un formulario?',
+        opciones: [{ v: 'a', t: 'Para decir qué se escribe en cada casilla, también a quien usa lector de pantalla' }, { v: 'b', t: 'Para darle color al formulario' }, { v: 'c', t: 'Para enviar los datos al servidor' }],
+        correcta: 'a',
+        fbOk: 'Correcto: es el nombre del campo, y es clave para la accesibilidad.',
+        fbKo: 'Dice qué va en cada casilla. Bien asociada con for/id, permite que un lector de pantalla anuncie el campo.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: '(Repaso S10) Después de guardar con éxito, ¿qué debe devolver el método POST?',
+        opciones: [{ v: 'a', t: 'Una redirección, para que recargar no duplique el registro' }, { v: 'b', t: 'La plantilla del formulario' }, { v: 'c', t: 'Nada' }],
+        correcta: 'a',
+        fbOk: 'Correcto. Hoy verás la excepción a esa regla: cuando hay errores, sí se devuelve la plantilla.',
+        fbKo: 'Una redirección. Ojo: hoy aparece la excepción — cuando hay errores de validación sí se devuelve la plantilla.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: '¿Qué crees que significa "validar" un formulario?',
+        opciones: [{ v: 'a', t: 'Revisar que los datos cumplan ciertas reglas antes de aceptarlos' }, { v: 'b', t: 'Darle un diseño bonito' }, { v: 'c', t: 'Guardarlo en la base de datos' }],
+        correcta: 'a',
+        fbOk: 'Correcto: revisar antes de aceptar.',
+        fbKo: 'Revisar que los datos cumplan reglas (obligatorio, rango, formato) antes de aceptarlos y guardarlos.'
+      },
+
+      // ---------- Ambas ----------
+      {
+        level: 'ambas',
+        pregunta: '¿De qué paquete viene la anotación <code>@NotBlank</code>?',
+        opciones: [{ v: 'a', t: 'jakarta.validation.constraints' }, { v: 'b', t: 'org.springframework.validation' }, { v: 'c', t: 'java.util.validation' }],
+        correcta: 'a',
+        fbOk: 'Correcto. Todas las anotaciones de reglas vienen de jakarta.validation.constraints.',
+        fbKo: 'De jakarta.validation.constraints. Ojo: en tutoriales viejos aparece como javax, que ya no aplica en Spring Boot 3.'
+      },
+      {
+        level: 'ambas',
+        pregunta: '¿Qué anotación exige que un texto no venga vacío ni con solo espacios?',
+        opciones: [{ v: 'a', t: '@NotBlank' }, { v: 'b', t: '@NotNull' }, { v: 'c', t: '@Size' }],
+        correcta: 'a',
+        fbOk: 'Correcto: es la más estricta para texto.',
+        fbKo: 'Es @NotBlank. @NotNull aceptaría el texto vacío, y @Size solo mide el largo.'
+      },
+      {
+        level: 'ambas',
+        pregunta: '¿Qué hace <code>@Valid</code> en el método del controlador?',
+        opciones: [{ v: 'a', t: 'Le ordena a Spring revisar las anotaciones del objeto antes de entrar al método' }, { v: 'b', t: 'Guarda el objeto automáticamente' }, { v: 'c', t: 'Convierte el objeto en JSON' }],
+        correcta: 'a',
+        fbOk: 'Correcto: sin @Valid, las anotaciones del modelo no se ejecutan.',
+        fbKo: 'Le ordena a Spring ejecutar las reglas del objeto. Sin ella, las anotaciones del modelo se ignoran en silencio.'
+      },
+      {
+        level: 'ambas',
+        pregunta: '¿Dónde debe ir el parámetro <code>BindingResult</code>?',
+        opciones: [{ v: 'a', t: 'Inmediatamente después del objeto validado' }, { v: 'b', t: 'Siempre al final de todos los parámetros' }, { v: 'c', t: 'Da igual el orden' }],
+        correcta: 'a',
+        fbOk: 'Correcto: pegado al objeto, como su sombra.',
+        fbKo: 'Inmediatamente después del objeto validado. Si hay otro parámetro en medio, la aplicación falla al enviar el formulario.'
+      },
+      {
+        level: 'ambas',
+        pregunta: 'Cuando la validación falla, ¿qué debe devolver el controlador?',
+        opciones: [{ v: 'a', t: 'La plantilla del formulario, para conservar los datos y los mensajes' }, { v: 'b', t: 'Una redirección al formulario' }, { v: 'c', t: 'Una redirección a la lista' }],
+        correcta: 'a',
+        fbOk: 'Correcto: es la excepción a la regla del redirect que vimos en la Semana 10.',
+        fbKo: 'La plantilla (return "formulario"). Un redirect haría una petición nueva y se perderían los mensajes y lo escrito.'
+      },
+      {
+        level: 'ambas',
+        pregunta: '¿Qué atributo de Thymeleaf muestra el mensaje de error de un campo?',
+        opciones: [{ v: 'a', t: 'th:errors' }, { v: 'b', t: 'th:each' }, { v: 'c', t: 'th:object' }],
+        correcta: 'a',
+        fbOk: 'Correcto: th:errors="*{campo}".',
+        fbKo: 'Es th:errors. th:each recorre listas y th:object indica qué objeto llena el formulario.'
+      },
+      {
+        level: 'ambas',
+        pregunta: '¿Por qué un campo numérico de formulario se declara <code>Integer</code> y no <code>int</code>?',
+        opciones: [{ v: 'a', t: 'Porque Integer admite el valor nulo y así @NotNull puede dar tu mensaje' }, { v: 'b', t: 'Porque int no existe en Java' }, { v: 'c', t: 'Porque Integer ocupa menos memoria' }],
+        correcta: 'a',
+        fbOk: 'Correcto: con int, la casilla vacía produce un error de conversión antes de tus reglas.',
+        fbKo: 'Porque Integer admite nulo. Con int, una casilla vacía da un error técnico de conversión antes de que corran tus validaciones.'
+      },
+      {
+        level: 'ambas',
+        pregunta: 'Además del borde rojo, ¿qué debe tener un campo con error para ser accesible?',
+        opciones: [{ v: 'a', t: 'Un mensaje de texto, porque no todos distinguen el color' }, { v: 'b', t: 'Una animación' }, { v: 'c', t: 'Un sonido' }],
+        correcta: 'a',
+        fbOk: 'Correcto: el color nunca puede ser el único canal.',
+        fbKo: 'Un mensaje de texto (y de preferencia un símbolo). El color por sí solo excluye a quien tiene daltonismo.'
+      },
+
+      // ---------- Solo Final ----------
+      {
+        level: 'final',
+        pregunta: 'Anotaste el modelo con @NotBlank, pusiste @Valid y BindingResult… y aun así guarda datos vacíos. ¿Qué falta revisar primero?',
+        opciones: [{ v: 'a', t: 'Que esté la dependencia spring-boot-starter-validation en el pom.xml' }, { v: 'b', t: 'Que el puerto sea el 8080' }, { v: 'c', t: 'Que exista la carpeta static' }],
+        correcta: 'a',
+        fbOk: 'Correcto: sin esa dependencia las anotaciones no hacen nada, y no aparece ningún error.',
+        fbKo: 'La dependencia de validación. Sin ella las anotaciones se ignoran en silencio: el proyecto compila y arranca igual.'
+      },
+      {
+        level: 'final',
+        pregunta: '¿Cuál es la diferencia entre <code>@NotNull</code> y <code>@NotBlank</code> ante un texto de solo espacios ("   ")?',
+        opciones: [{ v: 'a', t: '@NotNull lo acepta y @NotBlank lo rechaza' }, { v: 'b', t: 'Las dos lo rechazan' }, { v: 'c', t: 'Las dos lo aceptan' }],
+        correcta: 'a',
+        fbOk: 'Correcto: por eso para texto de formulario se usa @NotBlank.',
+        fbKo: '@NotNull lo acepta (no es nulo) y @NotBlank lo rechaza. Para texto siempre conviene @NotBlank.'
+      },
+      {
+        level: 'final',
+        pregunta: '¿De qué paquete viene <code>BindingResult</code>?',
+        opciones: [{ v: 'a', t: 'org.springframework.validation' }, { v: 'b', t: 'jakarta.validation.constraints' }, { v: 'c', t: 'jakarta.validation' }],
+        correcta: 'a',
+        fbOk: 'Correcto: BindingResult es de Spring, no de Jakarta.',
+        fbKo: 'De org.springframework.validation. Es la única pieza de hoy que no viene de Jakarta: las anotaciones sí, este no.'
+      },
+      {
+        level: 'final',
+        pregunta: 'Pones solo <code>@Email</code> en un campo y lo dejas vacío. ¿Qué ocurre?',
+        opciones: [{ v: 'a', t: 'Pasa la validación: @Email acepta el campo vacío' }, { v: 'b', t: 'Da error de formato' }, { v: 'c', t: 'La aplicación truena' }],
+        correcta: 'a',
+        fbOk: 'Correcto: por eso @Email casi siempre va acompañada de @NotBlank.',
+        fbKo: 'Pasa: @Email solo revisa el formato cuando hay algo escrito. Para hacerlo obligatorio hay que agregar @NotBlank.'
+      },
+      {
+        level: 'final',
+        pregunta: '¿Para qué sirve <code>th:errorclass="campo-error"</code>?',
+        opciones: [{ v: 'a', t: 'Agrega esa clase CSS a la casilla solo si ese campo falló' }, { v: 'b', t: 'Muestra el texto del error' }, { v: 'c', t: 'Borra el contenido del campo' }],
+        correcta: 'a',
+        fbOk: 'Correcto: sirve para marcar visualmente la casilla con problema.',
+        fbKo: 'Agrega la clase CSS solo si ese campo tiene error. El texto del mensaje lo escribe th:errors.'
+      },
+      {
+        level: 'final',
+        pregunta: '¿Qué hace <code>aria-describedby</code> en una casilla del formulario?',
+        opciones: [{ v: 'a', t: 'Liga el mensaje de error al campo, para que el lector de pantalla los lea juntos' }, { v: 'b', t: 'Cambia el color del borde' }, { v: 'c', t: 'Valida el campo del lado del navegador' }],
+        correcta: 'a',
+        fbOk: 'Correcto: es accesibilidad, no estilo.',
+        fbKo: 'Liga el campo con el id del párrafo del error, para que un lector de pantalla los anuncie juntos.'
+      },
+      {
+        level: 'final',
+        pregunta: 'Tienes un campo opcional con <code>@Pattern(regexp = "[0-9]{8}")</code>. El usuario lo deja vacío y da error. ¿Por qué?',
+        opciones: [{ v: 'a', t: 'Porque @Pattern sí revisa la cadena vacía y no coincide con el patrón' }, { v: 'b', t: 'Porque @Pattern no funciona con texto' }, { v: 'c', t: 'Porque falta @NotNull' }],
+        correcta: 'a',
+        fbOk: 'Correcto: para hacerlo opcional hay que permitir el vacío en el patrón, por ejemplo "|[0-9]{8}".',
+        fbKo: 'Porque @Pattern evalúa la cadena vacía y esta no coincide. Si el campo es opcional, el patrón debe permitir el vacío.'
+      },
+      {
+        level: 'final',
+        pregunta: '¿Cómo se crea una página de error propia en Spring Boot?',
+        opciones: [{ v: 'a', t: 'Creando templates/error.html: se usa automáticamente' }, { v: 'b', t: 'Escribiendo una clase @ErrorController obligatoria' }, { v: 'c', t: 'No se puede cambiar' }],
+        correcta: 'a',
+        fbOk: 'Correcto: basta el archivo con ese nombre en templates/.',
+        fbKo: 'Basta con crear templates/error.html. Spring Boot la usa sola, sin configuración adicional.'
+      },
+      {
+        level: 'final',
+        pregunta: '¿Qué mensaje de error es mejor para un teléfono mal escrito?',
+        opciones: [{ v: 'a', t: '"El teléfono debe tener exactamente 8 dígitos, sin espacios ni guiones."' }, { v: 'b', t: '"Dato inválido."' }, { v: 'c', t: '"El valor no cumple con el patrón establecido."' }],
+        correcta: 'a',
+        fbOk: 'Correcto: dice qué campo, por qué y qué hacer.',
+        fbKo: 'El primero: dice qué campo es, cuál es la regla y cómo escribirlo. Los otros dos no le sirven a la persona.'
+      },
+      {
+        level: 'final',
+        pregunta: '¿Para qué se agrega <code>novalidate</code> a la etiqueta <code>&lt;form&gt;</code> mientras desarrollas?',
+        opciones: [{ v: 'a', t: 'Para que el navegador no bloquee el envío y puedas probar la validación del servidor' }, { v: 'b', t: 'Para desactivar la validación de Java' }, { v: 'c', t: 'Para que el formulario no se envíe nunca' }],
+        correcta: 'a',
+        fbOk: 'Correcto: desactiva solo la revisión del navegador, no la tuya.',
+        fbKo: 'Desactiva la revisión del navegador para poder ver la del servidor. La validación de Java sigue funcionando igual.'
+      }
+    ];
+    var QUIZ_CONFIG = { presaberesCount: 8, finalCount: 12 };
+  </script>
+  <script src="quiz.js"></script>
+  <script>
+    // Baraja el orden de las opciones antes de cada render (patrón desde la Semana 9):
+    // en el banco la correcta se escribe siempre de primera para poder mantenerlo con
+    // facilidad, pero mostrarla siempre arriba permitiría "aprobar" sin leer.
+    // El valor .v no cambia, así que la calificación sigue siendo correcta.
+    function barajarOpciones() {
+      (window.QUESTION_BANK || []).forEach(function (q) {
+        for (var i = q.opciones.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var t = q.opciones[i]; q.opciones[i] = q.opciones[j]; q.opciones[j] = t;
+        }
+      });
+    }
+
+    var _renderBase = window.renderQuiz;
+    window.renderQuiz = function () {
+      barajarOpciones();
+      _renderBase();
+    };
+    renderQuiz();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
