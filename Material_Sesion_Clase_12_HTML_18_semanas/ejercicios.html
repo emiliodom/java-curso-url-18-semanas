@@ -1,0 +1,1086 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ejercicios y Kit de archivos — Semana 12 (Persistencia con JPA)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 12 — Persistencia</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link active" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Ejercicios · Semana 12 · 100% en tu propia computadora</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">De una lista que se olvida a una base de datos que recuerda</h1>
+          <div class="small-muted">Dos pestañas: los <strong>8 ejercicios en escalera</strong> y el <strong>Kit de archivos completos</strong> (cada archivo entero, con su ruta, su <code>package</code> y <strong>todos sus <code>import</code></strong>). Proyecto de práctica desechable: <code>taller-jpa</code> · <strong>Biblioteca Comunitaria Semilla</strong> · entidad <code>Libro</code>.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 1000px;">
+
+    <ul class="nav nav-tabs mb-4 no-print" id="ejerciciosTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="tab-ejercicios-btn" data-bs-toggle="tab" data-bs-target="#tab-ejercicios" type="button" role="tab">🪜 Ejercicios paso a paso</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-kit-btn" data-bs-toggle="tab" data-bs-target="#tab-kit" type="button" role="tab">📦 Kit de archivos completos</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="ejerciciosTabsContent">
+
+      <!-- ============ PESTAÑA 1: EJERCICIOS ============ -->
+      <div class="tab-pane fade show active" id="tab-ejercicios" role="tabpanel">
+
+        <div class="callout mb-3">
+          <div class="fw-semibold">Cómo está armada esta escalera</div>
+          <div class="small-muted">
+            Todo se resuelve en tu <strong>terminal y VS Code reales</strong>: no hay simuladores. Partes de un proyecto nuevo
+            (Ejercicio 1), conviertes una clase en tabla (2), le pones un repositorio (3), haces crecer el CRUD (4–6),
+            rompes cosas a propósito para aprender a leer los errores (7) y terminas guardando de verdad (8).
+            Si algo se enreda, el <a href="#" onclick="document.getElementById('tab-kit-btn').click(); return false;">Kit</a>
+            trae cada archivo entero para que lo copies. Recuerda: <strong>no avances si el checkpoint ✅ no se cumple</strong>.
+          </div>
+        </div>
+
+        <div class="callout warning mb-4">
+          <div class="fw-semibold">Las tres preguntas ancla de esta semana</div>
+          <div class="small-muted">Cuando algo no funcione, revisa en este orden: <strong>(1)</strong> ¿están en el <code>pom.xml</code> las dependencias nuevas, <code>spring-boot-starter-data-jpa</code> y <code>h2</code> (y <code>spring-boot-devtools</code> para la recarga automática)? <strong>(2)</strong> ¿la entidad tiene <code>@Entity</code>, <code>@Id</code> y un <strong>constructor vacío</strong>? <strong>(3)</strong> ¿la URL dice <code>jdbc:h2:file:</code> (archivo) y no <code>jdbc:h2:mem:</code> (memoria)?</div>
+        </div>
+
+
+        <div class="card mb-3">
+          <div class="card-body">
+            <h2 class="h5 section-title" id="ej1">Ejercicio 1 — Genera el proyecto y arráncalo <span class="badge text-bg-success">Nivel 1</span></h2>
+            <p class="small-muted mb-2"><strong>Objetivo:</strong> crear <code>taller-jpa</code> con las seis dependencias y comprobar que arranca. Es un proyecto de práctica <em>desechable</em>: tu proyecto real se toca en la página <a href="proyecto.html">Proyecto</a>.</p>
+            <h3 class="h6 fw-bold">Pasos</h3>
+            <ol class="small-muted">
+              <li>Entra a <strong>start.spring.io</strong> (Spring Initializr, como en la Semana 7).</li>
+              <li>Elige: Project <strong>Maven</strong> · Language <strong>Java</strong> · Spring Boot la versión estable más reciente 3.x (sin la palabra SNAPSHOT) · Group <code>gt.edu.url</code> · Artifact <code>taller-jpa</code> · Packaging <strong>Jar</strong> · Java <strong>17</strong> (o 21, el mismo que instalaste).</li>
+              <li>Pulsa <strong>ADD DEPENDENCIES</strong> y agrega seis: <code>Spring Web</code>, <code>Thymeleaf</code>, <code>Validation</code>, <code>Spring Data JPA</code>, <code>H2 Database</code> y <code>Spring Boot DevTools</code> (esta última hace que la aplicación se recargue sola; se explica en el recuadro "Antes de seguir" más abajo).</li>
+              <li>Pulsa <strong>GENERATE</strong>, descomprime el .zip y abre la carpeta <code>taller-jpa</code> en VS Code (<em>File → Open Folder</em>).</li>
+              <li>Abre <code>pom.xml</code> y localiza las tres dependencias nuevas de hoy: <code>spring-boot-starter-data-jpa</code>, <code>h2</code> y <code>spring-boot-devtools</code>.</li>
+              <li>Arranca: en la terminal de VS Code (<em>Terminal → New Terminal</em>) escribe <code>./mvnw spring-boot:run</code> (en Windows PowerShell: <code>.\mvnw spring-boot:run</code>). También sirve el botón ▶ <em>Run</em> sobre <code>TallerJpaApplication.java</code>.</li>
+</ol>
+            <p class="small-muted mb-2"><strong>Tu turno:</strong> lee el log. Busca la línea que dice <code>Hibernate ORM core version</code> y la que dice <code>HikariPool-1 - Start completed</code>. ¿Qué te dicen sobre lo que Spring hizo <em>solo</em>, sin que escribieras nada?</p>
+            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: la terminal termina con <code>Started TallerJpaApplication in ... seconds</code> y no hay líneas rojas de error.</span></div>
+            <details class="mb-2">
+              <summary class="fw-semibold">💡 Pista</summary>
+              <div class="mt-2 small-muted">Si el puerto 8080 está ocupado (Semana 7), cierra la otra aplicación con <kbd>Ctrl</kbd>+<kbd>C</kbd> en su terminal. Si Maven tarda minutos, es la primera descarga: espera.</div>
+            </details>
+            <details>
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small-muted">Spring detectó dos cosas en el <code>pom.xml</code>: <strong>JPA/Hibernate</strong> y una base de datos <strong>H2</strong>. Sin que le dijeras nada más, creó una base de datos H2 temporal y conectó Hibernate a ella (por eso aparecen las líneas de Hibernate y Hikari, que es el "administrador de conexiones"). Todavía no tienes ninguna entidad, así que no hay tablas.
+<table class="table table-sm small mt-2 mb-0"><thead><tr><th>Dependencia</th><th>Qué aporta</th></tr></thead><tbody>
+<tr><td><code>spring-boot-starter-data-jpa</code></td><td>JPA (las anotaciones <code>jakarta.persistence</code>), Hibernate (el traductor) y Spring Data (los repositorios)</td></tr>
+<tr><td><code>h2</code></td><td>La base de datos y su driver (el "conector" para hablarle). Solo vive en tu computadora</td></tr>
+<tr><td><code>spring-boot-devtools</code></td><td>Recarga automática en desarrollo: no tienes que parar y arrancar a mano por cada cambio (ver el recuadro "Antes de seguir")</td></tr></tbody></table></div>
+            </details>
+          </div>
+        </div>
+
+        <div class="card mb-3 border-primary">
+          <div class="card-body">
+            <h2 class="h5 section-title" id="devtools">🔁 Antes de seguir: que la aplicación se recargue sola</h2>
+            <p class="small-muted">Hoy harás muchos cambios y los probarás. Sin ayuda, cada uno exige parar la aplicación y volver a arrancarla. <strong>Spring Boot DevTools</strong> (la sexta dependencia del Ejercicio 1) lo evita: vigila tu proyecto y se recarga cuando algo cambia. Se recarga a <strong>tres velocidades</strong>:</p>
+            <div class="table-responsive"><table class="table table-sm small mb-2"><thead><tr><th>Qué cambias</th><th>Qué pasa</th><th>Qué haces tú</th></tr></thead><tbody>
+<tr><td>Plantillas Thymeleaf (<code>templates/</code>), CSS o HTML de <code>static/</code></td><td>DevTools desactiva la caché de Thymeleaf; <strong>no hay reinicio</strong></td><td>Solo <strong>refrescar el navegador</strong> (<kbd>F5</kbd>)</td></tr>
+<tr><td>Código Java (<code>.java</code>)</td><td>Reinicio automático y rápido (1 a 2 segundos; reinicia tu código, no las librerías)</td><td>Guardar y esperar (ver la condición abajo)</td></tr>
+<tr><td><code>pom.xml</code> y <code>application*.properties</code></td><td><strong>No</strong> se recargan solos</td><td><strong>Detener (<kbd>Ctrl</kbd>+<kbd>C</kbd>) y arrancar a mano</strong>. Hoy editarás varios properties: recuérdalo</td></tr>
+</tbody></table></div>
+            <div class="callout warning mb-2"><div class="small-muted"><strong>Ojo con la condición:</strong> lo que dispara el reinicio es la <em>recompilación</em>, no el guardado. En VS Code con la extensión de Java, compilar al guardar viene activado, así que normalmente basta con guardar. Si guardas y no pasa nada, arranca la aplicación con el botón ▶ <em>Run</em> (o con el Spring Boot Dashboard) en lugar de una terminal externa. DevTools se desactiva solo cuando la aplicación corre empaquetada como jar en producción, así que no estorba en el despliegue de la Semana 14 (Render y Neon).</div></div>
+            <h3 class="h6 fw-bold">Prueba de 30 segundos</h3>
+            <ol class="small-muted">
+              <li>Con la aplicación corriendo, abre una página de tu proyecto (si todavía no tienes ninguna, haz esta prueba al terminar el Ejercicio 4).</li>
+              <li>Abre una plantilla de <code>src/main/resources/templates/</code>, cambia un texto visible del título y guarda.</li>
+              <li>Refresca el navegador. El texto debe haber cambiado <strong>sin que reiniciaras nada</strong>.</li>
+            </ol>
+            <div class="callout success mb-0 py-2"><span class="small">✅ Checkpoint: viste el cambio en el navegador sin detener la aplicación. Si no ocurre, revisa que <code>spring-boot-devtools</code> esté en el <code>pom.xml</code> y que hayas guardado el archivo.</span></div>
+          </div>
+        </div>
+
+        <div class="card mb-3">
+          <div class="card-body">
+            <h2 class="h5 section-title" id="ej2">Ejercicio 2 — Tu primera entidad: una clase que se vuelve tabla <span class="badge text-bg-success">Nivel 1</span></h2>
+            <p class="small-muted mb-2"><strong>Objetivo:</strong> escribir <code>Libro</code> como <code>@Entity</code> y <strong>ver</strong> la tabla que Hibernate crea, usando la consola de H2.</p>
+            <h3 class="h6 fw-bold">Pasos</h3>
+            <ol class="small-muted">
+              <li>Crea la carpeta (paquete) <code>model</code> dentro de <code>src/main/java/gt/edu/url/tallerjpa/</code> y dentro el archivo <code>Libro.java</code> con este contenido (es una versión mínima; la completa está en el <a href="#" onclick="document.getElementById('tab-kit-btn').click(); return false;">Kit</a>, archivo 6):
+              <pre><code>package gt.edu.url.tallerjpa.model;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
+public class Libro {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String titulo;
+    private String autor;
+    private Integer anioPublicacion;
+    private boolean disponible = true;
+
+    public Libro() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public void setAutor(String autor) {
+        this.autor = autor;
+    }
+
+    public Integer getAnioPublicacion() {
+        return anioPublicacion;
+    }
+
+    public void setAnioPublicacion(Integer anioPublicacion) {
+        this.anioPublicacion = anioPublicacion;
+    }
+
+    public boolean isDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(boolean disponible) {
+        this.disponible = disponible;
+    }
+}</code></pre></li>
+              <li>Reemplaza todo el contenido de <code>src/main/resources/application.properties</code> por esto (H2 <strong>en memoria</strong>, por ahora):
+              <pre><code># Ruta: src/main/resources/application.properties   (versión del Ejercicio 2: H2 EN MEMORIA)
+spring.application.name=taller-jpa
+
+# jdbc:h2:mem: = base de datos que vive en la memoria RAM mientras la aplicación está encendida
+spring.datasource.url=jdbc:h2:mem:biblioteca
+spring.datasource.driver-class-name=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console</code></pre></li>
+              <li>Arranca la aplicación y busca en la terminal una línea parecida a <code>create table libro (...)</code>: es el SQL que <strong>Hibernate escribió por ti</strong>.</li>
+              <li>Abre <code>http://localhost:8080/h2-console</code>. En <em>JDBC URL</em> escribe <code>jdbc:h2:mem:biblioteca</code>, usuario <code>sa</code>, contraseña vacía, y pulsa <strong>Connect</strong>.</li>
+              <li>En el panel izquierdo aparece la tabla <strong>LIBRO</strong>. Haz clic sobre ella, y luego ejecuta <code>SELECT * FROM LIBRO;</code> con el botón <em>Run</em>.</li>
+</ol>
+            <p class="small-muted mb-2"><strong>Tu turno:</strong> ¿Con qué nombre aparece la columna del año de publicación? ¿Quién decidió ese nombre, tú o Hibernate?</p>
+            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: ves la tabla <code>LIBRO</code> con sus cinco columnas en la consola de H2, vacía (0 filas).</span></div>
+            <details class="mb-2">
+              <summary class="fw-semibold">💡 Pista</summary>
+              <div class="mt-2 small-muted">Si la consola dice <em>Database not found</em>, la JDBC URL no coincide con la del archivo <code>application.properties</code>: debe ser idéntica. Si da 404 en <code>/h2-console</code>, falta <code>spring.h2.console.enabled=true</code>.</div>
+            </details>
+            <details>
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small-muted">La columna se llama <code>ANIO_PUBLICACION</code>. Lo decidió Hibernate: toma el nombre del campo Java (<code>anioPublicacion</code>, en camelCase) y lo convierte a minúsculas con guion bajo (<code>anio_publicacion</code>); H2 lo muestra en mayúsculas. La clase <code>Libro</code> se volvió la tabla <code>libro</code>. Esa es la <strong>convención nombre-de-clase → nombre-de-tabla</strong>: no tuviste que escribir ningún <code>CREATE TABLE</code>. La columna <code>ID</code> es numérica y se llena sola gracias a <code>@GeneratedValue(strategy = GenerationType.IDENTITY)</code>.</div>
+            </details>
+          </div>
+        </div>
+
+        <div class="card mb-3">
+          <div class="card-body">
+            <h2 class="h5 section-title" id="ej3">Ejercicio 3 — El repositorio: una interfaz que funciona sola <span class="badge text-bg-primary">Nivel 2</span></h2>
+            <p class="small-muted mb-2"><strong>Objetivo:</strong> crear <code>LibroRepository</code> (una interfaz) y <code>LibroService</code>, y ver que Spring escribe la implementación por ti.</p>
+            <h3 class="h6 fw-bold">Pasos</h3>
+            <ol class="small-muted">
+              <li>Crea la carpeta <code>repository</code> junto a <code>model</code> y dentro <code>LibroRepository.java</code>:
+              <pre><code>package gt.edu.url.tallerjpa.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import gt.edu.url.tallerjpa.model.Libro;
+
+public interface LibroRepository extends JpaRepository&lt;Libro, Long&gt; {
+}</code></pre></li>
+              <li>Crea la carpeta <code>service</code> y copia <code>LibroService.java</code> completo del <a href="#" onclick="document.getElementById('tab-kit-btn').click(); return false;">Kit</a> (archivo 8). Verás subrayados rojos en <code>findByTituloContainingIgnoreCase</code> y <code>findByDisponibleTrue</code>: es normal, aún no existen en el repositorio.</li>
+              <li>Para quitar los rojos, agrega esas dos líneas dentro de las llaves de <code>LibroRepository</code>, y el <code>import java.util.List;</code> arriba (el archivo completo está en el Kit, archivo 7):
+              <pre><code>List&lt;Libro&gt; findByTituloContainingIgnoreCase(String texto);
+List&lt;Libro&gt; findByDisponibleTrue();</code></pre></li>
+              <li>Arranca y busca en el log la frase <code>Found 1 JPA repository interface</code>.</li>
+</ol>
+            <p class="small-muted mb-2"><strong>Tu turno:</strong> abre <code>LibroRepository.java</code>. ¿Cuántos métodos <em>con cuerpo</em> escribiste tú? ¿Y dónde está entonces el código que guarda en la base de datos?</p>
+            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: la aplicación arranca y el log dice <code>Found 1 JPA repository interface</code>.</span></div>
+            <details class="mb-2">
+              <summary class="fw-semibold">💡 Pista</summary>
+              <div class="mt-2 small-muted">Piensa en un restaurante: tú entregas al mesero una <em>carta</em> (la interfaz) y la cocina (Spring) se encarga de prepararla. No existe ninguna clase <code>LibroRepositoryImpl</code> escrita por ti.</div>
+            </details>
+            <details>
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small-muted">No escribiste <strong>ninguna</strong> línea de código que guarde. Al arrancar, Spring Data lee tu interfaz, ve que extiende <code>JpaRepository&lt;Libro, Long&gt;</code> y <strong>genera en memoria una clase que la implementa</strong>, con <code>save()</code>, <code>findAll()</code>, <code>findById()</code>, <code>deleteById()</code> y <code>count()</code> ya funcionando. Por eso en el log aparece "Found 1 JPA repository interface": encontró tu repositorio y le fabricó la implementación. Los dos métodos extra los entiende por su <em>nombre</em> (ver Ejercicio 6).</div>
+            </details>
+          </div>
+        </div>
+
+        <div class="card mb-3">
+          <div class="card-body">
+            <h2 class="h5 section-title" id="ej4">Ejercicio 4 — Crear y listar… y el reinicio que lo borra todo <span class="badge text-bg-primary">Nivel 2</span></h2>
+            <p class="small-muted mb-2"><strong>Objetivo:</strong> completar el flujo formulario → controlador → servicio → repositorio → base de datos, y vivir en carne propia el problema de la base en memoria.</p>
+            <h3 class="h6 fw-bold">Pasos</h3>
+            <ol class="small-muted">
+              <li>Reemplaza <code>Libro.java</code> por la <strong>versión completa</strong> del Kit (archivo 6): suma las reglas de validación de la Semana 11 sobre los mismos campos.</li>
+              <li>Copia del Kit: <code>LibroController.java</code> (archivo 9) en la carpeta <code>controller</code>; <code>formulario.html</code> y <code>lista.html</code> (archivos 10 y 11) en <code>src/main/resources/templates/</code>; y <code>estilos.css</code> (archivo 12) en <code>src/main/resources/static/</code>.</li>
+              <li>Arranca y entra a <code>http://localhost:8080</code>. Pulsa <strong>+ Registrar un libro</strong> y guarda tres libros (por ejemplo, "Rebeca Lazo", "Don Quijote", "El Principito").</li>
+              <li>En la terminal busca las líneas <code>insert into libro ...</code>: es el SQL que Hibernate escribió cada vez que pulsaste Guardar.</li>
+              <li>En <code>http://localhost:8080/h2-console</code> (misma URL <code>jdbc:h2:mem:biblioteca</code>) ejecuta <code>SELECT * FROM LIBRO;</code>. Deben aparecer tus tres filas.</li>
+              <li><strong>La prueba incómoda:</strong> detén la aplicación tú mismo (<kbd>Ctrl</kbd>+<kbd>C</kbd> en la terminal) y vuelve a arrancarla <strong>a mano</strong>. Actualiza la lista del navegador.</li>
+</ol>
+            <div class="callout warning mb-2 py-2"><span class="small"><strong>¿Por qué manual?</strong> Con DevTools, el reinicio automático de DevTools también vacía la base en memoria, pero aquí queremos que lo hagas tú, a propósito, para que veas que la prueba es tuya y no un efecto secundario. Ojo: con DevTools <em>cualquier</em> cambio en un archivo Java que provoque reinicio también vacía la base en memoria; lo notarás cada vez que corrijas código, y eso hace el problema más molesto. Esa molestia es justo lo que resuelve el Ejercicio 8.</span></div>
+            <p class="small-muted mb-2"><strong>Tu turno:</strong> después del reinicio, ¿cuántos libros hay? ¿Entonces la base de datos sirvió de algo todavía? Anota tu respuesta: la resuelve el Ejercicio 8.</p>
+            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: viste tres libros en la tabla <code>LIBRO</code> (consola de H2) <strong>y</strong> viste que, tras el reinicio, la lista volvió a estar vacía.</span></div>
+            <details class="mb-2">
+              <summary class="fw-semibold">💡 Pista</summary>
+              <div class="mt-2 small-muted">Fíjate en la primera parte de la JDBC URL: <code>jdbc:h2:<strong>mem</strong>:biblioteca</code>. ¿Qué crees que significa <em>mem</em>?</div>
+            </details>
+            <details>
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small-muted">Después del reinicio hay <strong>cero</strong> libros. Es exactamente la promesa incumplida: <code>jdbc:h2:mem:</code> significa "base de datos en la <strong>memoria RAM</strong>", y la RAM se vacía al apagar la aplicación. Pasaste de una <code>List</code> en memoria a… una base de datos en memoria: mejor organizada, pero igual de olvidadiza. Lo que falta es decirle a H2 que guarde en un <strong>archivo</strong> del disco. Eso es el Ejercicio 8.</div>
+            </details>
+          </div>
+        </div>
+
+        <div class="card mb-3">
+          <div class="card-body">
+            <h2 class="h5 section-title" id="ej5">Ejercicio 5 — Editar, borrar y el misterio de <code>Optional</code> <span class="badge text-bg-warning">Nivel 3</span></h2>
+            <p class="small-muted mb-2"><strong>Objetivo:</strong> completar el CRUD (actualizar y borrar) y entender por qué <code>findById()</code> no devuelve un <code>Libro</code> a secas.</p>
+            <h3 class="h6 fw-bold">Pasos</h3>
+            <ol class="small-muted">
+              <li>Registra un libro y pulsa <strong>Editar</strong>. Cambia el título y Guarda. Observa en la terminal que ahora aparece <code>update libro set ...</code> (y no un <code>insert</code>), y que en la lista <strong>no se duplicó</strong> el libro.</li>
+              <li>Pulsa <strong>Eliminar</strong> en un libro. Busca en la terminal <code>delete from libro where id=?</code>.</li>
+              <li>Escribe en el navegador <code>http://localhost:8080/libros/999/editar</code> (un id que no existe). Lee el mensaje del error.</li>
+              <li><strong>Provoca el error de tipos.</strong> En <code>LibroService.java</code>, dentro de <code>buscarPorId</code>, comenta el <code>return</code> y escribe esta línea temporal:
+              <pre><code>Libro libro = libroRepository.findById(id);</code></pre>
+              VS Code la marcará en rojo. Pasa el cursor sobre el error y léelo. Luego <strong>deshaz</strong> el cambio (<kbd>Ctrl</kbd>+<kbd>Z</kbd>) para volver a <code>orElseThrow</code>.</li>
+</ol>
+            <p class="small-muted mb-2"><strong>Tu turno:</strong> ¿cómo supo <code>save()</code> si debía hacer <code>insert</code> o <code>update</code>? (Mira el campo escondido <code>id</code> en <code>formulario.html</code>.)</p>
+            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: editar cambia la fila en lugar de duplicarla, borrar la elimina, y viste el mensaje <code>incompatible types: Optional&lt;Libro&gt; cannot be converted to Libro</code>.</span></div>
+            <details class="mb-2">
+              <summary class="fw-semibold">💡 Pista</summary>
+              <div class="mt-2 small-muted">Imagina que alguien te pide "tráeme el libro 999" y ese libro no existe. ¿Qué entregas: un libro vacío, o una cajita que puede traer un libro o venir vacía?</div>
+            </details>
+            <details>
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small-muted"><p class="mb-1"><strong>insert o update:</strong> <code>save()</code> mira el <code>id</code>. Si es nulo (formulario nuevo, el campo escondido va vacío) hace <code>insert</code>; si trae un número que ya existe (formulario de edición), hace <code>update</code>. Un solo método para dos trabajos.</p>
+<p class="mb-1"><strong>Optional:</strong> <code>findById()</code> devuelve <code>Optional&lt;Libro&gt;</code>: una "cajita" que <em>puede</em> contener un libro o puede venir vacía, porque ese id podría no existir. Java te obliga a decidir qué hacer en ese caso, en lugar de explotar más tarde con un error confuso. <code>orElseThrow(...)</code> significa: "si hay libro, dámelo; si la caja está vacía, lanza este error con mi mensaje". Por eso <code>/libros/999/editar</code> muestra un error con el texto <em>No existe un libro con id 999</em>.</p>
+<p class="mb-0"><strong>Borrar por POST:</strong> el botón Eliminar es un formulario <code>POST</code>, no un enlace. Un enlace puede abrirse sin querer (un buscador, una vista previa) y borrar datos.</p></div>
+            </details>
+          </div>
+        </div>
+
+        <div class="card mb-3">
+          <div class="card-body">
+            <h2 class="h5 section-title" id="ej6">Ejercicio 6 — Métodos derivados: Spring entiende el nombre <span class="badge text-bg-warning">Nivel 3</span></h2>
+            <p class="small-muted mb-2"><strong>Objetivo:</strong> usar la búsqueda por título y el filtro de disponibles, y comprobar que Spring convierte <em>el nombre del método</em> en una consulta.</p>
+            <h3 class="h6 fw-bold">Pasos</h3>
+            <ol class="small-muted">
+              <li>En la lista, escribe parte de un título (con mayúsculas o minúsculas distintas) en <strong>Buscar por título</strong> y pulsa Buscar.</li>
+              <li>Quita la marca <em>Disponible</em> a un libro (Editar) y luego pulsa el enlace <strong>Solo disponibles</strong>.</li>
+              <li>En la terminal compara el SQL de ambas búsquedas: busca <code>like</code> y <code>where ... disponible=?</code>.</li>
+              <li><strong>Provoca el error de nombre.</strong> En <code>LibroRepository.java</code>, cambia temporalmente <code>findByDisponibleTrue</code> por <code>findByDisponibilidadTrue</code> (y el mismo cambio en <code>LibroService.java</code>). Arranca y lee el error. Luego regresa al nombre correcto.</li>
+</ol>
+            <p class="small-muted mb-2"><strong>Tu turno:</strong> descompón el nombre <code>findByTituloContainingIgnoreCase</code> en cuatro palabras y di qué significa cada una.</p>
+            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: la búsqueda ignora mayúsculas, el filtro muestra solo los disponibles, y viste un error que dice <code>No property 'disponibilidad' found for type 'Libro'</code>.</span></div>
+            <details class="mb-2">
+              <summary class="fw-semibold">💡 Pista</summary>
+              <div class="mt-2 small-muted">Spring lee el nombre de izquierda a derecha: <em>find</em> (buscar) <em>By</em> (por) <em>Titulo</em> (el campo) <em>Containing</em> (que contenga) <em>IgnoreCase</em> (sin distinguir mayúsculas).</div>
+            </details>
+            <details>
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small-muted"><code>find</code> + <code>By</code> + <code>Titulo</code> + <code>Containing</code> + <code>IgnoreCase</code> = "busca por el campo <code>titulo</code> los que contengan el texto, sin importar mayúsculas". <code>findByDisponibleTrue</code> = "busca los que tengan <code>disponible</code> verdadero". Al arrancar, Spring comprueba que cada palabra del nombre sea un <strong>campo real</strong> de la entidad. Con <code>Disponibilidad</code> no existe tal campo, y la aplicación ni siquiera arranca: el error aparece <em>al inicio</em>, no cuando alguien hace clic. Eso es una ventaja: los errores de nombre se descubren de inmediato. Regla práctica: el nombre del campo en el método debe ser <strong>idéntico</strong> (en camelCase, con mayúscula inicial) al campo de la clase.</div>
+            </details>
+          </div>
+        </div>
+
+        <div class="card mb-3">
+          <div class="card-body">
+            <h2 class="h5 section-title" id="ej7">Ejercicio 7 — Provoca los errores del mapeo (y aprende a leerlos) <span class="badge text-bg-warning">Nivel 3</span></h2>
+            <p class="small-muted mb-2"><strong>Objetivo:</strong> romper a propósito la entidad de tres maneras, leer cada mensaje y arreglarlo. Estos errores dan mensajes largos y poco claros: mejor conocerlos hoy, con calma.</p>
+            <h3 class="h6 fw-bold">Pasos</h3>
+            <ol class="small-muted">
+              <li>Haz <strong>una prueba a la vez</strong>. Después de cada una, restaura el archivo y comprueba que arranca antes de pasar a la siguiente.</li>
+              <li><strong>Prueba A — sin <code>@Id</code>.</strong> En <code>Libro.java</code> comenta las líneas <code>@Id</code> y <code>@GeneratedValue(...)</code>. Arranca. Lee el final de la terminal.</li>
+              <li><strong>Prueba B — sin constructor vacío.</strong> Borra <code>public Libro() { }</code> y agrega en su lugar un constructor con parámetros:
+              <pre><code>// Dentro de Libro.java, Java ya no regala el constructor vacío:
+public Libro(String titulo, String autor) {
+    this.titulo = titulo;
+    this.autor = autor;
+}
+// (y el "public Libro() { }" del Kit está borrado)</code></pre>
+              Arranca, entra a <code>/libros</code> y registra un libro. Lee el mensaje.</li>
+              <li><strong>Prueba C — sin el driver de H2.</strong> En <code>pom.xml</code> comenta el bloque <code>&lt;dependency&gt;</code> de <code>com.h2database</code> y recarga Maven (VS Code pregunta "Sync"; acepta). Arranca y lee el error.</li>
+</ol>
+            <p class="small-muted mb-2"><strong>Tu turno:</strong> en cada prueba, encuentra la última línea que empieza con <code>Caused by:</code>. Casi siempre ahí está la causa real; lo de arriba es solo ruido de Spring.</p>
+            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: las tres pruebas están restauradas y la aplicación vuelve a mostrar <code>Started TallerJpaApplication</code>.</span></div>
+            <details class="mb-2">
+              <summary class="fw-semibold">💡 Pista</summary>
+              <div class="mt-2 small-muted">Los mensajes son largos. No los leas de arriba hacia abajo: ve al <strong>final</strong> y busca el último <code>Caused by:</code>.</div>
+            </details>
+            <details>
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small-muted"><table class="table table-sm small mb-2"><thead><tr><th>Prueba</th><th>Mensaje clave (en el último <code>Caused by</code>)</th><th>Qué significa</th></tr></thead><tbody>
+<tr><td>A. Sin <code>@Id</code></td><td><code>No identifier specified for entity: gt.edu.url.tallerjpa.model.Libro</code></td><td>Toda entidad necesita una columna que identifique cada fila. La aplicación <strong>no arranca</strong>.</td></tr>
+<tr><td>B. Sin constructor vacío</td><td><code>No default constructor for entity 'gt.edu.url.tallerjpa.model.Libro'</code></td><td>Hibernate crea un <code>Libro</code> vacío por cada fila que lee y luego rellena los campos. Sin constructor sin parámetros no puede. Según la versión falla al arrancar o en el primer <code>findAll()</code>/<code>findById()</code>.</td></tr>
+<tr><td>C. Sin driver H2</td><td><code>Failed to load driver class org.h2.Driver</code> (o <code>Failed to determine a suitable driver class</code>)</td><td>Hibernate existe pero no tiene el "conector" para hablar con H2. Falla al arrancar la conexión.</td></tr>
+</tbody></table>
+<p class="mb-1"><strong>¿Por qué B es tan traicionero?</strong> En cuanto escribes <em>cualquier</em> constructor con parámetros, Java <strong>deja de regalarte</strong> el constructor vacío. Si todavía lo necesitas, tienes que escribirlo tú.</p>
+<p class="mb-0"><strong>Prueba extra (solo leer, no la hagas):</strong> si quitaras <code>spring-boot-starter-data-jpa</code>, ni siquiera compilaría: los <code>import jakarta.persistence.*</code> quedarían en rojo con <em>package jakarta.persistence does not exist</em>.</p></div>
+            </details>
+          </div>
+        </div>
+
+        <div class="card mb-3">
+          <div class="card-body">
+            <h2 class="h5 section-title" id="ej8">Ejercicio 8 — El reinicio que no borra nada: H2 en archivo y perfiles <span class="badge text-bg-danger">Nivel 4</span></h2>
+            <p class="small-muted mb-2"><strong>Objetivo:</strong> cumplir por fin la promesa: guardar en un <strong>archivo</strong>, separar la configuración en <strong>perfiles</strong> y comprobar que los datos sobreviven al reinicio.</p>
+            <h3 class="h6 fw-bold">Pasos</h3>
+            <ol class="small-muted">
+              <li>Crea tres archivos en <code>src/main/resources/</code> con el contenido del Kit: <code>application.properties</code> (archivo 2, <strong>reemplaza</strong> el que tenías), <code>application-dev.properties</code> (archivo 3) y <code>application-prod.properties</code> (archivo 4).</li>
+              <li>Fíjate en la diferencia clave entre la versión anterior y la nueva: <code>jdbc:h2:<strong>mem</strong>:biblioteca</code> pasó a <code>jdbc:h2:<strong>file</strong>:./datos/biblioteca</code>.</li>
+              <li>En el archivo <code>.gitignore</code> de tu proyecto, al final, agrega una línea nueva: <code>datos/</code> (la base de datos local no se sube a GitHub).</li>
+              <li>Arranca. En el log busca <code>The following 1 profile is active: "dev"</code>. En el explorador de VS Code debe aparecer la carpeta <code>datos/</code> con un archivo <code>biblioteca.mv.db</code>.</li>
+              <li>Registra tres libros. Detén la aplicación tú mismo (<kbd>Ctrl</kbd>+<kbd>C</kbd>) y vuelve a arrancarla <strong>a mano</strong>. Hazlo así a propósito: el reinicio automático de DevTools también vacía la base en memoria, pero aquí queremos que lo hagas tú, a propósito, para que veas que la prueba es tuya y no un efecto secundario. Además, los cambios en <code>application*.properties</code> nunca se recargan solos.</li>
+              <li>Abre la lista. Entra a la consola de H2 con la nueva URL <code>jdbc:h2:file:./datos/biblioteca</code> y ejecuta <code>SELECT * FROM LIBRO;</code>.</li>
+              <li>Lee <code>application-prod.properties</code> sin usarlo: observa los tres huecos <code>${DB_URL}</code>, <code>${DB_USER}</code> y <code>${DB_PASSWORD}</code>.</li>
+</ol>
+            <p class="small-muted mb-2"><strong>Tu turno:</strong> ¿qué aparece en tu lista después del reinicio? Y responde con tus palabras: ¿por qué el archivo <code>application-prod.properties</code> usa <code>${...}</code> en lugar de escribir la contraseña directamente?</p>
+            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: tus tres libros <strong>siguen ahí</strong> después de apagar y encender la aplicación. 🎉 Es el momento por el que esperaste desde la Semana 8.</span></div>
+            <details class="mb-2">
+              <summary class="fw-semibold">💡 Pista</summary>
+              <div class="mt-2 small-muted">Si aparece <em>Database may be already in use</em>, hay otra copia de la aplicación corriendo: cierra todas las terminales de Maven y vuelve a intentar (con DevTools, si arrancas dos veces la misma aplicación, este error es más fácil de provocar). Si tus datos se borran aunque uses <code>file</code>, revisa que diga <code>ddl-auto=update</code> y no <code>create</code> ni <code>create-drop</code>.</div>
+            </details>
+            <details>
+              <summary class="fw-semibold">Solución</summary>
+              <div class="mt-2 small-muted">Los libros siguen ahí porque H2 ahora escribe en el archivo <code>datos/biblioteca.mv.db</code> de tu disco, que no se borra al apagar la aplicación. <code>ddl-auto=update</code> significa "crea la tabla si no existe, pero <strong>no</strong> toques los datos". Con <code>create</code> la tabla se reconstruiría vacía en cada arranque.
+<p class="mt-2 mb-1"><strong>Los perfiles:</strong> <code>application.properties</code> contiene lo común y elige el perfil con <code>spring.profiles.active=dev</code>. Spring carga entonces <code>application-dev.properties</code> encima. En la Semana 14 el hosting activará <code>prod</code> (con una variable de entorno) y Spring cargará <code>application-prod.properties</code>: la misma aplicación, otra base de datos.</p>
+<p class="mb-0"><strong>Los <code>${...}</code>:</strong> son huecos que se llenan con variables de entorno del servidor. Así la contraseña de Neon vive solo en Render, nunca en tu código ni en GitHub, donde cualquiera podría leerla. Y como <code>Libro.java</code>, <code>LibroRepository.java</code> y el resto <strong>no mencionan ninguna base de datos concreta</strong>, no habrá que tocarlos.</p></div>
+            </details>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ============ PESTAÑA 2: KIT ============ -->
+      <div class="tab-pane fade" id="tab-kit" role="tabpanel">
+
+        <div class="callout mb-4">
+          <div class="fw-semibold">Para qué sirve este Kit</div>
+          <div class="small-muted">Aquí está el proyecto <code>taller-jpa</code> <strong>terminado</strong>, archivo por archivo, con su ruta exacta, su línea <code>package</code> y todos sus <code>import</code>. Úsalo para copiar, para comparar con lo tuyo o para recuperarte si te perdiste. Nada está resumido ni abreviado. Paquete base: <code>gt.edu.url.tallerjpa</code>.</div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit-anot">Antes de los archivos: anotación → import completo</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted">Toda anotación necesita su <code>import</code>; si falta, VS Code la subraya en rojo. Es <code>jakarta</code>, <strong>no</strong> <code>javax</code> (Spring Boot 3).</p>
+            <div class="table-responsive">
+              <table class="table table-sm small mb-0">
+                <thead><tr><th>Anotación</th><th>Import completo</th><th>Qué hace</th><th>Qué aparece si falta</th></tr></thead>
+                <tbody><tr><td><code>@Entity</code></td><td><code>jakarta.persistence.Entity</code></td><td>La clase se convierte en una tabla</td><td>cannot find symbol; o bien la clase se ignora y no hay tabla</td></tr><tr><td><code>@Id</code></td><td><code>jakarta.persistence.Id</code></td><td>Marca la columna que identifica cada fila</td><td>cannot find symbol; si la anotación no está: <code>No identifier specified for entity</code></td></tr><tr><td><code>@GeneratedValue</code></td><td><code>jakarta.persistence.GeneratedValue</code></td><td>El id se numera automáticamente</td><td>cannot find symbol; sin ella tendrías que asignar el id a mano y <code>save()</code> fallaría</td></tr><tr><td><code>GenerationType.IDENTITY</code></td><td><code>jakarta.persistence.GenerationType</code></td><td>La estrategia: numeración propia de la base de datos</td><td>cannot find symbol: GenerationType</td></tr><tr><td><code>@Column</code></td><td><code>jakarta.persistence.Column</code></td><td>Personaliza nombre, largo y obligatoriedad de una columna</td><td>cannot find symbol: Column</td></tr><tr><td><code>JpaRepository</code></td><td><code>org.springframework.data.jpa.repository.JpaRepository</code></td><td>La interfaz que ya trae save, findAll, findById, deleteById, count</td><td>cannot find symbol: JpaRepository (falta <code>spring-boot-starter-data-jpa</code>)</td></tr><tr><td><code>@Service / @Controller</code></td><td><code>org.springframework.stereotype.*</code></td><td>Ya conocidos (Semanas 6 y 10)</td><td>cannot find symbol</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit-arbol">El árbol del proyecto</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-2">Las líneas con ← son las que se tocan esta semana.</p>
+            <pre><code>taller-jpa/
+├── pom.xml                                       ← archivo 1 (tres dependencias nuevas)
+├── .gitignore                                    ← agrega la línea: datos/
+├── datos/                                        ← la crea H2 sola (biblioteca.mv.db). NO se sube a GitHub
+└── src/main/
+    ├── java/gt/edu/url/tallerjpa/
+    │   ├── TallerJpaApplication.java             (archivo 5, sin cambios)
+    │   ├── model/
+    │   │   └── Libro.java                        ← archivo 6 (la ENTIDAD)
+    │   ├── repository/
+    │   │   └── LibroRepository.java              ← archivo 7 (NUEVA carpeta)
+    │   ├── service/
+    │   │   └── LibroService.java                 ← archivo 8
+    │   └── controller/
+    │       └── LibroController.java              ← archivo 9
+    └── resources/
+        ├── application.properties                ← archivo 2
+        ├── application-dev.properties            ← archivo 3 (NUEVO: H2 en archivo)
+        ├── application-prod.properties           ← archivo 4 (NUEVO: huecos para Neon)
+        ├── templates/
+        │   ├── formulario.html                   ← archivo 10
+        │   └── lista.html                        ← archivo 11
+        └── static/
+            └── estilos.css                       ← archivo 12</code></pre>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit1">1. <code>pom.xml</code> <span class="badge text-bg-primary">tres dependencias nuevas</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>raíz del proyecto</code></p>
+            <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+    &lt;parent&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;
+        &lt;version&gt;3.3.5&lt;/version&gt; &lt;!-- deja el número que te generó Initializr --&gt;
+        &lt;relativePath/&gt;
+    &lt;/parent&gt;
+
+    &lt;groupId&gt;gt.edu.url&lt;/groupId&gt;
+    &lt;artifactId&gt;taller-jpa&lt;/artifactId&gt;
+    &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
+    &lt;name&gt;taller-jpa&lt;/name&gt;
+    &lt;description&gt;Biblioteca Comunitaria Semilla - practica de persistencia&lt;/description&gt;
+
+    &lt;properties&gt;
+        &lt;java.version&gt;17&lt;/java.version&gt; &lt;!-- 17 o 21, el que elegiste en la Semana 7 --&gt;
+    &lt;/properties&gt;
+
+    &lt;dependencies&gt;
+        &lt;!-- De semanas anteriores --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-validation&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+
+        &lt;!-- NUEVA (Semana 12): JPA + Hibernate + Spring Data --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-data-jpa&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+
+        &lt;!-- NUEVA (Semana 12): la base de datos H2 y su driver (solo en tu computadora) --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.h2database&lt;/groupId&gt;
+            &lt;artifactId&gt;h2&lt;/artifactId&gt;
+            &lt;scope&gt;runtime&lt;/scope&gt;
+        &lt;/dependency&gt;
+
+        &lt;!-- NUEVA (Semana 12): recarga automática al cambiar plantillas y código (solo desarrollo) --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;
+            &lt;optional&gt;true&lt;/optional&gt;
+        &lt;/dependency&gt;
+
+        &lt;!-- Semana 14 (NO hoy): aquí se agregará el driver de PostgreSQL para Neon:
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.postgresql&lt;/groupId&gt;
+            &lt;artifactId&gt;postgresql&lt;/artifactId&gt;
+            &lt;scope&gt;runtime&lt;/scope&gt;
+        &lt;/dependency&gt;
+        --&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+
+    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+                &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+&lt;/project&gt;</code></pre>
+            <div class="small-muted mt-2">Si generaste el proyecto con Initializr y marcaste las seis dependencias, tu <code>pom.xml</code> ya se parece a este: no lo pegues encima, solo <strong>compara</strong>. Si te falta alguna, agrega solo el bloque que falte:</div><pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-data-jpa&lt;/artifactId&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+    &lt;groupId&gt;com.h2database&lt;/groupId&gt;
+    &lt;artifactId&gt;h2&lt;/artifactId&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;
+    &lt;optional&gt;true&lt;/optional&gt;
+&lt;/dependency&gt;</code></pre><div class="small-muted mt-2">El bloque comentado del driver de PostgreSQL <strong>no se activa hoy</strong>: se descomenta en la Semana 14.</div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit2">2. <code>application.properties</code> <span class="badge text-bg-primary">lo modificas tú</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/resources/application.properties</code></p>
+            <pre><code># Ruta: src/main/resources/application.properties
+# Aquí van solo las cosas que valen para TODOS los perfiles.
+spring.application.name=taller-jpa
+
+# Perfil activo. "dev" = tu computadora. En la Semana 14 el hosting lo cambiará a "prod".
+spring.profiles.active=dev</code></pre>
+            
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit3">3. <code>application-dev.properties</code> <span class="badge text-bg-success">nuevo esta semana</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/resources/application-dev.properties</code></p>
+            <pre><code># Ruta: src/main/resources/application-dev.properties
+# Perfil "dev": H2 EN ARCHIVO, en tu computadora.
+
+# jdbc:h2:file:  = base de datos guardada en un archivo (sobrevive al reinicio)
+# ./datos/biblioteca = carpeta "datos" dentro de tu proyecto, archivo "biblioteca"
+spring.datasource.url=jdbc:h2:file:./datos/biblioteca
+spring.datasource.driver-class-name=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+
+# update = crea la tabla si no existe y CONSERVA los datos. (create y create-drop los borran.)
+spring.jpa.hibernate.ddl-auto=update
+
+# Muestra en la terminal el SQL que Hibernate escribe por ti.
+spring.jpa.show-sql=true
+
+# Consola web de H2: http://localhost:8080/h2-console
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console</code></pre>
+            <div class="table-responsive mt-2"><table class="table table-sm small mb-0"><thead><tr><th>Línea</th><th>Qué hace</th></tr></thead><tbody><tr><td><code>jdbc:h2:file:./datos/biblioteca</code></td><td>H2 en <strong>archivo</strong> (sobrevive al reinicio). Con <code>jdbc:h2:mem:biblioteca</code> sería memoria y se perdería todo</td></tr><tr><td><code>ddl-auto=update</code></td><td>Crea la tabla si falta y conserva los datos. <code>create</code> y <code>create-drop</code> los borran en cada arranque</td></tr><tr><td><code>show-sql=true</code></td><td>Muestra en la terminal el SQL que Hibernate genera (útil para aprender)</td></tr><tr><td><code>h2.console.enabled=true</code></td><td>Activa <code>/h2-console</code> para ver tus tablas y filas</td></tr></tbody></table></div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit4">4. <code>application-prod.properties</code> <span class="badge text-bg-warning">preparado, se usa en la Semana 14</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/resources/application-prod.properties</code></p>
+            <pre><code># Ruta: src/main/resources/application-prod.properties
+# Perfil "prod": PostgreSQL en Neon. HOY NO SE USA; queda preparado para la Semana 14.
+# Los ${...} son "huecos" que se llenan con variables de entorno del hosting (Render).
+# Así tu contraseña real nunca se escribe en el código ni se sube a GitHub.
+spring.datasource.url=${DB_URL}
+spring.datasource.username=${DB_USER}
+spring.datasource.password=${DB_PASSWORD}
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=false
+
+# La consola de H2 NO debe existir en producción.
+spring.h2.console.enabled=false</code></pre>
+            <div class="callout warning mt-2 mb-0"><div class="small-muted">No actives este perfil hoy: sin el driver de PostgreSQL y sin variables de entorno, la aplicación no arrancaría. Existe para que la Semana 14 sea cambiar <em>configuración</em>, no reescribir código.</div></div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit5">5. <code>TallerJpaApplication.java</code> <span class="badge text-bg-secondary">sin cambios</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/java/gt/edu/url/tallerjpa/TallerJpaApplication.java</code></p>
+            <pre><code>package gt.edu.url.tallerjpa;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class TallerJpaApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(TallerJpaApplication.class, args);
+    }
+}</code></pre>
+            
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit6">6. <code>Libro.java</code> — la entidad <span class="badge text-bg-primary">lo escribes tú</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/java/gt/edu/url/tallerjpa/model/Libro.java</code></p>
+            <pre><code>package gt.edu.url.tallerjpa.model;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+// @Entity: "esta clase es una tabla". Por convención la tabla se llamará "libro".
+@Entity
+public class Libro {
+
+    // @Id: la columna que identifica cada fila (la llave primaria). OBLIGATORIA.
+    // IDENTITY: la base de datos numera sola (1, 2, 3...). Funciona igual en H2 y en PostgreSQL.
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    // Anotaciones de VALIDACIÓN (jakarta.validation, Semana 11) ...
+    @NotBlank(message = "El título es obligatorio.")
+    @Size(max = 120, message = "El título no puede pasar de 120 caracteres.")
+    // ... y anotación de PERSISTENCIA (jakarta.persistence, hoy) sobre el mismo campo.
+    @Column(nullable = false, length = 120)
+    private String titulo;
+
+    @NotBlank(message = "El autor es obligatorio.")
+    @Size(min = 3, max = 80, message = "El autor debe tener entre 3 y 80 caracteres.")
+    @Column(nullable = false, length = 80)
+    private String autor;
+
+    // Integer (con mayúscula), como aprendimos en la Semana 11.
+    @NotNull(message = "El año de publicación es obligatorio.")
+    @Min(value = 1000, message = "El año debe ser 1000 o posterior.")
+    @Max(value = 2100, message = "El año no puede pasar de 2100.")
+    @Column(name = "anio_publicacion")
+    private Integer anioPublicacion;
+
+    private boolean disponible = true;
+
+    // CONSTRUCTOR VACÍO: Hibernate lo necesita para crear un Libro por cada fila que lee.
+    public Libro() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public void setAutor(String autor) {
+        this.autor = autor;
+    }
+
+    public Integer getAnioPublicacion() {
+        return anioPublicacion;
+    }
+
+    public void setAnioPublicacion(Integer anioPublicacion) {
+        this.anioPublicacion = anioPublicacion;
+    }
+
+    public boolean isDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(boolean disponible) {
+        this.disponible = disponible;
+    }
+}</code></pre>
+            <div class="callout warning mt-2 mb-2"><div class="fw-semibold">Dos familias de anotaciones sobre la misma clase</div><div class="small-muted"><code>jakarta.persistence.*</code> (JPA, de hoy: <code>@Entity</code>, <code>@Id</code>, <code>@GeneratedValue</code>, <code>@Column</code>) describen <em>cómo se guarda</em> el dato. <code>jakarta.validation.constraints.*</code> (Semana 11: <code>@NotBlank</code>, <code>@Size</code>, <code>@Min</code>, <code>@Max</code>, <code>@NotNull</code>) describen <em>qué datos se aceptan</em>. No se estorban: cada una responde una pregunta distinta. Ojo: <code>@Column(nullable = false)</code> es una regla de la <strong>base de datos</strong>; <code>@NotBlank</code> es una regla del <strong>formulario</strong>.</div></div><div class="table-responsive mt-2"><table class="table table-sm small mb-0"><thead><tr><th>Import</th><th>Para qué</th><th>Si falta…</th></tr></thead><tbody><tr><td><code>jakarta.persistence.Entity</code></td><td><code>@Entity</code>: la clase es una tabla</td><td>cannot find symbol: Entity (y la clase no se guarda)</td></tr><tr><td><code>jakarta.persistence.Id</code></td><td><code>@Id</code>: la llave primaria</td><td>cannot find symbol: Id</td></tr><tr><td><code>jakarta.persistence.GeneratedValue</code></td><td><code>@GeneratedValue</code>: el id se numera solo</td><td>cannot find symbol: GeneratedValue</td></tr><tr><td><code>jakarta.persistence.GenerationType</code></td><td>Trae <code>GenerationType.IDENTITY</code></td><td>cannot find symbol: GenerationType</td></tr><tr><td><code>jakarta.persistence.Column</code></td><td><code>@Column</code>: nombre, largo y obligatoriedad de la columna</td><td>cannot find symbol: Column</td></tr><tr><td><code>jakarta.validation.constraints.NotBlank / NotNull / Size / Min / Max</code></td><td>Reglas de validación del formulario (Semana 11)</td><td>cannot find symbol; y recuerda: es <code>jakarta</code>, no <code>javax</code></td></tr></tbody></table></div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit7">7. <code>LibroRepository.java</code> — el repositorio <span class="badge text-bg-primary">lo escribes tú</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/java/gt/edu/url/tallerjpa/repository/LibroRepository.java</code></p>
+            <pre><code>package gt.edu.url.tallerjpa.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import gt.edu.url.tallerjpa.model.Libro;
+
+// Una interfaz SIN cuerpo propio. Hereda save, findAll, findById, deleteById, count...
+// &lt;Libro, Long&gt; = "trabajo con la entidad Libro, y su @Id es de tipo Long".
+public interface LibroRepository extends JpaRepository&lt;Libro, Long&gt; {
+
+    // Métodos derivados: Spring lee el NOMBRE y escribe la consulta.
+    // find + By + Titulo + Containing + IgnoreCase  -&gt;  WHERE lower(titulo) LIKE %texto%
+    List&lt;Libro&gt; findByTituloContainingIgnoreCase(String texto);
+
+    // find + By + Disponible + True  -&gt;  WHERE disponible = true
+    List&lt;Libro&gt; findByDisponibleTrue();
+}</code></pre>
+            <div class="table-responsive mt-2"><table class="table table-sm small mb-0"><thead><tr><th>Import</th><th>Para qué</th><th>Si falta…</th></tr></thead><tbody><tr><td><code>org.springframework.data.jpa.repository.JpaRepository</code></td><td>La interfaz que trae <code>save</code>, <code>findAll</code>, <code>findById</code>, <code>deleteById</code>, <code>count</code></td><td>cannot find symbol: JpaRepository (señal de que falta <code>spring-boot-starter-data-jpa</code>)</td></tr><tr><td><code>java.util.List</code></td><td>El tipo de lista que devuelven los métodos derivados</td><td>cannot find symbol: List</td></tr><tr><td><code>gt.edu.url.tallerjpa.model.Libro</code></td><td>Tu entidad, que vive en otro paquete</td><td>cannot find symbol: Libro</td></tr></tbody></table></div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit8">8. <code>LibroService.java</code> — el servicio <span class="badge text-bg-primary">cambia respecto a la Semana 10</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/java/gt/edu/url/tallerjpa/service/LibroService.java</code></p>
+            <pre><code>package gt.edu.url.tallerjpa.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import gt.edu.url.tallerjpa.model.Libro;
+import gt.edu.url.tallerjpa.repository.LibroRepository;
+
+@Service
+public class LibroService {
+
+    // Ya NO hay una List en memoria: el repositorio guarda en la base de datos.
+    private final LibroRepository libroRepository;
+
+    // Inyección por constructor (igual que en la Semana 10, pero ahora recibe el repositorio).
+    public LibroService(LibroRepository libroRepository) {
+        this.libroRepository = libroRepository;
+    }
+
+    public List&lt;Libro&gt; listarTodos() {
+        return libroRepository.findAll();
+    }
+
+    public List&lt;Libro&gt; buscarPorTitulo(String texto) {
+        return libroRepository.findByTituloContainingIgnoreCase(texto);
+    }
+
+    public List&lt;Libro&gt; listarDisponibles() {
+        return libroRepository.findByDisponibleTrue();
+    }
+
+    // findById devuelve Optional&lt;Libro&gt; ("puede haber un libro o puede no haber nada").
+    // orElseThrow: si hay libro, lo entrega; si no, lanza este error.
+    public Libro buscarPorId(Long id) {
+        return libroRepository.findById(id)
+                .orElseThrow(() -&gt; new IllegalArgumentException("No existe un libro con id " + id));
+    }
+
+    // save() sirve para CREAR (id nulo) y para ACTUALIZAR (id ya existente).
+    public Libro guardar(Libro libro) {
+        return libroRepository.save(libro);
+    }
+
+    public void eliminar(Long id) {
+        libroRepository.deleteById(id);
+    }
+
+    public long contar() {
+        return libroRepository.count();
+    }
+}</code></pre>
+            <div class="small-muted mt-2 mb-1">Compara con la Semana 10: la <code>List</code> en memoria desapareció; ahora el servicio <strong>delega en el repositorio</strong>.</div><div class="table-responsive mt-2"><table class="table table-sm small mb-0"><thead><tr><th>Import</th><th>Para qué</th><th>Si falta…</th></tr></thead><tbody><tr><td><code>org.springframework.stereotype.Service</code></td><td><code>@Service</code>: Spring crea y administra esta clase</td><td>cannot find symbol: Service</td></tr><tr><td><code>java.util.List</code></td><td>El tipo de las listas que devuelve</td><td>cannot find symbol: List</td></tr><tr><td><code>gt.edu.url.tallerjpa.model.Libro</code></td><td>Tu entidad</td><td>cannot find symbol: Libro</td></tr><tr><td><code>gt.edu.url.tallerjpa.repository.LibroRepository</code></td><td>El repositorio que se inyecta por constructor</td><td>cannot find symbol: LibroRepository</td></tr></tbody></table></div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit9">9. <code>LibroController.java</code> — el controlador <span class="badge text-bg-primary">CRUD completo</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/java/gt/edu/url/tallerjpa/controller/LibroController.java</code></p>
+            <pre><code>package gt.edu.url.tallerjpa.controller;
+
+import java.util.List;
+
+import jakarta.validation.Valid;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import gt.edu.url.tallerjpa.model.Libro;
+import gt.edu.url.tallerjpa.service.LibroService;
+
+@Controller
+public class LibroController {
+
+    private final LibroService libroService;
+
+    public LibroController(LibroService libroService) {
+        this.libroService = libroService;
+    }
+
+    @GetMapping("/")
+    public String inicio() {
+        return "redirect:/libros";
+    }
+
+    // LISTAR (y buscar, si llega ?buscar=texto)
+    @GetMapping("/libros")
+    public String listar(@RequestParam(required = false) String buscar, Model model) {
+        List&lt;Libro&gt; libros;
+        if (buscar == null || buscar.isBlank()) {
+            libros = libroService.listarTodos();
+        } else {
+            libros = libroService.buscarPorTitulo(buscar);
+        }
+        model.addAttribute("libros", libros);
+        model.addAttribute("total", libroService.contar());
+        model.addAttribute("buscar", buscar);
+        return "lista";
+    }
+
+    // LISTAR solo los disponibles (usa el método derivado findByDisponibleTrue)
+    @GetMapping("/libros/disponibles")
+    public String listarDisponibles(Model model) {
+        model.addAttribute("libros", libroService.listarDisponibles());
+        model.addAttribute("total", libroService.contar());
+        model.addAttribute("buscar", "");
+        return "lista";
+    }
+
+    // CREAR - paso 1: mostrar el formulario vacío
+    @GetMapping("/libros/nuevo")
+    public String nuevo(Model model) {
+        model.addAttribute("libro", new Libro());
+        return "formulario";
+    }
+
+    // EDITAR - paso 1: mostrar el formulario ya lleno con el libro de ese id
+    @GetMapping("/libros/{id}/editar")
+    public String editar(@PathVariable Long id, Model model) {
+        model.addAttribute("libro", libroService.buscarPorId(id));
+        return "formulario";
+    }
+
+    // CREAR y EDITAR - paso 2: guardar. Si el libro trae id, save() lo actualiza; si no, lo crea.
+    @PostMapping("/libros")
+    public String guardar(@Valid @ModelAttribute Libro libro, BindingResult resultado) {
+        if (resultado.hasErrors()) {
+            return "formulario";          // con errores: se devuelve la plantilla (Semana 11)
+        }
+        libroService.guardar(libro);
+        return "redirect:/libros";        // sin errores: guardar -&gt; redirigir -&gt; mostrar (Semana 10)
+    }
+
+    // BORRAR: por POST, nunca por un enlace normal (un enlace se puede abrir sin querer)
+    @PostMapping("/libros/{id}/eliminar")
+    public String eliminar(@PathVariable Long id) {
+        libroService.eliminar(id);
+        return "redirect:/libros";
+    }
+}</code></pre>
+            <div class="table-responsive mt-2"><table class="table table-sm small mb-0"><thead><tr><th>Import</th><th>Para qué</th><th>Si falta…</th></tr></thead><tbody><tr><td><code>jakarta.validation.Valid</code></td><td><code>@Valid</code> (Semana 11)</td><td>cannot find symbol: Valid</td></tr><tr><td><code>org.springframework.validation.BindingResult</code></td><td>Recoge los errores de validación (Semana 11)</td><td>cannot find symbol: BindingResult</td></tr><tr><td><code>org.springframework.stereotype.Controller</code></td><td><code>@Controller</code> (Semana 10)</td><td>cannot find symbol: Controller</td></tr><tr><td><code>org.springframework.ui.Model</code></td><td>Enviar datos a la plantilla</td><td>cannot find symbol: Model</td></tr><tr><td><code>org.springframework.web.bind.annotation.PathVariable</code></td><td>NUEVO: leer el <code>{id}</code> de la dirección</td><td>cannot find symbol: PathVariable</td></tr><tr><td><code>org.springframework.web.bind.annotation.RequestParam</code></td><td>NUEVO: leer <code>?buscar=...</code></td><td>cannot find symbol: RequestParam</td></tr><tr><td><code>…web.bind.annotation.GetMapping / PostMapping / ModelAttribute</code></td><td>Rutas y binding (Semana 10)</td><td>cannot find symbol</td></tr><tr><td><code>java.util.List</code></td><td>La variable <code>libros</code> del método <code>listar</code></td><td>cannot find symbol: List</td></tr><tr><td><code>…model.Libro / …service.LibroService</code></td><td>Tus clases, en otros paquetes</td><td>cannot find symbol</td></tr></tbody></table></div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit10">10. <code>templates/formulario.html</code> <span class="badge text-bg-primary">sirve para crear y para editar</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/resources/templates/formulario.html</code></p>
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="es" xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Libro - Biblioteca Comunitaria Semilla&lt;/title&gt;
+    &lt;link rel="stylesheet" th:href="@{/estilos.css}"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1 th:text="${libro.id == null} ? 'Registrar libro' : 'Editar libro'"&gt;Registrar libro&lt;/h1&gt;
+
+    &lt;div class="resumen-errores" role="alert" th:if="${#fields.hasAnyErrors()}"&gt;
+        &lt;p&gt;&lt;strong&gt;Revisa estos datos antes de continuar:&lt;/strong&gt;&lt;/p&gt;
+        &lt;ul&gt;
+            &lt;li th:each="error : ${#fields.allErrors()}" th:text="${error}"&gt;Error&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+
+    &lt;form th:action="@{/libros}" th:object="${libro}" method="post" novalidate&gt;
+
+        &lt;!-- El id viaja escondido: vacío al crear, con número al editar.
+             Es lo que le dice a save() si debe crear o actualizar. --&gt;
+        &lt;input type="hidden" th:field="*{id}" /&gt;
+
+        &lt;label for="titulo"&gt;Título&lt;/label&gt;
+        &lt;input type="text" id="titulo" th:field="*{titulo}" th:errorclass="campo-error"
+               aria-describedby="titulo-error" /&gt;
+        &lt;p class="mensaje-error" id="titulo-error"
+           th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"&gt;Error&lt;/p&gt;
+
+        &lt;label for="autor"&gt;Autor&lt;/label&gt;
+        &lt;input type="text" id="autor" th:field="*{autor}" th:errorclass="campo-error"
+               aria-describedby="autor-error" /&gt;
+        &lt;p class="mensaje-error" id="autor-error"
+           th:if="${#fields.hasErrors('autor')}" th:errors="*{autor}"&gt;Error&lt;/p&gt;
+
+        &lt;label for="anioPublicacion"&gt;Año de publicación&lt;/label&gt;
+        &lt;input type="number" id="anioPublicacion" th:field="*{anioPublicacion}" th:errorclass="campo-error"
+               aria-describedby="anio-error" /&gt;
+        &lt;p class="mensaje-error" id="anio-error"
+           th:if="${#fields.hasErrors('anioPublicacion')}" th:errors="*{anioPublicacion}"&gt;Error&lt;/p&gt;
+
+        &lt;label class="check"&gt;
+            &lt;input type="checkbox" th:field="*{disponible}" /&gt; Disponible para préstamo
+        &lt;/label&gt;
+
+        &lt;button type="submit"&gt;Guardar&lt;/button&gt;
+        &lt;a th:href="@{/libros}"&gt;Cancelar&lt;/a&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            <div class="small-muted mt-2">El mismo formulario sirve para <strong>crear</strong> y <strong>editar</strong>: la diferencia es el campo escondido <code>id</code>. Los mensajes y la accesibilidad son los de la Semana 11.</div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit11">11. <code>templates/lista.html</code> <span class="badge text-bg-primary">editar, borrar y buscar</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/resources/templates/lista.html</code></p>
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="es" xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Libros - Biblioteca Comunitaria Semilla&lt;/title&gt;
+    &lt;link rel="stylesheet" th:href="@{/estilos.css}"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Biblioteca Comunitaria Semilla&lt;/h1&gt;
+    &lt;p&gt;Libros guardados en la base de datos: &lt;strong th:text="${total}"&gt;0&lt;/strong&gt;&lt;/p&gt;
+
+    &lt;!-- Búsqueda: un formulario GET que llega a /libros?buscar=texto --&gt;
+    &lt;form th:action="@{/libros}" method="get"&gt;
+        &lt;label for="buscar"&gt;Buscar por título&lt;/label&gt;
+        &lt;input type="text" id="buscar" name="buscar" th:value="${buscar}" /&gt;
+        &lt;button type="submit"&gt;Buscar&lt;/button&gt;
+        &lt;a th:href="@{/libros}"&gt;Ver todos&lt;/a&gt;
+        &lt;a th:href="@{/libros/disponibles}"&gt;Solo disponibles&lt;/a&gt;
+    &lt;/form&gt;
+
+    &lt;p&gt;&lt;a th:href="@{/libros/nuevo}"&gt;+ Registrar un libro&lt;/a&gt;&lt;/p&gt;
+
+    &lt;table&gt;
+        &lt;thead&gt;
+            &lt;tr&gt;&lt;th&gt;Id&lt;/th&gt;&lt;th&gt;Título&lt;/th&gt;&lt;th&gt;Autor&lt;/th&gt;&lt;th&gt;Año&lt;/th&gt;&lt;th&gt;Disponible&lt;/th&gt;&lt;th&gt;Acciones&lt;/th&gt;&lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+            &lt;tr th:each="libro : ${libros}"&gt;
+                &lt;td th:text="${libro.id}"&gt;1&lt;/td&gt;
+                &lt;td th:text="${libro.titulo}"&gt;Título&lt;/td&gt;
+                &lt;td th:text="${libro.autor}"&gt;Autor&lt;/td&gt;
+                &lt;td th:text="${libro.anioPublicacion}"&gt;2000&lt;/td&gt;
+                &lt;td th:text="${libro.disponible} ? 'Sí' : 'No'"&gt;Sí&lt;/td&gt;
+                &lt;td&gt;
+                    &lt;a th:href="@{/libros/{id}/editar(id=${libro.id})}"&gt;Editar&lt;/a&gt;
+                    &lt;form th:action="@{/libros/{id}/eliminar(id=${libro.id})}" method="post" class="en-linea"&gt;
+                        &lt;button type="submit" class="peligro"&gt;Eliminar&lt;/button&gt;
+                    &lt;/form&gt;
+                &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr th:if="${#lists.isEmpty(libros)}"&gt;
+                &lt;td colspan="6"&gt;No hay libros para mostrar.&lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/tbody&gt;
+    &lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit12">12. <code>static/estilos.css</code> <span class="badge text-bg-secondary">estilos mínimos</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/resources/static/estilos.css</code></p>
+            <pre><code>body { font-family: system-ui, sans-serif; max-width: 820px; margin: 2rem auto; padding: 0 1rem; color: #1e293b; }
+label { display: block; margin-top: 1rem; font-weight: 600; }
+.check { font-weight: 400; }
+input[type="text"], input[type="number"] { padding: 0.5rem; border: 1px solid #94a3b8; border-radius: 6px; width: 100%; max-width: 420px; }
+input:focus, button:focus { outline: 3px solid #2563eb; outline-offset: 2px; }
+.campo-error { border: 2px solid #b91c1c !important; background: #fef2f2; }
+.mensaje-error { color: #b91c1c; font-weight: 600; margin: 0.2rem 0 0 0; }
+.mensaje-error::before { content: "▲ "; }
+.resumen-errores { background: #fef2f2; border-left: 5px solid #b91c1c; padding: 0.75rem 1rem; margin-bottom: 1rem; }
+button { margin-top: 1rem; padding: 0.5rem 1rem; border: none; border-radius: 6px; background: #0d6efd; color: #fff; cursor: pointer; }
+button.peligro { background: #b91c1c; margin-top: 0; padding: 0.25rem 0.6rem; }
+form.en-linea { display: inline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { text-align: left; padding: 0.5rem; border-bottom: 1px solid #e2e8f0; }
+th { background: #f1f5f9; }</code></pre>
+            <div class="small-muted mt-2">Si ya tienes <code>templates/error.html</code> de la Semana 11, déjalo: sigue funcionando sin cambios.</div>
+          </div>
+        </div>
+
+        <div class="callout success">
+          <div class="fw-semibold">Para tu proyecto real</div>
+          <div class="small-muted">
+            Cambia tres cosas: <strong>(1)</strong> <code>tallerjpa</code> por tu paquete base;
+            <strong>(2)</strong> <code>Libro</code> por tu entidad y sus campos;
+            <strong>(3)</strong> las reglas de validación por las de tu institución. La guía paso a paso está en
+            <a href="proyecto.html">Proyecto</a>.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Ejercicios y Kit — Semana 12 · Persistencia de datos con JPA y Spring Data (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz — Semana 12 (Presaberes y Final)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 12 — Persistencia</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Quiz de la semana · Elige el modo con el menú</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Presaberes y Quiz Final, en un solo lugar</h1>
+          <div class="small-muted" id="quizTypeLabel">Presaberes · 8 preguntas · no cuenta para nota</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 900px;">
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="row g-3 align-items-end">
+          <div class="col-md-6">
+            <label class="form-label fw-semibold" for="quizType">¿Qué quiz vas a resolver?</label>
+            <select id="quizType" class="form-select" onchange="renderQuiz()">
+              <option value="presaberes">🟡 Presaberes (inicio de clase, no cuenta para nota)</option>
+              <option value="final">🔴 Final de clase (evidencia de la Actividad en clase)</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold" for="studentName">Nombre del estudiante (aparecerá en el PDF)</label>
+            <input id="studentName" class="form-control" type="text" placeholder="Nombre y apellido" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout mb-3 no-print">
+      <div class="fw-semibold">¿Cómo funciona?</div>
+      <div class="small-muted">Cada vez que cambias de modo (o pulsas "🔀 Nuevas preguntas") se eligen preguntas <strong>al azar</strong> de un banco más grande, y además el <strong>orden de las opciones cambia</strong>: hay que leer, no memorizar posiciones.</div>
+    </div>
+
+    <div id="quizContainer"></div>
+
+    <div id="scoreBanner" class="score-banner"></div>
+
+    <div class="d-flex gap-2 flex-wrap mt-3 no-print">
+      <button class="btn btn-primary btn-lg" onclick="gradeQuiz()">Calificar</button>
+      <button class="btn btn-outline-secondary" onclick="resetQuiz()">Reintentar (mismas preguntas)</button>
+      <button class="btn btn-outline-info" onclick="regenerateQuiz()">🔀 Nuevas preguntas</button>
+      <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      <a class="btn btn-outline-primary ms-auto" href="clase.html">Continuar a la clase →</a>
+    </div>
+
+    <div class="callout warning mt-4 no-print">
+      <div class="fw-semibold">Instrucciones de entrega (si estás en modo Final)</div>
+      <ol class="small-muted mb-0">
+        <li>Escribe tu nombre en la casilla de arriba.</li>
+        <li>Pulsa <strong>Calificar</strong> y revisa la retroalimentación de cada pregunta.</li>
+        <li>Pulsa <strong>Exportar a PDF</strong> y guarda el archivo como <code>QuizFinal_S12_TuNombre.pdf</code>.</li>
+        <li>Súbelo al aula virtual junto con el PDF del <a href="challenge.html">Challenge</a>.</li>
+      </ol>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Quiz — Semana 12 · Persistencia de datos con JPA y Spring Data (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script>
+    // ===== Banco de preguntas de la Semana 12 =====
+    // level: 'presaberes' | 'final' | 'ambas'
+    // La opción correcta se escribe siempre de primera para poder revisarla fácil;
+    // la página baraja las opciones antes de mostrarlas (ver script más abajo).
+    function Q(level, pregunta, a, b, c, fbOk, fbKo) {
+      return { level: level, pregunta: pregunta,
+        opciones: [{ v: 'a', t: a }, { v: 'b', t: b }, { v: 'c', t: c }],
+        correcta: 'a', fbOk: fbOk, fbKo: fbKo };
+    }
+    var QUESTION_BANK = [
+      // ---------- Solo Presaberes ----------
+      Q('presaberes', '(Repaso S10) En tu formulario guardabas los datos en una lista dentro del servicio. ¿Qué pasa con esos datos al apagar la aplicación?',
+        'Se pierden: viven en la memoria RAM', 'Se guardan solos en un archivo', 'Se suben a GitHub',
+        'Correcto: la lista vive en la memoria y se borra al apagar. Hoy lo resolvemos con una base de datos.',
+        'Se pierden. Una lista en memoria desaparece al apagar la aplicación; por eso necesitamos persistencia.'),
+      Q('presaberes', '¿Qué significa "persistir" un dato?',
+        'Guardarlo de forma que siga existiendo después de apagar la aplicación', 'Mostrarlo en pantalla más rápido', 'Copiarlo a otra variable',
+        'Correcto: persistencia es que el dato sobreviva al apagado.', 'Persistir es que el dato siga existiendo aunque la aplicación se apague.'),
+      Q('presaberes', '(Repaso S6) En la arquitectura en capas, ¿qué capa se encarga de hablar con los datos?',
+        'El repositorio', 'El controlador', 'La plantilla HTML',
+        'Correcto: el repositorio es la capa de acceso a datos.', 'Es el repositorio. El controlador atiende peticiones y la plantilla solo muestra.'),
+      Q('presaberes', '(Repaso S11) ¿Para qué sirve la anotación <code>@NotBlank</code>?',
+        'Para rechazar un texto vacío o solo con espacios', 'Para crear una tabla', 'Para numerar los datos solos',
+        'Correcto: es una regla de validación del formulario.', 'Es de validación (Semana 11): rechaza textos vacíos. No crea tablas.'),
+      Q('presaberes', 'Una base de datos organiza la información en…',
+        'Tablas con filas y columnas', 'Carpetas de imágenes', 'Un solo texto largo',
+        'Correcto: tablas con filas (registros) y columnas (campos).', 'Se organiza en tablas con filas y columnas, como una hoja de cálculo.'),
+      Q('presaberes', '¿Qué dependencia se agrega en el <code>pom.xml</code> para usar JPA con Spring?',
+        '<code>spring-boot-starter-data-jpa</code>', '<code>spring-boot-starter-mail</code>', '<code>junit</code>',
+        'Correcto: ese starter trae JPA, Hibernate y Spring Data.', 'Es <code>spring-boot-starter-data-jpa</code>.'),
+
+      // ---------- Ambas ----------
+      Q('ambas', '¿Qué hace la anotación <code>@Entity</code> sobre una clase?',
+        'Indica que la clase se guarda como una tabla en la base de datos', 'Hace que la clase sea un controlador', 'Valida los campos del formulario',
+        'Correcto: la clase pasa a ser una tabla.', '<code>@Entity</code> convierte la clase en tabla. Validar es otra familia de anotaciones.'),
+      Q('ambas', '¿Para qué sirve <code>@Id</code>?',
+        'Marca la columna que identifica cada fila de forma única', 'Cambia el nombre de la tabla', 'Obliga a escribir el texto en mayúsculas',
+        'Correcto: es la llave primaria.', 'Marca la llave primaria. Sin ella: <code>No identifier specified for entity</code>.'),
+      Q('ambas', '¿Qué es <code>LibroRepository</code> cuando la escribes como <code>interface LibroRepository extends JpaRepository&lt;Libro, Long&gt;</code>?',
+        'Una interfaz cuya implementación genera Spring por ti', 'Una clase que debes llenar de código SQL', 'Una página HTML',
+        'Correcto: tú escribes la "carta", Spring "cocina" la implementación.', 'Es solo una interfaz; Spring genera la implementación al arrancar.'),
+      Q('ambas', 'En <code>jdbc:h2:mem:biblioteca</code>, ¿qué implica la palabra <code>mem</code>?',
+        'Los datos viven en la memoria y se pierden al reiniciar', 'Los datos se guardan para siempre', 'Los datos van a la nube',
+        'Correcto: memoria = olvido al reiniciar.', '<code>mem</code> es memoria RAM: al reiniciar todo se pierde. Para guardar se usa <code>file</code>.'),
+      Q('ambas', '¿Qué URL hace que H2 guarde los datos en un archivo del disco?',
+        '<code>jdbc:h2:file:./datos/biblioteca</code>', '<code>jdbc:h2:mem:biblioteca</code>', '<code>jdbc:h2:cloud:biblioteca</code>',
+        'Correcto: <code>file</code> escribe <code>datos/biblioteca.mv.db</code>.', 'Es la de <code>file</code>. La de <code>mem</code> olvida al reiniciar.'),
+      Q('ambas', '¿Qué devuelve <code>findById(id)</code>?',
+        'Un <code>Optional&lt;Libro&gt;</code>: puede contener el libro o venir vacío', 'Siempre un <code>Libro</code>', 'Un número',
+        'Correcto: por eso se usa <code>.orElseThrow(...)</code>.', 'Devuelve un <code>Optional</code>, porque el id podría no existir.'),
+      Q('ambas', 'Las anotaciones <code>@Entity</code> y <code>@NotBlank</code> pertenecen a…',
+        'Dos paquetes distintos: <code>jakarta.persistence</code> y <code>jakarta.validation.constraints</code>', 'El mismo paquete <code>javax.persistence</code>', 'Ninguno: no necesitan import',
+        'Correcto: dos familias que conviven en la misma clase.', 'Son de dos paquetes <code>jakarta</code> distintos, y cada una necesita su import. No es <code>javax</code>.'),
+      Q('ambas', '¿Qué hace <code>save(libro)</code> cuando el libro trae el <code>id</code> nulo?',
+        'Hace un <code>insert</code> (crea una fila nueva)', 'Hace un <code>update</code>', 'Borra el libro',
+        'Correcto: id nulo = registro nuevo; con id existente actualiza.', 'Con id nulo inserta; con un id existente actualiza.'),
+
+      // ---------- Solo Final ----------
+      Q('final', '¿Qué mensaje aparece si olvidas poner <code>@Id</code> en la entidad?',
+        '<code>No identifier specified for entity</code>', '<code>Port 8080 was already in use</code>', '<code>404 Not Found</code>',
+        'Correcto: toda entidad necesita llave primaria.', 'Es <code>No identifier specified for entity</code>.'),
+      Q('final', 'Agregaste un constructor <code>Libro(String titulo)</code> y borraste el vacío. ¿Qué ocurre?',
+        'Hibernate no puede crear objetos <code>Libro</code> vacíos y falla con "No default constructor"', 'Todo funciona igual', 'Se pierde la anotación @Entity',
+        'Correcto: Hibernate necesita el constructor sin parámetros.', 'Falla: al escribir un constructor con parámetros, Java ya no regala el vacío y debes escribirlo.'),
+      Q('final', 'Falta la dependencia <code>com.h2database:h2</code> en el <code>pom.xml</code>. ¿Qué verás?',
+        'Un error al arrancar tipo <code>Failed to load driver class org.h2.Driver</code>', 'Un error de compilación en <code>Libro.java</code>', 'Nada, funciona igual',
+        'Correcto: Hibernate no tiene el "conector" a H2.', 'Se queja al arrancar por no encontrar el driver. La falta de <code>data-jpa</code> sí daría error de compilación.'),
+      Q('final', '¿Cómo se interpreta <code>findByTituloContainingIgnoreCase</code>?',
+        'Buscar por <code>titulo</code> los que contengan el texto, sin distinguir mayúsculas', 'Borrar títulos duplicados', 'Ordenar por título',
+        'Correcto: find + By + campo + Containing + IgnoreCase.', 'Es una búsqueda por título que contiene el texto, ignorando mayúsculas.'),
+      Q('final', 'Escribes <code>findByDisponibilidadTrue()</code> pero el campo se llama <code>disponible</code>. ¿Qué pasa?',
+        'La aplicación no arranca: <code>No property ... found for type Libro</code>', 'Funciona normalmente', 'Se crea un campo nuevo solo',
+        'Correcto: Spring valida los nombres al arrancar.', 'No arranca: el nombre del método debe coincidir con un campo real.'),
+      Q('final', 'Tus datos desaparecen aunque la URL usa <code>file</code>. ¿Cuál es una causa probable?',
+        '<code>spring.jpa.hibernate.ddl-auto=create</code> reconstruye la tabla vacía en cada arranque', 'Falta el punto y coma', 'El navegador borra los datos',
+        'Correcto: usa <code>update</code> para conservar los datos.', 'La causa típica es <code>ddl-auto=create</code> o <code>create-drop</code>. Con <code>update</code> se conservan.'),
+      Q('final', '¿Para qué sirve un perfil como <code>application-prod.properties</code>?',
+        'Para cambiar la configuración (por ejemplo la base de datos) sin tocar el código Java', 'Para guardar contraseñas en GitHub', 'Para instalar Java',
+        'Correcto: la misma aplicación, otra configuración.', 'Sirve para cambiar configuración sin tocar Java. Las contraseñas nunca van escritas en GitHub.'),
+      Q('final', 'En <code>application-prod.properties</code> se escribe <code>${DB_PASSWORD}</code>. ¿Por qué?',
+        'Para tomar la contraseña de una variable de entorno y no escribirla en el código', 'Porque la contraseña es literalmente DB_PASSWORD', 'Para ocultar el archivo en VS Code',
+        'Correcto: el secreto vive en el servidor, no en GitHub.', 'Es un hueco que se llena con una variable de entorno del servidor, para no exponer la clave.'),
+      Q('final', 'La aplicación estará en Render y la base de datos en Neon. ¿Por qué no la base de Render?',
+        'Porque la base de datos gratuita de Render expira; Neon ofrece PostgreSQL en la nube', 'Porque Render no puede ejecutar Java', 'Porque Neon es una versión de H2',
+        'Correcto: se hospedan por separado.', 'La base gratuita de Render expira, por eso se usa Neon (PostgreSQL).'),
+      Q('final', 'Para pasar de H2 a PostgreSQL en la Semana 14, ¿qué debería cambiar?',
+        'Solo la configuración del perfil (y el driver en el pom), no la entidad ni el repositorio', 'Reescribir <code>Libro</code> con SQL', 'Cambiar de lenguaje de programación',
+        'Correcto: ese es el segundo criterio de la Guía 12.', 'Solo configuración y el driver; entidad y repositorio quedan intactos.'),
+    ];
+    var QUIZ_CONFIG = { presaberesCount: 8, finalCount: 12 };
+  </script>
+  <script src="quiz.js"></script>
+  <script>
+    // Baraja el orden de las opciones antes de cada render (patrón desde la Semana 9):
+    // en el banco la correcta se escribe siempre de primera para poder mantenerlo con
+    // facilidad, pero mostrarla siempre arriba permitiría "aprobar" sin leer.
+    // El valor .v no cambia, así que la calificación sigue siendo correcta.
+    function barajarOpciones() {
+      (window.QUESTION_BANK || []).forEach(function (q) {
+        for (var i = q.opciones.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var t = q.opciones[i]; q.opciones[i] = q.opciones[j]; q.opciones[j] = t;
+        }
+      });
+    }
+
+    var _renderBase = window.renderQuiz;
+    window.renderQuiz = function () {
+      barajarOpciones();
+      _renderBase();
+    };
+    renderQuiz();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

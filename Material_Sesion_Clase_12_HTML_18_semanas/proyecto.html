@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Proyecto — Guía de Aprendizaje 12 (Semana 12)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 12 — Persistencia</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link active" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Proyecto · Entregable de la Guía de Aprendizaje 12 (1 pt)</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Tus datos, por fin guardados de verdad</h1>
+          <div class="small-muted">Primero la <strong>guía paso a paso</strong> para persistir los datos de tu proyecto real con JPA, y al final la <strong>plantilla calificable</strong>. Fecha límite: <strong>antes de la Sesión 13</strong>.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 980px;">
+
+    <div class="callout warning mb-4">
+      <div class="fw-semibold">Antes de empezar</div>
+      <div class="small-muted">Necesitas tu módulo de la Semana 11 (formulario con validación, que guarda en una lista en memoria). Si quedó incompleto, recupéralo con el <a href="ejercicios.html">Kit de archivos completos</a> y adáptalo a tu entidad. Haz esta guía <strong>después</strong> de los <a href="ejercicios.html">Ejercicios</a>: aquí no se vuelve a explicar cada error.</div>
+    </div>
+
+    <div class="callout success mb-4">
+      <div class="fw-semibold">Dos criterios para esta guía</div>
+      <div class="small-muted">Esta guía se califica con un <strong>doble criterio</strong>: <strong>(1)</strong> tu proyecto funciona contra H2 local y los datos sobreviven al reinicio; <strong>(2)</strong> tu entidad y tu repositorio <strong>no necesitan cambios de código</strong> para reconectarse a PostgreSQL en la Semana 14 (solo cambiará el archivo de configuración del perfil, hacia Neon).</div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">Parte guiada — persiste tu proyecto real</h2>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso1">Paso 1 — Agrega las tres dependencias a tu <code>pom.xml</code></h3>
+<p class="small-muted">Dentro de <code>&lt;dependencies&gt;</code> (o márcalas al regenerar el esqueleto en Initializr: <em>Spring Data JPA</em>, <em>H2 Database</em> y <em>Spring Boot DevTools</em>):</p><pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-data-jpa&lt;/artifactId&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+    &lt;groupId&gt;com.h2database&lt;/groupId&gt;
+    &lt;artifactId&gt;h2&lt;/artifactId&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;
+    &lt;optional&gt;true&lt;/optional&gt;
+&lt;/dependency&gt;</code></pre><div class="callout info mb-2"><div class="small-muted"><strong>DevTools (opcional pero recomendada):</strong> recarga la aplicación sola al guardar cambios en código y plantillas, así no repites "parar y arrancar". <strong>No</strong> recarga cambios en <code>pom.xml</code> ni en <code>application*.properties</code>: para esos, <kbd>Ctrl</kbd>+<kbd>C</kbd> y arranca a mano. Se desactiva sola en producción.</div></div><div class="callout danger mb-0"><div class="fw-semibold">Si falta una, el error es distinto</div><div class="small-muted">Sin <code>data-jpa</code>, los imports de <code>jakarta.persistence</code> salen en rojo (no compila). Sin <code>h2</code>, compila pero al arrancar dice <code>Failed to load driver class org.h2.Driver</code>. Recarga Maven después de editar.</div></div>
+        <div class="callout success mb-0 mt-2">✅ Checkpoint: el proyecto arranca (o falla solo por falta de configuración, lo que se arregla en el Paso 5).</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso2">Paso 2 — Convierte TU entidad en <code>@Entity</code></h3>
+<p class="small-muted mb-2">Tomas la clase de modelo que ya tienes (Semanas 10–11) y le sumas las anotaciones de persistencia <strong>sin quitar las de validación</strong>. Ejemplo con un stand-in neutral, <code>Beneficiario</code>; reemplázalo por tu entidad (Niño, Paciente, Donante...) y <code>TU.PAQUETE</code> por tu paquete base (el de tu <code>@SpringBootApplication</code>):</p><pre><code>// src/main/java/TU/PAQUETE/model/Beneficiario.java
+package TU.PAQUETE.model;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+@Entity
+public class Beneficiario {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotBlank(message = "El nombre es obligatorio.")
+    @Size(min = 3, max = 60, message = "El nombre debe tener entre 3 y 60 caracteres.")
+    @Column(nullable = false, length = 60)
+    private String nombre;
+
+    @NotNull(message = "La edad es obligatoria.")
+    @Min(value = 0, message = "La edad no puede ser negativa.")
+    @Max(value = 120, message = "Revisa la edad.")
+    private Integer edad;
+
+    public Beneficiario() { }   // obligatorio para JPA
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+    public Integer getEdad() { return edad; }
+    public void setEdad(Integer edad) { this.edad = edad; }
+}</code></pre><ul class="small-muted mt-2 mb-0"><li><code>@Id</code> + <code>@GeneratedValue</code> sobre un campo <code>Long id</code> (si tu clase no lo tenía, agrégalo con su getter y setter).</li><li><code>public Beneficiario() { }</code>: constructor vacío.</li><li>Campos numéricos: <code>Integer</code>.</li></ul>
+        <div class="callout success mb-0 mt-2">✅ Checkpoint: tu clase tiene <code>@Entity</code>, <code>@Id</code> y constructor vacío, y todos los <code>import</code> están sin subrayado rojo.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso3">Paso 3 — Crea tu repositorio</h3>
+<p class="small-muted mb-2">Carpeta nueva <code>repository</code> junto a <code>model</code>. Son cuatro líneas útiles:</p><pre><code>// src/main/java/TU/PAQUETE/repository/BeneficiarioRepository.java
+package TU.PAQUETE.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import TU.PAQUETE.model.Beneficiario;
+
+public interface BeneficiarioRepository extends JpaRepository&lt;Beneficiario, Long&gt; {
+}</code></pre>
+        <div class="callout success mb-0 mt-2">✅ Checkpoint: el archivo no tiene rojos y es una <strong>interfaz</strong> (<code>interface</code>, no <code>class</code>).</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso4">Paso 4 — Cambia tu servicio para que use el repositorio (adiós a la <code>List</code>)</h3>
+<p class="small-muted mb-2">En la Semana 10 el servicio guardaba en una <code>List</code> en memoria. Ahora delega en el repositorio. Observa que <code>findById</code> usa <code>orElseThrow</code>:</p><pre><code>// src/main/java/TU/PAQUETE/service/BeneficiarioService.java
+package TU.PAQUETE.service;
+
+import java.util.List;
+import org.springframework.stereotype.Service;
+import TU.PAQUETE.model.Beneficiario;
+import TU.PAQUETE.repository.BeneficiarioRepository;
+
+@Service
+public class BeneficiarioService {
+
+    private final BeneficiarioRepository repositorio;
+
+    public BeneficiarioService(BeneficiarioRepository repositorio) {
+        this.repositorio = repositorio;
+    }
+
+    public List&lt;Beneficiario&gt; listarTodos() {
+        return repositorio.findAll();
+    }
+
+    public Beneficiario buscarPorId(Long id) {
+        return repositorio.findById(id)
+                .orElseThrow(() -&gt; new IllegalArgumentException("No existe un registro con id " + id));
+    }
+
+    public Beneficiario guardar(Beneficiario b) {
+        return repositorio.save(b);
+    }
+
+    public void eliminar(Long id) {
+        repositorio.deleteById(id);
+    }
+}</code></pre><p class="small-muted mb-0">Tu controlador casi no cambia: sigue llamando a <code>guardar</code>, <code>listarTodos</code>, etc. Para editar necesitarás un campo escondido <code>id</code> en el formulario (<code>th:field="*{id}"</code>) y para borrar un formulario con <code>POST</code>: el Kit de <a href="ejercicios.html">Ejercicios</a> trae ambos.</p>
+        <div class="callout success mb-0 mt-2">✅ Checkpoint: ya no queda ningún <code>ArrayList</code> en tu servicio.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso5">Paso 5 — Configura H2 en archivo con perfiles</h3>
+<p class="small-muted mb-1">Tres archivos en <code>src/main/resources/</code>. Usa un nombre de base propio (por ejemplo, el de tu institución) en lugar de <code>biblioteca</code>:</p><pre><code># Ruta: src/main/resources/application.properties
+# Aquí van solo las cosas que valen para TODOS los perfiles.
+spring.application.name=taller-jpa
+
+# Perfil activo. "dev" = tu computadora. En la Semana 14 el hosting lo cambiará a "prod".
+spring.profiles.active=dev</code></pre><pre><code># Ruta: src/main/resources/application-dev.properties
+# Perfil "dev": H2 EN ARCHIVO, en tu computadora.
+
+# jdbc:h2:file:  = base de datos guardada en un archivo (sobrevive al reinicio)
+# ./datos/biblioteca = carpeta "datos" dentro de tu proyecto, archivo "biblioteca"
+spring.datasource.url=jdbc:h2:file:./datos/biblioteca
+spring.datasource.driver-class-name=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+
+# update = crea la tabla si no existe y CONSERVA los datos. (create y create-drop los borran.)
+spring.jpa.hibernate.ddl-auto=update
+
+# Muestra en la terminal el SQL que Hibernate escribe por ti.
+spring.jpa.show-sql=true
+
+# Consola web de H2: http://localhost:8080/h2-console
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console</code></pre><pre><code># Ruta: src/main/resources/application-prod.properties
+# Perfil "prod": PostgreSQL en Neon. HOY NO SE USA; queda preparado para la Semana 14.
+# Los ${...} son "huecos" que se llenan con variables de entorno del hosting (Render).
+# Así tu contraseña real nunca se escribe en el código ni se sube a GitHub.
+spring.datasource.url=${DB_URL}
+spring.datasource.username=${DB_USER}
+spring.datasource.password=${DB_PASSWORD}
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=false
+
+# La consola de H2 NO debe existir en producción.
+spring.h2.console.enabled=false</code></pre><p class="small-muted mb-1">Y en tu <code>.gitignore</code> agrega al final una línea:</p><pre><code>datos/</code></pre><div class="callout mb-0"><div class="small-muted"><strong>Por qué <code>application-prod.properties</code> si hoy no se usa:</strong> hoy trabajas contra H2 en tu computadora; en la Semana 14 la misma aplicación se conectará a <strong>Neon</strong> (PostgreSQL en la nube) <strong>sin cambiar una sola línea de Java</strong>: solo cambia el archivo de configuración del perfil. Render hospedará la aplicación y Neon la base, porque la base gratuita de Render expira. No actives <code>prod</code> hoy.</div></div>
+        <div class="callout success mb-0 mt-2">✅ Checkpoint: al arrancar, el log dice <code>The following 1 profile is active: "dev"</code> y aparece la carpeta <code>datos/</code>.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso6">Paso 6 — Prueba el CRUD y el reinicio</h3>
+<ol class="small-muted mb-2"><li><strong>Crear:</strong> registra 3 registros reales de tu institución.</li><li><strong>Listar:</strong> comprueba que salen.</li><li><strong>Editar:</strong> cambia uno; verifica que NO se duplica.</li><li><strong>Eliminar:</strong> borra uno.</li><li><strong>Consola:</strong> abre <code>/h2-console</code> con la URL <code>jdbc:h2:file:./datos/tu-nombre</code> (usuario <code>sa</code>, sin contraseña) y haz un <code>SELECT *</code> sobre tu tabla.</li><li><strong>Reinicio:</strong> detén la aplicación, arráncala de nuevo y comprueba que tus datos siguen ahí.</li><li><strong>Id inexistente:</strong> visita <code>/tu-ruta/999/editar</code> y observa el mensaje.</li></ol>
+        <div class="callout success mb-0 mt-2">✅ Checkpoint: tus registros sobreviven al reinicio. Esta es la prueba más importante de la guía.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso7">Paso 7 — Verifica el segundo criterio: tu código no depende de H2</h3>
+<p class="small-muted mb-2">Revisa tu entidad y tu repositorio con esta lista. Si cumples todo, en la Semana 14 no tendrás que tocarlos:</p><ul class="small-muted mb-0"><li>No hay ninguna sentencia SQL escrita a mano.</li><li>No hay ningún <code>import</code> que mencione <code>h2</code>.</li><li>Todas las anotaciones son <code>jakarta.persistence.*</code> o <code>jakarta.validation.constraints.*</code>.</li><li>La URL de la base de datos solo aparece en los archivos <code>.properties</code>, nunca en un archivo <code>.java</code>.</li></ul>
+        <div class="callout success mb-0 mt-2">✅ Checkpoint: puedes decir con confianza: "si cambio solo el perfil, mi código sigue igual".</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso8">Paso 8 — Sube tu avance a GitHub</h3>
+<p class="small-muted mb-0">En tu rama <code>development</code>: commit con mensaje descriptivo (por ejemplo <em>"Persiste los registros con JPA y H2 en archivo"</em>) y push. Confirma que la carpeta <code>datos/</code> <strong>no</strong> se subió.</p>
+        <div class="callout success mb-0 mt-2">✅ Checkpoint: en GitHub.com se ven tu entidad, tu repositorio y tus tres archivos de propiedades, pero no la carpeta <code>datos/</code>.</div>
+      </div>
+    </div>
+
+    <details class="mb-4">
+      <summary class="fw-semibold">Solución de problemas frecuentes</summary>
+      <div class="table-responsive mt-2">
+        <table class="table table-sm small mb-0">
+          <thead><tr><th>Situación</th><th>Qué hacer</th></tr></thead>
+          <tbody><tr><td><code>No identifier specified for entity</code></td><td>Falta <code>@Id</code> (revisa también su import).</td></tr><tr><td><code>No default constructor for entity</code></td><td>Agrega <code>public TuClase() { }</code>.</td></tr><tr><td><code>Failed to load driver class org.h2.Driver</code></td><td>Falta la dependencia <code>h2</code> en el <code>pom.xml</code>.</td></tr><tr><td><code>package jakarta.persistence does not exist</code></td><td>Falta <code>spring-boot-starter-data-jpa</code>.</td></tr><tr><td><code>Optional&lt;...&gt; cannot be converted to ...</code></td><td>Usa <code>.orElseThrow(...)</code> después de <code>findById</code>.</td></tr><tr><td>Mis datos desaparecen al reiniciar</td><td>Revisa que la URL diga <code>file</code> y no <code>mem</code>, y que <code>ddl-auto</code> sea <code>update</code>.</td></tr><tr><td><code>Database may be already in use</code></td><td>Hay otra copia de la aplicación abierta; ciérrala (con DevTools es más fácil arrancar dos veces).</td></tr><tr><td>Se duplica al editar</td><td>Falta el campo escondido <code>id</code> en el formulario.</td></tr><tr><td>Mi módulo de las Semanas 10–11 quedó incompleto</td><td>Usa el <a href="ejercicios.html">Kit de archivos completos</a> y adáptalo a tu entidad.</td></tr></tbody>
+        </table>
+      </div>
+    </details>
+
+    <div class="callout mb-4">
+      <div class="fw-semibold">Plan B</div>
+      <div class="small-muted">Si no logras que arranque tu proyecto real, arma <code>taller-jpa</code> desde el Kit y entrega esa evidencia indicando qué intentaste y qué error te detuvo (cópialo del último <code>Caused by:</code>). Se evalúa el proceso y la reflexión de la Parte E. Recuerda que el detalle de instalación está en la <a href="../Material_Sesion_Clase_1_HTML_18_semanas/instalacion.html">Semana 1</a>.</div>
+    </div>
+
+    <hr class="my-4" />
+    <h2 class="h4 section-title mb-3">📋 Entregable — completa esto para tu calificación</h2>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title mb-3">Datos del estudiante</h3>
+        <div class="row g-3">
+          <div class="col-md-5"><label class="form-label small fw-semibold">Nombre completo</label><input class="form-control fill-line" type="text" /></div>
+          <div class="col-md-3"><label class="form-label small fw-semibold">Carné</label><input class="form-control fill-line" type="text" /></div>
+          <div class="col-md-4"><label class="form-label small fw-semibold">Entidad que persistes</label><input class="form-control fill-line" type="text" placeholder="Ej. Donante, Paciente, Beneficiario" /></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte A — Tu entidad, explicada (20%)</h3>
+        <p class="small-muted">Por cada campo de tu entidad: nombre del campo, tipo, nombre de columna que Hibernate le dará y para qué lo usa tu institución. Explica también por qué elegiste <code>Integer</code> (o <code>Long</code>) y no <code>int</code>.</p>
+        <textarea class="code-area" rows="8" placeholder="Campo: anioPublicacion | Tipo: Integer | Columna: anio_publicacion | Para qué: ...&#10;Campo: ..."></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte B — Entidad y repositorio (25%)</h3>
+        <p class="small-muted mb-1"><strong>B1.</strong> Tu entidad completa, con <code>package</code>, <strong>todos sus <code>import</code></strong>, anotaciones y constructor vacío:</p>
+        <textarea class="code-area mb-3" rows="14"></textarea>
+        <p class="small-muted mb-1"><strong>B2.</strong> Tu repositorio completo (con <code>package</code> e <code>import</code>):</p>
+        <textarea class="code-area" rows="6"></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte C — Servicio y configuración (25%)</h3>
+        <p class="small-muted mb-1"><strong>C1.</strong> Tu servicio completo (con <code>package</code> e <code>import</code>):</p>
+        <textarea class="code-area mb-3" rows="12"></textarea>
+        <p class="small-muted mb-1"><strong>C2.</strong> Tus archivos <code>application.properties</code> y <code>application-dev.properties</code>:</p>
+        <textarea class="code-area" rows="9"></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte D — Las pruebas y el doble criterio (20%)</h3>
+        <p class="small-muted mb-1">Describe (o adjunta capturas de) qué pasó en cada prueba del Paso 6. Luego responde el criterio 2 con la lista del Paso 7 y pega el enlace a tu repositorio:</p>
+        <textarea class="code-area" rows="9" placeholder="1. Crear → ...&#10;2. Editar (¿se duplicó?) → ...&#10;3. Reinicio (¿siguen mis datos?) → ...&#10;4. Id inexistente → ...&#10;Criterio 2: mi entidad/repositorio no tienen SQL ni mencionan H2 → sí/no, porque ...&#10;Repositorio: https://github.com/..."></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte E — Reflexión (10%)</h3>
+        <ol class="small">
+          <li class="mb-2">
+            <strong>Empatía con el usuario:</strong> imagina a una persona de tu institución que registró 200 beneficiarios y un día se reinicia el servidor. ¿Qué habría sentido con la lista en memoria y qué siente ahora?
+            <textarea class="form-control mt-1" rows="3"></textarea>
+          </li>
+          <li>
+            <strong>Rigor en la calidad:</strong> ¿qué podría salir mal con los datos guardados (copia de seguridad, borrar sin querer, datos duplicados)? ¿Qué harías en la Semana 14 para cuidarlos mejor?
+            <textarea class="form-control mt-1" rows="3"></textarea>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Lista de cotejo (marca antes de entregar)</h3>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck1" /><label class="form-check-label small" for="ck1">Agregué <code>spring-boot-starter-data-jpa</code> y <code>h2</code> al <code>pom.xml</code>.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck2" /><label class="form-check-label small" for="ck2">Mi entidad tiene <code>@Entity</code>, <code>@Id</code>, <code>@GeneratedValue</code> y constructor vacío, con todos sus imports.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck3" /><label class="form-check-label small" for="ck3">Mi repositorio es una interfaz que extiende <code>JpaRepository</code>.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck4" /><label class="form-check-label small" for="ck4">Mi servicio ya no usa una <code>List</code>: usa el repositorio, y <code>buscarPorId</code> usa <code>orElseThrow</code>.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck5" /><label class="form-check-label small" for="ck5">Tengo <code>application.properties</code>, <code>application-dev.properties</code> y <code>application-prod.properties</code>.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck6" /><label class="form-check-label small" for="ck6">Mi base de datos es H2 <strong>en archivo</strong> y <code>datos/</code> está en el <code>.gitignore</code>.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck7" /><label class="form-check-label small" for="ck7">Mis registros sobreviven al reinicio de la aplicación.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck8" /><label class="form-check-label small" for="ck8">Mi código Java no contiene SQL ni menciona H2 (criterio 2).</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck9" /><label class="form-check-label small" for="ck9">Subí todo a mi rama <code>development</code> en GitHub.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck10" /><label class="form-check-label small" for="ck10">Exporté el PDF como <code>Guia12_TuNombre.pdf</code>.</label></div>
+        
+      </div>
+    </div>
+
+    <div class="callout warning">
+      <div class="fw-semibold">Rúbrica rápida (1 punto total)</div>
+      <div class="small-muted">Parte A: 0.20 · Parte B: 0.25 · Parte C: 0.25 · Parte D: 0.20 · Parte E: 0.10. Doble criterio: <strong>(1)</strong> funciona contra H2 local con datos que sobreviven al reinicio; <strong>(2)</strong> la entidad y el repositorio no necesitan cambios para reconectar a PostgreSQL. No hay hito de Entrega Parcial esta semana: el siguiente es la Entrega Parcial 3 en la Semana 14.</div>
+    </div>
+
+    <div class="d-flex gap-2 mt-3 no-print">
+      <button class="btn btn-primary btn-lg btn-export" onclick="window.print()">Exportar a PDF</button>
+      <a class="btn btn-outline-primary btn-lg" href="index.html">Volver al inicio</a>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Proyecto — Entregable de la Guía 12 · Semana 12 (formato 18 semanas) · Fecha límite: antes de la Sesión 13
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

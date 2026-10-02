@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guía Docente — Semana 12 (70 min)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 12 — Persistencia</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link active" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Guía docente · Semana 12 · 70 minutos (11:10–12:20)</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Persistencia de datos con JPA y Spring Data</h1>
+          <div class="small-muted">Sesión sabatina en línea del 3 de octubre de 2026. Dominio de la demo: <strong>Biblioteca Comunitaria Semilla</strong>, entidad <code>Libro</code>.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 1000px;">
+
+    <div class="card mb-3"><div class="card-body">
+      <h2 class="h5 section-title">Objetivos de la sesión</h2>
+      <ul class="small-muted mb-0">
+        <li>Explicar con una analogía qué hace un ORM y por qué la base en memoria olvida.</li>
+        <li>Escribir una entidad con <code>@Entity</code>, <code>@Id</code>, <code>@GeneratedValue</code> y constructor vacío.</li>
+        <li>Crear un repositorio <code>JpaRepository</code> y usar <code>save</code>, <code>findAll</code>, <code>findById</code> (con <code>Optional</code>) y <code>deleteById</code>.</li>
+        <li>Configurar H2 en archivo con perfiles y comprobar que los datos sobreviven al reinicio.</li>
+        <li>Entender que la Semana 14 solo cambiará configuración (Neon), no código Java.</li>
+      </ul>
+    </div></div>
+
+    <div class="card mb-3"><div class="card-body">
+      <h2 class="h5 section-title">Distribución del tiempo</h2>
+      <table class="table table-sm small mb-0"><tbody><tr><td><span class="time-chip">00–05</span></td><td>Bienvenida + Quiz (Presaberes)</td></tr><tr><td><span class="time-chip">05–14</span></td><td>Demo: la base en memoria que olvida</td></tr><tr><td><span class="time-chip">14–28</span></td><td>Entidad, repositorio, dos familias de anotaciones, métodos derivados</td></tr><tr><td><span class="time-chip">28–30</span></td><td>Pausa activa</td></tr><tr><td><span class="time-chip">30–40</span></td><td>Errores provocados a propósito</td></tr><tr><td><span class="time-chip">40–50</span></td><td>H2 en archivo + perfiles (la promesa cumplida)</td></tr><tr><td><span class="time-chip">50–56</span></td><td>Práctica guiada (Ejercicios)</td></tr><tr><td><span class="time-chip">56–62</span></td><td>Challenge (PDF de evidencia)</td></tr><tr><td><span class="time-chip">62–68</span></td><td>Quiz Final (PDF de evidencia)</td></tr><tr><td><span class="time-chip">68–70</span></td><td>Cierre y evaluación anónima</td></tr></tbody></table>
+    </div></div>
+
+    <div class="callout mb-3">
+      <div class="fw-semibold">Normas rápidas</div>
+      <div class="small-muted">Cámara opcional, micrófono apagado salvo para preguntar. Preguntas en el chat. Quien se atrasa copia del <a href="ejercicios.html">Kit</a> y sigue: nadie se queda sin proyecto funcionando. Regla de oro de hoy: <strong>cuando haya un error largo, lean el último <code>Caused by:</code></strong>.</div>
+    </div>
+
+    <div class="card mb-3"><div class="card-body">
+      <h2 class="h5 section-title">Guion minuto a minuto</h2>
+      <div class="accordion" id="acc">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#c1">
+                    <span class="time-chip me-2">00–05</span> Bienvenida + Quiz (Presaberes)
+                  </button>
+                </h2>
+                <div id="c1" class="accordion-collapse collapse show" data-bs-parent="#acc">
+                  <div class="accordion-body">
+<p><strong>Qué haces:</strong> saludas, abres <code>quiz.html</code> en modo <em>Presaberes</em> y los estudiantes lo resuelven solos (8 preguntas).</p>
+  <p><strong>Guion:</strong> "La semana pasada su formulario ya rechazaba datos malos. Pero hagamos una prueba: si apago la aplicación y la vuelvo a encender, ¿qué pasa con los datos? Hoy respondemos eso."</p>
+  <p class="mb-0"><strong>Ojo:</strong> pide que apunten su puntaje; el PDF del quiz Final cuenta para la Actividad en clase.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c2">
+                    <span class="time-chip me-2">05–14</span> Demo en vivo: la base en memoria que olvida (¡provocada a propósito!)
+                  </button>
+                </h2>
+                <div id="c2" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+<p><strong>Preparación previa:</strong> proyecto <code>taller-jpa</code> de la Biblioteca Comunitaria Semilla ya funcionando con <code>jdbc:h2:mem:biblioteca</code> (Kit de <a href="ejercicios.html">Ejercicios</a>).</p>
+  <ol>
+   <li>Muestra la <strong>lista de la Semana 10</strong> (la <code>List</code> dentro del servicio): registra 2 libros, reinicia, la lista está vacía. Pregunta: "¿cuántos creen que esto se arregla con una base de datos?"</li>
+   <li>Ahora muestra la versión con JPA y <strong>H2 en memoria</strong>: registra 3 libros, abre <code>/h2-console</code> (URL <code>jdbc:h2:mem:biblioteca</code>, usuario <code>sa</code>, sin contraseña) y haz <code>SELECT * FROM LIBRO;</code>. Los libros están ahí.</li>
+   <li><strong>Reinicia la aplicación.</strong> Lista vacía otra vez. Silencio dramático: "Tenemos base de datos y aun así perdimos todo. ¿Por qué?"</li>
+   <li>Señala <code>mem</code> en la URL: "memoria RAM". Anuncia: "Al final de la clase esto estará resuelto."</li>
+  </ol>
+  <div class="callout success mb-2"><div class="small-muted"><strong>Spring Boot DevTools (muéstralo en vivo):</strong> el proyecto ya lo trae como sexta dependencia. Cambia un texto en una plantilla, guarda y refresca el navegador: cambia sin reiniciar. Cambia algo en un <code>.java</code> y guarda: la consola reinicia sola en 1 o 2 segundos. Esto termina con el ciclo "parar y volver a arrancar" de las semanas anteriores. Dos límites: <code>pom.xml</code> y <code>application*.properties</code> siguen requiriendo reinicio manual, y lo que dispara el reinicio es la recompilación (si no pasa nada, usar el botón ▶ Run). <strong>Cuidado con el paso 3:</strong> para esta demo reinicia a mano (<kbd>Ctrl</kbd>+<kbd>C</kbd>), y explica que el reinicio automático también vacía la base en memoria.</div></div>
+  <div class="callout warning mb-0"><div class="small-muted"><strong>Analogía:</strong> H2 en memoria es una pizarra: sirve mientras estás en el salón, pero se borra al salir. H2 en archivo es un cuaderno.</div></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c3">
+                    <span class="time-chip me-2">14–28</span> Concepto central: entidad, repositorio y las dos familias de anotaciones
+                  </button>
+                </h2>
+                <div id="c3" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+<p><strong>Dibuja en la pizarra:</strong> Formulario → Controlador → Servicio → <strong>Repositorio</strong> → Hibernate → Tabla. Solo el repositorio y la entidad son nuevos.</p>
+  <ul>
+   <li><strong>ORM (analogía: traductor):</strong> Hibernate traduce entre objetos Java (<code>Libro</code>) y filas de tabla. Tú hablas Java, la base habla SQL.</li>
+   <li><strong>Entidad:</strong> escribe <code>Libro</code> con <code>@Entity</code>, <code>@Id</code>, <code>@GeneratedValue</code> y constructor vacío. Muestra la tabla que aparece en <code>/h2-console</code> sin haber escrito SQL.</li>
+   <li><strong>Repositorio:</strong> una <em>interfaz</em> de dos líneas que extiende <code>JpaRepository&lt;Libro, Long&gt;</code>. "Ustedes entregan la carta; Spring cocina."</li>
+   <li><strong>Dos familias:</strong> <code>jakarta.persistence.*</code> (cómo se guarda) y <code>jakarta.validation.constraints.*</code> (qué se acepta). Muestra ambas sobre <code>Libro</code>.</li>
+   <li><strong>Métodos derivados:</strong> descompón <code>findByTituloContainingIgnoreCase</code> palabra por palabra.</li>
+  </ul>
+  <p class="mb-0"><strong>Muestra los imports en pantalla</strong>, cada vez que aparezca una anotación nueva (regla del curso).</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c3b">
+                    <span class="time-chip me-2">28–30</span> Pausa activa
+                  </button>
+                </h2>
+                <div id="c3b" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+<p class="mb-0">Pausa breve para descansar, hidratarse y reiniciar el foco. Micro-check en el chat: <em>"¿de qué paquete viene <code>@Entity</code>, y de cuál <code>@NotBlank</code>?"</em> Son dos familias distintas sobre la misma clase: <code>jakarta.persistence</code> y <code>jakarta.validation.constraints</code>.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c4">
+                    <span class="time-chip me-2">30–40</span> Errores provocados a propósito (los que no dan mensajes claros)
+                  </button>
+                </h2>
+                <div id="c4" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+<p>Rompe una cosa, lee el <em>último</em> <code>Caused by:</code> en voz alta, restaura.</p>
+  <table class="table table-sm small">
+   <thead><tr><th>Qué quitas</th><th>Qué ven</th></tr></thead>
+   <tbody>
+    <tr><td><code>@Id</code></td><td><code>No identifier specified for entity</code> (no arranca)</td></tr>
+    <tr><td>Constructor vacío (poniendo uno con parámetros)</td><td><code>No default constructor for entity</code> (al arrancar o al leer, según versión)</td></tr>
+    <tr><td>Dependencia <code>h2</code></td><td><code>Failed to load driver class org.h2.Driver</code></td></tr>
+    <tr><td><code>findById</code> sin <code>.orElseThrow()</code></td><td>Error de compilación: <code>Optional&lt;Libro&gt; cannot be converted to Libro</code></td></tr>
+   </tbody>
+  </table>
+  <p class="small-muted">Recordatorio: en esta semana los reinicios de las pruebas de memoria son <strong>manuales a propósito</strong>; DevTools reiniciaría solo, pero quieres que ellos provoquen el reinicio.</p>
+  <p class="mb-0">Explica <code>Optional</code> como "cajita que puede venir vacía". Avisa: si falta <code>spring-boot-starter-data-jpa</code> los imports de <code>jakarta.persistence</code> se ponen rojos (no compila).</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c5">
+                    <span class="time-chip me-2">40–50</span> Cumplir la promesa: H2 en archivo + perfiles
+                  </button>
+                </h2>
+                <div id="c5" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+<ol>
+   <li>Crea <code>application-dev.properties</code> con <code>jdbc:h2:file:./datos/biblioteca</code> y <code>ddl-auto=update</code>.</li>
+   <li><code>application.properties</code> elige: <code>spring.profiles.active=dev</code>.</li>
+   <li>Registra libros, <strong>reinicia a mano con <kbd>Ctrl</kbd>+<kbd>C</kbd></strong> (DevTools no recarga los <code>application*.properties</code> y, además, la prueba debe ser tuya): siguen ahí. Muestra <code>datos/biblioteca.mv.db</code> y la línea <code>datos/</code> en <code>.gitignore</code>.</li>
+   <li>Muestra <code>application-prod.properties</code> con <code>${DB_URL}</code>, <code>${DB_USER}</code>, <code>${DB_PASSWORD}</code>.</li>
+  </ol>
+  <div class="callout success mb-0"><div class="small-muted"><strong>El mensaje clave:</strong> hoy trabajamos contra H2 en la computadora; en la Semana 14 la misma aplicación se conecta a <strong>Neon</strong> (PostgreSQL en la nube) <em>sin cambiar una sola línea de Java</em>: solo cambia el archivo de configuración del perfil. Render aloja la aplicación, pero la base vive en Neon porque la base gratuita de Render expira.</div></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c6">
+                    <span class="time-chip me-2">50–56</span> Práctica guiada: Ejercicios 1–8 y arranque de la Guía
+                  </button>
+                </h2>
+                <div id="c6" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+<p>Los estudiantes trabajan en <a href="ejercicios.html">Ejercicios</a> con su proyecto <code>taller-jpa</code>. Circula en el chat/salas por los errores más comunes (ver tabla de abajo). Quien termine, empieza <a href="proyecto.html">Proyecto</a> con su repositorio real.</p>
+  <p class="mb-0"><strong>Criterio de la Guía 12 (doble):</strong> (1) funciona contra H2 local y (2) la entidad y el repositorio no necesitan cambios para reconectar a PostgreSQL.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c8">
+                    <span class="time-chip me-2">56–62</span> Challenge (primera evidencia en PDF)
+                  </button>
+                </h2>
+                <div id="c8" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+<p>Los estudiantes abren <a href="challenge.html">Challenge</a>, ambientado en el <strong>Comedor Infantil El Girasol</strong>. Tiene dos pestañas:</p>
+  <ul>
+    <li><strong>Clasifica las piezas:</strong> cada anotación, método o línea de configuración va a su caja (Entidad / Repositorio / Servicio o Controlador / <code>application.properties</code>). Los niveles Medio y Difícil traen piezas trampa que no pertenecen a ninguna caja.</li>
+    <li><strong>Simulador:</strong> recorre el viaje de un <code>save()</code> por las capas y compara los dos escenarios de la semana — con H2 en memoria el contador de filas vuelve a cero tras el reinicio; con H2 en archivo, no.</li>
+  </ul>
+  <p class="mb-0"><strong>Pide explícitamente:</strong> completar al menos el nivel Medio de la primera pestaña, recorrer los dos escenarios del simulador y <strong>exportar el PDF</strong>. Ese PDF es parte de la Actividad en clase — Sesión 12 (0.66 pts).</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c9">
+                    <span class="time-chip me-2">62–68</span> Quiz Final (segunda evidencia en PDF)
+                  </button>
+                </h2>
+                <div id="c9" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+<p>Resolución individual de <a href="quiz.html">Quiz</a> en modo <strong>"Final de clase"</strong>: 12 preguntas sorteadas del banco, con retroalimentación inmediata por pregunta. Recuérdales que <strong>el orden de las opciones se baraja en cada intento</strong>, así que no sirve memorizar posiciones.</p>
+  <p class="mb-0">Al calificarse, exportan el resultado a PDF. Los dos PDF —Quiz Final y Challenge— se suben al aula virtual como evidencia de la <strong>Actividad en clase — Sesión 12 (0.66 pts)</strong>.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c7">
+                    <span class="time-chip me-2">68–70</span> Cierre y evaluación anónima
+                  </button>
+                </h2>
+                <div id="c7" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+<p>Síntesis en una frase, pedida al grupo: <em>"¿por qué <code>mem</code> olvida y <code>file</code> recuerda?"</em>. Ticket de salida en el chat: cada estudiante escribe qué entidad de su institución real será su primera tabla. Recuérdales que los dos PDF (Quiz Final y Challenge) son la Actividad en clase (0.66 pts) y que la <strong>Guía 12 vale 1 pt</strong>, con fecha límite antes de la Sesión 13. La próxima semana es autenticación y roles; la Entrega Parcial 3 es hasta la Semana 14. Comparte el enlace de la <a href="../evaluacion_docente/index.html">evaluación anónima</a>.</p>
+  <p class="mb-0 small-muted">Si el tiempo aprieta, recorta el bloque 50–56 (práctica guiada) y deja los ejercicios como trabajo autónomo: el Ejercicio 8 es el único imprescindible. <strong>No recortes el Challenge ni el Quiz Final</strong>: de ahí salen los dos PDF que califican la Actividad en clase.</p>
+                  </div>
+                </div>
+              </div>
+      </div>
+    </div></div>
+
+    <div class="card mb-3"><div class="card-body">
+      <h2 class="h5 section-title">Errores que verás en las salas</h2>
+      <div class="table-responsive"><table class="table table-sm small mb-0">
+        <thead><tr><th>Síntoma</th><th>Causa probable</th></tr></thead><tbody><tr><td>La aplicación no arranca y el log dice <code>No identifier specified</code></td><td>Falta <code>@Id</code> (o su import)</td></tr><tr><td><code>cannot find symbol: Entity</code></td><td>Falta <code>import jakarta.persistence.Entity;</code> o la dependencia <code>data-jpa</code></td></tr><tr><td>La lista siempre queda vacía tras reiniciar</td><td>URL con <code>mem</code> en lugar de <code>file</code>, o <code>ddl-auto=create</code></td></tr><tr><td><code>Database may be already in use</code></td><td>Hay otra copia corriendo o la consola H2 abierta sobre el mismo archivo: cerrar y reintentar (con DevTools es más fácil arrancar dos veces)</td></tr><tr><td>Guardó y no se reinició</td><td>No hubo recompilación (usar ▶ Run) o cambió <code>pom.xml</code>/<code>application*.properties</code> (reinicio manual)</td></tr><tr><td><code>No property ... found for type Libro</code></td><td>Nombre del método derivado no coincide con un campo</td></tr><tr><td><code>Failed to load driver class org.h2.Driver</code></td><td>Falta la dependencia <code>com.h2database:h2</code></td></tr></tbody></table></div>
+    </div></div>
+
+    <div class="callout warning mb-3">
+      <div class="fw-semibold">Plan B si falla la tecnología</div>
+      <div class="small-muted">Sin Internet para Initializr: entrega el proyecto <code>taller-jpa</code> ya comprimido con los archivos del Kit. Sin VS Code funcionando: proyecta la demo y que los estudiantes sigan el Kit leyendo, haciendo el Ejercicio 8 en casa. Si Maven no descarga, usa el repositorio local del profesor en un USB. Guía completa de instalación: <a href="../Material_Sesion_Clase_1_HTML_18_semanas/instalacion.html">Semana 1</a>.</div>
+    </div>
+
+    <div class="callout success mb-0">
+      <div class="fw-semibold">Sobre Neon y Render (decir en voz alta)</div>
+      <div class="small-muted">Render alojará la aplicación pero su base de datos gratuita expira, por eso la base PostgreSQL vivirá en <strong>Neon</strong>. Hoy: H2 local. Semana 14: misma aplicación, perfil <code>prod</code>, variables de entorno <code>DB_URL</code>, <code>DB_USER</code>, <code>DB_PASSWORD</code>; la URL de Neon necesita <code>?sslmode=require</code>.</div>
+    </div>
+
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Guía docente — Semana 12 · Persistencia de datos con JPA y Spring Data (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

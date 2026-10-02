@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Semana 12 — Persistencia de datos con JPA y Spring Data (18 semanas)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 12 — Persistencia</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-5">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+          <div class="brand-pill mb-3">Semana 12 · Unidad 6a · Persistencia de datos con JPA y Spring Data · 3 de octubre de 2026</div>
+          <h1 class="display-5 fw-bold mb-3">Hoy tus datos dejan de desaparecer <span class="small-muted">(70 min)</span></h1>
+          <p class="lead small-muted mb-4">
+            Desde la Semana 8 se te ha prometido que "los datos se guardan de verdad en la Semana 12". Esa semana es hoy.
+            Hasta ahora tu formulario guardaba en una <strong>lista dentro de la memoria</strong>: al apagar la aplicación,
+            todo se perdía. Hoy conectas tu proyecto a una <strong>base de datos</strong> con <strong>JPA</strong> y
+            <strong>Spring Data</strong>, y terminas la sesión apagando y encendiendo la aplicación para comprobar que
+            <strong>tus registros siguen ahí</strong>. Además estrenas <strong>Spring Boot DevTools</strong>, que recarga la aplicación sola y te ahorra el ciclo de "parar y volver a arrancar" en cada cambio.
+          </p>
+          <div class="d-flex gap-2 flex-wrap">
+            <a class="btn btn-primary btn-lg" href="quiz.html">1. Quiz de Presaberes</a>
+            <a class="btn btn-outline-primary btn-lg" href="clase.html">2. Abrir guía docente</a>
+            <a class="btn btn-outline-dark btn-lg" href="ejercicios.html">3. Abrir ejercicios</a>
+          </div>
+          <div class="mt-4 callout warning">
+            <div class="fw-semibold">Una idea que vale por toda la semana</div>
+            <div class="small-muted">Tú <strong>no</strong> vas a escribir SQL. Describes cómo es un libro (una clase Java con unas anotaciones), y <strong>Hibernate</strong> hace de <strong>traductor</strong> entre tu idioma (objetos Java) y el idioma de la base de datos (tablas y filas). Y Spring Data va un paso más allá: escribe por ti el código que guarda, busca y borra.</div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="card">
+            <div class="card-body">
+              <h2 class="h5 section-title mb-3">Aprendizajes esperados (hoy)</h2>
+              <ul class="mb-0">
+                <li>Conecta la aplicación a una <strong>base de datos relacional</strong>.</li>
+                <li>Define <strong>entidades y repositorios</strong> con Spring Data JPA.</li>
+                <li>Realiza operaciones <strong>CRUD</strong> básicas (crear, leer, actualizar y borrar).</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card mt-3">
+            <div class="card-body">
+              <h2 class="h6 section-title mb-2">Ruta del estudiante (70 min)</h2>
+              <ol class="mb-0 small">
+                <li>Quiz — modo Presaberes (5 min)</li>
+                <li>El problema: datos que se borran + qué es un ORM (10 min)</li>
+                <li>Entidad y repositorio: la magia de la interfaz vacía (15 min)</li>
+                <li>CRUD completo y el misterio de <code>Optional</code> (15 min)</li>
+                <li>Perfiles, H2 en archivo y el reinicio que no borra nada (10 min)</li>
+                <li>Challenge + Quiz Final + cierre (15 min)</li>
+              </ol>
+            </div>
+          </div>
+          <div class="small-muted mt-3">Valores de la semana: <strong>precisión técnica</strong> (entender cada anotación, no solo copiarla) y <strong>visión a futuro</strong> (las decisiones de hoy facilitan el despliegue de la Semana 14).</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <div class="callout mb-4">
+      <div class="fw-semibold">De dónde venimos y a dónde vamos</div>
+      <div class="table-responsive mt-2">
+        <table class="table table-sm small mb-0">
+          <thead><tr><th>Semana</th><th>Qué hace tu aplicación</th><th>Cómo</th></tr></thead>
+          <tbody>
+            <tr><td>10</td><td>Recibe datos de un formulario y los guarda… en una lista en memoria</td><td><code>@Controller</code> + Thymeleaf + <code>@PostMapping</code></td></tr>
+            <tr><td>11</td><td>Revisa los datos antes de guardar y explica qué corregir</td><td>Bean Validation + <code>@Valid</code> + <code>BindingResult</code></td></tr>
+            <tr class="table-primary"><td><strong>12 (hoy)</strong></td><td><strong>Guarda en una base de datos: los registros sobreviven al reinicio</strong></td><td>JPA + Hibernate + <code>JpaRepository</code> + H2 en archivo</td></tr>
+            <tr><td>13</td><td>Pide usuario y contraseña; cada rol ve cosas distintas</td><td>Spring Security</td></tr>
+            <tr><td>14</td><td>Se publica en internet con base de datos en la nube</td><td>Render + <strong>Neon</strong> (PostgreSQL)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout success mb-4">
+      <div class="fw-semibold">🔌 Sobre la base de datos: hoy H2 en tu computadora, en la Semana 14 Neon en la nube</div>
+      <div class="small-muted">
+        Para publicar tu aplicación usaremos <strong>Render</strong> como hosting <em>de la aplicación</em>, pero la
+        <strong>base de datos PostgreSQL vivirá en Neon</strong>. ¿Por qué? Porque la base de datos gratuita de Render
+        es temporal: expira y se borra, y eso destruiría tu proyecto justo antes de la presentación de la Semana 18.
+        El plan gratuito de Neon no expira por fecha; solo se "duerme" por inactividad y despierta sola, sin perder datos.<br />
+        <strong>Hoy trabajas contra H2 en tu computadora; en la Semana 14 la misma aplicación se conecta a Neon
+        <u>sin cambiar una sola línea de Java</u> — solo cambia el archivo de configuración del perfil.</strong>
+        Esa es la razón de ser de los <em>perfiles</em> que creas hoy, y es el <strong>criterio doble</strong> de la Guía 12.
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">Secciones del material</h2>
+    <div class="row g-3">
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <h3 class="h5">1) Quiz</h3>
+              <span class="badge text-bg-warning">Presaberes + Final</span>
+            </div>
+            <p class="small-muted">Un solo quiz con menú desplegable y preguntas al azar sobre entidades, repositorios, <code>Optional</code>, H2 y perfiles.</p>
+            <a class="btn btn-sm btn-primary" href="quiz.html">Ir</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <h3 class="h5">2) Guía Docente</h3>
+              <span class="badge text-bg-primary">70 min</span>
+            </div>
+            <p class="small-muted">Guion minuto a minuto: la demo del reinicio que borra todo, la entidad en vivo, la interfaz vacía que "funciona sola" y el momento en que los datos sobreviven.</p>
+            <a class="btn btn-sm btn-primary" href="clase.html">Ir</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <h3 class="h5">3) Ejercicios + Kit</h3>
+              <span class="badge text-bg-success">Todo el código</span>
+            </div>
+            <p class="small-muted">8 ejercicios en escalera (incluye provocar errores a propósito) y el <strong>Kit de archivos completos</strong>: <code>pom.xml</code>, los tres archivos de perfiles, entidad, repositorio, servicio, controlador y plantillas.</p>
+            <a class="btn btn-sm btn-primary" href="ejercicios.html">Ir</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <h3 class="h5">4) Cheat Sheet</h3>
+              <span class="badge text-bg-secondary">2 pestañas</span>
+            </div>
+            <p class="small-muted">Anotaciones <strong>con su import</strong>, métodos de <code>JpaRepository</code>, errores comunes, y la pestaña "De H2 a Neon" con lo que cambia (y lo que no) en la Semana 14.</p>
+            <a class="btn btn-sm btn-primary" href="cheatsheet.html">Ir</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <h3 class="h5">5) Challenge</h3>
+              <span class="badge text-bg-success">Juego</span>
+            </div>
+            <p class="small-muted">Clasifica piezas en Entidad, Repositorio, Servicio/Controlador y <code>application.properties</code>, y mira en un <strong>simulador</strong> el viaje de un <code>save()</code> con H2 en memoria frente a H2 en archivo.</p>
+            <a class="btn btn-sm btn-primary" href="challenge.html">Ir</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <h3 class="h5">6) Proyecto (Guía 12)</h3>
+              <span class="badge text-bg-dark">Evidencia</span>
+            </div>
+            <p class="small-muted">Convierte el modelo de <strong>tu proyecto real</strong> en una entidad, reemplaza la lista en memoria por un repositorio, levanta el CRUD completo y súbelo a GitHub.</p>
+            <a class="btn btn-sm btn-primary" href="proyecto.html">Ir</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warning mt-4">
+      <div class="fw-semibold">¿Cómo se evalúa esta semana?</div>
+      <div class="small-muted">
+        <strong>Actividad en clase – Sesión 12</strong> (PDF del quiz en modo Final + PDF del challenge, 0.66 pts) y
+        <strong>Entrega Guía 12</strong> (módulo CRUD funcional del proyecto, 1 pt). La Guía tiene un
+        <strong>criterio doble</strong>: (1) funciona contra H2 local y (2) la entidad y el repositorio no requieren
+        cambios de código para reconectarse a PostgreSQL. Esta semana <strong>no tiene Entrega Parcial</strong>: los
+        hitos del proyecto son las Semanas 5, 9, 14 y 17, y el siguiente es la <strong>Entrega Parcial 3 en la Semana 14</strong>.
+      </div>
+    </div>
+
+    <div class="callout success mt-3">
+      <div class="fw-semibold">🔒 Evalúa la sesión (100% anónimo)</div>
+      <div class="small-muted">
+        Al terminar la clase, cuéntanos qué funcionó, qué mejorar y cualquier queja:
+        <a href="../evaluacion_docente/index.html">formulario de evaluación anónima</a>.
+        No se guarda tu nombre, correo ni IP.
+      </div>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted d-flex justify-content-between flex-wrap gap-2">
+      <span>Material Semana 12 — Persistencia de datos con JPA y Spring Data · Formato 18 semanas (70 min por sesión).</span>
+      <span>Curso: Programación I · URL · Sábados 11:10–12:20</span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
