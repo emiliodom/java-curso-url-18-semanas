@@ -21,7 +21,7 @@ documentos oficiales y el enlace a la evaluación anónima de la sesión.
 | --- | --- |
 | [`index.html`](index.html) | Portal del curso: las 18 semanas, cada una activándose al publicarse |
 | [`Nuevo_Programa_18_semanas.md`](Nuevo_Programa_18_semanas.md) | Programa oficial del curso: temario, competencias, evaluación, proyecto |
-| `Material_Sesion_Clase_N_HTML_18_semanas/` | Material interactivo de la semana N: guía docente, ejercicios, quizzes autocalificados, cheat sheet, puente Python→Java, challenge drag & drop y entregable — todo exportable a PDF |
+| `Material_Sesion_Clase_N_HTML_18_semanas/` | Material interactivo de la semana N: hub, guía docente, ejercicios, quiz autocalificado, cheat sheet, challenge drag & drop y proyecto/entregable — todo exportable a PDF. Desde la Semana 6 se usa una plantilla reducida (quiz unificado, proyecto y entregable fusionados, sin puente Python); las semanas con hito de evaluación pueden agregar páginas propias (ver Semana 9) |
 | `PEM en TIC_Sesión de Clase N..._18_semanas.md/.docx` | Documento oficial de la sesión N (formato institucional) |
 | `PEM en TIC_Guía de Aprendizaje N..._18_semanas.md/.docx` | Documento oficial de la guía de aprendizaje N |
 | [`evaluacion_docente/`](evaluacion_docente/) | Formulario 100% anónimo de evaluación del profesor, sugerencias y quejas (todas las sesiones en una sola fuente de datos) + dashboard `/admin` |
@@ -35,7 +35,24 @@ documentos oficiales y el enlace a la evaluación anónima de la sesión.
 - ✅ **Semana 4** — Ramas, colaboración y documentación (1 ago 2026)
 - ✅ **Semana 5** — Patrones de diseño y arquitectura web / MVC (8 ago 2026) — ★ Entrega Parcial 1
 - ✅ **Semana 6** — Arquitectura en capas (15 ago 2026)
-- ⏳ Semanas 7–18 — pendientes (se activan en el portal al publicarse)
+- ✅ **Semana 7** — Entorno de desarrollo y Spring Boot (22 ago 2026)
+- ✅ **Semana 8** — Spring Boot: configuración y primer servicio (29 ago 2026)
+- ✅ **Semana 9** — Hito Parcial: examen parcial y entrega de avance (5 sep 2026) — ★ Entrega Parcial 2, examen de mitad de curso y peer review Ronda 1
+- ✅ **Semana 10** — Rutas, controladores y formularios (19 sep 2026) — Thymeleaf, `@PostMapping` y binding de datos
+- ✅ **Semana 11** — Validación, errores y experiencia de usuario (26 sep 2026) — Bean Validation, mensajes de error y accesibilidad
+- ⏳ Semanas 12–18 — pendientes (se activan en el portal al publicarse)
+
+> **Calendario:** las 18 sesiones no son sábados consecutivos. El **12 de
+> septiembre de 2026 no hubo clase** (semana de independencia), por lo que la
+> Sesión 9 fue el 5 de septiembre y la Sesión 10 saltó al 19. El programa, el
+> portal y el calendario del módulo de evaluación anónima ya contemplan el salto.
+
+> La Semana 9 es la de mayor peso del curso (21.66 pts en cuatro
+> instrumentos) y la única con 9 páginas: agrega `examen.html` y
+> `evaluacion_pares.html`. Su `ejercicios.html` incluye un **Kit de
+> archivos completos** con los 11 archivos del proyecto —cada uno con su
+> ruta, su línea `package` y sus `import`— útil como material de
+> recuperación para cualquier estudiante atrasado.
 
 ## Evaluación anónima de cada sesión
 

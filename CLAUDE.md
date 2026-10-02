@@ -19,6 +19,20 @@ competencias, evaluación, referencias) está en `Nuevo_Programa_18_semanas.md`
 — **léelo primero** al construir una semana nueva, es la fuente de verdad del
 tema, aprendizajes esperados, habilidades y valores de esa semana.
 
+**Excepción vigente desde la Semana 12:** para las Semanas 12–18 la fuente de
+verdad es `Nuevo_Programa_18_semanas-DB con Neon.md`, no el archivo original.
+El profesor cambió el destino de la base de datos: **Render hospeda la
+aplicación, pero la base de datos PostgreSQL vive en Neon**, porque la base
+gratuita de Render es temporal y se elimina, lo que destruiría el proyecto
+antes de la presentación de la Semana 18. El free tier de Neon no expira por
+fecha; solo pausa el cómputo por inactividad y despierta solo, sin pérdida de
+datos. Consecuencias: la Semana 12 siembra los perfiles de Spring (`dev` con
+H2 local, `prod` con placeholders `${DB_URL}`/`${DB_USER}`/`${DB_PASSWORD}`),
+`@GeneratedValue(strategy = GenerationType.IDENTITY)` se elige justamente
+porque funciona igual en H2 y en PostgreSQL, y la Semana 14 conecta Neon de
+verdad (`sslmode=require` obligatorio) con las credenciales como variables de
+entorno en Render, nunca en GitHub.
+
 Proyecto que desarrollan los estudiantes durante el curso: una app web
 (Java + Spring Boot) para el registro y gestión de una entidad sin fines de
 lucro (guardería, casa hogar, dispensario comunitario).
@@ -88,7 +102,223 @@ portal.
   Group/Artifact basados en su Ficha del Proyecto) y lo sube a la rama
   `development` de su repositorio real — es la base que crecerá hasta la
   Entrega Parcial 2 (Semana 9). Sin hito de Entrega Parcial esta semana.
-- **Semanas 8–18** — pendientes, mismo patrón reducido descrito en este archivo.
+- **Semana 8** (Spring Boot: configuración y primer servicio) — completa.
+  El proyecto de la Semana 7 arrancaba pero solo mostraba la Whitelabel
+  Error Page; esta semana el estudiante escribe su primer
+  `@RestController` con rutas `@GetMapping`/`@RequestParam`, las prueba en
+  el navegador y con Postman (opcional; toda la sesión usa solo GET, así
+  que el navegador basta), y construye un **formulario web sencillo**:
+  HTML estático en `src/main/resources/static/index.html` con JavaScript
+  puro (`fetch`) que consulta el endpoint y muestra la respuesta sin
+  recargar la página. Deliberadamente **sin guardar ningún dato** —
+  `@PostMapping`/persistencia se explican formalmente cuando toque su
+  tema (Thymeleaf en la Semana 10, JPA en la Semana 12); el `cheatsheet.html`
+  agrega una tercera pestaña ("🎁 Anexo: estilo y base de datos") con un
+  adelanto explícitamente marcado como "no lo hagas hoy" de cómo se vería
+  ese mismo formulario con CSS (sí realizable ya) y con guardado real vía
+  `@PostMapping`+JPA (todavía no). El `challenge.html` reutiliza dos
+  patrones ya existentes en vez de inventar uno nuevo: la secuencia
+  `dd-slot`/`dd-piece` (dominio nuevo: Ludoteca Los Soñadores) y el
+  simulador de capas iluminadas de la Semana 6 (`.layer-map`/`.sim-log`),
+  reetiquetado para mostrar el recorrido de una petición GET
+  (Formulario → DispatcherServlet → `@RestController`) en vez del flujo
+  MVC. `proyecto.html` aplica el mismo controlador+formulario al proyecto
+  real del estudiante (iniciado en la Semana 7) y lo sube a GitHub. Sin
+  hito de Entrega Parcial esta semana — el siguiente es la Entrega
+  Parcial 2 en la Semana 9.
+- **Semana 9** (Hito Parcial: examen parcial y entrega de avance) — completa.
+  **La semana con más peso del curso: 21.66 pts** repartidos en 4
+  instrumentos distintos (Actividad en clase 0.66 + Examen parcial 15 +
+  Evaluación entre pares Ronda 1 5 + Guía 9 1 + Entrega Parcial 2 5).
+  Sin contenido nuevo: repasa e integra las Semanas 1–8. Es la **primera
+  semana con 9 páginas** — a la plantilla reducida se le suman
+  `examen.html` y `evaluacion_pares.html` (ver "Páginas de evaluación
+  adicionales" más abajo). Novedades reutilizables que introdujo:
+  - **Kit de archivos completos** (`ejercicios.html`, 2ª pestaña): los 11
+    archivos del proyecto **enteros**, cada uno con su ruta exacta, su
+    línea `package`, todos sus `import` y una tabla de "qué hace cada
+    import / qué error aparece si falta". Nació de un señalamiento
+    explícito del profesor: en las Semanas 7–8 los fragmentos mostraban
+    anotaciones sueltas sin decir el paquete ni los imports ni en qué
+    carpeta iba el archivo. **Replicar este kit en semanas futuras con
+    código nuevo.**
+  - **Pestaña "Anatomía de un archivo Java"** (`cheatsheet.html`): regla
+    "carpeta = paquete", y la distinción entre el error que no compila y
+    el error silencioso (clase fuera del paquete base → compila pero
+    Spring nunca la registra → 404 sin mensaje).
+  - **Barajado de opciones en el quiz** (`quiz.html`): en el banco la
+    respuesta correcta se escribe siempre como `'a'` (fácil de mantener),
+    pero un envoltorio local sobre `renderQuiz` baraja las opciones antes
+    de cada render. Sin esto, la correcta siempre aparecía de primera —
+    problema que arrastran los bancos de las Semanas 1–8, donde el motor
+    las muestra en el orden escrito. `quiz.js` sigue sin modificarse.
+  - **Challenge con dos motores en una misma página**: clasificación
+    (cajas, S5) + secuencia (slots numerados, S1–S4), con las funciones y
+    el estado namespaced por sufijo (`loadLevelC`/`verifyC` vs.
+    `loadLevelS`/`verifyS`) y `basePiece()` compartida. Los handlers de
+    drop filtran por `dataset.zone` / `dataset.cat` para que una pieza no
+    se pueda soltar en el tablero de la otra pestaña.
+  - Dominios: ejercicios/clase/cheatsheet = Banco de Alimentos San Miguel
+    (proyecto de práctica `repaso-spring`); challenge = Escuela de Música
+    Clave de Sol; proyecto = el proyecto real del estudiante.
+- **Semana 10** (Unidad 5a: Rutas, controladores y formularios) — completa.
+  Cumple la promesa abierta desde la Semana 8: **por fin se guardan los
+  datos del formulario**. Introduce `@Controller` (devuelve el nombre de una
+  plantilla) frente al `@RestController` ya conocido (devuelve datos) —la
+  confusión central de la semana, que `clase.html` enseña **provocándola a
+  propósito** en vivo—, Thymeleaf (dependencia nueva + carpeta
+  `templates/` frente a `static/`), `@PostMapping` con `@ModelAttribute`
+  (binding), el patrón **guardar → redirigir → mostrar**, `th:each` y
+  `@PathVariable`. Alcance acotado: se guarda **en memoria** (lista dentro
+  del `@Service`), se pierde al reiniciar, y eso se dice de frente en todo
+  el material — validación es Semana 11 y base de datos Semana 12.
+  Replica los dos patrones de la S9: **Kit de archivos completos** (9
+  archivos con ruta, `package` e `import`) y **barajado de opciones** en el
+  quiz. El `challenge.html` combina clasificación de archivos
+  (`templates/` vs `static/` vs paquetes Java) con el simulador de capas
+  iluminadas reetiquetado para el ciclo POST/Redirect/GET, con un contador
+  visible que muestra el registro **duplicándose** en el escenario sin
+  `redirect`. Dominios: ejercicios/clase/cheatsheet = Escuela de Fútbol Los
+  Cerritos (`taller-formularios`, entidad `Jugador`); challenge = Huerto
+  Comunitario La Cosecha; proyecto = el proyecto real del estudiante.
+  **Erratas del programa confirmadas por el profesor** para esta fila: dice
+  "Hito Parcial" (la 4.2 **no** asigna Entrega Parcial a la Semana 10; los
+  hitos son 5, 9, 14 y 17) y "Sesión presencial 9" (es la 10). El material
+  y los documentos oficiales usan los datos corregidos.
+- **Semana 11** (Unidad 5b: Validación, errores y experiencia de usuario) —
+  completa. Continúa directamente el formulario de la Semana 10, que
+  guardaba cualquier cosa. Introduce **Bean Validation**
+  (`jakarta.validation.constraints`: `@NotBlank`, `@NotNull`, `@Size`,
+  `@Min`, `@Max`, `@Email`, `@Pattern`), `@Valid` + `BindingResult` en el
+  controlador, mensajes con `th:errors`/`th:errorclass`/`#fields`,
+  accesibilidad básica (`label` asociado, `aria-describedby`,
+  `role="alert"`, foco visible, no comunicar solo con color) y una página de
+  error propia (`templates/error.html`, que Spring Boot toma sola). Los
+  datos siguen **en memoria**; JPA es la Semana 12. A petición explícita del
+  profesor, **cada anotación aparece siempre con su paquete completo**: el
+  Kit abre con una tabla "anotación → import completo".
+  Los tres puntos que el material enseña **provocando el error a propósito**,
+  porque ninguno da un mensaje claro:
+  - **Falta la dependencia `spring-boot-starter-validation`** → las
+    anotaciones se ignoran en silencio (compila, arranca, sigue guardando
+    basura). Es el fallo más difícil de diagnosticar de la semana.
+  - **Campo numérico declarado `int`** → la casilla vacía produce un
+    `typeMismatch` en inglés *antes* de que corran las reglas. En
+    formularios siempre `Integer`/`Long`/`Double`.
+  - **`BindingResult` mal colocado** → debe ir *inmediatamente después* del
+    objeto validado; con un parámetro en medio, la aplicación truena.
+  Además fija la **excepción a la regla del redirect de la Semana 10**:
+  cuando hay errores se devuelve la plantilla (no `redirect`), porque el
+  redirect borraría los mensajes y lo que el usuario escribió — y eso es
+  justo lo que evalúa la rúbrica de la Guía 11.
+  Precisiones que no suelen estar en los tutoriales y que sí causan errores
+  reales: es **`jakarta`, no `javax`** (Spring Boot 3); **`@Email` acepta el
+  campo vacío** (va con `@NotBlank`); **`@Pattern` sí rechaza la cadena
+  vacía** (un campo opcional necesita permitir el vacío en el patrón).
+  Dominios: ejercicios/clase/cheatsheet = Escuela de Fútbol Los Cerritos
+  (continúa `taller-formularios`); challenge = Centro de Salud Buena Vida;
+  proyecto = el proyecto real del estudiante. Sin hito de Entrega Parcial.
+- **Semana 12** (Unidad 6a: Persistencia de datos con JPA y Spring Data) —
+  completa. **La semana prometida desde la Semana 8:** hasta aquí los datos
+  vivían en una `List` dentro del `@Service` y se perdían al apagar la app;
+  esta semana sobreviven al reinicio. Introduce qué resuelve un ORM
+  (Hibernate traduce objetos ↔ filas), entidades (`@Entity`, `@Id`,
+  `@GeneratedValue(strategy = GenerationType.IDENTITY)`, `@Column`),
+  repositorios (`JpaRepository` como interfaz vacía que Spring implementa en
+  el arranque, más métodos derivados por nombre), CRUD completo y la consola
+  de H2 (`/h2-console`) para ver la tabla real. Siembra además los
+  **perfiles de Spring** de cara al despliegue en Neon (ver la excepción al
+  inicio de este archivo).
+  Los puntos que el material enseña **provocando el error a propósito**:
+  - **H2 en memoria vs. H2 en archivo.** `jdbc:h2:mem:` sigue olvidando; la
+    semana termina con `jdbc:h2:file:./datos/biblioteca` (y `datos/` en
+    `.gitignore`). Es el momento emocional de la sesión.
+  - **Trampa silenciosa:** `ddl-auto=create` reconstruye la tabla vacía en
+    cada arranque **aunque** la URL apunte a un archivo. Debe ser `update`.
+  - Falta `@Id` (`No identifier specified for entity`), falta el constructor
+    vacío, falta el driver `com.h2database:h2` o la dependencia
+    `spring-boot-starter-data-jpa`, método derivado mal escrito
+    (`No property xxx found for type`), y `findById` devolviendo
+    `Optional<T>` en vez de `T` (`.orElseThrow()`).
+  Advierte que sobre la misma clase **conviven dos familias de anotaciones**:
+  `jakarta.persistence` (cómo se guarda) y `jakarta.validation.constraints`
+  de la Semana 11 (qué se acepta). Replica el **Kit de archivos completos**
+  (12 archivos) y el **barajado de opciones** del quiz. El `challenge.html`
+  combina clasificación en 4 cajas (Entidad / Repositorio / Servicio o
+  Controlador / `application.properties`) con el simulador de capas
+  reetiquetado para el viaje de un `save()`, con un contador de filas que
+  **vuelve a cero** en el escenario de base en memoria. Dominios:
+  ejercicios/clase/cheatsheet = Biblioteca Comunitaria Semilla
+  (`taller-jpa`, entidad `Libro`); challenge = Comedor Infantil El Girasol
+  (entidad `Donacion`); proyecto = el proyecto real del estudiante. Sin hito
+  de Entrega Parcial — el siguiente es la Entrega Parcial 3 en la Semana 14.
+  **Primera semana con `spring-boot-devtools`** (recarga automática), a
+  petición explícita del profesor: nunca se había enseñado y la Semana 12
+  pedía más reinicios manuales que ninguna otra. No se retroactivó a las
+  Semanas 7–11 (esas sesiones ya ocurrieron). Tres precisiones que el
+  material debe repetir en semanas futuras, porque son la fuente de las
+  preguntas: (1) lo que dispara el reinicio es la **recompilación**, no el
+  guardado — si se corre desde la terminal con `./mvnw spring-boot:run` y
+  VS Code no recompila, hay que arrancar con el botón ▶ Run; (2) las
+  plantillas Thymeleaf y lo de `static/` **no reinician nada**, basta
+  refrescar el navegador (DevTools apaga la caché de Thymeleaf); (3)
+  `pom.xml` y los `application*.properties` **siguen exigiendo reinicio
+  manual**. La dependencia va con `<optional>true</optional>`, así que se
+  desactiva sola en el jar empaquetado de la Semana 14. Excepción
+  pedagógica deliberada: en los Ejercicios 4 y 8 el material pide un
+  apagado y encendido **a mano**, porque ahí el reinicio es la prueba y no
+  debe quedar como efecto secundario de DevTools.
+- **Semanas 13–18** — pendientes, mismo patrón reducido descrito en este archivo.
+
+### Calendario real del curso (ojo con los saltos)
+
+Las 18 sesiones **no son 18 sábados consecutivos**. El sábado **12 de
+septiembre de 2026 no hay clase** (semana de independencia), así que la
+Sesión 9 es el 5 de septiembre y la Sesión 10 salta al **19 de septiembre**.
+Ese salto ya está reflejado en los tres lugares que dependen de él y deben
+mantenerse sincronizados:
+
+- `Nuevo_Programa_18_semanas.md` (fechas por semana),
+- el arreglo `WEEKS` del portal raíz (campo `fecha`),
+- el arreglo `SESSION_SATURDAYS`, **duplicado** en `index.html` y en
+  `evaluacion_docente/index.html` — si cambian las fechas hay que editarlo
+  en los dos archivos o el timer de la evaluación anónima y la
+  preselección de semana quedan desfasados.
+
+### Páginas de evaluación adicionales (patrón desde Semana 9)
+
+Cuando la sección 4.2 del programa asigna a una semana un instrumento con
+**rúbrica propia que no cabe en las páginas existentes**, ese instrumento
+recibe su propia página, se agrega al navbar de las 9 páginas de la semana
+y como tarjeta en su `index.html`:
+
+- **`examen.html`** (Semanas 9 y, previsiblemente, 18): **100% opción
+  múltiple, autocalificable, 20 preguntas en 20 minutos, máximo 2 intentos
+  por carné** (decisión explícita del profesor: la sesión solo tiene 20
+  minutos para el examen). Tres secciones: (1) conceptos generales —
+  GitHub, qué es Java y cómo se ejecuta, qué aporta la librería web de
+  Spring Boot, qué es un endpoint, ambientes de desarrollo/producción y por
+  qué no se toca producción "en caliente" (10 × 0.6); (2) identificar 5
+  errores obvios en un archivo Java, uno por línea señalada (5 × 0.8);
+  (3) estructura mínima de archivos para que un endpoint responda
+  (5 × 1.0). Total 15 pts. Incluye cronómetro con autoentrega al llegar a
+  cero y compromiso de honestidad académica.
+  **La calificación va en el servidor** (módulo `examen_parcial/`, ver
+  abajo): con un examen autocalificable de 15 pts, la clave no puede vivir
+  en el HTML. Al estudiante se le dice si acertó cada pregunta pero **nunca
+  cuál era la correcta**, para que el segundo intento siga siendo examen.
+  Ojo al editar el banco: **la letra correcta debe variar entre preguntas**
+  — el `value` de cada opción sí llega al DOM, así que "siempre la a" se
+  saca inspeccionando la página (error que cometí y corregí en la S9).
+- **`evaluacion_pares.html`** (Semanas 9 y 18, las 2 rondas de peer
+  review): rúbrica compartida de 5 criterios de 1 pt con descriptores
+  0 / 0.5 / 1, más "2 fortalezas + 2 sugerencias" y una tabla de ejemplos
+  de comentario inútil vs. accionable. Regla pedagógica clave: **se
+  califica la calidad de la evaluación que el estudiante entrega**, no el
+  estado del proyecto que le tocó revisar (así quien va atrasado con su
+  propio proyecto igual puede obtener los 5 pts). Requiere que el docente
+  prepare las parejas cruzadas **antes** de la sesión y que cada
+  estudiante lleve el enlace de su repositorio.
 
 ### Cuando el tema de la semana no es sintaxis Java (ej. Git, MVC, despliegue)
 
@@ -421,6 +651,32 @@ confundir con la tarjeta/página `proyecto.html` de cada semana, que es la
 guía paso a paso semanal). Si se agrega a una semana nueva, replicar el
 mismo `<li>` al final del navbar de esa semana. No se ha retro-agregado a
 las Semanas 1–4 (decisión explícita: portal + semana vigente en adelante).
+
+## Módulo `examen_parcial/` (backend del examen, desde Semana 9)
+
+PHP puro sin base de datos, mismo patrón que `evaluacion_docente/` (pensado
+para Hostinger). Existe porque el examen es **autocalificable y vale 15 pts**:
+la clave de respuestas no puede estar en el HTML.
+
+- `examen_datos.php` — **fuente única**: preguntas, opciones y clave. Es el
+  único archivo que se edita para cambiar el examen; `verificar.php` y
+  `calificar.php` lo leen, así que nunca se desincronizan.
+- `verificar.php` — `POST {carne, nombre}`: valida intentos disponibles y
+  devuelve el examen **sin** el campo `correcta`, con las opciones barajadas
+  por estudiante (el id de cada opción se conserva, así "la respuesta es la
+  B" no significa nada entre compañeros).
+- `calificar.php` — califica del lado del servidor, guarda el intento y
+  **aplica el límite de 2 intentos ahí** (manipular la página no sirve).
+- `comun.php` (almacén con `flock`, normalización de carné), `config.php`
+  (clave admin, `INTENTOS_MAXIMOS`, `NOTA_QUE_CUENTA`), `data/intentos.json`
+  + `.htaccess`, y `admin/` con panel por carné y descarga CSV/JSON.
+- **Requiere despliegue antes de la sesión**: si el módulo no está publicado,
+  `examen.html` avisa que no hay conexión y nadie puede resolver el examen.
+  Probar en local con `php -S 127.0.0.1:8000` desde la raíz del repo —
+  abrir el HTML como `file://` no funciona.
+- Al escribir CSV usar siempre `fputcsv($h, $campos, ',', '"', '')` con los
+  cinco argumentos: desde PHP 8.4 omitirlos imprime un *Deprecated* dentro
+  del propio archivo y lo deja corrupto.
 
 ## Módulo `evaluacion_docente/`
 
