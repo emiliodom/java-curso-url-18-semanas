@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cheat Sheet — Semana 10 (Thymeleaf y formularios)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 10 — Formularios</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link active" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Cheat Sheet · Semana 10 · Thymeleaf y formularios</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Referencia rápida — sintaxis, circuito y errores</h1>
+          <div class="small-muted">Tres pestañas: la sintaxis que se usa hoy, el circuito completo de un formulario explicado paso a paso, y los errores de esta semana (que son pocos y muy reconocibles).</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <ul class="nav nav-tabs mb-4 no-print" id="cheatTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="tab-sintaxis-btn" data-bs-toggle="tab" data-bs-target="#tab-sintaxis" type="button" role="tab">📘 Sintaxis de hoy</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-circuito-btn" data-bs-toggle="tab" data-bs-target="#tab-circuito" type="button" role="tab">🔄 El circuito del formulario</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-errores-btn" data-bs-toggle="tab" data-bs-target="#tab-errores" type="button" role="tab">🧯 Errores frecuentes</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="cheatTabsContent">
+
+      <!-- ===== TAB 1 ===== -->
+      <div class="tab-pane fade show active" id="tab-sintaxis" role="tabpanel">
+
+        <h2 class="h4 section-title mb-3" id="sinA">A. Las anotaciones de Java</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-sm small mb-3">
+                <thead><tr><th>Anotación</th><th>Qué hace</th><th>Ejemplo</th></tr></thead>
+                <tbody>
+                  <tr><td><code>@Controller</code></td><td>Marca la clase: sus métodos devuelven el <strong>nombre de una plantilla</strong></td><td><code>@Controller</code></td></tr>
+                  <tr><td><code>@GetMapping</code></td><td>Atiende visitas (mostrar algo)</td><td><code>@GetMapping("/jugadores")</code></td></tr>
+                  <tr><td><code>@PostMapping</code></td><td>Atiende envíos de formulario (guardar algo)</td><td><code>@PostMapping("/jugadores")</code></td></tr>
+                  <tr><td><code>@ModelAttribute</code></td><td>Convierte los campos del formulario en un objeto Java</td><td><code>@ModelAttribute Jugador jugador</code></td></tr>
+                  <tr><td><code>@PathVariable</code></td><td>Lee un valor incrustado en la ruta</td><td><code>@GetMapping("/jugadores/{numero}")</code></td></tr>
+                  <tr><td><code>Model</code></td><td>El "maletín" para enviarle datos a la plantilla</td><td><code>model.addAttribute("total", 5);</code></td></tr>
+                  <tr><td><code>"redirect:/ruta"</code></td><td>En vez de mostrar una plantilla, manda al navegador a otra ruta</td><td><code>return "redirect:/jugadores";</code></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="callout mb-0">
+              <div class="fw-semibold">La confusión número uno: <code>@Controller</code> vs <code>@RestController</code></div>
+              <div class="table-responsive mt-2">
+                <table class="table table-sm small mb-0">
+                  <thead><tr><th></th><th><code>@RestController</code></th><th><code>@Controller</code></th></tr></thead>
+                  <tbody>
+                    <tr><td><code>return "lista";</code> produce</td><td>la palabra <em>lista</em> en pantalla</td><td>la página <code>templates/lista.html</code></td></tr>
+                    <tr><td>Se usó en</td><td>Semanas 8 y 9</td><td>Esta semana</td></tr>
+                    <tr><td>Sirve para</td><td>Devolver datos (APIs)</td><td>Devolver páginas web</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="sinB">B. Los atributos de Thymeleaf</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-sm small mb-3">
+                <thead><tr><th>Atributo</th><th>Qué hace</th><th>Ejemplo</th></tr></thead>
+                <tbody>
+                  <tr><td><code>th:text</code></td><td>Reemplaza el contenido de la etiqueta con un dato</td><td><code>&lt;span th:text="${total}"&gt;0&lt;/span&gt;</code></td></tr>
+                  <tr><td><code>th:each</code></td><td>Repite la etiqueta una vez por cada elemento de una lista</td><td><code>th:each="j : ${jugadores}"</code></td></tr>
+                  <tr><td><code>th:if</code></td><td>Muestra la etiqueta solo si se cumple la condición</td><td><code>th:if="${total == 0}"</code></td></tr>
+                  <tr><td><code>th:href</code></td><td>Construye un enlace</td><td><code>th:href="@{/jugadores}"</code></td></tr>
+                  <tr><td><code>th:action</code></td><td>Indica a qué ruta se envía el formulario</td><td><code>th:action="@{/jugadores}"</code></td></tr>
+                  <tr><td><code>th:object</code></td><td>Dice qué objeto llena este formulario</td><td><code>th:object="${jugador}"</code></td></tr>
+                  <tr><td><code>th:field</code></td><td>Conecta una casilla con un atributo del objeto</td><td><code>th:field="*{nombre}"</code></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="callout warning mb-0">
+              <div class="fw-semibold">Los tres símbolos que hay que distinguir</div>
+              <div class="small-muted">
+                <code>${...}</code> → una variable que mandó el controlador con <code>model.addAttribute</code>.<br />
+                <code>*{...}</code> → un atributo <strong>dentro</strong> del objeto declarado en <code>th:object</code> (solo se usa en formularios).<br />
+                <code>@{...}</code> → una <strong>dirección</strong> (URL). Úsalo siempre para enlaces y acciones de formulario.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="sinC">C. Las dos carpetas</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-sm small mb-0">
+                <thead><tr><th></th><th><code>src/main/resources/templates/</code></th><th><code>src/main/resources/static/</code></th></tr></thead>
+                <tbody>
+                  <tr><td>Qué guarda</td><td>Plantillas <code>.html</code> con atributos <code>th:</code></td><td>CSS, imágenes, JavaScript</td></tr>
+                  <tr><td>Quién la procesa</td><td>Thymeleaf, en el servidor</td><td>Nadie: se entrega tal cual</td></tr>
+                  <tr><td>¿Tiene URL propia?</td><td><strong>No</strong>, se llega vía <code>@Controller</code></td><td>Sí (<code>/estilos.css</code>)</td></tr>
+                  <tr><td>Si te equivocas de carpeta</td><td>La página se descarga con las etiquetas <code>th:</code> sin procesar</td><td>El CSS no carga (404)</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="sinD">D. Qué SÍ toca hoy y qué NO</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="callout success mb-0">
+                  <div class="fw-semibold">✅ Semana 10 (hoy)</div>
+                  <div class="small-muted"><code>@Controller</code>, plantillas Thymeleaf, formularios con <code>th:object</code>/<code>th:field</code>, <code>@PostMapping</code> con <code>@ModelAttribute</code>, listados con <code>th:each</code>, rutas parametrizadas y redirecciones. Los datos se guardan <strong>en memoria</strong>.</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="callout warning mb-0">
+                  <div class="fw-semibold">⏭ Todavía no</div>
+                  <div class="small-muted">Validar los datos y mostrar mensajes de error (Semana 11) · guardar en base de datos con JPA para que sobrevivan al reinicio (Semana 12) · editar y borrar registros (CRUD completo, Semana 13).</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ===== TAB 2 ===== -->
+      <div class="tab-pane fade" id="tab-circuito" role="tabpanel">
+
+        <div class="callout mb-4">
+          <div class="fw-semibold">Un formulario son siempre dos viajes, no uno</div>
+          <div class="small-muted">Es lo que más cuesta al inicio: no hay "una página de formulario", hay <strong>una ruta que lo muestra</strong> (GET) y <strong>otra que lo recibe</strong> (POST). Si tienes clara esa separación, todo lo demás encaja.</div>
+        </div>
+
+        <h2 class="h4 section-title mb-3">Los 6 pasos del circuito completo</h2>
+
+        <div class="card mb-3">
+          <div class="card-body">
+            <h3 class="h6 fw-bold">Paso 1 — El usuario pide el formulario <span class="badge text-bg-primary">GET</span></h3>
+            <p class="small-muted mb-2">Visita <code>/jugadores/nuevo</code>. El controlador prepara un objeto vacío y devuelve el nombre de la plantilla.</p>
+            <pre><code>@GetMapping("/jugadores/nuevo")
+public String mostrarFormulario(Model model) {
+    model.addAttribute("jugador", new Jugador());   // ficha en blanco
+    return "formulario";                            // templates/formulario.html
+}</code></pre>
+          </div>
+        </div>
+
+        <div class="card mb-3">
+          <div class="card-body">
+            <h3 class="h6 fw-bold">Paso 2 — Thymeleaf arma el HTML</h3>
+            <p class="small-muted mb-2">El motor lee la plantilla, reemplaza los <code>th:</code> por HTML normal y lo envía al navegador. El usuario nunca ve un atributo <code>th:</code>.</p>
+            <pre><code>&lt;form th:action="@{/jugadores}" th:object="${jugador}" method="post"&gt;
+    &lt;input type="text" th:field="*{nombre}" /&gt;
+&lt;/form&gt;
+
+&lt;!-- lo que realmente le llega al navegador: --&gt;
+&lt;form action="/jugadores" method="post"&gt;
+    &lt;input type="text" id="nombre" name="nombre" value="" /&gt;
+&lt;/form&gt;</code></pre>
+            <div class="small-muted"><code>th:field</code> genera solo tres cosas: el <code>id</code>, el <code>name</code> y el <code>value</code>. Ese <code>name="nombre"</code> es la clave de todo lo que viene después.</div>
+          </div>
+        </div>
+
+        <div class="card mb-3">
+          <div class="card-body">
+            <h3 class="h6 fw-bold">Paso 3 — El usuario envía <span class="badge text-bg-danger">POST</span></h3>
+            <p class="small-muted mb-2">Al pulsar "Guardar", el navegador manda los datos a la ruta del <code>th:action</code>, con el método <code>post</code>:</p>
+            <pre><code>POST /jugadores
+nombre=Ana&amp;edad=12&amp;posicion=Delantero</code></pre>
+            <div class="small-muted">A diferencia del GET de la Semana 8, los datos <strong>no</strong> viajan en la barra de direcciones: van dentro de la petición. Por eso un POST no se puede probar escribiendo una URL en el navegador.</div>
+          </div>
+        </div>
+
+        <div class="card mb-3">
+          <div class="card-body">
+            <h3 class="h6 fw-bold">Paso 4 — Spring convierte los datos en un objeto (binding)</h3>
+            <pre><code>@PostMapping("/jugadores")
+public String registrarJugador(@ModelAttribute Jugador jugador) { ... }</code></pre>
+            <p class="small-muted mb-2">Spring hace exactamente esto, por dentro:</p>
+            <pre><code>Jugador jugador = new Jugador();      // ← necesita el constructor vacío
+jugador.setNombre("Ana");             // ← necesita los setters
+jugador.setEdad(12);
+jugador.setPosicion("Delantero");</code></pre>
+            <div class="callout danger mb-0">
+              <div class="fw-semibold">Por eso el modelo necesita constructor vacío y setters</div>
+              <div class="small-muted">Si falta el constructor vacío, la aplicación falla al arrancar la petición. Si faltan los setters, el objeto llega <strong>vacío y sin ningún mensaje de error</strong>: se guarda un registro en blanco. Es el error más difícil de diagnosticar de la semana.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-3">
+          <div class="card-body">
+            <h3 class="h6 fw-bold">Paso 5 — El servicio guarda</h3>
+            <pre><code>jugadorService.guardar(jugador);   // lo agrega a la lista en memoria</code></pre>
+            <div class="small-muted">El controlador no guarda: <strong>delega</strong> en el servicio, igual que en la Semana 9. Cada capa hace lo suyo.</div>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h3 class="h6 fw-bold">Paso 6 — Redirigir, no mostrar</h3>
+            <pre><code>return "redirect:/jugadores";   // NO devuelve una plantilla</code></pre>
+            <div class="callout warning mb-0">
+              <div class="fw-semibold">Por qué se redirige después de guardar</div>
+              <div class="small-muted">
+                Si en vez de redirigir devolvieras <code>"lista"</code>, la página se vería bien… pero la dirección
+                del navegador seguiría siendo el <strong>POST</strong>. Al pulsar F5, el navegador vuelve a enviar el
+                formulario y <strong>guarda el registro otra vez</strong>. Redirigiendo, el navegador hace un GET
+                normal a <code>/jugadores</code> y recargar ya no duplica nada. Se le llama patrón
+                <em>POST → Redirect → GET</em>, y el <a href="challenge.html">Challenge</a> lo simula.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout success">
+          <div class="fw-semibold">El circuito, en una frase</div>
+          <div class="small-muted">GET muestra la ficha en blanco → Thymeleaf la convierte en HTML → el usuario la envía → <code>@ModelAttribute</code> la vuelve un objeto Java → el servicio lo guarda → redirigimos para que recargar sea inofensivo.</div>
+        </div>
+
+      </div>
+
+      <!-- ===== TAB 3 ===== -->
+      <div class="tab-pane fade" id="tab-errores" role="tabpanel">
+
+        <div class="callout mb-4">
+          <div class="fw-semibold">Cómo usar esta tabla</div>
+          <div class="small-muted">Los errores marcados con 🔇 <strong>no muestran ningún mensaje</strong>: la aplicación funciona pero hace algo distinto de lo que esperabas. Son los que más tiempo hacen perder, así que revísalos primero cuando "todo parece bien".</div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h2 class="h5 section-title mb-3">Errores de plantillas y rutas</h2>
+            <div class="table-responsive">
+              <table class="table table-sm small mb-0">
+                <thead><tr><th style="width:34%">Mensaje o síntoma</th><th>Qué significa</th><th>Cómo se arregla</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><code>Error resolving template [formulario], template might not exist</code></td>
+                    <td>El nombre que devuelve el método no coincide con ningún archivo de <code>templates/</code></td>
+                    <td>Compara letra por letra. Se escribe <strong>sin</strong> <code>.html</code> y sin barra inicial: <code>return "formulario";</code></td>
+                  </tr>
+                  <tr>
+                    <td>🔇 El navegador muestra la palabra <em>formulario</em> como texto</td>
+                    <td>La clase quedó anotada con <code>@RestController</code></td>
+                    <td>Cámbiala a <code>@Controller</code> y ajusta el <code>import</code> a <code>org.springframework.stereotype.Controller</code>.</td>
+                  </tr>
+                  <tr>
+                    <td>🔇 La página se ve "en crudo", con los <code>th:</code> visibles o sin datos</td>
+                    <td>La plantilla quedó en <code>static/</code> en vez de <code>templates/</code></td>
+                    <td>Muévela a <code>src/main/resources/templates/</code>.</td>
+                  </tr>
+                  <tr>
+                    <td><code>Neither BindingResult nor plain target object for bean name 'jugador' available</code></td>
+                    <td>La plantilla usa <code>th:object="${jugador}"</code> pero el controlador no envió ese objeto</td>
+                    <td>Agrega <code>model.addAttribute("jugador", new Jugador());</code> en el método GET. El nombre debe coincidir exactamente.</td>
+                  </tr>
+                  <tr>
+                    <td>Error 405 <code>Request method 'POST' not supported</code></td>
+                    <td>El formulario envía a una ruta que solo tiene <code>@GetMapping</code></td>
+                    <td>Verifica que el <code>th:action</code> apunte a la ruta que tiene <code>@PostMapping</code>.</td>
+                  </tr>
+                  <tr>
+                    <td>Error 400 al abrir <code>/jugadores/abc</code></td>
+                    <td>El método espera un <code>int</code> en <code>@PathVariable</code> y llegó texto</td>
+                    <td>Es el comportamiento esperado. Solo enlaza números desde tu tabla.</td>
+                  </tr>
+                  <tr>
+                    <td>El CSS no se aplica</td>
+                    <td>La ruta del <code>&lt;link&gt;</code> es incorrecta</td>
+                    <td>Usa <code>th:href="@{/estilos.css}"</code> y confirma que el archivo está en <code>static/</code>.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-body">
+            <h2 class="h5 section-title mb-3">Errores del guardado y el binding</h2>
+            <div class="table-responsive">
+              <table class="table table-sm small mb-0">
+                <thead><tr><th style="width:34%">Síntoma</th><th>Qué significa</th><th>Cómo se arregla</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td>🔇 Se guarda un registro <strong>en blanco</strong> (nombre vacío, edad 0)</td>
+                    <td>Al modelo le faltan los <em>setters</em>, o el <code>th:field</code> no coincide con el nombre del atributo</td>
+                    <td>Revisa que exista <code>setNombre(...)</code> y que <code>th:field="*{nombre}"</code> use exactamente el nombre del atributo.</td>
+                  </tr>
+                  <tr>
+                    <td><code>No default constructor found</code></td>
+                    <td>El modelo solo tiene constructor con parámetros</td>
+                    <td>Agrega el constructor vacío <code>public Jugador() { }</code>.</td>
+                  </tr>
+                  <tr>
+                    <td>🔇 Al recargar tras guardar, se duplica el registro</td>
+                    <td>El método POST devolvió una plantilla en vez de redirigir</td>
+                    <td>Termina con <code>return "redirect:/jugadores";</code></td>
+                  </tr>
+                  <tr>
+                    <td>🔇 La lista aparece vacía después de reiniciar</td>
+                    <td>Los datos viven en memoria</td>
+                    <td>No es un error: es el alcance de esta semana. La persistencia real llega en la Semana 12.</td>
+                  </tr>
+                  <tr>
+                    <td><code>Parameter 0 of constructor … required a bean of type … JugadorService</code></td>
+                    <td>Al servicio le falta <code>@Service</code>, o está fuera del paquete base</td>
+                    <td>Agrega la anotación y confirma que la clase esté dentro del paquete de tu <code>...Application.java</code>.</td>
+                  </tr>
+                  <tr>
+                    <td>Cambio el HTML y no veo el cambio</td>
+                    <td>Thymeleaf está guardando la plantilla en caché</td>
+                    <td>Agrega <code>spring.thymeleaf.cache=false</code> en <code>application.properties</code>.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout success">
+          <div class="fw-semibold">Ruta de diagnóstico en 30 segundos</div>
+          <div class="small-muted">
+            <strong>1.</strong> ¿La página aparece? Si no → problema de plantilla o de <code>@Controller</code>.
+            <strong>2.</strong> ¿El formulario se envía? Si da 405 → la ruta del <code>th:action</code>.
+            <strong>3.</strong> ¿Llegan los datos? Imprime con <code>System.out.println</code> en el método POST.
+            <strong>4.</strong> ¿Llegan vacíos? → constructor vacío y setters del modelo.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Cheat Sheet — Semana 10 · Rutas, controladores y formularios (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

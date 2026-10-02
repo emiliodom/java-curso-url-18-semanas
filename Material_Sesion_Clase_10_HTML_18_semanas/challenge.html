@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Challenge — ¿Dónde vive cada archivo? y simulador de guardado (Semana 10)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 10 — Formularios</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link active" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Challenge · Semana 10 · Huerto Comunitario La Cosecha</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Dos retos: ubicar los archivos y entender el redirect</h1>
+          <div class="small-muted">Pestaña 1: <strong>¿dónde vive cada archivo?</strong> (<code>templates/</code>, <code>static/</code> y los paquetes Java). Pestaña 2: un <strong>simulador</strong> que muestra, paso a paso, por qué hay que redirigir después de guardar — y qué pasa si no lo haces.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="exportChallengePdf()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <ul class="nav nav-tabs mb-4 no-print" id="challengeTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="tab-clasifica-btn" data-bs-toggle="tab" data-bs-target="#tab-clasifica" type="button" role="tab">🗂️ ¿Dónde vive cada archivo?</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-simulador-btn" data-bs-toggle="tab" data-bs-target="#tab-simulador" type="button" role="tab">⚙️ Simulador: guardar y redirigir</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="challengeTabsContent">
+
+      <!-- ============ PESTAÑA 1 ============ -->
+      <div class="tab-pane fade show active" id="tab-clasifica" role="tabpanel">
+        <div class="row g-3">
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="h5 section-title">Cómo jugar</h2>
+                <ol class="small mb-0">
+                  <li>Elige un nivel: <strong>Fácil → Medio → Difícil</strong>.</li>
+                  <li>El Huerto Comunitario La Cosecha está armando su módulo de registro de voluntarios.</li>
+                  <li>Arrastra cada pieza a la caja donde debe vivir (o toca: primero la pieza, luego la caja).</li>
+                  <li>Cada caja acepta <strong>varias piezas</strong>.</li>
+                  <li>Pulsa <strong>Verificar</strong> para tu puntaje.</li>
+                </ol>
+              </div>
+            </div>
+            <div class="callout warning mt-3">
+              <div class="fw-semibold">Ojo en Medio y Difícil</div>
+              <div class="small-muted">Aparecen piezas de <strong>semanas futuras</strong> (validación, base de datos, despliegue, seguridad). No pertenecen a ninguna caja: <strong>déjalas en el banco</strong>.</div>
+            </div>
+            <div class="card mt-3">
+              <div class="card-body">
+                <h2 class="h6 section-title">Tu progreso</h2>
+                <div class="small">
+                  <div>🟡 Fácil: <span id="progc-facil">sin intentar</span></div>
+                  <div>🟠 Medio: <span id="progc-medio">sin intentar</span></div>
+                  <div>🔴 Difícil: <span id="progc-dificil">sin intentar</span></div>
+                </div>
+                <label class="form-label fw-semibold mt-3 mb-1" for="studentName">Nombre (para el PDF)</label>
+                <input id="studentName" class="form-control form-control-sm" type="text" placeholder="Nombre y apellido" />
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-8">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3 no-print">
+                  <div class="btn-group" role="group" aria-label="Nivel">
+                    <button class="btn btn-outline-primary levelc-btn active" data-level="facil" onclick="loadLevelC('facil')">🟡 Fácil</button>
+                    <button class="btn btn-outline-primary levelc-btn" data-level="medio" onclick="loadLevelC('medio')">🟠 Medio</button>
+                    <button class="btn btn-outline-primary levelc-btn" data-level="dificil" onclick="loadLevelC('dificil')">🔴 Difícil</button>
+                  </div>
+                  <span class="badge text-bg-secondary" id="attemptsBadgeC">Verificaciones: 0</span>
+                </div>
+
+                <div class="callout mb-3">
+                  <div class="fw-semibold">Misión — <span id="levelNameC"></span></div>
+                  <div class="small-muted" id="levelMissionC"></div>
+                </div>
+
+                <h3 class="h6 fw-bold">Banco de piezas</h3>
+                <div id="poolC" class="dd-pool mb-3" aria-label="Banco de piezas"></div>
+
+                <h3 class="h6 fw-bold">Cajas</h3>
+                <div id="boardC" class="mvc-board mb-3"></div>
+
+                <div id="resultBannerC" class="score-banner"></div>
+
+                <div class="d-flex gap-2 flex-wrap no-print mt-3">
+                  <button class="btn btn-primary" onclick="verifyC()">✔ Verificar</button>
+                  <button class="btn btn-outline-secondary" onclick="loadLevelC(currentLevelC)">↺ Reiniciar nivel</button>
+                  <button class="btn btn-outline-warning" id="solutionBtnC" onclick="showSolutionC()" disabled>💡 Ver solución (tras 3 verificaciones)</button>
+                  <button class="btn btn-outline-dark btn-export ms-auto" onclick="exportChallengePdf()">Exportar a PDF</button>
+                </div>
+
+                <details class="mt-3">
+                  <summary class="fw-semibold">¿Qué deberías concluir de este nivel?</summary>
+                  <pre class="mt-2" style="white-space: pre-wrap;"><code id="expectedOutputC"></code></pre>
+                </details>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ PESTAÑA 2 ============ -->
+      <div class="tab-pane fade" id="tab-simulador" role="tabpanel">
+        <div class="row g-3">
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="h5 section-title">Sigue el registro</h2>
+                <p class="small-muted">Un voluntario se registra en el Huerto La Cosecha. Compara los dos escenarios y fíjate en <strong>cuántos registros quedan</strong> al final de cada uno.</p>
+                <label class="form-label small fw-semibold" for="scenarioSelect">Escenario</label>
+                <select id="scenarioSelect" class="form-select mb-3" onchange="reiniciarSimulador()">
+                  <option value="conRedirect">✅ Con redirect (lo correcto)</option>
+                  <option value="sinRedirect">⚠️ Sin redirect (se duplica)</option>
+                </select>
+                <div class="d-flex gap-2 flex-wrap">
+                  <button class="btn btn-primary" id="nextStepBtn" onclick="siguientePaso()">▶ Siguiente paso</button>
+                  <button class="btn btn-outline-secondary" onclick="reiniciarSimulador()">↺ Reiniciar</button>
+                </div>
+              </div>
+            </div>
+            <div class="callout mt-3">
+              <div class="fw-semibold">Qué observar</div>
+              <div class="small-muted">En los dos escenarios el registro se guarda bien la primera vez. La diferencia aparece <strong>cuando el usuario pulsa F5</strong>: mira qué dirección tiene el navegador en ese momento en cada caso.</div>
+            </div>
+          </div>
+
+          <div class="col-lg-8">
+            <div class="card">
+              <div class="card-body">
+                <h3 class="h6 fw-bold mb-2">Mapa del recorrido (se ilumina la etapa activa)</h3>
+                <div class="layer-map mb-3">
+                  <div class="layer-card presentacion" id="box-navegador">
+                    <div class="layer-title">🌐 Navegador <span class="small-muted fw-normal">— lo que ve el voluntario</span></div>
+                    <span class="role-chip">Envía el formulario</span><span class="role-chip">Guarda la dirección actual</span>
+                  </div>
+                  <div class="layer-arrow">↕</div>
+                  <div class="layer-card negocio" id="box-controlador">
+                    <div class="layer-title">🎮 @Controller <span class="small-muted fw-normal">— recibe y decide</span></div>
+                    <span class="role-chip">@PostMapping</span><span class="role-chip">@ModelAttribute</span><span class="role-chip">Devuelve plantilla o redirect</span>
+                  </div>
+                  <div class="layer-arrow">↕</div>
+                  <div class="layer-card datos" id="box-servicio">
+                    <div class="layer-title">💾 Servicio <span class="small-muted fw-normal">— la lista en memoria</span></div>
+                    <span class="role-chip">guardar(voluntario)</span><span class="role-chip">listarTodos()</span>
+                  </div>
+                </div>
+
+                <h3 class="h6 fw-bold">Registro de la simulación</h3>
+                <div id="simLog" class="sim-log"></div>
+
+                <div class="mt-3">
+                  <span class="badge text-bg-dark">Voluntarios guardados: <span id="contador">0</span></span>
+                </div>
+              </div>
+            </div>
+            <div class="callout success mt-3" id="simExplain" style="display:none;"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Challenge — Semana 10 · Rutas, controladores y formularios, Huerto Comunitario La Cosecha (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="toast.js"></script>
+  <script>
+    // ============================================================
+    // PESTAÑA 1 — Clasificación de archivos
+    // ============================================================
+    var ZONE_LABELS_C = {
+      templates: '📄 templates/',
+      static: '🎨 static/',
+      java: '☕ Paquetes Java',
+      controller: '🎮 controller/',
+      service: '⚙️ service/',
+      model: '📦 model/'
+    };
+
+    var ZONE_TIPS_C = {
+      templates: 'Correcto: lo procesa Thymeleaf antes de enviarlo.',
+      static: 'Correcto: se entrega tal cual, sin procesar.',
+      java: 'Correcto: es código Java, va dentro del paquete base.',
+      controller: 'Correcto: recibe peticiones y decide qué devolver.',
+      service: 'Correcto: aquí viven las reglas y los datos en memoria.',
+      model: 'Correcto: datos puros, sin lógica.'
+    };
+
+    var LEVELS_C = {
+      facil: {
+        name: 'Fácil — Las tres carpetas grandes',
+        mission: 'El Huerto La Cosecha tiene 6 archivos y no sabe dónde ponerlos. Clasifícalos entre templates/, static/ y los paquetes Java.',
+        zones: ['templates', 'static', 'java'],
+        items: [
+          { text: 'formulario.html, con th:object y th:field', zone: 'templates' },
+          { text: 'lista.html, con th:each para la tabla', zone: 'templates' },
+          { text: 'estilos.css', zone: 'static' },
+          { text: 'logo-huerto.png', zone: 'static' },
+          { text: 'VoluntarioController.java', zone: 'java' },
+          { text: 'Voluntario.java', zone: 'java' }
+        ],
+        distractors: [],
+        output: 'Regla simple: si el archivo tiene atributos th:, va en templates/. Si es un archivo que el navegador descarga tal cual (CSS, imágenes), va en static/. Si termina en .java, va en un paquete dentro del paquete base.'
+      },
+      medio: {
+        name: 'Medio — Separando el código Java',
+        mission: 'Ahora el código Java se divide en controller/ y service/. Además aparecen 2 piezas de semanas futuras: déjalas en el banco.',
+        zones: ['templates', 'static', 'controller', 'service'],
+        items: [
+          { text: 'formulario.html, con th:action y th:field', zone: 'templates' },
+          { text: 'detalle.html, con th:text', zone: 'templates' },
+          { text: 'estilos.css', zone: 'static' },
+          { text: 'El método @PostMapping que recibe el formulario', zone: 'controller' },
+          { text: 'El método @GetMapping que muestra la lista', zone: 'controller' },
+          { text: 'La lista en memoria donde se acumulan los voluntarios', zone: 'service' },
+          { text: 'El método guardar(voluntario)', zone: 'service' }
+        ],
+        distractors: [
+          { text: '@NotBlank para exigir que el nombre no venga vacío', zone: 'trap' },
+          { text: '@Entity y el repositorio JPA para la base de datos', zone: 'trap' }
+        ],
+        output: 'El controlador recibe y decide; el servicio guarda y aplica reglas. Las dos piezas del banco son de la Semana 11 (validación) y la Semana 12 (base de datos): todavía no forman parte de tu proyecto.'
+      },
+      dificil: {
+        name: 'Difícil — Las cinco cajas completas',
+        mission: 'Nueve piezas en 5 cajas, con 3 trampas de semanas futuras. Fíjate bien: algunas piezas parecen de una caja y son de otra.',
+        zones: ['templates', 'static', 'controller', 'service', 'model'],
+        items: [
+          { text: 'th:each que recorre la lista de voluntarios', zone: 'templates' },
+          { text: 'th:action="@{/voluntarios}" en la etiqueta form', zone: 'templates' },
+          { text: 'El archivo estilos.css enlazado desde las plantillas', zone: 'static' },
+          { text: '@PostMapping con @ModelAttribute Voluntario voluntario', zone: 'controller' },
+          { text: 'return "redirect:/voluntarios";', zone: 'controller' },
+          { text: '@Service sobre la clase que administra la lista', zone: 'service' },
+          { text: 'El método buscarPorNumero(int numero)', zone: 'service' },
+          { text: 'Los atributos privados nombre, edad y disponibilidad', zone: 'model' },
+          { text: 'El constructor vacío y los setters', zone: 'model' }
+        ],
+        distractors: [
+          { text: 'La conexión a MySQL en application.properties', zone: 'trap' },
+          { text: 'El despliegue de la aplicación en Render', zone: 'trap' },
+          { text: 'El inicio de sesión con Spring Security', zone: 'trap' }
+        ],
+        output: 'El constructor vacío y los setters van en el modelo: son lo que Spring usa para llenar el objeto con los datos del formulario. El redirect es una decisión del controlador, no del servicio. Las 3 trampas corresponden a las Semanas 12, 14 y 13/15.'
+      }
+    };
+
+    var currentLevelC = 'facil';
+    var attemptsC = 0;
+    var progressC = { facil: null, medio: null, dificil: null };
+    var selectedC = null;
+
+    function shuffle(arr) {
+      var a = arr.slice();
+      for (var i = a.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = a[i]; a[i] = a[j]; a[j] = t;
+      }
+      return a;
+    }
+
+    function makePieceC(text, zone) {
+      var el = document.createElement('div');
+      el.className = 'dd-piece';
+      el.textContent = text;
+      el.setAttribute('draggable', 'true');
+      el.dataset.text = text;
+      el.dataset.zone = zone;
+      el.addEventListener('dragstart', function (e) {
+        el.classList.add('dragging');
+        e.dataTransfer.setData('text/plain', '');
+        window._dragged = el;
+      });
+      el.addEventListener('dragend', function () {
+        el.classList.remove('dragging');
+        window._dragged = null;
+      });
+      el.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (selectedC === el) {
+          el.classList.remove('selected');
+          selectedC = null;
+        } else {
+          if (selectedC) selectedC.classList.remove('selected');
+          selectedC = el;
+          el.classList.add('selected');
+        }
+      });
+      return el;
+    }
+
+    function feedbackC(piece, zoneKey) {
+      var pieceZone = piece.dataset.zone;
+      if (pieceZone === zoneKey) {
+        return { ok: true, type: 'ok', msg: '✓ ' + (ZONE_LABELS_C[zoneKey] || zoneKey) + '. ' + (ZONE_TIPS_C[zoneKey] || '') };
+      }
+      if (pieceZone === 'trap') {
+        return { ok: false, type: 'bad', msg: 'Esa pieza es de una semana futura (validación, base de datos, despliegue o seguridad). Déjala en el banco.' };
+      }
+      return { ok: false, type: 'warn', msg: 'Esa pieza va en ' + (ZONE_LABELS_C[pieceZone] || pieceZone) + ', no en ' + (ZONE_LABELS_C[zoneKey] || zoneKey) + '.' };
+    }
+
+    function placeInZoneC(piece, zoneEl, zoneKey) {
+      zoneEl.appendChild(piece);
+      piece.classList.remove('selected');
+      selectedC = null;
+      var fb = feedbackC(piece, zoneKey);
+      piece.classList.remove('correct-piece', 'incorrect-piece');
+      piece.classList.add(fb.ok ? 'correct-piece' : 'incorrect-piece');
+      showToast(fb.msg, fb.type);
+    }
+
+    function setupPoolC(zone) {
+      zone.addEventListener('dragover', function (e) { e.preventDefault(); });
+      zone.addEventListener('drop', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var piece = window._dragged;
+        if (!piece) return;
+        piece.classList.remove('correct-piece', 'incorrect-piece');
+        zone.appendChild(piece);
+      });
+      zone.addEventListener('click', function (e) {
+        if (!selectedC || e.target !== zone) return;
+        selectedC.classList.remove('correct-piece', 'incorrect-piece', 'selected');
+        zone.appendChild(selectedC);
+        selectedC = null;
+      });
+    }
+
+    function setupZoneC(zoneEl, zoneKey) {
+      zoneEl.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        zoneEl.classList.add('over');
+      });
+      zoneEl.addEventListener('dragleave', function () { zoneEl.classList.remove('over'); });
+      zoneEl.addEventListener('drop', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        zoneEl.classList.remove('over');
+        var piece = window._dragged;
+        if (!piece) return;
+        placeInZoneC(piece, zoneEl, zoneKey);
+      });
+      zoneEl.addEventListener('click', function () {
+        if (!selectedC) return;
+        placeInZoneC(selectedC, zoneEl, zoneKey);
+      });
+    }
+
+    function loadLevelC(key) {
+      currentLevelC = key;
+      attemptsC = 0;
+      selectedC = null;
+      document.getElementById('attemptsBadgeC').textContent = 'Verificaciones: 0';
+      document.getElementById('solutionBtnC').disabled = true;
+
+      var level = LEVELS_C[key];
+      document.getElementById('levelNameC').textContent = level.name;
+      document.getElementById('levelMissionC').textContent = level.mission;
+      document.getElementById('expectedOutputC').textContent = level.output;
+
+      document.querySelectorAll('.levelc-btn').forEach(function (b) {
+        b.classList.toggle('active', b.dataset.level === key);
+      });
+
+      var banner = document.getElementById('resultBannerC');
+      banner.className = 'score-banner';
+      banner.innerHTML = '';
+
+      var board = document.getElementById('boardC');
+      board.innerHTML = '';
+      level.zones.forEach(function (zoneKey) {
+        var zoneEl = document.createElement('div');
+        zoneEl.className = 'mvc-zone';
+        zoneEl.id = 'zonec-' + zoneKey;
+        var title = document.createElement('div');
+        title.className = 'mvc-zone-title';
+        title.textContent = ZONE_LABELS_C[zoneKey] || zoneKey;
+        zoneEl.appendChild(title);
+        setupZoneC(zoneEl, zoneKey);
+        board.appendChild(zoneEl);
+      });
+
+      var pool = document.getElementById('poolC');
+      pool.innerHTML = '';
+      var pieces = level.items.map(function (l) { return makePieceC(l.text, l.zone); })
+        .concat((level.distractors || []).map(function (d) { return makePieceC(d.text, d.zone); }));
+      shuffle(pieces).forEach(function (p) { pool.appendChild(p); });
+
+      showToast('Nivel "' + level.name + '" listo. Arrastra la primera pieza.', 'info', 3000);
+    }
+
+    function verifyC() {
+      attemptsC++;
+      document.getElementById('attemptsBadgeC').textContent = 'Verificaciones: ' + attemptsC;
+      if (attemptsC >= 3) document.getElementById('solutionBtnC').disabled = false;
+
+      var level = LEVELS_C[currentLevelC];
+      var pool = document.getElementById('poolC');
+      var allPieces = document.querySelectorAll('#boardC .dd-piece, #poolC .dd-piece');
+      var correct = 0;
+
+      allPieces.forEach(function (piece) {
+        var inPool = piece.parentElement === pool;
+        var zoneKey = inPool ? null : piece.parentElement.id.replace('zonec-', '');
+        var isCorrect = piece.dataset.zone === 'trap' ? inPool : (zoneKey === piece.dataset.zone);
+        piece.classList.remove('correct-piece', 'incorrect-piece');
+        if (!inPool || piece.dataset.zone === 'trap') {
+          piece.classList.add(isCorrect ? 'correct-piece' : 'incorrect-piece');
+        }
+        if (isCorrect) correct++;
+      });
+
+      var total = allPieces.length;
+      var pct = Math.round((correct / total) * 100);
+      progressC[currentLevelC] = { pct: pct, attempts: attemptsC };
+      document.getElementById('progc-' + currentLevelC).textContent =
+        pct + '% (' + attemptsC + ' verificación' + (attemptsC === 1 ? '' : 'es') + ')';
+
+      var banner = document.getElementById('resultBannerC');
+      var msg;
+      if (pct === 100) {
+        msg = '🎉 ¡Todo en su lugar! Así debe verse la estructura de tu proyecto.';
+        showToast('¡Nivel completado! ' + level.name, 'ok', 5000);
+      } else if (pct >= 60) {
+        msg = 'Casi. Revisa las piezas en rojo — el toast de cada una te dice dónde va.';
+      } else {
+        msg = 'Pregúntate de cada pieza: ¿la procesa el servidor (templates), se entrega tal cual (static), o es código Java?';
+      }
+      banner.className = 'score-banner show alert ' + (pct === 100 ? 'alert-success' : pct >= 60 ? 'alert-warning' : 'alert-danger');
+      banner.innerHTML =
+        '<div class="h5 mb-1">' + level.name + ' — ' + correct + ' / ' + total + ' piezas (' + pct + '%)</div>' +
+        '<div>' + msg + '</div>' +
+        '<div class="small mt-1">Verificaciones: ' + attemptsC + ' · Fecha: ' + new Date().toLocaleString('es-GT') + '</div>';
+    }
+
+    function showSolutionC() {
+      var pool = document.getElementById('poolC');
+      document.querySelectorAll('#boardC .dd-piece').forEach(function (p) { pool.appendChild(p); });
+      pool.querySelectorAll('.dd-piece').forEach(function (piece) {
+        piece.classList.remove('correct-piece', 'incorrect-piece');
+        if (piece.dataset.zone !== 'trap') {
+          var target = document.getElementById('zonec-' + piece.dataset.zone);
+          if (target) {
+            target.appendChild(piece);
+            piece.classList.add('correct-piece');
+          }
+        }
+      });
+      var banner = document.getElementById('resultBannerC');
+      banner.className = 'score-banner show alert alert-warning';
+      banner.innerHTML = '<div class="fw-semibold">Solución mostrada (no cuenta como logro propio).</div><div class="small">Estúdiala, pulsa "Reiniciar nivel" e inténtalo de nuevo sin ayuda.</div>';
+      showToast('Solución mostrada — vuelve a intentarlo sin ayuda.', 'info');
+    }
+
+    function exportChallengePdf() {
+      var name = document.getElementById('studentName').value || '';
+      var intento = Object.keys(progressC).some(function (k) { return progressC[k]; });
+      if (!intento) {
+        showToast('Verifica al menos un nivel de la primera pestaña antes de exportar.', 'warn');
+        return;
+      }
+      if (!name.trim()) {
+        showToast('Escribe tu nombre en la casilla "Nombre (para el PDF)".', 'warn');
+        document.getElementById('tab-clasifica-btn').click();
+        document.getElementById('studentName').focus();
+        return;
+      }
+      window.print();
+    }
+
+    // ============================================================
+    // PESTAÑA 2 — Simulador POST / Redirect / GET
+    // ============================================================
+    var SCENARIOS = {
+      conRedirect: [
+        { layer: 'navegador', msg: '🌐 El voluntario llena el formulario (Marta, 34 años) y pulsa "Guardar".', guardados: 0, url: 'POST /voluntarios' },
+        { layer: 'controlador', msg: '🎮 @PostMapping("/voluntarios") recibe la petición. @ModelAttribute arma el objeto Voluntario con los datos.', guardados: 0, url: 'POST /voluntarios' },
+        { layer: 'servicio', msg: '💾 guardar(voluntario): Marta se agrega a la lista en memoria.', guardados: 1, url: 'POST /voluntarios' },
+        { layer: 'controlador', msg: '🎮 El método devuelve "redirect:/voluntarios" — NO una plantilla.', guardados: 1, url: 'POST /voluntarios' },
+        { layer: 'navegador', msg: '🌐 El navegador obedece y hace una petición NUEVA: GET /voluntarios. La barra de direcciones ahora dice /voluntarios.', guardados: 1, url: 'GET /voluntarios' },
+        { layer: 'servicio', msg: '💾 listarTodos(): se devuelve la lista con 1 voluntario, y la plantilla la muestra.', guardados: 1, url: 'GET /voluntarios' },
+        { layer: 'navegador', msg: '🌐 El voluntario pulsa F5. Como la dirección actual es un GET, solo se vuelve a pedir la lista.', guardados: 1, url: 'GET /voluntarios' }
+      ],
+      sinRedirect: [
+        { layer: 'navegador', msg: '🌐 El voluntario llena el formulario (Marta, 34 años) y pulsa "Guardar".', guardados: 0, url: 'POST /voluntarios' },
+        { layer: 'controlador', msg: '🎮 @PostMapping("/voluntarios") recibe la petición y arma el objeto Voluntario.', guardados: 0, url: 'POST /voluntarios' },
+        { layer: 'servicio', msg: '💾 guardar(voluntario): Marta se agrega a la lista en memoria.', guardados: 1, url: 'POST /voluntarios' },
+        { layer: 'controlador', msg: '🎮 El método devuelve "lista" — la plantilla directamente, sin redirigir.', guardados: 1, url: 'POST /voluntarios' },
+        { layer: 'navegador', msg: '🌐 La lista se ve bien… pero la barra de direcciones SIGUE siendo el POST /voluntarios.', guardados: 1, url: 'POST /voluntarios' },
+        { layer: 'navegador', msg: '🌐 El voluntario pulsa F5. El navegador pregunta "¿Volver a enviar el formulario?" y reenvía el POST.', guardados: 1, url: 'POST /voluntarios' },
+        { layer: 'servicio', msg: '💾 guardar(voluntario) se ejecuta OTRA VEZ: ahora hay dos Martas idénticas en la lista.', guardados: 2, url: 'POST /voluntarios' }
+      ]
+    };
+    var simIndex = -1;
+
+    function limpiarResaltado() {
+      ['navegador', 'controlador', 'servicio'].forEach(function (l) {
+        var el = document.getElementById('box-' + l);
+        if (el) el.classList.remove('active-step');
+      });
+    }
+
+    function logSim(msg) {
+      var box = document.getElementById('simLog');
+      var line = document.createElement('div');
+      line.className = 'sim-line hl';
+      line.textContent = msg;
+      box.appendChild(line);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function siguientePaso() {
+      var scenario = SCENARIOS[document.getElementById('scenarioSelect').value];
+      if (simIndex >= scenario.length - 1) {
+        showToast('Escenario terminado. Pulsa "Reiniciar" o elige el otro escenario para comparar.', 'info');
+        return;
+      }
+      simIndex++;
+      limpiarResaltado();
+      var step = scenario[simIndex];
+      var el = document.getElementById('box-' + step.layer);
+      if (el) el.classList.add('active-step');
+      logSim((simIndex + 1) + '. [' + step.url + '] ' + step.msg);
+      document.getElementById('contador').textContent = step.guardados;
+
+      if (simIndex === scenario.length - 1) {
+        document.getElementById('nextStepBtn').textContent = '✔ Escenario completo';
+        var esConRedirect = document.getElementById('scenarioSelect').value === 'conRedirect';
+        var box = document.getElementById('simExplain');
+        box.style.display = 'block';
+        box.className = 'callout mt-3 ' + (esConRedirect ? 'success' : 'danger');
+        box.innerHTML = esConRedirect
+          ? '<div class="fw-semibold">✅ Resultado: 1 voluntario</div><div class="small-muted">Al redirigir, la dirección del navegador pasó a ser un GET normal. Recargar solo vuelve a pedir la lista: es una operación inofensiva. Este es el patrón <strong>POST → Redirect → GET</strong>.</div>'
+          : '<div class="fw-semibold">❌ Resultado: 2 voluntarios idénticos</div><div class="small-muted">Al devolver la plantilla directamente, la dirección del navegador siguió siendo el POST. Recargar volvió a enviar el formulario y se guardó un duplicado. Por eso el método que guarda debe terminar con <code>return "redirect:/...";</code></div>';
+        showToast(esConRedirect ? 'Escenario correcto: 1 solo registro.' : 'Escenario con problema: se duplicó el registro.', esConRedirect ? 'ok' : 'bad', 5000);
+      }
+    }
+
+    function reiniciarSimulador() {
+      simIndex = -1;
+      limpiarResaltado();
+      document.getElementById('simLog').innerHTML = '';
+      document.getElementById('nextStepBtn').textContent = '▶ Siguiente paso';
+      document.getElementById('simExplain').style.display = 'none';
+      document.getElementById('contador').textContent = '0';
+    }
+
+    // Arranque
+    setupPoolC(document.getElementById('poolC'));
+    loadLevelC('facil');
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

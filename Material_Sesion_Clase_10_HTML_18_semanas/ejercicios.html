@@ -1,0 +1,707 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ejercicios y Kit de archivos — Semana 10 (Formularios y Thymeleaf)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 10 — Formularios</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link active" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Ejercicios · Semana 10 · 100% en tu propia computadora</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Del formulario al objeto Java, paso por paso</h1>
+          <div class="small-muted">Dos pestañas: los <strong>8 ejercicios en escalera</strong> y el <strong>Kit de archivos completos</strong> (cada archivo entero, con su ruta, su <code>package</code> y sus <code>import</code>). Proyecto de práctica: <code>taller-formularios</code> · Institución de ejemplo: <strong>Escuela de Fútbol Los Cerritos</strong> · Entidad: <code>Jugador</code>.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <ul class="nav nav-tabs mb-4 no-print" id="ejerciciosTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="tab-ejercicios-btn" data-bs-toggle="tab" data-bs-target="#tab-ejercicios" type="button" role="tab">🪜 Ejercicios paso a paso</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-kit-btn" data-bs-toggle="tab" data-bs-target="#tab-kit" type="button" role="tab">📦 Kit de archivos completos</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="ejerciciosTabsContent">
+
+      <!-- ============ PESTAÑA 1: EJERCICIOS ============ -->
+      <div class="tab-pane fade show active" id="tab-ejercicios" role="tabpanel">
+
+        <div class="callout mb-3">
+          <div class="fw-semibold">Cómo está armada esta escalera</div>
+          <div class="small-muted">
+            Los ejercicios construyen <strong>un mismo módulo de registro</strong>, una pieza a la vez: primero
+            mostrar una página, luego mostrar un formulario, luego recibirlo, luego guardarlo, luego listarlo. Al
+            terminar los 8 tendrás exactamente el mismo circuito que pide la <a href="proyecto.html">Guía 10</a>,
+            pero con un proyecto de práctica desechable.
+          </div>
+        </div>
+
+        <div class="callout warning mb-4">
+          <div class="fw-semibold">Las tres preguntas ancla de esta semana</div>
+          <div class="small-muted">Cuando algo no funcione, revisa en este orden: <strong>(1)</strong> ¿el nombre que devuelve el método coincide con el nombre del archivo en <code>templates/</code>? <strong>(2)</strong> ¿el <code>th:action</code> del formulario apunta a la misma ruta que el <code>@PostMapping</code>? <strong>(3)</strong> ¿tu clase de modelo tiene constructor vacío y setters?</div>
+        </div>
+
+        <div class="row g-3">
+
+          <div class="col-lg-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <h2 class="h5 section-title">Ejercicio 1 — Agrega Thymeleaf <span class="badge text-bg-success">Nivel 1</span></h2>
+                <p class="small-muted mb-2">Abre el <code>pom.xml</code> de tu proyecto de práctica y agrega, <strong>dentro</strong> de <code>&lt;dependencies&gt;</code>, el bloque del Kit (archivo 2). Guarda y ejecuta el proyecto.</p>
+                <p class="small-muted mb-1"><strong>Tu turno:</strong> la primera ejecución tarda más de lo normal. ¿Por qué?</p>
+                <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: el proyecto arranca y muestra "Started ... Application" sin errores.</span></div>
+                <details>
+                  <summary class="fw-semibold">Solución</summary>
+                  <div class="mt-2 small-muted">Porque Maven está <strong>descargando</strong> la dependencia nueva por primera vez (igual que en la Semana 7 con Spring Web). Se guarda en caché: las siguientes ejecuciones vuelven a ser rápidas. Si ves errores de descarga, revisa tu conexión y vuelve a ejecutar.</div>
+                </details>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <h2 class="h5 section-title">Ejercicio 2 — <code>@Controller</code> vs <code>@RestController</code> <span class="badge text-bg-success">Nivel 1</span></h2>
+                <p class="small-muted mb-2">Crea <code>templates/saludo.html</code> con un <code>&lt;h1&gt;</code> cualquiera. Luego crea una clase controladora con este método, pero anota la clase con <code>@RestController</code> (a propósito):</p>
+                <pre><code>@GetMapping("/saludo")
+public String saludo() {
+    return "saludo";
+}</code></pre>
+                <p class="small-muted mb-1"><strong>Tu turno:</strong> visita <code>/saludo</code>. ¿Qué muestra? Ahora cambia a <code>@Controller</code> y recarga.</p>
+                <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: viste los dos comportamientos con el mismo método.</span></div>
+                <details>
+                  <summary class="fw-semibold">Solución</summary>
+                  <div class="mt-2 small-muted">Con <code>@RestController</code> el navegador muestra literalmente la palabra <strong>saludo</strong>: la anotación devuelve el texto como contenido. Con <code>@Controller</code>, ese mismo texto se interpreta como el <strong>nombre de una plantilla</strong>, y Spring muestra <code>templates/saludo.html</code>. Es la distinción central de la semana.</div>
+                </details>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <h2 class="h5 section-title">Ejercicio 3 — Pasa datos a la plantilla <span class="badge text-bg-primary">Nivel 2</span></h2>
+                <p class="small-muted mb-2">Agrega el método para enviar un dato. No debes borrar el código anterior. Muestralo en la plantilla:</p>
+                <pre><code>// En el controlador
+public String saludo(Model model) {
+    model.addAttribute("institucion", "Escuela de Fútbol Los Cerritos");
+    return "saludo";
+}</code></pre>
+                <pre><code>&lt;!-- En templates/saludo.html --&gt;
+&lt;h1 th:text="${institucion}"&gt;Texto de relleno&lt;/h1&gt;</code></pre>
+                <p class="small-muted mb-1"><strong>Tu turno:</strong> ¿qué pasó con el texto "Texto de relleno"? ¿Para qué sirve entonces escribirlo?</p>
+                <details>
+                  <summary class="fw-semibold">Solución</summary>
+                  <div class="mt-2 small-muted">Desapareció: <code>th:text</code> <strong>reemplaza</strong> el contenido de la etiqueta. Se escribe relleno para poder abrir el archivo directamente en el navegador mientras diseñas y ver cómo va quedando, sin tener que ejecutar el proyecto. No olvides el <code>xmlns:th</code> en la etiqueta <code>&lt;html&gt;</code> (ver Kit).</div>
+                </details>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <h2 class="h5 section-title">Ejercicio 4 — Muestra el formulario <span class="badge text-bg-primary">Nivel 2</span></h2>
+                <p class="small-muted mb-2">Copia del Kit los archivos <code>Jugador.java</code> (archivo 4) y <code>formulario.html</code> (archivo 7), y crea el método que muestra el formulario:</p>
+                <pre><code>@GetMapping("/jugadores/nuevo")
+public String mostrarFormulario(Model model) {
+    model.addAttribute("jugador", new Jugador());
+    return "formulario";
+}</code></pre>
+                <p class="small-muted mb-1"><strong>Tu turno:</strong> ¿por qué hay que mandar un <code>new Jugador()</code> vacío si el usuario todavía no ha escrito nada?</p>
+                <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: <code>/jugadores/nuevo</code> muestra el formulario con sus tres campos.</span></div>
+                <details>
+                  <summary class="fw-semibold">Solución</summary>
+                  <div class="mt-2 small-muted">Porque <code>th:object="${jugador}"</code> necesita un objeto al cual "amarrar" las casillas. Es como entregar una ficha en blanco: el formulario necesita saber <em>qué</em> va a llenar. Si no lo mandas, aparece el error <code>Neither BindingResult nor plain target object for bean name 'jugador' available</code>.</div>
+                </details>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <h2 class="h5 section-title">Ejercicio 5 — Recibe el envío <span class="badge text-bg-warning">Nivel 3</span></h2>
+                <p class="small-muted mb-2">Agrega el método que atiende el POST. Por ahora, solo imprime en la terminal para comprobar que llegan los datos:</p>
+                <pre><code>@PostMapping("/jugadores")
+public String registrarJugador(@ModelAttribute Jugador jugador) {
+    System.out.println("Llegó: " + jugador.getNombre() + ", " + jugador.getEdad());
+    return "redirect:/jugadores/nuevo";
+}</code></pre>
+                <p class="small-muted mb-1"><strong>Tu turno:</strong> llena el formulario y envíalo. Mira la <strong>terminal</strong> de VS Code, no el navegador. ¿Qué aparece?</p>
+                <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: en la terminal aparece el nombre y la edad que escribiste.</span></div>
+                <details>
+                  <summary class="fw-semibold">Solución</summary>
+                  <div class="mt-2 small-muted">Aparece <code>Llegó: [lo que escribiste]</code>. Eso demuestra el <strong>binding</strong>: Spring creó un objeto <code>Jugador</code> y llenó sus atributos con los datos del formulario, casándolos por nombre (<code>th:field="*{nombre}"</code> → <code>setNombre(...)</code>). <br /><strong>Si aparece <code>null</code> o <code>0</code>:</strong> revisa que tu clase tenga los <em>setters</em> y el constructor vacío.</div>
+                </details>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <h2 class="h5 section-title">Ejercicio 6 — Guarda de verdad <span class="badge text-bg-warning">Nivel 3</span></h2>
+                <p class="small-muted mb-2">Copia del Kit <code>JugadorService.java</code> (archivo 5), inyéctalo en el controlador por constructor (igual que en la Semana 9) y cambia el método del POST para que guarde y redirija a la lista.</p>
+                <p class="small-muted mb-1"><strong>Tu turno:</strong> registra dos jugadores. Luego <strong>detén y vuelve a ejecutar</strong> el proyecto y visita la lista. ¿Qué pasó?</p>
+                <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: al enviar el formulario, el navegador te lleva a <code>/jugadores</code>.</span></div>
+                <details>
+                  <summary class="fw-semibold">Solución</summary>
+                  <div class="mt-2 small-muted">La lista quedó vacía: los datos vivían en una lista <strong>en memoria</strong> y se borraron al apagar la aplicación. No es un error tuyo — es el límite de esta semana. En la <strong>Semana 12</strong> conectarás una base de datos y los datos sobrevivirán a los reinicios.</div>
+                </details>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <h2 class="h5 section-title">Ejercicio 7 — Lista con <code>th:each</code> <span class="badge text-bg-warning">Nivel 3</span></h2>
+                <p class="small-muted mb-2">Copia del Kit <code>lista.html</code> (archivo 8) y agrega el método <code>@GetMapping("/jugadores")</code> que manda la lista al modelo.</p>
+                <p class="small-muted mb-1"><strong>Tu turno:</strong> registra tres jugadores y observa la tabla. Ahora fíjate en el <code>@GetMapping("/jugadores")</code> y el <code>@PostMapping("/jugadores")</code>: ¿por qué no chocan si tienen la misma ruta?</p>
+                <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: la tabla muestra una fila por jugador registrado, numeradas.</span></div>
+                <details>
+                  <summary class="fw-semibold">Solución</summary>
+                  <div class="mt-2 small-muted">Porque una ruta se identifica por <strong>dirección + método HTTP</strong>. <code>GET /jugadores</code> ("muéstrame la lista") y <code>POST /jugadores</code> ("guarda este nuevo") son dos rutas distintas aunque compartan la dirección. Es una convención muy común en aplicaciones web.</div>
+                </details>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <h2 class="h5 section-title">Ejercicio 8 — Reto: detalle con ruta parametrizada <span class="badge text-bg-danger">Nivel 4</span></h2>
+                <p class="small-muted mb-2">Copia del Kit <code>detalle.html</code> (archivo 9) y escribe tú el método <code>@GetMapping("/jugadores/{numero}")</code> con <code>@PathVariable</code>, usando <code>buscarPorNumero()</code> del servicio. Enlázalo desde la tabla.</p>
+                <p class="small-muted mb-1"><strong>Tu turno:</strong> prueba tres direcciones: <code>/jugadores/1</code>, <code>/jugadores/99</code> y <code>/jugadores/abc</code>. ¿Qué pasa en cada una y por qué?</p>
+                <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: <code>/jugadores/1</code> muestra el primer jugador registrado.</span></div>
+                <details>
+                  <summary class="fw-semibold">Solución</summary>
+                  <div class="mt-2 small-muted">
+                    <code>/jugadores/1</code> muestra el detalle. <code>/jugadores/99</code> no encuentra a nadie: el servicio devuelve <code>null</code> y el controlador redirige a la lista (por eso conviene esa comprobación). <code>/jugadores/abc</code> da un <strong>error 400</strong>, porque el método espera un <code>int</code> y "abc" no se puede convertir a número.<br />
+                    <strong>Bonus:</strong> <code>/jugadores/nuevo</code> sigue funcionando aunque parezca que choca con <code>{numero}</code>, porque Spring prefiere siempre la coincidencia literal antes que la variable.
+                  </div>
+                </details>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="callout success mt-4">
+          <div class="fw-semibold">¿Terminaste los 8?</div>
+          <div class="small-muted">Ya construiste el circuito completo. Ahora aplícalo a tu proyecto real en <a href="proyecto.html">Proyecto</a> — es exactamente lo que evalúa la Guía 10, cambiando <code>Jugador</code> por la entidad principal de tu institución.</div>
+        </div>
+      </div>
+
+      <!-- ============ PESTAÑA 2: KIT ============ -->
+      <div class="tab-pane fade" id="tab-kit" role="tabpanel">
+
+        <div class="callout mb-4">
+          <div class="fw-semibold">Qué es este Kit</div>
+          <div class="small-muted">
+            Los <strong>9 archivos</strong> del módulo de registro, completos: ruta exacta, línea <code>package</code>,
+            todos los <code>import</code> y el cuerpo entero. Copia, pega y cambia los nombres por los de tu
+            institución y tu entidad. Los mismos archivos sirven para tu proyecto real: solo cambia
+            <code>tallerformularios</code> por tu paquete y <code>Jugador</code> por tu entidad.
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit1">1. El árbol completo del proyecto</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-2">Proyecto <code>taller-formularios</code>, Group <code>gt.edu.url</code> → paquete base <code>gt.edu.url.tallerformularios</code>. Las líneas con ← son las de esta semana.</p>
+            <pre><code>taller-formularios/
+├── pom.xml                          ← agrega la dependencia (archivo 2)
+└── src/main/
+    ├── java/gt/edu/url/tallerformularios/
+    │   ├── TallerFormulariosApplication.java      (generado — archivo 3)
+    │   ├── controller/
+    │   │   └── JugadorController.java             ← archivo 6
+    │   ├── service/
+    │   │   └── JugadorService.java                ← archivo 5
+    │   └── model/
+    │       └── Jugador.java                       ← archivo 4
+    └── resources/
+        ├── application.properties                 (archivo 10)
+        ├── templates/                             ← CARPETA NUEVA esta semana
+        │   ├── formulario.html                    ← archivo 7
+        │   ├── lista.html                         ← archivo 8
+        │   └── detalle.html                       ← archivo 9
+        └── static/
+            └── estilos.css                        (archivo 11)</code></pre>
+            <div class="callout warning mb-0">
+              <div class="fw-semibold">La carpeta nueva y la regla que la acompaña</div>
+              <div class="small-muted"><code>templates/</code> se crea a mano, dentro de <code>src/main/resources/</code> (al lado de <code>static/</code>, <strong>no</strong> dentro de ella). Todo lo que va ahí lo procesa Thymeleaf y solo se alcanza a través de un <code>@Controller</code>; lo que va en <code>static/</code> se entrega tal cual y sí tiene URL propia. Recuerda además la regla de la Semana 9: las clases Java van dentro del paquete base o Spring no las encuentra.</div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit2">2. <code>pom.xml</code> — la dependencia que se agrega</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> raíz del proyecto</p>
+            <p class="small-muted mb-2">No reescribas el archivo: solo pega este bloque <strong>dentro</strong> de <code>&lt;dependencies&gt;</code>, junto al de <code>spring-boot-starter-web</code> que ya tienes.</p>
+            <pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+            <div class="small-muted">No lleva número de versión: lo hereda del bloque <code>&lt;parent&gt;</code>, que ya define la versión de Spring Boot de tu proyecto.</div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit3">3. <code>TallerFormulariosApplication.java</code></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/java/gt/edu/url/tallerformularios/TallerFormulariosApplication.java</code></p>
+            <p class="small-muted mb-2">Generado por Initializr. No se modifica; se incluye para que veas el paquete base del que dependen todos los demás.</p>
+            <pre><code>package gt.edu.url.tallerformularios;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class TallerFormulariosApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(TallerFormulariosApplication.class, args);
+    }
+}</code></pre>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit4">4. <code>Jugador.java</code> — el modelo <span class="badge text-bg-primary">lo creas tú</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/java/gt/edu/url/tallerformularios/<strong>model</strong>/Jugador.java</code></p>
+            <pre><code>package gt.edu.url.tallerformularios.model;
+
+public class Jugador {
+
+    private String nombre;
+    private int edad;
+    private String posicion;
+
+    // Constructor vacío: OBLIGATORIO para que el formulario funcione.
+    public Jugador() {
+    }
+
+    public Jugador(String nombre, int edad, String posicion) {
+        this.nombre = nombre;
+        this.edad = edad;
+        this.posicion = posicion;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+
+    public String getPosicion() {
+        return posicion;
+    }
+
+    public void setPosicion(String posicion) {
+        this.posicion = posicion;
+    }
+}</code></pre>
+            <div class="callout danger mb-0">
+              <div class="fw-semibold">Las dos cosas sin las cuales el formulario "no guarda nada"</div>
+              <div class="small-muted">
+                <strong>(1) El constructor vacío:</strong> Spring crea el objeto llamándolo antes de llenarlo. Ojo: si escribes un constructor con parámetros, Java ya <em>no</em> te da el vacío gratis — hay que escribirlo, como arriba.<br />
+                <strong>(2) Los setters:</strong> Spring llena cada campo llamando a <code>setNombre(...)</code>, <code>setEdad(...)</code>. Sin ellos el objeto llega vacío y no aparece ningún error, solo datos en blanco. Los <em>getters</em> son igual de necesarios para que Thymeleaf pueda <em>mostrar</em> los valores.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit5">5. <code>JugadorService.java</code> <span class="badge text-bg-primary">lo creas tú</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/java/gt/edu/url/tallerformularios/<strong>service</strong>/JugadorService.java</code></p>
+            <pre><code>package gt.edu.url.tallerformularios.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import gt.edu.url.tallerformularios.model.Jugador;
+
+@Service
+public class JugadorService {
+
+    // La "memoria" de la aplicación: se vacía cada vez que reinicias.
+    private final List&lt;Jugador&gt; jugadores = new ArrayList&lt;&gt;();
+
+    public void guardar(Jugador jugador) {
+        jugadores.add(jugador);
+    }
+
+    public List&lt;Jugador&gt; listarTodos() {
+        return jugadores;
+    }
+
+    public int contar() {
+        return jugadores.size();
+    }
+
+    public Jugador buscarPorNumero(int numero) {
+        if (numero &lt; 1 || numero &gt; jugadores.size()) {
+            return null;
+        }
+        return jugadores.get(numero - 1);
+    }
+}</code></pre>
+            <div class="table-responsive">
+              <table class="table table-sm small mb-0">
+                <thead><tr><th>Import</th><th>Para qué sirve</th></tr></thead>
+                <tbody>
+                  <tr><td><code>java.util.List</code></td><td>El tipo "lista" (una colección ordenada de objetos)</td></tr>
+                  <tr><td><code>java.util.ArrayList</code></td><td>La implementación concreta que se usa al crearla con <code>new</code></td></tr>
+                  <tr><td><code>org.springframework.stereotype.Service</code></td><td>Habilita <code>@Service</code></td></tr>
+                  <tr><td><code>…model.Jugador</code></td><td>Tu propia clase, que vive en otro paquete</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit6">6. <code>JugadorController.java</code> <span class="badge text-bg-primary">lo creas tú</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/java/gt/edu/url/tallerformularios/<strong>controller</strong>/JugadorController.java</code></p>
+            <pre><code>package gt.edu.url.tallerformularios.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import gt.edu.url.tallerformularios.model.Jugador;
+import gt.edu.url.tallerformularios.service.JugadorService;
+
+@Controller
+public class JugadorController {
+
+    private final JugadorService jugadorService;
+
+    public JugadorController(JugadorService jugadorService) {
+        this.jugadorService = jugadorService;
+    }
+
+    // 1. Muestra el formulario vacío
+    @GetMapping("/jugadores/nuevo")
+    public String mostrarFormulario(Model model) {
+        model.addAttribute("jugador", new Jugador());
+        return "formulario";
+    }
+
+    // 2. Recibe el formulario, guarda y redirige
+    @PostMapping("/jugadores")
+    public String registrarJugador(@ModelAttribute Jugador jugador) {
+        jugadorService.guardar(jugador);
+        return "redirect:/jugadores";
+    }
+
+    // 3. Muestra la lista
+    @GetMapping("/jugadores")
+    public String listarJugadores(Model model) {
+        model.addAttribute("jugadores", jugadorService.listarTodos());
+        model.addAttribute("total", jugadorService.contar());
+        return "lista";
+    }
+
+    // 4. Muestra el detalle de uno solo (ruta parametrizada)
+    @GetMapping("/jugadores/{numero}")
+    public String verJugador(@PathVariable int numero, Model model) {
+        Jugador jugador = jugadorService.buscarPorNumero(numero);
+        if (jugador == null) {
+            return "redirect:/jugadores";
+        }
+        model.addAttribute("jugador", jugador);
+        model.addAttribute("numero", numero);
+        return "detalle";
+    }
+}</code></pre>
+            <div class="table-responsive">
+              <table class="table table-sm small mb-0">
+                <thead><tr><th>Import</th><th>Para qué sirve</th><th>Si falta…</th></tr></thead>
+                <tbody>
+                  <tr><td><code>…stereotype.Controller</code></td><td>Habilita <code>@Controller</code> (¡no es el mismo paquete que <code>@RestController</code>!)</td><td><code>cannot find symbol: Controller</code></td></tr>
+                  <tr><td><code>org.springframework.ui.Model</code></td><td>El "maletín" donde metes los datos que la plantilla va a mostrar</td><td><code>cannot find symbol: Model</code></td></tr>
+                  <tr><td><code>…annotation.GetMapping</code></td><td>Rutas que se visitan (mostrar)</td><td><code>cannot find symbol: GetMapping</code></td></tr>
+                  <tr><td><code>…annotation.PostMapping</code></td><td>Rutas que reciben formularios (guardar)</td><td><code>cannot find symbol: PostMapping</code></td></tr>
+                  <tr><td><code>…annotation.ModelAttribute</code></td><td>Convierte los campos del formulario en un objeto Java</td><td><code>cannot find symbol: ModelAttribute</code></td></tr>
+                  <tr><td><code>…annotation.PathVariable</code></td><td>Lee un valor incrustado en la ruta (<code>/jugadores/3</code>)</td><td><code>cannot find symbol: PathVariable</code></td></tr>
+                  <tr><td><code>…model.Jugador</code> y <code>…service.JugadorService</code></td><td>Tus propias clases, en otros paquetes</td><td><code>cannot find symbol</code></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit7">7. <code>templates/formulario.html</code> <span class="badge text-bg-primary">lo creas tú</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/resources/templates/formulario.html</code></p>
+            <pre><code>&lt;!doctype html&gt;
+&lt;html lang="es" xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8" /&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1" /&gt;
+  &lt;title&gt;Registrar jugador&lt;/title&gt;
+  &lt;link rel="stylesheet" th:href="@{/estilos.css}" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;main&gt;
+  &lt;h1&gt;Escuela de Fútbol Los Cerritos&lt;/h1&gt;
+  &lt;h2&gt;Registrar un jugador&lt;/h2&gt;
+
+  &lt;form th:action="@{/jugadores}" th:object="${jugador}" method="post"&gt;
+
+    &lt;label for="nombre"&gt;Nombre&lt;/label&gt;
+    &lt;input type="text" id="nombre" th:field="*{nombre}" required /&gt;
+
+    &lt;label for="edad"&gt;Edad&lt;/label&gt;
+    &lt;input type="number" id="edad" th:field="*{edad}" required /&gt;
+
+    &lt;label for="posicion"&gt;Posición&lt;/label&gt;
+    &lt;select id="posicion" th:field="*{posicion}"&gt;
+      &lt;option value="Portero"&gt;Portero&lt;/option&gt;
+      &lt;option value="Defensa"&gt;Defensa&lt;/option&gt;
+      &lt;option value="Mediocampista"&gt;Mediocampista&lt;/option&gt;
+      &lt;option value="Delantero"&gt;Delantero&lt;/option&gt;
+    &lt;/select&gt;
+
+    &lt;button type="submit"&gt;Guardar&lt;/button&gt;
+  &lt;/form&gt;
+
+  &lt;p&gt;&lt;a th:href="@{/jugadores}"&gt;Ver la lista de jugadores&lt;/a&gt;&lt;/p&gt;
+&lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            <div class="callout warning mb-0">
+              <div class="fw-semibold">El <code>xmlns:th</code> no es decoración</div>
+              <div class="small-muted">Esa línea en la etiqueta <code>&lt;html&gt;</code> es la que le dice al editor y a Thymeleaf que los atributos <code>th:</code> son válidos. Si la omites, el proyecto puede funcionar, pero VS Code te marcará advertencias en todo el archivo y perderás el autocompletado.</div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit8">8. <code>templates/lista.html</code> <span class="badge text-bg-primary">lo creas tú</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/resources/templates/lista.html</code></p>
+            <pre><code>&lt;!doctype html&gt;
+&lt;html lang="es" xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8" /&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1" /&gt;
+  &lt;title&gt;Jugadores inscritos&lt;/title&gt;
+  &lt;link rel="stylesheet" th:href="@{/estilos.css}" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;main&gt;
+  &lt;h1&gt;Jugadores inscritos&lt;/h1&gt;
+  &lt;p&gt;Total registrados: &lt;strong th:text="${total}"&gt;0&lt;/strong&gt;&lt;/p&gt;
+
+  &lt;p th:if="${total == 0}"&gt;Todavía no hay jugadores inscritos.&lt;/p&gt;
+
+  &lt;table th:if="${total &gt; 0}"&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th&gt;#&lt;/th&gt;&lt;th&gt;Nombre&lt;/th&gt;&lt;th&gt;Edad&lt;/th&gt;&lt;th&gt;Posición&lt;/th&gt;&lt;th&gt;&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr th:each="jugador, estado : ${jugadores}"&gt;
+        &lt;td th:text="${estado.count}"&gt;1&lt;/td&gt;
+        &lt;td th:text="${jugador.nombre}"&gt;Nombre de ejemplo&lt;/td&gt;
+        &lt;td th:text="${jugador.edad}"&gt;0&lt;/td&gt;
+        &lt;td th:text="${jugador.posicion}"&gt;Posición&lt;/td&gt;
+        &lt;td&gt;&lt;a th:href="@{/jugadores/{n}(n=${estado.count})}"&gt;Ver&lt;/a&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+
+  &lt;p&gt;&lt;a th:href="@{/jugadores/nuevo}"&gt;Registrar otro jugador&lt;/a&gt;&lt;/p&gt;
+&lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            <div class="table-responsive">
+              <table class="table table-sm small mb-0">
+                <thead><tr><th>Atributo</th><th>Qué hace</th></tr></thead>
+                <tbody>
+                  <tr><td><code>th:each="jugador, estado : ${jugadores}"</code></td><td>Repite esa fila una vez por cada elemento. <code>jugador</code> es el elemento actual; <code>estado</code> trae información extra del recorrido.</td></tr>
+                  <tr><td><code>${estado.count}</code></td><td>El número de la vuelta actual, empezando en 1 (útil para numerar).</td></tr>
+                  <tr><td><code>th:if="${total == 0}"</code></td><td>Muestra la etiqueta solo si la condición se cumple.</td></tr>
+                  <tr><td><code>@{/jugadores/{n}(n=${estado.count})}</code></td><td>Construye una dirección con un valor variable: <code>/jugadores/1</code>, <code>/jugadores/2</code>…</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit9">9. <code>templates/detalle.html</code> <span class="badge text-bg-primary">lo creas tú</span></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/resources/templates/detalle.html</code></p>
+            <pre><code>&lt;!doctype html&gt;
+&lt;html lang="es" xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8" /&gt;
+  &lt;title&gt;Detalle del jugador&lt;/title&gt;
+  &lt;link rel="stylesheet" th:href="@{/estilos.css}" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;main&gt;
+  &lt;h1&gt;Jugador #&lt;span th:text="${numero}"&gt;1&lt;/span&gt;&lt;/h1&gt;
+
+  &lt;p&gt;&lt;strong&gt;Nombre:&lt;/strong&gt; &lt;span th:text="${jugador.nombre}"&gt;—&lt;/span&gt;&lt;/p&gt;
+  &lt;p&gt;&lt;strong&gt;Edad:&lt;/strong&gt; &lt;span th:text="${jugador.edad}"&gt;—&lt;/span&gt;&lt;/p&gt;
+  &lt;p&gt;&lt;strong&gt;Posición:&lt;/strong&gt; &lt;span th:text="${jugador.posicion}"&gt;—&lt;/span&gt;&lt;/p&gt;
+
+  &lt;p&gt;&lt;a th:href="@{/jugadores}"&gt;Volver a la lista&lt;/a&gt;&lt;/p&gt;
+&lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit10">10. <code>application.properties</code></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/resources/application.properties</code></p>
+            <pre><code>spring.application.name=taller-formularios
+
+# Mientras desarrollas, evita que Thymeleaf guarde en caché las plantillas:
+# así ves los cambios del HTML sin reiniciar el proyecto cada vez.
+spring.thymeleaf.cache=false</code></pre>
+            <div class="small-muted">Esa segunda línea ahorra muchísimo tiempo esta semana. Con ella, al editar una plantilla basta con recargar el navegador; sin ella, hay que reiniciar el proyecto para ver cada cambio.</div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit11">11. <code>static/estilos.css</code></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/resources/static/estilos.css</code></p>
+            <p class="small-muted mb-2">Va en <code>static/</code> (no en <code>templates/</code>): es un archivo que se entrega tal cual, sin procesar.</p>
+            <pre><code>body {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: #f6f8fb;
+  margin: 0;
+  padding: 2rem 1rem;
+}
+
+main {
+  max-width: 620px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem 1.75rem;
+  box-shadow: 0 10px 30px rgba(16, 24, 40, 0.08);
+}
+
+h1 { color: #0b3d91; font-size: 1.5rem; margin-top: 0; }
+h2 { font-size: 1.1rem; color: #334155; }
+
+form { display: flex; flex-direction: column; gap: 0.4rem; margin: 1rem 0; }
+
+label { font-weight: 600; font-size: 0.9rem; }
+
+input, select {
+  padding: 0.55rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+button {
+  margin-top: 0.75rem;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  background: #0d6efd;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+button:hover { background: #0b5ed7; }
+
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { text-align: left; padding: 0.5rem; border-bottom: 1px solid #e2e8f0; }
+th { background: #f1f5f9; }
+
+a { color: #0d6efd; }</code></pre>
+          </div>
+        </div>
+
+        <div class="callout success">
+          <div class="fw-semibold">Para tu proyecto real</div>
+          <div class="small-muted">
+            Cambia tres cosas: <strong>(1)</strong> <code>tallerformularios</code> por tu paquete base;
+            <strong>(2)</strong> <code>Jugador</code> por tu entidad principal (niño, paciente, donante…) y sus
+            campos; <strong>(3)</strong> el nombre de la institución. La guía paso a paso está en
+            <a href="proyecto.html">Proyecto</a>.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Ejercicios y Kit — Semana 10 · Rutas, controladores y formularios (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

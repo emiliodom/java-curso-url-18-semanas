@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guía Docente — Semana 10 (70 min)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 10 — Formularios</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link active" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Guía Docente · Sesión sincrónica de 70 minutos</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Semana 10 — Rutas, controladores y formularios</h1>
+          <div class="small-muted">Sábado 19 de septiembre de 2026 · 11:10–12:20 · En línea · Dominio de la demo: <strong>Escuela de Fútbol Los Cerritos</strong>. Alcance: el registro se guarda <strong>en memoria</strong>; la base de datos es la Semana 12. Sin Entrega Parcial esta semana.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <div class="row g-3">
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="h5 section-title">Objetivos (hoy)</h2>
+            <ul class="mb-0">
+              <li>Distinguir <code>@Controller</code> (devuelve una <em>vista</em>) de <code>@RestController</code> (devuelve <em>datos</em>).</li>
+              <li>Agregar la dependencia de Thymeleaf a un proyecto que ya existe.</li>
+              <li>Crear la primera plantilla en <code>templates/</code> y entender por qué no va en <code>static/</code>.</li>
+              <li>Mostrar un formulario con <code>th:object</code> y <code>th:field</code>.</li>
+              <li>Recibir el envío con <code>@PostMapping</code> + <code>@ModelAttribute</code> y guardarlo en el servicio.</li>
+              <li>Aplicar el patrón <strong>guardar → redirigir → mostrar</strong> y explicar por qué existe.</li>
+              <li>Listar con <code>th:each</code> y abrir un detalle con <code>@PathVariable</code>.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h2 class="h5 section-title">Distribución del tiempo (70 min)</h2>
+            <table class="table table-sm small mb-0">
+              <tbody>
+                <tr><td><span class="time-chip">00–05</span></td><td>Bienvenida + Quiz (Presaberes)</td></tr>
+                <tr><td><span class="time-chip">05–13</span></td><td><code>@Controller</code> vs <code>@RestController</code> + agregar Thymeleaf</td></tr>
+                <tr><td><span class="time-chip">13–25</span></td><td>Primera plantilla y formulario en pantalla (GET)</td></tr>
+                <tr><td><span class="time-chip">25–27</span></td><td>Pausa activa</td></tr>
+                <tr><td><span class="time-chip">27–42</span></td><td>Recibir el POST, guardar en memoria y redirigir</td></tr>
+                <tr><td><span class="time-chip">42–52</span></td><td>Listado con <code>th:each</code> y ruta parametrizada</td></tr>
+                <tr><td><span class="time-chip">52–60</span></td><td>Challenge</td></tr>
+                <tr><td><span class="time-chip">60–67</span></td><td>Quiz (Final de clase)</td></tr>
+                <tr><td><span class="time-chip">67–70</span></td><td>Cierre + lanzamiento de la Guía 10</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <h2 class="h5 section-title">Normas rápidas</h2>
+            <ul class="mb-0">
+              <li>Hoy conviven dos anotaciones parecidas. Repetir la frase ancla cada vez: <em>"<code>@RestController</code> devuelve <strong>lo que se lee</strong>; <code>@Controller</code> devuelve <strong>el nombre de un archivo</strong>"</em>.</li>
+              <li>Los datos se pierden al reiniciar y está bien. Decirlo de frente evita que crean que algo falló.</li>
+              <li>Pregunta ancla: <em>"¿el <code>th:action</code> del formulario apunta exactamente a la misma ruta que tu <code>@PostMapping</code>?"</em></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout warning mt-3">
+          <div class="fw-semibold">Checklist antes de iniciar (docente)</div>
+          <ul class="small-muted mb-0">
+            <li>Tener el proyecto de demo <strong>ya con Thymeleaf descargado</strong> (haberlo ejecutado una vez antes de la sesión): la primera descarga de la dependencia tarda y arruina el ritmo si se hace en vivo.</li>
+            <li>Tener a mano el error de "plantilla no encontrada" para mostrarlo a propósito (ver bloque 3).</li>
+            <li>Avisar que quien no tenga el proyecto de la Semana 9 funcionando use el <a href="ejercicios.html">Kit de archivos completos</a>.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="h4 section-title">Guion minuto a minuto (70 min)</h2>
+
+            <div class="accordion" id="acc">
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#c1">
+                    <span class="time-chip me-2">00–05</span> 1) Bienvenida + Quiz (Presaberes)
+                  </button>
+                </h2>
+                <div id="c1" class="accordion-collapse collapse show" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ol>
+                      <li>Retoma la promesa pendiente: <em>"desde la Semana 8 les dije que el guardado llegaba después. Hoy llega la primera mitad: el dato entra y se queda mientras la aplicación esté encendida"</em>.</li>
+                      <li>Comparte el <a href="quiz.html">Quiz</a> en modo <strong>Presaberes</strong> (4 minutos, individual).</li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c2">
+                    <span class="time-chip me-2">05–13</span> 2) <code>@Controller</code> vs <code>@RestController</code> + Thymeleaf
+                  </button>
+                </h2>
+                <div id="c2" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">La distinción central de la semana, en una tabla:</p>
+                    <div class="table-responsive">
+                      <table class="table table-sm small">
+                        <thead><tr><th></th><th><code>@RestController</code> (S8–S9)</th><th><code>@Controller</code> (hoy)</th></tr></thead>
+                        <tbody>
+                          <tr><td>Qué devuelve el método</td><td>El contenido que verá el usuario</td><td>El <strong>nombre de una plantilla</strong></td></tr>
+                          <tr><td><code>return "formulario";</code> muestra…</td><td>la palabra <em>formulario</em> como texto</td><td>el archivo <code>templates/formulario.html</code></td></tr>
+                          <tr><td>Sirve para</td><td>APIs, datos, JSON</td><td>Páginas web completas</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="callout warning mb-2">
+                      <div class="fw-semibold">Demostración que vale más que la explicación (1 minuto)</div>
+                      <div class="small-muted">Deja a propósito <code>@RestController</code> en la clase nueva y visita la ruta: el navegador mostrará literalmente la palabra <code>formulario</code>. Cámbialo a <code>@Controller</code> delante de ellos y recarga: ahora aparece la página. Ese contraste fija la idea mejor que cualquier definición.</div>
+                    </div>
+                    <p class="small-muted mb-2">Agrega Thymeleaf al <code>pom.xml</code>, dentro de <code>&lt;dependencies&gt;</code>:</p>
+                    <pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+                    <p class="small-muted mb-0">Al guardar, VS Code descarga la dependencia (la primera vez tarda). Recuerda la Semana 7: un <em>Starter</em> es un paquete de piezas ya combinadas; este trae el motor que convierte plantillas en HTML.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c3">
+                    <span class="time-chip me-2">13–25</span> 3) Primera plantilla y formulario en pantalla
+                  </button>
+                </h2>
+                <div id="c3" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">Carpeta nueva: <code>src/main/resources/<strong>templates</strong>/</code>. Explica la diferencia con <code>static/</code>:</p>
+                    <div class="table-responsive">
+                      <table class="table table-sm small">
+                        <thead><tr><th>Carpeta</th><th>Qué contiene</th><th>¿Se puede abrir por URL directa?</th></tr></thead>
+                        <tbody>
+                          <tr><td><code>static/</code></td><td>Archivos que se entregan tal cual: CSS, imágenes, JS</td><td>Sí (<code>/estilos.css</code>)</td></tr>
+                          <tr><td><code>templates/</code></td><td>Plantillas que el servidor procesa antes de enviarlas</td><td><strong>No.</strong> Solo se llega a ellas a través de un <code>@Controller</code></td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p class="small-muted mb-2">Crea <code>templates/formulario.html</code> y el método que lo muestra:</p>
+                    <pre><code>@GetMapping("/jugadores/nuevo")
+public String mostrarFormulario(Model model) {
+    model.addAttribute("jugador", new Jugador());
+    return "formulario";       // ← busca templates/formulario.html
+}</code></pre>
+                    <p class="small-muted mb-2">Y en la plantilla, las tres piezas del enlace con el objeto:</p>
+                    <pre><code>&lt;form th:action="@{/jugadores}" th:object="${jugador}" method="post"&gt;
+    &lt;input type="text" th:field="*{nombre}" /&gt;
+    &lt;input type="number" th:field="*{edad}" /&gt;
+    &lt;button type="submit"&gt;Guardar&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+                    <div class="callout mb-2">
+                      <div class="fw-semibold">Las tres piezas, dichas despacio</div>
+                      <div class="small-muted"><code>th:object="${jugador}"</code> = "este formulario llena <em>ese</em> objeto" · <code>th:field="*{nombre}"</code> = "esta casilla es <em>ese</em> atributo" (el <code>*</code> significa "dentro del objeto de arriba") · <code>th:action="@{/jugadores}"</code> = "envíalo a esta ruta". El <code>@{...}</code> construye la dirección correctamente aunque la aplicación cambie de carpeta.</div>
+                    </div>
+                    <div class="callout danger mb-0">
+                      <div class="fw-semibold">Error que conviene provocar aquí</div>
+                      <div class="small-muted">Escribe mal el nombre en el <code>return</code> (por ejemplo <code>"formularios"</code>) y muestra el error resultante: <code>Error resolving template [formularios], template might not exist</code>. Es el error más frecuente de la semana y así lo reconocen cuando les pase solos.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c4">
+                    <span class="time-chip me-2">25–27</span> 4) Pausa activa (2 min)
+                  </button>
+                </h2>
+                <div id="c4" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>Estirar, agua, mirar lejos de la pantalla 20 segundos.</li>
+                      <li>Micro-check en el chat: "¿en qué carpeta va una plantilla de Thymeleaf?"</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c5">
+                    <span class="time-chip me-2">27–42</span> 5) Recibir el POST, guardar y redirigir
+                  </button>
+                </h2>
+                <div id="c5" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">El método que recibe el envío:</p>
+                    <pre><code>@PostMapping("/jugadores")
+public String registrarJugador(@ModelAttribute Jugador jugador) {
+    jugadorService.guardar(jugador);
+    return "redirect:/jugadores";
+}</code></pre>
+                    <div class="table-responsive">
+                      <table class="table table-sm small">
+                        <thead><tr><th>Pieza</th><th>Qué hace</th></tr></thead>
+                        <tbody>
+                          <tr><td><code>@PostMapping("/jugadores")</code></td><td>Atiende los envíos de formulario a esa ruta. Misma ruta que el <code>@GetMapping</code> de la lista, pero distinto método HTTP: no chocan.</td></tr>
+                          <tr><td><code>@ModelAttribute Jugador jugador</code></td><td>Spring crea un <code>Jugador</code> y llena sus atributos con lo que venga del formulario, casando por nombre. Eso es el <strong>binding</strong>.</td></tr>
+                          <tr><td><code>return "redirect:/jugadores";</code></td><td>No devuelve una plantilla: le ordena al navegador que vaya a otra ruta.</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="callout warning mb-2">
+                      <div class="fw-semibold">Por qué el binding depende de los <em>setters</em> y del constructor vacío</div>
+                      <div class="small-muted">Spring construye el objeto con el constructor sin parámetros y luego llama a <code>setNombre(...)</code>, <code>setEdad(...)</code>. Si la clase no tiene constructor vacío o le faltan los setters, el formulario "no guarda nada" sin decir por qué. Vale la pena abrir la clase <code>Jugador</code> y señalarlo.</div>
+                    </div>
+                    <div class="callout mb-0">
+                      <div class="fw-semibold">Por qué se redirige en vez de devolver la plantilla (valor de la semana: experiencia de usuario)</div>
+                      <div class="small-muted">Si después de guardar devolvieras directamente la lista, la dirección del navegador seguiría siendo el POST: al pulsar F5 el navegador vuelve a enviar el formulario y <strong>se guarda el registro otra vez</strong>. Redirigir cambia la dirección a un GET normal y recargar ya es inofensivo. El <a href="challenge.html">Challenge</a> tiene un simulador que muestra exactamente ese duplicado.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c6">
+                    <span class="time-chip me-2">42–52</span> 6) Listado y ruta parametrizada
+                  </button>
+                </h2>
+                <div id="c6" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <p class="small-muted mb-2">El controlador pasa la lista a la plantilla, y Thymeleaf repite una fila por elemento:</p>
+                    <pre><code>&lt;tr th:each="jugador, estado : ${jugadores}"&gt;
+    &lt;td th:text="${estado.count}"&gt;1&lt;/td&gt;
+    &lt;td th:text="${jugador.nombre}"&gt;Nombre&lt;/td&gt;
+    &lt;td th:text="${jugador.edad}"&gt;0&lt;/td&gt;
+&lt;/tr&gt;</code></pre>
+                    <p class="small-muted mb-2">Y la ruta parametrizada para el detalle:</p>
+                    <pre><code>@GetMapping("/jugadores/{numero}")
+public String verJugador(@PathVariable int numero, Model model) { ... }</code></pre>
+                    <div class="callout mb-2">
+                      <div class="fw-semibold">Dos detalles que los estudiantes preguntan siempre</div>
+                      <div class="small-muted">
+                        <strong>(1)</strong> El texto que escribes dentro de la etiqueta (<code>&gt;Nombre&lt;</code>) es solo relleno para poder abrir el archivo en el navegador mientras diseñas: al ejecutar, <code>th:text</code> lo reemplaza.<br />
+                        <strong>(2)</strong> <code>/jugadores/nuevo</code> y <code>/jugadores/{numero}</code> no chocan: Spring prefiere siempre la coincidencia literal antes que la variable.
+                      </div>
+                    </div>
+                    <div class="callout danger mb-0">
+                      <div class="fw-semibold">Cierre honesto del alcance (importante decirlo aquí)</div>
+                      <div class="small-muted">Reinicia el proyecto en vivo y muestra que la lista quedó vacía. <em>"Los datos viven en memoria: se borran al apagar. En la Semana 12 conectamos una base de datos y esto ya no pasa."</em> Anticiparlo evita que lo reporten como error durante la semana.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c7">
+                    <span class="time-chip me-2">52–60</span> 7) Challenge
+                  </button>
+                </h2>
+                <div id="c7" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ol>
+                      <li>Comparte el <a href="challenge.html">Challenge</a>: pestaña 1 "¿Dónde vive cada archivo?" y pestaña 2 "Simulador: guardar y redirigir".</li>
+                      <li>Modela una vez el escenario <strong>"sin redirect"</strong> del simulador (2 min): se ve el registro duplicado al recargar.</li>
+                      <li>Resuelven por su cuenta y exportan el PDF (evidencia de la Actividad en clase junto con el quiz).</li>
+                    </ol>
+                    <div class="callout warning mb-0">
+                      <div class="fw-semibold">Pregunta guía mientras circulas</div>
+                      <div class="small-muted">"Si pones tu plantilla en <code>static/</code> en vez de <code>templates/</code>, ¿qué crees que pasa?" (Respuesta: se descarga tal cual, con las etiquetas <code>th:</code> sin procesar, porque nadie la procesó.)</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c8">
+                    <span class="time-chip me-2">60–67</span> 8) Quiz (Final de clase)
+                  </button>
+                </h2>
+                <div id="c8" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ol>
+                      <li>Comparte de nuevo el <a href="quiz.html">Quiz</a>, esta vez en modo <strong>Final de clase</strong> (12 preguntas, 6 min).</li>
+                      <li>Calificar, revisar la retroalimentación y <strong>exportar a PDF</strong>.</li>
+                      <li>Los PDF del quiz y del challenge = evidencia de la <strong>Actividad en clase – Sesión 10</strong>.</li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c9">
+                    <span class="time-chip me-2">67–70</span> 9) Cierre + lanzamiento de la Guía 10
+                  </button>
+                </h2>
+                <div id="c9" class="accordion-collapse collapse" data-bs-parent="#acc">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>Síntesis en 3 frases: <code>@Controller</code> devuelve el nombre de una plantilla; Thymeleaf la convierte en HTML con los datos del <code>Model</code>; <code>@PostMapping</code> + <code>@ModelAttribute</code> convierten el formulario en un objeto Java.</li>
+                      <li>Presenta el <a href="proyecto.html">Proyecto (Guía 10)</a>: el <strong>módulo de registro de la entidad principal</strong> del proyecto propio — fecha límite antes de la Sesión 11 (26 de septiembre de 2026).</li>
+                      <li>Ticket de salida: <strong>qué entidad va a registrar cada quien</strong> y con qué tres campos (así detectas de una vez a quien no tenga claro su modelo).</li>
+                      <li>Invitación a la <a href="../evaluacion_docente/index.html">evaluación anónima</a>.</li>
+                      <li>Puente a la Semana 11: "hoy guardamos lo que el usuario escriba, aunque sea una edad de 500 años. La próxima semana aprendemos a validarlo y a mostrar errores".</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="callout success mt-3">
+          <div class="fw-semibold">Plan B (si la descarga de Thymeleaf falla en vivo o el tiempo se acorta)</div>
+          <div class="small-muted">
+            Ten el proyecto de demo ya compilado y funcionando en una segunda ventana para continuar sin esperar la
+            descarga. Si hay que recortar, sacrifica el bloque 6 (listado y ruta parametrizada) y déjalo como
+            trabajo autónomo con el <a href="ejercicios.html">Kit</a>: lo que <strong>no</strong> debe recortarse es
+            el circuito completo del bloque 5, porque es lo que evalúa la Guía 10.
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Guía Docente — Semana 10 (formato 18 semanas · 70 min) · Ejercicios y Kit en <a href="ejercicios.html">ejercicios.html</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

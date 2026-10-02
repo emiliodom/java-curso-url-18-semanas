@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz — Semana 10 (Presaberes y Final)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 10 — Formularios</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Quiz de la semana · Elige el modo con el menú</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Presaberes y Quiz Final, en un solo lugar</h1>
+          <div class="small-muted" id="quizTypeLabel">Presaberes · 8 preguntas · no cuenta para nota</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 900px;">
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="row g-3 align-items-end">
+          <div class="col-md-6">
+            <label class="form-label fw-semibold" for="quizType">¿Qué quiz vas a resolver?</label>
+            <select id="quizType" class="form-select" onchange="renderQuiz()">
+              <option value="presaberes">🟡 Presaberes (inicio de clase, no cuenta para nota)</option>
+              <option value="final">🔴 Final de clase (evidencia de la Actividad en clase)</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold" for="studentName">Nombre del estudiante (aparecerá en el PDF)</label>
+            <input id="studentName" class="form-control" type="text" placeholder="Nombre y apellido" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout mb-3 no-print">
+      <div class="fw-semibold">¿Cómo funciona?</div>
+      <div class="small-muted">Cada vez que cambias de modo (o pulsas "🔀 Nuevas preguntas") se eligen preguntas <strong>al azar</strong> de un banco más grande, y además el <strong>orden de las opciones cambia</strong>: no puedes memorizar posiciones, hay que leer. Los dos modos comparten varios conceptos a propósito.</div>
+    </div>
+
+    <div id="quizContainer"></div>
+
+    <div id="scoreBanner" class="score-banner"></div>
+
+    <div class="d-flex gap-2 flex-wrap mt-3 no-print">
+      <button class="btn btn-primary btn-lg" onclick="gradeQuiz()">Calificar</button>
+      <button class="btn btn-outline-secondary" onclick="resetQuiz()">Reintentar (mismas preguntas)</button>
+      <button class="btn btn-outline-info" onclick="regenerateQuiz()">🔀 Nuevas preguntas</button>
+      <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      <a class="btn btn-outline-primary ms-auto" href="clase.html">Continuar a la clase →</a>
+    </div>
+
+    <div class="callout warning mt-4 no-print">
+      <div class="fw-semibold">Instrucciones de entrega (si estás en modo Final)</div>
+      <ol class="small-muted mb-0">
+        <li>Escribe tu nombre en la casilla de arriba.</li>
+        <li>Pulsa <strong>Calificar</strong> y revisa la retroalimentación de cada pregunta.</li>
+        <li>Pulsa <strong>Exportar a PDF</strong> y guarda el archivo como <code>QuizFinal_S10_TuNombre.pdf</code>.</li>
+        <li>Súbelo al aula virtual junto con el PDF del <a href="challenge.html">Challenge</a>.</li>
+      </ol>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Quiz — Semana 10 · Rutas, controladores y formularios (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script>
+    // ===== Banco de preguntas de la Semana 10 =====
+    // level: 'presaberes' | 'final' | 'ambas'
+    // La opción correcta se escribe siempre de primera para poder revisarla fácil;
+    // la página baraja las opciones antes de mostrarlas (ver script más abajo).
+    var QUESTION_BANK = [
+      // ---------- Solo Presaberes ----------
+      {
+        level: 'presaberes',
+        pregunta: '(Repaso S8) Hasta ahora, ¿qué hacía el formulario de tu proyecto?',
+        opciones: [{ v: 'a', t: 'Consultaba información y la mostraba, sin guardar nada' }, { v: 'b', t: 'Guardaba los datos en una base de datos' }, { v: 'c', t: 'Enviaba correos electrónicos' }],
+        correcta: 'a',
+        fbOk: 'Correcto: consultaba con fetch y mostraba la respuesta. Hoy empezamos a guardar.',
+        fbKo: 'Solo consultaba (con fetch) y mostraba la respuesta. Guardar datos es justamente lo que empezamos hoy.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: '(Repaso S9) ¿Qué anotación marca la clase que contiene las reglas y decisiones de la aplicación?',
+        opciones: [{ v: 'a', t: '@Service' }, { v: 'b', t: '@GetMapping' }, { v: 'c', t: '@SpringBootApplication' }],
+        correcta: 'a',
+        fbOk: 'Correcto: la capa de negocio se marca con @Service.',
+        fbKo: 'Es @Service, la capa de negocio que ya usaste en la Semana 9.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: 'Cuando llenas un formulario en cualquier página de internet y pulsas "Enviar", ¿qué crees que ocurre?',
+        opciones: [{ v: 'a', t: 'El navegador manda los datos a una dirección del servidor, que los procesa' }, { v: 'b', t: 'Los datos se quedan solo en tu computadora' }, { v: 'c', t: 'Se imprime automáticamente una copia' }],
+        correcta: 'a',
+        fbOk: 'Correcto: el navegador envía los datos a una ruta del servidor. Hoy escribes tú esa ruta.',
+        fbKo: 'El navegador manda los datos a una dirección del servidor, que decide qué hacer con ellos. Eso es lo que programas hoy.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: '¿Qué crees que significa que una plantilla se procese "en el servidor"?',
+        opciones: [{ v: 'a', t: 'Que el servidor arma el HTML final con los datos antes de enviarlo al navegador' }, { v: 'b', t: 'Que el navegador descarga un programa y lo ejecuta' }, { v: 'c', t: 'Que la página se guarda en el servidor para siempre' }],
+        correcta: 'a',
+        fbOk: 'Correcto: el navegador recibe HTML normal, ya con los datos puestos.',
+        fbKo: 'Que el servidor arma el HTML ya con los datos y lo envía terminado. El navegador nunca ve las etiquetas de la plantilla.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: '(Repaso S9) ¿Dónde debe estar una clase para que Spring la encuentre?',
+        opciones: [{ v: 'a', t: 'Dentro del paquete base o en una subcarpeta suya' }, { v: 'b', t: 'En cualquier carpeta, da igual' }, { v: 'c', t: 'Siempre en la carpeta static' }],
+        correcta: 'a',
+        fbOk: 'Correcto: es la regla del escaneo de componentes que viste la semana pasada.',
+        fbKo: 'Dentro del paquete base (el de tu ...Application.java) o en subcarpetas suyas.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: '¿Qué diferencia intuyes entre GET y POST?',
+        opciones: [{ v: 'a', t: 'GET pide información; POST envía información para que el servidor la procese' }, { v: 'b', t: 'GET es para textos y POST para imágenes' }, { v: 'c', t: 'No hay ninguna diferencia' }],
+        correcta: 'a',
+        fbOk: 'Correcto: esa es exactamente la distinción que usaremos hoy.',
+        fbKo: 'GET pide/consulta; POST envía datos para que el servidor los procese (por ejemplo, los guarde).'
+      },
+      {
+        level: 'presaberes',
+        pregunta: 'Si guardas datos "en memoria", ¿qué esperarías que pase al apagar y volver a encender la aplicación?',
+        opciones: [{ v: 'a', t: 'Que los datos se pierdan' }, { v: 'b', t: 'Que los datos sigan ahí' }, { v: 'c', t: 'Que se envíen por correo' }],
+        correcta: 'a',
+        fbOk: 'Correcto: por eso más adelante se necesita una base de datos.',
+        fbKo: 'Se pierden. Guardar "en memoria" significa mientras la aplicación esté encendida; la base de datos llega en la Semana 12.'
+      },
+      {
+        level: 'presaberes',
+        pregunta: '(Repaso S9) En la arquitectura en capas, ¿quién debería guardar los datos: el controlador o el servicio?',
+        opciones: [{ v: 'a', t: 'El servicio; el controlador solo recibe la petición y delega' }, { v: 'b', t: 'El controlador, para que sea más rápido' }, { v: 'c', t: 'La vista' }],
+        correcta: 'a',
+        fbOk: 'Correcto: el controlador recibe y delega; el servicio decide y guarda.',
+        fbKo: 'El servicio. Si el controlador guardara por su cuenta estaría saltándose capas, el antipatrón de la Semana 6.'
+      },
+
+      // ---------- Ambas ----------
+      {
+        level: 'ambas',
+        pregunta: '¿Cuál es la diferencia entre @Controller y @RestController?',
+        opciones: [{ v: 'a', t: '@Controller devuelve el nombre de una plantilla; @RestController devuelve directamente los datos' }, { v: 'b', t: 'Son exactamente iguales' }, { v: 'c', t: '@Controller solo funciona con bases de datos' }],
+        correcta: 'a',
+        fbOk: 'Correcto: es la distinción central de la semana.',
+        fbKo: '@Controller devuelve el nombre de una plantilla (una página); @RestController devuelve los datos tal cual (texto o JSON).'
+      },
+      {
+        level: 'ambas',
+        pregunta: 'En un método de @Controller, ¿qué hace return "lista";?',
+        opciones: [{ v: 'a', t: 'Muestra la plantilla templates/lista.html' }, { v: 'b', t: 'Escribe la palabra "lista" en la página' }, { v: 'c', t: 'Redirige a la ruta /lista' }],
+        correcta: 'a',
+        fbOk: 'Correcto: se busca el archivo con ese nombre dentro de templates/.',
+        fbKo: 'Muestra templates/lista.html. Escribir la palabra sería el comportamiento de @RestController, y redirigir requeriría "redirect:/lista".'
+      },
+      {
+        level: 'ambas',
+        pregunta: '¿En qué carpeta van las plantillas de Thymeleaf?',
+        opciones: [{ v: 'a', t: 'src/main/resources/templates/' }, { v: 'b', t: 'src/main/resources/static/' }, { v: 'c', t: 'src/main/java/' }],
+        correcta: 'a',
+        fbOk: 'Correcto: en templates/, que el servidor procesa antes de enviar.',
+        fbKo: 'En src/main/resources/templates/. La carpeta static/ es para archivos que se entregan tal cual, como el CSS.'
+      },
+      {
+        level: 'ambas',
+        pregunta: '¿Qué anotación atiende el envío de un formulario?',
+        opciones: [{ v: 'a', t: '@PostMapping' }, { v: 'b', t: '@GetMapping' }, { v: 'c', t: '@PathVariable' }],
+        correcta: 'a',
+        fbOk: 'Correcto: los formularios que envían datos usan POST.',
+        fbKo: 'Es @PostMapping. @GetMapping atiende visitas y @PathVariable lee valores incrustados en la ruta.'
+      },
+      {
+        level: 'ambas',
+        pregunta: '¿Qué hace @ModelAttribute en el método que recibe el formulario?',
+        opciones: [{ v: 'a', t: 'Convierte los campos del formulario en un objeto Java, casándolos por nombre' }, { v: 'b', t: 'Guarda el objeto en la base de datos' }, { v: 'c', t: 'Valida que los datos sean correctos' }],
+        correcta: 'a',
+        fbOk: 'Correcto: a eso se le llama binding.',
+        fbKo: 'Convierte los datos del formulario en un objeto Java (binding). No guarda ni valida: eso es el servicio y la Semana 11.'
+      },
+      {
+        level: 'ambas',
+        pregunta: '¿Qué atributo de Thymeleaf repite una fila por cada elemento de una lista?',
+        opciones: [{ v: 'a', t: 'th:each' }, { v: 'b', t: 'th:text' }, { v: 'c', t: 'th:if' }],
+        correcta: 'a',
+        fbOk: 'Correcto: th:each recorre la colección.',
+        fbKo: 'Es th:each. th:text reemplaza contenido y th:if muestra u oculta según una condición.'
+      },
+      {
+        level: 'ambas',
+        pregunta: 'Después de guardar en un @PostMapping, ¿qué conviene devolver?',
+        opciones: [{ v: 'a', t: 'Una redirección, como return "redirect:/jugadores";' }, { v: 'b', t: 'La plantilla de la lista directamente' }, { v: 'c', t: 'Nada, el método puede ser void siempre' }],
+        correcta: 'a',
+        fbOk: 'Correcto: así, si el usuario recarga, no se vuelve a guardar.',
+        fbKo: 'Una redirección. Si devuelves la plantilla directamente, al recargar el navegador reenvía el formulario y se duplica el registro.'
+      },
+      {
+        level: 'ambas',
+        pregunta: '¿Qué significa el símbolo @{...} en una plantilla, como en th:href="@{/jugadores}"?',
+        opciones: [{ v: 'a', t: 'Que es una dirección (URL)' }, { v: 'b', t: 'Que es una variable enviada por el controlador' }, { v: 'c', t: 'Que es un comentario' }],
+        correcta: 'a',
+        fbOk: 'Correcto: @{...} construye direcciones; ${...} lee variables.',
+        fbKo: 'Es una dirección (URL). Las variables del controlador se leen con ${...}.'
+      },
+
+      // ---------- Solo Final ----------
+      {
+        level: 'final',
+        pregunta: 'Tu plantilla usa th:object="${jugador}" pero el controlador no envió ningún objeto llamado "jugador". ¿Qué ocurre?',
+        opciones: [{ v: 'a', t: 'Error: "Neither BindingResult nor plain target object for bean name jugador available"' }, { v: 'b', t: 'La página se muestra con el formulario vacío, sin problema' }, { v: 'c', t: 'El proyecto no compila' }],
+        correcta: 'a',
+        fbOk: 'Correcto: el formulario necesita un objeto al cual amarrarse, aunque venga vacío.',
+        fbKo: 'Da ese error en tiempo de ejecución. Hay que enviar model.addAttribute("jugador", new Jugador()) desde el método GET.'
+      },
+      {
+        level: 'final',
+        pregunta: 'Tu formulario guarda registros en blanco (nombre vacío, edad 0) y no aparece ningún error. ¿Cuál es la causa más probable?',
+        opciones: [{ v: 'a', t: 'A la clase del modelo le faltan los setters' }, { v: 'b', t: 'Falta la dependencia de Thymeleaf' }, { v: 'c', t: 'El puerto 8080 está ocupado' }],
+        correcta: 'a',
+        fbOk: 'Correcto: Spring llena el objeto llamando a los setters; sin ellos queda vacío y en silencio.',
+        fbKo: 'Le faltan los setters al modelo (o el th:field no coincide con el nombre del atributo). Spring no avisa: solo llegan datos vacíos.'
+      },
+      {
+        level: 'final',
+        pregunta: '¿Por qué el modelo necesita un constructor vacío?',
+        opciones: [{ v: 'a', t: 'Porque Spring crea el objeto sin datos y luego lo llena con los setters' }, { v: 'b', t: 'Porque Java lo exige en todas las clases' }, { v: 'c', t: 'Porque lo pide la base de datos' }],
+        correcta: 'a',
+        fbOk: 'Correcto: primero lo crea vacío, después lo llena.',
+        fbKo: 'Porque Spring primero crea el objeto vacío y luego lo llena con los setters. Ojo: si escribes un constructor con parámetros, Java ya no te da el vacío automáticamente.'
+      },
+      {
+        level: 'final',
+        pregunta: 'Tienes @GetMapping("/jugadores") y @PostMapping("/jugadores") en el mismo controlador. ¿Hay conflicto?',
+        opciones: [{ v: 'a', t: 'No: una ruta se identifica por dirección + método HTTP' }, { v: 'b', t: 'Sí, el proyecto no arranca' }, { v: 'c', t: 'Sí, hay que cambiar una de las dos direcciones' }],
+        correcta: 'a',
+        fbOk: 'Correcto: GET /jugadores y POST /jugadores son rutas distintas.',
+        fbKo: 'No hay conflicto: la dirección es la misma pero el método HTTP es distinto, así que son dos rutas diferentes.'
+      },
+      {
+        level: 'final',
+        pregunta: 'Colocas tu plantilla en static/ en vez de templates/. ¿Qué pasa?',
+        opciones: [{ v: 'a', t: 'Se entrega tal cual, sin procesar: los datos no aparecen' }, { v: 'b', t: 'Funciona igual' }, { v: 'c', t: 'El proyecto no compila' }],
+        correcta: 'a',
+        fbOk: 'Correcto: nadie la procesa, así que los th: no hacen nada.',
+        fbKo: 'Se entrega tal cual, sin procesar. Solo lo que está en templates/ pasa por Thymeleaf.'
+      },
+      {
+        level: 'final',
+        pregunta: '¿Qué anotación usarías para leer el 3 de la dirección /jugadores/3?',
+        opciones: [{ v: 'a', t: '@PathVariable' }, { v: 'b', t: '@RequestParam' }, { v: 'c', t: '@ModelAttribute' }],
+        correcta: 'a',
+        fbOk: 'Correcto: @PathVariable lee valores incrustados en la ruta.',
+        fbKo: 'Es @PathVariable. @RequestParam sería para /jugadores?numero=3, con el valor después del signo de interrogación.'
+      },
+      {
+        level: 'final',
+        pregunta: 'Aparece el error "Error resolving template [lista], template might not exist". ¿Qué revisas primero?',
+        opciones: [{ v: 'a', t: 'Que exista templates/lista.html y que el nombre coincida exactamente' }, { v: 'b', t: 'Que el puerto sea el 8080' }, { v: 'c', t: 'Que la base de datos esté conectada' }],
+        correcta: 'a',
+        fbOk: 'Correcto: el nombre del return debe coincidir con el archivo, sin .html.',
+        fbKo: 'Que el archivo exista en templates/ y que el nombre coincida letra por letra (se escribe sin .html).'
+      },
+      {
+        level: 'final',
+        pregunta: 'Registras tres jugadores, reinicias el proyecto y la lista aparece vacía. ¿Qué significa?',
+        opciones: [{ v: 'a', t: 'Es normal: los datos viven en memoria y se pierden al reiniciar' }, { v: 'b', t: 'Hay un error en el controlador' }, { v: 'c', t: 'Se borró la base de datos' }],
+        correcta: 'a',
+        fbOk: 'Correcto: es el alcance de esta semana. La persistencia real llega en la Semana 12.',
+        fbKo: 'Es normal y esperado: los datos se guardan en una lista en memoria. Todavía no hay base de datos: eso es la Semana 12.'
+      },
+      {
+        level: 'final',
+        pregunta: '¿Qué genera th:field="*{nombre}" en el HTML que recibe el navegador?',
+        opciones: [{ v: 'a', t: 'Los atributos id, name y value de la casilla' }, { v: 'b', t: 'Una función de JavaScript' }, { v: 'c', t: 'Una consulta a la base de datos' }],
+        correcta: 'a',
+        fbOk: 'Correcto: sobre todo el name, que es como viajan los datos al servidor.',
+        fbKo: 'Genera id, name y value. El name es clave: es el nombre con el que el dato llega al servidor y se casa con el atributo del objeto.'
+      },
+      {
+        level: 'final',
+        pregunta: 'El formulario da error 405 "Request method POST not supported". ¿Qué pasó?',
+        opciones: [{ v: 'a', t: 'El th:action apunta a una ruta que solo tiene @GetMapping' }, { v: 'b', t: 'Falta el archivo estilos.css' }, { v: 'c', t: 'El modelo no tiene getters' }],
+        correcta: 'a',
+        fbOk: 'Correcto: la ruta existe pero no acepta envíos POST.',
+        fbKo: 'El th:action apunta a una ruta que no tiene @PostMapping. La dirección existe, pero no acepta ese método.'
+      }
+    ];
+    var QUIZ_CONFIG = { presaberesCount: 8, finalCount: 12 };
+  </script>
+  <script src="quiz.js"></script>
+  <script>
+    // Baraja el orden de las opciones antes de cada render (patrón introducido en la
+    // Semana 9): en el banco la correcta se escribe siempre de primera para poder
+    // mantenerlo con facilidad, pero mostrarla siempre arriba permitiría "aprobar"
+    // sin leer. El valor .v no cambia, así que la calificación sigue siendo correcta.
+    function barajarOpciones() {
+      (window.QUESTION_BANK || []).forEach(function (q) {
+        for (var i = q.opciones.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var t = q.opciones[i]; q.opciones[i] = q.opciones[j]; q.opciones[j] = t;
+        }
+      });
+    }
+
+    var _renderBase = window.renderQuiz;
+    window.renderQuiz = function () {
+      barajarOpciones();
+      _renderBase();
+    };
+    renderQuiz();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

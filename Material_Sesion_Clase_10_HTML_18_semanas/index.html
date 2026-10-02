@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Semana 10 — Rutas, controladores y formularios (18 semanas)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 10 — Formularios</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-5">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+          <div class="brand-pill mb-3">Semana 10 · Unidad 5a · Rutas, controladores y formularios · 19 de septiembre de 2026</div>
+          <h1 class="display-5 fw-bold mb-3">Por fin: guardar lo que el usuario escribe <span class="small-muted">(70 min)</span></h1>
+          <p class="lead small-muted mb-4">
+            Hasta la Semana 9 tu formulario solo <em>consultaba</em>. Hoy cumplimos la promesa que quedó pendiente:
+            el usuario llena un formulario, pulsa "Guardar" y <strong>el dato se queda</strong>. Vas a conocer
+            <code>@Controller</code> (distinto del <code>@RestController</code> que ya usas), a generar HTML desde el
+            servidor con <strong>Thymeleaf</strong>, y a recibir datos con <code>@PostMapping</code>.
+          </p>
+          <div class="d-flex gap-2 flex-wrap">
+            <a class="btn btn-primary btn-lg" href="quiz.html">1. Quiz de Presaberes</a>
+            <a class="btn btn-outline-primary btn-lg" href="clase.html">2. Abrir guía docente</a>
+            <a class="btn btn-outline-dark btn-lg" href="ejercicios.html">3. Abrir ejercicios</a>
+          </div>
+          <div class="mt-4 callout warning">
+            <div class="fw-semibold">El límite honesto de hoy: se guarda en memoria</div>
+            <div class="small-muted">Los datos se guardan mientras la aplicación esté encendida; al reiniciarla se pierden. Eso <strong>no</strong> es un error ni una versión "de mentira": es exactamente el paso previo a la base de datos, que llega en la <strong>Semana 12</strong> con JPA. Hoy se aprende el circuito completo formulario → controlador → objeto Java.</div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="card">
+            <div class="card-body">
+              <h2 class="h5 section-title mb-3">Aprendizajes esperados (hoy)</h2>
+              <ul class="mb-0">
+                <li>Implementa rutas <strong>GET y POST</strong> en Spring Boot.</li>
+                <li>Diseña <strong>formularios HTML integrados con Thymeleaf</strong>.</li>
+                <li>Conecta formularios con controladores del backend.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card mt-3">
+            <div class="card-body">
+              <h2 class="h6 section-title mb-2">Ruta del estudiante (70 min)</h2>
+              <ol class="mb-0 small">
+                <li>Quiz — modo Presaberes (5 min)</li>
+                <li>De <code>@RestController</code> a <code>@Controller</code> + Thymeleaf (20 min)</li>
+                <li>Recibir el POST, guardar y redirigir (15 min)</li>
+                <li>Lista con <code>th:each</code> y ruta parametrizada (10 min)</li>
+                <li>Challenge + Quiz Final + cierre (18 min)</li>
+              </ol>
+            </div>
+          </div>
+          <div class="small-muted mt-3">Valores de la semana: <strong>precisión técnica</strong> (que la ruta del controlador y la acción del formulario coincidan exactamente) y <strong>orientación a la experiencia de usuario</strong> (que el dato se capture y se procese bien, y que la persona entienda qué pasó).</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <div class="callout mb-4">
+      <div class="fw-semibold">De dónde venimos y a dónde vamos</div>
+      <div class="table-responsive mt-2">
+        <table class="table table-sm small mb-0">
+          <thead><tr><th>Semana</th><th>Qué hace tu aplicación</th><th>Cómo</th></tr></thead>
+          <tbody>
+            <tr><td>8 y 9</td><td>Responde con texto cuando le preguntas algo</td><td><code>@RestController</code> + <code>@GetMapping</code> + formulario con <code>fetch</code></td></tr>
+            <tr class="table-primary"><td><strong>10 (hoy)</strong></td><td><strong>Recibe datos de un formulario y los guarda mientras esté encendida</strong></td><td><code>@Controller</code> + Thymeleaf + <code>@PostMapping</code></td></tr>
+            <tr><td>11</td><td>Avisa cuando el usuario escribe algo inválido</td><td>Validación y manejo de errores</td></tr>
+            <tr><td>12</td><td>Guarda de verdad, aunque se apague</td><td>Base de datos con JPA</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">Secciones del material</h2>
+    <div class="row g-3">
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <h3 class="h5">1) Quiz</h3>
+              <span class="badge text-bg-warning">Presaberes + Final</span>
+            </div>
+            <p class="small-muted">Un solo quiz con menú desplegable, con preguntas al azar sobre <code>@Controller</code>, Thymeleaf, <code>@PostMapping</code>, binding de datos y redirecciones.</p>
+            <a class="btn btn-sm btn-primary" href="quiz.html">Ir</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <h3 class="h5">2) Guía Docente</h3>
+              <span class="badge text-bg-primary">70 min</span>
+            </div>
+            <p class="small-muted">Guion minuto a minuto: agregar Thymeleaf en vivo, la primera plantilla, el formulario que envía datos, y el patrón "guardar y redirigir".</p>
+            <a class="btn btn-sm btn-primary" href="clase.html">Ir</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <h3 class="h5">3) Ejercicios + Kit</h3>
+              <span class="badge text-bg-success">Todo el código</span>
+            </div>
+            <p class="small-muted">8 ejercicios en escalera y el <strong>Kit de archivos completos</strong>: los 9 archivos del módulo de registro, enteros, con su ruta, su <code>package</code> y sus <code>import</code>.</p>
+            <a class="btn btn-sm btn-primary" href="ejercicios.html">Ir</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <h3 class="h5">4) Cheat Sheet</h3>
+              <span class="badge text-bg-secondary">3 pestañas</span>
+            </div>
+            <p class="small-muted">Sintaxis de Thymeleaf, la anatomía del circuito formulario → controlador → objeto, y los errores frecuentes de esta semana (que son muy específicos y muy reconocibles).</p>
+            <a class="btn btn-sm btn-primary" href="cheatsheet.html">Ir</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <h3 class="h5">5) Challenge</h3>
+              <span class="badge text-bg-success">Juego</span>
+            </div>
+            <p class="small-muted">"¿Dónde vive cada archivo?" (<code>templates/</code> vs <code>static/</code> vs paquetes Java) + un <strong>simulador</strong> que muestra por qué hay que redirigir después de guardar.</p>
+            <a class="btn btn-sm btn-primary" href="challenge.html">Ir</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <h3 class="h5">6) Proyecto (Guía 10)</h3>
+              <span class="badge text-bg-dark">Evidencia</span>
+            </div>
+            <p class="small-muted">Construye el <strong>módulo de registro de la entidad principal</strong> de tu proyecto (niños, pacientes, donantes…): formulario, guardado y listado, subido a GitHub.</p>
+            <a class="btn btn-sm btn-primary" href="proyecto.html">Ir</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warning mt-4">
+      <div class="fw-semibold">¿Cómo se evalúa esta semana?</div>
+      <div class="small-muted">
+        <strong>Actividad en clase – Sesión 10</strong> (quiz final + challenge, 0.66 pts) y
+        <strong>Entrega Guía 10</strong> (módulo de registro de la entidad principal del proyecto, 1 pt).
+        Esta semana <strong>no tiene Entrega Parcial</strong>: los hitos del proyecto son las Semanas 5, 9, 14 y 17,
+        y el siguiente es la Entrega Parcial 3 en la Semana 14. Todo se exporta a PDF y se sube al aula virtual.
+      </div>
+    </div>
+
+    <div class="callout success mt-3">
+      <div class="fw-semibold">🔒 Evalúa la sesión (100% anónimo)</div>
+      <div class="small-muted">
+        Al terminar la clase, cuéntanos qué funcionó, qué mejorar y cualquier queja:
+        <a href="../evaluacion_docente/index.html">formulario de evaluación anónima</a>.
+        No se guarda tu nombre, correo ni IP.
+      </div>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted d-flex justify-content-between flex-wrap gap-2">
+      <span>Material Semana 10 — Rutas, controladores y formularios · Formato 18 semanas (70 min por sesión).</span>
+      <span>Curso: Programación I · URL · Sábados 11:10–12:20</span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Proyecto — Entregable de la Guía 10 (Semana 10)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 10 — Formularios</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link active" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Proyecto · Entregable de la Guía de Aprendizaje 10 (1 pt)</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">El módulo de registro de tu entidad principal</h1>
+          <div class="small-muted">Primero la <strong>guía paso a paso</strong> para construir el módulo en tu proyecto real, y al final la <strong>plantilla calificable</strong>. Fecha límite: <strong>antes de la Sesión 11 (26 de septiembre de 2026)</strong>. Esta semana no tiene Entrega Parcial — el siguiente hito del proyecto es la Entrega Parcial 3, en la Semana 14.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 980px;">
+
+    <div class="callout warning mb-4">
+      <div class="fw-semibold">Antes de empezar</div>
+      <div class="small-muted">Necesitas tu proyecto de la <a href="../Material_Sesion_Clase_9_HTML_18_semanas/proyecto.html">Semana 9</a> (con sus paquetes <code>controller</code>, <code>service</code> y <code>model</code>) corriendo en local, y tu <a href="../ficha_proyecto.html">Ficha del Proyecto</a> a la mano. Si tu proyecto quedó incompleto, reconstrúyelo con el <a href="ejercicios.html">Kit de archivos completos</a>.</div>
+    </div>
+
+    <div class="card mb-4 border-primary">
+      <div class="card-body">
+        <h2 class="h5 section-title">Paso 0 — Decide cuál es tu "entidad principal"</h2>
+        <p class="small-muted mb-2">La Guía 10 pide el <strong>módulo de registro de la entidad principal</strong> de tu proyecto: eso que tu institución necesita registrar una y otra vez. Elige una sola y con <strong>3 o 4 campos</strong>, no más.</p>
+        <div class="table-responsive">
+          <table class="table table-sm small mb-2">
+            <thead><tr><th>Si tu proyecto es…</th><th>Tu entidad principal podría ser…</th><th>Campos sugeridos</th></tr></thead>
+            <tbody>
+              <tr><td>Una guardería</td><td><code>Nino</code></td><td>nombre, edad, nombre del encargado</td></tr>
+              <tr><td>Una casa hogar</td><td><code>Residente</code></td><td>nombre, edad, fecha de ingreso</td></tr>
+              <tr><td>Un dispensario comunitario</td><td><code>Paciente</code></td><td>nombre, edad, motivo de consulta</td></tr>
+              <tr><td>Un banco de alimentos</td><td><code>Donante</code></td><td>nombre, tipo de donación, cantidad</td></tr>
+              <tr><td>Un centro de capacitación</td><td><code>Participante</code></td><td>nombre, curso, teléfono</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout mb-0">
+          <div class="small-muted"><strong>Consejo sobre los nombres:</strong> escribe las clases sin tildes ni eñes (<code>Nino</code>, no <code>Niño</code>). Los textos que ve el usuario sí llevan tildes normales; solo los nombres de clases y atributos se mantienen simples para evitar problemas.</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">Parte guiada — construye tu módulo de registro</h2>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso1">Paso 1 — Agrega Thymeleaf a tu proyecto</h3>
+        <p class="small-muted">En tu <code>pom.xml</code>, dentro de <code>&lt;dependencies&gt;</code>, agrega el bloque del <a href="ejercicios.html">Kit</a> (archivo 2). Guarda y ejecuta el proyecto una vez para que se descargue.</p>
+        <p class="small-muted mb-2">Aprovecha para agregar también, en <code>application.properties</code>:</p>
+        <pre><code>spring.thymeleaf.cache=false</code></pre>
+        <div class="callout success mb-0">✅ Checkpoint: el proyecto sigue arrancando con "Started ... Application".</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso2">Paso 2 — Crea tu clase de modelo</h3>
+        <p class="small-muted">En tu paquete <code>model</code>, crea la clase de tu entidad con 3 o 4 atributos, <strong>constructor vacío</strong>, constructor con parámetros, y <strong>getters y setters de todos los campos</strong>. Usa <code>Jugador.java</code> del Kit (archivo 4) como plantilla.</p>
+        <div class="callout danger mb-2">
+          <div class="fw-semibold">No te saltes esto</div>
+          <div class="small-muted">Sin constructor vacío y sin setters, el formulario guardará registros en blanco <strong>sin mostrar ningún error</strong>. Es la causa número uno de "no me funciona y no sé por qué" en esta semana.</div>
+        </div>
+        <div class="callout success mb-0">✅ Checkpoint: la clase no tiene errores en rojo y tiene un getter y un setter por cada atributo.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso3">Paso 3 — Crea (o amplía) tu servicio</h3>
+        <p class="small-muted">En tu paquete <code>service</code>, crea la clase con <code>@Service</code> que guarde en una lista en memoria. Usa <code>JugadorService.java</code> del Kit (archivo 5) cambiando el tipo por tu entidad. Necesitas al menos: <code>guardar(...)</code>, <code>listarTodos()</code> y <code>contar()</code>.</p>
+        <div class="callout success mb-0">✅ Checkpoint: la clase tiene <code>@Service</code> con su <code>import</code>, y está dentro de tu paquete base.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso4">Paso 4 — Crea tu controlador con las tres rutas</h3>
+        <p class="small-muted mb-2">En tu paquete <code>controller</code>, crea una clase anotada con <code>@Controller</code> (¡no <code>@RestController</code>!) con estas tres rutas, adaptando los nombres a tu entidad:</p>
+        <div class="table-responsive">
+          <table class="table table-sm small mb-2">
+            <thead><tr><th>Ruta</th><th>Método</th><th>Qué hace</th></tr></thead>
+            <tbody>
+              <tr><td><code>/ninos/nuevo</code></td><td>GET</td><td>Muestra el formulario vacío</td></tr>
+              <tr><td><code>/ninos</code></td><td>POST</td><td>Recibe el formulario, guarda y redirige</td></tr>
+              <tr><td><code>/ninos</code></td><td>GET</td><td>Muestra la lista de registros</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small-muted mb-0">Toma <code>JugadorController.java</code> del Kit (archivo 6) como referencia. El servicio se recibe por constructor, igual que en la Semana 9.</p>
+        <div class="callout success mb-0 mt-2">✅ Checkpoint: el proyecto arranca sin errores (aunque las plantillas todavía no existan).</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso5">Paso 5 — Crea tus dos plantillas</h3>
+        <p class="small-muted">Crea la carpeta <code>src/main/resources/<strong>templates</strong>/</code> y dentro, adaptando los archivos 7 y 8 del <a href="ejercicios.html">Kit</a>:</p>
+        <ul class="small-muted mb-2">
+          <li><code>formulario.html</code> — con <code>th:action</code>, <code>th:object</code> y un <code>th:field</code> por cada campo de tu entidad.</li>
+          <li><code>lista.html</code> — con <code>th:each</code> que recorra los registros y muestre una fila por cada uno.</li>
+        </ul>
+        <p class="small-muted mb-0">Personaliza los títulos con el nombre real de tu institución.</p>
+        <div class="callout success mb-0 mt-2">✅ Checkpoint: <code>/ninos/nuevo</code> muestra tu formulario y <code>/ninos</code> muestra la lista (vacía al inicio).</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso6">Paso 6 — Prueba el circuito completo</h3>
+        <p class="small-muted mb-2">Registra <strong>tres registros de prueba</strong> con datos realistas de tu institución y confirma, en este orden:</p>
+        <ol class="small-muted mb-2">
+          <li>El formulario se envía y el navegador te lleva solo a la lista (eso confirma el <code>redirect</code>).</li>
+          <li>Los tres aparecen en la tabla, con todos sus campos llenos (no en blanco).</li>
+          <li>Al pulsar F5 en la lista, <strong>no</strong> se duplica ningún registro.</li>
+        </ol>
+        <div class="callout success mb-0">✅ Checkpoint: los tres puntos se cumplen. Si algo falla, revisa la pestaña de errores del <a href="cheatsheet.html">Cheat Sheet</a>.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso7">Paso 7 — Sube tu avance a GitHub</h3>
+        <p class="small-muted">En tu rama <code>development</code>: commit con un mensaje descriptivo (por ejemplo <em>"Agrega módulo de registro de niños con formulario Thymeleaf"</em>) y push.</p>
+        <div class="callout success mb-0">✅ Checkpoint: en GitHub.com ves tu carpeta <code>templates/</code> con las dos plantillas, y tu controlador actualizado.</div>
+      </div>
+    </div>
+
+    <details class="mb-4">
+      <summary class="fw-semibold">Solución de problemas frecuentes</summary>
+      <div class="table-responsive mt-2">
+        <table class="table table-sm small mb-0">
+          <thead><tr><th>Situación</th><th>Qué hacer</th></tr></thead>
+          <tbody>
+            <tr><td>El navegador muestra el nombre de la plantilla como texto</td><td>La clase quedó con <code>@RestController</code>. Cámbiala a <code>@Controller</code> (y su <code>import</code>).</td></tr>
+            <tr><td><code>Error resolving template ...</code></td><td>El nombre del <code>return</code> no coincide con el archivo de <code>templates/</code>. Se escribe sin <code>.html</code>.</td></tr>
+            <tr><td>Se guardan registros en blanco</td><td>Faltan los setters en tu modelo, o el <code>th:field</code> no usa el nombre exacto del atributo.</td></tr>
+            <tr><td>Error 405 al enviar el formulario</td><td>El <code>th:action</code> apunta a una ruta sin <code>@PostMapping</code>.</td></tr>
+            <tr><td>La lista se vacía al reiniciar</td><td>Es lo esperado: los datos están en memoria. La base de datos llega en la Semana 12.</td></tr>
+            <tr><td>Mi proyecto de la Semana 9 quedó incompleto</td><td>Usa el <a href="ejercicios.html">Kit de archivos completos</a>: trae todos los archivos enteros, con su ruta y sus imports.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <hr class="my-4" />
+    <h2 class="h4 section-title mb-3">📋 Entregable — completa esto para tu calificación</h2>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title mb-3">Datos del estudiante</h3>
+        <div class="row g-3">
+          <div class="col-md-5">
+            <label class="form-label small fw-semibold">Nombre completo</label>
+            <input class="form-control fill-line" type="text" />
+          </div>
+          <div class="col-md-3">
+            <label class="form-label small fw-semibold">Carné</label>
+            <input class="form-control fill-line" type="text" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label small fw-semibold">Entidad que registra tu módulo</label>
+            <input class="form-control fill-line" type="text" placeholder="Ej. Nino, Paciente, Donante" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte A — Tu clase de modelo (20%)</h3>
+        <p class="small-muted">Pega la clase completa, con su <code>package</code>, sus atributos, el constructor vacío y los getters y setters:</p>
+        <textarea class="code-area" rows="12"></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte B — Tu controlador (25%)</h3>
+        <p class="small-muted">Pega la clase completa, con su <code>package</code>, sus <code>import</code> y las tres rutas (GET del formulario, POST que guarda y redirige, GET de la lista):</p>
+        <textarea class="code-area" rows="14"></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte C — Tus plantillas (25%)</h3>
+        <p class="small-muted mb-1"><strong>C1.</strong> El bloque <code>&lt;form&gt;</code> de tu <code>formulario.html</code> (con <code>th:action</code>, <code>th:object</code> y los <code>th:field</code>):</p>
+        <textarea class="code-area mb-3" rows="10"></textarea>
+        <p class="small-muted mb-1"><strong>C2.</strong> El bloque con el <code>th:each</code> de tu <code>lista.html</code>:</p>
+        <textarea class="code-area" rows="8"></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte D — Evidencia de funcionamiento (20%)</h3>
+        <p class="small-muted mb-1">Describe (o adjunta capturas de) las tres comprobaciones del Paso 6, y pega el enlace a tu repositorio:</p>
+        <textarea class="code-area" rows="7" placeholder="1. Al enviar el formulario, el navegador me llevó a: ...&#10;2. Los tres registros aparecen así: ...&#10;3. Al pulsar F5 en la lista pasó: ...&#10;Repositorio: https://github.com/..."></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte E — Reflexión (10%)</h3>
+        <ol class="small">
+          <li class="mb-2">
+            <strong>Precisión técnica:</strong> ¿qué error te costó más resolver esta semana y cómo lo encontraste? Si no tuviste ninguno, explica qué revisarías primero si un compañero te dice "mi formulario no guarda nada".
+            <textarea class="form-control mt-1" rows="3"></textarea>
+          </li>
+          <li>
+            <strong>Orientación a la experiencia de usuario:</strong> una persona de tu institución que no sabe programar va a usar este formulario. ¿Qué le falta todavía para que le resulte claro y difícil de equivocarse?
+            <textarea class="form-control mt-1" rows="3"></textarea>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Lista de cotejo (marca antes de entregar)</h3>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck1" /><label class="form-check-label small" for="ck1">Mi modelo tiene constructor vacío, getters y setters de todos los campos.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck2" /><label class="form-check-label small" for="ck2">Mi controlador usa <code>@Controller</code> (no <code>@RestController</code>) y tiene las tres rutas.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck3" /><label class="form-check-label small" for="ck3">Mis plantillas están en <code>templates/</code> y el CSS en <code>static/</code>.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck4" /><label class="form-check-label small" for="ck4">El método POST termina con un <code>redirect</code> y recargar no duplica registros.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck5" /><label class="form-check-label small" for="ck5">Registré tres datos de prueba realistas y aparecen completos en la lista.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck6" /><label class="form-check-label small" for="ck6">Subí todo a mi rama <code>development</code> en GitHub.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck7" /><label class="form-check-label small" for="ck7">Exporté el PDF como <code>Guia10_TuNombre.pdf</code>.</label></div>
+      </div>
+    </div>
+
+    <div class="callout warning">
+      <div class="fw-semibold">Rúbrica rápida (1 punto total)</div>
+      <div class="small-muted">Parte A: 0.20 · Parte B: 0.25 · Parte C: 0.25 · Parte D: 0.20 · Parte E: 0.10. Se valora que el módulo <strong>realmente funcione</strong> (que se registre y se liste, no solo que el código esté escrito), que la entidad y los datos correspondan a tu institución real, y la honestidad de la reflexión. Entregar tarde: −25% por día.</div>
+    </div>
+
+    <div class="d-flex gap-2 mt-3 no-print">
+      <button class="btn btn-primary btn-lg btn-export" onclick="window.print()">Exportar a PDF</button>
+      <a class="btn btn-outline-primary btn-lg" href="index.html">Volver al inicio</a>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Proyecto — Entregable de la Guía 10 · Semana 10 (formato 18 semanas) · Fecha límite: antes de la Sesión 11
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
