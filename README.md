@@ -21,9 +21,11 @@ documentos oficiales y el enlace a la evaluación anónima de la sesión.
 | --- | --- |
 | [`index.html`](index.html) | Portal del curso: las 18 semanas, cada una activándose al publicarse |
 | [`Nuevo_Programa_18_semanas.md`](Nuevo_Programa_18_semanas.md) | Programa oficial del curso: temario, competencias, evaluación, proyecto |
+| `Nuevo_Programa_18_semanas-DB con Neon.md` | Revisión vigente del programa **para las Semanas 12–18**: la base de datos PostgreSQL vivirá en Neon y no en Render |
 | `Material_Sesion_Clase_N_HTML_18_semanas/` | Material interactivo de la semana N: hub, guía docente, ejercicios, quiz autocalificado, cheat sheet, challenge drag & drop y proyecto/entregable — todo exportable a PDF. Desde la Semana 6 se usa una plantilla reducida (quiz unificado, proyecto y entregable fusionados, sin puente Python); las semanas con hito de evaluación pueden agregar páginas propias (ver Semana 9) |
 | `PEM en TIC_Sesión de Clase N..._18_semanas.md/.docx` | Documento oficial de la sesión N (formato institucional) |
 | `PEM en TIC_Guía de Aprendizaje N..._18_semanas.md/.docx` | Documento oficial de la guía de aprendizaje N |
+| [`examen_parcial/`](examen_parcial/) | Backend PHP del examen parcial: califica en el servidor y limita los intentos. La clave de respuestas y la contraseña de admin **no están en el repo** (ver su README) |
 | [`evaluacion_docente/`](evaluacion_docente/) | Formulario 100% anónimo de evaluación del profesor, sugerencias y quejas (todas las sesiones en una sola fuente de datos) + dashboard `/admin` |
 | `ARCHIVO_POR_AHORA/`, `Material_Sesion_Clase_N_X/` | Material del **formato anterior** (ya no vigente), conservado como archivo histórico |
 
@@ -40,7 +42,8 @@ documentos oficiales y el enlace a la evaluación anónima de la sesión.
 - ✅ **Semana 9** — Hito Parcial: examen parcial y entrega de avance (5 sep 2026) — ★ Entrega Parcial 2, examen de mitad de curso y peer review Ronda 1
 - ✅ **Semana 10** — Rutas, controladores y formularios (19 sep 2026) — Thymeleaf, `@PostMapping` y binding de datos
 - ✅ **Semana 11** — Validación, errores y experiencia de usuario (26 sep 2026) — Bean Validation, mensajes de error y accesibilidad
-- ⏳ Semanas 12–18 — pendientes (se activan en el portal al publicarse)
+- ✅ **Semana 12** — Persistencia de datos con JPA y Spring Data (3 oct 2026) — los datos por fin sobreviven al reinicio, y se estrena la recarga automática con DevTools
+- ⏳ Semanas 13–18 — pendientes (se activan en el portal al publicarse)
 
 > **Calendario:** las 18 sesiones no son sábados consecutivos. El **12 de
 > septiembre de 2026 no hubo clase** (semana de independencia), por lo que la
@@ -53,6 +56,24 @@ documentos oficiales y el enlace a la evaluación anónima de la sesión.
 > archivos completos** con los 11 archivos del proyecto —cada uno con su
 > ruta, su línea `package` y sus `import`— útil como material de
 > recuperación para cualquier estudiante atrasado.
+
+## Dónde vive la base de datos del proyecto
+
+La aplicación del estudiante se **aloja en Render**, pero su base de datos
+PostgreSQL vive en **Neon**: la base gratuita de Render es temporal y se
+elimina, lo que destruiría el proyecto antes de la presentación final. Por
+eso la Semana 12 ya deja sembrados los perfiles de Spring (`dev` con H2 local,
+`prod` con las credenciales como variables de entorno) y la Semana 14 solo
+cambia la configuración, **sin tocar una línea de Java**.
+
+## Este repositorio es público
+
+Las credenciales y las respuestas de los estudiantes no se versionan. El
+`.gitignore` de la raíz deja fuera la clave de respuestas del examen
+(`examen_parcial/examen_datos.php`), la contraseña del panel admin
+(`examen_parcial/config.php`, que se versiona como `config.php.ejemplo`) y
+los JSON de `examen_parcial/data/` y `evaluacion_docente/data/`. Esos
+archivos se suben por FTP a Hostinger, nunca por git.
 
 ## Evaluación anónima de cada sesión
 

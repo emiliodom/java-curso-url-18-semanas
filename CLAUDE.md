@@ -677,6 +677,16 @@ la clave de respuestas no puede estar en el HTML.
 - Al escribir CSV usar siempre `fputcsv($h, $campos, ',', '"', '')` con los
   cinco argumentos: desde PHP 8.4 omitirlos imprime un *Deprecated* dentro
   del propio archivo y lo deja corrupto.
+- **Dos archivos de este módulo NO están versionados** (`.gitignore` de la
+  raíz), porque el repo de GitHub es **público** y cualquier estudiante lo
+  lee: `examen_parcial/examen_datos.php` (la clave de respuestas) y
+  `examen_parcial/config.php` (la contraseña del panel admin). En su lugar
+  se versiona `config.php.ejemplo`. Tampoco se suben los JSON de
+  `examen_parcial/data/` ni de `evaluacion_docente/data/`: son respuestas de
+  estudiantes. Los archivos reales viven solo en el equipo del profesor y en
+  Hostinger, y se suben por FTP. **Patrón a repetir** en cualquier módulo
+  nuevo con secretos o datos personales: archivo real ignorado + `.ejemplo`
+  versionado + explicación en el README del módulo.
 
 ## Módulo `evaluacion_docente/`
 
