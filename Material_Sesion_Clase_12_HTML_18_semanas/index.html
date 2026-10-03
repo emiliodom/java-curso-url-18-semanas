@@ -48,7 +48,7 @@
           </div>
           <div class="mt-4 callout warning">
             <div class="fw-semibold">Una idea que vale por toda la semana</div>
-            <div class="small-muted">Tú <strong>no</strong> vas a escribir SQL. Describes cómo es un libro (una clase Java con unas anotaciones), y <strong>Hibernate</strong> hace de <strong>traductor</strong> entre tu idioma (objetos Java) y el idioma de la base de datos (tablas y filas). Y Spring Data va un paso más allá: escribe por ti el código que guarda, busca y borra.</div>
+            <div class="small-muted">Tú <strong>no</strong> vas a escribir SQL. Continúas con los mismos jugadores del formulario de la Semana 11: describes la clase Java con anotaciones y <strong>Hibernate</strong> traduce objetos a filas. Spring Data genera por ti las operaciones para guardar, buscar y borrar.</div>
           </div>
         </div>
         <div class="col-lg-5">
@@ -84,14 +84,14 @@
   <main class="container py-4">
 
     <div class="callout mb-4">
-      <div class="fw-semibold">De dónde venimos y a dónde vamos</div>
+      <div class="fw-semibold">De dónde venimos y a dónde vamos: seguimos con Jugador</div>
       <div class="table-responsive mt-2">
         <table class="table table-sm small mb-0">
           <thead><tr><th>Semana</th><th>Qué hace tu aplicación</th><th>Cómo</th></tr></thead>
           <tbody>
             <tr><td>10</td><td>Recibe datos de un formulario y los guarda… en una lista en memoria</td><td><code>@Controller</code> + Thymeleaf + <code>@PostMapping</code></td></tr>
             <tr><td>11</td><td>Revisa los datos antes de guardar y explica qué corregir</td><td>Bean Validation + <code>@Valid</code> + <code>BindingResult</code></td></tr>
-            <tr class="table-primary"><td><strong>12 (hoy)</strong></td><td><strong>Guarda en una base de datos: los registros sobreviven al reinicio</strong></td><td>JPA + Hibernate + <code>JpaRepository</code> + H2 en archivo</td></tr>
+            <tr class="table-primary"><td><strong>12 (hoy)</strong></td><td><strong>Los mismos jugadores se guardan en una base de datos y sobreviven al reinicio</strong></td><td>JPA + Hibernate + <code>JpaRepository&lt;Jugador, Long&gt;</code> + H2 en archivo</td></tr>
             <tr><td>13</td><td>Pide usuario y contraseña; cada rol ve cosas distintas</td><td>Spring Security</td></tr>
             <tr><td>14</td><td>Se publica en internet con base de datos en la nube</td><td>Render + <strong>Neon</strong> (PostgreSQL)</td></tr>
           </tbody>
@@ -106,7 +106,7 @@
         <strong>base de datos PostgreSQL vivirá en Neon</strong>. ¿Por qué? Porque la base de datos gratuita de Render
         es temporal: expira y se borra, y eso destruiría tu proyecto justo antes de la presentación de la Semana 18.
         El plan gratuito de Neon no expira por fecha; solo se "duerme" por inactividad y despierta sola, sin perder datos.<br />
-        <strong>Hoy trabajas contra H2 en tu computadora; en la Semana 14 la misma aplicación se conecta a Neon
+        <strong>Hoy persistes los jugadores de <code>taller-formularios</code> en H2; en la Semana 14 la misma aplicación se conecta a Neon
         <u>sin cambiar una sola línea de Java</u> — solo cambia el archivo de configuración del perfil.</strong>
         Esa es la razón de ser de los <em>perfiles</em> que creas hoy, y es el <strong>criterio doble</strong> de la Guía 12.
       </div>
@@ -121,7 +121,7 @@
               <h3 class="h5">1) Quiz</h3>
               <span class="badge text-bg-warning">Presaberes + Final</span>
             </div>
-            <p class="small-muted">Un solo quiz con menú desplegable y preguntas al azar sobre entidades, repositorios, <code>Optional</code>, H2 y perfiles.</p>
+            <p class="small-muted">Un solo quiz con preguntas al azar sobre la transición de <code>Jugador</code> desde una lista en memoria hasta JPA, además de H2 y perfiles.</p>
             <a class="btn btn-sm btn-primary" href="quiz.html">Ir</a>
           </div>
         </div>
@@ -133,7 +133,7 @@
               <h3 class="h5">2) Guía Docente</h3>
               <span class="badge text-bg-primary">70 min</span>
             </div>
-            <p class="small-muted">Guion minuto a minuto: la demo del reinicio que borra todo, la entidad en vivo, la interfaz vacía que "funciona sola" y el momento en que los datos sobreviven.</p>
+            <p class="small-muted">Guion minuto a minuto: continuar el formulario validado de Semana 11, reemplazar la lista por JPA y demostrar que los jugadores sobreviven al reinicio.</p>
             <a class="btn btn-sm btn-primary" href="clase.html">Ir</a>
           </div>
         </div>
@@ -145,7 +145,7 @@
               <h3 class="h5">3) Ejercicios + Kit</h3>
               <span class="badge text-bg-success">Todo el código</span>
             </div>
-            <p class="small-muted">8 ejercicios en escalera (incluye provocar errores a propósito) y el <strong>Kit de archivos completos</strong>: <code>pom.xml</code>, los tres archivos de perfiles, entidad, repositorio, servicio, controlador y plantillas.</p>
+            <p class="small-muted">Seis pestañas: Ejercicios de Jugador, Kit de Acompañamiento de Ejercicios, Explicación del Kit, Kit para iniciar Jugador desde cero completamente, práctica independiente de Biblioteca y anexo <code>taller-jpa</code>.</p>
             <a class="btn btn-sm btn-primary" href="ejercicios.html">Ir</a>
           </div>
         </div>

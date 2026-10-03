@@ -34,7 +34,7 @@
         <div>
           <div class="brand-pill">Guía docente · Semana 12 · 70 minutos (11:10–12:20)</div>
           <h1 class="h2 fw-bold mt-2 mb-1">Persistencia de datos con JPA y Spring Data</h1>
-          <div class="small-muted">Sesión sabatina en línea del 3 de octubre de 2026. Dominio de la demo: <strong>Biblioteca Comunitaria Semilla</strong>, entidad <code>Libro</code>.</div>
+          <div class="small-muted">Sesión sabatina en línea del 3 de octubre de 2026. Continuación de la Semana 11: <strong>Escuela de Fútbol Los Cerritos</strong>, entidad <code>Jugador</code> en <code>taller-formularios</code>.</div>
         </div>
         <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
       </div>
@@ -90,14 +90,15 @@
                 </h2>
                 <div id="c2" class="accordion-collapse collapse" data-bs-parent="#acc">
                   <div class="accordion-body">
-<p><strong>Preparación previa:</strong> proyecto <code>taller-jpa</code> de la Biblioteca Comunitaria Semilla ya funcionando con <code>jdbc:h2:mem:biblioteca</code> (Kit de <a href="ejercicios.html">Ejercicios</a>).</p>
+<p><strong>Preparación previa:</strong> ten lista la aplicación de Semana 11 <code>taller-formularios</code> con el formulario validado de <code>Jugador</code>, que todavía guarda en una <code>List</code>. En <a href="ejercicios.html">Ejercicios</a>, la primera pestaña contiene la escalera práctica de Jugador; la segunda ofrece el Kit de Acompañamiento de Ejercicios y la tercera explica cómo usarlo. La cuarta permite generar desde Spring Initializr el proyecto validado y persistente desde cero, con dependencias seleccionadas en la web y árbol completo de archivos. Biblioteca y <code>taller-jpa</code> son recursos independientes.</p>
   <ol>
-   <li>Muestra la <strong>lista de la Semana 10</strong> (la <code>List</code> dentro del servicio): registra 2 libros, reinicia, la lista está vacía. Pregunta: "¿cuántos creen que esto se arregla con una base de datos?"</li>
-   <li>Ahora muestra la versión con JPA y <strong>H2 en memoria</strong>: registra 3 libros, abre <code>/h2-console</code> (URL <code>jdbc:h2:mem:biblioteca</code>, usuario <code>sa</code>, sin contraseña) y haz <code>SELECT * FROM LIBRO;</code>. Los libros están ahí.</li>
+   <li>Muestra la lista de <code>JugadorService</code>: registra 2 jugadores, reinicia, la lista está vacía. Pregunta: "¿qué pieza puede conservar estos mismos datos?"</li>
+   <li>Ahora muestra <code>Jugador</code> con JPA y <strong>H2 en memoria</strong>: registra 3 jugadores, abre <code>/h2-console</code> (URL <code>jdbc:h2:mem:jugadores</code>, usuario <code>sa</code>, sin contraseña) y ejecuta <code>SELECT * FROM JUGADOR;</code>. Los jugadores están ahí.</li>
    <li><strong>Reinicia la aplicación.</strong> Lista vacía otra vez. Silencio dramático: "Tenemos base de datos y aun así perdimos todo. ¿Por qué?"</li>
    <li>Señala <code>mem</code> en la URL: "memoria RAM". Anuncia: "Al final de la clase esto estará resuelto."</li>
   </ol>
-  <div class="callout success mb-2"><div class="small-muted"><strong>Spring Boot DevTools (muéstralo en vivo):</strong> el proyecto ya lo trae como sexta dependencia. Cambia un texto en una plantilla, guarda y refresca el navegador: cambia sin reiniciar. Cambia algo en un <code>.java</code> y guarda: la consola reinicia sola en 1 o 2 segundos. Esto termina con el ciclo "parar y volver a arrancar" de las semanas anteriores. Dos límites: <code>pom.xml</code> y <code>application*.properties</code> siguen requiriendo reinicio manual, y lo que dispara el reinicio es la recompilación (si no pasa nada, usar el botón ▶ Run). <strong>Cuidado con el paso 3:</strong> para esta demo reinicia a mano (<kbd>Ctrl</kbd>+<kbd>C</kbd>), y explica que el reinicio automático también vacía la base en memoria.</div></div>
+  <div class="callout info mb-2"><div class="small-muted"><strong>Si la consola H2 da 404:</strong> además de <code>spring.h2.console.enabled=true</code>, el proyecto de referencia en Spring Boot 4 necesita <code>spring-boot-h2console</code> en el <code>pom.xml</code>. El Kit muestra las dos piezas.</div></div>
+  <div class="callout success mb-2"><div class="small-muted"><strong>Spring Boot DevTools (muéstralo en vivo):</strong> el proyecto del Kit ya lo trae como dependencia opcional de desarrollo (<code>spring-boot-devtools</code>). Cambia un texto en una plantilla, guarda y refresca el navegador: cambia sin reiniciar. Cambia algo en un <code>.java</code> y guarda: la consola reinicia sola en 1 o 2 segundos. Esto termina con el ciclo "parar y volver a arrancar" de las semanas anteriores. Dos límites: <code>pom.xml</code> y <code>application*.properties</code> siguen requiriendo reinicio manual, y lo que dispara el reinicio es la recompilación (si no pasa nada, usar el botón ▶ Run). <strong>Cuidado con el paso 3:</strong> para esta demo reinicia a mano (<kbd>Ctrl</kbd>+<kbd>C</kbd>), y explica que el reinicio automático también vacía la base en memoria.</div></div>
   <div class="callout warning mb-0"><div class="small-muted"><strong>Analogía:</strong> H2 en memoria es una pizarra: sirve mientras estás en el salón, pero se borra al salir. H2 en archivo es un cuaderno.</div></div>
                   </div>
                 </div>
@@ -113,11 +114,11 @@
                   <div class="accordion-body">
 <p><strong>Dibuja en la pizarra:</strong> Formulario → Controlador → Servicio → <strong>Repositorio</strong> → Hibernate → Tabla. Solo el repositorio y la entidad son nuevos.</p>
   <ul>
-   <li><strong>ORM (analogía: traductor):</strong> Hibernate traduce entre objetos Java (<code>Libro</code>) y filas de tabla. Tú hablas Java, la base habla SQL.</li>
-   <li><strong>Entidad:</strong> escribe <code>Libro</code> con <code>@Entity</code>, <code>@Id</code>, <code>@GeneratedValue</code> y constructor vacío. Muestra la tabla que aparece en <code>/h2-console</code> sin haber escrito SQL.</li>
-   <li><strong>Repositorio:</strong> una <em>interfaz</em> de dos líneas que extiende <code>JpaRepository&lt;Libro, Long&gt;</code>. "Ustedes entregan la carta; Spring cocina."</li>
-   <li><strong>Dos familias:</strong> <code>jakarta.persistence.*</code> (cómo se guarda) y <code>jakarta.validation.constraints.*</code> (qué se acepta). Muestra ambas sobre <code>Libro</code>.</li>
-   <li><strong>Métodos derivados:</strong> descompón <code>findByTituloContainingIgnoreCase</code> palabra por palabra.</li>
+   <li><strong>ORM (analogía: traductor):</strong> Hibernate traduce entre objetos Java (<code>Jugador</code>) y filas de tabla. Tú hablas Java, la base habla SQL.</li>
+   <li><strong>Entidad:</strong> convierte el <code>Jugador</code> que el grupo ya conoce en <code>@Entity</code>, agrega <code>@Id</code>, <code>@GeneratedValue</code> y constructor vacío, sin quitar las validaciones de Semana 11.</li>
+   <li><strong>Repositorio:</strong> una <em>interfaz</em> que extiende <code>JpaRepository&lt;Jugador, Long&gt;</code>. "Ustedes entregan la carta; Spring cocina."</li>
+   <li><strong>Dos familias:</strong> <code>jakarta.persistence.*</code> (cómo se guarda) y <code>jakarta.validation.constraints.*</code> (qué se acepta). Ambas conviven sobre <code>Jugador</code>.</li>
+   <li><strong>Métodos derivados:</strong> descompón <code>findByNombreContainingIgnoreCase</code> palabra por palabra; <code>nombre</code> existe en la entidad.</li>
   </ul>
   <p class="mb-0"><strong>Muestra los imports en pantalla</strong>, cada vez que aparezca una anotación nueva (regla del curso).</p>
                   </div>
@@ -152,7 +153,7 @@
     <tr><td><code>@Id</code></td><td><code>No identifier specified for entity</code> (no arranca)</td></tr>
     <tr><td>Constructor vacío (poniendo uno con parámetros)</td><td><code>No default constructor for entity</code> (al arrancar o al leer, según versión)</td></tr>
     <tr><td>Dependencia <code>h2</code></td><td><code>Failed to load driver class org.h2.Driver</code></td></tr>
-    <tr><td><code>findById</code> sin <code>.orElseThrow()</code></td><td>Error de compilación: <code>Optional&lt;Libro&gt; cannot be converted to Libro</code></td></tr>
+    <tr><td><code>findById</code> sin <code>.orElseThrow()</code></td><td>Error de compilación: <code>Optional&lt;Jugador&gt; cannot be converted to Jugador</code></td></tr>
    </tbody>
   </table>
   <p class="small-muted">Recordatorio: en esta semana los reinicios de las pruebas de memoria son <strong>manuales a propósito</strong>; DevTools reiniciaría solo, pero quieres que ellos provoquen el reinicio.</p>
@@ -170,9 +171,9 @@
                 <div id="c5" class="accordion-collapse collapse" data-bs-parent="#acc">
                   <div class="accordion-body">
 <ol>
-   <li>Crea <code>application-dev.properties</code> con <code>jdbc:h2:file:./datos/biblioteca</code> y <code>ddl-auto=update</code>.</li>
+   <li>Crea <code>application-dev.properties</code> con <code>jdbc:h2:file:./datos/jugadores</code> y <code>ddl-auto=update</code>.</li>
    <li><code>application.properties</code> elige: <code>spring.profiles.active=dev</code>.</li>
-   <li>Registra libros, <strong>reinicia a mano con <kbd>Ctrl</kbd>+<kbd>C</kbd></strong> (DevTools no recarga los <code>application*.properties</code> y, además, la prueba debe ser tuya): siguen ahí. Muestra <code>datos/biblioteca.mv.db</code> y la línea <code>datos/</code> en <code>.gitignore</code>.</li>
+   <li>Registra jugadores, <strong>reinicia a mano con <kbd>Ctrl</kbd>+<kbd>C</kbd></strong> (DevTools no recarga los <code>application*.properties</code> y, además, la prueba debe ser tuya): siguen ahí. Muestra <code>datos/jugadores.mv.db</code> y la línea <code>datos/</code> en <code>.gitignore</code>.</li>
    <li>Muestra <code>application-prod.properties</code> con <code>${DB_URL}</code>, <code>${DB_USER}</code>, <code>${DB_PASSWORD}</code>.</li>
   </ol>
   <div class="callout success mb-0"><div class="small-muted"><strong>El mensaje clave:</strong> hoy trabajamos contra H2 en la computadora; en la Semana 14 la misma aplicación se conecta a <strong>Neon</strong> (PostgreSQL en la nube) <em>sin cambiar una sola línea de Java</em>: solo cambia el archivo de configuración del perfil. Render aloja la aplicación, pero la base vive en Neon porque la base gratuita de Render expira.</div></div>
@@ -188,7 +189,15 @@
                 </h2>
                 <div id="c6" class="accordion-collapse collapse" data-bs-parent="#acc">
                   <div class="accordion-body">
-<p>Los estudiantes trabajan en <a href="ejercicios.html">Ejercicios</a> con su proyecto <code>taller-jpa</code>. Circula en el chat/salas por los errores más comunes (ver tabla de abajo). Quien termine, empieza <a href="proyecto.html">Proyecto</a> con su repositorio real.</p>
+<p>Los estudiantes trabajan primero en la pestaña <strong>Ejercicios</strong> de <a href="ejercicios.html">Ejercicios</a> y consultan el <strong>Kit de Acompañamiento</strong> solo cuando necesiten contrastar el código completo; la tercera pestaña explica cómo usarlo. Quienes completaron la Semana 11 continúan su proyecto <code>taller-formularios</code> sin reconstruir formulario ni validaciones. Quienes no llegaron a Semana 11 usan la cuarta pestaña: generan la aplicación y seleccionan las dependencias en Spring Initializr, sin editar el <code>pom.xml</code>, y siguen el árbol completo antes de crear los archivos. Biblioteca y el anexo <code>taller-jpa</code> son prácticas independientes. Circula por los errores más comunes (ver tabla). Quien termine, empieza <a href="proyecto.html">Proyecto</a>.</p>
+  <div class="callout warning mb-2"><div class="fw-semibold">La pregunta que sí o sí va a salir: «dice <code>taller-jpa</code> pero el código dice <code>tallerjpa</code>»</div>
+  <div class="small-muted">Esta pregunta se refiere al proyecto independiente de referencia: el grupo que continúa <code>taller-formularios</code> no debe volver a generar el proyecto ni cambiar su paquete. Respuesta corta, al grupo completo, en cuanto aparezca el primer mensaje en el chat (no esperes a que lo pregunten uno por uno):
+  son <strong>tres nombres derivados del mismo Artifact</strong>, y los tres conviven. <code>taller-jpa</code> es la carpeta y el <code>&lt;artifactId&gt;</code>;
+  <code>gt.edu.url.tallerjpa</code> es el paquete — <strong>sin guion, porque en Java el guion es el signo de resta</strong> y un paquete no lo admite;
+  <code>TallerJpaApplication</code> es la clase principal. Y esto adviértelo en voz alta: Initializr <strong>no</strong> quita el guion solo — propone <em>Package name</em> como <code>gt.edu.url.taller-jpa</code> y cada quien debe borrarlo. Quien lo haya dejado tal cual tiene el paquete <code>gt.edu.url.taller_jpa</code>, con guion bajo: funciona, pero debe usar ese nombre en todas sus líneas <code>package</code>.
+  Y la segunda mitad de la pregunta: el <code>.service</code> del final <strong>no es parte del nombre del proyecto</strong>, es la <strong>capa</strong> de la Semana 6
+  (<code>model</code>, <code>repository</code>, <code>service</code>, <code>controller</code>), y esas cuatro carpetas van <em>dentro</em> del paquete base.
+  Si alguien las crea al lado, compila pero da 404 sin mensaje — el error silencioso de la Semana 9. Está explicado en el recuadro del Ejercicio 1 y en el Cheat Sheet.</div></div>
   <p class="mb-0"><strong>Criterio de la Guía 12 (doble):</strong> (1) funciona contra H2 local y (2) la entidad y el repositorio no necesitan cambios para reconectar a PostgreSQL.</p>
                   </div>
                 </div>
@@ -207,7 +216,7 @@
     <li><strong>Clasifica las piezas:</strong> cada anotación, método o línea de configuración va a su caja (Entidad / Repositorio / Servicio o Controlador / <code>application.properties</code>). Los niveles Medio y Difícil traen piezas trampa que no pertenecen a ninguna caja.</li>
     <li><strong>Simulador:</strong> recorre el viaje de un <code>save()</code> por las capas y compara los dos escenarios de la semana — con H2 en memoria el contador de filas vuelve a cero tras el reinicio; con H2 en archivo, no.</li>
   </ul>
-  <p class="mb-0"><strong>Pide explícitamente:</strong> completar al menos el nivel Medio de la primera pestaña, recorrer los dos escenarios del simulador y <strong>exportar el PDF</strong>. Ese PDF es parte de la Actividad en clase — Sesión 12 (0.66 pts).</p>
+  <p class="mb-0"><strong>Pide explícitamente:</strong> completar al menos el nivel Medio de la práctica independiente, recorrer los dos escenarios del simulador y <strong>exportar el PDF</strong>. Ese PDF es parte de la Actividad en clase — Sesión 12 (0.66 pts).</p>
                   </div>
                 </div>
               </div>
@@ -245,7 +254,7 @@
     <div class="card mb-3"><div class="card-body">
       <h2 class="h5 section-title">Errores que verás en las salas</h2>
       <div class="table-responsive"><table class="table table-sm small mb-0">
-        <thead><tr><th>Síntoma</th><th>Causa probable</th></tr></thead><tbody><tr><td>La aplicación no arranca y el log dice <code>No identifier specified</code></td><td>Falta <code>@Id</code> (o su import)</td></tr><tr><td><code>cannot find symbol: Entity</code></td><td>Falta <code>import jakarta.persistence.Entity;</code> o la dependencia <code>data-jpa</code></td></tr><tr><td>La lista siempre queda vacía tras reiniciar</td><td>URL con <code>mem</code> en lugar de <code>file</code>, o <code>ddl-auto=create</code></td></tr><tr><td><code>Database may be already in use</code></td><td>Hay otra copia corriendo o la consola H2 abierta sobre el mismo archivo: cerrar y reintentar (con DevTools es más fácil arrancar dos veces)</td></tr><tr><td>Guardó y no se reinició</td><td>No hubo recompilación (usar ▶ Run) o cambió <code>pom.xml</code>/<code>application*.properties</code> (reinicio manual)</td></tr><tr><td><code>No property ... found for type Libro</code></td><td>Nombre del método derivado no coincide con un campo</td></tr><tr><td><code>Failed to load driver class org.h2.Driver</code></td><td>Falta la dependencia <code>com.h2database:h2</code></td></tr></tbody></table></div>
+        <thead><tr><th>Síntoma</th><th>Causa probable</th></tr></thead><tbody><tr><td>La aplicación no arranca y el log dice <code>No identifier specified</code></td><td>Falta <code>@Id</code> (o su import)</td></tr><tr><td><code>cannot find symbol: Entity</code></td><td>Falta <code>import jakarta.persistence.Entity;</code> o la dependencia <code>data-jpa</code></td></tr><tr><td>La lista siempre queda vacía tras reiniciar</td><td>URL con <code>mem</code> en lugar de <code>file</code>, o <code>ddl-auto=create</code></td></tr><tr><td><code>Database may be already in use</code></td><td>Hay otra copia corriendo o la consola H2 abierta sobre el mismo archivo: cerrar y reintentar (con DevTools es más fácil arrancar dos veces)</td></tr><tr><td>Guardó y no se reinició</td><td>No hubo recompilación (usar ▶ Run) o cambió <code>pom.xml</code>/<code>application*.properties</code> (reinicio manual)</td></tr><tr><td><code>No property ... found for type Jugador</code></td><td>Nombre del método derivado no coincide con un campo</td></tr><tr><td><code>Failed to load driver class org.h2.Driver</code></td><td>Falta la dependencia <code>com.h2database:h2</code></td></tr></tbody></table></div>
     </div></div>
 
     <div class="callout warning mb-3">

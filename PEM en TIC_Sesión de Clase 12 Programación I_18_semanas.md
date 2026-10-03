@@ -93,8 +93,13 @@ Sesión **[sincrónica]{.underline}** #12 — Sábado 3 de octubre de 2026, 11:1
 
 > **Material de apoyo de la sesión:** carpeta HTML
 > `Material_Sesion_Clase_12_HTML_18_semanas/` (hub `index.html` con quiz
-> unificado, guía docente, ocho ejercicios en escalera con Kit de doce
-> archivos completos, cheat sheet de dos pestañas —"Conceptos JPA" y "De H2
+> unificado, guía docente, seis ejercicios progresivos de Jugador, ocho
+> ejercicios independientes de Biblioteca y seis pestañas en `ejercicios.html`:
+> Ejercicios, Kit de Acompañamiento de Ejercicios, explicación del Kit,
+> Kit para iniciar Jugador desde cero (proyecto y dependencias seleccionados
+> en Spring Initializr, con árbol completo de archivos), Práctica
+> independiente de Biblioteca y Anexo `taller-jpa`; cheat sheet de
+> dos pestañas —"Conceptos JPA" y "De H2
 > a Neon"—, challenge con clasificación de piezas y simulador de
 > persistencia, y la página "Proyecto" que integra la guía paso a paso y el
 > entregable calificable). Requiere el módulo de registro construido en las
@@ -107,6 +112,17 @@ Sesión **[sincrónica]{.underline}** #12 — Sábado 3 de octubre de 2026, 11:1
 > base de datos H2 local (primero en memoria, para evidenciar el problema, y
 > luego en archivo, para resolverlo). La autenticación corresponde a la
 > Semana 13 y el despliegue en producción a la Semana 14.
+>
+> **Continuidad para grupos que completaron la Semana 11:** trabajar sobre
+> el módulo validado que ya tienen; no rehacer el formulario, las
+> validaciones, las rutas ni las plantillas. Se agrega JPA y se sustituye la
+> lista en memoria; las etiquetas del Kit distinguen lo que se conserva, se
+> agrega, se modifica y lo imprescindible. Relacionar cada requisito omitido
+> con su síntoma: imports JPA sin resolver si falta `data-jpa`, fallo del
+> driver al arrancar si falta H2, error de entidad si falta
+> `@Entity`/`@Id` o el constructor vacío, inyección fallida si Spring no
+> encuentra el repositorio, duplicados al editar sin el `id` oculto y
+> pérdida de datos con H2 `mem` o `ddl-auto=create`.
 >
 > **Nota sobre el despliegue (cambio respecto de lo anunciado antes):** la
 > aplicación se alojará en **Render**, pero la base de datos PostgreSQL
@@ -142,25 +158,26 @@ una base de datos. A continuación se introduce el concepto ancla de la
 sesión: qué es un ORM, cómo Hibernate traduce un objeto Java en una fila de
 una tabla, y qué sentencias SQL deja de escribir el programador gracias a
 ello. Se agregan al pom.xml las dependencias spring-boot-starter-data-jpa y
-el driver de H2, y junto a ellas spring-boot-devtools, que a partir de esta
-sesión evita tener que detener y recompilar el proyecto tras cada cambio: el
-docente modifica un texto de una plantilla y muestra que basta con refrescar
-el navegador. Se advierte de inmediato la excepción que más confunde: los
-cambios en pom.xml y en los archivos application*.properties siguen
+el driver de H2, y junto a ellas spring-boot-devtools. Se explica con
+precisión que el reinicio automático ocurre cuando se recompila código; un
+cambio en una plantilla se ve al refrescar el navegador y no reinicia Java.
+Los cambios en pom.xml y en los archivos application*.properties siguen
 requiriendo un reinicio manual.*
 
 *Tiempo estimado: 9 minutos (minutos 05–14)*
 
-*Recursos: `clase.html` bloque 2, `cheatsheet.html` pestaña "Conceptos JPA",
-proyecto de demostración `taller-jpa` con las dependencias ya descargadas.*
+*Recursos: `clase.html` bloque 2, `cheatsheet.html` pestaña "Continuidad:
+Jugador", proyecto de Semana 11 `taller-formularios` con las dependencias
+JPA ya agregadas. `taller-jpa` es una referencia funcional separada del Kit.*
 
-*Actividad que realizará el estudiante: Agregar las tres dependencias a su
-proyecto de práctica, confirmar que sigue arrancando y comprobar la recarga
+*Actividad que realizará el estudiante: Agregar las dependencias JPA/H2 al
+módulo de Semana 11, confirmar que sigue arrancando y comprobar la recarga
 automática cambiando un texto de una plantilla.*
 
 3.  **Construcción del conocimiento — Entidad, repositorio y las dos familias de anotaciones**
 
-*Actividad: Conversión de una clase ordinaria en entidad, nombrando en voz
+*Actividad: Conversión de `Jugador`, la misma entidad validada en Semana 11,
+en entidad JPA, nombrando en voz
 alta el paquete de cada anotación al escribir su import: @Entity, @Id,
 @GeneratedValue(strategy = GenerationType.IDENTITY) y @Column, todas de
 jakarta.persistence. Se explica por qué se elige IDENTITY: funciona igual en
@@ -171,16 +188,20 @@ jakarta.validation.constraints de la Semana 11, que dice qué dato se
 acepta—. Luego se crea el repositorio como una interfaz vacía que extiende
 JpaRepository, y se muestra que Spring escribe su implementación durante el
 arranque; se agregan dos métodos derivados por nombre para evidenciar que la
-consulta se deduce del nombre del método.*
+consulta se deduce del nombre del método. Se comprueban el constructor
+vacío requerido por JPA, el tipo de id y que el repositorio esté dentro del
+paquete base. Si falta @Id, se lee "No identifier specified for entity";
+si un método derivado menciona un campo inexistente, el mensaje
+"No property ... found for type" revela el nombre que debe corregirse.*
 
 *Tiempo estimado: 14 minutos (minutos 14–28)*
 
 *Recursos: `clase.html` bloque 3, `cheatsheet.html` (tabla "anotación →
-import completo → error si falta"), Kit de archivos completos de
-`ejercicios.html`.*
+import completo → error si falta"), los Ejercicios de Jugador y el Kit de
+Acompañamiento en `ejercicios.html`.*
 
-*Actividad que realizará el estudiante: Anotar su entidad y crear su
-repositorio en paralelo al docente.*
+*Actividad que realizará el estudiante: Anotar `Jugador` sin quitar sus
+validaciones y crear `JugadorRepository` en paralelo al docente.*
 
 ***Pausa activa***
 
@@ -196,8 +217,12 @@ claros, porque son los que harán perder horas al estudiante si no los
 reconoce: quitar @Id (la aplicación no arranca y el registro dice "No
 identifier specified for entity"), eliminar el constructor vacío tras haber
 escrito uno con parámetros, retirar el driver de H2 y escribir mal el nombre
-de un método derivado. Cada error se lee en el registro de arranque,
-señalando qué línea del mensaje importa. Se completa después el ciclo CRUD
+de un método derivado. Se muestra además que, si Spring no detecta el
+repositorio porque quedó fuera del paquete base, falla su inyección; en
+Spring Boot 4, si falta el starter o la propiedad de consola, la ruta
+/h2-console da 404 aunque eso no demuestre que JPA haya fallado. Cada error
+se lee en el registro de arranque, señalando qué línea del mensaje importa.
+Se completa después el ciclo CRUD
 —save, findAll, findById, deleteById— inyectando el repositorio por
 constructor, y se aclara por qué findById devuelve Optional y cómo se
 resuelve con .orElseThrow(). Se abre la consola de H2 en /h2-console para
@@ -214,14 +239,18 @@ errores en su propio proyecto, leer el mensaje y repararlo.*
 5.  **Práctica guiada — Cumplir la promesa: H2 en archivo y perfiles de Spring**
 
 *Actividad: Momento central de la sesión. Se demuestra que con la dirección
-jdbc:h2:mem: los datos siguen desapareciendo al reiniciar, y se cambia a
-jdbc:h2:file:./datos/biblioteca para que persistan de verdad; se reinicia la
+jdbc:h2:mem:jugadores los datos siguen desapareciendo al reiniciar, y se
+cambia a jdbc:h2:file:./datos/jugadores para que persistan de verdad; se reinicia la
 aplicación delante del grupo —deteniéndola a mano con Ctrl+C, no dejando que
 DevTools la reinicie sola, porque aquí el apagado deliberado es justamente la
 prueba— y los registros siguen ahí. Se recuerda también que estos archivos de
 configuración son de los que DevTools no recarga. Se advierte además
 la trampa silenciosa de la semana: con ddl-auto=create la tabla se
 reconstruye vacía en cada arranque aunque la dirección apunte a un archivo.
+Se inspecciona el id oculto del formulario para comprobar que editar
+actualiza la fila y no inserta otra. El driver PostgreSQL se agrega si el
+perfil prod declara org.postgresql.Driver; no se necesita mientras el perfil
+dev siga activo.
 Se crean finalmente los tres archivos de configuración —application.properties,
 que elige el perfil; application-dev.properties, con H2; y
 application-prod.properties, con los marcadores ${DB_URL}, ${DB_USER} y
@@ -230,28 +259,36 @@ ${DB_PASSWORD} para Neon— y se agrega la carpeta de datos al .gitignore.*
 *Tiempo estimado: 10 minutos (minutos 40–50)*
 
 *Recursos: `clase.html` bloque 5, `cheatsheet.html` pestaña "De H2 a Neon"
-(tabla comparativa H2 local frente a PostgreSQL en Neon).*
+(tabla comparativa H2 local frente a PostgreSQL en Neon); la base de
+ejemplo se llama `jugadores`.*
 
 *Actividad que realizará el estudiante: Cambiar la dirección de su base de
 datos, reiniciar y comprobar con sus propios ojos que el registro sobrevive.*
 
 6.  **Práctica — Ejercicios en escalera**
 
-*Actividad: Trabajo autónomo sobre el proyecto de práctica `taller-jpa`
-(Biblioteca Comunitaria Semilla, entidad Libro), con acompañamiento del
-docente en el chat o en salas. El docente circula atento a los errores
+*Actividad: Trabajo autónomo sobre el proyecto de Semana 11
+`taller-formularios` (Escuela de Fútbol Los Cerritos, entidad `Jugador`),
+con acompañamiento del docente en el chat o en salas. El docente circula atento a los errores
 recogidos en la tabla de la guía docente. Quien avance, inicia la guía del
 proyecto real.*
 
 *Tiempo estimado: 6 minutos (minutos 50–56)*
 
-*Recursos: `ejercicios.html` (ocho ejercicios con pista y solución, y el Kit
-de doce archivos completos con su ruta, su línea package y todos sus
-import).*
+*Recursos: `ejercicios.html`: iniciar en "Ejercicios" y seguir sus seis
+pasos con checkpoints; consultar el Kit de Acompañamiento y su explicación
+al necesitar los archivos finales o aclarar qué se conserva y qué se agrega.
+Quienes aún no llegaron a Semana 11 pueden usar "Kit para iniciar Jugador
+desde cero": generar el proyecto y seleccionar las dependencias en Spring
+Initializr, no en el POM, y seguir el árbol completo de carpetas y archivos.
+La Práctica independiente de Biblioteca y el Anexo funcional `taller-jpa`
+son recursos separados del proyecto principal de la semana.*
 
-*Actividad que realizará el estudiante: Resolver los ejercicios posibles en
-el tiempo disponible y dejar el resto como trabajo autónomo; el Ejercicio 8
-—H2 en archivo y perfiles— es el imprescindible.*
+*Actividad que realizará el estudiante: completar el cambio de la lista a
+`JugadorRepository` —o generar el proyecto desde cero y construir el módulo
+con las dependencias seleccionadas en Initializr— y
+avanzar con la configuración H2 en archivo y perfiles; la referencia
+`taller-jpa` queda disponible si hace falta comparar archivos.*
 
 7.  **Práctica — Challenge**
 

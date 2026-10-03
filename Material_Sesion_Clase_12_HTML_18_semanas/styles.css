@@ -91,6 +91,93 @@ details > summary {
     border-left-color: var(--bad);
 }
 
+/* ---- Transición Semana 11 → 12 ---- */
+.s12-transition-key {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.s12-state {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.22rem 0.65rem;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    line-height: 1.35;
+    vertical-align: middle;
+}
+
+.s12-state--existing {
+    color: #14532d;
+    background: #dcfce7;
+    border-color: #86efac;
+}
+
+.s12-state--added {
+    color: #1e3a8a;
+    background: #dbeafe;
+    border-color: #93c5fd;
+}
+
+.s12-state--adjust {
+    color: #713f12;
+    background: #fef3c7;
+    border-color: #fcd34d;
+}
+
+.s12-state--required {
+    color: #7f1d1d;
+    background: #fee2e2;
+    border-color: #fca5a5;
+}
+
+.s12-transition-panel {
+    border: 1px solid #bfdbfe;
+    border-left: 5px solid var(--brand);
+    border-radius: 0.75rem;
+    background: #eff6ff;
+    padding: 1rem;
+}
+
+.s12-error-map {
+    border: 1px solid #fecaca;
+    border-left: 5px solid var(--bad);
+    border-radius: 0.75rem;
+    background: #fff7f7;
+    padding: 1rem;
+}
+
+.s12-error-map code {
+    color: #7f1d1d;
+}
+
+.s12-error-map ul {
+    margin-bottom: 0;
+}
+
+.s12-transition-panel code {
+    color: #12336b;
+}
+
+@media print {
+    .s12-transition-panel {
+        break-inside: avoid;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
+
+    .s12-error-map {
+        break-inside: avoid;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
+}
+
 /* ---- Cronómetro / bloques de tiempo ---- */
 .time-chip {
     display: inline-block;

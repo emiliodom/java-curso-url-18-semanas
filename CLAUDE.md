@@ -231,7 +231,7 @@ portal.
   inicio de este archivo).
   Los puntos que el material enseña **provocando el error a propósito**:
   - **H2 en memoria vs. H2 en archivo.** `jdbc:h2:mem:` sigue olvidando; la
-    semana termina con `jdbc:h2:file:./datos/biblioteca` (y `datos/` en
+    semana termina con `jdbc:h2:file:./datos/jugadores` (y `datos/` en
     `.gitignore`). Es el momento emocional de la sesión.
   - **Trampa silenciosa:** `ddl-auto=create` reconstruye la tabla vacía en
     cada arranque **aunque** la URL apunte a un archivo. Debe ser `update`.
@@ -240,18 +240,44 @@ portal.
     `spring-boot-starter-data-jpa`, método derivado mal escrito
     (`No property xxx found for type`), y `findById` devolviendo
     `Optional<T>` en vez de `T` (`.orElseThrow()`).
+  La ruta principal continúa la aplicación de Semana 11:
+  `taller-formularios`, Escuela de Fútbol Los Cerritos, entidad `Jugador`.
+  Conserva su formulario y Bean Validation mientras cambia `List<Jugador>`
+  por `JugadorRepository`; no hay salto a una aplicación nueva. En
+  `ejercicios.html` tiene seis pestañas ordenadas: Ejercicios progresivos
+  de `Jugador`, Kit de Acompañamiento de Ejercicios con archivos completos,
+  Explicación del Kit, Kit para iniciar el módulo completo de Jugador desde
+  cero en start.spring.io seleccionando allí las dependencias (sin editar
+  `pom.xml`), Práctica independiente de Biblioteca y Anexo `taller-jpa`/
+  Biblioteca. El Kit desde cero sigue el árbol expandido de la Semana 10;
+  ambos Kits de Jugador incluyen `templates/error.html`. Spring Initializr
+  actualmente ofrece Boot 4.1.1 sin una opción seleccionable para H2 Console,
+  por lo que el Kit desde cero verifica persistencia por CRUD/reinicio y no
+  configura `/h2-console`. La referencia funcional usa `groupId` `gt.edu.url`.
+  El challenge usa `Donacion` como transferencia; `proyecto.html` continúa
+  `Jugador` en el proyecto real del estudiante. La Guía 12 sigue valiendo
+  1 pt y no es Entrega Parcial.
   Advierte que sobre la misma clase **conviven dos familias de anotaciones**:
   `jakarta.persistence` (cómo se guarda) y `jakarta.validation.constraints`
   de la Semana 11 (qué se acepta). Replica el **Kit de archivos completos**
-  (12 archivos) y el **barajado de opciones** del quiz. El `challenge.html`
+  (12 archivos de aplicación; el proyecto de referencia incluye además una
+  prueba de integración opcional) y el **barajado de opciones** del quiz.
+  El POM de referencia usa Spring Boot 4.1.1: la consola H2 requiere el
+  starter separado `spring-boot-h2console`, el driver PostgreSQL ya está
+  incluido para el perfil futuro y `application-dev.properties` desactiva
+  la caché de Thymeleaf. El Kit tiene además un anexo de 12 errores
+  reproducibles con pasos de restauración.
+  El `challenge.html`
   combina clasificación en 4 cajas (Entidad / Repositorio / Servicio o
   Controlador / `application.properties`) con el simulador de capas
   reetiquetado para el viaje de un `save()`, con un contador de filas que
   **vuelve a cero** en el escenario de base en memoria. Dominios:
-  ejercicios/clase/cheatsheet = Biblioteca Comunitaria Semilla
+  recorrido principal/clase/cheatsheet/proyecto = Escuela de Fútbol Los
+  Cerritos (`taller-formularios`, entidad `Jugador`); pestaña de referencia
+  del Kit y ejercicios independientes = Biblioteca Comunitaria Semilla
   (`taller-jpa`, entidad `Libro`); challenge = Comedor Infantil El Girasol
-  (entidad `Donacion`); proyecto = el proyecto real del estudiante. Sin hito
-  de Entrega Parcial — el siguiente es la Entrega Parcial 3 en la Semana 14.
+  (entidad `Donacion`). Sin hito de Entrega Parcial — el siguiente es la
+  Entrega Parcial 3 en la Semana 14.
   **Primera semana con `spring-boot-devtools`** (recarga automática), a
   petición explícita del profesor: nunca se había enseñado y la Semana 12
   pedía más reinicios manuales que ninguna otra. No se retroactivó a las
@@ -548,6 +574,52 @@ presentes en `styles.css`, incluyendo forzar visibles todas las
 
 ### Reglas de contenido importantes
 
+- **Los tres nombres derivados del Artifact de Spring Initializr se explican
+  siempre, nunca se dan por obvios.** El profesor reportó como error que el
+  material de la Semana 12 dijera `taller-jpa` (carpeta) y `tallerjpa`
+  (paquete), y que el servicio añadiera `.service`. No era un error: Initializr
+  deriva **tres** nombres del mismo Artifact y los tres conviven — carpeta y
+  `<artifactId>` **con** guion; `package` y ruta `src/main/java/…` **sin**
+  guion (en Java el guion es el signo de resta y un paquete no lo admite);
+  clase principal en CamelCase + `Application`. Y el sufijo `.model` /
+  `.repository` / `.service` / `.controller` es la **capa** de la Semana 6, no
+  parte del nombre del proyecto; esas carpetas van *dentro* del paquete base o
+  se produce el 404 silencioso de la Semana 9. Esta audiencia lee una
+  diferencia de una letra como una errata y pierde la sesión corrigiéndola.
+  Implementado (octubre 2026) en las Semanas 10, 11 y 12, en cinco lugares por
+  semana: recuadro en `ejercicios.html` (en la S10 es un **Paso 0** nuevo, que
+  además cubre otro hueco: la S10 nunca decía cómo generar
+  `taller-formularios`), árbol del Kit anotado, tarjeta "Cómo se lee la línea
+  `package`" en `cheatsheet.html`, aviso de FAQ en `clase.html` para
+  responderla al grupo completo, y preguntas nuevas en `quiz.html`.
+  **Replicar en toda semana 13–18 que genere o toque un proyecto Spring.**
+
+  **Corrección de octubre 2026 — Initializr NO quita el guion solo.** La
+  primera versión de esos cinco recuadros afirmaba que Spring Initializr
+  escribe el campo *Package name* ya sin guion y que el estudiante "no debe
+  corregirlo a mano". Es falso, y el profesor lo detectó con una captura de
+  start.spring.io. Verificado contra el servicio real
+  (`curl https://start.spring.io/starter.zip -d artifactId=taller-jpa ...`):
+
+  1. El campo *Package name* del formulario **muestra el guion**:
+     `gt.edu.url.taller-jpa`.
+  2. Si se deja así, el proyecto generado **no usa `tallerjpa`** sino
+     **`taller_jpa`** — el guion se convierte en **guion bajo**, no se
+     elimina (`src/main/java/gt/edu/url/taller_jpa/`,
+     `package gt.edu.url.taller_jpa;`).
+  3. Lo único que sí es automático y sí se documentó bien: el
+     `<artifactId>` conserva el guion y la clase principal se vuelve
+     `TallerJpaApplication` (CamelCase).
+
+  Decisión del profesor: el material **instruye borrar el guion a mano** en
+  el campo *Package name*, para que el paquete quede `gt.edu.url.tallerjpa`
+  (convencional, y coincide con todos los Kits ya escritos). Todo material
+  nuevo debe decir las tres cosas: que el campo viene con guion, que hay que
+  borrarlo, y qué pasa si no se borra (guion bajo, válido pero distinto). El
+  aviso vive ahora también en la **Semana 7** (`clase.html` como fila nueva
+  de la tabla de campos de Initializr, `ejercicios.html` y `proyecto.html`),
+  que es donde el estudiante genera su proyecto real y donde el campo nunca
+  se había mencionado.
 - **Solo la Semana 1 tiene `instalacion.html`** (VS Code + JDK + Git + Plan B
   online). Las semanas siguientes **no lo duplican**: enlazan de vuelta con
   `../Material_Sesion_Clase_1_HTML_18_semanas/instalacion.html` (se permite

@@ -34,7 +34,7 @@
         <div>
           <div class="brand-pill">Ejercicios · Semana 12 · 100% en tu propia computadora</div>
           <h1 class="h2 fw-bold mt-2 mb-1">De una lista que se olvida a una base de datos que recuerda</h1>
-          <div class="small-muted">Dos pestañas: los <strong>8 ejercicios en escalera</strong> y el <strong>Kit de archivos completos</strong> (cada archivo entero, con su ruta, su <code>package</code> y <strong>todos sus <code>import</code></strong>). Proyecto de práctica desechable: <code>taller-jpa</code> · <strong>Biblioteca Comunitaria Semilla</strong> · entidad <code>Libro</code>.</div>
+          <div class="small-muted">Seis pestañas para practicar persistencia con Jugador: ejercicios paso a paso, Kit de Acompañamiento, explicación del Kit, alternativa para iniciar desde cero y dos recursos independientes sobre Biblioteca.</div>
         </div>
         <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
       </div>
@@ -45,17 +45,1234 @@
 
     <ul class="nav nav-tabs mb-4 no-print" id="ejerciciosTabs" role="tablist">
       <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="tab-ejercicios-btn" data-bs-toggle="tab" data-bs-target="#tab-ejercicios" type="button" role="tab">🪜 Ejercicios paso a paso</button>
+        <button class="nav-link active" id="tab-ejercicios-jugador-btn" data-bs-toggle="tab" data-bs-target="#tab-ejercicios-jugador" type="button" role="tab">🪜 Ejercicios</button>
       </li>
       <li class="nav-item" role="presentation">
-        <button class="nav-link" id="tab-kit-btn" data-bs-toggle="tab" data-bs-target="#tab-kit" type="button" role="tab">📦 Kit de archivos completos</button>
+        <button class="nav-link" id="tab-jugador-kit-btn" data-bs-toggle="tab" data-bs-target="#tab-jugador-kit" type="button" role="tab">🧩 Kit de Acompañamiento de Ejercicios</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-continuidad-btn" data-bs-toggle="tab" data-bs-target="#tab-continuidad" type="button" role="tab">🧭 Explicación del Kit de Acompañamiento</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-jugador-zero-btn" data-bs-toggle="tab" data-bs-target="#tab-jugador-zero" type="button" role="tab">🆕 Kit: iniciar Jugador desde cero completamente</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-ejercicios-btn" data-bs-toggle="tab" data-bs-target="#tab-ejercicios" type="button" role="tab">📚 Práctica independiente: Biblioteca</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-kit-btn" data-bs-toggle="tab" data-bs-target="#tab-kit" type="button" role="tab">📎 Anexo: taller-jpa Biblioteca</button>
       </li>
     </ul>
 
     <div class="tab-content" id="ejerciciosTabsContent">
 
-      <!-- ============ PESTAÑA 1: EJERCICIOS ============ -->
-      <div class="tab-pane fade show active" id="tab-ejercicios" role="tabpanel">
+      <!-- ============ PESTAÑA 1: EJERCICIOS JUGADOR ============ -->
+      <div class="tab-pane fade show active" id="tab-ejercicios-jugador" role="tabpanel">
+        <div class="callout info mb-3">
+          <div class="fw-semibold">Ejercicios en escalera — de la lista en memoria a los registros persistentes</div>
+          <div class="small-muted">Sigue el formato de la Semana 11: realiza la acción, verifica el checkpoint y abre la solución solo después de intentarlo. Si terminaste la Semana 11, trabaja sobre tu <code>taller-formularios</code>; si empiezas desde cero, primero completa el <a href="#" onclick="document.getElementById('tab-jugador-zero-btn').click(); return false;">Kit para iniciar Jugador</a>. El <a href="#" onclick="document.getElementById('tab-jugador-kit-btn').click(); return false;">Kit de Acompañamiento</a> reúne el código final de cada archivo.</div>
+        </div>
+        <div class="callout warning mb-4">
+          <div class="fw-semibold">Regla de trabajo</div>
+          <div class="small-muted">No pegues todos los archivos al comienzo. Haz cada cambio por separado y ejecuta o prueba la aplicación antes de avanzar. Conserva Bean Validation y las plantillas de Semana 11; esta escalera se concentra en JPA, CRUD y persistencia.</div>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-lg-6"><div class="card h-100"><div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 1 — Localiza dónde viven los datos <span class="badge text-bg-success">Nivel 1</span></h2>
+            <p class="small-muted mb-2">Si continúas desde Semana 11, encuentra en <code>JugadorService</code> la lista que conserva los jugadores. Registra uno y explica por qué se perderá al cerrar la aplicación. Si iniciaste con el Kit desde cero, lee la solución y localiza en tu implementación actual el repositorio que reemplaza aquella lista.</p>
+            <p class="small-muted"><strong>Tu turno:</strong> identifica en qué archivo y variable se guarda, y qué pasaría si mañana hubiera cientos de registros.</p>
+            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: puedes señalar la colección en memoria y explicar por qué no es almacenamiento permanente.</span></div>
+            <details><summary class="fw-semibold">Solución</summary><div class="mt-2 small-muted">El <code>ArrayList&lt;Jugador&gt;</code> vive en memoria dentro del servicio. Al apagar el proceso, se destruye junto con su contenido. JPA permitirá guardar los mismos objetos en una base de datos.</div></details>
+          </div></div></div>
+
+          <div class="col-lg-6"><div class="card h-100"><div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 2 — Convierte Jugador en entidad <span class="badge text-bg-success">Nivel 1</span></h2>
+            <p class="small-muted mb-2">En <code>Jugador.java</code>, conserva todas las reglas de validación de Semana 11 y agrega las anotaciones de persistencia, un <code>Long id</code> autogenerado y el constructor vacío. Consulta el Kit de Acompañamiento para imports y archivo completo.</p>
+            <p class="small-muted"><strong>Tu turno:</strong> distingue qué anotaciones definen cómo se guarda el objeto y cuáles siguen validando los datos.</p>
+            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: el proyecto compila; Jugador conserva sus reglas y ahora tiene una identidad estable.</span></div>
+            <details><summary class="fw-semibold">Pista y solución</summary><div class="mt-2 small-muted">JPA usa <code>@Entity</code>, <code>@Id</code>, <code>@GeneratedValue(strategy = GenerationType.IDENTITY)</code> y, si corresponde, <code>@Column</code>. Bean Validation sigue usando <code>jakarta.validation.constraints</code>; JPA usa <code>jakarta.persistence</code>. No elimines ninguna de las dos familias.</div></details>
+          </div></div></div>
+
+          <div class="col-lg-6"><div class="card h-100"><div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 3 — Crea el repositorio <span class="badge text-bg-primary">Nivel 2</span></h2>
+            <p class="small-muted mb-2">Crea <code>repository/JugadorRepository.java</code> dentro del paquete base y haz que extienda <code>JpaRepository&lt;Jugador, Long&gt;</code>. No escribas una clase de implementación ni métodos CRUD a mano.</p>
+            <p class="small-muted"><strong>Tu turno:</strong> confirma que el repositorio puede importar <code>Jugador</code> y que VS Code resuelve <code>JpaRepository</code>.</p>
+            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: la interfaz compila y está en la capa <code>repository</code>, dentro del paquete base.</span></div>
+            <details><summary class="fw-semibold">Solución</summary><div class="mt-2 small-muted">La forma mínima es <code>public interface JugadorRepository extends JpaRepository&lt;Jugador, Long&gt; { }</code>. Spring Data genera su implementación al iniciar la aplicación. Si no encuentra el tipo, revisa el paquete, los imports y que JPA esté presente.</div></details>
+          </div></div></div>
+
+          <div class="col-lg-6"><div class="card h-100"><div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 4 — Sustituye la lista por JPA <span class="badge text-bg-primary">Nivel 2</span></h2>
+            <p class="small-muted mb-2">Inyecta <code>JugadorRepository</code> en el servicio. Cambia las operaciones de listar, guardar, buscar y eliminar para delegarlas al repositorio; elimina la lista y cualquier <code>new ArrayList&lt;&gt;()</code>.</p>
+            <p class="small-muted"><strong>Tu turno:</strong> revisa qué devuelve <code>findById</code> y adapta la búsqueda para entregar un <code>Jugador</code>, no un <code>Optional&lt;Jugador&gt;</code>.</p>
+            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: el proyecto arranca y el servicio usa repositorio por constructor, sin guardar datos en una colección propia.</span></div>
+            <details><summary class="fw-semibold">Pista y solución</summary><div class="mt-2 small-muted"><code>findAll()</code>, <code>save(jugador)</code>, <code>findById(id).orElseThrow(...)</code> y <code>deleteById(id)</code> cubren este CRUD. Inyección por constructor facilita ver la dependencia del servicio.</div></details>
+          </div></div></div>
+
+          <div class="col-lg-6"><div class="card h-100"><div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 5 — Prueba registrar, validar y editar <span class="badge text-bg-warning">Nivel 3</span></h2>
+            <p class="small-muted mb-2">Usa el formulario existente para guardar un jugador válido. Después intenta enviar un dato inválido, edita el registro y comprueba que la edición no cree una fila duplicada; finalmente elimínalo.</p>
+            <p class="small-muted"><strong>Tu turno:</strong> si al editar aparece un duplicado, inspecciona el campo oculto <code>id</code> del formulario y cómo llega al objeto enviado.</p>
+            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: la validación sigue mostrando errores; crear, editar y eliminar funcionan.</span></div>
+            <details><summary class="fw-semibold">Solución</summary><div class="mt-2 small-muted">Conserva <code>@Valid</code> y <code>BindingResult</code> en su orden de Semana 11. El formulario de edición debe enviar el id (por ejemplo, <code>&lt;input type="hidden" th:field="*{id}"&gt;</code>); <code>save</code> usa ese id para actualizar el registro.</div></details>
+          </div></div></div>
+
+          <div class="col-lg-6"><div class="card h-100"><div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 6 — Comprueba que sobrevive al apagado <span class="badge text-bg-danger">Nivel 4</span></h2>
+            <p class="small-muted mb-2">Confirma que <code>application-dev.properties</code> usa <code>jdbc:h2:file:./datos/jugadores</code> y <code>ddl-auto=update</code>. Guarda un jugador y verifica que aparece en la lista.</p>
+            <p class="small-muted"><strong>Tu turno:</strong> detén completamente la aplicación con <kbd>Ctrl</kbd>+<kbd>C</kbd> o Stop de VS Code; vuelve a iniciarla a mano y revisa la lista. No cuentes la recarga de DevTools como reinicio de prueba.</p>
+            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: el mismo jugador aparece después del apagado completo y el nuevo arranque.</span></div>
+            <details><summary class="fw-semibold">Pista y solución</summary><div class="mt-2 small-muted">La URL <code>file</code> guarda los datos en disco y <code>update</code> conserva la tabla. Con <code>mem</code> la base está en memoria y se vacía al cerrar. DevTools se usa para recargar cambios de código; el apagado manual verifica la persistencia deliberadamente.</div></details>
+          </div></div></div>
+        </div>
+      </div>
+
+      <!-- ============ PESTAÑA 3: EXPLICACIÓN DEL KIT ============ -->
+      <div class="tab-pane fade" id="tab-continuidad" role="tabpanel">
+        <div class="callout success mb-4">
+          <div class="fw-semibold">Qué acompaña el Kit a lo largo de los ejercicios</div>
+          <div class="small-muted">El <a href="#" onclick="document.getElementById('tab-jugador-kit-btn').click(); return false;">Kit de Acompañamiento de Ejercicios</a> contiene los archivos completos del resultado final para comparar o consultar cuando te atasques. No reemplaza la práctica: primero intenta el ejercicio y revisa el Kit después. Si no tienes el módulo de Semana 11, comienza por el <a href="#" onclick="document.getElementById('tab-jugador-zero-btn').click(); return false;">Kit para iniciar Jugador desde cero completamente</a>.</div>
+        </div>
+        <div class="callout warning mb-4">
+          <div class="fw-semibold">Cómo leer los cambios del Kit</div>
+          <div class="small-muted">Las etiquetas distinguen lo que ya existía en Semana 11 de lo que se agrega o modifica ahora. Mantienes entidad, formulario y validaciones; agregas el id y el repositorio y conectas el servicio a JPA. La primera pestaña te da tareas para practicarlo; la segunda reúne el código completo de referencia.</div>
+        </div>
+        <div class="s12-transition-panel mb-4">
+          <div class="fw-bold mb-2">Si ya completaste la Semana 11, no reconstruyas el módulo: continúa desde ahí.</div>
+          <div class="small mb-2">Conserva tu formulario, sus validaciones y las plantillas. Avanza directamente a los cambios de persistencia de esta semana. Las etiquetas indican el alcance de cada paso:</div>
+          <div class="s12-transition-key" aria-label="Leyenda de cambios de Semana 12">
+            <span class="s12-state s12-state--existing">Ya viene de Semana 11</span>
+            <span class="s12-state s12-state--added">Se incorpora en Semana 12</span>
+            <span class="s12-state s12-state--adjust">Se modifica para usar JPA</span>
+            <span class="s12-state s12-state--required">Imprescindible: si falta, puede fallar</span>
+          </div>
+        </div>
+        <div class="s12-error-map mb-4" role="note" aria-label="Requisitos que provocan errores si se omiten">
+          <div class="fw-bold mb-2">Agregados que no debes omitir: síntoma si falta cada uno</div>
+          <ul class="small">
+            <li><code>spring-boot-starter-data-jpa</code> → imports <code>jakarta.persistence</code> / <code>JpaRepository</code> en rojo; no compila.</li>
+            <li><code>com.h2database:h2</code> → compila, pero falla al arrancar: <code>Failed to load driver class org.h2.Driver</code>.</li>
+            <li>Sin <code>@Entity</code> → la clase no se mapea como entidad (puede aparecer <code>Not a managed type</code>); sin <code>@Id</code> → <code>No identifier specified for entity</code> y falla el arranque.</li>
+            <li>Constructor vacío <code>public Jugador() { }</code> → Hibernate puede fallar al crear la entidad (<code>No default constructor</code>).</li>
+            <li>Un <code>JugadorRepository</code> dentro del paquete base → si falta o queda fuera del escaneo, el servicio no puede inyectarlo; si un método derivado nombra un campo inexistente, Spring falla al arrancar con <code>No property ... found for type</code>.</li>
+            <li><code>spring-boot-h2console</code> en Spring Boot 4 + propiedad de consola habilitada → si falta cualquiera, <code>/h2-console</code> da 404.</li>
+            <li>Campo oculto <code>id</code> en el formulario de edición → al guardar se inserta otro jugador en vez de actualizar el existente.</li>
+            <li><code>ddl-auto=update</code> y URL H2 <code>file</code> → si se deja <code>create</code>, los datos se borran al reiniciar; con <code>mem</code>, la base vive solo en memoria.</li>
+            <li>Driver <code>org.postgresql:postgresql</code> → solo es imprescindible al activar <code>prod</code>; si el perfil declara <code>org.postgresql.Driver</code> y no está el driver, falla la conexión al arrancar.</li>
+          </ul>
+        </div>
+        <div class="card mb-3"><div class="card-body">
+          <h2 class="h5 section-title">Paso 1 — Reconoce lo que ya tienes <span class="s12-state s12-state--existing">Punto de partida S11</span></h2>
+          <p class="small-muted">Abre <code>taller-formularios</code> y confirma el módulo que ya construiste, sin recrear sus archivos:</p>
+          <pre><code>gt.edu.url.tallerformularios
+├── model/Jugador.java                 ← validaciones de la Semana 11
+├── service/JugadorService.java        ← List&lt;Jugador&gt; en memoria
+├── controller/JugadorController.java ← formulario y rutas /jugadores
+└── resources/templates/              ← formulario.html y lista.html</code></pre>
+          <p class="small-muted mb-0">No cambies Group, Artifact, paquete base, formulario, rutas ni validaciones. Si ya tienes estos archivos funcionando, consérvalos y pasa al Paso 2.</p>
+        </div></div>
+        <div class="card mb-3"><div class="card-body">
+          <h2 class="h5 section-title">Paso 2 — Agrega las dependencias que falten <span class="s12-state s12-state--added">Se incorpora en S12</span> <span class="s12-state s12-state--required">Sin JPA/H2, no arranca correctamente</span></h2>
+          <p class="small-muted"><span class="s12-state s12-state--existing">Conserva</span> web, Thymeleaf y Validation. Dentro de <code>&lt;dependencies&gt;</code>, agrega <strong>solo las dependencias nuevas que aún no existan</strong> en tu POM; no pegues duplicados ni reemplaces el archivo completo:</p>
+          <pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-data-jpa&lt;/artifactId&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+    &lt;groupId&gt;com.h2database&lt;/groupId&gt;
+    &lt;artifactId&gt;h2&lt;/artifactId&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;
+
+&lt;!-- Spring Boot 4: starter independiente para /h2-console. --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-h2console&lt;/artifactId&gt;
+&lt;/dependency&gt;
+
+&lt;!-- Se necesita cuando application-prod.properties declara el driver PostgreSQL. --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.postgresql&lt;/groupId&gt;
+    &lt;artifactId&gt;postgresql&lt;/artifactId&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+    &lt;optional&gt;true&lt;/optional&gt;
+&lt;/dependency&gt;</code></pre>
+          <p class="small-muted">Si el proyecto usa Spring Boot 4, agrega también <code>spring-boot-h2console</code> para habilitar <code>/h2-console</code>. Agrega igualmente el driver <code>org.postgresql:postgresql</code> si vas a declarar el perfil <code>prod</code> que se usará en Semana 14. Recarga Maven; los cambios en el POM requieren reiniciar la aplicación.</p>
+          <div class="callout success mb-0">✅ Checkpoint: los imports de JPA se resuelven y la aplicación compila.</div>
+        </div></div>
+        <div class="card mb-3"><div class="card-body">
+          <h2 class="h5 section-title">Paso 3 — Añade persistencia a Jugador <span class="s12-state s12-state--adjust">Modifica el archivo existente</span> <span class="s12-state s12-state--required">Id y constructor vacío obligatorios</span></h2>
+          <p class="small-muted">No crees un segundo <code>Jugador.java</code> ni borres el que ya validaste. En <code>src/main/java/gt/edu/url/tallerformularios/model/Jugador.java</code>, <span class="s12-state s12-state--existing">conserva</span> campos, getters/setters y anotaciones Bean Validation. <span class="s12-state s12-state--added">Agrega</span> los imports JPA, <code>@Entity</code>, el campo <code>id</code> generado y constructor vacío. El código completo es modelo de llegada, no una invitación a rehacer las reglas que ya funcionan.</p>
+          <pre><code>package gt.edu.url.tallerformularios.model;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
+@Entity
+public class Jugador {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotBlank(message = "El nombre es obligatorio.")
+    @Size(min = 3, max = 40, message = "El nombre debe tener entre 3 y 40 caracteres.")
+    @Column(nullable = false, length = 40)
+    private String nombre;
+
+    @NotNull(message = "La edad es obligatoria.")
+    @Min(value = 5, message = "La edad mínima para inscribirse es 5 años.")
+    @Max(value = 17, message = "Esta categoría admite hasta 17 años.")
+    @Column(nullable = false)
+    private Integer edad;
+
+    @NotBlank(message = "Selecciona una posición.")
+    @Column(nullable = false)
+    private String posicion;
+
+    @NotBlank(message = "El correo del encargado es obligatorio.")
+    @Email(message = "Escribe un correo válido, por ejemplo: nombre@correo.com")
+    @Column(nullable = false)
+    private String correoEncargado;
+
+    @NotBlank(message = "El teléfono es obligatorio.")
+    @Pattern(regexp = "[0-9]{8}", message = "El teléfono debe tener exactamente 8 dígitos.")
+    @Column(nullable = false, length = 8)
+    private String telefono;
+
+    public Jugador() {
+    }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+    public Integer getEdad() { return edad; }
+    public void setEdad(Integer edad) { this.edad = edad; }
+    public String getPosicion() { return posicion; }
+    public void setPosicion(String posicion) { this.posicion = posicion; }
+    public String getCorreoEncargado() { return correoEncargado; }
+    public void setCorreoEncargado(String correoEncargado) { this.correoEncargado = correoEncargado; }
+    public String getTelefono() { return telefono; }
+    public void setTelefono(String telefono) { this.telefono = telefono; }
+}</code></pre>
+          <p class="small-muted">Los getters/setters que ya tienes se conservan; agrega los de <code>id</code>. <code>Integer</code> permite que una edad vacía llegue como <code>null</code> y la rechace <code>@NotNull</code>. Persistencia (<code>jakarta.persistence</code>) y validación (<code>jakarta.validation.constraints</code>) conviven en los mismos campos.</p>
+          <div class="callout success mb-0">✅ Checkpoint: <code>Jugador</code> conserva las cinco validaciones, tiene <code>@Entity</code>, <code>@Id</code>, id <code>Long</code> y constructor vacío.</div>
+        </div></div>
+        <div class="card mb-3"><div class="card-body">
+          <h2 class="h5 section-title">Paso 4 — Crea JugadorRepository <span class="s12-state s12-state--added">Archivo nuevo en S12</span> <span class="s12-state s12-state--required">Paquete y campos correctos</span></h2>
+          <p class="small-muted">Este archivo sí es nuevo: crea <code>repository/JugadorRepository.java</code> dentro del paquete base. Los nombres derivados deben usar campos que ya existen en <code>Jugador</code>:</p>
+          <pre><code>package gt.edu.url.tallerformularios.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import gt.edu.url.tallerformularios.model.Jugador;
+
+public interface JugadorRepository extends JpaRepository&lt;Jugador, Long&gt; {
+    List&lt;Jugador&gt; findByNombreContainingIgnoreCase(String texto);
+    List&lt;Jugador&gt; findByPosicionIgnoreCase(String posicion);
+}</code></pre>
+          <p class="small-muted mb-0"><code>&lt;Jugador, Long&gt;</code> indica entidad y tipo de su llave primaria. Spring implementa <code>save</code>, <code>findAll</code>, <code>findById</code> y <code>deleteById</code>; también interpreta los dos métodos por su nombre.</p>
+          <div class="callout success mb-0 mt-2">✅ Checkpoint: el archivo compila y es una interfaz, no una clase con SQL escrito a mano.</div>
+        </div></div>
+        <div class="card mb-3"><div class="card-body">
+          <h2 class="h5 section-title">Paso 5 — Conecta JugadorService al repositorio <span class="s12-state s12-state--adjust">Reemplaza solo el almacenamiento</span></h2>
+          <p class="small-muted">Edita el <code>JugadorService.java</code> que ya tienes. Quita la lista y sus operaciones locales; conserva la clase, su paquete y los nombres de los métodos que el controlador ya usa:</p>
+          <pre><code>package gt.edu.url.tallerformularios.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import gt.edu.url.tallerformularios.model.Jugador;
+import gt.edu.url.tallerformularios.repository.JugadorRepository;
+
+@Service
+public class JugadorService {
+
+    private final JugadorRepository jugadorRepository;
+
+    public JugadorService(JugadorRepository jugadorRepository) {
+        this.jugadorRepository = jugadorRepository;
+    }
+
+    public void guardar(Jugador jugador) {
+        jugadorRepository.save(jugador);
+    }
+
+    public List&lt;Jugador&gt; listarTodos() {
+        return jugadorRepository.findAll();
+    }
+
+    public Jugador buscarPorId(Long id) {
+        return jugadorRepository.findById(id)
+                .orElseThrow(() -&gt; new IllegalArgumentException(
+                        "No existe un jugador con id " + id));
+    }
+
+    public void eliminar(Long id) {
+        jugadorRepository.deleteById(id);
+    }
+
+    public long contar() {
+        return jugadorRepository.count();
+    }
+}</code></pre>
+          <div class="callout warning mb-0">El controlador todavía puede llamar a <code>guardar</code> y <code>listarTodos</code>. La diferencia es que ya no existe una lista: el servicio delega en <code>JugadorRepository</code>.</div>
+        </div></div>
+        <div class="card mb-3"><div class="card-body">
+          <h2 class="h5 section-title">Paso 6 — Ajusta el controlador para editar y borrar <span class="s12-state s12-state--adjust">Amplía el controlador existente</span> <span class="s12-state s12-state--required">Importa PathVariable</span></h2>
+          <p class="small-muted">No reemplaces todo tu <code>JugadorController.java</code>: conserva constructor, ruta del formulario, validación y manejo de errores de Semana 11. Añade o adapta los métodos que cargan por id y borran; <code>BindingResult</code> sigue inmediatamente después del objeto validado.</p>
+          <pre><code>@GetMapping("/jugadores")
+public String listarJugadores(Model model) {
+    model.addAttribute("jugadores", jugadorService.listarTodos());
+    return "lista";
+}
+
+@GetMapping("/jugadores/{id}/editar")
+public String editar(@PathVariable Long id, Model model) {
+    model.addAttribute("jugador", jugadorService.buscarPorId(id));
+    return "formulario";
+}
+
+@PostMapping("/jugadores")
+public String registrarJugador(@Valid @ModelAttribute Jugador jugador,
+                               BindingResult resultado) {
+    if (resultado.hasErrors()) {
+        return "formulario";
+    }
+    jugadorService.guardar(jugador);
+    return "redirect:/jugadores";
+}
+
+@PostMapping("/jugadores/{id}/eliminar")
+public String eliminar(@PathVariable Long id) {
+    jugadorService.eliminar(id);
+    return "redirect:/jugadores";
+}</code></pre>
+          <p class="small-muted">Estos métodos van dentro de tu <code>JugadorController</code>; conserva constructor e imports existentes y agrega <code>PathVariable</code>. En el formulario mantén <code>@Valid</code>, <code>BindingResult</code> y el retorno directo de <code>formulario</code> si hay errores. El patrón válido sigue siendo guardar → redirigir → mostrar.</p>
+        </div></div>
+        <div class="card mb-3"><div class="card-body">
+          <h2 class="h5 section-title">Paso 7 — Conserva las plantillas y añade el id <span class="s12-state s12-state--existing">Reutiliza formulario y lista</span> <span class="s12-state s12-state--required">Sin id oculto, editar duplica</span></h2>
+          <p class="small-muted">No reemplaces tus plantillas validadas de Semana 11: se conservan los mensajes de error, la accesibilidad y los valores introducidos. Añade únicamente el campo oculto en <code>formulario.html</code> y las acciones CRUD que falten en <code>lista.html</code>.</p>
+          <p class="small-muted">En <code>formulario.html</code>, dentro de <code>&lt;form th:object="${jugador}"&gt;</code>, agrega este campo oculto. El valor vacío crea; el id existente actualiza:</p>
+          <pre><code>&lt;input type="hidden" th:field="*{id}" /&gt;</code></pre>
+          <p class="small-muted">En <code>lista.html</code>, agrega las columnas/acciones a la fila existente:</p>
+          <pre><code>&lt;tr th:each="jugador : ${jugadores}"&gt;
+    &lt;td th:text="${jugador.nombre}"&gt;Nombre&lt;/td&gt;
+    &lt;td th:text="${jugador.edad}"&gt;12&lt;/td&gt;
+    &lt;td th:text="${jugador.posicion}"&gt;Portero&lt;/td&gt;
+    &lt;td&gt;&lt;a th:href="@{/jugadores/{id}/editar(id=${jugador.id})}"&gt;Editar&lt;/a&gt;
+        &lt;form th:action="@{/jugadores/{id}/eliminar(id=${jugador.id})}"
+              method="post" class="en-linea"&gt;
+            &lt;button type="submit" class="peligro"&gt;Eliminar&lt;/button&gt;
+        &lt;/form&gt;
+    &lt;/td&gt;
+&lt;/tr&gt;</code></pre>
+          <div class="callout success mb-0">✅ Checkpoint: los errores de Semana 11 siguen mostrándose; un jugador existente se edita sin duplicarse y el borrado se envía por POST.</div>
+        </div></div>
+        <div class="card mb-3"><div class="card-body">
+          <h2 class="h5 section-title">Paso 8 — Configura H2 y comprueba JPA <span class="s12-state s12-state--added">Configuración nueva en S12</span> <span class="s12-state s12-state--required">Revisa URL y ddl-auto</span></h2>
+          <p class="small-muted">Para aislar la primera prueba, configura temporalmente H2 en memoria. La lista ya consulta la base, pero se vaciará al reiniciar:</p>
+          <pre><code># src/main/resources/application.properties
+spring.application.name=taller-formularios
+spring.profiles.active=dev
+
+# src/main/resources/application-dev.properties
+spring.datasource.url=jdbc:h2:mem:jugadores
+spring.datasource.driver-class-name=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+spring.jpa.hibernate.ddl-auto=create
+spring.jpa.show-sql=true
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
+spring.thymeleaf.cache=false</code></pre>
+          <p class="small-muted">Registra jugadores, abre <code>/h2-console</code>, conéctate a <code>jdbc:h2:mem:jugadores</code> con usuario <code>sa</code> y ejecuta <code>SELECT * FROM JUGADOR;</code>. Reinicia manualmente; deben desaparecer. Después, sigue el Ejercicio 8 para pasar a H2 en archivo y perfiles.</p>
+          <div class="callout success mb-0">✅ Checkpoint: el formulario sigue validando, inserta filas en JPA y el reinicio de la base en memoria borra esas filas como se esperaba.</div>
+        </div></div>
+      </div>
+
+      <!-- ============ PESTAÑA 2: KIT DE CONTINUACIÓN ============ -->
+      <div class="tab-pane fade" id="tab-jugador-kit" role="tabpanel">
+        <div class="callout success mb-4">
+          <div class="fw-semibold">Kit de Acompañamiento de Ejercicios: Jugador</div>
+          <div class="small-muted">Archivos completos que sirven de apoyo a los ejercicios y muestran el resultado final para <code>taller-formularios</code>. Si completaste la Semana 11, identifica qué archivos se conservan, cuáles cambian y cuáles se agregan; para iniciar todo desde cero, usa la cuarta pestaña. La explicación de este Kit está en la tercera pestaña.</div>
+        </div>
+
+        <h2 class="h5 section-title" id="jugador-kit-pom">1. Dependencias nuevas — dentro de <code>pom.xml</code></h2>
+        <div class="card mb-3"><div class="card-body">
+          <p class="small-muted">Conserva las dependencias de Web, Thymeleaf y Validation de Semana 11.</p>
+          <pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-data-jpa&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;com.h2database&lt;/groupId&gt;
+    &lt;artifactId&gt;h2&lt;/artifactId&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-h2console&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+    &lt;optional&gt;true&lt;/optional&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.postgresql&lt;/groupId&gt;
+    &lt;artifactId&gt;postgresql&lt;/artifactId&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+        </div></div>
+
+        <h2 class="h5 section-title" id="jugador-kit-config">2–4. Perfiles de Spring</h2>
+        <div class="card mb-3"><div class="card-body">
+          <p class="small-muted mb-1"><strong>2. <code>src/main/resources/application.properties</code></strong></p>
+          <pre><code>spring.application.name=taller-formularios
+spring.profiles.active=dev
+server.error.whitelabel.enabled=false</code></pre>
+          <p class="small-muted mb-1"><strong>3. <code>src/main/resources/application-dev.properties</code></strong></p>
+          <pre><code>spring.datasource.url=jdbc:h2:file:./datos/jugadores
+spring.datasource.driver-class-name=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
+spring.thymeleaf.cache=false</code></pre>
+          <p class="small-muted mb-1"><strong>4. <code>src/main/resources/application-prod.properties</code></strong></p>
+          <pre><code>spring.datasource.url=${DB_URL}
+spring.datasource.username=${DB_USER}
+spring.datasource.password=${DB_PASSWORD}
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=false
+spring.h2.console.enabled=false</code></pre>
+          <p class="small-muted mb-0"><code>DB_URL</code> debe incluir <code>sslmode=require</code> al conectarse a Neon.</p>
+        </div></div>
+
+        <h2 class="h5 section-title" id="jugador-kit-gitignore">5. <code>.gitignore</code> — agrega</h2>
+        <div class="card mb-3"><div class="card-body">
+          <pre><code>datos/</code></pre>
+        </div></div>
+
+        <h2 class="h5 section-title" id="jugador-kit-entity">6. <code>model/Jugador.java</code></h2>
+        <div class="card mb-3"><div class="card-body">
+          <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/java/gt/edu/url/tallerformularios/model/Jugador.java</code></p>
+          <pre><code>package gt.edu.url.tallerformularios.model;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
+@Entity
+public class Jugador {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotBlank(message = "El nombre es obligatorio.")
+    @Size(min = 3, max = 40, message = "El nombre debe tener entre 3 y 40 caracteres.")
+    @Column(nullable = false, length = 40)
+    private String nombre;
+
+    @NotNull(message = "La edad es obligatoria.")
+    @Min(value = 5, message = "La edad mínima para inscribirse es 5 años.")
+    @Max(value = 17, message = "Esta categoría admite hasta 17 años.")
+    @Column(nullable = false)
+    private Integer edad;
+
+    @NotBlank(message = "Selecciona una posición.")
+    @Column(nullable = false)
+    private String posicion;
+
+    @NotBlank(message = "El correo del encargado es obligatorio.")
+    @Email(message = "Escribe un correo válido.")
+    @Column(nullable = false)
+    private String correoEncargado;
+
+    @NotBlank(message = "El teléfono es obligatorio.")
+    @Pattern(regexp = "[0-9]{8}", message = "El teléfono debe tener exactamente 8 dígitos.")
+    @Column(nullable = false, length = 8)
+    private String telefono;
+
+    public Jugador() {
+    }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+    public Integer getEdad() { return edad; }
+    public void setEdad(Integer edad) { this.edad = edad; }
+    public String getPosicion() { return posicion; }
+    public void setPosicion(String posicion) { this.posicion = posicion; }
+    public String getCorreoEncargado() { return correoEncargado; }
+    public void setCorreoEncargado(String correoEncargado) { this.correoEncargado = correoEncargado; }
+    public String getTelefono() { return telefono; }
+    public void setTelefono(String telefono) { this.telefono = telefono; }
+}</code></pre>
+        </div></div>
+
+        <h2 class="h5 section-title" id="jugador-kit-repository">7. <code>repository/JugadorRepository.java</code></h2>
+        <div class="card mb-3"><div class="card-body">
+          <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/java/gt/edu/url/tallerformularios/repository/JugadorRepository.java</code></p>
+          <pre><code>package gt.edu.url.tallerformularios.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import gt.edu.url.tallerformularios.model.Jugador;
+
+public interface JugadorRepository extends JpaRepository&lt;Jugador, Long&gt; {
+}</code></pre>
+        </div></div>
+
+        <h2 class="h5 section-title" id="jugador-kit-service">8. <code>service/JugadorService.java</code></h2>
+        <div class="card mb-3"><div class="card-body">
+          <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/java/gt/edu/url/tallerformularios/service/JugadorService.java</code></p>
+          <pre><code>package gt.edu.url.tallerformularios.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import gt.edu.url.tallerformularios.model.Jugador;
+import gt.edu.url.tallerformularios.repository.JugadorRepository;
+
+@Service
+public class JugadorService {
+
+    private final JugadorRepository repositorio;
+
+    public JugadorService(JugadorRepository repositorio) {
+        this.repositorio = repositorio;
+    }
+
+    public List&lt;Jugador&gt; listarTodos() {
+        return repositorio.findAll();
+    }
+
+    public Jugador buscarPorId(Long id) {
+        return repositorio.findById(id)
+                .orElseThrow(() -&gt; new IllegalArgumentException(
+                        "No existe un jugador con id " + id));
+    }
+
+    public Jugador guardar(Jugador jugador) {
+        return repositorio.save(jugador);
+    }
+
+    public void eliminar(Long id) {
+        repositorio.deleteById(id);
+    }
+
+    public long contar() {
+        return repositorio.count();
+    }
+}</code></pre>
+        </div></div>
+
+        <h2 class="h5 section-title" id="jugador-kit-controller">9. <code>controller/JugadorController.java</code></h2>
+        <div class="card mb-3"><div class="card-body">
+          <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/java/gt/edu/url/tallerformularios/controller/JugadorController.java</code></p>
+          <pre><code>package gt.edu.url.tallerformularios.controller;
+
+import jakarta.validation.Valid;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import gt.edu.url.tallerformularios.model.Jugador;
+import gt.edu.url.tallerformularios.service.JugadorService;
+
+@Controller
+public class JugadorController {
+
+    private final JugadorService jugadorService;
+
+    public JugadorController(JugadorService jugadorService) {
+        this.jugadorService = jugadorService;
+    }
+
+    @GetMapping({"/", "/jugadores"})
+    public String listar(Model model) {
+        model.addAttribute("jugadores", jugadorService.listarTodos());
+        model.addAttribute("total", jugadorService.contar());
+        return "lista";
+    }
+
+    @GetMapping("/jugadores/nuevo")
+    public String nuevo(Model model) {
+        model.addAttribute("jugador", new Jugador());
+        return "formulario";
+    }
+
+    @GetMapping("/jugadores/{id}/editar")
+    public String editar(@PathVariable Long id, Model model) {
+        model.addAttribute("jugador", jugadorService.buscarPorId(id));
+        return "formulario";
+    }
+
+    @PostMapping("/jugadores")
+    public String guardar(@Valid @ModelAttribute("jugador") Jugador jugador,
+                          BindingResult resultado) {
+        if (resultado.hasErrors()) {
+            return "formulario";
+        }
+        jugadorService.guardar(jugador);
+        return "redirect:/jugadores";
+    }
+
+    @PostMapping("/jugadores/{id}/eliminar")
+    public String eliminar(@PathVariable Long id) {
+        jugadorService.eliminar(id);
+        return "redirect:/jugadores";
+    }
+}</code></pre>
+        </div></div>
+
+        <h2 class="h5 section-title" id="jugador-kit-form">10. <code>templates/formulario.html</code></h2>
+        <div class="card mb-3"><div class="card-body">
+          <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/resources/templates/formulario.html</code></p>
+          <pre><code>&lt;!doctype html&gt;
+&lt;html lang="es" xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;Inscribir jugador&lt;/title&gt;
+  &lt;link rel="stylesheet" th:href="@{/estilos.css}"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;main&gt;
+  &lt;h1&gt;Escuela de Fútbol Los Cerritos&lt;/h1&gt;
+  &lt;h2 th:text="${jugador.id == null} ? 'Inscribir jugador' : 'Editar jugador'"&gt;Inscribir jugador&lt;/h2&gt;
+
+  &lt;div class="resumen-errores" role="alert" th:if="${#fields.hasAnyErrors()}"&gt;
+    &lt;p&gt;&lt;strong&gt;Revisa estos datos antes de continuar:&lt;/strong&gt;&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li th:each="error : ${#fields.allErrors()}" th:text="${error}"&gt;Error&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+
+  &lt;form th:action="@{/jugadores}" th:object="${jugador}" method="post" novalidate&gt;
+    &lt;input type="hidden" th:field="*{id}"&gt;
+
+    &lt;label for="nombre"&gt;Nombre completo&lt;/label&gt;
+    &lt;input id="nombre" type="text" th:field="*{nombre}" th:errorclass="campo-error" aria-describedby="nombre-error"&gt;
+    &lt;p id="nombre-error" class="mensaje-error" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"&gt;Error&lt;/p&gt;
+
+    &lt;label for="edad"&gt;Edad (entre 5 y 17 años)&lt;/label&gt;
+    &lt;input id="edad" type="number" th:field="*{edad}" th:errorclass="campo-error" aria-describedby="edad-error"&gt;
+    &lt;p id="edad-error" class="mensaje-error" th:if="${#fields.hasErrors('edad')}" th:errors="*{edad}"&gt;Error&lt;/p&gt;
+
+    &lt;label for="posicion"&gt;Posición&lt;/label&gt;
+    &lt;select id="posicion" th:field="*{posicion}" th:errorclass="campo-error" aria-describedby="posicion-error"&gt;
+      &lt;option value=""&gt;-- Elige una --&lt;/option&gt;
+      &lt;option value="Portero"&gt;Portero&lt;/option&gt;
+      &lt;option value="Defensa"&gt;Defensa&lt;/option&gt;
+      &lt;option value="Mediocampista"&gt;Mediocampista&lt;/option&gt;
+      &lt;option value="Delantero"&gt;Delantero&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;p id="posicion-error" class="mensaje-error" th:if="${#fields.hasErrors('posicion')}" th:errors="*{posicion}"&gt;Error&lt;/p&gt;
+
+    &lt;label for="correoEncargado"&gt;Correo del encargado&lt;/label&gt;
+    &lt;input id="correoEncargado" type="email" th:field="*{correoEncargado}" th:errorclass="campo-error" aria-describedby="correo-error"&gt;
+    &lt;p id="correo-error" class="mensaje-error" th:if="${#fields.hasErrors('correoEncargado')}" th:errors="*{correoEncargado}"&gt;Error&lt;/p&gt;
+
+    &lt;label for="telefono"&gt;Teléfono (8 dígitos)&lt;/label&gt;
+    &lt;input id="telefono" type="text" th:field="*{telefono}" th:errorclass="campo-error" aria-describedby="telefono-error"&gt;
+    &lt;p id="telefono-error" class="mensaje-error" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"&gt;Error&lt;/p&gt;
+
+    &lt;button type="submit"&gt;Guardar&lt;/button&gt;
+    &lt;a th:href="@{/jugadores}"&gt;Cancelar&lt;/a&gt;
+  &lt;/form&gt;
+  &lt;p&gt;&lt;a th:href="@{/jugadores}"&gt;Volver a la lista&lt;/a&gt;&lt;/p&gt;
+&lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </div></div>
+
+        <h2 class="h5 section-title" id="jugador-kit-list">11. <code>templates/lista.html</code></h2>
+        <div class="card mb-3"><div class="card-body">
+          <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/resources/templates/lista.html</code></p>
+          <pre><code>&lt;!doctype html&gt;
+&lt;html lang="es" xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;Jugadores inscritos&lt;/title&gt;
+  &lt;link rel="stylesheet" th:href="@{/estilos.css}"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;main&gt;
+  &lt;h1&gt;Escuela de Fútbol Los Cerritos&lt;/h1&gt;
+  &lt;p&gt;Total registrados: &lt;strong th:text="${total}"&gt;0&lt;/strong&gt;&lt;/p&gt;
+  &lt;p&gt;&lt;a th:href="@{/jugadores/nuevo}"&gt;+ Inscribir jugador&lt;/a&gt;&lt;/p&gt;
+
+  &lt;p th:if="${total == 0}"&gt;Todavía no hay jugadores inscritos.&lt;/p&gt;
+  &lt;table th:if="${total &gt; 0}"&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th&gt;Id&lt;/th&gt;&lt;th&gt;Nombre&lt;/th&gt;&lt;th&gt;Edad&lt;/th&gt;
+        &lt;th&gt;Posición&lt;/th&gt;&lt;th&gt;Correo&lt;/th&gt;&lt;th&gt;Teléfono&lt;/th&gt;&lt;th&gt;Acciones&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr th:each="jugador : ${jugadores}"&gt;
+        &lt;td th:text="${jugador.id}"&gt;1&lt;/td&gt;
+        &lt;td th:text="${jugador.nombre}"&gt;Nombre&lt;/td&gt;
+        &lt;td th:text="${jugador.edad}"&gt;12&lt;/td&gt;
+        &lt;td th:text="${jugador.posicion}"&gt;Portero&lt;/td&gt;
+        &lt;td th:text="${jugador.correoEncargado}"&gt;correo@ejemplo.com&lt;/td&gt;
+        &lt;td th:text="${jugador.telefono}"&gt;55555555&lt;/td&gt;
+        &lt;td&gt;
+          &lt;a th:href="@{/jugadores/{id}/editar(id=${jugador.id})}"&gt;Editar&lt;/a&gt;
+          &lt;form th:action="@{/jugadores/{id}/eliminar(id=${jugador.id})}" method="post" class="en-linea"&gt;
+            &lt;button type="submit" class="peligro"&gt;Eliminar&lt;/button&gt;
+          &lt;/form&gt;
+        &lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </div></div>
+
+        <h2 class="h5 section-title" id="jugador-kit-css">12. <code>static/estilos.css</code></h2>
+        <div class="card mb-3"><div class="card-body">
+          <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/resources/static/estilos.css</code></p>
+          <pre><code>body { font-family: system-ui, sans-serif; max-width: 900px; margin: 2rem auto; padding: 0 1rem; color: #1e293b; }
+label { display: block; margin-top: 1rem; font-weight: 600; }
+input, select { box-sizing: border-box; display: block; width: 100%; max-width: 480px; padding: 0.55rem; border: 1px solid #94a3b8; border-radius: 6px; }
+input:focus, select:focus, button:focus, a:focus { outline: 3px solid #2563eb; outline-offset: 2px; }
+.campo-error { border: 2px solid #b91c1c !important; background: #fef2f2; }
+.mensaje-error { color: #b91c1c; font-weight: 600; margin: 0.2rem 0 0; }
+.mensaje-error::before { content: "▲ "; }
+.resumen-errores { background: #fef2f2; border-left: 5px solid #b91c1c; padding: 0.75rem 1rem; margin-bottom: 1rem; }
+button { margin-top: 1rem; padding: 0.5rem 1rem; border: 0; border-radius: 6px; background: #0d6efd; color: #fff; cursor: pointer; }
+button.peligro { margin: 0; padding: 0.3rem 0.6rem; background: #b91c1c; }
+form.en-linea { display: inline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { text-align: left; padding: 0.5rem; border-bottom: 1px solid #e2e8f0; }
+th { background: #f1f5f9; }</code></pre>
+        </div></div>
+
+        <h2 class="h5 section-title" id="jugador-kit-error">13. <code>templates/error.html</code></h2>
+        <div class="card mb-3"><div class="card-body">
+          <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/resources/templates/error.html</code></p>
+          <pre><code>&lt;!doctype html&gt;
+&lt;html lang="es" xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;Ocurrió un problema&lt;/title&gt;
+  &lt;link rel="stylesheet" th:href="@{/estilos.css}"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;main&gt;
+  &lt;h1&gt;Escuela de Fútbol Los Cerritos&lt;/h1&gt;
+  &lt;div class="resumen-errores" role="alert"&gt;
+    &lt;p&gt;&lt;strong&gt;No pudimos mostrar esta página.&lt;/strong&gt;&lt;/p&gt;
+    &lt;p&gt;Revisa la dirección o vuelve a la lista de jugadores.&lt;/p&gt;
+    &lt;p&gt;Código del problema: &lt;span th:text="${status}"&gt;404&lt;/span&gt;&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;p&gt;
+    &lt;a th:href="@{/jugadores}"&gt;Ver jugadores&lt;/a&gt; ·
+    &lt;a th:href="@{/jugadores/nuevo}"&gt;Inscribir un jugador&lt;/a&gt;
+  &lt;/p&gt;
+&lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          <p class="small-muted mb-0">Spring Boot detecta esta plantilla automáticamente. En <code>application.properties</code>, deja <code>server.error.whitelabel.enabled=false</code> para evitar la página blanca genérica; pruébala visitando una ruta inexistente.</p>
+        </div></div>
+      </div>
+
+      <!-- ============ PESTAÑA 3: KIT DESDE CERO ============ -->
+      <div class="tab-pane fade" id="tab-jugador-zero" role="tabpanel">
+        <div class="callout info mb-4">
+          <div class="fw-semibold">Kit para iniciar el módulo completo de Jugador desde cero</div>
+          <div class="small-muted">Para quien todavía no construyó el módulo de Semana 11. Empieza en Spring Initializr, genera el proyecto con las dependencias seleccionadas en la página y después crea cada carpeta y archivo indicado abajo.</div>
+        </div>
+        <h2 class="h5 section-title">1. Genera el proyecto en Spring Initializr</h2>
+        <div class="card mb-3"><div class="card-body">
+          <ol class="small-muted">
+            <li>Abre <strong>start.spring.io</strong>. Elige Project <strong>Maven</strong>, Language <strong>Java</strong>, Packaging <strong>Jar</strong> y la versión estable de Spring Boot que usa el proyecto funcional de Semana 12 (<strong>4.1.1</strong>, sin <code>SNAPSHOT</code> ni <code>RC</code>).</li>
+            <li>Completa los nombres: Group <code>gt.edu.url</code>, Artifact <code>taller-formularios</code>, Name <code>taller-formularios</code>, Package name <code>gt.edu.url.tallerformularios</code> y Java <strong>17</strong> (o la misma versión que ya instalaste).</li>
+            <li>En <strong>Add Dependencies</strong>, busca y agrega desde la página: <strong>Spring Web</strong>, <strong>Thymeleaf</strong>, <strong>Validation</strong>, <strong>Spring Data JPA</strong>, <strong>H2 Database</strong>, <strong>Spring Boot DevTools</strong> y <strong>PostgreSQL Driver</strong>.</li>
+            <li>Genera, descomprime y abre la carpeta <code>taller-formularios</code> en VS Code. Acepta la importación Maven. <strong>No pegues ni agregues dependencias manualmente en <code>pom.xml</code></strong>: Initializr las incorpora al proyecto generado.</li>
+          </ol>
+          <div class="callout warning mb-0">
+            <div class="fw-semibold">El paquete se revisa a mano antes de generar</div>
+            <div class="small-muted">Initializr puede proponer <code>gt.edu.url.taller-formularios</code> al derivarlo del Artifact. Borra el guion en el campo <em>Package name</em> y confirma que quede exactamente <code>gt.edu.url.tallerformularios</code>. El Artifact y la carpeta conservan el guion; el paquete Java no.</div>
+          </div>
+          <div class="callout success mb-0 mt-2">
+            <div class="fw-semibold">Sí usamos Spring Boot DevTools durante el desarrollo</div>
+            <div class="small-muted">Selecciona esa dependencia en Initializr para que los cambios en clases Java provoquen la recarga automática mientras trabajas. No se reinicia al registrar o editar un jugador; al cambiar una plantilla HTML basta refrescar el navegador. La prueba de persistencia de abajo se hace con un apagado completo y un arranque manual para comprobarla deliberadamente, sin depender de la recarga de DevTools.</div>
+          </div>
+          <div class="callout info mb-0 mt-2">
+            <div class="fw-semibold">Nota sobre la consola H2 en Spring Boot 4</div>
+            <div class="small-muted">La lista actual de Spring Initializr no ofrece <strong>H2 Console</strong> como dependencia seleccionable. Para mantener este Kit completamente generable desde la web, no activamos <code>/h2-console</code>; comprueba el guardado desde la lista de la aplicación y la persistencia después de detenerla por completo y volver a iniciarla manualmente. La consola del proyecto de referencia <code>taller-jpa</code> se configura aparte y no es necesaria para que CRUD/JPA funcione.</div>
+          </div>
+        </div></div>
+
+        <h2 class="h5 section-title">2. Árbol completo del proyecto</h2>
+        <div class="card mb-3"><div class="card-body">
+          <p class="small-muted mb-2">Esta es la estructura que tendrás después de generar el proyecto y crear las carpetas/archivos del Kit. El archivo <code>pom.xml</code> y la clase principal los crea Initializr; las líneas con <strong>CREA</strong> son trabajo tuyo.</p>
+          <pre><code>taller-formularios/                                  ← proyecto (Artifact: conserva guion)
+├── .gitignore                                      ← agrega datos/ al final
+├── .mvn/
+│   └── wrapper/
+│       └── maven-wrapper.properties                ← generado por Initializr
+├── mvnw                                            ← generado por Initializr
+├── mvnw.cmd                                        ← generado por Initializr
+├── pom.xml                                         ← generado por Initializr; no editar dependencias
+└── src/
+    ├── main/
+    │   ├── java/
+    │   │   └── gt/
+    │   │       └── edu/
+    │   │           └── url/
+    │   │               └── tallerformularios/     ← paquete base (sin guion)
+    │   │                   ├── TallerFormulariosApplication.java  ← generado por Initializr
+    │   │                   ├── controller/                    ← CREA la carpeta
+    │   │                   │   └── JugadorController.java      ← CREA el archivo
+    │   │                   ├── model/                         ← CREA la carpeta
+    │   │                   │   └── Jugador.java                ← CREA el archivo
+    │   │                   ├── repository/                    ← CREA la carpeta
+    │   │                   │   └── JugadorRepository.java      ← CREA el archivo
+    │   │                   └── service/                       ← CREA la carpeta
+    │   │                       └── JugadorService.java         ← CREA el archivo
+    │   └── resources/
+    │       ├── application.properties             ← reemplaza el generado
+    │       ├── application-dev.properties          ← CREA el archivo
+    │       ├── application-prod.properties         ← CREA el archivo
+    │       ├── static/                             ← conserva la carpeta generada
+    │       │   └── estilos.css                     ← CREA el archivo
+    │       └── templates/                          ← CREA la carpeta
+    │           ├── error.html                      ← CREA el archivo
+    │           ├── formulario.html                 ← CREA el archivo
+    │           └── lista.html                      ← CREA el archivo
+    └── test/
+        └── java/
+            └── gt/
+                └── edu/
+                    └── url/
+                        └── tallerformularios/
+                            └── TallerFormulariosApplicationTests.java ← generado por Initializr</code></pre>
+          <div class="callout warning mb-0">
+            <div class="fw-semibold">Ubicación correcta de las capas y plantillas</div>
+            <div class="small-muted"><code>controller</code>, <code>model</code>, <code>repository</code> y <code>service</code> van dentro del paquete base <code>gt.edu.url.tallerformularios</code>. <code>templates</code> y <code>static</code> son carpetas hermanas dentro de <code>src/main/resources</code>, no van dentro de <code>java</code> ni una dentro de la otra. Los archivos del Kit que siguen indican la ruta exacta para cada uno.</div>
+          </div>
+        </div></div>
+
+        <h2 class="h5 section-title">3. Configura los perfiles y los errores</h2>
+        <div class="card mb-3"><div class="card-body">
+          <p class="small-muted mb-1"><strong><code>src/main/resources/application.properties</code></strong></p>
+          <pre><code>spring.application.name=taller-formularios
+spring.profiles.active=dev
+spring.web.resources.add-mappings=true
+server.error.whitelabel.enabled=false</code></pre>
+          <p class="small-muted mb-1"><strong><code>src/main/resources/application-dev.properties</code></strong></p>
+          <pre><code>spring.datasource.url=jdbc:h2:file:./datos/jugadores
+spring.datasource.driver-class-name=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.thymeleaf.cache=false</code></pre>
+          <p class="small-muted mb-1"><strong><code>src/main/resources/application-prod.properties</code></strong></p>
+          <pre><code>spring.datasource.url=${DB_URL}
+spring.datasource.username=${DB_USER}
+spring.datasource.password=${DB_PASSWORD}
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=false</code></pre>
+          <p class="small-muted mb-1"><strong>Agrega <code>datos/</code> al <code>.gitignore</code>.</strong> No actives <code>prod</code> todavía. Para Neon, <code>DB_URL</code> debe incluir <code>sslmode=require</code>.</p>
+        </div></div>
+
+        <h2 class="h5 section-title">4. <code>model/Jugador.java</code></h2>
+        <div class="card mb-3"><div class="card-body">
+          <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/java/gt/edu/url/tallerformularios/model/Jugador.java</code></p>
+          <pre><code>package gt.edu.url.tallerformularios.model;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
+@Entity
+public class Jugador {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotBlank(message = "El nombre es obligatorio.")
+    @Size(min = 3, max = 40, message = "El nombre debe tener entre 3 y 40 caracteres.")
+    @Column(nullable = false, length = 40)
+    private String nombre;
+
+    @NotNull(message = "La edad es obligatoria.")
+    @Min(value = 5, message = "La edad mínima para inscribirse es 5 años.")
+    @Max(value = 17, message = "Esta categoría admite hasta 17 años.")
+    @Column(nullable = false)
+    private Integer edad;
+
+    @NotBlank(message = "Selecciona una posición.")
+    @Column(nullable = false)
+    private String posicion;
+
+    @NotBlank(message = "El correo del encargado es obligatorio.")
+    @Email(message = "Escribe un correo válido.")
+    @Column(nullable = false)
+    private String correoEncargado;
+
+    @NotBlank(message = "El teléfono es obligatorio.")
+    @Pattern(regexp = "[0-9]{8}", message = "El teléfono debe tener exactamente 8 dígitos.")
+    @Column(nullable = false, length = 8)
+    private String telefono;
+
+    public Jugador() {
+    }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+    public Integer getEdad() { return edad; }
+    public void setEdad(Integer edad) { this.edad = edad; }
+    public String getPosicion() { return posicion; }
+    public void setPosicion(String posicion) { this.posicion = posicion; }
+    public String getCorreoEncargado() { return correoEncargado; }
+    public void setCorreoEncargado(String correoEncargado) { this.correoEncargado = correoEncargado; }
+    public String getTelefono() { return telefono; }
+    public void setTelefono(String telefono) { this.telefono = telefono; }
+}</code></pre>
+        </div></div>
+
+        <h2 class="h5 section-title">5. <code>repository/JugadorRepository.java</code></h2>
+        <div class="card mb-3"><div class="card-body">
+          <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/java/gt/edu/url/tallerformularios/repository/JugadorRepository.java</code></p>
+          <pre><code>package gt.edu.url.tallerformularios.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import gt.edu.url.tallerformularios.model.Jugador;
+
+public interface JugadorRepository extends JpaRepository&lt;Jugador, Long&gt; {
+}</code></pre>
+        </div></div>
+
+        <h2 class="h5 section-title">6. <code>service/JugadorService.java</code></h2>
+        <div class="card mb-3"><div class="card-body">
+          <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/java/gt/edu/url/tallerformularios/service/JugadorService.java</code></p>
+          <pre><code>package gt.edu.url.tallerformularios.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import gt.edu.url.tallerformularios.model.Jugador;
+import gt.edu.url.tallerformularios.repository.JugadorRepository;
+
+@Service
+public class JugadorService {
+
+    private final JugadorRepository repositorio;
+
+    public JugadorService(JugadorRepository repositorio) {
+        this.repositorio = repositorio;
+    }
+
+    public List&lt;Jugador&gt; listarTodos() {
+        return repositorio.findAll();
+    }
+
+    public Jugador buscarPorId(Long id) {
+        return repositorio.findById(id)
+                .orElseThrow(() -&gt; new IllegalArgumentException(
+                        "No existe un jugador con id " + id));
+    }
+
+    public Jugador guardar(Jugador jugador) {
+        return repositorio.save(jugador);
+    }
+
+    public void eliminar(Long id) {
+        repositorio.deleteById(id);
+    }
+
+    public long contar() {
+        return repositorio.count();
+    }
+}</code></pre>
+        </div></div>
+
+        <h2 class="h5 section-title">7. <code>controller/JugadorController.java</code></h2>
+        <div class="card mb-3"><div class="card-body">
+          <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/java/gt/edu/url/tallerformularios/controller/JugadorController.java</code></p>
+          <pre><code>package gt.edu.url.tallerformularios.controller;
+
+import jakarta.validation.Valid;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import gt.edu.url.tallerformularios.model.Jugador;
+import gt.edu.url.tallerformularios.service.JugadorService;
+
+@Controller
+public class JugadorController {
+
+    private final JugadorService jugadorService;
+
+    public JugadorController(JugadorService jugadorService) {
+        this.jugadorService = jugadorService;
+    }
+
+    @GetMapping({"/", "/jugadores"})
+    public String listar(Model model) {
+        model.addAttribute("jugadores", jugadorService.listarTodos());
+        model.addAttribute("total", jugadorService.contar());
+        return "lista";
+    }
+
+    @GetMapping("/jugadores/nuevo")
+    public String nuevo(Model model) {
+        model.addAttribute("jugador", new Jugador());
+        return "formulario";
+    }
+
+    @GetMapping("/jugadores/{id}/editar")
+    public String editar(@PathVariable Long id, Model model) {
+        model.addAttribute("jugador", jugadorService.buscarPorId(id));
+        return "formulario";
+    }
+
+    @PostMapping("/jugadores")
+    public String guardar(@Valid @ModelAttribute("jugador") Jugador jugador,
+                          BindingResult resultado) {
+        if (resultado.hasErrors()) {
+            return "formulario";
+        }
+        jugadorService.guardar(jugador);
+        return "redirect:/jugadores";
+    }
+
+    @PostMapping("/jugadores/{id}/eliminar")
+    public String eliminar(@PathVariable Long id) {
+        jugadorService.eliminar(id);
+        return "redirect:/jugadores";
+    }
+}</code></pre>
+        </div></div>
+
+        <h2 class="h5 section-title">8. <code>templates/formulario.html</code></h2>
+        <div class="card mb-3"><div class="card-body">
+          <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/resources/templates/formulario.html</code></p>
+          <pre><code>&lt;!doctype html&gt;
+&lt;html lang="es" xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;Inscribir jugador&lt;/title&gt;
+  &lt;link rel="stylesheet" th:href="@{/estilos.css}"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;main&gt;
+  &lt;h1&gt;Escuela de Fútbol Los Cerritos&lt;/h1&gt;
+  &lt;h2 th:text="${jugador.id == null} ? 'Inscribir jugador' : 'Editar jugador'"&gt;Inscribir jugador&lt;/h2&gt;
+
+  &lt;div class="resumen-errores" role="alert" th:if="${#fields.hasAnyErrors()}"&gt;
+    &lt;p&gt;&lt;strong&gt;Revisa estos datos antes de continuar:&lt;/strong&gt;&lt;/p&gt;
+    &lt;ul&gt;
+      &lt;li th:each="error : ${#fields.allErrors()}" th:text="${error}"&gt;Error&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+
+  &lt;form th:action="@{/jugadores}" th:object="${jugador}" method="post" novalidate&gt;
+    &lt;input type="hidden" th:field="*{id}"&gt;
+    &lt;label for="nombre"&gt;Nombre completo&lt;/label&gt;
+    &lt;input id="nombre" type="text" th:field="*{nombre}" th:errorclass="campo-error" aria-describedby="nombre-error"&gt;
+    &lt;p id="nombre-error" class="mensaje-error" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"&gt;Error&lt;/p&gt;
+    &lt;label for="edad"&gt;Edad (5 a 17 años)&lt;/label&gt;
+    &lt;input id="edad" type="number" th:field="*{edad}" th:errorclass="campo-error" aria-describedby="edad-error"&gt;
+    &lt;p id="edad-error" class="mensaje-error" th:if="${#fields.hasErrors('edad')}" th:errors="*{edad}"&gt;Error&lt;/p&gt;
+    &lt;label for="posicion"&gt;Posición&lt;/label&gt;
+    &lt;select id="posicion" th:field="*{posicion}" th:errorclass="campo-error" aria-describedby="posicion-error"&gt;
+      &lt;option value=""&gt;-- Elige una --&lt;/option&gt;
+      &lt;option value="Portero"&gt;Portero&lt;/option&gt;
+      &lt;option value="Defensa"&gt;Defensa&lt;/option&gt;
+      &lt;option value="Mediocampista"&gt;Mediocampista&lt;/option&gt;
+      &lt;option value="Delantero"&gt;Delantero&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;p id="posicion-error" class="mensaje-error" th:if="${#fields.hasErrors('posicion')}" th:errors="*{posicion}"&gt;Error&lt;/p&gt;
+    &lt;label for="correoEncargado"&gt;Correo del encargado&lt;/label&gt;
+    &lt;input id="correoEncargado" type="email" th:field="*{correoEncargado}" th:errorclass="campo-error" aria-describedby="correo-error"&gt;
+    &lt;p id="correo-error" class="mensaje-error" th:if="${#fields.hasErrors('correoEncargado')}" th:errors="*{correoEncargado}"&gt;Error&lt;/p&gt;
+    &lt;label for="telefono"&gt;Teléfono (8 dígitos)&lt;/label&gt;
+    &lt;input id="telefono" type="text" th:field="*{telefono}" th:errorclass="campo-error" aria-describedby="telefono-error"&gt;
+    &lt;p id="telefono-error" class="mensaje-error" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"&gt;Error&lt;/p&gt;
+    &lt;button type="submit"&gt;Guardar&lt;/button&gt;
+    &lt;a th:href="@{/jugadores}"&gt;Cancelar&lt;/a&gt;
+  &lt;/form&gt;
+&lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </div></div>
+
+        <h2 class="h5 section-title">9. <code>templates/lista.html</code></h2>
+        <div class="card mb-3"><div class="card-body">
+          <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/resources/templates/lista.html</code></p>
+          <pre><code>&lt;!doctype html&gt;
+&lt;html lang="es" xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;Jugadores inscritos&lt;/title&gt;
+  &lt;link rel="stylesheet" th:href="@{/estilos.css}"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;main&gt;
+  &lt;h1&gt;Escuela de Fútbol Los Cerritos&lt;/h1&gt;
+  &lt;p&gt;Total registrados: &lt;strong th:text="${total}"&gt;0&lt;/strong&gt;&lt;/p&gt;
+  &lt;p&gt;&lt;a th:href="@{/jugadores/nuevo}"&gt;+ Inscribir jugador&lt;/a&gt;&lt;/p&gt;
+  &lt;p th:if="${total == 0}"&gt;Todavía no hay jugadores inscritos.&lt;/p&gt;
+  &lt;table th:if="${total &gt; 0}"&gt;
+    &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Id&lt;/th&gt;&lt;th&gt;Nombre&lt;/th&gt;&lt;th&gt;Edad&lt;/th&gt;&lt;th&gt;Posición&lt;/th&gt;&lt;th&gt;Correo&lt;/th&gt;&lt;th&gt;Teléfono&lt;/th&gt;&lt;th&gt;Acciones&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr th:each="jugador : ${jugadores}"&gt;
+        &lt;td th:text="${jugador.id}"&gt;1&lt;/td&gt;
+        &lt;td th:text="${jugador.nombre}"&gt;Nombre&lt;/td&gt;
+        &lt;td th:text="${jugador.edad}"&gt;12&lt;/td&gt;
+        &lt;td th:text="${jugador.posicion}"&gt;Portero&lt;/td&gt;
+        &lt;td th:text="${jugador.correoEncargado}"&gt;correo@ejemplo.com&lt;/td&gt;
+        &lt;td th:text="${jugador.telefono}"&gt;55555555&lt;/td&gt;
+        &lt;td&gt;
+          &lt;a th:href="@{/jugadores/{id}/editar(id=${jugador.id})}"&gt;Editar&lt;/a&gt;
+          &lt;form th:action="@{/jugadores/{id}/eliminar(id=${jugador.id})}" method="post" class="en-linea"&gt;
+            &lt;button type="submit" class="peligro"&gt;Eliminar&lt;/button&gt;
+          &lt;/form&gt;
+        &lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </div></div>
+
+        <h2 class="h5 section-title">10. <code>templates/error.html</code></h2>
+        <div class="card mb-3"><div class="card-body">
+          <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/resources/templates/error.html</code></p>
+          <pre><code>&lt;!doctype html&gt;
+&lt;html lang="es" xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;Ocurrió un problema&lt;/title&gt;
+  &lt;link rel="stylesheet" th:href="@{/estilos.css}"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;main&gt;
+  &lt;h1&gt;Escuela de Fútbol Los Cerritos&lt;/h1&gt;
+  &lt;div class="resumen-errores" role="alert"&gt;
+    &lt;p&gt;&lt;strong&gt;No pudimos mostrar esta página.&lt;/strong&gt;&lt;/p&gt;
+    &lt;p&gt;Revisa la dirección o vuelve a la lista de jugadores.&lt;/p&gt;
+    &lt;p&gt;Código del problema: &lt;span th:text="${status}"&gt;404&lt;/span&gt;&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;p&gt;&lt;a th:href="@{/jugadores}"&gt;Ver jugadores&lt;/a&gt; ·
+     &lt;a th:href="@{/jugadores/nuevo}"&gt;Inscribir un jugador&lt;/a&gt;&lt;/p&gt;
+&lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </div></div>
+
+        <h2 class="h5 section-title">11. <code>static/estilos.css</code></h2>
+        <div class="card mb-3"><div class="card-body">
+          <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/resources/static/estilos.css</code></p>
+          <pre><code>body { font-family: system-ui, sans-serif; max-width: 900px; margin: 2rem auto; padding: 0 1rem; color: #1e293b; }
+label { display: block; margin-top: 1rem; font-weight: 600; }
+input, select { box-sizing: border-box; display: block; width: 100%; max-width: 480px; padding: 0.55rem; border: 1px solid #94a3b8; border-radius: 6px; }
+input:focus, select:focus, button:focus, a:focus { outline: 3px solid #2563eb; outline-offset: 2px; }
+.campo-error { border: 2px solid #b91c1c !important; background: #fef2f2; }
+.mensaje-error { color: #b91c1c; font-weight: 600; margin: 0.2rem 0 0; }
+.mensaje-error::before { content: "▲ "; }
+.resumen-errores { background: #fef2f2; border-left: 5px solid #b91c1c; padding: 0.75rem 1rem; margin-bottom: 1rem; }
+button { margin-top: 1rem; padding: 0.5rem 1rem; border: 0; border-radius: 6px; background: #0d6efd; color: #fff; cursor: pointer; }
+button.peligro { margin: 0; padding: 0.3rem 0.6rem; background: #b91c1c; }
+form.en-linea { display: inline; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { text-align: left; padding: 0.5rem; border-bottom: 1px solid #e2e8f0; }
+th { background: #f1f5f9; }</code></pre>
+        </div></div>
+
+        <div class="callout success">
+          <div class="fw-semibold">Prueba rápida</div>
+          <div class="small-muted">Arranca con <code>.\mvnw.cmd spring-boot:run</code>; registra un jugador y confirma que aparece en la lista. Para comprobar que H2 en archivo lo conserva, detén completamente la aplicación con <kbd>Ctrl</kbd>+<kbd>C</kbd> (o el botón Stop de VS Code), vuelve a iniciarla y confirma que sigue ahí. No uses solo una recarga automática de DevTools como evidencia de esta prueba. Después, edita y elimina un jugador y visita <code>/ruta-inexistente</code> para probar <code>error.html</code>.</div>
+        </div>
+      </div>
+
+      <!-- ============ PESTAÑA 4: EJERCICIOS INDEPENDIENTES ============ -->
+      <div class="tab-pane fade" id="tab-ejercicios" role="tabpanel">
+        <div class="callout info mb-4">
+          <div class="fw-semibold">Transferencia opcional: un segundo dominio</div>
+          <div class="small-muted">Los ejercicios de esta pestaña y el anexo usan <code>Libro</code> para practicar JPA en el dominio de una biblioteca. Son independientes y no sustituyen el módulo principal de <code>Jugador</code>; para ese recorrido, usa los ejercicios y el Kit de Acompañamiento.</div>
+        </div>
 
         <div class="callout mb-3">
           <div class="fw-semibold">Cómo está armada esta escalera</div>
@@ -81,12 +1298,37 @@
             <h3 class="h6 fw-bold">Pasos</h3>
             <ol class="small-muted">
               <li>Entra a <strong>start.spring.io</strong> (Spring Initializr, como en la Semana 7).</li>
-              <li>Elige: Project <strong>Maven</strong> · Language <strong>Java</strong> · Spring Boot la versión estable más reciente 3.x (sin la palabra SNAPSHOT) · Group <code>gt.edu.url</code> · Artifact <code>taller-jpa</code> · Packaging <strong>Jar</strong> · Java <strong>17</strong> (o 21, el mismo que instalaste).</li>
+              <li>Elige: Project <strong>Maven</strong> · Language <strong>Java</strong> · Spring Boot la versión estable más reciente 3.x (sin la palabra SNAPSHOT) · Group <code>gt.edu.url</code> · Artifact <code>taller-jpa</code> · Package name: <strong>este campo sí lo corriges a mano</strong> — Initializr lo propone como <code>gt.edu.url.taller-jpa</code>, <em>con</em> guion; <strong>borra el guion</strong> y déjalo exactamente <code>gt.edu.url.tallerjpa</code> (lee el recuadro de abajo) · Packaging <strong>Jar</strong> · Java <strong>17</strong> (o 21, el mismo que instalaste).</li>
               <li>Pulsa <strong>ADD DEPENDENCIES</strong> y agrega seis: <code>Spring Web</code>, <code>Thymeleaf</code>, <code>Validation</code>, <code>Spring Data JPA</code>, <code>H2 Database</code> y <code>Spring Boot DevTools</code> (esta última hace que la aplicación se recargue sola; se explica en el recuadro "Antes de seguir" más abajo).</li>
               <li>Pulsa <strong>GENERATE</strong>, descomprime el .zip y abre la carpeta <code>taller-jpa</code> en VS Code (<em>File → Open Folder</em>).</li>
               <li>Abre <code>pom.xml</code> y localiza las tres dependencias nuevas de hoy: <code>spring-boot-starter-data-jpa</code>, <code>h2</code> y <code>spring-boot-devtools</code>.</li>
               <li>Arranca: en la terminal de VS Code (<em>Terminal → New Terminal</em>) escribe <code>./mvnw spring-boot:run</code> (en Windows PowerShell: <code>.\mvnw spring-boot:run</code>). También sirve el botón ▶ <em>Run</em> sobre <code>TallerJpaApplication.java</code>.</li>
 </ol>
+            <div class="callout warning mb-2" id="nombres">
+              <div class="fw-semibold">¿Por qué la carpeta dice <code>taller-jpa</code> y el código dice <code>tallerjpa</code>?</div>
+              <div class="small-muted">
+                No es un error del material: son <strong>tres nombres distintos</strong> que Initializr deriva de lo que escribiste, y los tres son correctos a la vez.
+                La razón de fondo es que <strong>un nombre de paquete de Java no admite guiones</strong> (el guion es el signo de resta: <code>package gt.edu.url.taller-jpa;</code> ni siquiera compila), y una clase de Java tampoco.
+                <div class="table-responsive mt-2"><table class="table table-sm small mb-2"><thead><tr><th>Nombre</th><th>Dónde aparece</th><th>Regla</th></tr></thead><tbody>
+                <tr><td><code>taller-jpa</code></td><td>La <strong>carpeta</strong> del proyecto, el <code>&lt;artifactId&gt;</code> del <code>pom.xml</code> y <code>spring.application.name</code></td><td>Es el Artifact tal cual lo escribiste. Aquí el guion <strong>sí</strong> se permite y es la costumbre en Maven</td></tr>
+                <tr><td><code>gt.edu.url.tallerjpa</code></td><td>La línea <code>package</code> de todos tus archivos <code>.java</code> y la ruta <code>src/main/java/gt/edu/url/tallerjpa/</code></td><td>Group + Artifact <strong>sin el guion</strong>, porque Java no lo admite. <strong>Initializr no lo quita solo:</strong> propone el campo <em>Package name</em> como <code>gt.edu.url.taller-jpa</code> y el guion lo borras tú</td></tr>
+                <tr><td><code>TallerJpaApplication</code></td><td>La clase principal, <code>TallerJpaApplication.java</code></td><td>El Artifact partido por el guion, cada parte con mayúscula inicial, pegadas, + <code>Application</code></td></tr>
+                </tbody></table></div>
+                <strong>Lo que debes hacer:</strong> escribe el Artifact <code>taller-jpa</code> y, al llegar a <em>Package name</em>, <strong>borra el guion</strong> para que el campo diga <code>gt.edu.url.tallerjpa</code>.
+                Initializr <strong>no</strong> lo quita solo: si lo dejas con guion no da error, pero lo sustituye por un <strong>guion bajo</strong> y genera <code>gt.edu.url.taller_jpa</code>. Eso también funciona, solo que ya no coincide con la línea <code>package</code> de los archivos del Kit y tendrías que cambiarla en todos, porque <strong>carpeta = paquete</strong> (Semana 9).
+              </div>
+            </div>
+            <div class="callout mb-2">
+              <div class="fw-semibold">Y entonces, ¿qué es <code>.service</code> en <code>gt.edu.url.tallerjpa.service</code>?</div>
+              <div class="small-muted">
+                No tiene nada que ver con el nombre del proyecto: es la <strong>capa</strong> (Semana 6). Tu paquete base es siempre <code>gt.edu.url.tallerjpa</code>,
+                y debajo de él cuelga una carpeta por capa, con el nombre de la capa en inglés, igual que en las Semanas 9, 10 y 11:
+                <code>model</code> (la entidad), <code>repository</code> (nuevo hoy), <code>service</code> (la lógica) y <code>controller</code> (las rutas).
+                Así, <code>gt.edu.url.tallerjpa.service.LibroService</code> se lee: <em>proyecto</em> <code>tallerjpa</code> → <em>capa</em> <code>service</code> → <em>clase</em> <code>LibroService</code>.
+                <strong>Regla que no cambia:</strong> esas cuatro carpetas van <strong>dentro</strong> del paquete base, nunca al lado. Si las pones al lado,
+                el proyecto compila pero Spring no las registra y obtienes un 404 sin mensaje de error (la trampa silenciosa de la Semana 9).
+              </div>
+            </div>
             <p class="small-muted mb-2"><strong>Tu turno:</strong> lee el log. Busca la línea que dice <code>Hibernate ORM core version</code> y la que dice <code>HikariPool-1 - Start completed</code>. ¿Qué te dicen sobre lo que Spring hizo <em>solo</em>, sin que escribieras nada?</p>
             <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: la terminal termina con <code>Started TallerJpaApplication in ... seconds</code> y no hay líneas rojas de error.</span></div>
             <details class="mb-2">
@@ -107,7 +1349,7 @@
         <div class="card mb-3 border-primary">
           <div class="card-body">
             <h2 class="h5 section-title" id="devtools">🔁 Antes de seguir: que la aplicación se recargue sola</h2>
-            <p class="small-muted">Hoy harás muchos cambios y los probarás. Sin ayuda, cada uno exige parar la aplicación y volver a arrancarla. <strong>Spring Boot DevTools</strong> (la sexta dependencia del Ejercicio 1) lo evita: vigila tu proyecto y se recarga cuando algo cambia. Se recarga a <strong>tres velocidades</strong>:</p>
+            <p class="small-muted">Hoy harás muchos cambios y los probarás. Sin ayuda, cada uno exige parar la aplicación y volver a arrancarla. <strong>Spring Boot DevTools</strong> (incluido como dependencia opcional en el <code>pom.xml</code> del Kit) lo evita: vigila tu proyecto y se recarga cuando algo cambia. Se recarga a <strong>tres velocidades</strong>:</p>
             <div class="table-responsive"><table class="table table-sm small mb-2"><thead><tr><th>Qué cambias</th><th>Qué pasa</th><th>Qué haces tú</th></tr></thead><tbody>
 <tr><td>Plantillas Thymeleaf (<code>templates/</code>), CSS o HTML de <code>static/</code></td><td>DevTools desactiva la caché de Thymeleaf; <strong>no hay reinicio</strong></td><td>Solo <strong>refrescar el navegador</strong> (<kbd>F5</kbd>)</td></tr>
 <tr><td>Código Java (<code>.java</code>)</td><td>Reinicio automático y rápido (1 a 2 segundos; reinicia tu código, no las librerías)</td><td>Guardar y esperar (ver la condición abajo)</td></tr>
@@ -202,12 +1444,11 @@ spring.datasource.url=jdbc:h2:mem:biblioteca
 spring.datasource.driver-class-name=org.h2.Driver
 spring.datasource.username=sa
 spring.datasource.password=
-
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
-
 spring.h2.console.enabled=true
-spring.h2.console.path=/h2-console</code></pre></li>
+spring.h2.console.path=/h2-console
+spring.thymeleaf.cache=false</code></pre></li>
               <li>Arranca la aplicación y busca en la terminal una línea parecida a <code>create table libro (...)</code>: es el SQL que <strong>Hibernate escribió por ti</strong>.</li>
               <li>Abre <code>http://localhost:8080/h2-console</code>. En <em>JDBC URL</em> escribe <code>jdbc:h2:mem:biblioteca</code>, usuario <code>sa</code>, contraseña vacía, y pulsa <strong>Connect</strong>.</li>
               <li>En el panel izquierdo aparece la tabla <strong>LIBRO</strong>. Haz clic sobre ella, y luego ejecuta <code>SELECT * FROM LIBRO;</code> con el botón <em>Run</em>.</li>
@@ -372,6 +1613,7 @@ public Libro(String titulo, String autor) {
 <p class="mb-1"><strong>¿Por qué B es tan traicionero?</strong> En cuanto escribes <em>cualquier</em> constructor con parámetros, Java <strong>deja de regalarte</strong> el constructor vacío. Si todavía lo necesitas, tienes que escribirlo tú.</p>
 <p class="mb-0"><strong>Prueba extra (solo leer, no la hagas):</strong> si quitaras <code>spring-boot-starter-data-jpa</code>, ni siquiera compilaría: los <code>import jakarta.persistence.*</code> quedarían en rojo con <em>package jakarta.persistence does not exist</em>.</p></div>
             </details>
+<p class="small-muted mt-2 mb-0">Para más casos con el paso de reproducción, mensaje esperado y arreglo, abre el <a href="#" onclick="document.getElementById('tab-kit-btn').click(); document.getElementById('kit-errores').scrollIntoView(); return false;">anexo de errores del Kit</a>.</p>
           </div>
         </div>
 
@@ -406,8 +1648,12 @@ public Libro(String titulo, String autor) {
 
       </div>
 
-      <!-- ============ PESTAÑA 2: KIT ============ -->
+      <!-- ============ PESTAÑA 5: REFERENCIA taller-jpa ============ -->
       <div class="tab-pane fade" id="tab-kit" role="tabpanel">
+        <div class="callout info mb-4">
+          <div class="fw-semibold">Proyecto funcional de referencia, no el proyecto principal de la semana</div>
+          <div class="small-muted">Esta pestaña contiene como anexo el proyecto independiente <code>taller-jpa</code> con <code>Libro</code> y sus archivos completos. Para practicar los ejercicios principales, usa <code>Jugador</code>; para iniciar el módulo completo desde cero, ve a la cuarta pestaña. Los dos dominios comparten JPA, pero no mezclan entidades, paquetes ni bases de datos.</div>
+        </div>
 
         <div class="callout mb-4">
           <div class="fw-semibold">Para qué sirve este Kit</div>
@@ -417,7 +1663,7 @@ public Libro(String titulo, String autor) {
         <h2 class="h4 section-title mb-3" id="kit-anot">Antes de los archivos: anotación → import completo</h2>
         <div class="card mb-4">
           <div class="card-body">
-            <p class="small-muted">Toda anotación necesita su <code>import</code>; si falta, VS Code la subraya en rojo. Es <code>jakarta</code>, <strong>no</strong> <code>javax</code> (Spring Boot 3).</p>
+            <p class="small-muted">Toda anotación necesita su <code>import</code>; si falta, VS Code la subraya en rojo. Es <code>jakarta</code>, <strong>no</strong> <code>javax</code> (Spring Boot 3 y 4).</p>
             <div class="table-responsive">
               <table class="table table-sm small mb-0">
                 <thead><tr><th>Anotación</th><th>Import completo</th><th>Qué hace</th><th>Qué aparece si falta</th></tr></thead>
@@ -431,37 +1677,41 @@ public Libro(String titulo, String autor) {
         <div class="card mb-4">
           <div class="card-body">
             <p class="small-muted mb-2">Las líneas con ← son las que se tocan esta semana.</p>
-            <pre><code>taller-jpa/
-├── pom.xml                                       ← archivo 1 (tres dependencias nuevas)
+            <p class="small-muted mb-2">Recuerda la regla de los tres nombres (<a href="#nombres" onclick="document.getElementById('tab-ejercicios-btn').click(); document.getElementById('nombres').scrollIntoView(); return false;">Ejercicio 1</a>): la <strong>carpeta</strong> lleva guion (<code>taller-jpa</code>), el <strong>paquete</strong> no (<code>gt.edu.url.tallerjpa</code>), y debajo del paquete cuelga una carpeta por capa (<code>model</code>, <code>repository</code>, <code>service</code>, <code>controller</code>).</p>
+            <pre><code>taller-jpa/                                       ← carpeta y artifactId: CON guion
+├── pom.xml                                       ← archivo 1 (dependencias de JPA, H2 y perfiles)
 ├── .gitignore                                    ← agrega la línea: datos/
 ├── datos/                                        ← la crea H2 sola (biblioteca.mv.db). NO se sube a GitHub
-└── src/main/
-    ├── java/gt/edu/url/tallerjpa/
-    │   ├── TallerJpaApplication.java             (archivo 5, sin cambios)
-    │   ├── model/
-    │   │   └── Libro.java                        ← archivo 6 (la ENTIDAD)
-    │   ├── repository/
-    │   │   └── LibroRepository.java              ← archivo 7 (NUEVA carpeta)
-    │   ├── service/
-    │   │   └── LibroService.java                 ← archivo 8
-    │   └── controller/
-    │       └── LibroController.java              ← archivo 9
-    └── resources/
-        ├── application.properties                ← archivo 2
-        ├── application-dev.properties            ← archivo 3 (NUEVO: H2 en archivo)
-        ├── application-prod.properties           ← archivo 4 (NUEVO: huecos para Neon)
-        ├── templates/
-        │   ├── formulario.html                   ← archivo 10
-        │   └── lista.html                        ← archivo 11
-        └── static/
-            └── estilos.css                       ← archivo 12</code></pre>
+├── src/main/
+│   ├── java/gt/edu/url/tallerjpa/         ← paquete base: SIN guion. Las 4 capas van DENTRO
+│   │   ├── TallerJpaApplication.java             (archivo 5, sin cambios)
+│   │   ├── model/
+│   │   │   └── Libro.java                        ← archivo 6 (la ENTIDAD)
+│   │   ├── repository/
+│   │   │   └── LibroRepository.java              ← archivo 7 (NUEVA carpeta)
+│   │   ├── service/
+│   │   │   └── LibroService.java                 ← archivo 8
+│   │   └── controller/
+│   │       └── LibroController.java              ← archivo 9
+│   └── resources/
+│       ├── application.properties                ← archivo 2
+│       ├── application-dev.properties            ← archivo 3 (NUEVO: H2 en archivo)
+│       ├── application-prod.properties           ← archivo 4 (NUEVO: huecos para Neon)
+│       ├── templates/
+│       │   ├── formulario.html                   ← archivo 10
+│       │   └── lista.html                        ← archivo 11
+│       └── static/
+│           └── estilos.css                       ← archivo 12
+└── src/test/java/gt/edu/url/tallerjpa/
+    └── TallerJpaApplicationTests.java             ← anexo opcional: prueba de arranque y consola H2</code></pre>
           </div>
         </div>
 
-        <h2 class="h4 section-title mb-3" id="kit1">1. <code>pom.xml</code> <span class="badge text-bg-primary">tres dependencias nuevas</span></h2>
+        <h2 class="h4 section-title mb-3" id="kit1">1. <code>pom.xml</code> <span class="badge text-bg-primary">alineado al proyecto funcional</span></h2>
         <div class="card mb-4">
           <div class="card-body">
             <p class="small-muted mb-1"><strong>Ruta:</strong> <code>raíz del proyecto</code></p>
+            <p class="small-muted">Este bloque refleja el proyecto funcional <code>taller-jpa</code> (Spring Boot 4.1.1 y Java 17). En Spring Initializr conserva la versión que te haya generado. El <code>groupId</code> Maven usa la raíz institucional <code>gt.edu.url</code>; el paquete base Java añade el nombre del proyecto, <code>gt.edu.url.tallerjpa</code>, y debajo van las capas.</p>
             <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -471,7 +1721,7 @@ public Libro(String titulo, String autor) {
     &lt;parent&gt;
         &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
         &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;
-        &lt;version&gt;3.3.5&lt;/version&gt; &lt;!-- deja el número que te generó Initializr --&gt;
+        &lt;version&gt;4.1.1&lt;/version&gt; &lt;!-- conserva el número que te generó Initializr --&gt;
         &lt;relativePath/&gt;
     &lt;/parent&gt;
 
@@ -489,7 +1739,7 @@ public Libro(String titulo, String autor) {
         &lt;!-- De semanas anteriores --&gt;
         &lt;dependency&gt;
             &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+            &lt;artifactId&gt;spring-boot-starter-webmvc&lt;/artifactId&gt;
         &lt;/dependency&gt;
         &lt;dependency&gt;
             &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
@@ -513,24 +1763,44 @@ public Libro(String titulo, String autor) {
             &lt;scope&gt;runtime&lt;/scope&gt;
         &lt;/dependency&gt;
 
+        &lt;!-- Spring Boot 4 separa la consola web de H2 en este starter --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-h2console&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+
         &lt;!-- NUEVA (Semana 12): recarga automática al cambiar plantillas y código (solo desarrollo) --&gt;
         &lt;dependency&gt;
             &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
             &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;
+            &lt;scope&gt;runtime&lt;/scope&gt;
             &lt;optional&gt;true&lt;/optional&gt;
         &lt;/dependency&gt;
 
-        &lt;!-- Semana 14 (NO hoy): aquí se agregará el driver de PostgreSQL para Neon:
         &lt;dependency&gt;
             &lt;groupId&gt;org.postgresql&lt;/groupId&gt;
             &lt;artifactId&gt;postgresql&lt;/artifactId&gt;
             &lt;scope&gt;runtime&lt;/scope&gt;
         &lt;/dependency&gt;
-        --&gt;
 
         &lt;dependency&gt;
             &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
+            &lt;artifactId&gt;spring-boot-starter-data-jpa-test&lt;/artifactId&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-thymeleaf-test&lt;/artifactId&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-validation-test&lt;/artifactId&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-webmvc-test&lt;/artifactId&gt;
             &lt;scope&gt;test&lt;/scope&gt;
         &lt;/dependency&gt;
     &lt;/dependencies&gt;
@@ -544,7 +1814,7 @@ public Libro(String titulo, String autor) {
         &lt;/plugins&gt;
     &lt;/build&gt;
 &lt;/project&gt;</code></pre>
-            <div class="small-muted mt-2">Si generaste el proyecto con Initializr y marcaste las seis dependencias, tu <code>pom.xml</code> ya se parece a este: no lo pegues encima, solo <strong>compara</strong>. Si te falta alguna, agrega solo el bloque que falte:</div><pre><code>&lt;dependency&gt;
+            <div class="small-muted mt-2">No reemplaces tu <code>pom.xml</code> completo: Spring Initializr puede generar otra versión y nombres de starters distintos. Compara las dependencias y agrega solo las que falten. En Spring Boot 4, la consola H2 requiere <code>spring-boot-h2console</code>; el driver PostgreSQL ya queda incluido para el perfil <code>prod</code>, pero no se conecta mientras el perfil activo sea <code>dev</code>.</div><pre><code>&lt;dependency&gt;
     &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
     &lt;artifactId&gt;spring-boot-starter-data-jpa&lt;/artifactId&gt;
 &lt;/dependency&gt;
@@ -557,9 +1827,15 @@ public Libro(String titulo, String autor) {
 
 &lt;dependency&gt;
     &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-h2console&lt;/artifactId&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
     &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
     &lt;optional&gt;true&lt;/optional&gt;
-&lt;/dependency&gt;</code></pre><div class="small-muted mt-2">El bloque comentado del driver de PostgreSQL <strong>no se activa hoy</strong>: se descomenta en la Semana 14.</div>
+&lt;/dependency&gt;</code></pre><div class="small-muted mt-2">El driver PostgreSQL está en el proyecto de referencia desde ahora porque <code>application-prod.properties</code> declara <code>org.postgresql.Driver</code>. No se usa hasta activar el perfil <code>prod</code> en la Semana 14.</div>
           </div>
         </div>
 
@@ -599,8 +1875,11 @@ spring.jpa.show-sql=true
 
 # Consola web de H2: http://localhost:8080/h2-console
 spring.h2.console.enabled=true
-spring.h2.console.path=/h2-console</code></pre>
-            <div class="table-responsive mt-2"><table class="table table-sm small mb-0"><thead><tr><th>Línea</th><th>Qué hace</th></tr></thead><tbody><tr><td><code>jdbc:h2:file:./datos/biblioteca</code></td><td>H2 en <strong>archivo</strong> (sobrevive al reinicio). Con <code>jdbc:h2:mem:biblioteca</code> sería memoria y se perdería todo</td></tr><tr><td><code>ddl-auto=update</code></td><td>Crea la tabla si falta y conserva los datos. <code>create</code> y <code>create-drop</code> los borran en cada arranque</td></tr><tr><td><code>show-sql=true</code></td><td>Muestra en la terminal el SQL que Hibernate genera (útil para aprender)</td></tr><tr><td><code>h2.console.enabled=true</code></td><td>Activa <code>/h2-console</code> para ver tus tablas y filas</td></tr></tbody></table></div>
+spring.h2.console.path=/h2-console
+
+# Las plantillas Thymeleaf se actualizan al refrescar el navegador.
+spring.thymeleaf.cache=false</code></pre>
+            <div class="table-responsive mt-2"><table class="table table-sm small mb-0"><thead><tr><th>Línea</th><th>Qué hace</th></tr></thead><tbody><tr><td><code>jdbc:h2:file:./datos/biblioteca</code></td><td>H2 en <strong>archivo</strong> (sobrevive al reinicio). Con <code>jdbc:h2:mem:biblioteca</code> sería memoria y se perdería todo</td></tr><tr><td><code>ddl-auto=update</code></td><td>Crea la tabla si falta y conserva los datos. <code>create</code> y <code>create-drop</code> los borran en cada arranque</td></tr><tr><td><code>show-sql=true</code></td><td>Muestra en la terminal el SQL que Hibernate genera (útil para aprender)</td></tr><tr><td><code>h2.console.enabled=true</code></td><td>Activa <code>/h2-console</code> para ver tus tablas y filas</td></tr></tbody></table></div><p class="small-muted mt-2 mb-0"><code>spring.thymeleaf.cache=false</code> desactiva la caché de plantillas durante el desarrollo: al editar HTML, basta refrescar el navegador. No provoca reinicio de Java.</p>
           </div>
         </div>
 
@@ -622,7 +1901,7 @@ spring.jpa.show-sql=false
 
 # La consola de H2 NO debe existir en producción.
 spring.h2.console.enabled=false</code></pre>
-            <div class="callout warning mt-2 mb-0"><div class="small-muted">No actives este perfil hoy: sin el driver de PostgreSQL y sin variables de entorno, la aplicación no arrancaría. Existe para que la Semana 14 sea cambiar <em>configuración</em>, no reescribir código.</div></div>
+            <div class="callout warning mt-2 mb-0"><div class="small-muted">No actives este perfil hoy: aunque el driver de PostgreSQL ya está en el <code>pom.xml</code>, faltan las variables de entorno reales. Existe para que la Semana 14 sea cambiar <em>configuración</em>, no reescribir código.</div></div>
           </div>
         </div>
 
@@ -1067,6 +2346,132 @@ th { background: #f1f5f9; }</code></pre>
             <strong>(2)</strong> <code>Libro</code> por tu entidad y sus campos;
             <strong>(3)</strong> las reglas de validación por las de tu institución. La guía paso a paso está en
             <a href="proyecto.html">Proyecto</a>.
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit13">Anexo opcional. <code>TallerJpaApplicationTests.java</code> — comprobar arranque y consola H2</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/test/java/gt/edu/url/tallerjpa/TallerJpaApplicationTests.java</code></p>
+            <p class="small-muted">El proyecto de referencia incluye esta prueba de integración. No es requisito escribir pruebas automatizadas en esta sesión; puedes ejecutarla con <code>.\mvnw.cmd test</code> en Windows para comprobar que el contexto arranca y que la consola H2 responde.</p>
+            <pre><code>package gt.edu.url.tallerjpa;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest(
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+        properties = "spring.datasource.url=jdbc:h2:mem:tallerjpa-test;DB_CLOSE_DELAY=-1")
+class TallerJpaApplicationTests {
+
+    @Value("${local.server.port}")
+    private int port;
+
+    @Test
+    void contextLoads() {
+    }
+
+    @Test
+    void h2ConsoleIsAvailable() throws Exception {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:" + port + "/h2-console/"))
+                .GET()
+                .build();
+        HttpResponse&lt;String&gt; response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+
+        assertThat(response.statusCode()).isBetween(200, 299);
+    }
+}</code></pre>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="kit-errores">Errores explicados y reproducibles — siempre uno a la vez</h2>
+        <div class="card mb-4">
+          <div class="card-body">
+<div class="callout warning mb-3">
+  <div class="fw-semibold">Antes de provocar un error</div>
+  <div class="small-muted">Usa una copia desechable del proyecto; nunca pruebes los casos 7 y 8 con la única copia de una base de datos que quieras conservar. Si usas el proyecto real, respalda primero <code>datos/biblioteca.mv.db</code>. No subas a GitHub una versión rota. Cambia <strong>una sola cosa</strong>, observa el mensaje, deshaz el cambio y confirma que vuelve a arrancar antes de seguir. Para errores de Maven, sincroniza el proyecto después de editar <code>pom.xml</code>.</div>
+</div>
+<div class="table-responsive">
+  <table class="table table-sm small align-middle">
+    <thead><tr><th>Error y cómo provocarlo</th><th>Qué observar</th><th>Arreglo y comprobación</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>1. Entidad sin llave primaria</strong><br>En <code>Libro.java</code>, comenta temporalmente <code>@Id</code> y <code>@GeneratedValue(...)</code>.</td>
+        <td>La aplicación no arranca. Busca <code>No identifier specified for entity</code> en el último <code>Caused by:</code>.</td>
+        <td>Restaura ambas anotaciones sobre <code>Long id</code>. Arranca otra vez y comprueba que <code>/libros</code> carga.</td>
+      </tr>
+      <tr>
+        <td><strong>2. Falta el constructor vacío</strong><br>En <code>Libro.java</code>, reemplaza el constructor sin parámetros por uno con parámetros, por ejemplo <code>public Libro(String titulo) { this.titulo = titulo; }</code>.</td>
+        <td>Hibernate no puede crear la entidad al leer filas. Puede aparecer <code>No default constructor for entity</code> o un mensaje equivalente de instanciación; el punto de fallo varía por versión.</td>
+        <td>Vuelve a agregar <code>public Libro() { }</code> y conserva también los demás constructores que necesites. Prueba listar y registrar un libro.</td>
+      </tr>
+      <tr>
+        <td><strong>3. Falta JPA</strong><br>Comenta temporalmente <code>spring-boot-starter-data-jpa</code> en <code>pom.xml</code> y recarga Maven.</td>
+        <td>Los imports <code>jakarta.persistence.*</code> y <code>JpaRepository</code> quedan sin resolver: <code>package jakarta.persistence does not exist</code> / <code>cannot find symbol</code>. No es un error de la entidad: falta la dependencia.</td>
+        <td>Restaura el starter, sincroniza Maven y espera a que desaparezcan los errores de compilación.</td>
+      </tr>
+      <tr>
+        <td><strong>4. Falta el driver H2</strong><br>Comenta solo la dependencia <code>com.h2database:h2</code> en <code>pom.xml</code>; recarga Maven y arranca.</td>
+        <td>El código compila, pero la aplicación no puede conectarse: busca <code>Failed to load driver class org.h2.Driver</code> o <code>Failed to determine a suitable driver class</code>.</td>
+        <td>Restaura H2 con <code>&lt;scope&gt;runtime&lt;/scope&gt;</code>, sincroniza Maven y confirma que el servidor inicia.</td>
+      </tr>
+      <tr>
+        <td><strong>5. Método derivado apunta a un campo inexistente</strong><br>En el repositorio, cambia <code>findByDisponibleTrue()</code> temporalmente por <code>findByDisponibilidadTrue()</code> y ajusta la llamada en el servicio.</td>
+        <td>Spring valida el nombre al iniciar y falla con <code>No property 'disponibilidad' found for type 'Libro'</code>. El campo real se llama <code>disponible</code>.</td>
+        <td>Restaura el método <code>findByDisponibleTrue()</code> en repositorio y servicio; vuelve a arrancar.</td>
+      </tr>
+      <tr>
+        <td><strong>6. Se devuelve Optional donde se espera Libro</strong><br>En <code>LibroService.buscarPorId</code>, intenta <code>return libroRepository.findById(id);</code>.</td>
+        <td>El compilador avisa que <code>Optional&lt;Libro&gt;</code> no se puede convertir a <code>Libro</code>.</td>
+        <td>Restaura <code>.orElseThrow(() -&gt; new IllegalArgumentException(...))</code>. Así se decide explícitamente qué hacer cuando no existe ese id.</td>
+      </tr>
+      <tr>
+        <td><strong>7. Datos que desaparecen con H2 en memoria</strong><br>Cambia solo la URL a <code>jdbc:h2:mem:biblioteca</code>, registra un libro y reinicia manualmente.</td>
+        <td>La aplicación arranca sin error; la tabla queda vacía porque la base existía solo en RAM. Es un comportamiento esperado, no un fallo de JPA.</td>
+        <td>Restaura <code>jdbc:h2:file:./datos/biblioteca</code>, reinicia y confirma que el registro persiste.</td>
+      </tr>
+      <tr>
+        <td><strong>8. Tabla vacía aunque H2 usa archivo</strong><br>Cambia temporalmente <code>ddl-auto=update</code> por <code>ddl-auto=create</code>, agrega un registro y reinicia.</td>
+        <td>La conexión al archivo funciona, pero Hibernate vuelve a crear la tabla y borra sus filas.</td>
+        <td>Restaura <code>ddl-auto=update</code>. Con <code>create</code>/<code>create-drop</code> los datos se destruyen al inicializar o cerrar.</td>
+      </tr>
+      <tr>
+        <td><strong>9. Consola H2 con 404</strong><br>Desactiva temporalmente <code>spring.h2.console.enabled</code> o, en Spring Boot 4, comenta <code>spring-boot-h2console</code>.</td>
+        <td><code>/h2-console</code> devuelve 404 aunque el resto de la app pueda funcionar.</td>
+        <td>Restaura el starter de consola de Boot 4 y <code>spring.h2.console.enabled=true</code> en <code>application-dev.properties</code>; reinicia porque los cambios de configuración no se recargan solos.</td>
+      </tr>
+      <tr>
+        <td><strong>10. Dos procesos abren la misma base</strong><br>Deja una instancia en ejecución e intenta arrancar otra desde una terminal distinta.</td>
+        <td>H2 puede indicar <code>Database may be already in use</code>.</td>
+        <td>Detén la instancia duplicada con <kbd>Ctrl</kbd>+<kbd>C</kbd> en su terminal y deja solo una aplicación usando el archivo.</td>
+      </tr>
+      <tr>
+        <td><strong>11. Las validaciones no se aplican</strong><br>En una copia desechable, quita <code>spring-boot-starter-validation</code>, sincroniza Maven y prueba guardar el formulario.</td>
+        <td>Según lo que aporte el classpath, los imports <code>jakarta.validation</code> quedan sin resolver o las reglas dejan de ejecutarse. No confundas la anotación <code>@Column(nullable = false)</code> con la validación del formulario.</td>
+        <td>Restaura <code>spring-boot-starter-validation</code> y sincroniza Maven. Confirma que el formulario vuelve a mostrar errores de <code>@NotBlank</code>/<code>@NotNull</code>.</td>
+      </tr>
+      <tr>
+        <td><strong>12. Controlador fuera del paquete base</strong><br>En una copia desechable, mueve <code>LibroController</code> a un paquete hermano que no cuelgue de <code>gt.edu.url.tallerjpa</code> y actualiza el <code>package</code> y sus imports.</td>
+        <td>El código puede compilar y la aplicación arrancar, pero Spring no descubre el controlador y <code>/libros</code> responde 404.</td>
+        <td>Devuelve el controlador a <code>gt.edu.url.tallerjpa.controller</code> (debajo del paquete de <code>TallerJpaApplication</code>). Reinicia y vuelve a probar la ruta.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="callout info mb-0">
+  <div class="fw-semibold">Regla para leer errores largos</div>
+  <div class="small-muted">Primero identifica si es de compilación (VS Code/Maven) o de ejecución (terminal). En una traza larga busca el último <code>Caused by:</code>; después relaciona el mensaje con el archivo y la línea que acabas de cambiar. Si no aparece <code>Started TallerJpaApplication</code>, no sigas al próximo caso: restaura y arregla el actual.</div>
+</div>
           </div>
         </div>
 

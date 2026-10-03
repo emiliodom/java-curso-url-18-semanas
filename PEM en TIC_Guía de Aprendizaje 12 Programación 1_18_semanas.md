@@ -85,25 +85,31 @@ sola línea de Java**.
 | APRENDIZAJES**                                                        |
 |                                                                       |
 | **Propósito de la actividad:** Consolidar el mapeo de objetos a       |
-| tablas y el uso de repositorios, practicando primero sobre un         |
-| proyecto desechable antes de tocar el proyecto real.                  |
+| tablas y el uso de repositorios, continuando el módulo validado de    |
+| Semana 11 antes de transferirlo a otro dominio.                      |
 |                                                                       |
 | **Actividades (Instrucciones):**                                      |
 |                                                                       |
 | 1.  **Repaso interactivo:**                                           |
-|     - Estudiar las dos pestañas del cheat sheet                       |
-|       (`Material_Sesion_Clase_12_HTML_18_semanas/cheatsheet.html`):   |
-|       "Conceptos JPA", con la tabla de anotaciones y su import        |
-|       completo, los métodos que ya trae `JpaRepository` y el          |
-|       catálogo de errores frecuentes; y "De H2 a Neon", con la tabla  |
-|       comparativa entre la base local y la de producción.             |
-|     - Resolver los ocho ejercicios en escalera de `ejercicios.html`   |
-|       con el proyecto de práctica `taller-jpa` (Biblioteca            |
-|       Comunitaria Semilla, entidad `Libro`). El Ejercicio 4 muestra   |
-|       con las propias manos el problema —la base en memoria olvida—   |
-|       y el **Ejercicio 8 es el imprescindible**: H2 en archivo,       |
-|       perfiles `dev` y `prod`, y la carpeta de datos en               |
-|       `.gitignore`.                                                   |
+|     - Estudiar las pestañas de `cheatsheet.html`: "Continuidad:       |
+|       Jugador" aplica las anotaciones y repositorio al mismo          |
+|       `taller-formularios` de la Semana 11; "De H2 a Neon" anticipa   |
+|       la configuración de producción. La pestaña adicional          |
+|       "Referencia: taller-jpa (Libro)" es un ejemplo completo aparte. |
+|     - En `ejercicios.html`, resolver primero "Ejercicios", siguiendo  |
+|       sus checkpoints. Usar después el "Kit de Acompañamiento de      |
+|       Ejercicios" para consultar los archivos finales y su explicación.|
+|       Quienes ya completaron Semana 11 continúan con `Jugador`,       |
+|       conservando el formulario y sus validaciones mientras            |
+|       reemplazan `List<Jugador>` por JPA. Quienes aún no llegaron a    |
+|       Semana 11 usan el Kit para iniciar Jugador desde cero: generan  |
+|       el proyecto en Spring Initializr, seleccionan allí las          |
+|       dependencias y siguen el árbol completo de archivos. Ambos      |
+|       recorridos incluyen validación, persistencia y                  |
+|       `templates/error.html`. Después, la Práctica independiente de  |
+|       Biblioteca y el Anexo `taller-jpa` transfieren lo aprendido. El |
+|       paso final de H2 en archivo, perfiles `dev` y `prod`, y          |
+|       `.gitignore` es obligatorio.                                     |
 |     - Completar ambas pestañas del challenge si no se terminaron en   |
 |       clase, en especial el simulador que compara la base en memoria  |
 |       con la base en archivo.                                         |
@@ -122,10 +128,10 @@ sola línea de Java**.
 | **Recursos:**                                                         |
 |                                                                       |
 | - Material HTML de la Semana 12 (hub `index.html` de la carpeta       |
-|   `Material_Sesion_Clase_12_HTML_18_semanas/`), incluido el **Kit de  |
-|   archivos completos** con los doce archivos del módulo con           |
-|   persistencia, cada uno con su ruta, su línea `package` y todos sus  |
-|   `import`.                                                           |
+|   `Material_Sesion_Clase_12_HTML_18_semanas/`), con seis pestañas de |
+|   ejercicios: Ejercicios, Kit de Acompañamiento, explicación del Kit,|
+|   Kit Jugador desde cero, Práctica independiente de Biblioteca y     |
+|   Anexo `taller-jpa`.                                                |
 | - Documentación de Spring Data JPA                                    |
 |   (<https://spring.io/projects/spring-data-jpa>).                     |
 | - Documentación de Neon (<https://neon.tech/docs>), para anticipar    |
@@ -146,7 +152,8 @@ sola línea de Java**.
 **SEGUNDA PARTE: CONSTRUCCIÓN DEL PROYECTO**
 
 **Propósito de la actividad:** Sustituir la lista en memoria del proyecto
-real por una **base de datos**, de modo que la información de la institución
+real —el mismo módulo de `Jugador` validado en la Semana 11— por una **base
+de datos**, de modo que la información de la institución
 que se atiende (guardería, casa hogar, dispensario u otra entidad sin fines
 de lucro) deje de perderse al apagar la aplicación.
 
@@ -156,6 +163,14 @@ de lucro) deje de perderse al apagar la aplicación.
     -   Tener funcionando el módulo de registro con validación de la
         Semana 11 (formulario que guarda, lista que muestra y mensajes de
         error).
+    -   **Si la Semana 11 ya está completa, continúa desde ese proyecto:**
+        no vuelvas a crear el formulario ni a escribir de nuevo sus
+        validaciones. Conserva `Jugador`, sus plantillas, rutas y mensajes;
+        incorpora las piezas JPA y modifica únicamente el almacenamiento y
+        las acciones necesarias para editar y borrar. En el Kit, las marcas
+        "Ya viene de Semana 11", "Se incorpora en Semana 12",
+        "Se modifica para usar JPA" e "Imprescindible" distinguen cada tipo
+        de cambio.
     -   **Decidir primero, en palabras, cuál será la primera tabla:** qué
         entidad de la institución se va a guardar, qué campos tiene y cuál
         es el tipo de cada uno. La tabla de apoyo está al inicio de
@@ -163,12 +178,34 @@ de lucro) deje de perderse al apagar la aplicación.
     -   Seguir la guía de ocho pasos incluida en
         `Material_Sesion_Clase_12_HTML_18_semanas/proyecto.html`:
         dependencias —incluida **Spring Boot DevTools**, que recarga la
-        aplicación sola tras cada cambio de código o plantilla, salvo en
-        `pom.xml` y en los `application*.properties`, donde el reinicio
-        sigue siendo manual—, entidad, repositorio, servicio sin lista,
+        aplicación cuando se recompila el código; los cambios de plantilla
+        solo requieren refrescar el navegador. `pom.xml` y los
+        `application*.properties` siguen requiriendo reinicio manual—,
+        entidad, repositorio, servicio sin lista,
         perfiles y
         H2 en archivo, pruebas del CRUD y del reinicio, verificación del
         segundo criterio, y publicación en GitHub.
+    -   **No omitir los requisitos nuevos de persistencia:** `data-jpa`
+        permite resolver los imports JPA y `JpaRepository`; si falta, esos
+        imports quedan sin resolver y no compila. H2 aporta el driver local;
+        si falta, la aplicación puede compilar pero falla al arrancar con
+        `Failed to load driver class org.h2.Driver`. La entidad necesita
+        `@Entity`, `@Id`, un id compatible con `JpaRepository` y constructor
+        vacío: sin `@Entity` puede aparecer `Not a managed type`, sin `@Id`
+        aparece `No identifier specified for entity` y sin constructor
+        Hibernate no puede crear la entidad. `@GeneratedValue` permite que
+        la base genere el id; si no se configura, el estudiante tendría que
+        asignarlo manualmente. El repositorio debe quedar debajo del paquete
+        base para que Spring lo encuentre, y los nombres de sus métodos
+        derivados deben coincidir con campos reales; de lo contrario puede
+        fallar la inyección o aparecer `No property ... found for type`. En
+        Spring Boot 4, la consola requiere además su starter y la propiedad
+        que la habilita; sin esa configuración `/h2-console` responde 404.
+        Al editar, el formulario debe enviar el `id` oculto o se insertará
+        otra fila. Para conservar datos al reiniciar usa H2 en archivo con
+        `ddl-auto=update`; `mem` es temporal y `ddl-auto=create` vuelve a
+        crear la tabla vacía. El driver PostgreSQL solo se necesita cuando
+        se activa el perfil `prod` que lo declara.
 
 2.  **Práctica de Código — completar la plantilla (sección "Entregable" de `proyecto.html`):**
     -   **Parte A — Tu entidad, explicada (20%):** qué entidad se eligió,
@@ -195,8 +232,13 @@ de lucro) deje de perderse al apagar la aplicación.
 **Recursos:**
 -   Guía paso a paso y plantilla del entregable, en una sola página
     (`proyecto.html`), con exportación a PDF.
--   Kit de archivos completos (`ejercicios.html`, segunda pestaña) para
-    copiar cualquier archivo faltante, cambiando el paquete y la entidad.
+-   Ejercicios progresivos de Jugador, Kit de Acompañamiento y explicación
+    (`ejercicios.html`, pestañas 1–3) para aplicar JPA sobre Semana 11 sin
+    rehacer las validaciones; Kit para iniciar Jugador desde cero (pestaña
+    4), generado desde Spring Initializr con las dependencias seleccionadas
+    en la página y siguiendo el árbol completo. Ambos Kits de Jugador
+    incluyen `error.html`. La Práctica independiente de Biblioteca y el
+    Anexo `taller-jpa` ocupan las pestañas 5 y 6.
 -   Cheat sheet de la semana, en especial la tabla de anotaciones con su
     import y el catálogo de errores frecuentes, donde está documentada la
     trampa silenciosa de `ddl-auto=create`.
