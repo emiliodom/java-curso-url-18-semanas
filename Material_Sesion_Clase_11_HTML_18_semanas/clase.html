@@ -159,6 +159,14 @@
                 </h2>
                 <div id="c3" class="accordion-collapse collapse" data-bs-parent="#acc">
                   <div class="accordion-body">
+                    <div class="callout warning mb-2">
+                      <div class="fw-semibold">Pregunta que suele salir aquí: «dice <code>taller-formularios</code> pero el código dice <code>tallerformularios</code>»</div>
+                      <div class="small-muted">Como esta sesión insiste en leer los paquetes en voz alta, la diferencia salta a la vista. Respóndela al grupo completo, de una vez:
+                      son <strong>tres nombres derivados del mismo Artifact</strong> en la Semana 10, y los tres conviven. (Recuerda que el guion del campo <em>Package name</em> lo borró cada quien a mano; Initializr no lo quita solo. Si alguien lo dejó, su paquete dice <code>gt.edu.url.taller_formularios</code>, con guion bajo: válido, pero debe usar ese nombre en todas sus líneas <code>package</code>.) <code>taller-formularios</code> es la carpeta y el <code>&lt;artifactId&gt;</code>;
+                      <code>gt.edu.url.tallerformularios</code> es el paquete — <strong>sin guion, porque en Java el guion es el signo de resta</strong> y un paquete no lo admite;
+                      <code>TallerFormulariosApplication</code> es la clase principal. Y el <code>.model</code> / <code>.service</code> / <code>.controller</code> del final es la <strong>capa</strong> (Semana 6), no parte del nombre del proyecto:
+                      esas carpetas van <em>dentro</em> del paquete base o la aplicación compila pero responde 404 sin mensaje. Está en el Kit de <a href="ejercicios.html">Ejercicios</a> y en el <a href="cheatsheet.html">Cheat Sheet</a>.</div>
+                    </div>
                     <p class="small-muted mb-2"><strong>Paso 1 — anotar el modelo.</strong> Abre <code>Jugador.java</code> y agrega las reglas. Di el paquete en voz alta al escribir cada <code>import</code>:</p>
                     <pre><code>import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

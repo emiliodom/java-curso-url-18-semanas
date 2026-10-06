@@ -70,60 +70,150 @@
       <div class="tab-pane fade show active" id="tab-ejercicios-jugador" role="tabpanel">
         <div class="callout info mb-3">
           <div class="fw-semibold">Ejercicios en escalera — de la lista en memoria a los registros persistentes</div>
-          <div class="small-muted">Sigue el formato de la Semana 11: realiza la acción, verifica el checkpoint y abre la solución solo después de intentarlo. Si terminaste la Semana 11, trabaja sobre tu <code>taller-formularios</code>; si empiezas desde cero, primero completa el <a href="#" onclick="document.getElementById('tab-jugador-zero-btn').click(); return false;">Kit para iniciar Jugador</a>. El <a href="#" onclick="document.getElementById('tab-jugador-kit-btn').click(); return false;">Kit de Acompañamiento</a> reúne el código final de cada archivo.</div>
+          <div class="small-muted">Elige tu ruta. <strong>Si continúas desde Semana 11</strong>, realiza los cambios en tu <code>taller-formularios</code>. <strong>Si empiezas desde cero</strong>, completa primero el <a href="#" onclick="document.getElementById('tab-jugador-zero-btn').click(); return false;">Kit para iniciar Jugador</a>; los ejercicios 1–4 serán una revisión guiada de las decisiones ya implementadas, y los ejercicios 5–6 se prueban en tu aplicación. El <a href="#" onclick="document.getElementById('tab-jugador-kit-btn').click(); return false;">Kit de Acompañamiento</a> muestra los archivos finales de la ruta de continuación.</div>
         </div>
         <div class="callout warning mb-4">
           <div class="fw-semibold">Regla de trabajo</div>
-          <div class="small-muted">No pegues todos los archivos al comienzo. Haz cada cambio por separado y ejecuta o prueba la aplicación antes de avanzar. Conserva Bean Validation y las plantillas de Semana 11; esta escalera se concentra en JPA, CRUD y persistencia.</div>
+          <div class="small-muted">En la ruta Semana 11, no pegues todos los archivos al comienzo: haz cada cambio por separado. En la ruta desde cero, completa primero el Kit de la cuarta pestaña y luego usa los ejercicios 1–4 para localizar y explicar cada pieza, no para buscar una lista que nunca construiste. Ambas rutas conservan las validaciones y prueban el CRUD y la persistencia.</div>
         </div>
 
         <div class="row g-3">
           <div class="col-lg-6"><div class="card h-100"><div class="card-body">
-            <h2 class="h5 section-title">Ejercicio 1 — Localiza dónde viven los datos <span class="badge text-bg-success">Nivel 1</span></h2>
-            <p class="small-muted mb-2">Si continúas desde Semana 11, encuentra en <code>JugadorService</code> la lista que conserva los jugadores. Registra uno y explica por qué se perderá al cerrar la aplicación. Si iniciaste con el Kit desde cero, lee la solución y localiza en tu implementación actual el repositorio que reemplaza aquella lista.</p>
-            <p class="small-muted"><strong>Tu turno:</strong> identifica en qué archivo y variable se guarda, y qué pasaría si mañana hubiera cientos de registros.</p>
-            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: puedes señalar la colección en memoria y explicar por qué no es almacenamiento permanente.</span></div>
-            <details><summary class="fw-semibold">Solución</summary><div class="mt-2 small-muted">El <code>ArrayList&lt;Jugador&gt;</code> vive en memoria dentro del servicio. Al apagar el proceso, se destruye junto con su contenido. JPA permitirá guardar los mismos objetos en una base de datos.</div></details>
+            <h2 class="h5 section-title">Ejercicio 1 — ¿Dónde se guardan los jugadores? <span class="badge text-bg-success">Nivel 1 · Observar</span></h2>
+            <p class="small-muted mb-2"><strong>Si continúas desde Semana 11:</strong> abre <code>JugadorService.java</code> en <code>src/main/java/gt/edu/url/tallerformularios/service/</code>. Busca la línea que comienza con <code>private final List&lt;Jugador&gt;</code>. Esa lista está dentro de la memoria de la aplicación. Abre el formulario, registra un jugador de prueba y observa la lista del navegador.</p>
+            <p class="small-muted mb-2"><strong>Si empiezas desde cero:</strong> completa primero el Kit de la cuarta pestaña. Después abre el <code>JugadorService.java</code> terminado en el Kit de Acompañamiento y encuentra el campo <code>JugadorRepository</code>. Tu proyecto ya no tiene una lista propia: el servicio pide los datos al repositorio.</p>
+            <p class="small-muted"><strong>Tu turno:</strong> escribe en una frase qué ocurriría con la lista de Semana 11 al cerrar el programa y qué archivo del proyecto nuevo se encarga ahora de guardar los datos.</p>
+            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: ruta Semana 11: encontraste la lista; ruta desde cero: encontraste <code>JugadorRepository</code>. Puedes explicar que una lista vive en la ejecución y la base de datos conserva los registros.</span></div>
+            <details><summary class="fw-semibold">Ayuda y respuesta esperada</summary><div class="mt-2 small-muted">La lista de Semana 11 se crea con <code>new ArrayList&lt;&gt;()</code> y existe solo mientras corre la aplicación; al cerrarla desaparece. En Semana 12, <code>JugadorService</code> recibe <code>JugadorRepository</code>, que ofrece operaciones para guardar y consultar los jugadores en H2.</div></details>
           </div></div></div>
 
           <div class="col-lg-6"><div class="card h-100"><div class="card-body">
-            <h2 class="h5 section-title">Ejercicio 2 — Convierte Jugador en entidad <span class="badge text-bg-success">Nivel 1</span></h2>
-            <p class="small-muted mb-2">En <code>Jugador.java</code>, conserva todas las reglas de validación de Semana 11 y agrega las anotaciones de persistencia, un <code>Long id</code> autogenerado y el constructor vacío. Consulta el Kit de Acompañamiento para imports y archivo completo.</p>
-            <p class="small-muted"><strong>Tu turno:</strong> distingue qué anotaciones definen cómo se guarda el objeto y cuáles siguen validando los datos.</p>
-            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: el proyecto compila; Jugador conserva sus reglas y ahora tiene una identidad estable.</span></div>
-            <details><summary class="fw-semibold">Pista y solución</summary><div class="mt-2 small-muted">JPA usa <code>@Entity</code>, <code>@Id</code>, <code>@GeneratedValue(strategy = GenerationType.IDENTITY)</code> y, si corresponde, <code>@Column</code>. Bean Validation sigue usando <code>jakarta.validation.constraints</code>; JPA usa <code>jakarta.persistence</code>. No elimines ninguna de las dos familias.</div></details>
+            <h2 class="h5 section-title">Ejercicio 2 — Prepara Jugador para guardarse <span class="badge text-bg-success">Nivel 1 · Seguir un modelo</span></h2>
+            <p class="small-muted mb-2"><strong>Antes de editar:</strong> una <em>anotación</em> es una instrucción que empieza con <code>@</code> y se escribe encima de una clase o campo. JPA es el conjunto de herramientas que conecta objetos Java con tablas de la base de datos. No borres las anotaciones de validación que ya conoces.</p>
+            <p class="small-muted mb-2"><strong>Si continúas desde Semana 11:</strong> abre <code>src/main/java/gt/edu/url/tallerformularios/model/Jugador.java</code>. (1) Añade los imports <code>jakarta.persistence</code> mostrados en la ayuda. (2) Escribe <code>@Entity</code> encima de <code>public class Jugador</code>. (3) Añade el campo <code>id</code> con <code>@Id</code> y <code>@GeneratedValue</code>. (4) Agrega los getters/setters del id. El constructor vacío ya aparece en el Kit de Semana 11: consérvalo y no crees un segundo. Conserva también todos los campos y reglas de validación.</p>
+            <p class="small-muted mb-2"><strong>Si empiezas desde cero:</strong> en el archivo <code>Jugador.java</code> del Kit de la cuarta pestaña, señala cada anotación JPA y compárala con las anotaciones de validación. El Kit ya contiene el archivo correcto: no necesitas volverlo a escribir.</p>
+            <p class="small-muted"><strong>Tu turno:</strong> al lado de cada anotación, anota si sirve para guardar los datos (JPA) o revisar lo que escribe la persona (Validación).</p>
+            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint para ambas rutas: <code>Jugador</code> tiene <code>@Entity</code>, un <code>Long id</code> autogenerado, constructor vacío y conserva sus validaciones.</span></div>
+            <details><summary class="fw-semibold">Ayuda paso a paso y modelo mínimo</summary><div class="mt-2 small-muted">
+              <p><strong>Imports nuevos:</strong></p>
+              <pre><code>import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;</code></pre>
+              <p><strong>Dentro de la clase, antes del primer campo:</strong></p>
+              <pre><code>@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private Long id;</code></pre>
+              <p><strong>Qué significa:</strong> <code>@Entity</code> le dice a JPA que la clase representa datos que se guardan; <code>@Id</code> marca el identificador único de cada jugador; <code>@GeneratedValue</code> pide a la base que asigne ese número; <code>Long</code> es el tipo del número. El constructor vacío es <code>public Jugador() { }</code> y permite que JPA cree objetos al leer filas; consérvalo (en el Kit de Semana 11 ya existe). Agrega <code>getId()</code> y <code>setId(Long id)</code> como los demás getters/setters. Las reglas <code>@NotBlank</code>, <code>@Min</code> y las otras son de validación: déjalas en su lugar. El Kit de Acompañamiento también usa <code>@Column</code> para indicar reglas de las columnas de la tabla; la clase completa está allí para comparar.</p>
+            </div></details>
           </div></div></div>
 
           <div class="col-lg-6"><div class="card h-100"><div class="card-body">
-            <h2 class="h5 section-title">Ejercicio 3 — Crea el repositorio <span class="badge text-bg-primary">Nivel 2</span></h2>
-            <p class="small-muted mb-2">Crea <code>repository/JugadorRepository.java</code> dentro del paquete base y haz que extienda <code>JpaRepository&lt;Jugador, Long&gt;</code>. No escribas una clase de implementación ni métodos CRUD a mano.</p>
-            <p class="small-muted"><strong>Tu turno:</strong> confirma que el repositorio puede importar <code>Jugador</code> y que VS Code resuelve <code>JpaRepository</code>.</p>
-            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: la interfaz compila y está en la capa <code>repository</code>, dentro del paquete base.</span></div>
-            <details><summary class="fw-semibold">Solución</summary><div class="mt-2 small-muted">La forma mínima es <code>public interface JugadorRepository extends JpaRepository&lt;Jugador, Long&gt; { }</code>. Spring Data genera su implementación al iniciar la aplicación. Si no encuentra el tipo, revisa el paquete, los imports y que JPA esté presente.</div></details>
+            <h2 class="h5 section-title">Ejercicio 3 — Crea el archivo que sabe consultar la base <span class="badge text-bg-primary">Nivel 2 · Crear con modelo</span></h2>
+            <p class="small-muted mb-2">El <em>repositorio</em> es la pieza que ofrece operaciones para guardar, listar, buscar y borrar. No escribimos esas operaciones desde cero: Spring Data las prepara por nosotros.</p>
+            <p class="small-muted mb-2"><strong>Si continúas desde Semana 11:</strong> en VS Code, dentro de <code>src/main/java/gt/edu/url/tallerformularios/</code>, crea la carpeta <code>repository</code>; dentro crea <code>JugadorRepository.java</code>. Copia el modelo de la ayuda. Comprueba que la línea <code>package</code> coincida con la carpeta.</p>
+            <p class="small-muted mb-2"><strong>Si empiezas desde cero:</strong> abre el archivo creado por el Kit de la cuarta pestaña y compara cada línea con el modelo. Confirma que está en la misma carpeta <code>repository</code>, debajo del paquete base <code>gt.edu.url.tallerformularios</code>.</p>
+            <p class="small-muted"><strong>En palabras sencillas:</strong> <code>interface</code> es un contrato que declara qué operaciones estarán disponibles; <code>extends</code> significa “recibe también las operaciones de”; <code>JpaRepository&lt;Jugador, Long&gt;</code> indica que se trabajará con objetos <code>Jugador</code> cuyo identificador es tipo <code>Long</code>.</p>
+            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint para ambas rutas: existe el archivo <code>repository/JugadorRepository.java</code>, VS Code no subraya sus imports y no escribiste una clase de implementación.</span></div>
+            <details><summary class="fw-semibold">Modelo completo con ruta e imports</summary><div class="mt-2 small-muted"><pre><code>package gt.edu.url.tallerformularios.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import gt.edu.url.tallerformularios.model.Jugador;
+
+public interface JugadorRepository extends JpaRepository&lt;Jugador, Long&gt; {
+}</code></pre><p><code>JpaRepository</code> viene de Spring Data JPA; el otro import apunta a tu clase <code>Jugador</code>. El cuerpo puede quedar vacío: Spring crea al iniciar la aplicación la implementación de las operaciones básicas como <code>save</code> y <code>findAll</code>. En Semana 11 este archivo no existía; se crea en Semana 12.</p></div></details>
           </div></div></div>
 
           <div class="col-lg-6"><div class="card h-100"><div class="card-body">
-            <h2 class="h5 section-title">Ejercicio 4 — Sustituye la lista por JPA <span class="badge text-bg-primary">Nivel 2</span></h2>
-            <p class="small-muted mb-2">Inyecta <code>JugadorRepository</code> en el servicio. Cambia las operaciones de listar, guardar, buscar y eliminar para delegarlas al repositorio; elimina la lista y cualquier <code>new ArrayList&lt;&gt;()</code>.</p>
-            <p class="small-muted"><strong>Tu turno:</strong> revisa qué devuelve <code>findById</code> y adapta la búsqueda para entregar un <code>Jugador</code>, no un <code>Optional&lt;Jugador&gt;</code>.</p>
-            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: el proyecto arranca y el servicio usa repositorio por constructor, sin guardar datos en una colección propia.</span></div>
-            <details><summary class="fw-semibold">Pista y solución</summary><div class="mt-2 small-muted"><code>findAll()</code>, <code>save(jugador)</code>, <code>findById(id).orElseThrow(...)</code> y <code>deleteById(id)</code> cubren este CRUD. Inyección por constructor facilita ver la dependencia del servicio.</div></details>
+            <h2 class="h5 section-title">Ejercicio 4 — Cambia el lugar donde el servicio guarda datos <span class="badge text-bg-primary">Nivel 2 · Modificar un archivo existente</span></h2>
+            <p class="small-muted mb-2"><em>Inyectar</em> significa entregar una pieza que otra parte necesita. Aquí Spring entrega <code>JugadorRepository</code> al servicio mediante su constructor. <em>Delegar</em> significa pedirle a esa pieza que haga el trabajo: el servicio seguirá atendiendo las solicitudes del controlador, pero el repositorio hará las operaciones de base de datos.</p>
+            <p class="small-muted mb-2"><strong>Si continúas desde Semana 11:</strong> abre <code>src/main/java/gt/edu/url/tallerformularios/service/JugadorService.java</code>. Mantén el mismo paquete y nombre de clase. (1) Quita <code>import java.util.ArrayList</code>. (2) Reemplaza el campo <code>List&lt;Jugador&gt; jugadores = new ArrayList&lt;&gt;()</code> por el campo final que aparece en el modelo. (3) Agrega el constructor. (4) Cambia el contenido de cada método copiando el ejemplo, pero conserva sus nombres: el controlador los necesita.</p>
+            <p class="small-muted mb-2"><strong>Si empiezas desde cero:</strong> abre <code>JugadorService.java</code> del Kit de la cuarta pestaña y sigue con el dedo cada llamada: controlador → servicio → repositorio. Comprueba que no hay <code>new ArrayList&lt;&gt;()</code>.</p>
+            <p class="small-muted"><strong>Traduce las operaciones:</strong> <code>findAll</code> = listar; <code>save</code> = guardar; <code>findById</code> = buscar por id; <code>deleteById</code> = eliminar por id. <code>findById</code> puede no encontrar nada, por eso devuelve un <code>Optional</code> (un resultado que podría estar vacío); <code>orElseThrow</code> indica qué hacer si el id no existe.</p>
+            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint para ambas rutas: el servicio conserva sus métodos públicos, recibe el repositorio en el constructor y cada método le delega su trabajo. Ya no mantiene una lista de jugadores.</span></div>
+            <details><summary class="fw-semibold">Modelo completo de JugadorService</summary><div class="mt-2 small-muted"><p>Usa esta versión como modelo para comparar, no pegues solo fragmentos en medio de otro método:</p><pre><code>package gt.edu.url.tallerformularios.service;
+
+import java.util.List;
+import org.springframework.stereotype.Service;
+import gt.edu.url.tallerformularios.model.Jugador;
+import gt.edu.url.tallerformularios.repository.JugadorRepository;
+
+@Service
+public class JugadorService {
+    private final JugadorRepository repositorio;
+
+    public JugadorService(JugadorRepository repositorio) {
+        this.repositorio = repositorio;
+    }
+
+    public List&lt;Jugador&gt; listarTodos() {
+        return repositorio.findAll();
+    }
+
+    public Jugador buscarPorId(Long id) {
+        return repositorio.findById(id)
+                .orElseThrow(() -&gt; new IllegalArgumentException(
+                        "No existe un jugador con id " + id));
+    }
+
+    public Jugador guardar(Jugador jugador) {
+        return repositorio.save(jugador);
+    }
+
+    public void eliminar(Long id) {
+        repositorio.deleteById(id);
+    }
+
+    public long contar() {
+        return repositorio.count();
+    }
+}</code></pre><p>Compara los nombres con tu controlador antes de guardar. Si tu versión de Semana 11 no tenía aún <code>buscarPorId</code> o <code>eliminar</code>, agrega esos métodos; no reemplaces ni renombres los que ya utiliza.</p></div></details>
           </div></div></div>
 
           <div class="col-lg-6"><div class="card h-100"><div class="card-body">
-            <h2 class="h5 section-title">Ejercicio 5 — Prueba registrar, validar y editar <span class="badge text-bg-warning">Nivel 3</span></h2>
-            <p class="small-muted mb-2">Usa el formulario existente para guardar un jugador válido. Después intenta enviar un dato inválido, edita el registro y comprueba que la edición no cree una fila duplicada; finalmente elimínalo.</p>
-            <p class="small-muted"><strong>Tu turno:</strong> si al editar aparece un duplicado, inspecciona el campo oculto <code>id</code> del formulario y cómo llega al objeto enviado.</p>
-            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: la validación sigue mostrando errores; crear, editar y eliminar funcionan.</span></div>
-            <details><summary class="fw-semibold">Solución</summary><div class="mt-2 small-muted">Conserva <code>@Valid</code> y <code>BindingResult</code> en su orden de Semana 11. El formulario de edición debe enviar el id (por ejemplo, <code>&lt;input type="hidden" th:field="*{id}"&gt;</code>); <code>save</code> usa ese id para actualizar el registro.</div></details>
+            <h2 class="h5 section-title">Ejercicio 5 — Comprueba el formulario antes de guardar <span class="badge text-bg-warning">Nivel 3 · Probar</span></h2>
+            <p class="small-muted mb-2"><strong>Si continúas desde Semana 11:</strong> las validaciones y el formulario ya existen; aplica ahora los ajustes del Kit de Acompañamiento para cargar un jugador por id y agregar las acciones Editar/Eliminar. En el formulario conserva los campos y mensajes de error, y agrega el campo oculto <code>id</code>; en la lista agrega los enlaces/botones de las acciones. Los pasos 6 y 7 del Kit muestran exactamente qué conservar y qué añadir.</p>
+            <p class="small-muted mb-2"><strong>Si empiezas desde cero:</strong> asegúrate de haber terminado los archivos del Kit de la cuarta pestaña. Las rutas de editar y eliminar, el id oculto y las validaciones ya vienen incluidas; aquí solo vas a probarlas.</p>
+            <ol class="small-muted">
+              <li>Inicia la aplicación y abre <code>http://localhost:8080/jugadores/nuevo</code>.</li>
+              <li>Envía el formulario vacío. Deben aparecer mensajes y el formulario debe conservarse; no debe aparecer un registro nuevo.</li>
+              <li>Registra un jugador válido y confirma que aparece una vez en la lista.</li>
+              <li>Pulsa Editar, cambia su nombre y guarda. Debe actualizarse la misma fila, no crear otra.</li>
+              <li>Pulsa Eliminar y confirma que desaparece de la lista.</li>
+            </ol>
+            <p class="small-muted"><strong>Tu turno:</strong> explica para qué sirve el campo oculto <code>id</code> del formulario de edición.</p>
+            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint para ambas rutas: un formulario inválido muestra errores; puedes crear, editar sin duplicar y eliminar un jugador.</span></div>
+            <details><summary class="fw-semibold">Ayuda y respuesta esperada</summary><div class="mt-2 small-muted">Si al editar se crea otra fila, comprueba que el formulario tiene <code>&lt;input type="hidden" th:field="*{id}"&gt;</code> y que el controlador carga el jugador existente antes de mostrar el formulario. Al enviar ese mismo id, <code>save</code> actualiza la fila. Mantén <code>@Valid</code> y <code>BindingResult</code> inmediatamente después del objeto validado, como en Semana 11. Si aún falta una ruta, consulta los pasos 6 y 7 del Kit de Acompañamiento en lugar de cambiar todo el controlador.</div></details>
           </div></div></div>
 
           <div class="col-lg-6"><div class="card h-100"><div class="card-body">
-            <h2 class="h5 section-title">Ejercicio 6 — Comprueba que sobrevive al apagado <span class="badge text-bg-danger">Nivel 4</span></h2>
-            <p class="small-muted mb-2">Confirma que <code>application-dev.properties</code> usa <code>jdbc:h2:file:./datos/jugadores</code> y <code>ddl-auto=update</code>. Guarda un jugador y verifica que aparece en la lista.</p>
-            <p class="small-muted"><strong>Tu turno:</strong> detén completamente la aplicación con <kbd>Ctrl</kbd>+<kbd>C</kbd> o Stop de VS Code; vuelve a iniciarla a mano y revisa la lista. No cuentes la recarga de DevTools como reinicio de prueba.</p>
-            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: el mismo jugador aparece después del apagado completo y el nuevo arranque.</span></div>
-            <details><summary class="fw-semibold">Pista y solución</summary><div class="mt-2 small-muted">La URL <code>file</code> guarda los datos en disco y <code>update</code> conserva la tabla. Con <code>mem</code> la base está en memoria y se vacía al cerrar. DevTools se usa para recargar cambios de código; el apagado manual verifica la persistencia deliberadamente.</div></details>
+            <h2 class="h5 section-title">Ejercicio 6 — Crea la configuración y comprueba que los datos permanecen <span class="badge text-bg-danger">Nivel 4 · Seguir una receta</span></h2>
+            <p class="small-muted mb-2"><strong>Importante:</strong> en Semana 11 todavía no existe <code>application-dev.properties</code>. Si continúas desde esa semana, lo crearás ahora; si empiezas desde cero y completaste el Kit, el archivo ya existe y solo tendrás que revisarlo. Un <em>perfil</em> permite separar la configuración de desarrollo de la que se usará para publicar más adelante.</p>
+            <p class="small-muted mb-2"><strong>Si continúas desde Semana 11:</strong> crea los archivos nuevos indicados en los pasos. <strong>Si empiezas desde cero:</strong> el Kit ya los creó; no hagas duplicados, localízalos y verifica que sus valores coincidan. Después ambas rutas hacen la misma prueba.</p>
+            <ol class="small-muted">
+              <li>En el Explorador de VS Code abre <code>src/main/resources/</code>. Ahí está <code>application.properties</code>.</li>
+              <li><strong>Semana 11:</strong> en <code>application.properties</code> conserva las líneas existentes y agrega <code>spring.profiles.active=dev</code>. <strong>Desde cero:</strong> comprueba que esa línea ya está; si falta, agrégala.</li>
+              <li><strong>Semana 11:</strong> crea en esa misma carpeta <code>application-dev.properties</code> (no dentro de <code>java</code> ni de <code>templates</code>). <strong>Desde cero:</strong> abre el archivo que el Kit ya creó.</li>
+              <li>Comprueba que ese archivo contiene el bloque de la ayuda: la dirección debe usar <code>file</code> y terminar en <code>./datos/jugadores</code>; la opción <code>update</code> pide conservar la tabla y sus registros.</li>
+              <li><strong>Semana 11:</strong> abre el <code>.gitignore</code> de la raíz del proyecto y agrega <code>datos/</code>. <strong>Desde cero:</strong> confirma que el Kit ya dejó esa línea en <code>.gitignore</code>.</li>
+              <li>Detén e inicia la aplicación manualmente para que lea la configuración. Registra un jugador de prueba y confirma que aparece en la lista.</li>
+              <li>Detén completamente la aplicación con Stop de VS Code o <kbd>Ctrl</kbd>+<kbd>C</kbd>; vuelve a iniciarla y comprueba que sigue ahí.</li>
+            </ol>
+            <div class="callout info mb-2"><span class="small"><strong>La configuración final:</strong> <code>application.properties</code> selecciona <code>dev</code>; <code>application-dev.properties</code> configura H2 en archivo. No se espera que ese perfil exista en Semana 11: se agrega esta semana o se genera al completar el Kit desde cero.</span></div>
+            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint para ambas rutas: existe <code>application-dev.properties</code> con los valores correctos, el registro sigue en la lista tras apagar y volver a iniciar, y <code>datos/</code> está ignorada por Git.</span></div>
+            <details><summary class="fw-semibold">Bloques exactos y explicación</summary><div class="mt-2 small-muted">
+              <p><strong>En <code>src/main/resources/application.properties</code>:</strong> conserva lo que ya tienes de Semana 11 (por ejemplo, nombre de aplicación y página de error) y agrega solo la línea de perfil si hace falta. En el Kit desde cero, el archivo ya viene preparado:</p>
+              <pre><code>spring.profiles.active=dev</code></pre>
+              <p><strong>En <code>src/main/resources/application-dev.properties</code>:</strong> si continúas desde Semana 11, crea el archivo; si comienzas desde cero, abre el que generaste con el Kit y verifica su contenido:</p>
+              <pre><code>spring.datasource.url=jdbc:h2:file:./datos/jugadores
+spring.datasource.driver-class-name=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.thymeleaf.cache=false</code></pre>
+              <p>En la ruta Semana 11, <code>application-dev.properties</code> es nuevo; el Kit desde cero ya lo crea. La ruta <code>file</code> guarda en disco; <code>mem</code> solo vive mientras la aplicación está abierta. <code>update</code> conserva la tabla en vez de recrearla vacía. No hace falta habilitar la consola H2 para esta prueba: comprueba los registros desde la lista de la aplicación. DevTools sirve para recargar cambios de código durante el desarrollo, pero esta comprobación requiere detener y volver a iniciar la aplicación por completo. Si la base no recuerda los datos, revisa que no diga <code>mem</code> ni <code>create</code>, que el perfil <code>dev</code> esté activo y que hayas reiniciado después de editar propiedades.</p>
+            </div></details>
           </div></div></div>
         </div>
       </div>
@@ -828,7 +918,7 @@ th { background: #f1f5f9; }</code></pre>
         </div></div>
       </div>
 
-      <!-- ============ PESTAÑA 3: KIT DESDE CERO ============ -->
+      <!-- ============ PESTAÑA 4: KIT DESDE CERO ============ -->
       <div class="tab-pane fade" id="tab-jugador-zero" role="tabpanel">
         <div class="callout info mb-4">
           <div class="fw-semibold">Kit para iniciar el módulo completo de Jugador desde cero</div>
@@ -911,7 +1001,6 @@ th { background: #f1f5f9; }</code></pre>
           <p class="small-muted mb-1"><strong><code>src/main/resources/application.properties</code></strong></p>
           <pre><code>spring.application.name=taller-formularios
 spring.profiles.active=dev
-spring.web.resources.add-mappings=true
 server.error.whitelabel.enabled=false</code></pre>
           <p class="small-muted mb-1"><strong><code>src/main/resources/application-dev.properties</code></strong></p>
           <pre><code>spring.datasource.url=jdbc:h2:file:./datos/jugadores
@@ -1267,7 +1356,7 @@ th { background: #f1f5f9; }</code></pre>
         </div>
       </div>
 
-      <!-- ============ PESTAÑA 4: EJERCICIOS INDEPENDIENTES ============ -->
+      <!-- ============ PESTAÑA 5: EJERCICIOS INDEPENDIENTES ============ -->
       <div class="tab-pane fade" id="tab-ejercicios" role="tabpanel">
         <div class="callout info mb-4">
           <div class="fw-semibold">Transferencia opcional: un segundo dominio</div>
@@ -1648,7 +1737,7 @@ public Libro(String titulo, String autor) {
 
       </div>
 
-      <!-- ============ PESTAÑA 5: REFERENCIA taller-jpa ============ -->
+      <!-- ============ PESTAÑA 6: REFERENCIA taller-jpa ============ -->
       <div class="tab-pane fade" id="tab-kit" role="tabpanel">
         <div class="callout info mb-4">
           <div class="fw-semibold">Proyecto funcional de referencia, no el proyecto principal de la semana</div>

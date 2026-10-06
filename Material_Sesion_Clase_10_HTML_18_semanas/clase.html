@@ -163,6 +163,15 @@
                 </h2>
                 <div id="c3" class="accordion-collapse collapse" data-bs-parent="#acc">
                   <div class="accordion-body">
+                    <div class="callout warning mb-2">
+                      <div class="fw-semibold">La pregunta que sí o sí va a salir: «dice <code>taller-formularios</code> pero el código dice <code>tallerformularios</code>»</div>
+                      <div class="small-muted">Respóndela al grupo completo en cuanto aparezca el primer mensaje en el chat, no uno por uno. Son <strong>tres nombres derivados del mismo Artifact</strong>, y los tres conviven:
+                      <code>taller-formularios</code> es la carpeta y el <code>&lt;artifactId&gt;</code>; <code>gt.edu.url.tallerformularios</code> es el paquete — <strong>sin guion, porque en Java el guion es el signo de resta</strong>;
+                      <code>TallerFormulariosApplication</code> es la clase principal. Y esto adviértelo en voz alta: Initializr <strong>no</strong> quita el guion solo — propone <em>Package name</em> como <code>gt.edu.url.taller-formularios</code> y cada quien debe borrarlo. Quien lo haya dejado tal cual tiene el paquete <code>gt.edu.url.taller_formularios</code>, con guion bajo: funciona, pero debe usar ese nombre en todas sus líneas <code>package</code>.
+                      Y la segunda mitad: el <code>.model</code> / <code>.service</code> / <code>.controller</code> del final <strong>no es parte del nombre del proyecto</strong>, es la <strong>capa</strong> de la Semana 6,
+                      y esas carpetas van <em>dentro</em> del paquete base. Al lado compila pero da 404 sin mensaje (el error silencioso de la Semana 9).
+                      Está explicado en el Paso 0 de <a href="ejercicios.html#paso0">Ejercicios</a> y en el <a href="cheatsheet.html">Cheat Sheet</a>.</div>
+                    </div>
                     <p class="small-muted mb-2">Carpeta nueva: <code>src/main/resources/<strong>templates</strong>/</code>. Explica la diferencia con <code>static/</code>:</p>
                     <div class="table-responsive">
                       <table class="table table-sm small">

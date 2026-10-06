@@ -100,6 +100,23 @@
     // La opción correcta se escribe siempre de primera para poder revisarla fácil;
     // la página baraja las opciones antes de mostrarlas (ver script más abajo).
     var QUESTION_BANK = [
+      // ---------- La regla de nombres carpeta/paquete ----------
+      {
+        level: 'ambas',
+        pregunta: 'Al generar <code>taller-formularios</code> en Spring Initializr, el campo <em>Package name</em> aparece como <code>gt.edu.url.taller-formularios</code>, <strong>con</strong> guion. ¿Qué haces?',
+        opciones: [{ v: 'a', t: 'Borrar el guion y dejarlo <code>gt.edu.url.tallerformularios</code>: en Java un paquete no admite guiones' }, { v: 'b', t: 'Nada: Initializr lo quita solo al generar el proyecto' }, { v: 'c', t: 'Borrar todo el campo y dejarlo vacío' }],
+        correcta: 'a',
+        fbOk: 'Correcto. Si lo dejaras con guion, Initializr no falla: lo cambia por un guion bajo y genera <code>gt.edu.url.taller_formularios</code> — funciona, pero ya no coincide con el paquete del material.',
+        fbKo: 'Initializr <strong>no</strong> lo quita solo: propone el campo con guion y lo borras tú, porque en Java el guion es el signo de resta. Si lo dejas, el paquete generado es <code>gt.edu.url.taller_formularios</code>, con guion bajo.'
+      },
+      {
+        level: 'final',
+        pregunta: 'En <code>package gt.edu.url.tallerformularios.model;</code>, ¿qué es la palabra <code>model</code>?',
+        opciones: [{ v: 'a', t: 'La capa a la que pertenece la clase, una carpeta dentro del paquete base' }, { v: 'b', t: 'Parte del nombre del proyecto' }, { v: 'c', t: 'Una palabra obligatoria de Bean Validation' }],
+        correcta: 'a',
+        fbOk: 'Correcto: es la capa (Semana 6). El paquete base es <code>gt.edu.url.tallerformularios</code> y debajo cuelgan <code>model</code>, <code>service</code> y <code>controller</code>.',
+        fbKo: 'Es la <strong>capa</strong>, no parte del nombre del proyecto ni algo que exija la validación: una carpeta dentro del paquete base.'
+      },
       // ---------- Solo Presaberes ----------
       {
         level: 'presaberes',

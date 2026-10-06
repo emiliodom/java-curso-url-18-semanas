@@ -63,7 +63,7 @@
             Los ejercicios construyen <strong>un mismo módulo de registro</strong>, una pieza a la vez: primero
             mostrar una página, luego mostrar un formulario, luego recibirlo, luego guardarlo, luego listarlo. Al
             terminar los 8 tendrás exactamente el mismo circuito que pide la <a href="proyecto.html">Guía 10</a>,
-            pero con un proyecto de práctica desechable.
+            pero con un proyecto de práctica desechable (genéralo primero en el <a href="#paso0">Paso 0</a>).
           </div>
         </div>
 
@@ -72,13 +72,43 @@
           <div class="small-muted">Cuando algo no funcione, revisa en este orden: <strong>(1)</strong> ¿el nombre que devuelve el método coincide con el nombre del archivo en <code>templates/</code>? <strong>(2)</strong> ¿el <code>th:action</code> del formulario apunta a la misma ruta que el <code>@PostMapping</code>? <strong>(3)</strong> ¿tu clase de modelo tiene constructor vacío y setters?</div>
         </div>
 
+        <div class="card mb-4 border-primary" id="paso0">
+          <div class="card-body">
+            <h2 class="h5 section-title">Paso 0 — El proyecto de práctica de hoy</h2>
+            <p class="small-muted mb-2">Los 8 ejercicios se hacen sobre un proyecto <strong>desechable</strong>, no sobre el de tu institución (ese se toca en <a href="proyecto.html">Proyecto</a>). Genéralo antes de empezar, igual que en la Semana 7:</p>
+            <ol class="small-muted mb-2">
+              <li>Entra a <strong>start.spring.io</strong>.</li>
+              <li>Elige: Project <strong>Maven</strong> · Language <strong>Java</strong> · Spring Boot la versión estable más reciente 3.x (sin la palabra SNAPSHOT) · Group <code>gt.edu.url</code> · Artifact <code>taller-formularios</code> · Package name: <strong>este campo sí lo corriges a mano</strong> — Initializr lo propone como <code>gt.edu.url.taller-formularios</code>, <em>con</em> guion; <strong>borra el guion</strong> y déjalo exactamente <code>gt.edu.url.tallerformularios</code> (lee el recuadro de abajo) · Packaging <strong>Jar</strong> · Java <strong>17</strong> (o 21, el mismo que instalaste).</li>
+              <li>Dependencias: por ahora <strong>solo</strong> <code>Spring Web</code>. Thymeleaf la agregas tú en el Ejercicio 1, a propósito, para que veas qué cambia.</li>
+              <li><strong>GENERATE</strong>, descomprime y abre la carpeta <code>taller-formularios</code> en VS Code.</li>
+            </ol>
+            <div class="callout warning mb-0" id="nombres">
+              <div class="fw-semibold">¿Por qué la carpeta dice <code>taller-formularios</code> y el código dice <code>tallerformularios</code>?</div>
+              <div class="small-muted">
+                No es un error del material: son <strong>tres nombres distintos</strong> que Initializr deriva de lo que escribiste, y los tres son correctos a la vez.
+                La razón de fondo es que <strong>un nombre de paquete de Java no admite guiones</strong> (el guion es el signo de resta: <code>package gt.edu.url.taller-formularios;</code> ni siquiera compila), y una clase de Java tampoco.
+                <div class="table-responsive mt-2"><table class="table table-sm small mb-2"><thead><tr><th>Nombre</th><th>Dónde aparece</th><th>Regla</th></tr></thead><tbody>
+                <tr><td><code>taller-formularios</code></td><td>La <strong>carpeta</strong> del proyecto, el <code>&lt;artifactId&gt;</code> del <code>pom.xml</code> y <code>spring.application.name</code></td><td>Es el Artifact tal cual lo escribiste. Aquí el guion <strong>sí</strong> se permite y es la costumbre en Maven</td></tr>
+                <tr><td><code>gt.edu.url.tallerformularios</code></td><td>La línea <code>package</code> de todos tus archivos <code>.java</code> y la ruta <code>src/main/java/gt/edu/url/tallerformularios/</code></td><td>Group + Artifact <strong>sin el guion</strong>, porque Java no lo admite. <strong>Initializr no lo quita solo:</strong> propone el campo <em>Package name</em> como <code>gt.edu.url.taller-formularios</code> y el guion lo borras tú</td></tr>
+                <tr><td><code>TallerFormulariosApplication</code></td><td>La clase principal, <code>TallerFormulariosApplication.java</code></td><td>El Artifact partido por el guion, cada parte con mayúscula inicial, pegadas, + <code>Application</code></td></tr>
+                </tbody></table></div>
+                <div class="fw-semibold">¿Y qué es <code>.service</code> en <code>gt.edu.url.tallerformularios.service</code>?</div>
+                No tiene nada que ver con el nombre del proyecto: es la <strong>capa</strong> (Semana 6). Tu paquete base es siempre <code>gt.edu.url.tallerformularios</code>,
+                y debajo de él cuelga una carpeta por capa, con el nombre de la capa en inglés: <code>model</code>, <code>service</code> y <code>controller</code>.
+                Así, <code>gt.edu.url.tallerformularios.service.JugadorService</code> se lee: <em>proyecto</em> <code>tallerformularios</code> → <em>capa</em> <code>service</code> → <em>clase</em> <code>JugadorService</code>.
+                <strong>Regla que no cambia:</strong> esas carpetas van <strong>dentro</strong> del paquete base, nunca al lado. Si las pones al lado, el proyecto compila pero Spring no las registra y obtienes un 404 sin mensaje de error (la trampa silenciosa de la Semana 9).
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="row g-3">
 
           <div class="col-lg-6">
             <div class="card h-100">
               <div class="card-body">
                 <h2 class="h5 section-title">Ejercicio 1 — Agrega Thymeleaf <span class="badge text-bg-success">Nivel 1</span></h2>
-                <p class="small-muted mb-2">Abre el <code>pom.xml</code> de tu proyecto de práctica y agrega, <strong>dentro</strong> de <code>&lt;dependencies&gt;</code>, el bloque del Kit (archivo 2). Guarda y ejecuta el proyecto.</p>
+                <p class="small-muted mb-2">Abre el <code>pom.xml</code> del proyecto <code>taller-formularios</code> que generaste en el <a href="#paso0">Paso 0</a> y agrega, <strong>dentro</strong> de <code>&lt;dependencies&gt;</code>, el bloque del Kit (archivo 2). Guarda y ejecuta el proyecto.</p>
                 <p class="small-muted mb-1"><strong>Tu turno:</strong> la primera ejecución tarda más de lo normal. ¿Por qué?</p>
                 <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: el proyecto arranca y muestra "Started ... Application" sin errores.</span></div>
                 <details>
@@ -241,11 +271,11 @@ public String registrarJugador(@ModelAttribute Jugador jugador) {
         <h2 class="h4 section-title mb-3" id="kit1">1. El árbol completo del proyecto</h2>
         <div class="card mb-4">
           <div class="card-body">
-            <p class="small-muted mb-2">Proyecto <code>taller-formularios</code>, Group <code>gt.edu.url</code> → paquete base <code>gt.edu.url.tallerformularios</code>. Las líneas con ← son las de esta semana.</p>
-            <pre><code>taller-formularios/
+            <p class="small-muted mb-2">Proyecto <code>taller-formularios</code>, Group <code>gt.edu.url</code> → paquete base <code>gt.edu.url.tallerformularios</code> (<strong>sin el guion</strong>: Java no lo admite en un paquete — ver el recuadro del <a href="#paso0" onclick="document.getElementById('tab-ejercicios-btn').click(); document.getElementById('paso0').scrollIntoView(); return false;">Paso 0</a>). Las líneas con ← son las de esta semana.</p>
+            <pre><code>taller-formularios/                  ← carpeta y artifactId: CON guion
 ├── pom.xml                          ← agrega la dependencia (archivo 2)
 └── src/main/
-    ├── java/gt/edu/url/tallerformularios/
+    ├── java/gt/edu/url/tallerformularios/   ← paquete base: SIN guion. Las capas van DENTRO
     │   ├── TallerFormulariosApplication.java      (generado — archivo 3)
     │   ├── controller/
     │   │   └── JugadorController.java             ← archivo 6

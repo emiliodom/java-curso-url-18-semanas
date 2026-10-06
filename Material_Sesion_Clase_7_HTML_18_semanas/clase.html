@@ -167,6 +167,7 @@
                           <tr><td>Spring Boot</td><td>La versión más alta que NO diga <code>SNAPSHOT</code></td><td>Las versiones SNAPSHOT son inestables/experimentales</td></tr>
                           <tr><td>Group</td><td>ej. <code>gt.edu.url</code></td><td>Identifica a "quién le pertenece" el código (convención de paquetes Java)</td></tr>
                           <tr><td>Artifact</td><td>ej. <code>demo-spring-boot</code></td><td>Nombre del proyecto (se usa también para carpeta y JAR final)</td></tr>
+                          <tr><td><strong>Package name</strong></td><td><code>gt.edu.url.demospringboot</code> — <strong>bórrale el guion a mano</strong></td><td>Initializr lo propone como <code>gt.edu.url.demo-spring-boot</code>, con guion, y <strong>no lo corrige solo</strong>: si se deja, lo cambia por guiones bajos (<code>demo_spring_boot</code>). En Java un paquete nunca admite guiones (es el signo de resta). Insiste aquí: este nombre será el de todas sus líneas <code>package</code> hasta la Semana 18</td></tr>
                           <tr><td>Packaging</td><td><strong>Jar</strong></td><td>Formato que usaremos para desplegar más adelante (Semana 14)</td></tr>
                           <tr><td>Java</td><td><strong>21</strong></td><td>La misma versión del JDK instalado en la Semana 1</td></tr>
                           <tr><td>Dependencies</td><td><strong>Spring Web</strong> (única, por ahora)</td><td>Lo mínimo para tener un servidor web embebido — Thymeleaf y JPA llegan en semanas futuras</td></tr>

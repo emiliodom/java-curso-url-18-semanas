@@ -71,6 +71,7 @@ javac -version</code></pre>
           <div class="card-body">
             <h2 class="h5 section-title">Ejercicio 2 — Genera tu proyecto de práctica <span class="badge text-bg-primary">Real</span></h2>
             <p class="small-muted mb-2">En <a href="https://start.spring.io" target="_blank" rel="noreferrer">start.spring.io</a>, genera un proyecto con: Maven, Java, versión estable más reciente, Group <code>gt.edu.url</code>, Artifact <code>laboratorio-spring</code>, Packaging Jar, Java 21, dependencia <strong>Spring Web</strong> únicamente. Descarga y descomprime el <code>.zip</code>.</p>
+            <p class="small-muted mb-2"><strong>Un campo que sí debes corregir:</strong> al escribir el Artifact, Initializr copia ese nombre a <em>Package name</em> <strong>con todo y guion</strong> (<code>gt.edu.url.laboratorio-spring</code>). Bórrale el guion y déjalo <code>gt.edu.url.laboratoriospring</code>. No lo corrige solo: si lo dejas, lo cambia por un guion bajo (<code>laboratorio_spring</code>). En Java un paquete nunca admite guiones, porque ahí el guion es el signo de resta.</p>
             <p class="small-muted mb-1"><strong>Tu turno:</strong> antes de abrirlo, predice: ¿cuántas carpetas <code>main</code> vas a encontrar dentro de <code>src</code>?</p>
             <details>
               <summary class="fw-semibold">Solución</summary>

@@ -85,6 +85,14 @@
     <div class="card mb-3">
       <div class="card-body">
         <h3 class="h5 section-title" id="paso2">Paso 2 — Crea tu clase de modelo</h3>
+        <div class="callout warning mb-2">
+          <div class="fw-semibold">Antes de crear carpetas: cuál es TU paquete base</div>
+          <div class="small-muted">Abre tu archivo <code>…Application.java</code> (el que tiene <code>@SpringBootApplication</code>) y copia su primera línea <code>package</code> <strong>tal cual</strong>:
+          ese es tu paquete base. Ojo: <strong>no</strong> es el nombre de la carpeta de tu proyecto. Si tu Artifact lleva guion (por ejemplo <code>casa-hogar</code>), tu paquete será <code>gt.edu.url.casahogar</code> si borraste el guion
+          en el campo <em>Package name</em> de Initializr, o <code>gt.edu.url.casa_hogar</code> si lo dejaste tal cual (Initializr lo cambia por un guion bajo, no lo quita). Las dos variantes funcionan; lo que nunca existe es un paquete con guion, porque en Java el guion es el signo de resta.
+          Las carpetas <code>model</code>, <code>service</code> y <code>controller</code> de los Pasos 2 a 4 son la <strong>capa</strong> (Semana 6), no parte del nombre de tu proyecto, y van <strong>dentro</strong> del paquete base.
+          Si quedan al lado, la aplicación compila pero responde 404 sin ningún mensaje.</div>
+        </div>
         <p class="small-muted">En tu paquete <code>model</code>, crea la clase de tu entidad con 3 o 4 atributos, <strong>constructor vacío</strong>, constructor con parámetros, y <strong>getters y setters de todos los campos</strong>. Usa <code>Jugador.java</code> del Kit (archivo 4) como plantilla.</p>
         <div class="callout danger mb-2">
           <div class="fw-semibold">No te saltes esto</div>

@@ -256,6 +256,14 @@ public class BienvenidaController {                  ← 4. EL CÓDIGO
                               └───┬──┘ └┬┘ └┬┘ └─────┬─────┘ └────┬────┘
 Línea package:  package        gt   .  edu . url . repasospring . controller ;</code></pre>
             <div class="small-muted mb-3">Cada <code>/</code> de la carpeta es un <code>.</code> en el paquete. Todo lo que va después de <code>src/main/java/</code> forma el nombre del paquete; el nombre del archivo no entra.</div>
+            <div class="callout info mb-3">
+              <div class="fw-semibold">De dónde sale cada pedazo</div>
+              <div class="small-muted">
+                <code>gt.edu.url</code> es el <strong>Group</strong> que escribiste en Spring Initializr.
+                <code>repasospring</code> es el <strong>Artifact</strong> (<code>repaso-spring</code>) <strong>sin el guion</strong>: Java no admite guiones en un paquete, porque ahí el guion es el signo de resta. Por eso la carpeta del proyecto y el <code>&lt;artifactId&gt;</code> sí llevan guion y el <code>package</code> no — los dos están bien. Ojo: ese guion lo borraste <strong>tú</strong> en el campo <em>Package name</em> al generar el proyecto; Initializr no lo quita solo — si se deja, lo cambia por un guion bajo (<code>gt.edu.url.repaso_spring</code>), que también funciona pero es otro nombre.
+                Y <code>controller</code> es la <strong>capa</strong> de la Semana 6 (<code>model</code>, <code>repository</code>, <code>service</code>, <code>controller</code>), no parte del nombre del proyecto: va siempre <em>dentro</em> del paquete base.
+              </div>
+            </div>
             <div class="callout warning mb-0">
               <div class="fw-semibold">Los dos errores distintos que produce equivocarse aquí</div>
               <div class="small-muted">

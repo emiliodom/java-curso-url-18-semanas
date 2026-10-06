@@ -153,7 +153,25 @@
           </div>
         </div>
 
-        <h2 class="h4 section-title mb-3" id="anC">C. Los dos detalles que hacen perder más tiempo</h2>
+        <h2 class="h4 section-title mb-3" id="anPkg">C. Cómo se lee la línea <code>package</code></h2>
+        <div class="card mb-4">
+          <div class="card-body">
+            <p class="small-muted mb-2">Pregunta frecuente: la carpeta del proyecto dice <code>taller-formularios</code> pero el código dice <code>tallerformularios.service</code>. Las dos cosas están bien. Así se descompone:</p>
+            <pre><code>package gt.edu.url.tallerformularios.service;
+        └───┬───┘ └─────┬─────┘ └──┬──┘
+            │           │          └─ la CAPA (Semana 6): model, service o controller
+            │           └─ el PROYECTO: el Artifact "taller-formularios", SIN el guion (lo borras tú en Initializr)
+            └─ el GROUP de la universidad: gt.edu.url</code></pre>
+            <div class="table-responsive mt-2"><table class="table table-sm small mb-2"><thead><tr><th>Nombre</th><th>Dónde va</th><th>¿Guion?</th></tr></thead><tbody>
+            <tr><td><code>taller-formularios</code></td><td>Carpeta del proyecto, <code>&lt;artifactId&gt;</code>, <code>spring.application.name</code></td><td><strong>Sí</strong></td></tr>
+            <tr><td><code>gt.edu.url.tallerformularios</code></td><td>Línea <code>package</code>, <code>import</code> y la ruta <code>src/main/java/gt/edu/url/tallerformularios/</code></td><td><strong>No</strong> — Java no admite guiones en un paquete (es el signo de resta)</td></tr>
+            <tr><td><code>TallerFormulariosApplication</code></td><td>La clase principal</td><td><strong>No</strong> — el guion se vuelve mayúscula</td></tr>
+            </tbody></table></div>
+            <div class="small-muted">El <code>.service</code> del final es la <strong>capa</strong> (Semana 6), no parte del nombre del proyecto. <strong>Regla que no cambia:</strong> carpeta = paquete (Semana 9), y las capas cuelgan <em>dentro</em> del paquete base, nunca al lado. Una clase fuera del paquete base compila, pero Spring no la registra: 404 sin mensaje de error.</div>
+          </div>
+        </div>
+
+        <h2 class="h4 section-title mb-3" id="anC">D. Los dos detalles que hacen perder más tiempo</h2>
         <div class="card mb-4">
           <div class="card-body">
             <h3 class="h6 fw-bold">1. Campos numéricos: <code>Integer</code>, nunca <code>int</code></h3>
@@ -184,7 +202,7 @@ public String registrar(@Valid @ModelAttribute Jugador jugador,
           </div>
         </div>
 
-        <h2 class="h4 section-title mb-3" id="anD">D. Qué SÍ toca hoy y qué NO</h2>
+        <h2 class="h4 section-title mb-3" id="anD">E. Qué SÍ toca hoy y qué NO</h2>
         <div class="card mb-4">
           <div class="card-body">
             <div class="row g-3">

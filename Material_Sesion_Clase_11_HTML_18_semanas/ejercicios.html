@@ -319,10 +319,27 @@ private String telefono;</code></pre>
         <div class="card mb-4">
           <div class="card-body">
             <p class="small-muted mb-2">Proyecto <code>taller-formularios</code>, paquete base <code>gt.edu.url.tallerformularios</code>. Las líneas con ← son las que se tocan esta semana.</p>
-            <pre><code>taller-formularios/
+            <div class="callout warning mb-2" id="nombres">
+              <div class="fw-semibold">Recordatorio: la carpeta dice <code>taller-formularios</code> y el código dice <code>tallerformularios</code>. Las dos están bien</div>
+              <div class="small-muted">
+                No es una errata: son <strong>tres nombres</strong> que salen del mismo Artifact que escribiste al generar el proyecto en la Semana 10, y los tres conviven. (El del paquete lo dejaste así tú: Initializr propone <em>Package name</em> <strong>con</strong> guion y hay que borrárselo a mano — si se deja, genera <code>gt.edu.url.taller_formularios</code>, con guion bajo.)
+                La razón de fondo es que <strong>un nombre de paquete de Java no admite guiones</strong> (el guion es el signo de resta: <code>package gt.edu.url.taller-formularios;</code> ni siquiera compila), y una clase de Java tampoco.
+                <div class="table-responsive mt-2"><table class="table table-sm small mb-2"><thead><tr><th>Nombre</th><th>Dónde aparece</th><th>¿Guion?</th></tr></thead><tbody>
+                <tr><td><code>taller-formularios</code></td><td>La carpeta del proyecto, el <code>&lt;artifactId&gt;</code> y <code>spring.application.name</code></td><td><strong>Sí</strong></td></tr>
+                <tr><td><code>gt.edu.url.tallerformularios</code></td><td>La línea <code>package</code>, los <code>import</code> y la ruta <code>src/main/java/gt/edu/url/tallerformularios/</code></td><td><strong>No</strong> — Java no lo admite en un paquete</td></tr>
+                <tr><td><code>TallerFormulariosApplication</code></td><td>La clase principal</td><td><strong>No</strong> — el guion se vuelve mayúscula</td></tr>
+                </tbody></table></div>
+                <div class="fw-semibold">¿Y qué es <code>.service</code> en <code>gt.edu.url.tallerformularios.service</code>?</div>
+                No tiene nada que ver con el nombre del proyecto: es la <strong>capa</strong> (Semana 6). Tu paquete base es siempre <code>gt.edu.url.tallerformularios</code>,
+                y debajo de él cuelga una carpeta por capa: <code>model</code>, <code>service</code> y <code>controller</code>.
+                Así, <code>gt.edu.url.tallerformularios.service.JugadorService</code> se lee: <em>proyecto</em> <code>tallerformularios</code> → <em>capa</em> <code>service</code> → <em>clase</em> <code>JugadorService</code>.
+                <strong>Regla que no cambia:</strong> esas carpetas van <strong>dentro</strong> del paquete base, nunca al lado. Al lado el proyecto compila, pero Spring no registra la clase y obtienes un 404 sin mensaje (la trampa silenciosa de la Semana 9).
+              </div>
+            </div>
+            <pre><code>taller-formularios/                  ← carpeta y artifactId: CON guion
 ├── pom.xml                          ← agrega la dependencia (archivo 2)
 └── src/main/
-    ├── java/gt/edu/url/tallerformularios/
+    ├── java/gt/edu/url/tallerformularios/   ← paquete base: SIN guion. Las capas van DENTRO
     │   ├── TallerFormulariosApplication.java      (sin cambios)
     │   ├── controller/
     │   │   └── JugadorController.java             ← archivo 5
@@ -721,10 +738,9 @@ public class JugadorController {
 # Mientras desarrollas: ver los cambios del HTML sin reiniciar el proyecto.
 spring.thymeleaf.cache=false
 
-# Permite que tu templates/error.html se use también para los errores 404.
-spring.web.resources.add-mappings=true
+# Desactiva la página blanca genérica de Spring para que se use tu templates/error.html.
 server.error.whitelabel.enabled=false</code></pre>
-            <div class="small-muted">La última línea desactiva la página blanca genérica de Spring, para que se use la tuya.</div>
+            <div class="small-muted">No hace falta ninguna propiedad para "activar" <code>templates/error.html</code>: Spring Boot la usa sola por estar en esa ruta con ese nombre. Esta línea solo desactiva la página blanca genérica para que se use la tuya.</div>
           </div>
         </div>
 

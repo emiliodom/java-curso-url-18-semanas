@@ -282,12 +282,20 @@ git push -u origin practica-semana9</code></pre>
                 <thead><tr><th>Lo que escribiste en Initializr</th><th>Valor de ejemplo</th><th>En qué se convierte</th></tr></thead>
                 <tbody>
                   <tr><td><strong>Group</strong></td><td><code>gt.edu.url</code></td><td>El inicio del paquete y de las carpetas</td></tr>
-                  <tr><td><strong>Artifact</strong></td><td><code>repaso-spring</code></td><td>Se le quitan los guiones → <code>repasospring</code></td></tr>
+                  <tr><td><strong>Artifact</strong></td><td><code>repaso-spring</code></td><td>La carpeta y el <code>&lt;artifactId&gt;</code> del <code>pom.xml</code> conservan el guion; en el campo <em>Package name</em> tú lo borras → <code>repasospring</code></td></tr>
                   <tr><td colspan="2"><strong>Paquete base resultante</strong></td><td><code>gt.edu.url.repasospring</code></td></tr>
                   <tr><td colspan="2"><strong>Carpeta resultante</strong></td><td><code>src/main/java/gt/edu/url/repasospring/</code></td></tr>
                   <tr><td colspan="2"><strong>Clase principal resultante</strong></td><td><code>RepasoSpringApplication.java</code></td></tr>
                 </tbody>
               </table>
+            </div>
+            <div class="callout info mb-3">
+              <div class="fw-semibold">¿Por qué la carpeta dice <code>repaso-spring</code> y el código dice <code>repasospring</code>?</div>
+              <div class="small-muted">No es una errata ni algo que debas corregir: <strong>Java no admite guiones en un nombre de paquete</strong>, porque ahí el guion es el signo de resta. <code>package gt.edu.url.repaso-spring;</code> ni siquiera compila. Por eso del mismo Artifact salen <strong>tres nombres</strong>: la carpeta y el <code>&lt;artifactId&gt;</code> <strong>con</strong> guion, el <code>package</code> y la ruta <code>src/main/java/…</code> <strong>sin</strong> guion, y la clase principal en mayúsculas iniciales más <code>Application</code> (<code>RepasoSpringApplication</code>). Ojo con el segundo: Spring Initializr <strong>no</strong> borra el guion solo — propone <em>Package name</em> como <code>gt.edu.url.repaso-spring</code> y eres tú quien borra el guion antes de pulsar GENERATE. Si se deja, Initializr lo sustituye por un guion bajo y genera <code>gt.edu.url.repaso_spring</code>: funciona igual, pero es otro nombre y hay que usarlo en todas las líneas <code>package</code>.</div>
+            </div>
+            <div class="callout info mb-3">
+              <div class="fw-semibold">¿Y qué es el <code>.controller</code> de <code>gt.edu.url.repasospring.controller</code>?</div>
+              <div class="small-muted">Es la <strong>capa</strong> de la Semana 6, no parte del nombre del proyecto. Después del paquete base vienen las carpetas <code>model</code>, <code>repository</code>, <code>service</code> y <code>controller</code>, una por capa. Las cuatro van <strong>dentro</strong> de <code>gt/edu/url/repasospring/</code>: si una queda al lado del paquete base en vez de dentro, el proyecto compila igual pero Spring nunca registra esa clase (eso es justo lo que comprobarás en el Ejercicio 3).</div>
             </div>
             <div class="callout warning mb-0">
               <div class="fw-semibold">La regla de oro: carpeta = paquete</div>
