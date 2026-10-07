@@ -585,16 +585,18 @@ public class JugadorController {
   &lt;h1&gt;Escuela de Fútbol Los Cerritos&lt;/h1&gt;
   &lt;h2&gt;Inscribir un jugador&lt;/h2&gt;
 
-  &lt;!-- Resumen de errores: role="alert" hace que el lector de pantalla lo anuncie --&gt;
-  &lt;div class="resumen-errores" role="alert" th:if="${#fields.hasAnyErrors()}"&gt;
-    &lt;p&gt;&lt;strong&gt;Revisa estos datos antes de continuar:&lt;/strong&gt;&lt;/p&gt;
-    &lt;ul&gt;
-      &lt;li th:each="error : ${#fields.allErrors()}" th:text="${error}"&gt;Mensaje de error&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/div&gt;
-
   &lt;!-- novalidate: deja que valide el servidor, no el navegador --&gt;
   &lt;form th:action="@{/jugadores}" th:object="${jugador}" method="post" novalidate&gt;
+
+    &lt;!-- Resumen de errores DENTRO del form: #fields solo existe cuando hay
+         un th:object activo; fuera del &lt;form&gt; Thymeleaf falla al abrir la página.
+         role="alert" hace que el lector de pantalla lo anuncie. --&gt;
+    &lt;div class="resumen-errores" role="alert" th:if="${#fields.hasAnyErrors()}"&gt;
+      &lt;p&gt;&lt;strong&gt;Revisa estos datos antes de continuar:&lt;/strong&gt;&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li th:each="error : ${#fields.allErrors()}" th:text="${error}"&gt;Mensaje de error&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
 
     &lt;label for="nombre"&gt;Nombre completo&lt;/label&gt;
     &lt;input type="text" id="nombre" th:field="*{nombre}"

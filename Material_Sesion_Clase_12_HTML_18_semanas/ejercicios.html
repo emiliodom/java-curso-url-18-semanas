@@ -777,14 +777,16 @@ public class JugadorController {
   &lt;h1&gt;Escuela de Fútbol Los Cerritos&lt;/h1&gt;
   &lt;h2 th:text="${jugador.id == null} ? 'Inscribir jugador' : 'Editar jugador'"&gt;Inscribir jugador&lt;/h2&gt;
 
-  &lt;div class="resumen-errores" role="alert" th:if="${#fields.hasAnyErrors()}"&gt;
-    &lt;p&gt;&lt;strong&gt;Revisa estos datos antes de continuar:&lt;/strong&gt;&lt;/p&gt;
-    &lt;ul&gt;
-      &lt;li th:each="error : ${#fields.allErrors()}" th:text="${error}"&gt;Error&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/div&gt;
-
   &lt;form th:action="@{/jugadores}" th:object="${jugador}" method="post" novalidate&gt;
+    &lt;!-- El resumen de errores va DENTRO del form: #fields solo existe
+         cuando hay un th:object activo. Fuera del form, Thymeleaf falla. --&gt;
+    &lt;div class="resumen-errores" role="alert" th:if="${#fields.hasAnyErrors()}"&gt;
+      &lt;p&gt;&lt;strong&gt;Revisa estos datos antes de continuar:&lt;/strong&gt;&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li th:each="error : ${#fields.allErrors()}" th:text="${error}"&gt;Error&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+
     &lt;input type="hidden" th:field="*{id}"&gt;
 
     &lt;label for="nombre"&gt;Nombre completo&lt;/label&gt;
@@ -1226,14 +1228,16 @@ public class JugadorController {
   &lt;h1&gt;Escuela de Fútbol Los Cerritos&lt;/h1&gt;
   &lt;h2 th:text="${jugador.id == null} ? 'Inscribir jugador' : 'Editar jugador'"&gt;Inscribir jugador&lt;/h2&gt;
 
-  &lt;div class="resumen-errores" role="alert" th:if="${#fields.hasAnyErrors()}"&gt;
-    &lt;p&gt;&lt;strong&gt;Revisa estos datos antes de continuar:&lt;/strong&gt;&lt;/p&gt;
-    &lt;ul&gt;
-      &lt;li th:each="error : ${#fields.allErrors()}" th:text="${error}"&gt;Error&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/div&gt;
-
   &lt;form th:action="@{/jugadores}" th:object="${jugador}" method="post" novalidate&gt;
+    &lt;!-- El resumen de errores va DENTRO del form: #fields solo existe
+         cuando hay un th:object activo. Fuera del form, Thymeleaf falla. --&gt;
+    &lt;div class="resumen-errores" role="alert" th:if="${#fields.hasAnyErrors()}"&gt;
+      &lt;p&gt;&lt;strong&gt;Revisa estos datos antes de continuar:&lt;/strong&gt;&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li th:each="error : ${#fields.allErrors()}" th:text="${error}"&gt;Error&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+
     &lt;input type="hidden" th:field="*{id}"&gt;
     &lt;label for="nombre"&gt;Nombre completo&lt;/label&gt;
     &lt;input id="nombre" type="text" th:field="*{nombre}" th:errorclass="campo-error" aria-describedby="nombre-error"&gt;
@@ -2306,14 +2310,16 @@ public class LibroController {
 &lt;body&gt;
     &lt;h1 th:text="${libro.id == null} ? 'Registrar libro' : 'Editar libro'"&gt;Registrar libro&lt;/h1&gt;
 
-    &lt;div class="resumen-errores" role="alert" th:if="${#fields.hasAnyErrors()}"&gt;
-        &lt;p&gt;&lt;strong&gt;Revisa estos datos antes de continuar:&lt;/strong&gt;&lt;/p&gt;
-        &lt;ul&gt;
-            &lt;li th:each="error : ${#fields.allErrors()}" th:text="${error}"&gt;Error&lt;/li&gt;
-        &lt;/ul&gt;
-    &lt;/div&gt;
-
     &lt;form th:action="@{/libros}" th:object="${libro}" method="post" novalidate&gt;
+
+        &lt;!-- El resumen de errores va DENTRO del form: #fields solo existe
+             cuando hay un th:object activo. Fuera del form, Thymeleaf falla. --&gt;
+        &lt;div class="resumen-errores" role="alert" th:if="${#fields.hasAnyErrors()}"&gt;
+            &lt;p&gt;&lt;strong&gt;Revisa estos datos antes de continuar:&lt;/strong&gt;&lt;/p&gt;
+            &lt;ul&gt;
+                &lt;li th:each="error : ${#fields.allErrors()}" th:text="${error}"&gt;Error&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
 
         &lt;!-- El id viaja escondido: vacío al crear, con número al editar.
              Es lo que le dice a save() si debe crear o actualizar. --&gt;
@@ -2553,6 +2559,11 @@ class TallerJpaApplicationTests {
         <td><strong>12. Controlador fuera del paquete base</strong><br>En una copia desechable, mueve <code>LibroController</code> a un paquete hermano que no cuelgue de <code>gt.edu.url.tallerjpa</code> y actualiza el <code>package</code> y sus imports.</td>
         <td>El código puede compilar y la aplicación arrancar, pero Spring no descubre el controlador y <code>/libros</code> responde 404.</td>
         <td>Devuelve el controlador a <code>gt.edu.url.tallerjpa.controller</code> (debajo del paquete de <code>TallerJpaApplication</code>). Reinicia y vuelve a probar la ruta.</td>
+      </tr>
+      <tr>
+        <td><strong>13. Resumen de errores fuera del <code>&lt;form&gt;</code></strong> <span class="badge text-bg-warning">este no se provoca: ya le pasa a varios</span><br>En <code>formulario.html</code>, el bloque <code>&lt;div class="resumen-errores" th:if="${#fields.hasAnyErrors()}"&gt;</code> quedó <em>antes</em> de la etiqueta <code>&lt;form th:object="${libro}"&gt;</code>.</td>
+        <td>Falla al <strong>abrir</strong> el formulario (un GET, todavía no guarda nada), no al conectarse a la base. En la traza aparece algo como <code>Could not bind form errors</code> / un error de <code>#fields</code> en la plantilla <code>formulario</code>. <code>#fields</code> solo existe cuando hay un <code>th:object</code> activo, y ese contexto únicamente vive dentro del <code>&lt;form&gt;</code>.</td>
+        <td>Mueve el <code>&lt;div class="resumen-errores"&gt;…&lt;/div&gt;</code> completo para que sea lo primero <strong>dentro</strong> del <code>&lt;form&gt;</code> (justo después de la etiqueta de apertura). Vuelve a abrir <code>/libros/nuevo</code> y confirma que carga.</td>
       </tr>
     </tbody>
   </table>

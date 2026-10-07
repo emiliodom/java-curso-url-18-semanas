@@ -265,8 +265,11 @@ portal.
   El POM de referencia usa Spring Boot 4.1.1: la consola H2 requiere el
   starter separado `spring-boot-h2console`, el driver PostgreSQL ya está
   incluido para el perfil futuro y `application-dev.properties` desactiva
-  la caché de Thymeleaf. El Kit tiene además un anexo de 12 errores
-  reproducibles con pasos de restauración.
+  la caché de Thymeleaf. El Kit tiene además un anexo de 13 errores
+  reproducibles con pasos de restauración (el caso 13 no se provoca: es el
+  `#fields.hasAnyErrors()` colocado fuera del `<form th:object>`, que rompe
+  `formulario.html` al abrirlo con un GET; corregido en S11 y S12 moviendo
+  el `<div class="resumen-errores">` a ser lo primero dentro del `<form>`).
   El `challenge.html`
   combina clasificación en 4 cajas (Entidad / Repositorio / Servicio o
   Controlador / `application.properties`) con el simulador de capas
