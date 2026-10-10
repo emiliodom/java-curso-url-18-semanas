@@ -1,0 +1,1012 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ejercicios y Kit de archivos — Semana 13 (Login y roles)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 13 — Login y roles</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link active" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Ejercicios · Semana 13 · 100% en tu propia computadora</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Ponle una puerta con llave a tu aplicación</h1>
+          <div class="small-muted">Tres pestañas: ocho ejercicios en escalera con los jugadores de siempre, el Kit con todos los archivos completos y los errores que vas a provocar a propósito.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 1000px;">
+
+    <ul class="nav nav-tabs mb-4 no-print" id="ejerciciosTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="tab-ejercicios-btn" data-bs-toggle="tab" data-bs-target="#tab-ejercicios" type="button" role="tab">🪜 Ejercicios</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-kit-btn" data-bs-toggle="tab" data-bs-target="#tab-kit" type="button" role="tab">🧩 Kit: todos los archivos</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-errores-btn" data-bs-toggle="tab" data-bs-target="#tab-errores" type="button" role="tab">🆘 Errores que vas a provocar</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="ejerciciosTabsContent">
+
+      <!-- ============ PESTAÑA 1: EJERCICIOS ============ -->
+      <div class="tab-pane fade show active" id="tab-ejercicios" role="tabpanel">
+
+        <div class="callout info mb-3">
+          <div class="fw-semibold">La idea de hoy, con una llave de aula</div>
+          <div class="small-muted">Tu aplicación hoy es un salón con la puerta abierta: cualquiera que conozca la dirección entra, mira, edita y borra. Hoy le pones <strong>cerradura</strong> (login), repartes <strong>llaves distintas</strong> (roles: el administrador entra a todo, el entrenador solo mira) y aprendes a <strong>no dejar la llave pegada en la puerta</strong> (las contraseñas no se escriben en el código: viajan en variables de entorno). Los ejercicios siguen en <strong>Escuela de Fútbol Los Cerritos</strong>, con el mismo <code>taller-formularios</code> y la misma entidad <code>Jugador</code> de las semanas anteriores.</div>
+        </div>
+
+        <div class="callout warning mb-3">
+          <div class="fw-semibold">Elige tu ruta (una sola)</div>
+          <div class="small-muted">
+            <strong>Ruta A — continúas tu <code>taller-formularios</code> de la Semana 12.</strong> Haces los ejercicios en orden sobre tu propio proyecto. <br />
+            <strong>Ruta B — no tienes el proyecto o quedó roto.</strong> Genera uno nuevo con el <a href="#" onclick="document.getElementById('tab-kit-btn').click(); return false;">Kit (pestaña 2)</a>: ya trae el CRUD y la persistencia; luego haces los ejercicios 1 a 8 <em>leyendo</em> cada archivo en vez de escribirlo desde cero.
+          </div>
+        </div>
+
+        <div class="callout info mb-3">
+          <div class="fw-semibold">Los tres nombres del Artifact (para que una letra de diferencia no te haga perder la sesión)</div>
+          <div class="small-muted">Spring Initializr deriva <strong>tres</strong> nombres de <code>taller-formularios</code> y los tres conviven: la carpeta y el <code>&lt;artifactId&gt;</code> <strong>con guion</strong> (<code>taller-formularios</code>); el <code>package</code> y la ruta <code>src/main/java/…</code> <strong>sin guion</strong> (<code>gt.edu.url.tallerformularios</code>, porque en Java el guion es el signo de resta); y la clase principal en CamelCase (<code>TallerFormulariosApplication</code>). Hoy aparece una carpeta nueva, <code>security</code>: va <strong>dentro</strong> del paquete base, junto a <code>controller</code>, <code>model</code>, <code>repository</code> y <code>service</code>. Fuera de ahí, Spring no la ve (el 404 silencioso de la Semana 9).</div>
+        </div>
+
+        <div class="callout warning mb-4">
+          <div class="fw-semibold">Reglas de trabajo de hoy</div>
+          <div class="small-muted">
+            1) Esta semana <strong>arrancas desde la terminal</strong> (no con el botón ▶ de VS Code): las contraseñas viajan en variables de entorno y solo la terminal desde la que las definiste las conoce. Detén con <kbd>Ctrl</kbd>+<kbd>C</kbd> y vuelve a arrancar cada vez que se te pida.<br />
+            2) Haz <strong>un cambio a la vez</strong> y prueba. Si algo falla, el último cambio es el culpable.<br />
+            3) Tu <code>Jugador</code> de la Semana 12 puede tener correo y teléfono con sus validaciones. <strong>Déjalos como están</strong>: hoy no se tocan. Solo repasamos <strong>dos</strong> mensajes de error (nombre y edad).
+          </div>
+        </div>
+
+        <div class="row g-3">
+
+          <!-- EJ 1 -->
+          <div class="col-12"><div class="card h-100"><div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 1 — Agrega Spring Security y mira qué pasa solo <span class="badge text-bg-success">Nivel 1 · Observar</span></h2>
+            <p class="small-muted mb-2"><strong>Qué es Spring Security:</strong> un conjunto de herramientas que se coloca <em>delante</em> de todas tus rutas, como un guardia en la puerta del colegio. Nada llega a tus controladores sin pasar por él.</p>
+            <p class="small-muted mb-2"><strong>Ruta A:</strong> abre <code>pom.xml</code> y pega estas dos dependencias <em>dentro</em> de <code>&lt;dependencies&gt;</code>, junto a las demás (sin número de versión: Spring Boot ya sabe cuál usar). Después de guardar, VS Code puede pedir "Reload": acéptalo.</p>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.thymeleaf.extras&lt;/groupId&gt;
+    &lt;artifactId&gt;thymeleaf-extras-springsecurity6&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+            <p class="small-muted mb-2"><strong>Ruta B:</strong> si generaste el proyecto con el Kit, estas dos dependencias ya están (Initializr agregó la segunda solo al marcar Thymeleaf y Spring Security). Para este ejercicio comenta temporalmente, en tu mente, que aún no escribes ningún archivo de seguridad: <strong>no crees todavía la carpeta <code>security</code></strong>. Si ya la tienes completa, ve al ejercicio 8 y úsala como referencia de lectura.</p>
+            <p class="small-muted mb-2"><strong>Tu turno:</strong> arranca la aplicación desde la terminal. PowerShell: <code>.\mvnw.cmd spring-boot:run</code> · Git Bash, macOS o Linux: <code>./mvnw spring-boot:run</code>. Busca en la consola una línea que dice <code>Using generated security password: …</code>. Abre <code>http://localhost:8080</code>: aparecerá una pantalla de login que <strong>tú no escribiste</strong>. Entra con usuario <code>user</code> y esa contraseña.</p>
+            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: viste la línea <code>Using generated security password</code>, la pantalla de login automática, y al entrar tu lista de jugadores apareció igual que siempre.</span></div>
+            <details><summary class="fw-semibold">¿Qué acabo de ver? (respuesta)</summary><div class="mt-2 small-muted">Con solo agregar la dependencia, Spring Security <strong>cierra todo</strong> y crea un usuario de prueba llamado <code>user</code> con una contraseña al azar que cambia en cada arranque. Sirve para que nadie deje una aplicación abierta por accidente, pero no sirve para una escuela real: nadie puede memorizar una clave que cambia siempre y no hay roles. Hoy lo reemplazamos por <em>nuestros</em> usuarios, guardados en <em>nuestra</em> base de datos. Si algo no se ve (por ejemplo, un 404), revisa que <code>spring-boot-starter-security</code> esté bien escrito: una letra de menos y la dependencia no se descarga.</div></details>
+          </div></div></div>
+
+          <!-- EJ 2 -->
+          <div class="col-12"><div class="card h-100"><div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 2 — El "libro de usuarios": la entidad <code>Usuario</code> <span class="badge text-bg-success">Nivel 1 · Seguir un modelo</span></h2>
+            <p class="small-muted mb-2"><strong>Idea:</strong> así como guardas jugadores en una tabla, guardas <em>quién puede entrar</em> en otra tabla: <code>usuario</code>. Es la lista de asistencia de las personas autorizadas. Cada fila tiene un nombre de usuario, una contraseña <strong>cifrada</strong> y un rol (<code>ADMIN</code> o <code>ENTRENADOR</code>).</p>
+            <p class="small-muted mb-2"><strong>Qué haces:</strong> (1) crea el archivo <code>model/Usuario.java</code> y (2) el archivo <code>repository/UsuarioRepository.java</code>. Los dos están completos, con su ruta, en el <a href="#kit-usuario" onclick="document.getElementById('tab-kit-btn').click();">Kit, secciones 8 y 9</a>. Obsérvalos con calma: son hermanos de <code>Jugador</code> y <code>JugadorRepository</code>.</p>
+            <p class="small-muted mb-2"><strong>Tres cosas para notar:</strong> la contraseña se guarda como <em>hash</em> (una "huella" ilegible, como <code>$2a$10$…</code>): nunca la contraseña real. El rol se escribe <code>ADMIN</code>, sin <code>ROLE_</code> (Spring lo agrega solo). Y el repositorio tiene un método nuevo, <code>findByUsername</code>: el nombre ya dice qué busca, como en la Semana 12.</p>
+            <p class="small-muted"><strong>Tu turno:</strong> sin mirar el Kit, responde: ¿por qué <code>Usuario</code> no tiene validaciones (<code>@NotBlank</code>, etc.)? <em>(Pista: nadie escribe un usuario en un formulario; los crea el programa.)</em></p>
+            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: existen los dos archivos, el <code>package</code> coincide con su carpeta (<code>…tallerformularios.model</code> y <code>…tallerformularios.repository</code>) y VS Code no subraya nada en rojo. Todavía no arranques.</span></div>
+          </div></div></div>
+
+          <!-- EJ 3 -->
+          <div class="col-12"><div class="card h-100"><div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 3 — Enséñale a Spring a buscar en tu libro <span class="badge text-bg-primary">Nivel 2 · Crear con modelo</span></h2>
+            <p class="small-muted mb-2"><strong>El problema:</strong> cuando alguien escribe su usuario, Spring Security pregunta: <em>"¿dónde busco a esta persona?"</em> Tú le respondes con una clase que implementa <code>UserDetailsService</code>. Es la persona del mostrador que busca el nombre en la lista y le entrega al guardia la ficha completa (nombre, contraseña cifrada, rol).</p>
+            <p class="small-muted mb-2"><strong>Qué haces:</strong> crea la carpeta nueva <code>security</code> (dentro de <code>gt/edu/url/tallerformularios/</code>) y en ella <code>UsuarioDetailsService.java</code> (Kit, sección 10) y <code>SecurityConfig.java</code>. Para <code>SecurityConfig.java</code> hoy empieza con esta <strong>versión corta</strong>; la completa con roles llega en el ejercicio 6:</p>
+<pre><code>package gt.edu.url.tallerformularios.security;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+
+@Configuration
+public class SecurityConfig {
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public SecurityFilterChain filtros(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests(reglas -&gt; reglas
+                .requestMatchers("/login", "/estilos.css", "/error").permitAll()
+                .anyRequest().authenticated())
+            .formLogin(login -&gt; login
+                .loginPage("/login")
+                .defaultSuccessUrl("/jugadores", true))
+            .logout(logout -&gt; logout
+                .logoutSuccessUrl("/login?salio"));
+        return http.build();
+    }
+}</code></pre>
+            <p class="small-muted mb-2"><strong>Cómo se lee, línea por línea:</strong> <code>@Configuration</code> = "esta clase ajusta cómo funciona la aplicación". <code>PasswordEncoder</code> con <code>BCryptPasswordEncoder</code> = la máquina que convierte una contraseña en su huella (hash) y que luego compara. <code>permitAll()</code> = estas rutas las puede abrir cualquiera (si el login pidiera login, nadie podría entrar nunca). <code>anyRequest().authenticated()</code> = todo lo demás exige haber iniciado sesión. <code>loginPage("/login")</code> = usa <strong>mi</strong> pantalla, no la automática.</p>
+            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: dentro de <code>security/</code> hay dos archivos, <code>UsuarioDetailsService.java</code> y <code>SecurityConfig.java</code>, sin subrayados rojos. Si falta algún <code>import</code>, pasa el cursor sobre la palabra subrayada y VS Code ofrece "Quick Fix → Import"; compara con el Kit.</span></div>
+            <details><summary class="fw-semibold">¿Por qué BCrypt y no "cifrar" la contraseña?</summary><div class="mt-2 small-muted">Cifrar es como cerrar una caja con llave: quien tenga la llave abre la caja y ve la contraseña. El <em>hash</em> es como pasar la contraseña por una trituradora que siempre produce el mismo confeti para la misma clave, pero <strong>nadie puede volver a armar el papel</strong>. Al iniciar sesión, Spring tritura lo que escribiste y compara el confeti con el guardado. Si alguien roba la base de datos, solo se lleva confeti. BCrypt además agrega un "ingrediente al azar" (por eso dos usuarios con la misma clave tienen hashes distintos).</div></details>
+          </div></div></div>
+
+          <!-- EJ 4 -->
+          <div class="col-12"><div class="card h-100"><div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 4 — Tu propia pantalla de login <span class="badge text-bg-primary">Nivel 2 · Crear con modelo</span></h2>
+            <p class="small-muted mb-2"><strong>Qué haces:</strong> (1) crea <code>controller/AccesoController.java</code> (Kit, sección 9): una ruta <code>/login</code> que muestra la plantilla <code>login</code>. (2) Crea <code>templates/login.html</code> (Kit, sección 12). (3) Reinicia la aplicación (<kbd>Ctrl</kbd>+<kbd>C</kbd> y arranca de nuevo) y abre <code>http://localhost:8080</code>.</p>
+            <p class="small-muted mb-2"><strong>Dos detalles que no son decoración:</strong> los campos se llaman exactamente <code>username</code> y <code>password</code> (son los nombres que Spring Security espera) y el formulario usa <code>th:action="@{/login}"</code> (no <code>action=</code> a secas): <code>th:action</code> añade solo un <em>token de seguridad</em> oculto que protege contra formularios falsos. Sin ese token el envío es rechazado.</p>
+            <p class="small-muted"><strong>Tu turno:</strong> todavía no existen usuarios. Prueba escribir cualquier cosa: debes ver el aviso rojo "Usuario o contraseña incorrectos." y la dirección termina en <code>/login?error</code>.</p>
+            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: ves <strong>tu</strong> pantalla de login (con el título "Escuela de Fútbol Los Cerritos"), no la automática de Spring; y un intento fallido muestra el aviso en rojo.</span></div>
+            <details><summary class="fw-semibold">¿Por qué el aviso no dice cuál de los dos datos falló?</summary><div class="mt-2 small-muted">A propósito. Si dijera "ese usuario no existe", un intruso podría probar nombres hasta encontrar uno real. Con un mensaje único no le regalas pistas. Es la misma razón por la que en un colegio nadie dice en voz alta la clave del aula.</div></details>
+          </div></div></div>
+
+          <!-- EJ 5 -->
+          <div class="col-12"><div class="card h-100"><div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 5 — Las contraseñas viajan en variables de entorno <span class="badge text-bg-warning">Nivel 3 · Provocar y arreglar</span></h2>
+            <p class="small-muted mb-2"><strong>Una variable de entorno</strong> es un dato que vive <em>fuera</em> de tu proyecto, en la computadora (o el servidor) donde corre. Piensa en la escuela: el código es el reglamento, que puede estar pegado en la pared y lo ve todo el mundo; la clave de la caja fuerte se le entrega <strong>en mano</strong> a quien debe tenerla. Así "entregas el sistema al propietario": le das la aplicación y, por separado, le dices dónde poner las dos claves. Nunca viajan dentro del código ni en GitHub (tu repositorio es público: lo puede leer cualquiera).</p>
+            <p class="small-muted mb-2"><strong>Qué haces, en orden:</strong></p>
+            <ol class="small-muted mb-2">
+              <li>En <code>src/main/resources/application.properties</code> agrega al final las dos líneas con <code>${…}</code> (Kit, sección 3). Los <code>${ADMIN_PASSWORD}</code> significan: "el valor lo busca Spring en una variable de entorno con ese nombre".</li>
+              <li>Crea <code>security/CargadorUsuarios.java</code> (Kit, sección 10). Se ejecuta una vez en cada arranque: crea <code>admin</code> y <code>entrenador</code> <strong>si todavía no existen</strong>, cifrando su contraseña con BCrypt antes de guardarla.</li>
+              <li><strong>Provoca el error primero:</strong> reinicia <em>sin</em> definir las variables. La aplicación <strong>no arranca</strong> y la consola dice <code>Could not resolve placeholder 'ADMIN_PASSWORD' in value "${ADMIN_PASSWORD}"</code>. Eso es <em>bueno</em>: prefieres que falle a que quede un administrador sin contraseña.</li>
+              <li><strong>Ahora arregla:</strong> en la <strong>misma terminal</strong> en que vas a arrancar, define las dos variables con claves <strong>inventadas por ti</strong> (los ejemplos son solo ejemplos) y arranca:</li>
+            </ol>
+<pre><code># PowerShell (Windows)
+$env:ADMIN_PASSWORD = "Clave-Admin-2026"
+$env:ENTRENADOR_PASSWORD = "Clave-Entr-2026"
+.\mvnw.cmd spring-boot:run
+
+# Git Bash, macOS o Linux
+export ADMIN_PASSWORD="Clave-Admin-2026"
+export ENTRENADOR_PASSWORD="Clave-Entr-2026"
+./mvnw spring-boot:run</code></pre>
+            <p class="small-muted mb-2"><strong>Tu turno:</strong> entra en <code>http://localhost:8080</code> con <code>admin</code> y la clave del administrador que tú definiste. Debes ver tu lista de jugadores y arriba <strong>"Sesión de: admin"</strong>. Cierra sesión con el botón y entra como <code>entrenador</code>.</p>
+            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: (1) viste el error de la variable faltante; (2) entraste como <code>admin</code> y como <code>entrenador</code>; (3) una clave equivocada vuelve a <code>/login?error</code>; (4) en el proyecto <strong>no aparece escrita</strong> ninguna de las dos claves (búscalas con <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>F</kbd> en VS Code: no deben salir).</span></div>
+            <details><summary class="fw-semibold">Dos trampas reales</summary><div class="mt-2 small-muted"><strong>1) Las variables viven solo en esa ventana de terminal.</strong> Si la cierras y abres otra, hay que definirlas de nuevo (o la aplicación no arrancará). <strong>2) Cambiar la variable después no cambia la clave ya guardada:</strong> <code>CargadorUsuarios</code> solo <em>crea</em> usuarios que no existen. Si olvidaste la clave en desarrollo: detén la app, borra la carpeta <code>datos/</code> (se pierden los jugadores de práctica) y arranca otra vez. En producción esto se resuelve con una pantalla de cambio de clave, que está fuera del alcance de este curso.</div></details>
+          </div></div></div>
+
+          <!-- EJ 6 -->
+          <div class="col-12"><div class="card h-100"><div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 6 — Roles: quién puede qué <span class="badge text-bg-warning">Nivel 3 · Modificar y probar</span></h2>
+            <p class="small-muted mb-2"><strong>Autenticar</strong> es comprobar <em>quién eres</em> (mostrar tu credencial). <strong>Autorizar</strong> es decidir <em>qué puedes hacer</em> (con esa credencial, ¿entras a la dirección o solo al aula?). Hasta ahora solo autenticamos. Hoy también autorizamos, en dos lugares distintos:</p>
+            <ul class="small-muted mb-2">
+              <li><strong>La protección real</strong> vive en <code>SecurityConfig</code>: son las reglas <code>requestMatchers(…).hasRole("ADMIN")</code>. Aunque alguien escriba la dirección a mano, el servidor responde 403.</li>
+              <li><strong>La cortesía visual</strong> vive en <code>lista.html</code>: <code>sec:authorize="hasRole('ADMIN')"</code> esconde los botones a quien no los puede usar. Esconder un botón <strong>no protege nada</strong>: es como quitar la puerta del dibujo del plano pero dejarla en el edificio.</li>
+            </ul>
+            <p class="small-muted mb-2"><strong>Qué haces:</strong> (1) reemplaza el <code>SecurityConfig.java</code> corto por el <strong>completo</strong> del Kit (sección 10): ahora tiene dos reglas nuevas, y <strong>el orden importa</strong>: gana la primera que coincide. (2) Crea <code>templates/acceso-denegado.html</code> y agrega a <code>AccesoController</code> la ruta <code>/acceso-denegado</code> (Kit, secciones 9 y 12). (3) Reemplaza <code>templates/lista.html</code> por la versión del Kit, que usa <code>sec:authorize</code> y <code>sec:authentication</code>. (4) Reinicia.</p>
+            <p class="small-muted mb-2"><strong>Prueba con dos ventanas de navegador (una normal y una privada):</strong></p>
+            <div class="table-responsive"><table class="table table-sm small">
+              <thead><tr><th>Acción</th><th>Como <code>admin</code></th><th>Como <code>entrenador</code></th></tr></thead>
+              <tbody>
+                <tr><td>Abrir la lista</td><td>Ve la lista + "+ Inscribir jugador" + Editar/Eliminar</td><td>Ve la lista, <strong>sin</strong> botones de gestión</td></tr>
+                <tr><td>Escribir a mano <code>http://localhost:8080/jugadores/nuevo</code></td><td>Abre el formulario</td><td>Pantalla "No tienes permiso para esta acción."</td></tr>
+                <tr><td>Cerrar sesión</td><td colspan="2">Vuelve a <code>/login</code> con el aviso "Cerraste tu sesión."</td></tr>
+              </tbody>
+            </table></div>
+            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: la tabla de arriba se cumple completa. La fila clave es la segunda: el <code>entrenador</code> no ve el botón <strong>y además</strong> no puede entrar escribiendo la dirección.</span></div>
+            <details><summary class="fw-semibold">Experimento: ocultar no es proteger</summary><div class="mt-2 small-muted">Comenta (con <code>//</code>) la línea <code>.requestMatchers("/jugadores/nuevo", "/jugadores/*/editar").hasRole("ADMIN")</code>, reinicia y entra como <code>entrenador</code>. Los botones siguen ocultos (porque <code>sec:authorize</code> funciona), pero al escribir <code>/jugadores/nuevo</code> el formulario <strong>sí se abre</strong>. Descomenta y reinicia. Conclusión para tus futuros estudiantes: <em>la seguridad se pone en el servidor, no en lo que se ve</em>.</div></details>
+            <details><summary class="fw-semibold">¿Y si los botones se ven para todos?</summary><div class="mt-2 small-muted">Si <code>sec:authorize</code> no hace nada (todos ven todo), casi siempre falta la dependencia <code>thymeleaf-extras-springsecurity6</code> en <code>pom.xml</code>: no hay error, simplemente Thymeleaf no entiende el atributo. Revisa el ejercicio 1 y reinicia.</div></details>
+          </div></div></div>
+
+          <!-- EJ 7 -->
+          <div class="col-12"><div class="card h-100"><div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 7 — Repaso del CRUD con solo dos validaciones <span class="badge text-bg-warning">Nivel 3 · Repasar</span></h2>
+            <p class="small-muted mb-2"><strong>CRUD</strong> son las cuatro cosas que haces con cualquier registro: <strong>C</strong>rear, <strong>R</strong>eer (listar), <strong>U</strong>pdate (editar) y <strong>D</strong>elete (borrar). Ya lo construiste en la Semana 12; hoy solo confirmas que sigue vivo <em>detrás de la puerta con llave</em>.</p>
+            <p class="small-muted mb-2"><strong>Validaciones reducidas:</strong> en <code>Jugador.java</code> quedan <strong>solo dos campos validados</strong> (ver Kit, sección 7): <code>nombre</code> con <code>@NotBlank</code>, y <code>edad</code> con <code>@NotNull</code>, <code>@Min(5)</code> y <code>@Max(17)</code>. Si tu <code>Jugador</code> tiene más validaciones (correo, teléfono…), déjalas: no se borran, simplemente hoy no las practicamos.</p>
+            <p class="small-muted mb-2"><strong>Tu turno (entra como <code>admin</code>):</strong></p>
+            <ol class="small-muted mb-2">
+              <li><strong>Crear:</strong> inscribe un jugador válido. Debe aparecer en la lista.</li>
+              <li><strong>Provocar los dos mensajes:</strong> deja el nombre vacío y guarda → "El nombre es obligatorio." Escribe edad 30 → "La edad máxima es 17 años." Deja la edad vacía → "La edad es obligatoria." Fíjate: con errores <strong>no hay redirect</strong>; el formulario vuelve a mostrarse con lo que escribiste. Con datos válidos sí hay <em>guardar → redirigir → mostrar</em>.</li>
+              <li><strong>Editar:</strong> cambia la posición del jugador y guarda.</li>
+              <li><strong>Eliminar:</strong> borra un jugador de prueba.</li>
+              <li><strong>Sobrevivir al reinicio:</strong> <kbd>Ctrl</kbd>+<kbd>C</kbd>, arranca de nuevo (con tus variables definidas) y confirma que los jugadores siguen ahí <strong>y que no se duplicaron los usuarios</strong> (entras igual con tu clave).</li>
+            </ol>
+            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: las cuatro operaciones del CRUD funcionan como <code>admin</code>, ves exactamente tres mensajes de error posibles, y todo sobrevive al reinicio.</span></div>
+            <details><summary class="fw-semibold">Si algo falla</summary><div class="mt-2 small-muted">Edad vacía con mensaje en inglés <code>Failed to convert…</code> = el campo está declarado <code>int</code> en vez de <code>Integer</code> (en formularios siempre <code>Integer</code>). Las reglas se ignoran en silencio = falta <code>spring-boot-starter-validation</code>. Al editar se duplica el jugador = falta <code>&lt;input type="hidden" th:field="*{id}"&gt;</code> en el formulario.</div></details>
+          </div></div></div>
+
+          <!-- EJ 8 -->
+          <div class="col-12"><div class="card h-100"><div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 8 — Entrégale el sistema al propietario <span class="badge text-bg-danger">Nivel 4 · Cierre</span></h2>
+            <p class="small-muted mb-2"><strong>Escenario:</strong> la escuela de fútbol aprobó tu sistema. Mañana lo instalas en su computadora. ¿Qué le entregas y qué <em>no</em> puede ir en GitHub?</p>
+            <ol class="small-muted mb-2">
+              <li><strong>Revisa tu <code>.gitignore</code>:</strong> debe incluir la línea <code>datos/</code> (ahí vive la base H2 con los jugadores, que son <strong>datos de menores de edad</strong>). Si no está, agrégala.</li>
+              <li><strong>Busca secretos:</strong> en la terminal, dentro del proyecto, ejecuta <code>git grep -n "Clave-"</code> (cambia el texto por el comienzo de las claves que inventaste). <strong>No debe salir ninguna línea.</strong> Si sale alguna, la clave está escrita en el código: quítala y reemplázala por <code>${…}</code>.</li>
+              <li><strong>Escribe las "instrucciones para el propietario"</strong> (tres líneas en tu <code>README.md</code>): (a) qué dos variables debe definir (<strong>solo los nombres</strong>, sin valores); (b) con qué comando se arranca; (c) con qué usuarios entrar (<code>admin</code> y <code>entrenador</code>), sin escribir las claves.</li>
+              <li><strong>Mini-nota de datos sensibles (3 líneas):</strong> anota tres cosas de tu proyecto que son sensibles de cara a la Semana 14 y <em>dónde</em> vivirán (por ejemplo: "la clave de la base en Neon → variable de entorno en Render"). Esta nota crece y es parte de la Guía 13 en la página del Proyecto.</li>
+            </ol>
+            <div class="callout success mb-2 py-2"><span class="small">✅ Checkpoint: <code>datos/</code> está en <code>.gitignore</code>, <code>git grep</code> no encuentra ninguna clave, tu README dice cómo arrancar sin revelar claves y tienes la mini-nota escrita.</span></div>
+            <details><summary class="fw-semibold">Conexión con la Semana 14</summary><div class="mt-2 small-muted">Lo que hiciste hoy con <code>${ADMIN_PASSWORD}</code> es <strong>exactamente</strong> lo que harás para la base de datos en la nube: <code>application-prod.properties</code> ya tiene <code>${DB_URL}</code>, <code>${DB_USER}</code> y <code>${DB_PASSWORD}</code>. En Render escribirás esos valores en su panel de variables de entorno, y en GitHub no habrá ni una clave.</div></details>
+          </div></div></div>
+
+        </div>
+      </div>
+
+      <!-- ============ PESTAÑA 2: KIT ============ -->
+      <div class="tab-pane fade" id="tab-kit" role="tabpanel">
+
+        <div class="callout info mb-4">
+          <div class="fw-semibold">Kit completo: el proyecto <code>taller-formularios</code> con CRUD, login y roles</div>
+          <div class="small-muted">Cada archivo va <strong>entero</strong>, con su ruta, su <code>package</code> y todos sus <code>import</code>. Sirve para dos cosas: <strong>(Ruta B)</strong> generar el proyecto desde cero, o <strong>(Ruta A)</strong> comparar con el tuyo. Este código fue compilado y probado completo (login, dos roles, CRUD, persistencia tras reinicio) con Spring Boot 4.1.1 y Java 17.</div>
+        </div>
+
+        <h2 class="h5 section-title" id="kit-initializr">1. Genera el proyecto en Spring Initializr (solo Ruta B)</h2>
+        <div class="card mb-3"><div class="card-body">
+          <ol class="small-muted">
+            <li>Abre <strong>start.spring.io</strong>. Project <strong>Maven</strong>, Language <strong>Java</strong>, Packaging <strong>Jar</strong>, Spring Boot <strong>4.1.1</strong> (sin <code>SNAPSHOT</code> ni <code>RC</code>), Java <strong>17</strong>.</li>
+            <li>Group <code>gt.edu.url</code> · Artifact y Name <code>taller-formularios</code> · <em>Package name</em>: <code>gt.edu.url.tallerformularios</code>.</li>
+            <li><strong>Add Dependencies</strong> (búscalas por nombre): <strong>Spring Web</strong>, <strong>Thymeleaf</strong>, <strong>Validation</strong>, <strong>Spring Data JPA</strong>, <strong>H2 Database</strong>, <strong>Spring Boot DevTools</strong>, <strong>PostgreSQL Driver</strong> y <strong>Spring Security</strong> (la nueva de hoy).</li>
+            <li>Genera, descomprime, abre la carpeta <code>taller-formularios</code> en VS Code y acepta la importación de Maven. <strong>No edites <code>pom.xml</code></strong>: al marcar Thymeleaf y Security juntas, Initializr agrega solo la dependencia <code>thymeleaf-extras-springsecurity6</code>.</li>
+          </ol>
+          <div class="callout warning mb-0">
+            <div class="fw-semibold">Borra el guion del paquete a mano</div>
+            <div class="small-muted">El campo <em>Package name</em> de Initializr aparece con guion (<code>gt.edu.url.taller-formularios</code>). Bórralo para que quede <code>gt.edu.url.tallerformularios</code>. Si no lo borras, el proyecto usará <code>taller_formularios</code> (guion bajo): válido, pero distinto a todo el Kit y a tus compañeros.</div>
+          </div>
+        </div></div>
+
+        <h2 class="h5 section-title" id="kit-arbol">2. Árbol del proyecto</h2>
+        <div class="card mb-3"><div class="card-body">
+<pre><code>taller-formularios/                                ← carpeta (con guion)
+├── .gitignore                                    ← AGREGA la línea datos/
+├── pom.xml                                       ← lo genera Initializr (no lo edites en la Ruta B)
+└── src/main/
+    ├── java/gt/edu/url/tallerformularios/        ← paquete base (SIN guion)
+    │   ├── TallerFormulariosApplication.java     ← generado por Initializr
+    │   ├── controller/
+    │   │   ├── JugadorController.java            ← sin cambios desde la S12
+    │   │   └── AccesoController.java             ← NUEVO hoy (/login y /acceso-denegado)
+    │   ├── model/
+    │   │   ├── Jugador.java                      ← AJUSTADO (solo 2 validaciones)
+    │   │   └── Usuario.java                      ← NUEVO hoy
+    │   ├── repository/
+    │   │   ├── JugadorRepository.java            ← sin cambios
+    │   │   └── UsuarioRepository.java            ← NUEVO hoy
+    │   ├── service/
+    │   │   └── JugadorService.java               ← sin cambios
+    │   └── security/                             ← CARPETA NUEVA hoy (dentro del paquete base)
+    │       ├── SecurityConfig.java               ← NUEVO
+    │       ├── UsuarioDetailsService.java        ← NUEVO
+    │       └── CargadorUsuarios.java             ← NUEVO
+    └── resources/
+        ├── application.properties                ← AJUSTADO (2 líneas con ${…})
+        ├── application-dev.properties            ← sin cambios
+        ├── application-prod.properties           ← sin cambios (se usa en la Semana 14)
+        ├── static/estilos.css                    ← AJUSTADO (barra y avisos)
+        └── templates/
+            ├── lista.html                        ← AJUSTADO (sec:authorize, Cerrar sesión)
+            ├── formulario.html                   ← AJUSTADO (menos campos y mensajes)
+            ├── login.html                        ← NUEVO
+            ├── acceso-denegado.html              ← NUEVO
+            └── error.html                        ← sin cambios</code></pre>
+        </div></div>
+
+        <h2 class="h5 section-title" id="kit-config">3. Configuración y <code>.gitignore</code></h2>
+        <div class="card mb-3"><div class="card-body">
+          <p class="small-muted mb-1"><strong><code>src/main/resources/application.properties</code></strong></p>
+<pre><code>spring.application.name=taller-formularios
+spring.profiles.active=dev
+server.error.whitelabel.enabled=false
+
+# Contraseñas iniciales: NO están escritas aquí. Se leen de variables de entorno.
+app.admin.password=${ADMIN_PASSWORD}
+app.entrenador.password=${ENTRENADOR_PASSWORD}</code></pre>
+          <p class="small-muted mb-1"><strong><code>src/main/resources/application-dev.properties</code></strong> (igual que la Semana 12)</p>
+<pre><code>spring.datasource.url=jdbc:h2:file:./datos/jugadores
+spring.datasource.driver-class-name=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.thymeleaf.cache=false</code></pre>
+          <p class="small-muted mb-1"><strong><code>src/main/resources/application-prod.properties</code></strong> (igual que la Semana 12; se usa en la Semana 14)</p>
+<pre><code>spring.datasource.url=${DB_URL}
+spring.datasource.username=${DB_USER}
+spring.datasource.password=${DB_PASSWORD}
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=false</code></pre>
+          <p class="small-muted mb-0"><strong><code>.gitignore</code></strong>: agrega al final una línea con <code>datos/</code>. Las contraseñas <strong>no están</strong> en ningún archivo: llegan por variables de entorno.</p>
+        </div></div>
+
+        <h2 class="h5 section-title" id="kit-jugador">4–6. Capas que no cambian (Jugador)</h2>
+        <div class="card mb-3"><div class="card-body">
+          <p class="small-muted mb-1"><strong><code>repository/JugadorRepository.java</code></strong> — sin cambios.</p>
+<pre><code>package gt.edu.url.tallerformularios.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import gt.edu.url.tallerformularios.model.Jugador;
+
+public interface JugadorRepository extends JpaRepository&lt;Jugador, Long&gt; {
+}</code></pre>
+          <p class="small-muted mb-1"><strong><code>service/JugadorService.java</code></strong> — sin cambios.</p>
+<pre><code>package gt.edu.url.tallerformularios.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import gt.edu.url.tallerformularios.model.Jugador;
+import gt.edu.url.tallerformularios.repository.JugadorRepository;
+
+@Service
+public class JugadorService {
+
+    private final JugadorRepository repositorio;
+
+    public JugadorService(JugadorRepository repositorio) {
+        this.repositorio = repositorio;
+    }
+
+    public List&lt;Jugador&gt; listarTodos() {
+        return repositorio.findAll();
+    }
+
+    public Jugador buscarPorId(Long id) {
+        return repositorio.findById(id)
+                .orElseThrow(() -&gt; new IllegalArgumentException(
+                        "No existe un jugador con id " + id));
+    }
+
+    public Jugador guardar(Jugador jugador) {
+        return repositorio.save(jugador);
+    }
+
+    public void eliminar(Long id) {
+        repositorio.deleteById(id);
+    }
+
+    public long contar() {
+        return repositorio.count();
+    }
+}</code></pre>
+          <p class="small-muted mb-1"><strong><code>controller/JugadorController.java</code></strong> — sin cambios.</p>
+<pre><code>package gt.edu.url.tallerformularios.controller;
+
+import jakarta.validation.Valid;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import gt.edu.url.tallerformularios.model.Jugador;
+import gt.edu.url.tallerformularios.service.JugadorService;
+
+@Controller
+public class JugadorController {
+
+    private final JugadorService jugadorService;
+
+    public JugadorController(JugadorService jugadorService) {
+        this.jugadorService = jugadorService;
+    }
+
+    @GetMapping({"/", "/jugadores"})
+    public String listar(Model model) {
+        model.addAttribute("jugadores", jugadorService.listarTodos());
+        model.addAttribute("total", jugadorService.contar());
+        return "lista";
+    }
+
+    @GetMapping("/jugadores/nuevo")
+    public String nuevo(Model model) {
+        model.addAttribute("jugador", new Jugador());
+        return "formulario";
+    }
+
+    @GetMapping("/jugadores/{id}/editar")
+    public String editar(@PathVariable Long id, Model model) {
+        model.addAttribute("jugador", jugadorService.buscarPorId(id));
+        return "formulario";
+    }
+
+    @PostMapping("/jugadores")
+    public String guardar(@Valid @ModelAttribute("jugador") Jugador jugador,
+                          BindingResult resultado) {
+        if (resultado.hasErrors()) {
+            return "formulario";
+        }
+        jugadorService.guardar(jugador);
+        return "redirect:/jugadores";
+    }
+
+    @PostMapping("/jugadores/{id}/eliminar")
+    public String eliminar(@PathVariable Long id) {
+        jugadorService.eliminar(id);
+        return "redirect:/jugadores";
+    }
+}</code></pre>
+        </div></div>
+
+        <h2 class="h5 section-title" id="kit-entity">7. <code>model/Jugador.java</code> <span class="s12-state s12-state--adjust">solo 2 validaciones</span></h2>
+        <div class="card mb-3"><div class="card-body">
+          <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/java/gt/edu/url/tallerformularios/model/Jugador.java</code>. Aquí conviven dos familias de anotaciones: <code>jakarta.persistence</code> (cómo se guarda) y <code>jakarta.validation.constraints</code> (qué se acepta).</p>
+<pre><code>package gt.edu.url.tallerformularios.model;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+@Entity
+public class Jugador {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotBlank(message = "El nombre es obligatorio.")
+    @Column(nullable = false, length = 40)
+    private String nombre;
+
+    @NotNull(message = "La edad es obligatoria.")
+    @Min(value = 5, message = "La edad mínima es 5 años.")
+    @Max(value = 17, message = "La edad máxima es 17 años.")
+    @Column(nullable = false)
+    private Integer edad;
+
+    @Column(nullable = false)
+    private String posicion;
+
+    public Jugador() {
+    }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+    public Integer getEdad() { return edad; }
+    public void setEdad(Integer edad) { this.edad = edad; }
+    public String getPosicion() { return posicion; }
+    public void setPosicion(String posicion) { this.posicion = posicion; }
+}</code></pre>
+        </div></div>
+
+        <h2 class="h5 section-title" id="kit-usuario">8. <code>model/Usuario.java</code> <span class="s12-state s12-state--added">nuevo</span></h2>
+        <div class="card mb-3"><div class="card-body">
+          <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/java/gt/edu/url/tallerformularios/model/Usuario.java</code></p>
+<pre><code>package gt.edu.url.tallerformularios.model;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
+public class Usuario {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, unique = true)
+    private String username;
+
+    // Aquí NUNCA va la contraseña real: va el "hash" que produce BCrypt.
+    @Column(nullable = false)
+    private String password;
+
+    // "ADMIN" o "ENTRENADOR" (sin el prefijo ROLE_; Spring lo agrega solo).
+    @Column(nullable = false)
+    private String rol;
+
+    public Usuario() {
+    }
+
+    public Usuario(String username, String password, String rol) {
+        this.username = username;
+        this.password = password;
+        this.rol = rol;
+    }
+
+    public Long getId() { return id; }
+    public String getUsername() { return username; }
+    public String getPassword() { return password; }
+    public String getRol() { return rol; }
+}</code></pre>
+        </div></div>
+
+        <h2 class="h5 section-title" id="kit-usuario-repo">9. <code>repository/UsuarioRepository.java</code> y <code>controller/AccesoController.java</code> <span class="s12-state s12-state--added">nuevos</span></h2>
+        <div class="card mb-3"><div class="card-body">
+          <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/java/gt/edu/url/tallerformularios/repository/UsuarioRepository.java</code></p>
+<pre><code>package gt.edu.url.tallerformularios.repository;
+
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import gt.edu.url.tallerformularios.model.Usuario;
+
+public interface UsuarioRepository extends JpaRepository&lt;Usuario, Long&gt; {
+
+    Optional&lt;Usuario&gt; findByUsername(String username);
+}</code></pre>
+          <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/java/gt/edu/url/tallerformularios/controller/AccesoController.java</code>. Usa <code>@RequestMapping</code> (no <code>@GetMapping</code>) en <code>/acceso-denegado</code>: Spring reenvía allí con el método original, y un envío rechazado sería un POST que daría error 405.</p>
+<pre><code>package gt.edu.url.tallerformularios.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class AccesoController {
+
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    @RequestMapping("/acceso-denegado")
+    public String accesoDenegado() {
+        return "acceso-denegado";
+    }
+}</code></pre>
+        </div></div>
+
+        <h2 class="h5 section-title" id="kit-security">10. Carpeta <code>security/</code> <span class="s12-state s12-state--added">nueva, dentro del paquete base</span></h2>
+        <div class="card mb-3"><div class="card-body">
+          <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/java/gt/edu/url/tallerformularios/security/UsuarioDetailsService.java</code></p>
+<pre><code>package gt.edu.url.tallerformularios.security;
+
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+import gt.edu.url.tallerformularios.model.Usuario;
+import gt.edu.url.tallerformularios.repository.UsuarioRepository;
+
+/**
+ * Spring Security llama a esta clase cuando alguien intenta entrar:
+ * "dame los datos del usuario que se llama así". Aquí los buscamos en la base.
+ */
+@Service
+public class UsuarioDetailsService implements UserDetailsService {
+
+    private final UsuarioRepository usuarioRepository;
+
+    public UsuarioDetailsService(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Usuario usuario = usuarioRepository.findByUsername(username)
+                .orElseThrow(() -&gt; new UsernameNotFoundException("Usuario no encontrado: " + username));
+
+        return User.withUsername(usuario.getUsername())
+                .password(usuario.getPassword())
+                .roles(usuario.getRol())
+                .build();
+    }
+}</code></pre>
+          <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/java/gt/edu/url/tallerformularios/security/SecurityConfig.java</code> (versión completa, con roles)</p>
+<pre><code>package gt.edu.url.tallerformularios.security;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+
+@Configuration
+public class SecurityConfig {
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public SecurityFilterChain filtros(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests(reglas -&gt; reglas
+                // Gana la PRIMERA regla que coincide: el orden importa.
+                .requestMatchers("/login", "/estilos.css", "/error").permitAll()
+                .requestMatchers("/jugadores/nuevo", "/jugadores/*/editar").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/jugadores/**").hasRole("ADMIN")
+                .anyRequest().authenticated())
+            .formLogin(login -&gt; login
+                .loginPage("/login")
+                .defaultSuccessUrl("/jugadores", true))
+            .logout(logout -&gt; logout
+                .logoutSuccessUrl("/login?salio"))
+            .exceptionHandling(errores -&gt; errores
+                .accessDeniedPage("/acceso-denegado"));
+        return http.build();
+    }
+}</code></pre>
+          <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/java/gt/edu/url/tallerformularios/security/CargadorUsuarios.java</code></p>
+<pre><code>package gt.edu.url.tallerformularios.security;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
+
+import gt.edu.url.tallerformularios.model.Usuario;
+import gt.edu.url.tallerformularios.repository.UsuarioRepository;
+
+/**
+ * Se ejecuta una vez al arrancar la aplicación. Crea los dos usuarios iniciales
+ * si todavía no existen. Las contraseñas llegan desde variables de entorno:
+ * no están escritas en ningún archivo del proyecto.
+ */
+@Component
+public class CargadorUsuarios implements CommandLineRunner {
+
+    private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final String passwordAdmin;
+    private final String passwordEntrenador;
+
+    public CargadorUsuarios(UsuarioRepository usuarioRepository,
+                            PasswordEncoder passwordEncoder,
+                            @Value("${app.admin.password}") String passwordAdmin,
+                            @Value("${app.entrenador.password}") String passwordEntrenador) {
+        this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.passwordAdmin = passwordAdmin;
+        this.passwordEntrenador = passwordEntrenador;
+    }
+
+    @Override
+    public void run(String... args) {
+        crearSiNoExiste("admin", passwordAdmin, "ADMIN");
+        crearSiNoExiste("entrenador", passwordEntrenador, "ENTRENADOR");
+    }
+
+    private void crearSiNoExiste(String username, String passwordPlano, String rol) {
+        if (usuarioRepository.findByUsername(username).isEmpty()) {
+            String hash = passwordEncoder.encode(passwordPlano);
+            usuarioRepository.save(new Usuario(username, hash, rol));
+        }
+    }
+}</code></pre>
+        </div></div>
+
+        <h2 class="h5 section-title" id="kit-imports">11. Qué hace cada <code>import</code> nuevo y qué error aparece si falta</h2>
+        <div class="card mb-3"><div class="card-body">
+          <div class="table-responsive"><table class="table table-sm small mb-0">
+            <thead><tr><th>Clase o anotación</th><th>Import completo</th><th>Si falta</th></tr></thead>
+            <tbody>
+              <tr><td><code>@Configuration</code></td><td><code>org.springframework.context.annotation.Configuration</code></td><td>Subrayado rojo; la clase no se lee como configuración</td></tr>
+              <tr><td><code>@Bean</code></td><td><code>org.springframework.context.annotation.Bean</code></td><td>Subrayado rojo</td></tr>
+              <tr><td><code>HttpSecurity</code></td><td><code>org.springframework.security.config.annotation.web.builders.HttpSecurity</code></td><td>Rojo; no compila</td></tr>
+              <tr><td><code>SecurityFilterChain</code></td><td><code>org.springframework.security.web.SecurityFilterChain</code></td><td>Rojo; no compila</td></tr>
+              <tr><td><code>PasswordEncoder</code></td><td><code>org.springframework.security.crypto.password.PasswordEncoder</code></td><td>Rojo; no compila</td></tr>
+              <tr><td><code>BCryptPasswordEncoder</code></td><td><code>org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder</code></td><td>Rojo; no compila</td></tr>
+              <tr><td><code>HttpMethod</code></td><td><code>org.springframework.http.HttpMethod</code></td><td>Rojo en <code>HttpMethod.POST</code></td></tr>
+              <tr><td><code>UserDetailsService</code></td><td><code>org.springframework.security.core.userdetails.UserDetailsService</code></td><td>Rojo; no compila</td></tr>
+              <tr><td><code>UserDetails</code>, <code>User</code>, <code>UsernameNotFoundException</code></td><td><code>org.springframework.security.core.userdetails.…</code> (las tres)</td><td>Rojo; no compila</td></tr>
+              <tr><td><code>CommandLineRunner</code></td><td><code>org.springframework.boot.CommandLineRunner</code></td><td>Rojo; el cargador no se ejecuta</td></tr>
+              <tr><td><code>@Value</code></td><td><code>org.springframework.beans.factory.annotation.Value</code></td><td>Rojo; no compila</td></tr>
+              <tr><td><code>@Component</code> / <code>@Service</code></td><td><code>org.springframework.stereotype.Component</code> / <code>Service</code></td><td>Rojo; Spring no registra la clase</td></tr>
+              <tr><td><code>@RequestMapping</code></td><td><code>org.springframework.web.bind.annotation.RequestMapping</code></td><td>Rojo; no compila</td></tr>
+            </tbody>
+          </table></div>
+          <p class="small-muted mt-2 mb-0">Recuerda: es <strong><code>jakarta</code></strong>, no <code>javax</code>, en todo lo que venga de Jakarta (persistence, validation). Si VS Code te ofrece una opción con <code>javax</code>, no la elijas.</p>
+        </div></div>
+
+        <h2 class="h5 section-title" id="kit-login">12. Plantillas (<code>src/main/resources/templates/</code>) y estilos</h2>
+        <div class="card mb-3"><div class="card-body">
+          <p class="small-muted mb-1"><strong><code>login.html</code></strong> <span class="s12-state s12-state--added">nuevo</span></p>
+<pre><code>&lt;!doctype html&gt;
+&lt;html lang="es" xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;Iniciar sesión&lt;/title&gt;
+  &lt;link rel="stylesheet" th:href="@{/estilos.css}"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;main&gt;
+  &lt;h1&gt;Escuela de Fútbol Los Cerritos&lt;/h1&gt;
+  &lt;h2&gt;Iniciar sesión&lt;/h2&gt;
+
+  &lt;div class="aviso error" role="alert" th:if="${param.error}"&gt;
+    Usuario o contraseña incorrectos.
+  &lt;/div&gt;
+  &lt;div class="aviso" th:if="${param.salio}"&gt;
+    Cerraste tu sesión.
+  &lt;/div&gt;
+
+  &lt;!-- Los nombres username y password son los que Spring Security espera. --&gt;
+  &lt;form th:action="@{/login}" method="post"&gt;
+    &lt;label for="username"&gt;Usuario&lt;/label&gt;
+    &lt;input id="username" type="text" name="username" autofocus&gt;
+    &lt;label for="password"&gt;Contraseña&lt;/label&gt;
+    &lt;input id="password" type="password" name="password"&gt;
+    &lt;button type="submit"&gt;Entrar&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          <p class="small-muted mb-1"><strong><code>acceso-denegado.html</code></strong> <span class="s12-state s12-state--added">nuevo</span></p>
+<pre><code>&lt;!doctype html&gt;
+&lt;html lang="es" xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;Acceso denegado&lt;/title&gt;
+  &lt;link rel="stylesheet" th:href="@{/estilos.css}"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;main&gt;
+  &lt;h1&gt;Escuela de Fútbol Los Cerritos&lt;/h1&gt;
+  &lt;div class="aviso error" role="alert"&gt;
+    &lt;p&gt;&lt;strong&gt;No tienes permiso para esta acción.&lt;/strong&gt;&lt;/p&gt;
+    &lt;p&gt;Tu usuario puede ver la lista, pero solo un administrador puede inscribir, editar o eliminar jugadores.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;p&gt;&lt;a th:href="@{/jugadores}"&gt;Volver a la lista&lt;/a&gt;&lt;/p&gt;
+&lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          <p class="small-muted mb-1"><strong><code>lista.html</code></strong> <span class="s12-state s12-state--adjust">ajustado: <code>sec:authorize</code>, <code>sec:authentication</code>, Cerrar sesión</span></p>
+<pre><code>&lt;!doctype html&gt;
+&lt;html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;Jugadores inscritos&lt;/title&gt;
+  &lt;link rel="stylesheet" th:href="@{/estilos.css}"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;main&gt;
+  &lt;h1&gt;Escuela de Fútbol Los Cerritos&lt;/h1&gt;
+
+  &lt;div class="barra"&gt;
+    &lt;span&gt;Sesión de: &lt;strong sec:authentication="name"&gt;usuario&lt;/strong&gt;&lt;/span&gt;
+    &lt;form th:action="@{/logout}" method="post" class="en-linea"&gt;
+      &lt;button type="submit" class="secundario"&gt;Cerrar sesión&lt;/button&gt;
+    &lt;/form&gt;
+  &lt;/div&gt;
+
+  &lt;p&gt;Total registrados: &lt;strong th:text="${total}"&gt;0&lt;/strong&gt;&lt;/p&gt;
+
+  &lt;!-- Solo el administrador ve este enlace --&gt;
+  &lt;p sec:authorize="hasRole('ADMIN')"&gt;&lt;a th:href="@{/jugadores/nuevo}"&gt;+ Inscribir jugador&lt;/a&gt;&lt;/p&gt;
+
+  &lt;p th:if="${total == 0}"&gt;Todavía no hay jugadores inscritos.&lt;/p&gt;
+  &lt;table th:if="${total &gt; 0}"&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;&lt;th&gt;Id&lt;/th&gt;&lt;th&gt;Nombre&lt;/th&gt;&lt;th&gt;Edad&lt;/th&gt;&lt;th&gt;Posición&lt;/th&gt;&lt;th sec:authorize="hasRole('ADMIN')"&gt;Acciones&lt;/th&gt;&lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr th:each="jugador : ${jugadores}"&gt;
+        &lt;td th:text="${jugador.id}"&gt;1&lt;/td&gt;
+        &lt;td th:text="${jugador.nombre}"&gt;Nombre&lt;/td&gt;
+        &lt;td th:text="${jugador.edad}"&gt;12&lt;/td&gt;
+        &lt;td th:text="${jugador.posicion}"&gt;Portero&lt;/td&gt;
+        &lt;td sec:authorize="hasRole('ADMIN')"&gt;
+          &lt;a th:href="@{/jugadores/{id}/editar(id=${jugador.id})}"&gt;Editar&lt;/a&gt;
+          &lt;form th:action="@{/jugadores/{id}/eliminar(id=${jugador.id})}" method="post" class="en-linea"&gt;
+            &lt;button type="submit" class="peligro"&gt;Eliminar&lt;/button&gt;
+          &lt;/form&gt;
+        &lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          <p class="small-muted mb-1"><strong><code>formulario.html</code></strong> <span class="s12-state s12-state--adjust">ajustado: solo dos mensajes de error</span></p>
+<pre><code>&lt;!doctype html&gt;
+&lt;html lang="es" xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;Inscribir jugador&lt;/title&gt;
+  &lt;link rel="stylesheet" th:href="@{/estilos.css}"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;main&gt;
+  &lt;h1&gt;Escuela de Fútbol Los Cerritos&lt;/h1&gt;
+  &lt;h2 th:text="${jugador.id == null} ? 'Inscribir jugador' : 'Editar jugador'"&gt;Inscribir jugador&lt;/h2&gt;
+
+  &lt;form th:action="@{/jugadores}" th:object="${jugador}" method="post" novalidate&gt;
+    &lt;input type="hidden" th:field="*{id}"&gt;
+
+    &lt;label for="nombre"&gt;Nombre completo&lt;/label&gt;
+    &lt;input id="nombre" type="text" th:field="*{nombre}" th:errorclass="campo-error"&gt;
+    &lt;p class="mensaje-error" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"&gt;Error&lt;/p&gt;
+
+    &lt;label for="edad"&gt;Edad (5 a 17 años)&lt;/label&gt;
+    &lt;input id="edad" type="number" th:field="*{edad}" th:errorclass="campo-error"&gt;
+    &lt;p class="mensaje-error" th:if="${#fields.hasErrors('edad')}" th:errors="*{edad}"&gt;Error&lt;/p&gt;
+
+    &lt;label for="posicion"&gt;Posición&lt;/label&gt;
+    &lt;select id="posicion" th:field="*{posicion}"&gt;
+      &lt;option value="Portero"&gt;Portero&lt;/option&gt;
+      &lt;option value="Defensa"&gt;Defensa&lt;/option&gt;
+      &lt;option value="Mediocampista"&gt;Mediocampista&lt;/option&gt;
+      &lt;option value="Delantero"&gt;Delantero&lt;/option&gt;
+    &lt;/select&gt;
+
+    &lt;button type="submit"&gt;Guardar&lt;/button&gt;
+    &lt;a th:href="@{/jugadores}"&gt;Cancelar&lt;/a&gt;
+  &lt;/form&gt;
+&lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          <p class="small-muted mb-1"><strong><code>error.html</code></strong> — sin cambios respecto a la Semana 12 (esta es la versión usada para probar).</p>
+<pre><code>&lt;!doctype html&gt;
+&lt;html lang="es" xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;Ocurrió un problema&lt;/title&gt;
+  &lt;link rel="stylesheet" th:href="@{/estilos.css}"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;main&gt;
+  &lt;h1&gt;Escuela de Fútbol Los Cerritos&lt;/h1&gt;
+  &lt;div class="aviso error" role="alert"&gt;
+    &lt;p&gt;&lt;strong&gt;No pudimos mostrar esta página.&lt;/strong&gt;&lt;/p&gt;
+    &lt;p&gt;Revisa la dirección o vuelve a la lista de jugadores.&lt;/p&gt;
+    &lt;p&gt;Código del problema: &lt;span th:text="${status}"&gt;404&lt;/span&gt;&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;p&gt;&lt;a th:href="@{/jugadores}"&gt;Ver jugadores&lt;/a&gt;&lt;/p&gt;
+&lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          <p class="small-muted mb-1"><strong><code>src/main/resources/static/estilos.css</code></strong></p>
+<pre><code>body { font-family: system-ui, sans-serif; max-width: 900px; margin: 2rem auto; padding: 0 1rem; color: #1e293b; }
+label { display: block; margin-top: 1rem; font-weight: 600; }
+input, select { box-sizing: border-box; display: block; width: 100%; max-width: 480px; padding: 0.55rem; border: 1px solid #94a3b8; border-radius: 6px; }
+input:focus, select:focus, button:focus, a:focus { outline: 3px solid #2563eb; outline-offset: 2px; }
+.campo-error { border: 2px solid #b91c1c !important; background: #fef2f2; }
+.mensaje-error { color: #b91c1c; font-weight: 600; margin: 0.2rem 0 0; }
+.mensaje-error::before { content: "▲ "; }
+.aviso { padding: 0.75rem 1rem; margin-bottom: 1rem; border-left: 5px solid #0d6efd; background: #eff6ff; }
+.aviso.error { border-left-color: #b91c1c; background: #fef2f2; }
+button { margin-top: 1rem; padding: 0.5rem 1rem; border: 0; border-radius: 6px; background: #0d6efd; color: #fff; cursor: pointer; }
+button.peligro { margin: 0; padding: 0.3rem 0.6rem; background: #b91c1c; }
+button.secundario { margin: 0; padding: 0.3rem 0.6rem; background: #475569; }
+form.en-linea { display: inline; }
+.barra { display: flex; justify-content: space-between; align-items: center; background: #f1f5f9; padding: 0.5rem 1rem; border-radius: 6px; }
+table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+th, td { text-align: left; padding: 0.5rem; border-bottom: 1px solid #e2e8f0; }
+th { background: #f1f5f9; }</code></pre>
+        </div></div>
+
+        <h2 class="h5 section-title" id="kit-prueba">13. Prueba final de diez pasos</h2>
+        <div class="card mb-3"><div class="card-body">
+          <ol class="small-muted mb-2">
+            <li>Define <code>ADMIN_PASSWORD</code> y <code>ENTRENADOR_PASSWORD</code> en tu terminal y arranca con <code>./mvnw spring-boot:run</code> (o <code>.\mvnw.cmd spring-boot:run</code>).</li>
+            <li>Abre <code>http://localhost:8080/jugadores</code> sin sesión: te lleva a <code>/login</code>.</li>
+            <li>Escribe una clave incorrecta: <code>/login?error</code> y aviso en rojo.</li>
+            <li>Entra como <code>admin</code>: ves la lista, el enlace "+ Inscribir jugador" y los botones Editar/Eliminar.</li>
+            <li>Inscribe un jugador válido; luego intenta uno con nombre vacío y edad 30 y lee los dos mensajes.</li>
+            <li>Edita y luego elimina un jugador de prueba.</li>
+            <li>Cierra sesión (vuelves a <code>/login</code> con "Cerraste tu sesión.") y entra como <code>entrenador</code>: sin botones de gestión.</li>
+            <li>Como <code>entrenador</code>, escribe a mano <code>/jugadores/nuevo</code>: "No tienes permiso para esta acción."</li>
+            <li>Escribe <code>/ruta-inexistente</code>: ves <code>error.html</code>.</li>
+            <li>Detén (<kbd>Ctrl</kbd>+<kbd>C</kbd>) y arranca otra vez: los jugadores siguen y las claves siguen funcionando.</li>
+          </ol>
+        </div></div>
+      </div>
+
+      <!-- ============ PESTAÑA 3: ERRORES ============ -->
+      <div class="tab-pane fade" id="tab-errores" role="tabpanel">
+        <div class="callout info mb-4">
+          <div class="fw-semibold">Provoca el error a propósito, léelo, arréglalo</div>
+          <div class="small-muted">Los mensajes de seguridad asustan la primera vez. Aquí los provocas uno a uno, con el mensaje <strong>real</strong> que verás, para que el día que aparezcan solos ya los conozcas. <strong>Siempre uno a la vez:</strong> provoca, lee, restaura, confirma que vuelve a funcionar.</div>
+        </div>
+
+        <div class="accordion mb-4" id="accErrores">
+
+          <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#er1">1 · La aplicación no arranca: falta una variable de entorno</button></h2>
+            <div id="er1" class="accordion-collapse collapse show" data-bs-parent="#accErrores"><div class="accordion-body small-muted">
+              <p><strong>Cómo provocarlo:</strong> abre una terminal nueva (sin definir las variables) y arranca.</p>
+              <p><strong>Qué verás:</strong> <code>Error creating bean with name 'cargadorUsuarios'</code> y más abajo <code>Could not resolve placeholder 'ADMIN_PASSWORD' in value "${ADMIN_PASSWORD}"</code>.</p>
+              <p><strong>Qué significa:</strong> Spring buscó una variable que no existe. <strong>Arreglo:</strong> define las dos variables en esa terminal y arranca otra vez. Es una protección: preferimos que no arranque a que quede sin clave.</p>
+            </div></div></div>
+
+          <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#er2">2 · Pide una contraseña que nunca creaste (solo la dependencia, sin configuración)</button></h2>
+            <div id="er2" class="accordion-collapse collapse" data-bs-parent="#accErrores"><div class="accordion-body small-muted">
+              <p><strong>Cómo verlo:</strong> es el ejercicio 1. Con solo <code>spring-boot-starter-security</code> y sin tu carpeta <code>security</code>.</p>
+              <p><strong>Qué verás:</strong> <code>Using generated security password: …</code> en la consola y una pantalla de login automática (usuario <code>user</code>).</p>
+              <p><strong>Arreglo:</strong> no hay nada roto: es la protección por defecto. Se reemplaza con tus propias clases <code>UsuarioDetailsService</code> y <code>SecurityConfig</code>.</p>
+            </div></div></div>
+
+          <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#er3">3 · Reglas en mal orden: <code>anyRequest()</code> antes de las demás</button></h2>
+            <div id="er3" class="accordion-collapse collapse" data-bs-parent="#accErrores"><div class="accordion-body small-muted">
+              <p><strong>Cómo provocarlo:</strong> en <code>SecurityConfig</code> mueve la línea <code>.anyRequest().authenticated()</code> para que quede <strong>antes</strong> de los <code>requestMatchers</code>. Guarda y arranca.</p>
+              <p><strong>Qué verás:</strong> la aplicación no arranca: <code>Can't configure requestMatchers after anyRequest</code>.</p>
+              <p><strong>Qué significa:</strong> <code>anyRequest()</code> es "todo lo demás": tiene que ir <strong>al final</strong>. Las reglas se leen de arriba abajo y gana la primera que coincide. <strong>Arreglo:</strong> devuelve <code>anyRequest()</code> a la última posición.</p>
+            </div></div></div>
+
+          <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#er4">4 · La clave es correcta pero el login siempre falla: contraseña guardada sin cifrar</button></h2>
+            <div id="er4" class="accordion-collapse collapse" data-bs-parent="#accErrores"><div class="accordion-body small-muted">
+              <p><strong>Cómo provocarlo:</strong> en <code>CargadorUsuarios</code> cambia <code>passwordEncoder.encode(passwordPlano)</code> por <code>passwordPlano</code>. Borra la carpeta <code>datos/</code> (para que se recreen los usuarios), arranca e intenta entrar con la clave correcta.</p>
+              <p><strong>Qué verás:</strong> siempre vuelve a <code>/login?error</code> y en la consola aparece <code>WARN … BCryptPasswordEncoder : Encoded password does not look like BCrypt</code>.</p>
+              <p><strong>Qué significa:</strong> el sistema espera un hash BCrypt en la base y encontró texto normal. Además, una contraseña en texto plano en la base es justo lo que <strong>nunca</strong> se hace. <strong>Arreglo:</strong> restaura <code>encode(...)</code>, borra <code>datos/</code> y arranca otra vez.</p>
+            </div></div></div>
+
+          <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#er5">5 · "No tienes permiso": el entrenador entra a una ruta de administrador</button></h2>
+            <div id="er5" class="accordion-collapse collapse" data-bs-parent="#accErrores"><div class="accordion-body small-muted">
+              <p><strong>Cómo verlo:</strong> entra como <code>entrenador</code> y escribe <code>/jugadores/nuevo</code>.</p>
+              <p><strong>Qué verás:</strong> tu página <code>acceso-denegado.html</code> ("No tienes permiso para esta acción."; el navegador recibió código 403).</p>
+              <p><strong>Qué significa:</strong> no es un error, es la protección funcionando: sabe quién eres, pero tu rol no alcanza. No hay "arreglo": si esa persona debe poder hacerlo, se le cambia el rol.</p>
+            </div></div></div>
+
+          <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#er6">6 · Todos ven todos los botones: <code>sec:authorize</code> no hace nada</button></h2>
+            <div id="er6" class="accordion-collapse collapse" data-bs-parent="#accErrores"><div class="accordion-body small-muted">
+              <p><strong>Cómo se produce:</strong> falta la dependencia <code>thymeleaf-extras-springsecurity6</code> en <code>pom.xml</code>.</p>
+              <p><strong>Qué verás:</strong> ningún error: el entrenador ve Editar y Eliminar. (Si pulsa Eliminar, el servidor sí lo rechaza: ahí se ve que ocultar y proteger son cosas distintas.)</p>
+              <p><strong>Arreglo:</strong> agrega la dependencia (ejercicio 1), recarga Maven y reinicia.</p>
+            </div></div></div>
+
+          <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#er7">7 · El formulario se envía pero es rechazado: falta <code>th:action</code></button></h2>
+            <div id="er7" class="accordion-collapse collapse" data-bs-parent="#accErrores"><div class="accordion-body small-muted">
+              <p><strong>Cómo provocarlo:</strong> en <code>formulario.html</code> cambia <code>th:action="@{/jugadores}"</code> por <code>action="/jugadores"</code>.</p>
+              <p><strong>Qué verás:</strong> al guardar, la página "No tienes permiso…" en vez de guardar.</p>
+              <p><strong>Qué significa:</strong> Spring Security exige un <em>token de seguridad</em> en cada formulario que cambia datos (así un sitio falso no puede enviar formularios en tu nombre). <code>th:action</code> lo agrega solo; <code>action</code> a secas no. <strong>Arreglo:</strong> vuelve a <code>th:action</code>.</p>
+            </div></div></div>
+
+        </div>
+
+        <div class="callout warning">
+          <div class="fw-semibold">Las dos validaciones que sí repasamos hoy</div>
+          <div class="small-muted">Nombre vacío → "El nombre es obligatorio." · Edad vacía → "La edad es obligatoria." · Edad fuera de 5–17 → "La edad mínima es 5 años." / "La edad máxima es 17 años." Si la edad vacía muestra un mensaje en inglés (<code>Failed to convert…</code>), el campo está como <code>int</code>: cámbialo a <code>Integer</code>.</div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted d-flex justify-content-between flex-wrap gap-2">
+      <span>Material Semana 13 — Autenticación, roles y renderizado condicional · Formato 18 semanas (70 min por sesión).</span>
+      <span>Curso: Programación I · URL · Sábados 11:10–12:20</span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

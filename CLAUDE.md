@@ -297,7 +297,35 @@ portal.
   pedagógica deliberada: en los Ejercicios 4 y 8 el material pide un
   apagado y encendido **a mano**, porque ahí el reinicio es la prueba y no
   debe quedar como efecto secundario de DevTools.
-- **Semanas 13–18** — pendientes, mismo patrón reducido descrito en este archivo.
+- **Semana 13** (Unidad 6b: Autenticación, roles y renderizado condicional) —
+  completa. **Sesión deliberadamente ligera** (pedido explícito del profesor
+  tras las semanas pesadas): solo repaso de lo core — login, roles, CRUD,
+  variables de entorno y apenas dos validaciones (`nombre` con `@NotBlank`,
+  `edad` con `@NotNull @Min(5) @Max(17)`, tipo `Integer`). Continúa
+  `taller-formularios`/`Jugador` (Escuela de Fútbol Los Cerritos); **sin
+  Biblioteca**. Spring Security 7 + `thymeleaf-extras-springsecurity6`
+  (Initializr lo agrega solo al marcar Thymeleaf + Security; en la ruta de
+  continuar el proyecto S12 se pegan las dos dependencias a mano). Usuarios
+  en la BD (`Usuario`, `UsuarioRepository.findByUsername`), `UserDetailsService`
+  propio, `BCryptPasswordEncoder`, roles `ADMIN`/`ENTRENADOR`, `SecurityConfig`
+  con lambdas (**gana la primera regla que coincide**; `anyRequest()` al final
+  o la app no arranca), `accessDeniedPage("/acceso-denegado")` (el controlador
+  debe ser `@RequestMapping`, no `@GetMapping`, o el POST rechazado da 405).
+  Contraseñas por variables de entorno `ADMIN_PASSWORD`/`ENTRENADOR_PASSWORD`
+  (`${…}` en `application.properties`; sin ellas la app no arranca) —
+  ensayo de `DB_*` en la S14. `CargadorUsuarios` solo crea usuarios que no
+  existen: cambiar la variable después no cambia la clave ya guardada (en dev,
+  borrar `datos/`). Se arranca **desde la terminal**; el botón ▶ de VS Code
+  no ve las variables definidas en la terminal. Idea central: **ocultar un
+  botón (`sec:authorize`) no protege la ruta**; la protección real es
+  `requestMatchers`. Quiz redactado con analogías de aula (público: futuros
+  docentes, no ingenieros). Todo el código del Kit fue compilado y probado
+  con curl (login, 403, CRUD, reinicio, hash BCrypt en la BD); el
+  `ejercicios.html` se genera con un script que inserta los archivos
+  verificados. Dominios: challenge = Laboratorio de Robótica del Instituto
+  Nuevo Horizonte (roles ADMIN/DOCENTE). Sin Entrega Parcial; el siguiente
+  hito es la Entrega Parcial 3 en la Semana 14.
+- **Semanas 14–18** — pendientes, mismo patrón reducido descrito en este archivo.
 
 ### Calendario real del curso (ojo con los saltos)
 

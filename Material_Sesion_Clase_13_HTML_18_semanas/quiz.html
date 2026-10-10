@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz — Semana 13 (Presaberes y Final)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 13 — Login y roles</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Quiz de la semana · Elige el modo con el menú</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Presaberes y Quiz Final, en un solo lugar</h1>
+          <div class="small-muted" id="quizTypeLabel">Presaberes · 8 preguntas · no cuenta para nota</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 900px;">
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="row g-3 align-items-end">
+          <div class="col-md-6">
+            <label class="form-label fw-semibold" for="quizType">¿Qué quiz vas a resolver?</label>
+            <select id="quizType" class="form-select" onchange="renderQuiz()">
+              <option value="presaberes">🟡 Presaberes (inicio de clase, no cuenta para nota)</option>
+              <option value="final">🔴 Final de clase (evidencia de la Actividad en clase)</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold" for="studentName">Nombre del estudiante (aparecerá en el PDF)</label>
+            <input id="studentName" class="form-control" type="text" placeholder="Nombre y apellido" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout mb-3 no-print">
+      <div class="fw-semibold">¿Cómo funciona?</div>
+      <div class="small-muted">El banco repasa la Semana 12 (guardar datos) y estrena el tema de hoy: quién puede entrar (login) y qué puede hacer cada quien (roles), con ejemplos de la vida escolar. Cada vez que cambias de modo (o pulsas "🔀 Nuevas preguntas") se eligen preguntas <strong>al azar</strong> de un banco más grande, y además el <strong>orden de las opciones cambia</strong>: hay que leer, no memorizar posiciones.</div>
+    </div>
+
+    <div id="quizContainer"></div>
+
+    <div id="scoreBanner" class="score-banner"></div>
+
+    <div class="d-flex gap-2 flex-wrap mt-3 no-print">
+      <button class="btn btn-primary btn-lg" onclick="gradeQuiz()">Calificar</button>
+      <button class="btn btn-outline-secondary" onclick="resetQuiz()">Reintentar (mismas preguntas)</button>
+      <button class="btn btn-outline-info" onclick="regenerateQuiz()">🔀 Nuevas preguntas</button>
+      <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      <a class="btn btn-outline-primary ms-auto" href="clase.html">Continuar a la clase →</a>
+    </div>
+
+    <div class="callout warning mt-4 no-print">
+      <div class="fw-semibold">Instrucciones de entrega (si estás en modo Final)</div>
+      <ol class="small-muted mb-0">
+        <li>Escribe tu nombre en la casilla de arriba.</li>
+        <li>Pulsa <strong>Calificar</strong> y revisa la retroalimentación de cada pregunta.</li>
+        <li>Pulsa <strong>Exportar a PDF</strong> y guarda el archivo como <code>QuizFinal_S13_TuNombre.pdf</code>.</li>
+        <li>Súbelo al aula virtual junto con el PDF del <a href="challenge.html">Challenge</a>.</li>
+      </ol>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Quiz — Semana 13 · Autenticación, roles y variables de entorno (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script>
+    // ===== Banco de preguntas de la Semana 13 =====
+    // level: 'presaberes' | 'final' | 'ambas'
+    // La opción correcta se escribe siempre de primera para poder revisarla fácil;
+    // la página baraja las opciones antes de mostrarlas (ver script más abajo).
+    function Q(level, pregunta, a, b, c, fbOk, fbKo) {
+      return { level: level, pregunta: pregunta,
+        opciones: [{ v: 'a', t: a }, { v: 'b', t: b }, { v: 'c', t: c }],
+        correcta: 'a', fbOk: fbOk, fbKo: fbKo };
+    }
+    var QUESTION_BANK = [
+      // ---------- Solo Presaberes (repaso de la Semana 13, en lenguaje de aula) ----------
+      Q('presaberes', 'Apagas la aplicación de la Escuela de Fútbol y la vuelves a encender: los jugadores siguen ahí. ¿Por qué?',
+        'Porque se guardaron en un archivo de base de datos en el disco, no solo en la memoria', 'Porque el navegador los recuerda', 'Porque se subieron solos a GitHub',
+        'Correcto: es como anotar en el cuaderno y no en el pizarrón. El cuaderno (el disco) conserva lo escrito aunque se apaguen las luces.',
+        'Los datos sobreviven porque están en un archivo en el disco (persistencia). Lo que vive solo en la memoria es como el pizarrón: se borra al apagar.'),
+      Q('presaberes', 'Un estudiante de bachillerato te pregunta: "¿qué hace JPA?". ¿Cuál es la mejor explicación?',
+        'Es un traductor: convierte los objetos de Java en filas de una tabla y viceversa', 'Es el diseñador de las páginas web', 'Es el programa que revisa las contraseñas',
+        'Correcto: tú trabajas con objetos <code>Jugador</code> y JPA se encarga de guardarlos como filas de una tabla.',
+        'JPA es un traductor entre objetos Java y tablas de la base de datos. No diseña páginas ni revisa contraseñas.'),
+      Q('presaberes', 'En una escuela, la secretaría guarda y busca los expedientes. En tu aplicación, ¿qué pieza hace ese papel?',
+        'El repositorio (<code>JugadorRepository</code>)', 'La plantilla HTML', 'El archivo <code>.gitignore</code>',
+        'Correcto: el repositorio es quien guarda, busca y borra datos.',
+        'Es el repositorio. La plantilla solo muestra la información y <code>.gitignore</code> decide qué archivos no se suben a GitHub.'),
+      Q('presaberes', 'Después de guardar un jugador, la aplicación te lleva a la lista (redirect). ¿Por qué?',
+        'Para que, si recargas la página, no se vuelva a enviar el formulario y se guarde dos veces el mismo jugador', 'Porque Java no puede mostrar dos páginas seguidas', 'Para que la base de datos se actualice más rápido',
+        'Correcto: es como no volver a firmar la lista de asistencia cada vez que miras la hoja. Guardar, redirigir y mostrar.',
+        'El redirect evita que al recargar se reenvíe el formulario y se duplique el registro.'),
+      Q('presaberes', 'Un estudiante deja el nombre en blanco (solo espacios) y la aplicación no lo guarda. ¿Qué regla lo detuvo?',
+        '<code>@NotBlank</code> en el campo nombre', '<code>@Entity</code> sobre la clase', '<code>@Id</code> en el identificador',
+        'Correcto: <code>@NotBlank</code> rechaza textos vacíos o con solo espacios.',
+        'Fue <code>@NotBlank</code>. <code>@Entity</code> convierte la clase en tabla y <code>@Id</code> marca la llave de cada fila.'),
+      Q('presaberes', '¿Qué hace la anotación <code>@Entity</code> sobre la clase <code>Jugador</code>?',
+        'Le dice a Spring que cada Jugador se guarda como una fila de una tabla', 'Pone el nombre del jugador en mayúsculas', 'Crea la página donde se ve la lista',
+        'Correcto: la clase se convierte en una tabla de la base de datos.',
+        '<code>@Entity</code> hace que la clase se guarde como tabla. Las páginas las producen el controlador y las plantillas.'),
+      Q('presaberes', 'La URL <code>jdbc:h2:mem:jugadores</code> es como escribir en un pizarrón; <code>jdbc:h2:file:./datos/jugadores</code> es como escribir en un cuaderno. ¿Cuál conserva los datos al reiniciar?',
+        'La de <code>file</code> (el cuaderno)', 'La de <code>mem</code> (el pizarrón)', 'Las dos por igual',
+        'Correcto: <code>file</code> escribe en el disco; <code>mem</code> solo usa la memoria y olvida.',
+        '<code>mem</code> es memoria y se borra al apagar. <code>file</code> guarda en un archivo del disco.'),
+      Q('presaberes', 'Al llegar a la escuela, la persona de la recepción recibe a cada visitante y lo envía a la oficina correcta. En la aplicación, ¿quién hace ese papel?',
+        'El controlador', 'La entidad', 'La base de datos',
+        'Correcto: el controlador recibe la petición y decide a dónde enviarla.',
+        'Es el controlador: recibe las peticiones del navegador y las dirige a donde corresponde.'),
+
+      // ---------- Ambas (aparecen en Presaberes y en Final) ----------
+      Q('ambas', 'Para entrar al aula de cómputo, primero muestras tu carné para demostrar quién eres; después la llave decide qué puertas abre. ¿Cómo se llaman esos dos pasos en seguridad?',
+        'Autenticación (quién eres) y autorización (qué puedes hacer)', 'Cifrado y redirección', 'Compilación y ejecución',
+        'Correcto: autenticación = demostrar identidad (login); autorización = permisos según tu rol.',
+        'Primero la autenticación (¿quién eres?) y luego la autorización (¿qué se te permite hacer?). Son dos preguntas distintas.'),
+      Q('ambas', 'En la escuela, el director puede entrar a todas las oficinas y el docente de turno solo a algunas. En la aplicación, ¿qué representan <code>ADMIN</code> y <code>ENTRENADOR</code>?',
+        'Roles: grupos de permisos distintos para cada tipo de usuario', 'Dos bases de datos diferentes', 'Dos versiones de Java',
+        'Correcto: el rol <code>ADMIN</code> es como el director (gestiona todo) y <code>ENTRENADOR</code> como el docente de turno (solo consulta).',
+        'Son roles. Cada rol agrupa lo que un tipo de usuario puede hacer.'),
+      Q('ambas', 'Un compañero escribe la contraseña del administrador directamente dentro del código Java y sube el proyecto a un repositorio público. ¿Cuál es la comparación más acertada?',
+        'Es como pegar la clave en un post-it en el monitor: cualquiera que pase la puede ver', 'Es seguro: el código no lo lee nadie', 'Es lo recomendado para que no se olvide',
+        'Correcto: en un repositorio público cualquier persona puede leer el código, y con él la clave.',
+        'Es un riesgo: un repositorio público lo puede leer cualquiera. Las claves no se escriben en el código.'),
+      Q('ambas', '¿Qué es una variable de entorno, dicho para un estudiante de bachillerato?',
+        'Un valor que se guarda en el computador o en el servidor, fuera del código, y que el programa consulta al arrancar', 'Una variable que se declara con <code>int</code> dentro de una clase', 'Un archivo que se sube a GitHub junto con el proyecto',
+        'Correcto: es como entregar la llave en mano al propietario en vez de dejarla escrita en el plano del edificio.',
+        'Es un valor que vive fuera del código (en tu computador o en el servidor). El programa lo lee al arrancar.'),
+      Q('ambas', 'En <code>SecurityConfig</code> aparece la línea <code>.requestMatchers("/login").permitAll()</code>. ¿Qué significa?',
+        'Que la página <code>/login</code> la puede abrir cualquier persona, aunque no haya iniciado sesión', 'Que solo el administrador puede ver el login', 'Que se borra la sesión del usuario',
+        'Correcto: la puerta de entrada tiene que estar abierta para que alguien pueda identificarse.',
+        '<code>permitAll()</code> significa "todos pueden". El login debe ser público; si no, nadie podría entrar.'),
+      Q('ambas', 'Entre estos datos, ¿cuál NO debes subir nunca a un repositorio público?',
+        'La contraseña de la base de datos y las contraseñas de los usuarios', 'El nombre de la clase <code>Jugador</code>', 'El archivo de estilos <code>estilos.css</code>',
+        'Correcto: las contraseñas y claves son secretos. Los nombres de clases y los estilos no dañan a nadie.',
+        'Los secretos (contraseñas, claves, datos de personas) no se suben. El código sin secretos y los estilos sí pueden ser públicos.'),
+
+      // ---------- Solo Final ----------
+      Q('final', 'Alguien roba la base de datos. ¿Por qué es mejor que las contraseñas estén guardadas con BCrypt y no en texto plano?',
+        'Porque se guarda una versión revuelta que no se puede leer ni convertir otra vez en la contraseña original', 'Porque BCrypt hace que la base de datos pese menos', 'Porque con BCrypt ya no hace falta pedir contraseña',
+        'Correcto: el ladrón solo encuentra texto como <code>$2a$...</code>. Es como guardar la huella de la contraseña y no la contraseña misma.',
+        'BCrypt guarda una versión revuelta e irreversible. En texto plano, quien robe la base de datos lee todas las claves.'),
+      Q('final', 'Un estudiante pregunta: "¿hash y cifrado no son lo mismo?". ¿Cuál es la diferencia correcta?',
+        'El cifrado se puede deshacer con la llave correcta; el hash está hecho para no poder deshacerse', 'Son exactamente lo mismo con otro nombre', 'El hash se puede deshacer y el cifrado no',
+        'Correcto: un mensaje cifrado se puede abrir con la llave; un hash es como moler algo, no se puede reconstruir. Para verificar una contraseña se compara el hash del intento con el guardado.',
+        'El cifrado es reversible con la llave; el hash no. Por eso para contraseñas se usa hash (BCrypt).'),
+      Q('final', 'Arrancas la aplicación sin haber definido la variable <code>ADMIN_PASSWORD</code>. ¿Qué ocurre?',
+        'La aplicación no arranca y muestra un error como <code>Could not resolve placeholder \'ADMIN_PASSWORD\'</code>', 'Arranca y el administrador queda sin contraseña', 'Arranca con la contraseña <code>admin</code>',
+        'Correcto: es mejor que falle al arrancar a que quede un administrador sin contraseña. El mensaje te dice exactamente cuál variable falta.',
+        'No arranca: Spring no encuentra el valor del hueco <code>${ADMIN_PASSWORD}</code>. Se define la variable en la misma terminal donde se arranca.'),
+      Q('final', 'Definiste <code>ADMIN_PASSWORD</code>, la aplicación creó al administrador, y luego cambias la variable por otra clave y reinicias. Sigues entrando con la clave vieja. ¿Por qué?',
+        'Porque el usuario ya se había creado y guardado; el cargador solo crea usuarios que no existen', 'Porque Windows no permite cambiar variables', 'Porque BCrypt recuerda la clave anterior por su cuenta',
+        'Correcto: para empezar de nuevo en desarrollo, detén la aplicación y borra la carpeta <code>datos/</code> (se pierden los jugadores de prueba).',
+        'La contraseña ya quedó guardada en la base de datos. Cambiar la variable no la modifica porque el cargador solo crea usuarios nuevos.'),
+      Q('final', 'En <code>SecurityConfig</code> escribes la regla general <code>anyRequest().authenticated()</code> ANTES de las reglas específicas. ¿Qué pasa?',
+        'La aplicación no arranca: <code>Can\'t configure requestMatchers after anyRequest</code>', 'Funciona igual: el orden no importa', 'Todas las rutas quedan públicas',
+        'Correcto: las reglas se leen de arriba hacia abajo y gana la primera que coincide; la regla de "todo lo demás" va siempre al final.',
+        'El orden importa: gana la primera regla que coincide. "Cualquier otra ruta" va al final; si va antes, Spring lo rechaza al arrancar.'),
+      Q('final', 'Ocultaste el botón "Nuevo jugador" para el entrenador con <code>sec:authorize</code>. ¿Ya quedó protegida la página <code>/jugadores/nuevo</code>?',
+        'No: ocultar el botón es solo maquillaje; la protección real son las reglas de <code>requestMatchers</code>', 'Sí: si no ve el botón no puede entrar', 'Sí, porque Thymeleaf bloquea la ruta',
+        'Correcto: es como quitar el letrero de una puerta sin ponerle llave. Quien conozca la dirección puede escribirla a mano.',
+        'No. Ocultar un botón solo cambia lo que se ve. Para proteger la ruta hace falta la regla en <code>SecurityConfig</code>.'),
+      Q('final', 'El entrenador escribe a mano la dirección <code>/jugadores/nuevo</code>. ¿Qué ve, si la regla está bien configurada?',
+        'La página "Acceso denegado" (error 403): sí está identificado, pero no tiene permiso', 'El formulario normal para crear jugadores', 'La pantalla de login otra vez',
+        'Correcto: 403 significa "sé quién eres, pero no puedes entrar aquí". El login se muestra solo a quien aún no se ha identificado.',
+        'Ve "Acceso denegado" (403). El login aparece cuando falta identificarse; el 403, cuando ya te identificaste pero tu rol no alcanza.'),
+      Q('final', 'Un usuario escribe mal la contraseña y la página dice solo "Usuario o contraseña incorrectos." sin indicar cuál falló. ¿Por qué se hace así?',
+        'Para no darle pistas a alguien que intenta adivinar: si dijera "el usuario existe", ya tendría la mitad del dato', 'Porque Spring no sabe cuál de los dos falló', 'Por pereza al escribir el mensaje',
+        'Correcto: es como un portero que responde "no coincide" sin decir qué parte estaba bien.',
+        'Es una decisión de seguridad: no se revela si el usuario existe ni cuál dato estaba mal.'),
+      Q('final', 'Agregas solo la dependencia de Spring Security, sin escribir ninguna configuración. En la consola aparece <code>Using generated security password</code>. ¿Qué significa?',
+        'Spring protegió toda la aplicación por su cuenta con el usuario <code>user</code> y una clave temporal generada al azar', 'La aplicación está rota', 'Se creó el administrador con la clave de tu variable de entorno',
+        'Correcto: por defecto Spring Security bloquea todo; por eso hoy escribimos nuestra propia configuración y nuestros propios usuarios.',
+        'Es el comportamiento por defecto: todo queda protegido con el usuario <code>user</code> y una clave temporal. No está roto; se personaliza con <code>SecurityConfig</code>.'),
+      Q('final', 'El archivo <code>.gitignore</code> incluye la carpeta <code>datos/</code>. ¿Por qué es importante hacerlo en este proyecto?',
+        'Porque ahí está el archivo de la base de datos con los jugadores (menores de edad) y las contraseñas guardadas, y no deben quedar en un repositorio público', 'Porque la carpeta pesa mucho y Git es lento', 'Porque sin eso el proyecto no compila',
+        'Correcto: son datos de personas. Lo que no se sube a GitHub no se filtra.',
+        'La carpeta <code>datos/</code> contiene datos de menores y usuarios. Se ignora para que no se publiquen.'),
+      Q('final', 'La semana próxima la aplicación estará en Render y la base de datos en Neon. ¿Cómo se relaciona esto con lo que hiciste hoy con <code>ADMIN_PASSWORD</code>?',
+        'Es el mismo método: <code>DB_URL</code>, <code>DB_USER</code> y <code>DB_PASSWORD</code> se entregan como variables de entorno en Render, sin escribirlas en GitHub', 'Neon necesita que escribas la contraseña dentro de <code>application.properties</code>', 'No tiene relación: Render ignora las variables de entorno',
+        'Correcto: hoy practicas con tus claves de usuario lo mismo que harás con las de la base de datos de Neon.',
+        'Se usa la misma idea: los secretos se entregan al servidor como variables de entorno, nunca dentro del código ni en GitHub.'),
+      Q('final', 'Dos campos tienen validación esta semana: nombre y edad. El campo edad está declarado como <code>Integer</code> (no <code>int</code>). ¿Qué ventaja tiene?',
+        'Que si la casilla viene vacía se puede mostrar "La edad es obligatoria." en vez de un error confuso en inglés', 'Que la edad ocupa menos memoria', 'Que Java la convierte sola en texto',
+        'Correcto: <code>Integer</code> acepta "vacío" (null) y así nuestras reglas pueden dar un mensaje claro.',
+        'Con <code>Integer</code> el vacío es null y se puede validar con un mensaje propio. Con <code>int</code> aparece un error técnico antes de las reglas.'),
+    ];
+    var QUIZ_CONFIG = { presaberesCount: 8, finalCount: 12 };
+  </script>
+  <script src="quiz.js"></script>
+  <script>
+    // Baraja el orden de las opciones antes de cada render (patrón desde la Semana 9):
+    // en el banco la correcta se escribe siempre de primera para poder mantenerlo con
+    // facilidad, pero mostrarla siempre arriba permitiría "aprobar" sin leer.
+    // El valor .v no cambia, así que la calificación sigue siendo correcta.
+    function barajarOpciones() {
+      (window.QUESTION_BANK || []).forEach(function (q) {
+        for (var i = q.opciones.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var t = q.opciones[i]; q.opciones[i] = q.opciones[j]; q.opciones[j] = t;
+        }
+      });
+    }
+
+    var _renderBase = window.renderQuiz;
+    window.renderQuiz = function () {
+      barajarOpciones();
+      _renderBase();
+    };
+    renderQuiz();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

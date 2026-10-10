@@ -1,0 +1,689 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Proyecto — Guía de Aprendizaje 13 (Semana 13)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 13 — Login y roles</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link active" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Proyecto · Entregable de la Guía de Aprendizaje 13 (1 pt)</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Tu proyecto guarda datos y ahora tiene puerta con llave</h1>
+          <div class="small-muted">Primero la <strong>guía paso a paso</strong> para comprobar que todo tu proyecto guarda datos y para construir el login con dos roles; al final, la <strong>plantilla calificable</strong>. Fecha límite: <strong>antes de la Sesión 14</strong>.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 980px;">
+
+    <div class="callout warning mb-4">
+      <div class="fw-semibold">Antes de empezar</div>
+      <div class="small-muted">Necesitas tu proyecto real de la Semana 12: la entidad de tu institución con su repositorio, su servicio, su controlador, sus plantillas y la base H2 en archivo (<code>jdbc:h2:file:./datos/...</code>). Esta guía <strong>continúa ese mismo proyecto</strong>: no empieces uno nuevo. En todo el código de esta página, <code>TuEntidad</code> (o <code>tuentidad</code>) es el nombre de la clase de tu proyecto y <code>gt.edu.url.tuproyecto</code> es <strong>tu paquete base</strong>. El ejemplo de la clase (<code>Jugador</code>, Escuela de Fútbol Los Cerritos) solo sirve de referencia: tú usas tus nombres. Cómo se llaman los tres nombres derivados de tu Artifact (carpeta, paquete, clase principal) está explicado en el <a href="cheatsheet.html">Cheat Sheet</a>.</div>
+    </div>
+
+    <div class="callout success mb-4">
+      <div class="fw-semibold">Esta guía vale 1 punto y no es Entrega Parcial</div>
+      <div class="small-muted">Es la Guía 13 (1 pt). La siguiente entrega con peso extra es la <strong>Entrega Parcial 3, en la Semana 14</strong>, donde publicarás todo esto en Render y Neon. Por eso hoy dejas lista la parte difícil: que las contraseñas no estén escritas en el código.</div>
+    </div>
+
+    <div class="callout info mb-4">
+      <div class="fw-semibold">Qué vas a lograr, con una analogía de colegio</div>
+      <div class="small-muted">Hasta la Semana 12 tu aplicación era un salón sin puerta: cualquiera entraba y podía borrar la lista de asistencia. Hoy le pones <strong>puerta con llave</strong> (autenticación: demostrar quién eres) y decides <strong>quién puede hacer qué</strong> (autorización: el director puede cambiar notas; el docente de turno solo las consulta). Y las llaves <strong>no se dejan pegadas en el monitor</strong> (la contraseña no se escribe en el código): se entregan aparte, con variables de entorno.</div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">Parte guiada — completa tu proyecto y ponle login</h2>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso0">Paso 0 — Trabaja en una rama</h3>
+        <p class="small-muted mb-2">Estos cambios tocan muchos archivos. Si algo sale mal, quieres poder volver atrás sin perder lo que ya funcionaba. Trabaja en la rama <code>development</code> de tu repositorio (la misma de las semanas anteriores):</p>
+<pre><code>git checkout development
+git pull
+git status</code></pre>
+        <p class="small-muted mb-0">¿No recuerdas cómo era? Repasa la <a href="../Material_Sesion_Clase_4_HTML_18_semanas/index.html">Semana 4</a> (ramas). Si tu rama de trabajo tiene otro nombre, úsala; lo importante es <strong>no trabajar directamente en <code>main</code></strong>.</p>
+        <div class="callout success mb-0 mt-2">✅ Checkpoint: <code>git status</code> dice <code>On branch development</code> y no hay cambios sin guardar.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso1">Paso 1 — Comprueba que TODO tu proyecto guarda datos <span class="s12-state s12-state--existing">Repaso de Semana 12</span></h3>
+        <p class="small-muted mb-2">Antes de agregar nada nuevo, asegúrate de que la base está sana. Un login sobre una aplicación que pierde datos no sirve de nada. Arranca tu proyecto y haz esta ronda completa con <strong>tu</strong> entidad:</p>
+        <ol class="small-muted mb-2">
+          <li><strong>Crear:</strong> registra 3 elementos reales de tu institución.</li>
+          <li><strong>Listar:</strong> comprueba que los 3 salen en la tabla.</li>
+          <li><strong>Editar:</strong> cambia uno y verifica que <strong>no se duplica</strong>.</li>
+          <li><strong>Eliminar:</strong> borra uno.</li>
+          <li><strong>Reinicio:</strong> detén la aplicación (<kbd>Ctrl</kbd>+<kbd>C</kbd> en la terminal), arráncala de nuevo y verifica que los que quedaron siguen ahí.</li>
+        </ol>
+        <p class="small-muted mb-1">Revisa también tu <code>application-dev.properties</code>. Las dos líneas que hacen sobrevivir los datos son:</p>
+<pre><code>spring.datasource.url=jdbc:h2:file:./datos/tubasededatos
+spring.jpa.hibernate.ddl-auto=update</code></pre>
+        <p class="small-muted mb-0">Si tus datos desaparecen al reiniciar, la URL dice <code>mem</code> en lugar de <code>file</code>, o <code>ddl-auto</code> es <code>create</code>. Corrige y repite la prueba antes de seguir.</p>
+        <div class="callout success mb-0 mt-2">✅ Checkpoint: crear, listar, editar y eliminar funcionan, y los datos siguen ahí después de reiniciar.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso2">Paso 2 — Deja solo 2 validaciones en tu entidad <span class="s12-state s12-state--adjust">Simplifica lo de la Semana 11</span></h3>
+        <p class="small-muted mb-2">Esta semana no se trata de validar, así que mantén lo mínimo: <strong>dos campos</strong> con mensajes claros. Elige los dos que más importan en tu institución (en el ejemplo: nombre y edad). El resto de tus campos puede conservar validaciones si ya las tienes funcionando; no las repases hoy. Ejemplo de forma, adaptado a campos de tu entidad:</p>
+<pre><code>// src/main/java/gt/edu/url/tuproyecto/model/TuEntidad.java  (solo las líneas de validación)
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+    @NotBlank(message = "El nombre es obligatorio.")
+    private String nombre;
+
+    @NotNull(message = "La edad es obligatoria.")
+    @Min(value = 5, message = "La edad mínima es 5 años.")
+    @Max(value = 17, message = "La edad máxima es 17 años.")
+    private Integer edad;</code></pre>
+        <ul class="small-muted mb-0">
+          <li>El campo numérico es <code>Integer</code>, no <code>int</code> (casilla vacía = <code>null</code>, no un error en inglés).</li>
+          <li>Recuerda: es <code>jakarta</code>, no <code>javax</code>.</li>
+          <li>Tu controlador conserva el patrón: con errores devuelve la plantilla; con éxito, guardar → redirigir → mostrar.</li>
+        </ul>
+        <div class="callout success mb-0 mt-2">✅ Checkpoint: enviar el formulario vacío muestra tus dos mensajes y <strong>no guarda</strong> nada.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso3">Paso 3 — Agrega las dependencias de seguridad <span class="s12-state s12-state--added">Nuevas en Semana 13</span> <span class="s12-state s12-state--required">Imprescindible</span></h3>
+        <p class="small-muted mb-2">Necesitas dos dependencias nuevas en tu <code>pom.xml</code>, <strong>sin escribir versión</strong> (Spring Boot la elige). Pégalas dentro de <code>&lt;dependencies&gt;</code>, junto a las demás, sin duplicar nada y sin borrar nada:</p>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+    &lt;groupId&gt;org.thymeleaf.extras&lt;/groupId&gt;
+    &lt;artifactId&gt;thymeleaf-extras-springsecurity6&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+        <ul class="small-muted mb-2">
+          <li><code>spring-boot-starter-security</code>: el sistema de login y de permisos.</li>
+          <li><code>thymeleaf-extras-springsecurity6</code>: permite escribir <code>sec:authorize</code> en las plantillas para mostrar u ocultar partes de la página según el rol.</li>
+        </ul>
+        <div class="callout warning mb-2"><div class="small-muted">Si algún día generas un proyecto nuevo en start.spring.io, marcar <strong>Spring Security</strong> junto con Thymeleaf agrega ambas solas. Aquí, como continúas tu proyecto, las agregas a mano. Recarga Maven (VS Code ofrece "Sync/Reload") después de editar.</div></div>
+        <div class="callout danger mb-0"><div class="fw-semibold">Cuidado con la falla silenciosa</div><div class="small-muted">Sin la segunda dependencia el proyecto compila y arranca, pero <code>sec:authorize</code> simplemente no se procesa y los botones no se ocultan (no aparece ningún error). Si "los botones no se ocultan", revisa primero que esta dependencia exista.</div></div>
+        <div class="callout success mb-0 mt-2">✅ Checkpoint: el proyecto arranca. En la consola aparece <code>Using generated security password: ...</code> y, al abrir <code>http://localhost:8080</code>, el navegador te pide usuario y contraseña. Es el login <em>por defecto</em> de Spring (usuario <code>user</code>): esa pantalla confirma que Security está activa. Hoy la reemplazas por la tuya.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso4">Paso 4 — Crea la entidad Usuario y su repositorio <span class="s12-state s12-state--added">Archivos nuevos</span></h3>
+        <p class="small-muted mb-2">Los usuarios viven en la misma base que tus datos, en una tabla propia. Dos archivos, igual que en la Semana 12. <strong>Qué cambia respecto al ejemplo de la clase:</strong> únicamente la línea <code>package</code> y los <code>import</code> que llevan tu paquete base. <strong>Qué NO cambia:</strong> el nombre <code>Usuario</code>, sus tres campos y <code>findByUsername</code> (Spring Security espera justo esa forma).</p>
+<pre><code>// src/main/java/gt/edu/url/tuproyecto/model/Usuario.java
+package gt.edu.url.tuproyecto.model;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
+public class Usuario {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, unique = true)
+    private String username;
+
+    // Aquí NUNCA va la contraseña real: va el "hash" que produce BCrypt.
+    @Column(nullable = false)
+    private String password;
+
+    // "ADMIN" o "ENTRENADOR" (sin el prefijo ROLE_; Spring lo agrega solo).
+    // En tu proyecto puedes usar los nombres de rol que tengan sentido
+    // (por ejemplo "COORDINADOR" y "VOLUNTARIO"), en MAYÚSCULAS y sin espacios.
+    @Column(nullable = false)
+    private String rol;
+
+    public Usuario() {
+    }
+
+    public Usuario(String username, String password, String rol) {
+        this.username = username;
+        this.password = password;
+        this.rol = rol;
+    }
+
+    public Long getId() { return id; }
+    public String getUsername() { return username; }
+    public String getPassword() { return password; }
+    public String getRol() { return rol; }
+}</code></pre>
+<pre><code>// src/main/java/gt/edu/url/tuproyecto/repository/UsuarioRepository.java
+package gt.edu.url.tuproyecto.repository;
+
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import gt.edu.url.tuproyecto.model.Usuario;
+
+public interface UsuarioRepository extends JpaRepository&lt;Usuario, Long&gt; {
+
+    Optional&lt;Usuario&gt; findByUsername(String username);
+}</code></pre>
+        <div class="callout info mb-0 mt-2"><div class="small-muted"><code>findByUsername</code> es un método derivado por nombre (Semana 12): Spring lo implementa solo porque la entidad tiene un campo llamado <code>username</code>. Devuelve <code>Optional</code> porque el usuario puede no existir.</div></div>
+        <div class="callout success mb-0 mt-2">✅ Checkpoint: ambos archivos sin subrayado rojo, <code>Usuario</code> en <code>model</code> y <code>UsuarioRepository</code> en <code>repository</code> (dentro de tu paquete base, no fuera).</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso5">Paso 5 — Las contraseñas entran por variables de entorno <span class="s12-state s12-state--adjust">Edita application.properties</span> <span class="s12-state s12-state--required">Nunca escribas la clave real</span></h3>
+        <p class="small-muted mb-2">Una <strong>variable de entorno</strong> es un dato que vive en la computadora (o en el hosting), <strong>fuera de tus archivos</strong>. Es como entregarle la llave al director en la mano en lugar de pegarla en un post-it en el monitor, donde cualquiera que mire el repositorio público la vería. Agrega al final de tu <code>src/main/resources/application.properties</code>:</p>
+<pre><code># Contraseñas iniciales: NO están escritas aquí. Se leen de variables de entorno.
+app.admin.password=${ADMIN_PASSWORD}
+app.entrenador.password=${ENTRENADOR_PASSWORD}</code></pre>
+        <p class="small-muted mb-1">Cada <code>${...}</code> es un hueco que Spring llena con la variable de ese nombre. Antes de arrancar, <strong>define tus propias claves</strong> (inventa unas que no uses en ningún otro lugar; las de abajo son solo ejemplo) <strong>en la misma terminal</strong> desde la que vas a arrancar la aplicación:</p>
+<pre><code># PowerShell (Windows)
+$env:ADMIN_PASSWORD = "Clave-Admin-2026"
+$env:ENTRENADOR_PASSWORD = "Clave-Entr-2026"
+.\mvnw.cmd spring-boot:run</code></pre>
+<pre><code># Git Bash / macOS / Linux
+export ADMIN_PASSWORD="Clave-Admin-2026"
+export ENTRENADOR_PASSWORD="Clave-Entr-2026"
+./mvnw spring-boot:run</code></pre>
+        <div class="callout warning mb-2"><div class="small-muted"><strong>Esta semana arranca desde la terminal</strong>, no con el botón ▶ Run de VS Code: ese botón no ve las variables definidas en tu terminal. Las variables viven solo en esa ventana: si la cierras, hay que definirlas otra vez. Para reiniciar, <kbd>Ctrl</kbd>+<kbd>C</kbd> y el mismo comando.</div></div>
+        <div class="callout danger mb-0"><div class="fw-semibold">Si falta una variable, la aplicación se niega a arrancar (y está bien)</div><div class="small-muted">Verás <code>PlaceholderResolutionException: Could not resolve placeholder 'ADMIN_PASSWORD'</code>. Es preferible que falle a que quede un administrador sin contraseña. Define la variable y vuelve a arrancar.</div></div>
+        <div class="callout success mb-0 mt-2">✅ Checkpoint: tu <code>application.properties</code> contiene <code>${ADMIN_PASSWORD}</code> y <code>${ENTRENADOR_PASSWORD}</code>, y <strong>ninguna</strong> contraseña real escrita.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso6">Paso 6 — Crea la carpeta <code>security</code> con sus tres clases <span class="s12-state s12-state--added">Carpeta nueva</span> <span class="s12-state s12-state--required">Debe quedar dentro del paquete base</span></h3>
+        <p class="small-muted mb-2">Carpeta nueva <code>security</code>, hermana de <code>model</code>, <code>repository</code>, <code>service</code> y <code>controller</code>. Como en la Semana 9: si queda fuera de tu paquete base, Spring no la encuentra y no avisa.</p>
+
+        <div class="table-responsive mb-3">
+          <table class="table table-sm small mb-0">
+            <thead><tr><th>En cada archivo de esta carpeta</th><th>¿Qué haces?</th></tr></thead>
+            <tbody>
+              <tr><td>Línea <code>package</code> y los <code>import gt.edu.url...</code></td><td><strong>Cambian</strong>: pon tu paquete base.</td></tr>
+              <tr><td>Rutas de <code>SecurityConfig</code> (<code>/RUTA/...</code>)</td><td><strong>Cambian</strong>: tu ruta real (en el ejemplo de la clase es <code>/jugadores</code>).</td></tr>
+              <tr><td>Nombres de roles y de usuarios (<code>ADMIN</code>, <code>admin</code>...)</td><td>Pueden cambiar, pero deben ser <strong>idénticos</strong> en <code>SecurityConfig</code>, <code>CargadorUsuarios</code> y las plantillas.</td></tr>
+              <tr><td>Anotaciones, <code>BCryptPasswordEncoder</code>, <code>findByUsername</code>, <code>User.withUsername</code>, el orden de las reglas</td><td><strong>NO cambian</strong>: son la mecánica de Spring Security.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="small-muted mb-1"><strong>6a. <code>UsuarioDetailsService</code></strong> — cuando alguien intenta entrar, Spring Security pregunta aquí: "dame los datos del usuario que se llama así". Es como la lista de asistencia: busca el nombre y devuelve la ficha.</p>
+<pre><code>// src/main/java/gt/edu/url/tuproyecto/security/UsuarioDetailsService.java
+package gt.edu.url.tuproyecto.security;
+
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+import gt.edu.url.tuproyecto.model.Usuario;
+import gt.edu.url.tuproyecto.repository.UsuarioRepository;
+
+@Service
+public class UsuarioDetailsService implements UserDetailsService {
+
+    private final UsuarioRepository usuarioRepository;
+
+    public UsuarioDetailsService(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Usuario usuario = usuarioRepository.findByUsername(username)
+                .orElseThrow(() -&gt; new UsernameNotFoundException("Usuario no encontrado: " + username));
+
+        return User.withUsername(usuario.getUsername())
+                .password(usuario.getPassword())
+                .roles(usuario.getRol())
+                .build();
+    }
+}</code></pre>
+
+        <p class="small-muted mb-1 mt-3"><strong>6b. <code>SecurityConfig</code></strong> — el reglamento de la puerta: qué rutas son públicas, cuáles exigen rol y cómo se cifran las contraseñas. <strong>Gana la primera regla que coincide</strong>, por eso las específicas van arriba y <code>anyRequest()</code> al final.</p>
+<pre><code>// src/main/java/gt/edu/url/tuproyecto/security/SecurityConfig.java
+package gt.edu.url.tuproyecto.security;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+
+@Configuration
+public class SecurityConfig {
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public SecurityFilterChain filtros(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests(reglas -&gt; reglas
+                // Gana la PRIMERA regla que coincide: el orden importa.
+                .requestMatchers("/login", "/estilos.css", "/error").permitAll()
+                .requestMatchers("/RUTA/nuevo", "/RUTA/*/editar").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/RUTA/**").hasRole("ADMIN")
+                .anyRequest().authenticated())
+            .formLogin(login -&gt; login
+                .loginPage("/login")
+                .defaultSuccessUrl("/RUTA", true))
+            .logout(logout -&gt; logout
+                .logoutSuccessUrl("/login?salio"))
+            .exceptionHandling(errores -&gt; errores
+                .accessDeniedPage("/acceso-denegado"));
+        return http.build();
+    }
+}</code></pre>
+        <ul class="small-muted mt-2 mb-2">
+          <li><strong>Sustituye <code>/RUTA</code></strong> por la ruta base que ya usa tu controlador (la que escribiste con <code>@GetMapping</code> en la Semana 12). Aparece en tres líneas.</li>
+          <li><code>/estilos.css</code>: si tu archivo de estilos tiene otro nombre o está en otra carpeta de <code>static/</code>, cambia esa ruta; si no es pública, la página de login saldrá sin estilo.</li>
+          <li>Con este reglamento: ver la lista y las demás rutas = cualquier usuario con sesión; crear, editar y eliminar (todo <code>POST</code> a tu ruta) = solo <code>ADMIN</code>.</li>
+          <li>Contraseñas guardadas como hash BCrypt (empiezan con <code>$2a$</code>), nunca en texto plano.</li>
+        </ul>
+
+        <p class="small-muted mb-1 mt-3"><strong>6c. <code>CargadorUsuarios</code></strong> — se ejecuta una vez al arrancar y crea los dos usuarios <em>solo si todavía no existen</em>. Lee las claves de las variables de entorno y las cifra antes de guardarlas.</p>
+<pre><code>// src/main/java/gt/edu/url/tuproyecto/security/CargadorUsuarios.java
+package gt.edu.url.tuproyecto.security;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
+
+import gt.edu.url.tuproyecto.model.Usuario;
+import gt.edu.url.tuproyecto.repository.UsuarioRepository;
+
+@Component
+public class CargadorUsuarios implements CommandLineRunner {
+
+    private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final String passwordAdmin;
+    private final String passwordEntrenador;
+
+    public CargadorUsuarios(UsuarioRepository usuarioRepository,
+                            PasswordEncoder passwordEncoder,
+                            @Value("${app.admin.password}") String passwordAdmin,
+                            @Value("${app.entrenador.password}") String passwordEntrenador) {
+        this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.passwordAdmin = passwordAdmin;
+        this.passwordEntrenador = passwordEntrenador;
+    }
+
+    @Override
+    public void run(String... args) {
+        crearSiNoExiste("admin", passwordAdmin, "ADMIN");
+        crearSiNoExiste("entrenador", passwordEntrenador, "ENTRENADOR");
+    }
+
+    private void crearSiNoExiste(String username, String passwordPlano, String rol) {
+        if (usuarioRepository.findByUsername(username).isEmpty()) {
+            String hash = passwordEncoder.encode(passwordPlano);
+            usuarioRepository.save(new Usuario(username, hash, rol));
+        }
+    }
+}</code></pre>
+        <div class="callout warning mb-2 mt-2"><div class="small-muted">Los nombres <code>admin</code> / <code>entrenador</code> y sus roles pueden adaptarse a tu institución (por ejemplo <code>coordinador</code> / <code>voluntario</code>), siempre iguales en las tres clases y en las plantillas. Las propiedades <code>app.admin.password</code> y <code>app.entrenador.password</code> deben coincidir con las de tu <code>application.properties</code> (Paso 5).</div></div>
+        <div class="callout danger mb-0"><div class="fw-semibold">Trampa: cambiar la variable después no cambia la clave</div><div class="small-muted">El cargador <strong>solo crea</strong>. Si ya existe el usuario y cambias <code>ADMIN_PASSWORD</code>, la clave guardada sigue siendo la vieja. En desarrollo: detén la aplicación, borra la carpeta <code>datos/</code> (se pierden tus registros de prueba; solo se hace en tu computadora) y arranca de nuevo.</div></div>
+        <div class="callout success mb-0 mt-2">✅ Checkpoint: la aplicación arranca sin errores con tus dos variables definidas y ya no aparece la línea "Using generated security password".</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso7">Paso 7 — Controlador y pantallas del login <span class="s12-state s12-state--added">Archivos nuevos</span></h3>
+        <p class="small-muted mb-1"><strong>7a. <code>AccesoController</code></strong> en <code>controller</code>. Solo entrega dos plantillas; el login en sí lo hace Spring Security. Cambia solo <code>package</code>. <strong>No cambies</strong> <code>@RequestMapping</code> por <code>@GetMapping</code> en <code>/acceso-denegado</code>: Spring reenvía con el método original, y un POST rechazado daría error 405.</p>
+<pre><code>// src/main/java/gt/edu/url/tuproyecto/controller/AccesoController.java
+package gt.edu.url.tuproyecto.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class AccesoController {
+
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    @RequestMapping("/acceso-denegado")
+    public String accesoDenegado() {
+        return "acceso-denegado";
+    }
+}</code></pre>
+
+        <p class="small-muted mb-1 mt-3"><strong>7b. <code>login.html</code></strong> en <code>src/main/resources/templates/</code>. Cambia el título por el nombre de tu institución. <strong>No cambies</strong> los nombres <code>username</code> y <code>password</code> de los campos (Spring los espera) ni <code>th:action</code> (agrega solo el token de seguridad CSRF; con un <code>action</code> normal el envío se rechaza con 403).</p>
+<pre><code>&lt;!-- src/main/resources/templates/login.html --&gt;
+&lt;!doctype html&gt;
+&lt;html lang="es" xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;Iniciar sesión&lt;/title&gt;
+  &lt;link rel="stylesheet" th:href="@{/estilos.css}"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;main&gt;
+  &lt;h1&gt;Nombre de tu institución&lt;/h1&gt;
+  &lt;h2&gt;Iniciar sesión&lt;/h2&gt;
+
+  &lt;div class="aviso error" role="alert" th:if="${param.error}"&gt;
+    Usuario o contraseña incorrectos.
+  &lt;/div&gt;
+  &lt;div class="aviso" th:if="${param.salio}"&gt;
+    Cerraste tu sesión.
+  &lt;/div&gt;
+
+  &lt;!-- Los nombres username y password son los que Spring Security espera. --&gt;
+  &lt;form th:action="@{/login}" method="post"&gt;
+    &lt;label for="username"&gt;Usuario&lt;/label&gt;
+    &lt;input id="username" type="text" name="username" autofocus&gt;
+    &lt;label for="password"&gt;Contraseña&lt;/label&gt;
+    &lt;input id="password" type="password" name="password"&gt;
+    &lt;button type="submit"&gt;Entrar&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        <p class="small-muted mb-0">El mensaje de error <strong>a propósito no dice cuál de los dos datos falló</strong>: así nadie descubre qué usuarios existen.</p>
+
+        <p class="small-muted mb-1 mt-3"><strong>7c. <code>acceso-denegado.html</code></strong> en <code>templates/</code>. Es lo que ve quien intenta algo que su rol no permite (error 403). Cambia el título y el enlace de regreso a tu ruta.</p>
+<pre><code>&lt;!-- src/main/resources/templates/acceso-denegado.html --&gt;
+&lt;!doctype html&gt;
+&lt;html lang="es" xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;Acceso denegado&lt;/title&gt;
+  &lt;link rel="stylesheet" th:href="@{/estilos.css}"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;main&gt;
+  &lt;h1&gt;Nombre de tu institución&lt;/h1&gt;
+  &lt;div class="aviso error" role="alert"&gt;
+    &lt;p&gt;&lt;strong&gt;No tienes permiso para esta acción.&lt;/strong&gt;&lt;/p&gt;
+    &lt;p&gt;Tu usuario puede ver la lista, pero solo un administrador puede crear, editar o eliminar.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;p&gt;&lt;a th:href="@{/RUTA}"&gt;Volver a la lista&lt;/a&gt;&lt;/p&gt;
+&lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        <div class="callout info mb-0 mt-2"><div class="small-muted">Las clases <code>aviso</code> y <code>error</code> son de <code>estilos.css</code>. Si tu hoja de estilos no las define, agrega unas reglas simples (por ejemplo un borde y un fondo de color suave) o usa las clases equivalentes que ya tengas. Recuerda: no comunicar solo con color; el texto ya dice qué ocurrió.</div></div>
+        <div class="callout success mb-0 mt-2">✅ Checkpoint: al abrir <code>http://localhost:8080/login</code> ves <strong>tu</strong> pantalla de login (ya no la de Spring), y entrar con una clave incorrecta muestra "Usuario o contraseña incorrectos."</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso8">Paso 8 — Oculta lo que cada rol no debe ver <span class="s12-state s12-state--adjust">Modifica tu lista</span></h3>
+        <p class="small-muted mb-2">En tu plantilla de lista (la que muestra la tabla), <strong>modifica solo tres cosas</strong>; el resto de la plantilla queda como está.</p>
+        <p class="small-muted mb-1"><strong>(1)</strong> En la etiqueta <code>&lt;html&gt;</code>, agrega el espacio de nombres <code>sec</code>:</p>
+<pre><code>&lt;html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"&gt;</code></pre>
+        <p class="small-muted mb-1"><strong>(2)</strong> Arriba de la tabla, la barra con el nombre de quien tiene la sesión y el botón para cerrarla (cerrar sesión es un <code>POST</code>, por eso usa <code>th:action</code>):</p>
+<pre><code>&lt;div class="barra"&gt;
+  &lt;span&gt;Sesión de: &lt;strong sec:authentication="name"&gt;usuario&lt;/strong&gt;&lt;/span&gt;
+  &lt;form th:action="@{/logout}" method="post" class="en-linea"&gt;
+    &lt;button type="submit" class="secundario"&gt;Cerrar sesión&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/div&gt;</code></pre>
+        <p class="small-muted mb-1"><strong>(3)</strong> Agrega <code>sec:authorize="hasRole('ADMIN')"</code> a cada elemento que solo el administrador debe ver: el enlace de crear, el encabezado de la columna de acciones y la celda con editar/eliminar:</p>
+<pre><code>&lt;p sec:authorize="hasRole('ADMIN')"&gt;&lt;a th:href="@{/RUTA/nuevo}"&gt;+ Agregar&lt;/a&gt;&lt;/p&gt;
+
+&lt;th sec:authorize="hasRole('ADMIN')"&gt;Acciones&lt;/th&gt;
+
+&lt;td sec:authorize="hasRole('ADMIN')"&gt;
+  &lt;a th:href="@{/RUTA/{id}/editar(id=${tuentidad.id})}"&gt;Editar&lt;/a&gt;
+  &lt;form th:action="@{/RUTA/{id}/eliminar(id=${tuentidad.id})}" method="post" class="en-linea"&gt;
+    &lt;button type="submit" class="peligro"&gt;Eliminar&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/td&gt;</code></pre>
+        <p class="small-muted mb-2">Revisa además que el formulario de crear/editar use <code>th:action</code> (no <code>action</code>), igual que en la Semana 12.</p>
+        <div class="callout danger mb-0"><div class="fw-semibold">Ocultar un botón NO protege la ruta</div><div class="small-muted"><code>sec:authorize</code> es maquillaje: solo evita que el entrenador vea el botón. La protección real son las reglas <code>requestMatchers</code> de <code>SecurityConfig</code>. Compruébalo en el Paso 9: el entrenador que escribe a mano <code>/RUTA/nuevo</code> en la barra de direcciones debe recibir "Acceso denegado".</div></div>
+        <div class="callout success mb-0 mt-2">✅ Checkpoint: en tu lista aparece el nombre de quien tiene la sesión y el botón "Cerrar sesión".</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso9">Paso 9 — Prueba con los dos usuarios <span class="s12-state s12-state--added">Comprueba lo nuevo</span></h3>
+        <p class="small-muted mb-2">Con las variables definidas y la aplicación arrancada desde la terminal. Toma las capturas que pide el Entregable mientras pruebas:</p>
+        <ol class="small-muted mb-2">
+          <li><strong>Sin sesión:</strong> abre <code>http://localhost:8080/RUTA</code>. Debe llevarte a <code>/login</code>. <em>(captura 1: tu pantalla de login)</em></li>
+          <li><strong>Clave incorrecta:</strong> escribe una mala; debe volver al login con el mensaje de error.</li>
+          <li><strong>Como <code>admin</code>:</strong> entra con tu clave de administrador. Debes ver la lista, "Agregar" y las columnas de acciones. Crea, edita y elimina un registro. <em>(captura 2: vista de administrador)</em></li>
+          <li><strong>Cerrar sesión:</strong> pulsa el botón; debe llevarte a <code>/login</code> con "Cerraste tu sesión."</li>
+          <li><strong>Como <code>entrenador</code> (tu segundo rol):</strong> entra con la otra clave. Debes ver la lista, <strong>sin</strong> "Agregar" ni acciones. <em>(captura 3: vista del segundo rol)</em></li>
+          <li><strong>Intento prohibido:</strong> con esa misma sesión, escribe a mano <code>http://localhost:8080/RUTA/nuevo</code>. Debe salir "No tienes permiso para esta acción." <em>(captura 4: el 403)</em></li>
+          <li><strong>Reinicio:</strong> detén la aplicación y vuelve a arrancarla con las variables. Tus registros siguen ahí y los usuarios siguen funcionando (el cargador no los crea otra vez).</li>
+        </ol>
+        <div class="callout info mb-2"><div class="small-muted">Mientras Security esté activa, la consola <code>/h2-console</code> también exige login y su formulario es bloqueado por las reglas de seguridad. Hoy no la necesitas: verifica tus datos desde la propia aplicación.</div></div>
+        <div class="callout success mb-0 mt-2">✅ Checkpoint: las siete pruebas se comportan como se describe. Esta es la prueba más importante de la guía.</div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title" id="paso10">Paso 10 — Sube tu avance a GitHub sin subir secretos <span class="s12-state s12-state--required">Revisa antes del push</span></h3>
+        <p class="small-muted mb-2">Tu repositorio es <strong>público</strong>: cualquiera puede leerlo. Antes del commit comprueba qué NO debe subirse:</p>
+        <div class="table-responsive mb-2">
+          <table class="table table-sm small mb-0">
+            <thead><tr><th>Qué</th><th>¿Se sube?</th><th>Por qué</th></tr></thead>
+            <tbody>
+              <tr><td>Carpeta <code>datos/</code> (la base H2 en archivo)</td><td><strong>NO</strong></td><td>Contiene los registros reales (y los hashes de los usuarios). Debe estar en <code>.gitignore</code>.</td></tr>
+              <tr><td>Contraseñas escritas en cualquier archivo</td><td><strong>NUNCA</strong></td><td>En GitHub público quedan para siempre, aunque las borres después.</td></tr>
+              <tr><td><code>application.properties</code></td><td>Sí</td><td>Solo con <code>${ADMIN_PASSWORD}</code> y <code>${ENTRENADOR_PASSWORD}</code>, que son "huecos", no claves.</td></tr>
+              <tr><td>Código (<code>security/</code>, entidades, plantillas) y <code>pom.xml</code></td><td>Sí</td><td>No contienen secretos.</td></tr>
+            </tbody>
+          </table>
+        </div>
+<pre><code>git status
+# Revisa la lista: NO debe aparecer datos/ ni ninguna clave.
+git add .
+git commit -m "Agrega login con roles y contraseñas por variables de entorno"
+git push origin development</code></pre>
+        <p class="small-muted mb-0">Si <code>datos/</code> aparece en <code>git status</code>, agrega la línea <code>datos/</code> al final de tu <code>.gitignore</code> (<code>.gitignore</code> no oculta archivos que ya fueron subidos antes; si ya se subió, avisa en tu Entregable qué hiciste para quitarla). Haz un último <code>git diff</code> buscando tu contraseña de ejemplo: no debe estar en ningún archivo.</p>
+        <div class="callout success mb-0 mt-2">✅ Checkpoint: en GitHub.com se ven <code>security/</code>, <code>Usuario</code>, <code>login.html</code> y <code>application.properties</code> con <code>${ADMIN_PASSWORD}</code>, pero no la carpeta <code>datos/</code> ni ninguna contraseña real.</div>
+      </div>
+    </div>
+
+    <details class="mb-4">
+      <summary class="fw-semibold">Solución de problemas frecuentes</summary>
+      <div class="table-responsive mt-2">
+        <table class="table table-sm small mb-0">
+          <thead><tr><th>Situación</th><th>Qué hacer</th></tr></thead>
+          <tbody>
+            <tr><td><code>Could not resolve placeholder 'ADMIN_PASSWORD'</code> y la app no arranca</td><td>No definiste la variable en <strong>esa</strong> terminal. Define las dos y arranca de nuevo con <code>mvnw</code>, no con el botón ▶.</td></tr>
+            <tr><td>Aparece <code>Using generated security password</code> y todo pide login con usuario <code>user</code></td><td>Tienes Security pero no se carga tu configuración: revisa que <code>SecurityConfig</code> tenga <code>@Configuration</code> y esté dentro de tu paquete base.</td></tr>
+            <tr><td><code>Can't configure requestMatchers after anyRequest</code></td><td>Escribiste <code>anyRequest()</code> antes de otras reglas. Va <strong>siempre al final</strong>.</td></tr>
+            <tr><td>Siempre dice "Usuario o contraseña incorrectos" y en consola <code>Encoded password does not look like BCrypt</code></td><td>Guardaste la clave sin <code>passwordEncoder.encode(...)</code>. Corrige el cargador, detén la app y borra <code>datos/</code> (solo en desarrollo).</td></tr>
+            <tr><td>Cambié la variable pero la clave vieja sigue valiendo</td><td>El cargador solo crea usuarios nuevos. Detén la app, borra <code>datos/</code> y arranca otra vez.</td></tr>
+            <tr><td>El entrenador sigue viendo los botones de administrador</td><td>Falta la dependencia <code>thymeleaf-extras-springsecurity6</code>, el <code>xmlns:sec</code> en la etiqueta <code>&lt;html&gt;</code>, o el rol escrito en el <code>sec:authorize</code> no coincide con el guardado.</td></tr>
+            <tr><td>Al guardar o eliminar sale 403</td><td>El formulario usa <code>action=</code> en lugar de <code>th:action=</code>, y no lleva el token CSRF. O es el entrenador intentando una acción de administrador (comportamiento correcto).</td></tr>
+            <tr><td>La página de login sale sin estilo</td><td>Tu archivo CSS no está en el <code>permitAll()</code> de <code>SecurityConfig</code>: ajusta la ruta.</td></tr>
+            <tr><td>Cerrar sesión da error 405 o 403</td><td>El cierre de sesión es un <code>POST</code> con <code>th:action="@{/logout}"</code>, no un enlace.</td></tr>
+            <tr><td><code>Database may be already in use</code></td><td>Hay otra copia de la aplicación abierta; ciérrala.</td></tr>
+            <tr><td>Mis datos desaparecen al reiniciar</td><td>La URL dice <code>mem</code> en lugar de <code>file</code>, o <code>ddl-auto</code> no es <code>update</code>.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <div class="callout mb-4">
+      <div class="fw-semibold">Plan B</div>
+      <div class="small-muted">Si no logras que el login funcione en tu proyecto, haz el recorrido completo en el proyecto de práctica <code>taller-formularios</code> de los <a href="ejercicios.html">Ejercicios</a> y entrega esa evidencia indicando qué intentaste en el tuyo y el último <code>Caused by:</code> que viste en la consola. Se evalúa el proceso y la reflexión de la Parte E. Si falla tu instalación, el detalle está en la <a href="../Material_Sesion_Clase_1_HTML_18_semanas/instalacion.html">Semana 1</a>.</div>
+    </div>
+
+    <hr class="my-4" />
+    <h2 class="h4 section-title mb-3">📋 Entregable — completa esto para tu calificación</h2>
+
+    <div class="callout success mb-3">
+      <div class="small-muted">Guía 13 = <strong>1 punto</strong>. Sin Entrega Parcial esta semana. Donde se piden capturas, pégalas en el PDF (en el documento final) o descríbelas con precisión en la casilla.</div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title mb-3">Datos del estudiante</h3>
+        <div class="row g-3">
+          <div class="col-md-5"><label class="form-label small fw-semibold">Nombre completo</label><input class="form-control fill-line" type="text" /></div>
+          <div class="col-md-3"><label class="form-label small fw-semibold">Carné</label><input class="form-control fill-line" type="text" /></div>
+          <div class="col-md-4"><label class="form-label small fw-semibold">Entidad de tu proyecto</label><input class="form-control fill-line" type="text" placeholder="Nombre de tu clase principal" /></div>
+        </div>
+        <div class="row g-3 mt-1">
+          <div class="col-12"><label class="form-label small fw-semibold">Enlace a tu repositorio (rama <code>development</code>)</label><input class="form-control fill-line" type="text" placeholder="https://github.com/..." /></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte A — Mi proyecto guarda datos (20%)</h3>
+        <p class="small-muted mb-1">Evidencia del Paso 1: una captura (o descripción) de la lista con tus registros <strong>antes</strong> del reinicio y otra <strong>después</strong>. Indica cuántos registros había y confirma que la edición no duplicó. Pega aquí tus dos validaciones (los campos elegidos y sus mensajes) y qué mensaje viste al enviar el formulario vacío.</p>
+        <textarea class="code-area" rows="9" placeholder="Registros antes del reinicio: ...&#10;Registros después del reinicio: ...&#10;¿Editar duplicó? ...&#10;Mi URL de base de datos (jdbc:h2:file:...): ...&#10;Campo 1 validado: ... | mensaje: ...&#10;Campo 2 validado: ... | mensaje: ..."></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte B — Login y dos roles funcionando (25%)</h3>
+        <p class="small-muted mb-1"><strong>B1.</strong> Las cuatro capturas del Paso 9, descritas aquí si no las pegas en el PDF (qué se ve y con qué usuario): (1) tu login, (2) vista del administrador, (3) vista del segundo rol, (4) el 403 al entrar a mano a la ruta de crear.</p>
+        <textarea class="code-area mb-3" rows="8" placeholder="1. Login: ...&#10;2. Vista admin (qué botones ve): ...&#10;3. Vista del otro rol (qué NO ve): ...&#10;4. 403 al abrir /RUTA/nuevo con ese rol: ..."></textarea>
+        <p class="small-muted mb-1"><strong>B2.</strong> Tu <code>SecurityConfig</code> completo, adaptado a tu paquete y tus rutas (con <code>package</code> e <code>import</code>):</p>
+        <textarea class="code-area" rows="16"></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte C — Variables de entorno y .gitignore (20%)</h3>
+        <p class="small-muted mb-1"><strong>C1.</strong> Pega las dos líneas de tu <code>application.properties</code> que usan variables de entorno y tu <code>.gitignore</code> (al menos la línea <code>datos/</code>). <strong>No pegues contraseñas reales.</strong></p>
+        <textarea class="code-area mb-3" rows="6"></textarea>
+        <p class="small-muted mb-1"><strong>C2.</strong> Imagina que el propietario de la institución recibirá la aplicación. ¿Cómo le entregarías sus contraseñas <strong>sin escribirlas en el código ni en GitHub</strong>? Describe qué canal usarías, qué le pedirías que haga con ellas y qué pasa si las pierde.</p>
+        <textarea class="code-area" rows="6"></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte D — Nota escrita: datos sensibles de mi proyecto de cara al despliegue (25%)</h3>
+        <p class="small-muted mb-2">En la Semana 14 tu aplicación vivirá en Render y su base de datos en Neon, y cualquier persona de internet podrá escribirle. Haz la lista de <strong>al menos 5 datos</strong> de <strong>tu</strong> proyecto, decide si son sensibles y di dónde vivirá cada uno en la Semana 14 (por ejemplo: variable de entorno en Render, variable en Neon, no se sube a GitHub, se queda en el código). Ejemplos de datos a considerar: contraseñas de los usuarios, los datos de conexión a Neon (<code>DB_URL</code>, <code>DB_USER</code>, <code>DB_PASSWORD</code>), la carpeta <code>datos/</code>, correos o teléfonos de las personas que atiende tu institución, el código fuente, el nombre del proyecto.</p>
+        <div class="table-responsive">
+          <table class="table table-sm small mb-2 align-middle">
+            <thead><tr><th style="width:4%">#</th><th style="width:32%">Dato</th><th style="width:16%">¿Sensible?</th><th>¿Dónde vivirá en la Semana 14? ¿Por qué?</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td><input class="form-control form-control-sm fill-line" type="text" /></td><td><input class="form-control form-control-sm fill-line" type="text" placeholder="Sí / No" /></td><td><input class="form-control form-control-sm fill-line" type="text" /></td></tr>
+              <tr><td>2</td><td><input class="form-control form-control-sm fill-line" type="text" /></td><td><input class="form-control form-control-sm fill-line" type="text" placeholder="Sí / No" /></td><td><input class="form-control form-control-sm fill-line" type="text" /></td></tr>
+              <tr><td>3</td><td><input class="form-control form-control-sm fill-line" type="text" /></td><td><input class="form-control form-control-sm fill-line" type="text" placeholder="Sí / No" /></td><td><input class="form-control form-control-sm fill-line" type="text" /></td></tr>
+              <tr><td>4</td><td><input class="form-control form-control-sm fill-line" type="text" /></td><td><input class="form-control form-control-sm fill-line" type="text" placeholder="Sí / No" /></td><td><input class="form-control form-control-sm fill-line" type="text" /></td></tr>
+              <tr><td>5</td><td><input class="form-control form-control-sm fill-line" type="text" /></td><td><input class="form-control form-control-sm fill-line" type="text" placeholder="Sí / No" /></td><td><input class="form-control form-control-sm fill-line" type="text" /></td></tr>
+              <tr><td>6</td><td><input class="form-control form-control-sm fill-line" type="text" /></td><td><input class="form-control form-control-sm fill-line" type="text" placeholder="Sí / No" /></td><td><input class="form-control form-control-sm fill-line" type="text" /></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small-muted mb-1">Cierra con un párrafo de 3 a 5 líneas: de todo lo anterior, ¿qué dato crees que sería más grave perder o filtrar, y por qué?</p>
+        <textarea class="code-area" rows="5"></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte E — Reflexión (10%)</h3>
+        <ol class="small">
+          <li class="mb-2">
+            <strong>Empatía con el usuario:</strong> piensa en la persona de tu institución que usará el rol con menos permisos. ¿Cómo se sentirá al ver una pantalla que dice "No tienes permiso"? ¿Qué cambiarías del mensaje para que se sienta orientada y no bloqueada?
+            <textarea class="form-control mt-1" rows="3"></textarea>
+          </li>
+          <li>
+            <strong>Rigor en la calidad:</strong> explica con tus palabras la diferencia entre <em>ocultar un botón</em> y <em>proteger una ruta</em>, y por qué no basta con lo primero. ¿Qué te falta para considerar tu login "listo" para el público en la Semana 14?
+            <textarea class="form-control mt-1" rows="3"></textarea>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Lista de cotejo (marca antes de entregar)</h3>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck1" /><label class="form-check-label small" for="ck1">Trabajé en la rama <code>development</code> (no en <code>main</code>).</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck2" /><label class="form-check-label small" for="ck2">Crear, listar, editar y eliminar funcionan, y mis datos sobreviven al reinicio.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck3" /><label class="form-check-label small" for="ck3">Solo dos campos tienen validación y muestran su mensaje al enviar el formulario vacío.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck4" /><label class="form-check-label small" for="ck4">Agregué <code>spring-boot-starter-security</code> y <code>thymeleaf-extras-springsecurity6</code> al <code>pom.xml</code>.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck5" /><label class="form-check-label small" for="ck5">Tengo <code>Usuario</code>, <code>UsuarioRepository</code> y la carpeta <code>security</code> con sus tres clases, todas dentro de mi paquete base.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck6" /><label class="form-check-label small" for="ck6">Las contraseñas están cifradas con BCrypt y <strong>no</strong> aparecen escritas en ningún archivo del proyecto.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck7" /><label class="form-check-label small" for="ck7">Mi <code>application.properties</code> usa <code>${ADMIN_PASSWORD}</code> y <code>${ENTRENADOR_PASSWORD}</code>.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck8" /><label class="form-check-label small" for="ck8">Tengo <code>login.html</code> y <code>acceso-denegado.html</code>, y el entrenador recibe el 403 al entrar a mano a la ruta de crear.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck9" /><label class="form-check-label small" for="ck9">Mi lista oculta los botones de administración al otro rol con <code>sec:authorize</code> y tiene "Cerrar sesión".</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck10" /><label class="form-check-label small" for="ck10"><code>datos/</code> está en el <code>.gitignore</code> y no se subió a GitHub.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck11" /><label class="form-check-label small" for="ck11">Completé la nota de datos sensibles con al menos 5 filas.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck12" /><label class="form-check-label small" for="ck12">Subí todo a mi rama <code>development</code> en GitHub.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck13" /><label class="form-check-label small" for="ck13">Exporté el PDF como <code>Guia13_TuNombre.pdf</code>.</label></div>
+      </div>
+    </div>
+
+    <div class="callout warning">
+      <div class="fw-semibold">Rúbrica rápida (1 punto total)</div>
+      <div class="small-muted">Parte A: 0.20 · Parte B: 0.25 · Parte C: 0.20 · Parte D: 0.25 · Parte E: 0.10 = <strong>1.00</strong>. Se valora que el login y los roles funcionen en <strong>tu</strong> proyecto (no copiados con los nombres del ejemplo), que ninguna contraseña real aparezca en el código ni en el PDF, y que la nota de la Parte D sea concreta y propia. No hay hito de Entrega Parcial esta semana: el siguiente es la Entrega Parcial 3 en la Semana 14.</div>
+    </div>
+
+    <div class="d-flex gap-2 mt-3 no-print">
+      <button class="btn btn-primary btn-lg btn-export" onclick="window.print()">Exportar a PDF</button>
+      <a class="btn btn-outline-primary btn-lg" href="index.html">Volver al inicio</a>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Proyecto — Entregable de la Guía 13 · Semana 13 (formato 18 semanas) · Fecha límite: antes de la Sesión 14
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

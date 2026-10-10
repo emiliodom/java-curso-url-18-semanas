@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cheat Sheet — Semana 13 (Login y roles)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 13 — Login y roles</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link active" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Cheat Sheet · Semana 13</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Login, roles y variables de entorno: todo en una página</h1>
+          <div class="small-muted">Continúa <code>Jugador</code> en <code>taller-formularios</code> (Escuela de Fútbol Los Cerritos). Tema nuevo: quién puede entrar y qué puede hacer.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 1000px;">
+    <ul class="nav nav-tabs mb-4 no-print" role="tablist">
+      <li class="nav-item" role="presentation"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-conceptos" type="button" role="tab">📘 Conceptos</button></li>
+      <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-errores" type="button" role="tab">🛠 Errores comunes</button></li>
+    </ul>
+    <div class="tab-content">
+
+      <div class="tab-pane fade show active" id="tab-conceptos" role="tabpanel">
+
+        <div class="card mb-3"><div class="card-body"><h2 class="h5 section-title">Autenticación vs. autorización</h2>
+          <div class="table-responsive"><table class="table table-sm small mb-0"><thead><tr><th></th><th>Pregunta</th><th>Analogía escolar</th><th>En el proyecto</th></tr></thead><tbody>
+            <tr><td><strong>Autenticación</strong></td><td>¿Quién eres?</td><td>La llave que demuestra que eres docente de la escuela</td><td>El login: usuario y contraseña</td></tr>
+            <tr><td><strong>Autorización</strong></td><td>¿Qué puedes hacer?</td><td>La llave del aula no abre la dirección; el director firma el libro de calificaciones</td><td>Roles <code>ADMIN</code> y <code>ENTRENADOR</code></td></tr>
+          </tbody></table></div></div></div>
+
+        <div class="card mb-3"><div class="card-body"><h2 class="h5 section-title">El flujo del login en 5 pasos</h2>
+          <ol class="small-muted mb-0">
+            <li>La persona escribe usuario y contraseña en <code>login.html</code> (campos llamados <code>username</code> y <code>password</code>).</li>
+            <li>Spring Security llama a <code>UsuarioDetailsService.loadUserByUsername(...)</code>: "dame los datos de este usuario".</li>
+            <li>El servicio busca en la base con <code>UsuarioRepository.findByUsername(...)</code>.</li>
+            <li>Spring compara lo escrito con el <strong>hash BCrypt</strong> guardado (no desencripta: vuelve a calcular y compara).</li>
+            <li>Coincide: entra con su rol y va a <code>/jugadores</code>. No coincide: <code>/login?error</code>.</li>
+          </ol></div></div>
+
+        <div class="card mb-3"><div class="card-body"><h2 class="h5 section-title">Hash (BCrypt) vs. cifrar</h2>
+          <div class="table-responsive"><table class="table table-sm small mb-2"><thead><tr><th></th><th>Cifrar</th><th>Hash (BCrypt)</th></tr></thead><tbody>
+            <tr><td>Analogía</td><td>Caja con candado</td><td>Licuadora: de la fruta sale jugo, del jugo no vuelves a la fruta</td></tr>
+            <tr><td>¿Se puede revertir?</td><td>Sí, con la llave</td><td>No</td></tr>
+            <tr><td>Uso</td><td>Mensajes que luego hay que leer</td><td>Contraseñas</td></tr>
+          </tbody></table></div>
+          <p class="small-muted mb-0">En la tabla <code>usuario</code> la columna <code>password</code> contiene algo como <code>$2a$10$...</code>, nunca <code>Clave-Admin-2026</code>. La misma clave produce un hash distinto cada vez; <code>PasswordEncoder</code> sabe compararlos. Se crea con <code>passwordEncoder.encode(clave)</code>.</p></div></div>
+
+        <div class="card mb-3"><div class="card-body"><h2 class="h5 section-title">Variables de entorno: el post-it que no se pega al monitor</h2>
+          <p class="small-muted">Escribir la contraseña en el código es pegar el post-it con la clave en el monitor (y GitHub es público). Con una variable de entorno el archivo solo tiene un <em>hueco</em>, <code>${NOMBRE}</code>, y la clave se entrega al arrancar.</p>
+<pre><code># src/main/resources/application.properties
+app.admin.password=${ADMIN_PASSWORD}
+app.entrenador.password=${ENTRENADOR_PASSWORD}</code></pre>
+<pre><code># PowerShell (Windows)
+$env:ADMIN_PASSWORD = "Clave-Admin-2026"
+$env:ENTRENADOR_PASSWORD = "Clave-Entr-2026"
+.\mvnw.cmd spring-boot:run
+
+# Git Bash / macOS / Linux
+export ADMIN_PASSWORD="Clave-Admin-2026"
+export ENTRENADOR_PASSWORD="Clave-Entr-2026"
+./mvnw spring-boot:run</code></pre>
+          <ul class="small-muted mb-0">
+            <li>Esas claves son <strong>ejemplo: usa las tuyas</strong>.</li>
+            <li>Viven solo en esa ventana de terminal: si la cierras, defínelas otra vez.</li>
+            <li>Esta semana arranca desde la <strong>terminal</strong>: el botón ▶ Run de VS Code no ve las variables de la terminal.</li>
+            <li><code>CargadorUsuarios</code> solo <em>crea</em> los usuarios si no existen: cambiar la variable después no cambia la clave ya guardada. En desarrollo, detén la app y borra la carpeta <code>datos/</code> (pierdes los jugadores).</li>
+            <li>En la Semana 14 se repite con <code>DB_URL</code>, <code>DB_USER</code> y <code>DB_PASSWORD</code> de Neon.</li>
+          </ul></div></div>
+
+        <div class="card mb-3"><div class="card-body"><h2 class="h5 section-title">Roles y reglas de acceso</h2>
+<pre><code>.requestMatchers("/login", "/estilos.css", "/error").permitAll()
+.requestMatchers("/jugadores/nuevo", "/jugadores/*/editar").hasRole("ADMIN")
+.requestMatchers(HttpMethod.POST, "/jugadores/**").hasRole("ADMIN")
+.anyRequest().authenticated()</code></pre>
+          <div class="table-responsive mt-2"><table class="table table-sm small mb-2"><thead><tr><th>Ruta</th><th>Quién entra</th></tr></thead><tbody>
+            <tr><td><code>/login</code>, <code>/estilos.css</code>, <code>/error</code></td><td>Todos (públicas)</td></tr>
+            <tr><td>GET <code>/jugadores/nuevo</code>, GET <code>/jugadores/*/editar</code>, todo POST a <code>/jugadores/**</code></td><td>Solo <code>ADMIN</code></td></tr>
+            <tr><td>Cualquier otra (<code>/</code>, <code>/jugadores</code>)</td><td>Cualquier usuario con sesión</td></tr>
+          </tbody></table></div>
+          <p class="small-muted mb-0"><strong>El orden importa: gana la primera regla que coincide</strong>, y <code>anyRequest()</code> va al final. Los roles se guardan sin el prefijo (<code>ADMIN</code>); Spring agrega <code>ROLE_</code> solo.</p></div></div>
+
+        <div class="card mb-3"><div class="card-body"><h2 class="h5 section-title"><code>sec:authorize</code> vs. <code>requestMatchers</code></h2>
+          <div class="table-responsive"><table class="table table-sm small mb-2"><thead><tr><th></th><th><code>sec:authorize</code></th><th><code>requestMatchers</code></th></tr></thead><tbody>
+            <tr><td>Dónde</td><td>En la plantilla (<code>lista.html</code>)</td><td>En <code>SecurityConfig</code></td></tr>
+            <tr><td>Qué decide</td><td>Qué se <em>dibuja</em> (botón, columna)</td><td>Qué se <em>permite</em> (la ruta)</td></tr>
+            <tr><td>Si lo omites</td><td>El entrenador ve botones que no puede usar</td><td>El entrenador entra a <code>/jugadores/nuevo</code> escribiendo la dirección</td></tr>
+          </tbody></table></div>
+<pre><code>&lt;html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"&gt;
+&lt;p sec:authorize="hasRole('ADMIN')"&gt;&lt;a th:href="@{/jugadores/nuevo}"&gt;+ Inscribir jugador&lt;/a&gt;&lt;/p&gt;
+&lt;strong sec:authentication="name"&gt;usuario&lt;/strong&gt;
+&lt;form th:action="@{/logout}" method="post"&gt;&lt;button type="submit"&gt;Cerrar sesión&lt;/button&gt;&lt;/form&gt;</code></pre>
+          <p class="small-muted mb-0"><strong>Ocultar un botón NO protege la ruta.</strong> Ocultar mejora la experiencia; <code>requestMatchers</code> da la seguridad. Úsalos juntos. El cierre de sesión es un POST con token: <code>th:action</code> lo agrega solo.</p></div></div>
+
+        <div class="card mb-3"><div class="card-body"><h2 class="h5 section-title">Cómo se lee la línea <code>package</code> (carpeta <code>security</code> nueva)</h2>
+<pre><code>package gt.edu.url.tallerformularios.security;
+        └───┬───┘ └───────┬───────┘ └───┬──┘
+            │             │             └─ la CAPA: model, repository, service, controller o security (nueva)
+            │             └─ el PROYECTO: Artifact "taller-formularios" SIN guion (lo borras tú en Initializr)
+            └─ el GROUP: gt.edu.url</code></pre>
+          <div class="table-responsive mt-2"><table class="table table-sm small mb-2"><thead><tr><th>Nombre</th><th>Dónde va</th><th>¿Guion?</th></tr></thead><tbody>
+            <tr><td><code>taller-formularios</code></td><td>Carpeta, <code>&lt;artifactId&gt;</code></td><td><strong>Sí</strong></td></tr>
+            <tr><td><code>gt.edu.url.tallerformularios</code></td><td><code>package</code>, imports, ruta <code>src/main/java/gt/edu/url/tallerformularios/</code></td><td><strong>No</strong>; si lo dejas en Initializr queda <code>taller_formularios</code> (guion bajo)</td></tr>
+            <tr><td><code>TallerFormulariosApplication</code></td><td>Clase principal</td><td><strong>No</strong>: CamelCase</td></tr>
+          </tbody></table></div>
+          <p class="small-muted mb-0">Las carpetas de capa, incluida <code>security/</code>, van <em>dentro</em> del paquete base. Una al lado compila, pero Spring no la registra y no se aplica la seguridad.</p></div></div>
+
+        <div class="card mb-3"><div class="card-body"><h2 class="h5 section-title">Clases nuevas: anotación / clase → import completo</h2>
+          <div class="table-responsive"><table class="table table-sm small mb-0"><thead><tr><th>Anotación / clase</th><th>Import completo</th><th>Para qué</th></tr></thead><tbody>
+            <tr><td><code>@Entity</code>, <code>@Id</code>, <code>@GeneratedValue</code>, <code>GenerationType</code>, <code>@Column</code></td><td><code>jakarta.persistence.*</code> (cada una por separado)</td><td>Entidad <code>Usuario</code> (igual que <code>Jugador</code>)</td></tr>
+            <tr><td><code>JpaRepository</code></td><td><code>org.springframework.data.jpa.repository.JpaRepository</code></td><td><code>UsuarioRepository</code></td></tr>
+            <tr><td><code>@Configuration</code>, <code>@Bean</code></td><td><code>org.springframework.context.annotation.Configuration</code> / <code>...Bean</code></td><td>Clase de configuración y objetos que Spring guarda</td></tr>
+            <tr><td><code>HttpSecurity</code></td><td><code>org.springframework.security.config.annotation.web.builders.HttpSecurity</code></td><td>Escribir las reglas</td></tr>
+            <tr><td><code>SecurityFilterChain</code></td><td><code>org.springframework.security.web.SecurityFilterChain</code></td><td>Resultado de <code>http.build()</code></td></tr>
+            <tr><td><code>PasswordEncoder</code></td><td><code>org.springframework.security.crypto.password.PasswordEncoder</code></td><td>Tipo del bean de cifrado</td></tr>
+            <tr><td><code>BCryptPasswordEncoder</code></td><td><code>org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder</code></td><td>Genera y compara hashes</td></tr>
+            <tr><td><code>HttpMethod</code></td><td><code>org.springframework.http.HttpMethod</code></td><td>Regla solo para POST</td></tr>
+            <tr><td><code>UserDetailsService</code>, <code>UserDetails</code>, <code>User</code>, <code>UsernameNotFoundException</code></td><td><code>org.springframework.security.core.userdetails.*</code> (cada una por separado)</td><td><code>UsuarioDetailsService</code></td></tr>
+            <tr><td><code>@Service</code>, <code>@Component</code></td><td><code>org.springframework.stereotype.Service</code> / <code>...Component</code></td><td>Que Spring registre la clase</td></tr>
+            <tr><td><code>CommandLineRunner</code></td><td><code>org.springframework.boot.CommandLineRunner</code></td><td>Código que corre una vez al arrancar</td></tr>
+            <tr><td><code>@Value</code></td><td><code>org.springframework.beans.factory.annotation.Value</code></td><td>Leer <code>${app.admin.password}</code></td></tr>
+            <tr><td><code>@Controller</code>, <code>@GetMapping</code>, <code>@RequestMapping</code></td><td><code>org.springframework.stereotype.Controller</code> / <code>org.springframework.web.bind.annotation.GetMapping</code> / <code>...RequestMapping</code></td><td><code>AccesoController</code></td></tr>
+          </tbody></table></div>
+          <p class="small-muted mt-2 mb-0">Dependencias: <code>spring-boot-starter-security</code> y <code>thymeleaf-extras-springsecurity6</code> (sin versión). En Initializr se marca <strong>Spring Security</strong>; con Thymeleaf marcado, la segunda se agrega sola. <code>/acceso-denegado</code> usa <code>@RequestMapping</code> (no <code>@GetMapping</code>) para aceptar también un POST rechazado. Es <code>jakarta</code>, no <code>javax</code>.</p></div></div>
+      </div>
+
+      <div class="tab-pane fade" id="tab-errores" role="tabpanel">
+        <div class="card mb-3"><div class="card-body"><h2 class="h5 section-title">Los 8 errores de la semana (síntoma → causa → arreglo)</h2>
+          <div class="table-responsive"><table class="table table-sm small mb-0"><thead><tr><th>#</th><th>Síntoma / mensaje</th><th>Causa</th><th>Arreglo</th></tr></thead><tbody>
+            <tr><td>1</td><td>No arranca: <code>PlaceholderResolutionException: Could not resolve placeholder 'ADMIN_PASSWORD' in value "${ADMIN_PASSWORD}" &lt;-- "${app.admin.password}"</code> (arriba, <code>Error creating bean with name 'cargadorUsuarios'</code>)</td><td>Falta la variable de entorno en esa terminal (o se arrancó con ▶ Run)</td><td>Defínela y arranca con <code>mvnw</code>. Es una protección: mejor no arrancar que un admin sin clave</td></tr>
+            <tr><td>2</td><td>En consola <code>Using generated security password: ...</code>; usuario <code>user</code>; todo pide login</td><td>Hay Security pero no hay <code>SecurityConfig</code> detectada (falta o está fuera del paquete base)</td><td>Crea <code>security/SecurityConfig.java</code> dentro del paquete base con <code>@Configuration</code></td></tr>
+            <tr><td>3</td><td>No arranca: <code>Can't configure requestMatchers after anyRequest</code></td><td><code>anyRequest()</code> escrito antes de otras reglas</td><td>Muévelo al final</td></tr>
+            <tr><td>4</td><td>Login siempre falla (<code>/login?error</code>); consola: <code>Encoded password does not look like BCrypt</code></td><td>Se guardó la contraseña sin <code>encode()</code></td><td>Usa <code>passwordEncoder.encode(...)</code>; borra <code>datos/</code> (dev) y arranca de nuevo</td></tr>
+            <tr><td>5</td><td>Vuelve a <code>/login?error</code>: "Usuario o contraseña incorrectos."</td><td>Contraseña incorrecta (a propósito no dice cuál de los dos falló). Ojo: cambiar la variable después de crear los usuarios no cambia la clave guardada</td><td>Usa la clave con que se creó el usuario, o borra <code>datos/</code> (dev) para recrearlo</td></tr>
+            <tr><td>6</td><td>El <code>entrenador</code> recibe 403: "No tienes permiso para esta acción."</td><td>Su rol no cumple <code>hasRole("ADMIN")</code></td><td>No es un fallo: es la protección funcionando. Entra con <code>admin</code></td></tr>
+            <tr><td>7</td><td><strong>Silencioso:</strong> los botones de admin los ven todos y no hay error</td><td><code>sec:authorize</code> no se procesa si falta <code>thymeleaf-extras-springsecurity6</code> (o el <code>xmlns:sec</code>)</td><td>Revisa que la dependencia exista y recarga Maven; reinicia a mano</td></tr>
+            <tr><td>8</td><td>Guardar o cerrar sesión da 403 aunque seas <code>admin</code></td><td>Formulario con <code>action=</code> normal: no lleva token CSRF</td><td>Usa <code>th:action="@{...}"</code>, que lo agrega solo</td></tr>
+          </tbody></table></div></div></div>
+
+        <div class="card mb-3"><div class="card-body"><h2 class="h5 section-title">Validaciones reducidas (solo nombre y edad)</h2>
+          <div class="table-responsive"><table class="table table-sm small mb-2"><thead><tr><th>Campo</th><th>Reglas</th><th>Mensaje</th></tr></thead><tbody>
+            <tr><td><code>nombre</code></td><td><code>@NotBlank</code></td><td>"El nombre es obligatorio."</td></tr>
+            <tr><td><code>edad</code> (<code>Integer</code>)</td><td><code>@NotNull</code>, <code>@Min(5)</code>, <code>@Max(17)</code></td><td>"La edad es obligatoria." / "La edad mínima es 5 años." / "La edad máxima es 17 años."</td></tr>
+          </tbody></table></div>
+          <ul class="small-muted mb-0">
+            <li>Todas vienen de <code>jakarta.validation.constraints</code> (<code>NotBlank</code>, <code>NotNull</code>, <code>Min</code>, <code>Max</code>), con su <code>import</code> cada una.</li>
+            <li>Campo numérico = <code>Integer</code>, no <code>int</code> (con <code>int</code>, la casilla vacía da un error en inglés).</li>
+            <li>Con errores se devuelve la plantilla (no <em>redirect</em>); con éxito: guardar → redirigir → mostrar.</li>
+            <li>Si falta <code>spring-boot-starter-validation</code>, las reglas se ignoran en silencio.</li>
+          </ul></div></div>
+
+        <div class="callout warning mb-0"><div class="fw-semibold">Datos sensibles: nunca a GitHub</div><div class="small-muted">Contraseñas de usuarios, <code>DB_URL</code>/<code>DB_USER</code>/<code>DB_PASSWORD</code> de Neon, tokens o claves de API, la carpeta <code>datos/</code> (contiene jugadores, menores de edad) y correos o teléfonos reales de encargados. No son sensibles: nombre del proyecto, código sin secretos, nombres de clases y estilos.</div></div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Cheat Sheet — Semana 13 · Autenticación, roles y renderizado condicional (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

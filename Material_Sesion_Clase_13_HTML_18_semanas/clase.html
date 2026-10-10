@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guía Docente — Semana 13 (70 min)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 13 — Login y roles</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link active" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Guía docente · Semana 13 · 70 minutos (11:10–12:20)</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Autenticación, roles y renderizado condicional</h1>
+          <div class="small-muted">Sesión sabatina en línea del 10 de octubre de 2026. Continúa <strong>Escuela de Fútbol Los Cerritos</strong>, entidad <code>Jugador</code> en <code>taller-formularios</code>. Sesión deliberadamente liviana: un tema nuevo (el login) explicado despacio y repaso de lo demás.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 1000px;">
+
+    <div class="card mb-3"><div class="card-body">
+      <h2 class="h5 section-title">Objetivos de la sesión</h2>
+      <ul class="small-muted mb-0">
+        <li>Distinguir <strong>autenticación</strong> (¿quién eres?) de <strong>autorización</strong> (¿qué puedes hacer?).</li>
+        <li>Construir un login conectado a la base de datos: <code>Usuario</code>, <code>UsuarioRepository</code>, <code>UsuarioDetailsService</code>, <code>SecurityConfig</code> y <code>login.html</code>.</li>
+        <li>Explicar por qué una contraseña se guarda como <em>hash</em> (BCrypt) y no en texto plano.</li>
+        <li>Entregar las contraseñas al proyecto con <strong>variables de entorno</strong>, sin escribirlas en el código.</li>
+        <li>Restringir rutas por rol (<code>requestMatchers</code>) y ocultar botones (<code>sec:authorize</code>), sabiendo que ocultar <em>no protege</em>.</li>
+        <li>Repasar el CRUD de <code>Jugador</code> con solo dos validaciones (nombre y edad) y leer sus mensajes de error.</li>
+      </ul>
+    </div></div>
+
+    <div class="card mb-3"><div class="card-body">
+      <h2 class="h5 section-title">Distribución del tiempo</h2>
+      <table class="table table-sm small mb-0"><tbody>
+        <tr><td><span class="time-chip">00–08</span></td><td>Presaberes (quiz) + repaso: ¿qué guarda hoy la app?</td></tr>
+        <tr><td><span class="time-chip">08–20</span></td><td>Concepto: autenticación vs. autorización y el flujo del login (demo: login por defecto de Spring)</td></tr>
+        <tr><td><span class="time-chip">20–45</span></td><td>Construir el login: Usuario + BCrypt + SecurityConfig + login.html + variables de entorno</td></tr>
+        <tr><td><span class="time-chip">45–55</span></td><td>Roles: restringir rutas y ocultar botones; probar con los dos usuarios</td></tr>
+        <tr><td><span class="time-chip">55–63</span></td><td>Repaso CRUD + las 2 validaciones (provocar un error y leer el mensaje)</td></tr>
+        <tr><td><span class="time-chip">63–70</span></td><td>Cierre: nota de datos sensibles, Challenge / Quiz Final, conexión con la Semana 14</td></tr>
+      </tbody></table>
+    </div></div>
+
+    <div class="callout mb-3">
+      <div class="fw-semibold">Normas rápidas</div>
+      <div class="small-muted">Cámara opcional, micrófono apagado salvo para preguntar. Preguntas en el chat. Esta semana <strong>se arranca desde la terminal</strong> (el botón ▶ Run de VS Code no ve las variables definidas en la terminal). Quien se atrasa copia el código completo de <a href="ejercicios.html">Ejercicios</a> y sigue: nadie se queda sin proyecto funcionando. Regla de oro de hoy: <strong>ante un error largo, lean el último <code>Caused by:</code></strong>.</div>
+    </div>
+
+    <div class="card mb-3"><div class="card-body">
+      <h2 class="h5 section-title">Guion minuto a minuto</h2>
+      <div class="accordion" id="acc">
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#c1">
+              <span class="time-chip me-2">00–08</span> Presaberes (quiz) + repaso: ¿qué guarda hoy la app?
+            </button>
+          </h2>
+          <div id="c1" class="accordion-collapse collapse show" data-bs-parent="#acc">
+            <div class="accordion-body">
+              <p><strong>Qué haces:</strong> abres <code>quiz.html</code> en modo <em>Presaberes</em> (resolución individual, 3 a 4 minutos) y luego repasas en voz alta con la aplicación corriendo.</p>
+              <p><strong>Guion:</strong> "La semana pasada logramos que los jugadores sobrevivan al reinicio. Hagamos una prueba: abro <code>/jugadores</code> y ¿quién puede entrar? <em>Cualquiera</em> que conozca la dirección. Puede ver a niños menores de edad, borrarlos, cambiarlos. Hoy ponemos una puerta con llave."</p>
+              <p class="mb-0"><strong>Pregunta al grupo (chat):</strong> "¿Quién debería poder borrar un jugador en la escuela? ¿Y quién solo mirar la lista?" Anota las respuestas: salen solas las palabras <em>director</em> y <em>entrenador</em>, que serán los roles <code>ADMIN</code> y <code>ENTRENADOR</code>.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c2">
+              <span class="time-chip me-2">08–20</span> Concepto: autenticación vs. autorización + demo del login por defecto (provocada)
+            </button>
+          </h2>
+          <div id="c2" class="accordion-collapse collapse" data-bs-parent="#acc">
+            <div class="accordion-body">
+              <p><strong>Dibuja en la pizarra</strong> dos preguntas: <em>¿Quién eres?</em> = <strong>autenticación</strong>; <em>¿Qué puedes hacer?</em> = <strong>autorización</strong>.</p>
+              <ul>
+                <li><strong>Analogía de la llave del aula:</strong> la llave demuestra que eres docente de la escuela (autenticación). Pero la llave del aula de cómputo no abre la dirección: lo que tu llave abre es la autorización.</li>
+                <li><strong>Analogía director vs. docente de turno:</strong> los dos entran al edificio; solo el director firma el libro de calificaciones.</li>
+              </ul>
+              <p><strong>Flujo del login en 5 pasos</strong> (escríbelos y déjalos visibles):</p>
+              <ol>
+                <li>La persona escribe usuario y contraseña en <code>login.html</code>.</li>
+                <li>Spring Security llama a <code>UsuarioDetailsService</code>: "dame los datos de este usuario".</li>
+                <li>El servicio lo busca en la base con <code>UsuarioRepository</code>.</li>
+                <li>Spring compara lo escrito con el <em>hash</em> guardado (BCrypt).</li>
+                <li>Si coincide, la persona entra con su rol; si no, vuelve a <code>/login?error</code>.</li>
+              </ol>
+              <div class="callout warning mb-2"><div class="fw-semibold">Provoca el error a propósito: el login por defecto de Spring</div>
+                <div class="small-muted">
+                  <ol class="mb-1">
+                    <li>En un proyecto de práctica, agrega <strong>solo</strong> la dependencia <code>spring-boot-starter-security</code> (sin ninguna clase de configuración) y arranca.</li>
+                    <li>Muestra la consola: aparece <code>Using generated security password: ...</code> (un código largo distinto cada vez). Abre <code>http://localhost:8080</code>: sale un formulario que tú no escribiste.</li>
+                    <li>Entra con usuario <code>user</code> y ese código. Pregunta: "¿Quién escogió ese usuario y esa clave? ¿Se la dirían ustedes a las familias de la escuela? ¿Y si reinicio?" (cambia en cada arranque).</li>
+                    <li><strong>Mensaje clave:</strong> Spring protege todo por defecto, pero con una sola cuenta inventada. Hoy la reemplazamos por usuarios reales guardados en nuestra base.</li>
+                  </ol>
+                  Detén la app (<kbd>Ctrl</kbd>+<kbd>C</kbd>) y vuelve al proyecto <code>taller-formularios</code>.
+                </div>
+              </div>
+              <div class="callout info mb-0"><div class="small-muted"><strong>Dependencias de hoy:</strong> Spring Security (nueva) en Initializr. Al marcar Thymeleaf junto con Security, Initializr agrega solo <code>thymeleaf-extras-springsecurity6</code> y no se edita el <code>pom.xml</code>. Quien <em>continúa su proyecto de la Semana 12</em> debe agregar a mano <code>org.springframework.boot:spring-boot-starter-security</code> y <code>org.thymeleaf.extras:thymeleaf-extras-springsecurity6</code> (sin versión; las gestiona Spring Boot), y reiniciar a mano.</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c3">
+              <span class="time-chip me-2">20–45</span> Construir el login: Usuario + BCrypt + SecurityConfig + login.html + variables de entorno
+            </button>
+          </h2>
+          <div id="c3" class="accordion-collapse collapse" data-bs-parent="#acc">
+            <div class="accordion-body">
+              <p><strong>Ritmo:</strong> un archivo a la vez, mostrando ruta, <code>package</code> e <code>import</code> en pantalla (regla del curso). Fuente del código completo: <a href="ejercicios.html">Ejercicios</a>. La carpeta <code>security/</code> es <strong>nueva</strong> y va dentro del paquete base <code>gt.edu.url.tallerformularios</code>.</p>
+              <ol>
+                <li><strong><code>model/Usuario.java</code> (5 min):</strong> igual que <code>Jugador</code>: <code>@Entity</code>, <code>@Id</code>, campos <code>username</code>, <code>password</code>, <code>rol</code>. Escribe en el comentario: "aquí nunca va la contraseña real, va el hash".</li>
+                <li><strong><code>UsuarioRepository</code> (2 min):</strong> una línea de método derivado, <code>Optional&lt;Usuario&gt; findByUsername(String username)</code>. Es lo mismo que la Semana 12.</li>
+                <li><strong>Hash vs. cifrar (3 min):</strong> "Cifrar es una caja con candado: quien tiene la llave la abre. Un <em>hash</em> es una licuadora: de la fruta sale el jugo, pero del jugo no se vuelve a la fruta. Por eso, ni quien administre la base puede leer las contraseñas." Muestra que BCrypt produce algo que empieza con <code>$2a$</code> y que <strong>la misma clave da un hash distinto cada vez</strong>; Spring compara de forma segura, no desencripta.</li>
+                <li><strong><code>UsuarioDetailsService</code> (4 min):</strong> "Spring pregunta: dame los datos de este usuario. Esta clase responde." Subraya <code>orElseThrow</code> (el <code>Optional</code> de la Semana 12) y que se agrega <code>.roles(...)</code> sin el prefijo <code>ROLE_</code>.</li>
+                <li><strong><code>SecurityConfig</code> (4 min):</strong> solo el <code>@Bean PasswordEncoder</code> y la cadena de filtros; las reglas por rol se escriben en el siguiente bloque (aquí déjalo con <code>anyRequest().authenticated()</code> y <code>permitAll</code> para <code>/login</code>, <code>/estilos.css</code>, <code>/error</code>).</li>
+                <li><strong><code>login.html</code> + <code>AccesoController</code> (3 min):</strong> los campos se llaman exactamente <code>username</code> y <code>password</code> y el formulario usa <code>th:action</code> (agrega solo el token que protege contra envíos falsos).</li>
+                <li><strong>Variables de entorno (4 min):</strong> ver el recuadro siguiente.</li>
+              </ol>
+              <p class="small-muted">Cuando todos tengan el código, dedica 2 minutos a preguntar: "¿en qué archivo está escrita la contraseña del administrador?" Respuesta correcta: en ninguno.</p>
+
+              <div class="callout success mb-2"><div class="fw-semibold">Variables de entorno: el post-it que no se pega al monitor</div>
+                <div class="small-muted">
+                  <strong>Analogía:</strong> escribir la contraseña en el código es como pegar un post-it con la clave de la sala de cómputo en el monitor: cualquiera que pase la ve (y GitHub es público). Una variable de entorno es decirle la clave al propietario <em>de viva voz</em>, al momento de abrir: no queda escrita en el archivo. En <code>application.properties</code> solo hay un "hueco": <code>app.admin.password=${ADMIN_PASSWORD}</code>.
+                  <pre class="mb-1 mt-2"><code># PowerShell (Windows), en la misma terminal donde arrancas:
+$env:ADMIN_PASSWORD = "Clave-Admin-2026"
+$env:ENTRENADOR_PASSWORD = "Clave-Entr-2026"
+.\mvnw.cmd spring-boot:run
+
+# Git Bash / macOS / Linux:
+export ADMIN_PASSWORD="Clave-Admin-2026"
+export ENTRENADOR_PASSWORD="Clave-Entr-2026"
+./mvnw spring-boot:run</code></pre>
+                  Esas claves son <strong>ejemplo: cada estudiante inventa las suyas</strong>. Viven solo en esa ventana de terminal; si la cierran, deben definirlas de nuevo. Esta es la misma técnica que usaremos en la Semana 14 para <code>DB_URL</code>, <code>DB_USER</code> y <code>DB_PASSWORD</code> de Neon.
+                </div></div>
+
+              <div class="callout warning mb-0"><div class="fw-semibold">Provoca el error a propósito: la variable de entorno faltante</div>
+                <div class="small-muted">
+                  Cierra la terminal, ábrela de nuevo y arranca <strong>sin</strong> definir las variables. La aplicación no arranca. Pide al grupo que lea el último <code>Caused by:</code> en voz alta:
+                  <pre class="mb-1 mt-2"><code>PlaceholderResolutionException: Could not resolve placeholder 'ADMIN_PASSWORD'
+  in value "${ADMIN_PASSWORD}" &lt;-- "${app.admin.password}"</code></pre>
+                  (Arriba del todo, <code>Error creating bean with name 'cargadorUsuarios'</code>.) <strong>Pregunta:</strong> "¿Esto es un problema o una protección?" Es una protección: preferimos que la app no arranque a que arranque con un administrador sin contraseña. Define las variables y arranca de nuevo.
+                  <br /><strong>Trampa que aparecerá:</strong> <code>CargadorUsuarios</code> solo <em>crea</em> los usuarios si no existen. Si alguien cambia la variable <em>después</em> de crearlos, la contraseña ya guardada no cambia. En desarrollo: detener la app y borrar la carpeta <code>datos/</code> (se pierden los jugadores; solo en <code>dev</code>). Además, la carpeta <code>datos/</code> debe estar en <code>.gitignore</code>.
+                </div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c4">
+              <span class="time-chip me-2">45–55</span> Roles: restringir rutas y ocultar botones; probar con los dos usuarios
+            </button>
+          </h2>
+          <div id="c4" class="accordion-collapse collapse" data-bs-parent="#acc">
+            <div class="accordion-body">
+              <p><strong>Escribe las reglas en <code>SecurityConfig</code></strong> (en este orden exacto) y léelas como una lista de reglas del reglamento escolar:</p>
+              <pre><code>.requestMatchers("/login", "/estilos.css", "/error").permitAll()
+.requestMatchers("/jugadores/nuevo", "/jugadores/*/editar").hasRole("ADMIN")
+.requestMatchers(HttpMethod.POST, "/jugadores/**").hasRole("ADMIN")
+.anyRequest().authenticated()</code></pre>
+              <ul>
+                <li><strong>El orden importa: gana la primera regla que coincide.</strong> Como en un reglamento: se lee de arriba hacia abajo y se aplica la primera que corresponde.</li>
+                <li><code>anyRequest()</code> es "todo lo demás": va <strong>siempre al final</strong>. Si lo escriben antes, la app no arranca con <code>Can't configure requestMatchers after anyRequest</code>.</li>
+                <li>Los POST (guardar y eliminar) se restringen aparte porque son las acciones que cambian datos.</li>
+              </ul>
+              <p><strong>Botones según el rol:</strong> en <code>lista.html</code>, <code>sec:authorize="hasRole('ADMIN')"</code> en el enlace "Inscribir jugador" y en la columna de acciones; <code>sec:authentication="name"</code> muestra quién tiene la sesión; "Cerrar sesión" es un formulario POST con <code>th:action</code>. Recuerda el espacio de nombres <code>xmlns:sec</code> al inicio y la dependencia <code>thymeleaf-extras-springsecurity6</code>.</p>
+              <p><strong>Prueba en vivo con los dos usuarios</strong> (la mitad del grupo con <code>admin</code>, la otra mitad con <code>entrenador</code>, luego intercambian):</p>
+              <ol>
+                <li><code>admin</code>: ve el enlace, crea, edita, elimina.</li>
+                <li><code>entrenador</code>: solo ve la lista, sin enlace ni columna de acciones.</li>
+                <li><strong>La prueba que importa:</strong> como <code>entrenador</code>, escribir a mano <code>http://localhost:8080/jugadores/nuevo</code> en la barra de direcciones. Resultado: página "Acceso denegado" (403).</li>
+              </ol>
+              <div class="callout warning mb-0"><div class="fw-semibold">Aviso de FAQ (dilo al grupo completo): ocultar un botón NO protege</div>
+                <div class="small-muted"><code>sec:authorize</code> es cosmético: decide qué se <em>dibuja</em>. <code>requestMatchers</code> es la protección real: decide qué se <em>permite</em>. Analogía: quitar el letrero de "Dirección" de la puerta no la cierra con llave. Por eso las dos van juntas: una cuida la experiencia, la otra cuida el acceso. Si el botón no desaparece y no hay error, revisa que exista la dependencia <code>thymeleaf-extras-springsecurity6</code> (falla en silencio).</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c5">
+              <span class="time-chip me-2">55–63</span> Repaso CRUD + las 2 validaciones (provocar un error)
+            </button>
+          </h2>
+          <div id="c5" class="accordion-collapse collapse" data-bs-parent="#acc">
+            <div class="accordion-body">
+              <p><strong>Qué haces:</strong> como <code>admin</code>, recorres el CRUD completo (crear, listar, editar, eliminar) sin explicar de nuevo: es repaso, <code>JugadorService</code>, <code>JugadorController</code> y <code>JugadorRepository</code> no cambian.</p>
+              <p><strong>Solo dos validaciones esta semana</strong> en <code>Jugador</code>: <code>@NotBlank</code> en <code>nombre</code> y <code>@NotNull @Min(5) @Max(17)</code> en <code>edad</code>. No repitas el gran número de validaciones de la Semana 11.</p>
+              <p><strong>Provoca y lee:</strong> envía el formulario vacío ("El nombre es obligatorio." y "La edad es obligatoria."), luego una edad de 25 ("La edad máxima es 17 años."). Pregunta: "¿Se guardó algo? ¿Qué devolvió el controlador: plantilla o <em>redirect</em>?" Con errores se devuelve la plantilla (para no perder lo escrito); con éxito, guardar → redirigir → mostrar.</p>
+              <p class="mb-0 small-muted">Recordatorio: el campo numérico es <code>Integer</code>, no <code>int</code> (con <code>int</code> la casilla vacía produce un error en inglés antes de las reglas). Si <code>Jugador</code> de algún estudiante conserva correo o teléfono con validaciones de la Semana 12, se dejan tal cual.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c6">
+              <span class="time-chip me-2">63–70</span> Cierre: datos sensibles, Challenge / Quiz Final, conexión con la Semana 14
+            </button>
+          </h2>
+          <div id="c6" class="accordion-collapse collapse" data-bs-parent="#acc">
+            <div class="accordion-body">
+              <p><strong>Nota de datos sensibles (3 min).</strong> Pide al grupo clasificar en el chat: <em>sensibles</em> (nunca a GitHub): contraseñas de usuarios, <code>DB_URL</code>/<code>DB_USER</code>/<code>DB_PASSWORD</code> de Neon, tokens o claves de API, la carpeta <code>datos/</code> (contiene jugadores = datos de menores) y correos o teléfonos reales de encargados. <em>No sensibles</em>: nombre del proyecto, código sin secretos, nombres de clases, estilos. Es la base de la nota que llevan en la Guía 13.</p>
+              <p><strong>Evidencias (3 min):</strong> abren <a href="challenge.html">Challenge</a> (Laboratorio de Robótica del Instituto Nuevo Horizonte) y <a href="quiz.html">Quiz</a> en modo <strong>Final</strong>; si no alcanzan en clase, terminan solos. Los PDF de ambos son la <strong>Actividad en clase — Sesión 13 (0.66 pts)</strong>; la <strong>Guía 13 vale 1 pt</strong> (<a href="proyecto.html">Proyecto</a>). Esta semana <strong>no hay Entrega Parcial</strong>: la siguiente (Entrega Parcial 3) es en la Semana 14.</p>
+              <p><strong>Conexión con la Semana 14:</strong> hoy las contraseñas llegaron por variables de entorno de tu terminal; en la Semana 14 la aplicación se publica en Render y la base vive en <strong>Neon</strong>, con <code>DB_URL</code>, <code>DB_USER</code> y <code>DB_PASSWORD</code> como variables de entorno del hosting. Mismo mecanismo, otro lugar.</p>
+              <p class="mb-0">Ticket de salida en el chat: "¿qué dato de tu proyecto real nunca debería llegar a GitHub?". Comparte el enlace de la <a href="../evaluacion_docente/index.html">evaluación anónima</a>. <span class="small-muted">Si el tiempo aprieta, recorta el repaso del CRUD (55–63) y deja el Challenge y el Quiz Final: de ahí salen los PDF que califican.</span></p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div></div>
+
+    <div class="card mb-3"><div class="card-body">
+      <h2 class="h5 section-title">Aviso de FAQ: los tres nombres del Artifact</h2>
+      <div class="small-muted">
+        Si alguien genera un proyecto nuevo en Initializr, saldrá la pregunta "dice <code>taller-formularios</code> pero el código dice <code>tallerformularios</code>". Respóndela al grupo completo, antes de que la pregunten. Son <strong>tres nombres derivados del mismo Artifact</strong>:
+        <ul class="mb-1">
+          <li><code>taller-formularios</code>: carpeta y <code>&lt;artifactId&gt;</code>, <strong>con guion</strong>.</li>
+          <li><code>gt.edu.url.tallerformularios</code>: línea <code>package</code> y ruta <code>src/main/java/gt/edu/url/tallerformularios/</code>, <strong>sin guion</strong> (en Java el guion es el signo de resta). Initializr <strong>no</strong> lo quita solo: muestra <em>Package name</em> como <code>gt.edu.url.taller-formularios</code> y cada quien debe borrar el guion. Si no, el paquete queda <code>taller_formularios</code> (guion bajo): funciona, pero es distinto y debe usarse en todas las líneas <code>package</code>.</li>
+          <li><code>TallerFormulariosApplication</code>: clase principal en CamelCase.</li>
+        </ul>
+        Y el sufijo <code>.model</code>, <code>.repository</code>, <code>.service</code>, <code>.controller</code> y, hoy, <strong><code>.security</code></strong> es la <strong>capa</strong>, no parte del nombre del proyecto: va <em>dentro</em> del paquete base. Una carpeta <code>security</code> al lado compila, pero Spring no la registra y nada se protege (404 o login por defecto sin mensaje). Quienes continúan su proyecto de la Semana 12 no deben regenerarlo ni cambiar su paquete.
+      </div>
+    </div></div>
+
+    <div class="card mb-3"><div class="card-body">
+      <h2 class="h5 section-title">Errores que verás en las salas</h2>
+      <div class="table-responsive"><table class="table table-sm small mb-0">
+        <thead><tr><th>Síntoma</th><th>Causa probable</th></tr></thead>
+        <tbody>
+          <tr><td><code>Could not resolve placeholder 'ADMIN_PASSWORD'</code>, no arranca</td><td>Falta definir la variable de entorno en <em>esa</em> terminal, o se arrancó con ▶ Run en lugar de la terminal</td></tr>
+          <tr><td>Aparece <code>Using generated security password</code> y piden usuario <code>user</code></td><td>Está la dependencia de Security pero no se detecta <code>SecurityConfig</code> (¿clase fuera del paquete base?)</td></tr>
+          <tr><td><code>Can't configure requestMatchers after anyRequest</code></td><td><code>anyRequest()</code> escrito antes de otras reglas</td></tr>
+          <tr><td>El login siempre vuelve a <code>/login?error</code>; en consola <code>Encoded password does not look like BCrypt</code></td><td>Se guardó la contraseña sin <code>passwordEncoder.encode(...)</code></td></tr>
+          <tr><td>Contraseña cambiada y no funciona</td><td>El cargador solo crea: detener y borrar <code>datos/</code> (solo en dev)</td></tr>
+          <tr><td>Los botones de admin se ven para todos (sin error)</td><td>Falta <code>thymeleaf-extras-springsecurity6</code> o el <code>xmlns:sec</code></td></tr>
+          <tr><td>El formulario devuelve 403 al guardar</td><td>Se usó <code>action=</code> en lugar de <code>th:action</code> (no lleva token)</td></tr>
+        </tbody></table></div>
+    </div></div>
+
+    <div class="callout warning mb-0">
+      <div class="fw-semibold">Plan B si falla la tecnología</div>
+      <div class="small-muted">Sin Internet para Initializr: entrega el proyecto <code>taller-formularios</code> de la Semana 12 comprimido y agrega a mano las dos dependencias. Si las variables de entorno no funcionan en la terminal de un estudiante, que siga la demo proyectada y complete los Ejercicios en casa. Si Maven no descarga, usa el repositorio local del profesor en un USB. Guía completa de instalación: <a href="../Material_Sesion_Clase_1_HTML_18_semanas/instalacion.html">Semana 1</a>.</div>
+    </div>
+
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Guía docente — Semana 13 · Autenticación, roles y renderizado condicional (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
