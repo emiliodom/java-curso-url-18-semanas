@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cheat Sheet — Semana 14 (Despliegue con Render y Neon)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 14 — Despliegue</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link active" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto ★</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Cheat Sheet · Semana 14</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Despliegue en una página: conceptos, variables, pantallas y errores</h1>
+          <div class="small-muted">Continúa <code>Jugador</code> en <code>taller-formularios</code> (Escuela de Fútbol Los Cerritos). Tema nuevo: llevar la aplicación de tu computadora a internet.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 1040px;">
+    <ul class="nav nav-tabs mb-4 no-print" role="tablist">
+      <li class="nav-item" role="presentation"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-conceptos" type="button" role="tab">📘 Conceptos</button></li>
+      <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-variables" type="button" role="tab">🔑 Las 6 variables</button></li>
+      <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-pantallas" type="button" role="tab">🖥️ Pantallas 2026</button></li>
+      <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-errores" type="button" role="tab">🛠 Errores comunes</button></li>
+    </ul>
+    <div class="tab-content">
+
+      <!-- ============ CONCEPTOS ============ -->
+      <div class="tab-pane fade show active" id="tab-conceptos" role="tabpanel">
+
+        <div class="card mb-3"><div class="card-body"><h2 class="h5 section-title">Desarrollo vs. producción</h2>
+          <div class="table-responsive"><table class="table table-sm small mb-2"><thead><tr><th></th><th>💻 Desarrollo (tu PC)</th><th>☁️ Producción (internet)</th></tr></thead><tbody>
+            <tr><td>Analogía</td><td>El ensayo del acto cívico</td><td>El acto cívico frente a las familias</td></tr>
+            <tr><td>Quién lo usa</td><td>Solo tú</td><td>Personas reales, desde cualquier lugar</td></tr>
+            <tr><td>Perfil de Spring</td><td><code>dev</code></td><td><code>prod</code></td></tr>
+            <tr><td>Base de datos</td><td>H2 en archivo (<code>datos/</code>)</td><td>PostgreSQL en Neon</td></tr>
+            <tr><td>Dirección</td><td><code>http://localhost:8080</code></td><td><code>https://….onrender.com</code> 🔒</td></tr>
+            <tr><td>Claves</td><td>Variables de tu terminal</td><td>Variables de entorno en Render</td></tr>
+            <tr><td>Si algo falla…</td><td>Lo arreglas y reinicias</td><td>Lo arreglas en tu PC, lo pruebas y <em>luego</em> lo publicas (nunca "en caliente")</td></tr>
+          </tbody></table></div>
+          <figure class="mmd-figure mb-0">
+            <div class="mermaid">
+flowchart TB
+  C["📦 El mismo .jar<br/>Jugador · JugadorRepository · SecurityConfig…"]
+  C --> D{"¿Qué dice<br/>SPRING_PROFILES_ACTIVE?"}
+  D -- "nada → usa 'dev'<br/>(escrito en application.properties)" --> DEV["application-dev.properties<br/>jdbc:h2:file:./datos/jugadores"]
+  D -- "prod<br/>(variable de entorno en Render)" --> PROD["application-prod.properties<br/>${DB_URL} ${DB_USER} ${DB_PASSWORD}"]
+  DEV --> H2[("H2 en tu disco")]
+  PROD --> N[("🐘 Neon")]
+  style C fill:#eff6ff,stroke:#3b82f6
+  style DEV fill:#fffbeb,stroke:#f59e0b
+  style PROD fill:#f5f3ff,stroke:#8b5cf6
+  style N fill:#f0fdf4,stroke:#22c55e
+            </div>
+            <figcaption>"El mismo código, otra configuración": el perfil decide qué archivo de propiedades se lee. Ninguna clase Java se entera de dónde está.</figcaption>
+          </figure>
+        </div></div>
+
+        <div class="card mb-3"><div class="card-body"><h2 class="h5 section-title">Glosario de la semana (con analogía de aula)</h2>
+          <div class="table-responsive"><table class="table table-sm small mb-0"><thead><tr><th style="width:18%">Término</th><th>Qué es</th><th style="width:32%">Analogía</th></tr></thead><tbody>
+            <tr><td><strong>Desplegar</strong> (deploy)</td><td>Poner una versión de la aplicación a funcionar en un servidor público</td><td>Inaugurar el edificio nuevo de la escuela</td></tr>
+            <tr><td><strong><code>.jar</code></strong></td><td>Un solo archivo con tu código, Spring, Tomcat y drivers. Se ejecuta con <code>java -jar</code></td><td>Una lonchera armada: se abre y se come</td></tr>
+            <tr><td><strong>Maven</strong> (<code>mvn clean package</code>)</td><td>Limpia, compila, prueba y empaqueta</td><td>La cocina que prepara la lonchera (y la prueba antes)</td></tr>
+            <tr><td><strong>Docker / Dockerfile</strong></td><td>Una receta escrita para construir y encender la aplicación siempre igual, en cualquier máquina</td><td>La receta del comedor escolar: cualquier cocinero obtiene el mismo plato</td></tr>
+            <tr><td><strong>Imagen / contenedor</strong></td><td>Imagen = el resultado empacado de la receta; contenedor = esa imagen funcionando</td><td>Plato servido vs. plato que alguien se está comiendo</td></tr>
+            <tr><td><strong>Render</strong></td><td>Empresa que presta servidores: construye tu Dockerfile y le da una URL pública</td><td>El edificio rentado donde funciona la escuela</td></tr>
+            <tr><td><strong>Neon</strong> / <strong>PostgreSQL</strong></td><td>Servicio que presta una base PostgreSQL en internet (Neon ahora es parte de Databricks; algunas páginas la llaman "Lakebase Postgres")</td><td>El archivo central de expedientes, en otro edificio con bóveda</td></tr>
+            <tr><td><strong>JDBC</strong></td><td>El "idioma" con que Java habla con bases de datos. Sus direcciones empiezan con <code>jdbc:</code></td><td>El formato oficial de una solicitud</td></tr>
+            <tr><td><strong>SSL / <code>sslmode=require</code></strong></td><td>Conversación cifrada entre Render y Neon. Neon la exige</td><td>Mandar los expedientes en sobre sellado, no en postal</td></tr>
+            <tr><td><strong>Variable de entorno</strong></td><td>Valor que vive en el servidor, fuera del código, y la app lee al arrancar</td><td>La llave que se entrega en mano, no pegada en la puerta</td></tr>
+            <tr><td><strong>Perfil</strong> (<code>dev</code>/<code>prod</code>)</td><td>Un juego de configuración que se elige al arrancar</td><td>El horario de clases normal vs. el horario de exámenes</td></tr>
+            <tr><td><strong>CI/CD</strong></td><td>CI: comprobar automáticamente cada cambio. CD: publicar automáticamente lo que llega a <code>main</code></td><td>Revisar la tarea antes de pegarla en el periódico mural, y que se pegue sola al aprobarse</td></tr>
+            <tr><td><strong>Spin down / cold start</strong></td><td>El plan gratuito apaga la app tras 15 min sin visitas; la siguiente visita la despierta (~1 min)</td><td>El conserje apaga las luces del aula vacía; el primero que llega espera a que enciendan</td></tr>
+            <tr><td><strong><code>ddl-auto=update</code> / Flyway</strong></td><td><code>update</code>: Hibernate crea y amplía tablas solo. Flyway: cambios escritos y numerados, para empresas</td><td>Ampliar el archivo "como vaya haciendo falta" vs. con acta aprobada</td></tr>
+          </tbody></table></div>
+        </div></div>
+
+        <div class="card mb-3"><div class="card-body"><h2 class="h5 section-title">"12-factor app" en tres reglas simples</h2>
+          <p class="small-muted mb-2">Es una lista famosa de buenas prácticas para aplicaciones en internet. Para este curso bastan tres:</p>
+          <div class="ruta-tres">
+            <div class="antes"><h3>1 · Un código, muchos lugares</h3><div class="small-muted">El mismo repositorio sirve para tu PC y para producción. No hay "una copia especial para el servidor".</div></div>
+            <div class="ahora"><h3>2 · La configuración vive afuera</h3><div class="small-muted">Lo que cambia entre lugares (dónde está la base, las claves, el puerto) llega por variables de entorno, nunca escrito en el código.</div></div>
+            <div class="despues"><h3>3 · Los datos viven en un servicio aparte</h3><div class="small-muted">El disco del servidor es desechable (Render lo borra en cada despliegue). Lo que debe durar va a Neon.</div></div>
+          </div>
+        </div></div>
+
+        <div class="card mb-3"><div class="card-body"><h2 class="h5 section-title">El ciclo de cambio (CI/CD) de tu proyecto</h2>
+          <figure class="mmd-figure mb-0">
+            <div class="mermaid">
+flowchart LR
+  A["✏️ Cambias el código<br/>rama development"] --> B["🧪 Pruebas en tu PC<br/>mvnw clean package"]
+  B --> C["🔀 Pull Request<br/>development → main"]
+  C --> D["🐙 main cambia"]
+  D -- "Render se entera solo<br/>(Auto-Deploy: On Commit)" --> E["🏗️ Build<br/>Dockerfile"]
+  E --> F["🚀 Deploy<br/>nueva versión Live"]
+  F --> G["✅ Verificas en la URL<br/>pública con datos reales"]
+  G -. "¿algo mal? se corrige en<br/>development, no en caliente" .-> A
+  style C fill:#f3f4f6,stroke:#6b7280
+  style E fill:#f5f3ff,stroke:#8b5cf6
+  style F fill:#f5f3ff,stroke:#8b5cf6
+  style G fill:#dcfce7,stroke:#22c55e
+            </div>
+            <figcaption>Si un despliegue nuevo falla, Render deja funcionando la versión anterior: tus usuarios no ven el error.</figcaption>
+          </figure>
+        </div></div>
+
+        <div class="card mb-3"><div class="card-body"><h2 class="h5 section-title">Comandos de la semana</h2>
+          <div class="table-responsive"><table class="table table-sm small mb-0"><thead><tr><th>Para qué</th><th>Windows (PowerShell)</th><th>macOS / Linux / Git Bash</th></tr></thead><tbody>
+            <tr><td>Empaquetar (con pruebas)</td><td><code>.\mvnw.cmd clean package</code></td><td><code>./mvnw clean package</code></td></tr>
+            <tr><td>Ejecutar el <code>.jar</code></td><td colspan="2"><code>java -jar target/taller-formularios-0.0.1-SNAPSHOT.jar</code></td></tr>
+            <tr><td>Definir una variable</td><td><code>$env:DB_USER = "neondb_owner"</code></td><td><code>export DB_USER=neondb_owner</code></td></tr>
+            <tr><td>Ver una variable</td><td><code>$env:DB_USER</code></td><td><code>echo $DB_USER</code></td></tr>
+            <tr><td>Borrar una variable</td><td><code>Remove-Item Env:PORT</code></td><td><code>unset PORT</code></td></tr>
+            <tr><td>Buscar claves antes del push</td><td colspan="2"><code>git grep npg_</code> (debe no encontrar nada)</td></tr>
+          </tbody></table></div>
+          <p class="small-muted mt-2 mb-0">En Bash, una URL con <code>&amp;</code> va entre comillas simples: <code>export DB_URL='jdbc:postgresql://…?sslmode=require&amp;channelBinding=require'</code>. Sin comillas, Bash corta la línea en el <code>&amp;</code>.</p>
+        </div></div>
+      </div>
+
+      <!-- ============ VARIABLES ============ -->
+      <div class="tab-pane fade" id="tab-variables" role="tabpanel">
+
+        <div class="card mb-3"><div class="card-body"><h2 class="h5 section-title">El viaje de una clave: de Neon a Spring sin pasar por GitHub</h2>
+          <figure class="mmd-figure mb-2">
+            <div class="mermaid">
+flowchart LR
+  N["🐘 Neon<br/>botón Connect"] -- "copias la cadena" --> NP["📝 Tu nota privada<br/>DB_URL · DB_USER · DB_PASSWORD"]
+  NP -- "las escribes a mano" --> RE["☁️ Render<br/>Environment"]
+  RE -- "al arrancar el contenedor" --> SP["application-prod.properties<br/>spring.datasource.url=${DB_URL}"]
+  SP --> HK["Spring + Hikari<br/>abren la conexión"]
+  HK -- "JDBC + SSL" --> N
+  GH["🐙 GitHub"]
+  NP -. "❌ NUNCA" .-> GH
+  style NP fill:#fef3c7,stroke:#f59e0b
+  style GH fill:#fee2e2,stroke:#ef4444
+  style RE fill:#f5f3ff,stroke:#8b5cf6
+            </div>
+            <figcaption>La clave de Neon recorre un círculo cerrado: Neon → tu nota → Render → tu app → Neon. GitHub solo ve el "hueco" <code>${DB_PASSWORD}</code>.</figcaption>
+          </figure>
+          <div class="table-responsive"><table class="table table-sm small mb-0"><thead><tr><th>Variable</th><th>Valor en Render</th><th>Origen</th><th>Si falta o está mal</th></tr></thead><tbody>
+            <tr><td><span class="var-chip spring">SPRING_PROFILES_ACTIVE</span></td><td><code>prod</code></td><td>tú</td><td><strong>Silencioso:</strong> arranca con H2 dentro del contenedor y pierde los datos en cada despliegue</td></tr>
+            <tr><td><span class="var-chip neon">DB_URL</span></td><td><code>jdbc:postgresql://ep-…aws.neon.tech/neondb?sslmode=require&amp;channelBinding=require</code></td><td>Neon (transformada)</td><td>Sin <code>jdbc:</code>: <code>claims to not accept jdbcUrl</code></td></tr>
+            <tr><td><span class="var-chip neon">DB_USER</span></td><td><code>neondb_owner</code></td><td>Neon</td><td><code>password authentication failed</code></td></tr>
+            <tr><td><span class="var-chip neon">DB_PASSWORD</span></td><td><code>npg_…</code></td><td>Neon</td><td><code>password authentication failed</code> (si falta, Spring envía el texto <code>${DB_PASSWORD}</code>)</td></tr>
+            <tr><td><span class="var-chip tuya">ADMIN_PASSWORD</span></td><td>tu clave</td><td>tú (igual que en tu PC)</td><td><code>Could not resolve placeholder 'ADMIN_PASSWORD'</code>, no arranca</td></tr>
+            <tr><td><span class="var-chip tuya">ENTRENADOR_PASSWORD</span></td><td>tu clave</td><td>tú</td><td>Igual que la anterior</td></tr>
+            <tr><td><span class="var-chip render">PORT</span></td><td><em>no la agregues</em></td><td>Render (10000)</td><td>—</td></tr>
+          </tbody></table></div>
+        </div></div>
+
+        <div class="card mb-3 no-print"><div class="card-body"><h2 class="h5 section-title">🔧 Separador automático de la cadena de Neon</h2>
+          <p class="small-muted">Pega la cadena que copiaste de Neon (<code>postgresql://…</code>). Este separador funciona <strong>solo dentro de tu navegador</strong>: no se envía ni se guarda nada (puedes desconectar el internet y probar). Aun así, al terminar, <strong>borra la casilla</strong>.</p>
+          <label class="form-label small fw-semibold" for="cadenaNeon">Cadena de conexión de Neon</label>
+          <input id="cadenaNeon" class="form-control font-monospace" type="text" autocomplete="off" spellcheck="false" placeholder="postgresql://neondb_owner:npg_...@ep-....aws.neon.tech/neondb?sslmode=require&amp;channel_binding=require" />
+          <div class="d-flex gap-2 mt-2">
+            <button class="btn btn-primary btn-sm" type="button" onclick="separarCadena()">Separar</button>
+            <button class="btn btn-outline-secondary btn-sm" type="button" onclick="limpiarCadena()">Borrar todo</button>
+          </div>
+          <div id="avisoCadena" class="mt-2 small"></div>
+          <div class="table-responsive mt-2"><table class="table table-sm small mb-0 align-middle"><tbody>
+            <tr><td style="width:22%"><span class="var-chip neon">DB_URL</span></td><td><code id="outUrl">—</code></td><td style="width:1%"><button class="btn btn-outline-dark btn-sm" type="button" onclick="copiar('outUrl')">Copiar</button></td></tr>
+            <tr><td><span class="var-chip neon">DB_USER</span></td><td><code id="outUser">—</code></td><td><button class="btn btn-outline-dark btn-sm" type="button" onclick="copiar('outUser')">Copiar</button></td></tr>
+            <tr><td><span class="var-chip neon">DB_PASSWORD</span></td><td><code id="outPass">—</code></td><td><button class="btn btn-outline-dark btn-sm" type="button" onclick="copiar('outPass')">Copiar</button></td></tr>
+          </tbody></table></div>
+        </div></div>
+
+        <div class="card mb-3"><div class="card-body"><h2 class="h5 section-title">Separarla a mano (para entender qué hace el separador)</h2>
+<div class="term"><span class="dim">postgresql://</span><span style="color:#fde68a">neondb_owner</span><span class="dim">:</span><span style="color:#fca5a5">npg_AbC123xYz</span><span class="dim">@</span><span style="color:#93c5fd">ep-cool-river-a1b2c3d4.us-east-2.aws.neon.tech</span><span class="dim">/</span><span style="color:#86efac">neondb</span><span class="dim">?sslmode=require&amp;channel_binding=require</span>
+
+DB_USER     = <span style="color:#fde68a">neondb_owner</span>
+DB_PASSWORD = <span style="color:#fca5a5">npg_AbC123xYz</span>
+DB_URL      = jdbc:postgresql://<span style="color:#93c5fd">ep-cool-river-a1b2c3d4.us-east-2.aws.neon.tech</span>/<span style="color:#86efac">neondb</span>?sslmode=require&amp;channelBinding=require</div>
+          <ul class="small-muted mb-0">
+            <li>Si la dirección contiene <code>-pooler</code>, volviste a encender <em>Connection pooling</em>: apágalo en la ventana <strong>Connect</strong> y copia de nuevo.</li>
+            <li>Si la contraseña tiene caracteres como <code>%40</code>, están "codificados": <code>%40</code> es <code>@</code>. El separador los decodifica solo.</li>
+          </ul>
+        </div></div>
+      </div>
+
+      <!-- ============ PANTALLAS 2026 ============ -->
+      <div class="tab-pane fade" id="tab-pantallas" role="tabpanel">
+        <div class="callout warning mb-3"><div class="fw-semibold">Las plataformas cambian sus pantallas seguido</div><div class="small-muted">Esta tabla se comprobó contra la documentación oficial de Render y Neon en <strong>octubre de 2026</strong>. Si un video muestra otro nombre, busca aquí la equivalencia. La regla que no cambia: <strong>busca la palabra, no el color ni la posición</strong>.</div></div>
+
+        <div class="card mb-3"><div class="card-body"><h2 class="h5 section-title">🐘 Neon (console.neon.tech)</h2>
+          <div class="table-responsive"><table class="table table-sm small mb-0"><thead><tr><th>Lo que buscas</th><th>Dónde está hoy</th><th>Nombre en material viejo</th></tr></thead><tbody>
+            <tr><td>Crear la base</td><td><strong>New Project</strong> → Project name, <strong>Region</strong> → <strong>Create project</strong></td><td>Un campo aparte de "Cloud provider" (hoy va dentro de la región)</td></tr>
+            <tr><td>La cadena de conexión</td><td>Botón <strong>Connect</strong> → ventana <strong>Connect to your branch</strong></td><td>"Connection Details" / "Connect to your database"</td></tr>
+            <tr><td>Conexión directa</td><td>Interruptor <strong>Connection pooling</strong> apagado (viene encendido)</td><td>Casilla "Pooled connection"</td></tr>
+            <tr><td>Rama por defecto</td><td><code>production</code></td><td><code>main</code></td></tr>
+            <tr><td>Ver tablas y filas</td><td>Menú izquierdo → <strong>Tables</strong></td><td>—</td></tr>
+            <tr><td>Escribir SQL</td><td>Menú izquierdo → <strong>SQL Editor</strong> → <strong>Run</strong></td><td>—</td></tr>
+            <tr><td>Cambiar la clave</td><td><strong>Roles</strong> → menú de <code>neondb_owner</code> → <strong>Reset password</strong></td><td>—</td></tr>
+          </tbody></table></div>
+        </div></div>
+
+        <div class="card mb-3"><div class="card-body"><h2 class="h5 section-title">☁️ Render (dashboard.render.com)</h2>
+          <div class="table-responsive"><table class="table table-sm small mb-0"><thead><tr><th>Lo que buscas</th><th>Dónde está hoy</th><th>Nombre en material viejo</th></tr></thead><tbody>
+            <tr><td>Crear el servicio</td><td><strong>+ New</strong> → <strong>Web Service</strong> → elegir repositorio → <strong>Connect</strong></td><td>"New Web Service" en el menú principal</td></tr>
+            <tr><td>Tipo de proyecto</td><td><strong>Language</strong> = <strong>Docker</strong></td><td>"Environment" o "Runtime" (y algunos inventan una opción "Java" que <strong>no existe</strong>)</td></tr>
+            <tr><td>Plan gratuito</td><td><strong>Compute</strong> = <strong>Free</strong> (renombrado en agosto de 2026)</td><td>"Instance Type"</td></tr>
+            <tr><td>Botón final</td><td><strong>Deploy Web Service</strong> (en algunas cuentas: <em>Create Web Service</em>)</td><td>—</td></tr>
+            <tr><td>Variables</td><td>Menú izquierdo del servicio → <strong>Environment</strong> → <strong>+ Add Environment Variable</strong> → <em>Save, rebuild, and deploy</em></td><td>"Environment" como pestaña superior</td></tr>
+            <tr><td>Historia de despliegues</td><td><strong>Events</strong> y <strong>Deploys</strong></td><td>—</td></tr>
+            <tr><td>Lo que imprime tu app</td><td><strong>Logs</strong> (con <em>Live tail</em>)</td><td>—</td></tr>
+            <tr><td>Volver a publicar / reiniciar</td><td><strong>Manual Deploy</strong> → <em>Deploy latest commit</em>, <em>Clear build cache &amp; deploy</em>, <em>Restart service</em></td><td>—</td></tr>
+            <tr><td>Publicación automática</td><td><strong>Settings</strong> → <strong>Auto-Deploy</strong>: <em>On Commit</em> (por defecto) / <em>After CI Checks Pass</em> / <em>Off</em></td><td>Interruptor "Auto-Deploy: Yes/No"</td></tr>
+          </tbody></table></div>
+        </div></div>
+
+        <div class="card mb-3"><div class="card-body"><h2 class="h5 section-title">Los planes gratuitos (octubre de 2026)</h2>
+          <div class="table-responsive"><table class="table table-sm small mb-2"><thead><tr><th></th><th>☁️ Render Free (web service)</th><th>🐘 Neon Free</th></tr></thead><tbody>
+            <tr><td>Costo / tarjeta</td><td>$0. La documentación dice que no se paga; a veces pide verificar con tarjeta</td><td>$0, sin tarjeta</td></tr>
+            <tr><td>Capacidad</td><td>512 MB de memoria, 0.1 CPU</td><td>1 GB de almacenamiento por proyecto (era 0.5 GB hasta octubre de 2026); 100 horas de cómputo al mes por proyecto</td></tr>
+            <tr><td>Se duerme</td><td>A los 15 min sin visitas; despierta en ~1 min</td><td>A los 5 min sin consultas; despierta en milisegundos</td></tr>
+            <tr><td>¿Vence o borra?</td><td>750 horas al mes por cuenta (lo dormido no cuenta). El disco del contenedor se borra en cada despliegue</td><td>No vence ni borra los datos por inactividad</td></tr>
+            <tr><td>HTTPS</td><td>Automático en <code>*.onrender.com</code></td><td>SSL obligatorio en la conexión</td></tr>
+          </tbody></table></div>
+          <p class="small-muted mb-0"><strong>Por qué no la base de Render:</strong> la PostgreSQL gratuita de Render se elimina a los 30 días (más 14 de gracia). Tu proyecto debe vivir hasta la presentación de la Semana 18. Fuentes: render.com/docs/free y neon.com/pricing.</p>
+        </div></div>
+      </div>
+
+      <!-- ============ ERRORES ============ -->
+      <div class="tab-pane fade" id="tab-errores" role="tabpanel">
+        <div class="card mb-3"><div class="card-body"><h2 class="h5 section-title">¿Dónde miro? (Render)</h2>
+          <div class="table-responsive"><table class="table table-sm small mb-0"><thead><tr><th>Si…</th><th>Mira en…</th><th>Busca</th></tr></thead><tbody>
+            <tr><td>No llega a <em>Build successful 🎉</em></td><td>El log del despliegue (<strong>Events</strong> → el despliegue fallido)</td><td>Líneas con <code>ERROR</code> en los pasos del Dockerfile</td></tr>
+            <tr><td>Construye pero el despliegue falla</td><td><strong>Logs</strong></td><td><code>PSQLException</code>, <code>Driver … claims</code>, <code>Could not resolve placeholder</code></td></tr>
+            <tr><td>Está <em>Live</em> pero se comporta raro</td><td><strong>Logs</strong> y Neon → <strong>Tables</strong></td><td><code>profile is active</code>; ¿cambian las filas en Neon?</td></tr>
+          </tbody></table></div>
+        </div></div>
+        <div class="card mb-3"><div class="card-body"><h2 class="h5 section-title">Los 10 errores de la semana (síntoma → causa → arreglo)</h2>
+          <div class="table-responsive"><table class="table table-sm small mb-0"><thead><tr><th>#</th><th>Síntoma / mensaje</th><th>Causa</th><th>Arreglo</th></tr></thead><tbody>
+            <tr><td>1</td><td><code>mvn clean package</code>: <code>contextLoads » IllegalState</code> … <code>Could not resolve placeholder 'ADMIN_PASSWORD'</code></td><td>La prueba arranca la app y faltan las claves</td><td>Define las claves en esa terminal (en Docker: <code>-DskipTests</code>)</td></tr>
+            <tr><td>2</td><td><strong>Silencioso:</strong> log con <code>profile is active: "dev"</code> y <code>jdbc:h2</code>; datos que desaparecen</td><td>Falta <code>SPRING_PROFILES_ACTIVE=prod</code></td><td>Agrégala en Render → <em>Environment</em></td></tr>
+            <tr><td>3</td><td><code>Driver org.postgresql.Driver claims to not accept jdbcUrl, postgresql://…</code></td><td>Cadena de Neon pegada sin transformar</td><td>Arma <code>jdbc:postgresql://host/neondb?sslmode=require…</code>; si la clave salió en el log, <em>Reset password</em></td></tr>
+            <tr><td>4</td><td><code>PSQLException: ERROR: password authentication failed for user 'neondb_owner'</code></td><td>Clave mal copiada, vacía, con espacios o variable faltante</td><td>Copia de nuevo con la clave visible</td></tr>
+            <tr><td>5</td><td>Último <code>Caused by</code>: <code>Unable to determine Dialect without JDBC metadata</code></td><td>Consecuencia de no poder conectar</td><td>Sube por el log hasta la primera <code>PSQLException</code></td></tr>
+            <tr><td>6</td><td><code>failed to solve: openjdk:17-jdk-slim: not found</code></td><td>Imagen retirada (tutorial viejo)</td><td>Usa <code>maven:3.9-eclipse-temurin-17</code> y <code>eclipse-temurin:17-jre</code></td></tr>
+            <tr><td>7</td><td><code>failed to read dockerfile: open Dockerfile: no such file or directory</code></td><td>Dockerfile en otra carpeta o con extensión</td><td>Junto a <code>pom.xml</code>; o ajusta <em>Root Directory</em></td></tr>
+            <tr><td>8</td><td><code>==&gt; No open ports detected</code> → <code>Port scan timeout reached</code></td><td>La app se cayó al arrancar</td><td>Busca el error real más arriba en <strong>Logs</strong></td></tr>
+            <tr><td>9</td><td>La primera visita tarda ~1 min</td><td>El servicio dormía (15 min sin visitas)</td><td>Nada: es el plan gratuito</td></tr>
+            <tr><td>10</td><td>Cambié <code>ADMIN_PASSWORD</code> y no funciona la nueva</td><td>El usuario ya existe en Neon; el cargador solo crea</td><td>Usa la original, o <code>DELETE FROM usuario;</code> en Neon y <em>Restart service</em></td></tr>
+          </tbody></table></div>
+        </div></div>
+        <div class="callout danger mb-0"><div class="fw-semibold">Si una clave llega a GitHub o a un log</div><div class="small-muted">Primero <strong>cámbiala</strong> (Neon → Roles → Reset password) y actualízala en Render; después limpia el archivo. Borrar la línea no basta: el historial de un repositorio público la conserva.</div></div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Cheat Sheet — Semana 14 · Despliegue en producción con Render y Neon (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script>
+    // Separador de la cadena de Neon: todo ocurre en esta página, nada se envía.
+    function separarCadena() {
+      var crudo = document.getElementById('cadenaNeon').value.trim().replace(/^['"]|['"]$/g, '');
+      var aviso = document.getElementById('avisoCadena');
+      var m = crudo.match(/^postgres(?:ql)?:\/\/([^:\/?#]+):([^@]+)@([^\/?#]+)\/([^?#]+)/);
+      if (!m) {
+        aviso.className = 'mt-2 small text-danger';
+        aviso.textContent = crudo.indexOf('jdbc:') === 0
+          ? 'Esa ya es una dirección JDBC (empieza con jdbc:). Pega la que empieza con postgresql:// para separarla.'
+          : 'No reconozco el formato. Debe parecerse a postgresql://usuario:clave@servidor/neondb?sslmode=require';
+        return;
+      }
+      var usuario = decodeURIComponent(m[1]);
+      var clave = decodeURIComponent(m[2]);
+      var host = m[3];
+      var base = m[4];
+      document.getElementById('outUser').textContent = usuario;
+      document.getElementById('outPass').textContent = clave;
+      document.getElementById('outUrl').textContent =
+        'jdbc:postgresql://' + host + '/' + base + '?sslmode=require&channelBinding=require';
+      var avisos = [];
+      if (host.indexOf('-pooler') !== -1) avisos.push('La dirección tiene "-pooler": apaga Connection pooling en Neon y copia de nuevo (recomendado).');
+      if (clave.indexOf('*') !== -1) avisos.push('La clave tiene asteriscos: muéstrala en Neon antes de copiar.');
+      aviso.className = 'mt-2 small ' + (avisos.length ? 'text-warning-emphasis' : 'text-success');
+      aviso.textContent = avisos.length ? '⚠️ ' + avisos.join(' ') : '✅ Listo. Copia cada valor a Render → Environment y luego pulsa "Borrar todo".';
+    }
+
+    function limpiarCadena() {
+      document.getElementById('cadenaNeon').value = '';
+      ['outUrl', 'outUser', 'outPass'].forEach(function (id) { document.getElementById(id).textContent = '—'; });
+      document.getElementById('avisoCadena').textContent = '';
+    }
+
+    function copiar(id) {
+      var texto = document.getElementById(id).textContent;
+      if (!texto || texto === '—') return;
+      if (navigator.clipboard) navigator.clipboard.writeText(texto);
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+  <script src="diagramas.js"></script>
+</body>
+</html>

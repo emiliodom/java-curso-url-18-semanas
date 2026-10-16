@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Semana 14 — Despliegue en producción con Render y Neon (18 semanas)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 14 — Despliegue</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto ★</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-5">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+          <div class="brand-pill mb-3">Semana 14 · Unidad 7a · Despliegue en producción con Render y Neon · 17 de octubre de 2026</div>
+          <h1 class="display-5 fw-bold mb-3">Hoy tu aplicación sale de tu computadora <span class="small-muted">(70 min)</span></h1>
+          <p class="lead small-muted mb-4">
+            Hasta hoy, la aplicación de la Escuela de Fútbol solo existía en <strong>tu</strong> computadora: si la apagabas, nadie más podía usarla.
+            Hoy la publicas en internet con una dirección <strong>https://</strong> que cualquier persona puede abrir desde su celular.
+            La aplicación vivirá en <strong>Render</strong> y los datos en una base PostgreSQL de <strong>Neon</strong>. No hay que reescribir el código:
+            lo que preparaste en las Semanas 12 y 13 (perfiles y variables de entorno) es justo lo que hace posible este paso.
+          </p>
+          <div class="d-flex gap-2 flex-wrap">
+            <a class="btn btn-primary btn-lg" href="quiz.html">1. Quiz de Presaberes</a>
+            <a class="btn btn-outline-primary btn-lg" href="ejercicios.html">2. Ejercicios paso a paso</a>
+            <a class="btn btn-outline-dark btn-lg" href="proyecto.html">3. ★ Entrega Parcial 3</a>
+          </div>
+          <div class="mt-4 callout warning">
+            <div class="fw-semibold">Una idea que vale por toda la semana</div>
+            <div class="small-muted"><strong>El mismo código, otra configuración.</strong> No se cambia ni una línea de <code>Jugador</code>, del repositorio ni del controlador. Lo único que cambia entre tu computadora y producción es <em>dónde</em> están los datos y <em>quién</em> entrega las claves. Eso se decide con perfiles y variables de entorno.</div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="card">
+            <div class="card-body">
+              <h2 class="h5 section-title mb-3">Aprendizajes esperados (hoy)</h2>
+              <ul class="mb-0">
+                <li><strong>Empaqueta</strong> la aplicación con Maven en un archivo <code>.jar</code> ejecutable.</li>
+                <li><strong>Crea y conecta</strong> una base de datos PostgreSQL gestionada en <strong>Neon</strong>.</li>
+                <li><strong>Despliega</strong> en <strong>Render</strong> usando variables de entorno, sin escribir claves en el código.</li>
+                <li><strong>Verifica</strong> el funcionamiento en una URL pública con HTTPS, con datos reales.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card mt-3">
+            <div class="card-body">
+              <h2 class="h6 section-title mb-2">Ruta del estudiante (70 min)</h2>
+              <ol class="mb-0 small">
+                <li>Quiz Presaberes y "¿qué significa publicar?" (7 min)</li>
+                <li>El mapa del despliegue y el <code>.jar</code> (10 min)</li>
+                <li>Neon: crear la base y sacar las 3 piezas de conexión (10 min)</li>
+                <li>Render: Dockerfile, Web Service y 6 variables (18 min)</li>
+                <li>Verificación de punta a punta con datos reales (12 min)</li>
+                <li>Errores típicos, dormir/despertar y cierre (13 min)</li>
+              </ol>
+            </div>
+          </div>
+          <div class="small-muted mt-3">Valores de la semana: <strong>responsabilidad operativa</strong> (lo que está en internet lo usan personas reales) y <strong>rigor en la verificación</strong> (no se entrega sin probar con datos reales).</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <div class="card mb-4"><div class="card-body">
+      <h2 class="h5 section-title mb-1">🗺️ Dónde estamos en el curso</h2>
+      <p class="small-muted mb-2">El proyecto crece semana a semana. Hoy es el momento en que deja de ser un ejercicio y se convierte en un servicio público.</p>
+      <div class="ruta-mapa" aria-label="Mapa del curso">
+        <div class="ruta-paso hecho"><div class="ruta-punto">11</div><span class="ruta-etq">Validación</span>revisa antes de guardar</div>
+        <div class="ruta-paso hecho"><div class="ruta-punto">12</div><span class="ruta-etq">Persistencia</span>JPA + perfiles</div>
+        <div class="ruta-paso hecho"><div class="ruta-punto">13</div><span class="ruta-etq">Login y roles</span>variables de entorno</div>
+        <div class="ruta-paso aqui"><div class="ruta-punto">14</div><span class="ruta-etq">Despliegue</span>Render + Neon</div>
+        <div class="ruta-paso"><div class="ruta-punto">15</div><span class="ruta-etq">Seguridad</span>HTTPS, CSRF</div>
+        <div class="ruta-paso"><div class="ruta-punto">16</div><span class="ruta-etq">QA</span>pruebas y redeploy</div>
+        <div class="ruta-paso"><div class="ruta-punto">17</div><span class="ruta-etq">Presentación</span>★ Entrega 4</div>
+        <div class="ruta-paso"><div class="ruta-punto">18</div><span class="ruta-etq">Cierre</span>demo final</div>
+      </div>
+      <div class="ruta-tres mt-3">
+        <div class="antes">
+          <h3>⬅️ De dónde vienes</h3>
+          <div class="small-muted">La aplicación guarda jugadores en H2 (un archivo en tu disco), tiene login con dos roles y las contraseñas llegan por variables de entorno. Ya existe <code>application-prod.properties</code> con tres "huecos": <code>${DB_URL}</code>, <code>${DB_USER}</code>, <code>${DB_PASSWORD}</code>.</div>
+        </div>
+        <div class="ahora">
+          <h3>📍 Qué harás hoy</h3>
+          <div class="small-muted">Llenar esos huecos con una base real en Neon, empaquetar la aplicación, entregarla a Render con un Dockerfile y probar desde el celular que el login y el CRUD funcionan en <code>https://…onrender.com</code>.</div>
+        </div>
+        <div class="despues">
+          <h3>➡️ A dónde vas</h3>
+          <div class="small-muted">Semana 15: auditar la seguridad de lo publicado (candado HTTPS, SSL hacia Neon, CSRF). Semana 16: probar y volver a publicar cambios. Semana 18: presentar la aplicación <em>en vivo</em> desde su URL pública.</div>
+        </div>
+      </div>
+    </div></div>
+
+    <figure class="mmd-figure">
+      <div class="mermaid">
+flowchart LR
+  VS["💻 Tu computadora<br/>VS Code + H2<br/><i>perfil dev</i>"] -- "git push" --> REPO["🐙 GitHub<br/>repositorio público<br/>rama main"]
+  REPO -- "aviso<br/>automático" --> APP["▶ Render<br/>Dockerfile → .jar<br/>Spring Boot <i>perfil prod</i>"]
+  APP -- "JDBC + SSL" --> PG[("🐘 Neon<br/>PostgreSQL<br/>neondb")]
+  ENV["🔑 Variables de entorno en Render<br/>SPRING_PROFILES_ACTIVE · DB_URL<br/>DB_USER · DB_PASSWORD<br/>ADMIN_PASSWORD · ENTRENADOR_PASSWORD"] -.-> APP
+  USER(["📱 Cualquier persona<br/>con un navegador"]) -- "HTTPS 🔒" --> APP
+  style VS fill:#fffbeb,stroke:#f59e0b,stroke-width:2px
+  style REPO fill:#f3f4f6,stroke:#6b7280,stroke-width:2px
+  style APP fill:#f5f3ff,stroke:#8b5cf6,stroke-width:2px
+  style PG fill:#f0fdf4,stroke:#22c55e,stroke-width:2px
+  style ENV fill:#fef3c7,stroke:#f59e0b
+  style USER fill:#eff6ff,stroke:#3b82f6
+      </div>
+      <figcaption>El mapa completo de hoy. Tu computadora sigue usando H2 para practicar; internet usa Render (la aplicación) y Neon (los datos). Las claves nunca pasan por GitHub: viajan como variables de entorno directo a Render.</figcaption>
+    </figure>
+
+    <div class="row g-3 mb-4">
+      <div class="col-lg-6">
+        <div class="callout danger h-100">
+          <div class="fw-semibold">⚠️ Antes de la sesión (obligatorio, 20 minutos)</div>
+          <ol class="small-muted mb-0">
+            <li>Tu proyecto de la Semana 13 <strong>arranca</strong> en tu computadora con login y CRUD.</li>
+            <li>Está subido a tu repositorio de <strong>GitHub</strong> y lo puedes abrir en github.com.</li>
+            <li>Crea una cuenta en <strong>neon.com</strong> (botón <em>Sign up</em>, elige "Continue with GitHub"). No pide tarjeta.</li>
+            <li>Crea una cuenta en <strong>render.com</strong> (botón <em>Get Started</em>, elige GitHub). Si te pide verificar con tarjeta, avisa al docente: hay Plan B.</li>
+            <li>Ten a mano un celular: lo usarás para comprobar que la aplicación se abre "desde fuera".</li>
+          </ol>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="callout info h-100">
+          <div class="fw-semibold">🔎 Precisión técnica (comprobada en octubre de 2026)</div>
+          <div class="small-muted">Render <strong>no ejecuta Java directamente</strong>: solo trae soporte nativo para Node, Python, Ruby, Go, Rust y Elixir. Para Java se usa <strong>Docker</strong>, con un archivo de 15 líneas llamado <code>Dockerfile</code> que te damos completo y explicado. Además, Render cambió en agosto de 2026 el nombre del campo <em>Instance Type</em> por <strong>Compute</strong>; los videos anteriores todavía muestran el nombre viejo. El material de esta semana usa los nombres actuales.</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="h4 section-title mb-3">Secciones del material</h2>
+    <div class="row g-3">
+      <div class="col-md-6 col-lg-4"><div class="card h-100"><div class="card-body">
+        <div class="d-flex justify-content-between"><h3 class="h5">1) Quiz</h3><span class="badge text-bg-warning">Presaberes + Final</span></div>
+        <p class="small-muted">Preguntas con analogías de escuela: el cuaderno y el pizarrón, la mudanza, el sobre cerrado con la clave.</p>
+        <a class="btn btn-sm btn-primary" href="quiz.html">Ir</a>
+      </div></div></div>
+      <div class="col-md-6 col-lg-4"><div class="card h-100"><div class="card-body">
+        <div class="d-flex justify-content-between"><h3 class="h5">2) Guía Docente</h3><span class="badge text-bg-primary">70 min</span></div>
+        <p class="small-muted">Guion minuto a minuto con lista de preparación previa, porque el primer despliegue tarda varios minutos.</p>
+        <a class="btn btn-sm btn-primary" href="clase.html">Ir</a>
+      </div></div></div>
+      <div class="col-md-6 col-lg-4"><div class="card h-100"><div class="card-body">
+        <div class="d-flex justify-content-between"><h3 class="h5">3) Ejercicios + Kit</h3><span class="badge text-bg-success">Paso a paso</span></div>
+        <p class="small-muted">Ocho ejercicios en escalera con <code>Jugador</code>, una pieza nueva a la vez, con maquetas de cada pantalla de Neon y Render y los errores reales.</p>
+        <a class="btn btn-sm btn-primary" href="ejercicios.html">Ir</a>
+      </div></div></div>
+      <div class="col-md-6 col-lg-4"><div class="card h-100"><div class="card-body">
+        <div class="d-flex justify-content-between"><h3 class="h5">4) Cheat Sheet</h3><span class="badge text-bg-secondary">4 pestañas</span></div>
+        <p class="small-muted">Conceptos con diagramas, las 6 variables (con un separador de la cadena de Neon), pantallas 2026 y la tabla de errores.</p>
+        <a class="btn btn-sm btn-primary" href="cheatsheet.html">Ir</a>
+      </div></div></div>
+      <div class="col-md-6 col-lg-4"><div class="card h-100"><div class="card-body">
+        <div class="d-flex justify-content-between"><h3 class="h5">5) Challenge</h3><span class="badge text-bg-success">Juego</span></div>
+        <p class="small-muted">Ordena los pasos de un despliegue y sigue en un simulador la consola de Render en cuatro escenarios.</p>
+        <a class="btn btn-sm btn-primary" href="challenge.html">Ir</a>
+      </div></div></div>
+      <div class="col-md-6 col-lg-4"><div class="card h-100 border-dark"><div class="card-body">
+        <div class="d-flex justify-content-between"><h3 class="h5">6) Proyecto</h3><span class="badge text-bg-dark">★ Entrega Parcial 3</span></div>
+        <p class="small-muted">Publica <strong>tu</strong> proyecto real en Render + Neon. Guía de 12 pasos con mapa de avance y la plantilla calificable.</p>
+        <a class="btn btn-sm btn-dark" href="proyecto.html">Ir</a>
+      </div></div></div>
+    </div>
+
+    <div class="callout danger mt-4">
+      <div class="fw-semibold">★ Esta semana tiene hito: la entrega cuenta doble</div>
+      <div class="small-muted">
+        La página <a href="proyecto.html">Proyecto</a> es a la vez la <strong>Guía de Aprendizaje 14 (1 pt)</strong> y el <strong>Avance del Proyecto — Entrega Parcial 3 (5 pts)</strong>: tu aplicación en producción con CRUD y autenticación funcionando contra la base de datos real de Neon (no H2). Es una sola entrega y un solo PDF.
+      </div>
+    </div>
+
+    <div class="card mt-3"><div class="card-body">
+      <h2 class="h5 section-title">¿Cómo se evalúa esta semana?</h2>
+      <div class="table-responsive"><table class="table table-sm small mb-0">
+        <thead><tr><th>Instrumento</th><th>Evidencia</th><th>Fecha límite</th><th class="text-end">Pts</th></tr></thead>
+        <tbody>
+          <tr><td>Actividad en clase — Sesión 14</td><td>PDF del quiz en modo Final + PDF del challenge</td><td>Al terminar la sesión</td><td class="text-end">0.66</td></tr>
+          <tr><td>Guía de Aprendizaje 14</td><td rowspan="2"><a href="proyecto.html">proyecto.html</a> — URL pública funcionando, base en Neon, evidencias y reflexión</td><td rowspan="2">Antes de la Sesión 15 (24 oct 2026)</td><td class="text-end">1</td></tr>
+          <tr class="table-dark"><td><strong>★ Entrega Parcial 3</strong></td><td class="text-end"><strong>5</strong></td></tr>
+        </tbody>
+      </table></div>
+    </div></div>
+
+    <div class="callout success mt-3">
+      <div class="fw-semibold">🔒 Evalúa la sesión (100% anónimo)</div>
+      <div class="small-muted">
+        Al terminar la clase, cuéntanos qué funcionó, qué mejorar y cualquier queja:
+        <a href="../evaluacion_docente/index.html">formulario de evaluación anónima</a>. No se guarda tu nombre, correo ni IP.
+      </div>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted d-flex justify-content-between flex-wrap gap-2">
+      <span>Material Semana 14 — Despliegue en producción con Render y Neon · Formato 18 semanas (70 min por sesión).</span>
+      <span>Curso: Programación I · URL · Sábados 11:10–12:20</span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+  <script src="diagramas.js"></script>
+</body>
+</html>

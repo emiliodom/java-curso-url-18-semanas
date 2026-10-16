@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz — Semana 14 (Presaberes y Final)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 14 — Despliegue</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto ★</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Quiz de la semana · Elige el modo con el menú</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Presaberes y Quiz Final, en un solo lugar</h1>
+          <div class="small-muted" id="quizTypeLabel">Presaberes · 8 preguntas · no cuenta para nota</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 900px;">
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="row g-3 align-items-end">
+          <div class="col-md-6">
+            <label class="form-label fw-semibold" for="quizType">¿Qué quiz vas a resolver?</label>
+            <select id="quizType" class="form-select" onchange="renderQuiz()">
+              <option value="presaberes">🟡 Presaberes (inicio de clase, no cuenta para nota)</option>
+              <option value="final">🔴 Final de clase (evidencia de la Actividad en clase)</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold" for="studentName">Nombre del estudiante (aparecerá en el PDF)</label>
+            <input id="studentName" class="form-control" type="text" placeholder="Nombre y apellido" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout mb-3 no-print">
+      <div class="fw-semibold">¿Cómo funciona?</div>
+      <div class="small-muted">El banco repasa las Semanas 12 y 13 (perfiles, variables de entorno, login) y estrena el tema de hoy: publicar la aplicación en internet con Render y Neon, explicado con situaciones de la escuela. Cada vez que cambias de modo (o pulsas "🔀 Nuevas preguntas") se eligen preguntas <strong>al azar</strong> de un banco más grande, y además el <strong>orden de las opciones cambia</strong>: hay que leer, no memorizar posiciones.</div>
+    </div>
+
+    <div id="quizContainer"></div>
+
+    <div id="scoreBanner" class="score-banner"></div>
+
+    <div class="d-flex gap-2 flex-wrap mt-3 no-print">
+      <button class="btn btn-primary btn-lg" onclick="gradeQuiz()">Calificar</button>
+      <button class="btn btn-outline-secondary" onclick="resetQuiz()">Reintentar (mismas preguntas)</button>
+      <button class="btn btn-outline-info" onclick="regenerateQuiz()">🔀 Nuevas preguntas</button>
+      <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      <a class="btn btn-outline-primary ms-auto" href="clase.html">Continuar a la clase →</a>
+    </div>
+
+    <div class="callout warning mt-4 no-print">
+      <div class="fw-semibold">Instrucciones de entrega (si estás en modo Final)</div>
+      <ol class="small-muted mb-0">
+        <li>Escribe tu nombre en la casilla de arriba.</li>
+        <li>Pulsa <strong>Calificar</strong> y revisa la retroalimentación de cada pregunta.</li>
+        <li>Pulsa <strong>Exportar a PDF</strong> y guarda el archivo como <code>QuizFinal_S14_TuNombre.pdf</code>.</li>
+        <li>Súbelo al aula virtual junto con el PDF del <a href="challenge.html">Challenge</a>.</li>
+      </ol>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Quiz — Semana 14 · Despliegue en producción con Render y Neon (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script>
+    // ===== Banco de preguntas de la Semana 14 =====
+    // level: 'presaberes' | 'final' | 'ambas'
+    // La opción correcta se escribe siempre de primera para poder revisarla fácil;
+    // la página baraja las opciones antes de mostrarlas (ver script más abajo).
+    function Q(level, pregunta, a, b, c, fbOk, fbKo) {
+      return { level: level, pregunta: pregunta,
+        opciones: [{ v: 'a', t: a }, { v: 'b', t: b }, { v: 'c', t: c }],
+        correcta: 'a', fbOk: fbOk, fbKo: fbKo };
+    }
+    var QUESTION_BANK = [
+      // ---------- Solo Presaberes (repaso de las Semanas 12 y 13, lenguaje de aula) ----------
+      Q('presaberes', 'Escribes <code>localhost:8080</code> en tu celular y no abre tu aplicación, aunque en tu computadora sí. ¿Por qué?',
+        'Porque <em>localhost</em> significa "esta misma máquina": el celular se busca a sí mismo', 'Porque el celular no tiene Java', 'Porque falta internet en la computadora',
+        'Correcto: <em>localhost</em> es como decir "mi casa": cada quien entiende la suya. Para que otros entren hace falta una dirección pública.',
+        '<em>localhost</em> siempre apunta al mismo aparato donde lo escribes. Desde el celular, "localhost" es el celular.'),
+      Q('presaberes', 'En la Semana 12 creaste <code>application-dev.properties</code> y <code>application-prod.properties</code>. ¿Para qué sirven dos archivos?',
+        'Para tener dos configuraciones (práctica y producción) sin cambiar el código', 'Para tener una copia de seguridad', 'Porque Spring exige siempre dos archivos',
+        'Correcto: es como tener el horario normal y el horario de exámenes: la escuela es la misma, cambia la organización.',
+        'Son perfiles: dos juegos de configuración para el mismo código. Se elige uno al arrancar.'),
+      Q('presaberes', 'En <code>application-prod.properties</code> hay una línea <code>spring.datasource.password=${DB_PASSWORD}</code>. ¿Qué es <code>${DB_PASSWORD}</code>?',
+        'Un "hueco" que se llena con una variable de entorno al arrancar', 'La contraseña real de la base de datos', 'Un error de escritura que hay que borrar',
+        'Correcto: el archivo puede ir a GitHub porque solo tiene el hueco, no la clave.',
+        'Es un hueco (placeholder). La clave real llega desde fuera, como variable de entorno.'),
+      Q('presaberes', 'En la Semana 13 la aplicación se negó a arrancar porque faltaba <code>ADMIN_PASSWORD</code>. ¿Cómo lo arreglaste?',
+        'Definiendo la variable en la misma terminal desde la que se arranca', 'Escribiendo la contraseña dentro de <code>SecurityConfig</code>', 'Borrando la carpeta <code>security</code>',
+        'Correcto: hoy harás lo mismo, pero en el panel de Render en vez de tu terminal.',
+        'Se define la variable de entorno en la terminal. Escribir la clave en el código es justo lo que evitamos.'),
+      Q('presaberes', '¿Por qué la carpeta <code>datos/</code> está en <code>.gitignore</code>?',
+        'Porque contiene la base H2 con datos de personas y no debe publicarse', 'Porque pesa demasiado para GitHub', 'Porque sin eso el proyecto no compila',
+        'Correcto: son datos de menores y hashes de usuarios. Lo que no se sube no se filtra.',
+        'Contiene datos reales (jugadores, usuarios). Se ignora para que nunca llegue a un repositorio público.'),
+      Q('presaberes', 'Con <code>jdbc:h2:mem:</code> los datos se borraban al reiniciar y con <code>jdbc:h2:file:</code> no. ¿Cuál es la mejor comparación?',
+        'Pizarrón (se borra) frente a cuaderno (se conserva)', 'Lápiz frente a lapicero', 'Carta frente a correo electrónico',
+        'Correcto: hoy damos el siguiente paso: el cuaderno se guarda en un archivo central (Neon) al que llega cualquier servidor.',
+        '<code>mem</code> es como un pizarrón: al apagar, se borra. <code>file</code> es un cuaderno en tu disco.'),
+      Q('presaberes', 'Trabajas en la rama <code>development</code> y llevas los cambios a <code>main</code> con un Pull Request. ¿Por qué no trabajar directo en <code>main</code>?',
+        'Porque <code>main</code> debe tener solo lo revisado y estable', 'Porque GitHub no permite escribir en <code>main</code>', 'Porque <code>main</code> borra los archivos viejos',
+        'Correcto: y desde hoy importa más: lo que llega a <code>main</code> se publica solo en internet.',
+        '<code>main</code> guarda la versión estable. Desde hoy, además, es la que Render publica.'),
+      Q('presaberes', '¿Qué hace Spring Boot con la anotación <code>@Entity</code> en <code>Jugador</code>?',
+        'Crea y usa una tabla para guardar cada jugador como una fila', 'Dibuja la página de la lista', 'Revisa la contraseña del usuario',
+        'Correcto: por eso, al conectar con Neon, Hibernate crea la tabla <code>jugador</code> sola.',
+        '<code>@Entity</code> convierte la clase en tabla. Hoy esa tabla aparecerá en Neon.'),
+
+      // ---------- Ambas ----------
+      Q('ambas', 'Publicar una aplicación se parece a mudar la escuela a un edificio nuevo. En esa analogía, ¿qué es el archivo <code>.jar</code>?',
+        'Las cajas de la mudanza: todo empacado en un solo bulto listo para llevar', 'El edificio nuevo', 'La llave de la puerta',
+        'Correcto: el <code>.jar</code> lleva tu código, Spring y el servidor Tomcat adentro. Se ejecuta con <code>java -jar</code>.',
+        'El <code>.jar</code> es el paquete con todo adentro. El edificio sería Render y la llave, las variables de entorno.'),
+      Q('ambas', 'Hoy la aplicación vive en Render y los datos en Neon. ¿Qué hace cada uno?',
+        'Render ejecuta la aplicación; Neon guarda la base de datos PostgreSQL', 'Render guarda el código; Neon lo ejecuta', 'Los dos hacen lo mismo, uno es respaldo del otro',
+        'Correcto: como la escuela (donde se atiende) y el archivo central de expedientes (donde se guardan los datos).',
+        'Render es donde corre la aplicación; Neon es la base de datos. GitHub guarda el código.'),
+      Q('ambas', '¿Por qué los datos van en Neon y no en la base gratuita de Render?',
+        'Porque la base gratuita de Render se borra a los 30 días y el proyecto debe durar hasta la Semana 18', 'Porque Render no permite bases de datos', 'Porque Neon es más bonito',
+        'Correcto: Neon gratis no vence; solo "se duerme" sin uso y despierta solo, sin perder datos.',
+        'La base gratuita de Render expira a los 30 días. Neon gratuita no vence.'),
+      Q('ambas', '¿Dónde se escriben <code>DB_URL</code>, <code>DB_USER</code> y <code>DB_PASSWORD</code> para la aplicación publicada?',
+        'Como variables de entorno en el panel de Render', 'Dentro de <code>application-prod.properties</code>, con sus valores', 'En el README del repositorio',
+        'Correcto: el archivo solo tiene los huecos <code>${...}</code>; los valores viven en Render.',
+        'En Render → Environment. Si los escribes en un archivo del proyecto, terminan en GitHub (público).'),
+      Q('ambas', 'Neon te da su dirección como <code>postgresql://…</code>. ¿Qué cambio le haces para Spring en <code>DB_URL</code>?',
+        'Empezarla con <code>jdbc:postgresql://</code> y quitarle usuario y contraseña (van en sus propias variables)', 'Ninguno, se pega tal cual', 'Cambiar <code>postgresql</code> por <code>h2</code>',
+        'Correcto: Java habla "JDBC". Pegada tal cual, falla con "claims to not accept jdbcUrl" y además imprime tu clave en el log.',
+        'Java necesita el formato JDBC (<code>jdbc:postgresql://servidor/base?sslmode=require</code>) y usuario/clave por separado.'),
+      Q('ambas', '¿Qué significa <code>sslmode=require</code> al final de la dirección de Neon?',
+        'Que la conversación con la base va cifrada; Neon no acepta conexiones sin cifrar', 'Que la base es de solo lectura', 'Que se requiere iniciar sesión dos veces',
+        'Correcto: es mandar los expedientes en sobre sellado y no en una postal que cualquiera lee.',
+        'SSL cifra la conexión. Neon lo exige: sin cifrado, rechaza la conexión.'),
+
+      // ---------- Solo Final ----------
+      Q('final', 'Ejecutas <code>mvn clean package</code> sin definir <code>ADMIN_PASSWORD</code> y falla la prueba <code>contextLoads</code>. ¿Qué está pasando?',
+        'La prueba enciende la aplicación completa y esta se niega a arrancar sin la clave', 'Maven está dañado y hay que reinstalarlo', 'El archivo <code>.jar</code> ya existía',
+        'Correcto: Maven no empaca lo que no enciende. Se arregla definiendo las claves (en Docker se usa <code>-DskipTests</code> porque ahí no están).',
+        'La prueba generada por Initializr arranca la app; sin la variable, la app no arranca y la prueba falla. Es una protección.'),
+      Q('final', 'Render no tiene una opción "Java". ¿Cómo logramos que ejecute nuestra aplicación?',
+        'Con un <code>Dockerfile</code>: una receta que construye el <code>.jar</code> y lo ejecuta con Java', 'Subiendo el <code>.jar</code> por correo a Render', 'Instalando Java en la computadora del estudiante',
+        'Correcto: en Render se elige <strong>Language: Docker</strong> y Render sigue la receta en cada despliegue.',
+        'Para Java, Render usa Docker. El Dockerfile es la receta de cómo construir y ejecutar la aplicación.'),
+      Q('final', 'El Dockerfile tiene dos etapas: una con Maven y otra solo con Java (JRE). ¿Por qué dos?',
+        'La primera construye el <code>.jar</code>; la segunda solo lo ejecuta, más liviana y con menos herramientas que atacar', 'Porque Render cobra por etapa', 'Para tener dos copias de la aplicación',
+        'Correcto: la cocina (con Maven) se descarta; al servidor llega solo el plato servido.',
+        'Etapa 1 = cocinar (construir). Etapa 2 = servir (ejecutar). Al final solo queda la segunda.'),
+      Q('final', 'Un compañero copió de un video viejo <code>FROM openjdk:17-jdk-slim</code> y la construcción falla con "not found". ¿Qué pasó?',
+        'Esa imagen fue retirada de Docker Hub; hay que usar <code>eclipse-temurin</code>', 'Le falta internet a Render', 'Java 17 ya no existe',
+        'Correcto: por eso verificamos las guías contra la documentación actual. Las imágenes del Kit son <code>maven:3.9-eclipse-temurin-17</code> y <code>eclipse-temurin:17-jre</code>.',
+        'La imagen <code>openjdk</code> ya no se publica. Se reemplaza por <code>eclipse-temurin</code>.'),
+      Q('final', 'Agregaste <code>server.port=${PORT:8080}</code>. ¿Qué significa el <code>:8080</code>?',
+        'Que si la variable <code>PORT</code> no existe (como en tu PC), se usa 8080', 'Que la aplicación usa dos puertos a la vez', 'Que el puerto 8080 está prohibido',
+        'Correcto: en Render, <code>PORT</code> vale 10000; en tu PC no existe y queda 8080. Lo que va tras los dos puntos es el valor por defecto.',
+        'Es un valor por defecto: se usa solo cuando la variable no existe.'),
+      Q('final', 'Tu aplicación en Render dice <em>Live</em> y funciona, pero en el log aparece <code>profile is active: "dev"</code>. ¿Qué problema hay?',
+        'Falta <code>SPRING_PROFILES_ACTIVE=prod</code>: usa H2 dentro del servidor y perderá los datos en el próximo despliegue', 'Ninguno: "dev" y "prod" son iguales', 'Que Neon está dormido',
+        'Correcto: es el error más peligroso porque no avisa. El disco del contenedor se borra en cada despliegue.',
+        'Con "dev" usa H2 en un disco que Render borra. Debe decir "prod" para usar Neon.'),
+      Q('final', 'La aplicación no arranca y el ÚLTIMO <code>Caused by</code> dice <code>Unable to determine Dialect without JDBC metadata</code>. ¿Qué haces?',
+        'Subir por el log hasta la primera <code>PSQLException</code>: ahí está la causa real (clave, dirección…)', 'Agregar <code>hibernate.dialect</code> y listo', 'Reinstalar Render',
+        'Correcto: ese mensaje es la consecuencia ("no pude hablar con la base"), no la causa.',
+        'Es un síntoma. La causa está más arriba, en la <code>PSQLException</code>.'),
+      Q('final', 'Después del despliegue, ¿cuál prueba demuestra que los datos están de verdad en Neon y no en H2?',
+        'Inscribir un jugador, reiniciar el servicio en Render y comprobar que sigue (y que aparece en Neon → Tables)', 'Ver que la página tiene colores', 'Que el estado diga <em>Live</em>',
+        'Correcto: rigor en la verificación. <em>Live</em> no es lo mismo que "funciona con datos reales".',
+        'Hay que probar con datos: crear, reiniciar y comprobar que siguen, y verlos en Neon.'),
+      Q('final', 'Abres tu aplicación a las 7 de la mañana y tarda casi un minuto en responder. Luego va rápido. ¿Qué pasó?',
+        'El plan gratuito de Render la "durmió" tras 15 minutos sin visitas y la primera visita la despertó', 'Hackearon la aplicación', 'Neon borró los datos',
+        'Correcto: es esperado en el plan gratuito, no un error tuyo. Avísalo a quien la pruebe.',
+        'Es el comportamiento del plan gratuito: duerme sin visitas y tarda ~1 minuto en despertar.'),
+      Q('final', 'Haces un Pull Request de <code>development</code> a <code>main</code> con un cambio en el título. Sin tocar Render, aparece un despliegue nuevo. ¿Cómo se llama esto?',
+        'Despliegue continuo (la "CD" de CI/CD): lo que llega a <code>main</code> se publica solo', 'Un virus', 'Una copia de seguridad',
+        'Correcto: Render vigila <code>main</code> (Auto-Deploy: On Commit). Por eso <code>main</code> solo recibe lo probado.',
+        'Es despliegue continuo: cada cambio en <code>main</code> dispara un despliegue automático.'),
+      Q('final', 'Por error pegaste la clave de Neon en un archivo y la subiste a GitHub. ¿Qué es lo PRIMERO que haces?',
+        'Cambiar la clave en Neon (Reset password) y poner la nueva en Render', 'Borrar la línea y hacer otro commit', 'Hacer privado el repositorio y olvidarlo',
+        'Correcto: borrar la línea no basta, el historial la conserva. Cambiar la clave la vuelve inútil.',
+        'Primero se cambia la clave (así la filtrada deja de servir); después se limpia el archivo.'),
+      Q('final', 'Cambiaste <code>ADMIN_PASSWORD</code> en Render, pero sigues entrando con la clave anterior. ¿Por qué?',
+        'El usuario admin ya existía en Neon; <code>CargadorUsuarios</code> solo crea usuarios nuevos', 'Render no guardó la variable', 'BCrypt recuerda la clave anterior',
+        'Correcto: igual que en la Semana 13. En producción no se borra <code>datos/</code>: se usa la clave original o se borra la fila en Neon.',
+        'El cargador no actualiza usuarios que ya existen. La clave guardada en Neon sigue siendo la del primer arranque.'),
+      Q('final', 'Usamos <code>spring.jpa.hibernate.ddl-auto=update</code> en producción. ¿Qué es lo correcto decir?',
+        'Es cómodo para un proyecto escolar; en un sistema grande se usarían migraciones escritas (por ejemplo, Flyway)', 'Es la única forma que existe', 'Borra las tablas en cada arranque',
+        'Correcto: lo usamos a conciencia. <code>update</code> crea y amplía tablas, pero no hace cambios cuidadosos como renombrar.',
+        '<code>update</code> crea/amplía tablas sin borrar. Las empresas suelen usar migraciones (Flyway).'),
+    ];
+    var QUIZ_CONFIG = { presaberesCount: 8, finalCount: 12 };
+  </script>
+  <script src="quiz.js"></script>
+  <script>
+    // Baraja el orden de las opciones antes de cada render (patrón desde la Semana 9):
+    // en el banco la correcta se escribe siempre de primera para poder mantenerlo con
+    // facilidad, pero mostrarla siempre arriba permitiría "aprobar" sin leer.
+    // El valor .v no cambia, así que la calificación sigue siendo correcta.
+    function barajarOpciones() {
+      (window.QUESTION_BANK || []).forEach(function (q) {
+        for (var i = q.opciones.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var t = q.opciones[i]; q.opciones[i] = q.opciones[j]; q.opciones[j] = t;
+        }
+      });
+    }
+
+    var _renderBase = window.renderQuiz;
+    window.renderQuiz = function () {
+      barajarOpciones();
+      _renderBase();
+    };
+    renderQuiz();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

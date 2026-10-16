@@ -1,0 +1,787 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ejercicios y Kit de despliegue — Semana 14 (Render + Neon)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 14 — Despliegue</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link active" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto ★</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Ejercicios · Semana 14 · En tu computadora, en Neon y en Render (todo real)</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Publica la Escuela de Fútbol en internet, una pieza a la vez</h1>
+          <div class="small-muted">Tres pestañas: ocho ejercicios en escalera con <code>taller-formularios</code> y <code>Jugador</code>, el Kit con los archivos completos que cambian, y los errores reales que vas a provocar y leer.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 1040px;">
+
+    <ul class="nav nav-tabs mb-4 no-print" id="ejerciciosTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="tab-ejercicios-btn" data-bs-toggle="tab" data-bs-target="#tab-ejercicios" type="button" role="tab">🪜 Ejercicios</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-kit-btn" data-bs-toggle="tab" data-bs-target="#tab-kit" type="button" role="tab">🧩 Kit: archivos completos</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-errores-btn" data-bs-toggle="tab" data-bs-target="#tab-errores" type="button" role="tab">🆘 Errores que vas a provocar</button>
+      </li>
+    </ul>
+
+    <div class="tab-content" id="ejerciciosTabsContent">
+
+      <!-- ============ PESTAÑA 1: EJERCICIOS ============ -->
+      <div class="tab-pane fade show active" id="tab-ejercicios" role="tabpanel">
+
+        <div class="callout info mb-3">
+          <div class="fw-semibold">La idea de hoy, con una mudanza</div>
+          <div class="small-muted">Publicar una aplicación se parece a mudar una escuela a un edificio nuevo. Primero <strong>empacas</strong> todo en cajas (el <code>.jar</code>). Luego consigues el <strong>archivo</strong> donde se guardarán los expedientes (la base de datos en Neon). Después le das al nuevo edificio las <strong>instrucciones para armar</strong> todo (el <code>Dockerfile</code>) y le entregas las <strong>llaves en sobre cerrado</strong> (las variables de entorno en Render). Al final <strong>recorres el edificio</strong> para comprobar que todo funciona (la verificación). Ningún mueble se rediseña: solo cambia el lugar.</div>
+        </div>
+
+        <figure class="mmd-figure">
+          <div class="mermaid">
+flowchart LR
+  E1["1 · Empacar<br/>el .jar"] --> E2["2 · Puerto<br/>flexible"] --> E3["3 · Crear base<br/>en Neon"] --> E4["4 · Sacar las<br/>3 piezas"]
+  E4 --> E5["5 · Tu PC habla<br/>con Neon"] --> E6["6 · Dockerfile<br/>y push a main"] --> E7["7 · Web Service<br/>en Render"] --> E8["8 · Verificar<br/>de punta a punta"]
+  style E1 fill:#fffbeb,stroke:#f59e0b
+  style E2 fill:#fffbeb,stroke:#f59e0b
+  style E3 fill:#f0fdf4,stroke:#22c55e
+  style E4 fill:#f0fdf4,stroke:#22c55e
+  style E5 fill:#fffbeb,stroke:#f59e0b
+  style E6 fill:#f3f4f6,stroke:#6b7280
+  style E7 fill:#f5f3ff,stroke:#8b5cf6
+  style E8 fill:#eff6ff,stroke:#3b82f6
+          </div>
+          <figcaption>La escalera de hoy. El color dice <strong>dónde</strong> trabajas: <span class="lugar pc">tu PC</span> <span class="lugar neon">Neon</span> <span class="lugar github">GitHub</span> <span class="lugar render">Render</span> <span class="lugar navegador">navegador</span>. Cada ejercicio agrega <strong>una sola pieza nueva</strong>: si algo falla, sabes exactamente dónde buscar.</figcaption>
+        </figure>
+
+        <div class="callout warning mb-3">
+          <div class="fw-semibold">Elige tu ruta (una sola)</div>
+          <div class="small-muted">
+            <strong>Ruta A — continúas tu <code>taller-formularios</code> de la Semana 13</strong> (con login y roles). Haces los ejercicios en orden. <br />
+            <strong>Ruta B — no tienes el proyecto o quedó roto.</strong> Genera el proyecto con el <a href="../Material_Sesion_Clase_13_HTML_18_semanas/ejercicios.html">Kit de la Semana 13</a> (todos los archivos Java y plantillas) y luego agrega los archivos de la <a href="#" onclick="document.getElementById('tab-kit-btn').click(); return false;">pestaña 2 de esta página</a>. Necesitas una cuenta de GitHub con el proyecto subido antes del ejercicio 6.
+          </div>
+        </div>
+
+        <div class="callout warning mb-4">
+          <div class="fw-semibold">Reglas de trabajo de hoy</div>
+          <div class="small-muted">
+            1) <strong>Una pieza a la vez.</strong> Primero el <code>.jar</code> en tu PC, luego tu PC con Neon, y solo al final Render. Así, si algo falla, el culpable es la última pieza.<br />
+            2) <strong>Las claves de Neon nunca van a un archivo del proyecto.</strong> Guárdalas en un lugar privado fuera de la carpeta (un gestor de contraseñas o una nota personal), nunca en GitHub ni en el chat de la clase.<br />
+            3) <strong>Lee el log.</strong> Cuando algo falle, busca la línea que dice <code>PSQLException</code> o el primer <code>Caused by:</code> con un mensaje entendible. El último <code>Caused by</code> a veces engaña (ver la pestaña de errores).<br />
+            4) Los nombres de botones de esta página se comprobaron en octubre de 2026. Si una pantalla se ve un poco distinta, busca la palabra <strong>en negrita</strong>: los nombres cambian menos que los colores.
+          </div>
+        </div>
+
+        <div class="row g-3">
+
+          <!-- EJ 1 -->
+          <div class="col-12"><div class="card"><div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 1 — Empaca tu aplicación en un <code>.jar</code> <span class="badge text-bg-success">Nivel 1 · Observar</span></h2>
+            <p class="mb-2"><span class="lugar pc">💻 TU PC</span> <span class="small-muted">Terminal de VS Code, dentro de la carpeta <code>taller-formularios</code>.</span></p>
+            <p class="small-muted mb-2"><strong>Qué es un <code>.jar</code>:</strong> un solo archivo que contiene <em>todo</em> lo necesario para que tu aplicación funcione: tu código compilado, Spring, el servidor web Tomcat, el driver de PostgreSQL. Es como una lonchera armada: quien la recibe no necesita cocinar, solo abrirla. Por eso no hace falta instalar un servidor aparte (el viejo archivo <code>.war</code>).</p>
+            <figure class="mmd-figure">
+              <div class="mermaid">
+flowchart LR
+  A["📄 pom.xml<br/>lista de ingredientes"] --> M
+  B["📁 src/<br/>tu código y plantillas"] --> M
+  M{{"mvn clean package"}} --> C1["1 · limpia<br/>target/"] --> C2["2 · compila<br/>.java → .class"] --> C3["3 · corre las<br/>pruebas"] --> C4["4 · empaqueta"]
+  C4 --> J["📦 target/taller-formularios-0.0.1-SNAPSHOT.jar<br/>tu código + Spring + Tomcat + drivers"]
+  style M fill:#fef3c7,stroke:#f59e0b
+  style J fill:#dcfce7,stroke:#22c55e
+              </div>
+              <figcaption>Lo que hace Maven con un solo comando. El paso 3 (pruebas) es el que va a fallar a propósito en este ejercicio.</figcaption>
+            </figure>
+            <ol class="small-muted">
+              <li>Detén la aplicación si está corriendo (<kbd>Ctrl</kbd>+<kbd>C</kbd>). Abre una terminal <strong>nueva</strong> (sin variables definidas).</li>
+              <li>Ejecuta:
+<pre class="mt-2"><code># Windows (PowerShell)
+.\mvnw.cmd clean package
+
+# macOS / Linux / Git Bash
+./mvnw clean package</code></pre></li>
+              <li><strong>Va a fallar, y está bien.</strong> Busca en el texto rojo esta línea:
+<div class="term"><span class="bad">[ERROR]   TallerFormulariosApplicationTests.contextLoads » IllegalState Failed to load ApplicationContext</span>
+<span class="dim">...</span>
+Caused by: org.springframework.util.PlaceholderResolutionException: <span class="warn">Could not resolve placeholder 'ADMIN_PASSWORD'</span> in value "${ADMIN_PASSWORD}"
+<span class="bad">[ERROR] BUILD FAILURE</span></div>
+                ¿Por qué? Spring Initializr creó una prueba llamada <code>contextLoads</code> que <strong>arranca la aplicación completa</strong> para ver si enciende. Y desde la Semana 13 tu aplicación se niega a arrancar sin las contraseñas. La prueba está haciendo su trabajo.</li>
+              <li>Define las dos variables de la Semana 13 en <strong>esa misma terminal</strong> y repite:
+<pre class="mt-2"><code># Windows (PowerShell)
+$env:ADMIN_PASSWORD = "Clave-Admin-2026"
+$env:ENTRENADOR_PASSWORD = "Clave-Entr-2026"
+.\mvnw.cmd clean package
+
+# macOS / Linux / Git Bash
+export ADMIN_PASSWORD="Clave-Admin-2026"
+export ENTRENADOR_PASSWORD="Clave-Entr-2026"
+./mvnw clean package</code></pre>
+                Ahora debe terminar con <code class="text-success">BUILD SUCCESS</code>. (Las claves son ejemplo: usa las tuyas.)</li>
+              <li>Mira el resultado: en VS Code abre la carpeta <code>target/</code>. Ahí está <code>taller-formularios-0.0.1-SNAPSHOT.jar</code> (unos 60 MB: lleva todo adentro).</li>
+              <li>Ejecútalo <strong>sin Maven y sin VS Code</strong>, como lo hará el servidor:
+<pre class="mt-2"><code>java -jar target/taller-formularios-0.0.1-SNAPSHOT.jar</code></pre>
+                Abre <code>http://localhost:8080</code>, entra como <code>admin</code> y verás tus jugadores de siempre (sigue en perfil <code>dev</code>, con H2). Detén con <kbd>Ctrl</kbd>+<kbd>C</kbd>.</li>
+            </ol>
+            <div class="callout success mb-2">✅ Checkpoint: <code>BUILD SUCCESS</code>, existe el <code>.jar</code> en <code>target/</code> y con <code>java -jar</code> la aplicación abre en el navegador.</div>
+            <details><summary class="fw-semibold">¿Qué acabo de ver? (respuesta)</summary><div class="mt-2 small-muted">Viste las dos caras de empaquetar: (1) Maven <strong>prueba antes de empacar</strong>, y si una prueba falla no entrega la caja (eso es bueno: no se publica algo que no enciende); (2) el <code>.jar</code> se ejecuta con un solo comando, con su propio Tomcat adentro. Render hará exactamente esto, pero dentro de su propia máquina. Nota: DevTools (la recarga automática de la Semana 12) <strong>no viaja dentro del <code>.jar</code></strong>: se desactiva sola en producción, tal como prometimos.</div></details>
+          </div></div></div>
+
+          <!-- EJ 2 -->
+          <div class="col-12"><div class="card"><div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 2 — Un puerto que se adapta al lugar <span class="badge text-bg-success">Nivel 1 · Modificar una línea</span></h2>
+            <p class="mb-2"><span class="lugar pc">💻 TU PC</span> <span class="small-muted">Archivo <code>src/main/resources/application.properties</code>.</span></p>
+            <p class="small-muted mb-2"><strong>Por qué:</strong> en tu computadora la aplicación escucha en la "puerta" 8080. Render, en cambio, le dice a cada aplicación en qué puerta debe escuchar mediante una variable de entorno llamada <code>PORT</code> (normalmente 10000). Es como un salón de clases que cambia de número según el edificio: la aplicación debe preguntar "¿en qué salón me toca?" en vez de asumirlo.</p>
+            <ol class="small-muted">
+              <li>Agrega esta línea a <code>application.properties</code> (debajo de <code>server.error.whitelabel.enabled=false</code>):
+<pre class="mt-2"><code># Puerto: Render entrega el suyo en la variable PORT; en tu computadora no existe y se usa 8080.
+server.port=${PORT:8080}</code></pre>
+                Se lee: "usa el valor de <code>PORT</code>; <strong>si no existe</strong>, usa <code>8080</code>". Lo que va después de los dos puntos es el <em>valor por defecto</em>. Por eso, a diferencia de <code>${ADMIN_PASSWORD}</code>, esta variable <strong>no</strong> es obligatoria.</li>
+              <li>Reempaqueta (en la terminal que ya tiene las dos claves): <code>./mvnw clean package</code> (o <code>.\mvnw.cmd clean package</code>).</li>
+              <li>Prueba el puerto "prestado":
+<pre class="mt-2"><code># Windows (PowerShell)
+$env:PORT = "9090"
+java -jar target/taller-formularios-0.0.1-SNAPSHOT.jar
+
+# macOS / Linux / Git Bash
+PORT=9090 java -jar target/taller-formularios-0.0.1-SNAPSHOT.jar</code></pre>
+                En el log busca <code>Tomcat started on port 9090</code> y abre <code>http://localhost:9090</code>. Detén la app. En PowerShell, borra la variable con <code>Remove-Item Env:PORT</code> para volver al 8080.</li>
+            </ol>
+            <div class="callout success mb-0">✅ Checkpoint: con <code>PORT=9090</code> la app abre en el 9090; sin <code>PORT</code>, en el 8080.</div>
+          </div></div></div>
+
+          <!-- EJ 3 -->
+          <div class="col-12"><div class="card"><div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 3 — Crea la base de datos en Neon <span class="badge text-bg-primary">Nivel 2 · Seguir pantallas</span></h2>
+            <p class="mb-2"><span class="lugar neon">🐘 NEON</span> <span class="small-muted">En el navegador, en <strong>console.neon.tech</strong> (la consola de neon.com).</span></p>
+            <p class="small-muted mb-2"><strong>Qué es Neon:</strong> un servicio que te presta una base de datos PostgreSQL que vive en internet, encendida para cualquier servidor que tenga la clave. A diferencia de H2 (un archivo en tu disco), PostgreSQL es la base de datos que usan empresas reales. <strong>Por qué Neon y no la base de Render:</strong> la base gratuita de Render se borra a los 30 días, y tu proyecto debe seguir vivo hasta la presentación de la Semana 18. El plan gratuito de Neon no vence: si nadie la usa por 5 minutos, "se duerme" y despierta sola en menos de un segundo, sin perder datos.</p>
+            <div class="row g-3">
+              <div class="col-lg-7">
+                <div class="gui-mock" aria-label="Maqueta del formulario de proyecto nuevo en Neon">
+                  <div class="gui-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">console.neon.tech</span><span class="ms-auto">Maqueta simplificada</span></div>
+                  <div class="gui-body">
+                    <div class="gui-title">Create project</div>
+                    <div class="gui-field"><span class="gui-label"><span class="pin">1</span>Project name</span><span class="gui-input elegir">escuela-futbol-los-cerritos</span></div>
+                    <div class="gui-field"><span class="gui-label"><span class="pin">2</span>Region</span><span class="gui-input elegir">AWS US East 2 (Ohio)</span></div>
+                    <div class="gui-field"><span class="gui-label"><span class="pin">3</span>Postgres database</span><span class="gui-input">✔ activado · versión: la que venga por defecto</span></div>
+                    <div class="gui-field"><span class="gui-label"><span class="pin">4</span>Neon Auth y otros</span><span class="gui-input">apagados (no los usamos)</span></div>
+                    <div class="gui-field"><span class="gui-label"></span><span><span class="pin">5</span><span class="gui-btn">Create project</span></span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-5">
+                <ul class="gui-leyenda small-muted">
+                  <li><span class="pin">0</span>Entra a <strong>neon.com</strong> → <strong>Sign up</strong> (o <strong>Log in</strong>) con GitHub. No pide tarjeta. Si es tu primera vez, Neon te lleva directo a crear el primer proyecto; si no, pulsa <strong>New Project</strong>.</li>
+                  <li><span class="pin">1</span>Nombre del proyecto: el de la institución, en minúsculas y con guiones.</li>
+                  <li><span class="pin">2</span><strong>Región:</strong> elige una de <strong>Estados Unidos, lado Este</strong> (Ohio o Virginia). Ahí mismo crearás la app en Render: si los dos están cerca, cada consulta es más rápida. El proveedor (AWS) viene incluido en el nombre de la región.</li>
+                  <li><span class="pin">3</span><span class="pin">4</span>Deja la versión que viene. Los servicios opcionales (Neon Auth, almacenamiento…) quedan apagados: nuestro login ya lo hace Spring Security.</li>
+                  <li><span class="pin">5</span><strong>Create project</strong>. En segundos verás el panel del proyecto.</li>
+                </ul>
+              </div>
+            </div>
+            <p class="small-muted mb-2">Neon crea automáticamente tres cosas con nombres que vas a reconocer: una <strong>rama</strong> llamada <code>production</code> (sí, como las ramas de Git), una base de datos llamada <code>neondb</code> y un usuario llamado <code>neondb_owner</code>.</p>
+            <div class="callout success mb-2">✅ Checkpoint: ves el panel de tu proyecto y, en el menú de la izquierda, la opción <strong>Tables</strong> muestra una base <strong>vacía</strong> (todavía no hay tablas: las creará tu aplicación).</div>
+            <details><summary class="fw-semibold">¿Por qué está vacía si mi app ya tiene jugadores?</summary><div class="mt-2 small-muted">Porque tus jugadores viven en el archivo H2 de tu computadora (<code>datos/</code>). Neon es un archivo <strong>nuevo y distinto</strong>, en otro lugar. Cuando tu aplicación se conecte en el perfil <code>prod</code>, Hibernate verá que no existen las tablas y las creará (<code>ddl-auto=update</code>). Los datos de práctica <strong>no se mudan</strong>: producción empieza limpia, como un cuaderno nuevo para el ciclo escolar.</div></details>
+          </div></div></div>
+
+          <!-- EJ 4 -->
+          <div class="col-12"><div class="card"><div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 4 — Saca las 3 piezas de conexión <span class="badge text-bg-primary">Nivel 2 · Transformar</span></h2>
+            <p class="mb-2"><span class="lugar neon">🐘 NEON</span> <span class="lugar pc">📝 una nota privada</span></p>
+            <p class="small-muted mb-2">Neon te da <strong>una sola cadena</strong> con todo junto (usuario, contraseña, dirección y base). Spring la necesita <strong>en tres piezas separadas</strong>, y la dirección escrita en el "idioma" de Java (JDBC). Es como recibir una dirección completa en un sobre y tener que pasarla a un formulario con casillas separadas.</p>
+            <div class="row g-3">
+              <div class="col-lg-7">
+                <div class="gui-mock" aria-label="Maqueta de la ventana Connect de Neon">
+                  <div class="gui-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">console.neon.tech · Project dashboard</span><span class="ms-auto">Maqueta simplificada</span></div>
+                  <div class="gui-body">
+                    <div class="gui-title"><span class="pin">1</span>Connect to your branch</div>
+                    <div class="gui-field"><span class="gui-label">Branch · Compute</span><span class="gui-input">production · Primary</span></div>
+                    <div class="gui-field"><span class="gui-label">Database · Role</span><span class="gui-input">neondb · neondb_owner</span></div>
+                    <div class="gui-field"><span class="gui-label"><span class="pin">2</span>Connection pooling</span><span><span class="gui-toggle"></span> <strong>apágalo</strong> (viene encendido)</span></div>
+                    <div class="gui-field"><span class="gui-label"><span class="pin">3</span>Mostrar contraseña</span><span class="gui-input ojo">👁 ícono del ojo / Show password</span></div>
+                    <div class="gui-field"><span class="gui-label"><span class="pin">4</span>Connection string</span><span class="gui-input">postgresql://neondb_owner:npg_AbC123xYz@ep-cool-river-a1b2c3d4.us-east-2.aws.neon.tech/neondb?sslmode=require&amp;channel_binding=require</span></div>
+                    <div class="gui-field"><span class="gui-label"></span><span><span class="gui-btn claro">Copy snippet</span></span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-5">
+                <ul class="gui-leyenda small-muted">
+                  <li><span class="pin">1</span>En el panel del proyecto pulsa el botón <strong>Connect</strong>. Se abre la ventana <strong>Connect to your branch</strong>. Deja la rama, la base y el rol como vienen.</li>
+                  <li><span class="pin">2</span><strong>Apaga Connection pooling.</strong> Con el interruptor encendido, la dirección lleva <code>-pooler</code>: es un "repartidor" de conexiones útil para miles de usuarios, pero recomendado <em>no</em> usarlo para crear tablas. Apagado te da la conexión directa, la más simple para nuestro proyecto.</li>
+                  <li><span class="pin">3</span>Muestra la contraseña <strong>antes</strong> de copiar; si copias con asteriscos, copiarás asteriscos.</li>
+                  <li><span class="pin">4</span>Copia la cadena y pégala en una <strong>nota privada</strong> (no en tu proyecto). El selector de lenguaje también ofrece <strong>Java</strong>; sirve, pero te pone usuario y clave dentro de la URL, y aquí los queremos separados.</li>
+                </ul>
+              </div>
+            </div>
+
+            <h3 class="h6 fw-bold mt-2">Desarma la cadena (con colores)</h3>
+            <div class="term"><span class="dim">postgresql://</span><span style="color:#fde68a">neondb_owner</span><span class="dim">:</span><span style="color:#fca5a5">npg_AbC123xYz</span><span class="dim">@</span><span style="color:#93c5fd">ep-cool-river-a1b2c3d4.us-east-2.aws.neon.tech</span><span class="dim">/</span><span style="color:#86efac">neondb</span><span class="dim">?</span><span style="color:#c4b5fd">sslmode=require&amp;channel_binding=require</span>
+<span class="dim">└─ protocolo ─┘└── usuario ──┘ └ contraseña ┘ └────────────── dirección del servidor ──────────────┘ └ base ┘ └──── opciones de seguridad ────┘</span></div>
+            <div class="table-responsive"><table class="table table-sm small align-middle">
+              <thead><tr><th>Variable</th><th>Cómo se arma</th><th>Ejemplo</th></tr></thead>
+              <tbody>
+                <tr><td><span class="var-chip neon">DB_USER</span></td><td>Lo que está entre <code>//</code> y <code>:</code></td><td><code>neondb_owner</code></td></tr>
+                <tr><td><span class="var-chip neon">DB_PASSWORD</span></td><td>Lo que está entre <code>:</code> y <code>@</code></td><td><code>npg_AbC123xYz</code></td></tr>
+                <tr><td><span class="var-chip neon">DB_URL</span></td><td><code>jdbc:postgresql://</code> + dirección + <code>/</code> + base + <code>?sslmode=require&amp;channelBinding=require</code></td><td><code>jdbc:postgresql://ep-cool-river-a1b2c3d4.us-east-2.aws.neon.tech/neondb?sslmode=require&amp;channelBinding=require</code></td></tr>
+              </tbody>
+            </table></div>
+            <div class="callout warning mb-2"><div class="small-muted"><strong>Tres detalles que importan:</strong> (1) <code>DB_URL</code> empieza con <code>jdbc:</code> y <strong>no</strong> lleva usuario ni contraseña. (2) <code>sslmode=require</code> obliga a cifrar la conversación con Neon: Neon no acepta conexiones sin cifrar. (3) En Java la opción se escribe <code>channelBinding</code> (sin guion bajo, con B mayúscula); en la cadena de Neon viene como <code>channel_binding</code>. Si la dejas con guion bajo, Java simplemente la ignora (lo comprobamos), pero escrita bien añade una protección extra.</div></div>
+            <p class="small-muted mb-2">¿Te da miedo equivocarte? En el <a href="cheatsheet.html">Cheat Sheet</a>, pestaña "🔑 Las 6 variables", hay un <strong>separador automático</strong>: pegas la cadena y te muestra las tres piezas. Funciona solo dentro de tu navegador; no envía nada a ningún lado.</p>
+            <div class="callout success mb-0">✅ Checkpoint: en tu nota privada tienes <span class="var-chip neon">DB_URL</span> (empieza con <code>jdbc:postgresql://</code>, sin <code>-pooler</code>), <span class="var-chip neon">DB_USER</span> y <span class="var-chip neon">DB_PASSWORD</span>.</div>
+          </div></div></div>
+
+          <!-- EJ 5 -->
+          <div class="col-12"><div class="card"><div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 5 — Tu computadora habla con Neon (antes de tocar Render) <span class="badge text-bg-warning">Nivel 3 · Probar una pieza a la vez</span></h2>
+            <p class="mb-2"><span class="lugar pc">💻 TU PC</span> <span class="lugar neon">🐘 NEON</span></p>
+            <p class="small-muted mb-2"><strong>Por qué este paso existe:</strong> si conectas Neon por primera vez desde Render y algo falla, no sabrás si el problema es Neon, el Dockerfile o Render. Probando primero desde tu computadora, aíslas una sola pieza: <em>¿las tres variables de Neon son correctas?</em> Es como probar la llave nueva en la puerta antes de entregarla.</p>
+            <figure class="mmd-figure">
+              <div class="mermaid">
+flowchart LR
+  subgraph PC["💻 Tu computadora"]
+    T["Terminal con 6 variables<br/>SPRING_PROFILES_ACTIVE=prod"] --> J["java -jar …jar"]
+    P["application-prod.properties<br/>${DB_URL} ${DB_USER} ${DB_PASSWORD}"] -.lee.-> J
+  end
+  J -- "JDBC + SSL<br/>por internet" --> N[("🐘 Neon<br/>neondb")]
+  H[("H2 · datos/")]
+  J -. "NO se usa en prod" .-x H
+  style PC fill:#fffbeb,stroke:#f59e0b
+  style N fill:#dcfce7,stroke:#22c55e
+  style H fill:#f1f5f9,stroke:#94a3b8,stroke-dasharray: 5 5
+              </div>
+              <figcaption>Mismo <code>.jar</code>, otra configuración: con <code>SPRING_PROFILES_ACTIVE=prod</code> Spring ignora H2 y usa las tres variables de Neon.</figcaption>
+            </figure>
+            <ol class="small-muted">
+              <li>Abre <code>application-prod.properties</code>: ya existe desde la Semana 12. Compáralo con el de la <a href="#" onclick="document.getElementById('tab-kit-btn').click(); return false;">pestaña Kit</a> y agrega las líneas nuevas (tamaño del grupo de conexiones y la línea de HTTPS). Reempaqueta.</li>
+              <li>En una terminal, define las <strong>seis</strong> variables (con <strong>tus</strong> valores de la nota privada) y arranca:
+<pre class="mt-2"><code># Windows (PowerShell) — todo en la MISMA terminal
+$env:SPRING_PROFILES_ACTIVE = "prod"
+$env:DB_URL = "jdbc:postgresql://ep-cool-river-a1b2c3d4.us-east-2.aws.neon.tech/neondb?sslmode=require&amp;channelBinding=require"
+$env:DB_USER = "neondb_owner"
+$env:DB_PASSWORD = "npg_AbC123xYz"
+$env:ADMIN_PASSWORD = "Clave-Admin-2026"
+$env:ENTRENADOR_PASSWORD = "Clave-Entr-2026"
+java -jar target/taller-formularios-0.0.1-SNAPSHOT.jar
+
+# macOS / Linux / Git Bash — la URL va entre comillas simples por el símbolo &amp;
+export SPRING_PROFILES_ACTIVE=prod
+export DB_URL='jdbc:postgresql://ep-cool-river-a1b2c3d4.us-east-2.aws.neon.tech/neondb?sslmode=require&amp;channelBinding=require'
+export DB_USER=neondb_owner
+export DB_PASSWORD='npg_AbC123xYz'
+export ADMIN_PASSWORD='Clave-Admin-2026'
+export ENTRENADOR_PASSWORD='Clave-Entr-2026'
+java -jar target/taller-formularios-0.0.1-SNAPSHOT.jar</code></pre></li>
+              <li>En el log busca estas dos señales:
+<div class="term">... The following 1 profile is active: <span class="ok">"prod"</span>
+... HikariPool-1 - Added connection <span class="ok">org.postgresql.jdbc.PgConnection</span>@...
+... Tomcat started on port 8080 (http)
+... <span class="ok">Started TallerFormulariosApplication</span> in 6.1 seconds</div>
+                Si dice <code>"dev"</code> o ves <code>jdbc:h2</code>, falta <code>SPRING_PROFILES_ACTIVE</code>. Si falla, ve a la pestaña de errores (casos 3, 4 y 5).</li>
+              <li>Abre <code>http://localhost:8080</code>, entra como <code>admin</code>: la lista está <strong>vacía</strong> (base nueva). Inscribe a <em>Diego Morales, 11 años, Delantero</em>.</li>
+              <li>Vuelve a Neon → menú izquierdo <strong>Tables</strong>: aparecen las tablas <code>jugador</code> y <code>usuario</code>. Abre <code>jugador</code> y ahí está Diego. Abre <code>usuario</code>: la columna <code>password</code> empieza con <code>$2a$10$</code> (BCrypt, como en la Semana 13).</li>
+              <li>Opcional: en <strong>SQL Editor</strong> escribe <code>SELECT * FROM jugador;</code> y pulsa <strong>Run</strong>.</li>
+            </ol>
+            <div class="callout danger mb-2"><div class="fw-semibold">Trampa de la Semana 13 que reaparece</div><div class="small-muted"><code>CargadorUsuarios</code> crea los usuarios <strong>la primera vez</strong> que la aplicación arranca contra Neon, con las claves que tenía <em>esa</em> terminal. Después, aunque Render tenga otras claves, <strong>no las cambia</strong>. Regla: usa en Render <strong>las mismas</strong> <code>ADMIN_PASSWORD</code> y <code>ENTRENADOR_PASSWORD</code> que usaste aquí. (Si te equivocas: en el SQL Editor de Neon ejecuta <code>DELETE FROM usuario;</code> y reinicia la app: se vuelven a crear con las claves actuales.)</div></div>
+            <div class="callout success mb-0">✅ Checkpoint: el log dice <code>"prod"</code>, la app abre con la lista vacía, y el jugador que inscribiste <strong>aparece en Neon → Tables → jugador</strong>.</div>
+          </div></div></div>
+
+          <!-- EJ 6 -->
+          <div class="col-12"><div class="card"><div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 6 — El Dockerfile: la receta que entenderá Render <span class="badge text-bg-warning">Nivel 3 · Crear con modelo</span></h2>
+            <p class="mb-2"><span class="lugar pc">💻 TU PC</span> <span class="lugar github">🐙 GITHUB</span></p>
+            <p class="small-muted mb-2"><strong>Qué es Docker, en simple:</strong> Render no sabe "cocinar" Java por su cuenta. Un <code>Dockerfile</code> es una <strong>receta escrita</strong>: "consigue una cocina con Java y Maven, mete los ingredientes, cocina el <code>.jar</code>, y sírvelo en un plato limpio con solo Java para ejecutarlo". Render sigue la receta al pie de la letra cada vez que publicas. El resultado (el "plato servido" que corre) se llama <strong>contenedor</strong>.</p>
+            <figure class="mmd-figure">
+              <div class="mermaid">
+flowchart LR
+  subgraph S1["Etapa 1 · la cocina — maven:3.9-eclipse-temurin-17"]
+    A["COPY pom.xml<br/>COPY src"] --> B["RUN mvn -DskipTests<br/>clean package"] --> C["📦 target/*.jar"]
+  end
+  subgraph S2["Etapa 2 · el plato — eclipse-temurin:17-jre"]
+    D["COPY app.jar"] --> E["ENTRYPOINT<br/>java -jar app.jar"]
+  end
+  C -- "solo se lleva el .jar" --> D
+  E --> F(["🚀 contenedor corriendo en Render"])
+  style S1 fill:#fffbeb,stroke:#f59e0b
+  style S2 fill:#f0fdf4,stroke:#22c55e
+  style F fill:#ede9fe,stroke:#8b5cf6
+              </div>
+              <figcaption>Un Dockerfile de dos etapas: la cocina (pesada, con Maven) se descarta; al servidor solo llega el plato (Java + tu <code>.jar</code>), más liviano.</figcaption>
+            </figure>
+            <ol class="small-muted">
+              <li>En la <strong>raíz</strong> del proyecto (junto a <code>pom.xml</code>, no dentro de <code>src</code>) crea un archivo llamado exactamente <code>Dockerfile</code> (sin extensión, con D mayúscula) y copia el de la <a href="#" onclick="document.getElementById('tab-kit-btn').click(); return false;">pestaña Kit</a>. Crea también <code>.dockerignore</code>.</li>
+              <li>Lee la tabla "línea por línea" del Kit. Fíjate en <code>-DskipTests</code>: en Render no existen <em>tus</em> claves durante la construcción, y la prueba <code>contextLoads</code> fallaría (como en el ejercicio 1). Las pruebas se corren en tu computadora.</li>
+              <li>Revisa qué vas a subir: <code>git status</code>. Deben aparecer <code>Dockerfile</code>, <code>.dockerignore</code> y los <code>.properties</code> modificados. <strong>No</strong> debe aparecer <code>datos/</code> ni ningún archivo con claves. Busca tu clave de Neon en todo el proyecto (en VS Code: <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>F</kbd>, pega <code>npg_</code>): <strong>cero resultados</strong>.</li>
+              <li>Sube a la rama de trabajo y luego lleva los cambios a <code>main</code> con un Pull Request (Semana 4):
+<pre class="mt-2"><code>git checkout development
+git add .
+git commit -m "Prepara el despliegue: puerto flexible, perfil prod y Dockerfile"
+git push origin development
+# En github.com: Pull requests → New pull request → base: main ← compare: development → Create → Merge</code></pre></li>
+            </ol>
+            <figure class="mmd-figure">
+              <div class="mermaid">
+gitGraph
+  commit id: "S12 persistencia"
+  branch development
+  checkout development
+  commit id: "S13 login y roles"
+  commit id: "S14 Dockerfile + prod"
+  checkout main
+  merge development id: "PR → main" tag: "Render publica"
+              </div>
+              <figcaption>Trabajas en <code>development</code>; <code>main</code> es lo que se publica. Cada vez que algo llega a <code>main</code>, Render vuelve a desplegar solo (eso es el "CD" de CI/CD).</figcaption>
+            </figure>
+            <div class="callout success mb-0">✅ Checkpoint: en github.com, en la rama <code>main</code>, ves <code>Dockerfile</code> junto a <code>pom.xml</code>, y la búsqueda de <code>npg_</code> en el repositorio no encuentra nada.</div>
+          </div></div></div>
+
+          <!-- EJ 7 -->
+          <div class="col-12"><div class="card"><div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 7 — Crea el Web Service en Render <span class="badge text-bg-warning">Nivel 3 · Seguir pantallas</span></h2>
+            <p class="mb-2"><span class="lugar render">☁️ RENDER</span> <span class="small-muted">En el navegador, en <strong>dashboard.render.com</strong>.</span></p>
+            <p class="small-muted mb-2"><strong>Qué es Render:</strong> una empresa que presta computadoras en internet. Le dices "este es mi repositorio" y Render lo descarga, sigue el <code>Dockerfile</code>, enciende el contenedor, le da una dirección pública con candado HTTPS y lo vuelve a hacer cada vez que <code>main</code> cambia.</p>
+            <div class="row g-3">
+              <div class="col-lg-7">
+                <div class="gui-mock" aria-label="Maqueta del formulario New Web Service de Render">
+                  <div class="gui-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">dashboard.render.com · New Web Service</span><span class="ms-auto">Maqueta simplificada</span></div>
+                  <div class="gui-body">
+                    <div class="gui-field"><span class="gui-label"><span class="pin">1</span>Source Code</span><span class="gui-input elegir">tu-usuario / taller-formularios</span></div>
+                    <div class="gui-field"><span class="gui-label"><span class="pin">2</span>Name</span><span class="gui-input elegir">escuela-futbol-tu-nombre</span></div>
+                    <div class="gui-field"><span class="gui-label"><span class="pin">3</span>Language</span><span class="gui-input elegir">Docker</span></div>
+                    <div class="gui-field"><span class="gui-label"><span class="pin">4</span>Branch</span><span class="gui-input elegir">main</span></div>
+                    <div class="gui-field"><span class="gui-label"><span class="pin">5</span>Region</span><span class="gui-input elegir">Ohio (US East)</span></div>
+                    <div class="gui-field"><span class="gui-label"><span class="pin">6</span>Root Directory</span><span class="gui-input">(vacío)</span></div>
+                    <div class="gui-field"><span class="gui-label"><span class="pin">7</span>Compute</span><span class="gui-input elegir">Free · 512 MB · 0.1 CPU</span></div>
+                    <div class="gui-field"><span class="gui-label"><span class="pin">8</span>Environment Variables</span><span class="gui-input ojo">6 variables (tabla abajo)</span></div>
+                    <div class="gui-field"><span class="gui-label"><span class="pin">9</span>Advanced → Health Check Path</span><span class="gui-input">/login</span></div>
+                    <div class="gui-field"><span class="gui-label"></span><span><span class="pin">10</span><span class="gui-btn">Deploy Web Service</span></span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-5">
+                <ul class="gui-leyenda small-muted">
+                  <li><span class="pin">1</span>Arriba a la derecha: <strong>+ New</strong> → <strong>Web Service</strong>. En <em>Git Provider</em> elige tu repositorio (si no aparece: <strong>Configure</strong> / dar permiso a GitHub sobre ese repositorio) → <strong>Connect</strong>.</li>
+                  <li><span class="pin">2</span>El nombre será tu dirección: <code>https://escuela-futbol-tu-nombre.onrender.com</code>. Si ya existe, Render le agrega letras al final.</li>
+                  <li><span class="pin">3</span><strong>Docker</strong>. No hay opción "Java": es justamente por eso que escribiste el Dockerfile.</li>
+                  <li><span class="pin">4</span><code>main</code>, la rama que se publica.</li>
+                  <li><span class="pin">5</span>La misma zona que elegiste en Neon (Este de EE. UU.).</li>
+                  <li><span class="pin">6</span>Vacío si <code>pom.xml</code> y <code>Dockerfile</code> están en la raíz del repositorio. Si tu proyecto está dentro de una subcarpeta, escribe aquí el nombre de esa carpeta.</li>
+                  <li><span class="pin">7</span><strong>Free</strong>. (Antes de agosto de 2026 este campo se llamaba <em>Instance Type</em>.)</li>
+                  <li><span class="pin">8</span>Botón <strong>Add Environment Variable</strong>, una por una (abajo).</li>
+                  <li><span class="pin">9</span>Opcional pero recomendado: <code>/login</code> es pública y responde rápido; Render la usa para saber que tu app está viva.</li>
+                  <li><span class="pin">10</span>El botón final (según la versión, dice <strong>Deploy Web Service</strong> o <strong>Create Web Service</strong>).</li>
+                </ul>
+              </div>
+            </div>
+            <h3 class="h6 fw-bold">Las seis variables de entorno (pin 8)</h3>
+            <div class="table-responsive"><table class="table table-sm small align-middle">
+              <thead><tr><th>Key (nombre exacto)</th><th>Value (valor)</th><th>De dónde sale</th></tr></thead>
+              <tbody>
+                <tr><td><span class="var-chip spring">SPRING_PROFILES_ACTIVE</span></td><td><code>prod</code></td><td>Escrito por ti: activa <code>application-prod.properties</code></td></tr>
+                <tr><td><span class="var-chip neon">DB_URL</span></td><td><code>jdbc:postgresql://…/neondb?sslmode=require&amp;channelBinding=require</code></td><td>Tu nota privada (ejercicio 4)</td></tr>
+                <tr><td><span class="var-chip neon">DB_USER</span></td><td><code>neondb_owner</code></td><td>Tu nota privada</td></tr>
+                <tr><td><span class="var-chip neon">DB_PASSWORD</span></td><td><code>npg_…</code></td><td>Tu nota privada</td></tr>
+                <tr><td><span class="var-chip tuya">ADMIN_PASSWORD</span></td><td>tu clave de admin</td><td>La misma del ejercicio 5</td></tr>
+                <tr><td><span class="var-chip tuya">ENTRENADOR_PASSWORD</span></td><td>tu clave de entrenador</td><td>La misma del ejercicio 5</td></tr>
+              </tbody>
+            </table></div>
+            <p class="small-muted mb-2"><strong>No</strong> agregues <code>PORT</code>: Render la pone sola. Copia las claves sin espacios al inicio ni al final.</p>
+            <h3 class="h6 fw-bold">Mientras se construye: lee el registro (Logs)</h3>
+            <p class="small-muted mb-2">El primer despliegue tarda de <strong>5 a 10 minutos</strong> (Maven descarga todas las dependencias). Así se ve un despliegue sano; las líneas que empiezan con <code>==&gt;</code> las escribe Render, las demás tu aplicación:</p>
+<div class="term"><span class="render">==&gt; Cloning from https://github.com/tu-usuario/taller-formularios</span>
+<span class="render">==&gt; Checking out commit 3f2a9c1 in branch main</span>
+#8 [construccion 5/5] RUN mvn -B -DskipTests clean package
+<span class="dim">#8 ... Downloading from central: https://repo.maven.apache.org/...</span>   <span class="dim">← varios minutos, es normal</span>
+#8 ... <span class="ok">[INFO] BUILD SUCCESS</span>
+<span class="render">==&gt; </span><span class="ok">Build successful 🎉</span>
+<span class="render">==&gt; Deploying...</span>
+  .   ____          _            __ _ _      <span class="dim">← el logo de Spring: tu app está arrancando</span>
+... The following 1 profile is active: <span class="ok">"prod"</span>
+... HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@...
+... Tomcat started on port <span class="ok">10000</span> (http)
+... <span class="ok">Started TallerFormulariosApplication</span> in 48.7 seconds
+<span class="render">==&gt; </span><span class="ok">Your service is live 🎉</span></div>
+            <p class="small-muted mb-2">Fíjate: el puerto es <strong>10000</strong> (la variable <code>PORT</code> de Render, gracias al ejercicio 2) y el arranque tarda más que en tu PC (el plan gratuito tiene una fracción de procesador).</p>
+            <div class="callout success mb-0">✅ Checkpoint: arriba del panel del servicio el estado dice <strong>Live</strong> (en verde) y aparece tu dirección <code>https://….onrender.com</code>.</div>
+          </div></div></div>
+
+          <!-- EJ 8 -->
+          <div class="col-12"><div class="card"><div class="card-body">
+            <h2 class="h5 section-title">Ejercicio 8 — Verificación de punta a punta <span class="badge text-bg-danger">Nivel 4 · Rigor</span></h2>
+            <p class="mb-2"><span class="lugar navegador">📱 NAVEGADOR / CELULAR</span> <span class="lugar neon">🐘 NEON</span> <span class="lugar render">☁️ RENDER</span></p>
+            <p class="small-muted mb-2">"Ya dice <em>Live</em>" no es lo mismo que "funciona". Un docente no da por aprendido un tema porque el estudiante dijo "sí entendí": le pide que lo demuestre. Aquí haces lo mismo con tu aplicación, con <strong>datos reales</strong>.</p>
+            <figure class="mmd-figure">
+              <div class="mermaid">
+sequenceDiagram
+  autonumber
+  actor P as 📱 Persona
+  participant R as ☁️ Render (HTTPS)
+  participant S as 🛡️ Spring Security
+  participant C as 🚦 JugadorController
+  participant N as 🐘 Neon
+  P->>R: https://escuela-futbol….onrender.com/jugadores
+  R->>S: pasa la visita (por dentro, sin cifrar)
+  S-->>P: ¿quién eres? → /login
+  P->>S: admin + contraseña
+  S->>N: SELECT … FROM usuario WHERE username='admin'
+  N-->>S: hash BCrypt
+  S->>C: ✔ autenticado como ADMIN
+  C->>N: INSERT INTO jugador …
+  N-->>C: guardado
+  C-->>P: redirect → lista con el jugador nuevo
+              </div>
+              <figcaption>Lo que realmente ocurre cuando alguien usa tu aplicación publicada: cada paso que pruebas abajo recorre este camino completo.</figcaption>
+            </figure>
+            <ol class="small-muted">
+              <li>Desde tu <strong>celular</strong> (con datos móviles, no el wifi de tu casa) abre tu dirección <code>https://…onrender.com</code>. Te lleva a <code>/login</code>, con el <strong>candado</strong> 🔒 en la barra.</li>
+              <li>Escribe una clave incorrecta: "Usuario o contraseña incorrectos.".</li>
+              <li>Entra como <code>admin</code>: ves a Diego (¡el que inscribiste desde tu PC en el ejercicio 5! Es la misma base).</li>
+              <li>Inscribe un jugador nuevo, edítalo y elimina otro. Luego envía el formulario vacío y lee los dos mensajes de validación.</li>
+              <li>Cierra sesión y entra como <code>entrenador</code>: no ves botones de gestión. Escribe a mano <code>/jugadores/nuevo</code>: "No tienes permiso…" (403).</li>
+              <li>En <strong>Neon → Tables → jugador</strong>, refresca: los cambios que hiciste desde el celular están ahí.</li>
+              <li>En Render: <strong>Manual Deploy</strong> → <strong>Restart service</strong> (o <em>Deploy latest commit</em>). Cuando vuelva a decir <em>Live</em>, recarga en el celular: los jugadores siguen. <strong>Esta es la prueba de que no estás usando H2.</strong></li>
+              <li>Cambia un texto pequeño (por ejemplo el título de <code>lista.html</code>), súbelo a <code>development</code> y haz el Pull Request a <code>main</code>. Mira la pestaña <strong>Events</strong> de Render: inicia un despliegue <strong>sin que toques nada</strong>.</li>
+              <li>Deja la aplicación sin visitas más de <strong>15 minutos</strong> y vuelve a abrirla: tardará cerca de <strong>un minuto</strong> en responder. No es un error: el plan gratuito "duerme" el servicio y lo despierta con la primera visita.</li>
+            </ol>
+            <figure class="mmd-figure">
+              <div class="mermaid">
+stateDiagram-v2
+  direction LR
+  [*] --> Activo: despliegue
+  Activo --> Dormido: 15 min sin visitas
+  Dormido --> Despertando: llega una visita
+  Despertando --> Activo: ≈ 1 min (Spring arranca de nuevo)
+  note right of Dormido
+    Render no cobra ni gasta horas
+    mientras duerme. Neon también se
+    duerme a los 5 min y despierta
+    en menos de 1 segundo.
+  end note
+              </div>
+              <figcaption>El ciclo del plan gratuito. Avísale a quien pruebe tu aplicación: "la primera visita del día tarda un minuto".</figcaption>
+            </figure>
+            <div class="callout success mb-2">✅ Checkpoint: las nueve pruebas se comportan como se describe. Guarda capturas: son la evidencia de tu Entrega Parcial 3.</div>
+            <details><summary class="fw-semibold">¿Y por qué <code>ddl-auto=update</code> y no algo "más profesional"?</summary><div class="mt-2 small-muted">En una empresa, los cambios a las tablas de producción se escriben a mano como "migraciones" numeradas (con herramientas como <strong>Flyway</strong>), se revisan y se aplican en orden, igual que un acta con cambios aprobados. <code>update</code> deja que Hibernate cree y amplíe las tablas por su cuenta: es cómodo para un proyecto escolar, pero nunca borra columnas viejas ni renombra con cuidado. Lo usamos <strong>a conciencia</strong>, sabiendo que en un sistema grande no sería suficiente.</div></details>
+          </div></div></div>
+
+        </div>
+      </div>
+
+      <!-- ============ PESTAÑA 2: KIT ============ -->
+      <div class="tab-pane fade" id="tab-kit" role="tabpanel">
+
+        <div class="callout info mb-4">
+          <div class="fw-semibold">Kit: todo lo que cambia o es nuevo en la Semana 14</div>
+          <div class="small-muted">Esta semana <strong>no cambia ni una clase Java ni una plantilla</strong>: <code>Jugador</code>, <code>Usuario</code>, repositorios, servicio, controladores, <code>security/</code> y las cinco plantillas son idénticos a los del <a href="../Material_Sesion_Clase_13_HTML_18_semanas/ejercicios.html">Kit de la Semana 13</a> (cópialos de ahí si vas por la Ruta B). Aquí van <strong>completos</strong> los archivos de configuración que sí cambian y los dos archivos nuevos. Todo fue comprobado: compilado con Spring Boot 4.1.1 y Java 17, ejecutado en perfil <code>prod</code> contra PostgreSQL (login, roles, CRUD, reinicio sin pérdida de datos, hash BCrypt en la tabla) y con la memoria medida por debajo del límite del plan gratuito.</div>
+        </div>
+
+        <h2 class="h5 section-title" id="kit-arbol">1. Árbol del proyecto</h2>
+        <div class="card mb-3"><div class="card-body">
+<pre><code>taller-formularios/                                ← carpeta (con guion) = raíz del repositorio
+├── .gitignore                                    ← sin cambios (ya tiene datos/)
+├── .dockerignore                                 ← NUEVO hoy
+├── Dockerfile                                    ← NUEVO hoy (junto a pom.xml, sin extensión)
+├── pom.xml                                       ← sin cambios (ya trae el driver de PostgreSQL desde la S12)
+├── mvnw, mvnw.cmd, .mvn/                         ← sin cambios
+└── src/main/
+    ├── java/gt/edu/url/tallerformularios/        ← paquete base (SIN guion) — todo igual que la S13
+    │   ├── TallerFormulariosApplication.java
+    │   ├── controller/  (JugadorController, AccesoController)
+    │   ├── model/       (Jugador, Usuario)
+    │   ├── repository/  (JugadorRepository, UsuarioRepository)
+    │   ├── service/     (JugadorService)
+    │   └── security/    (SecurityConfig, UsuarioDetailsService, CargadorUsuarios)
+    └── resources/
+        ├── application.properties                ← AJUSTADO (1 línea: server.port)
+        ├── application-dev.properties            ← sin cambios (H2 en tu PC)
+        ├── application-prod.properties           ← COMPLETADO hoy (Neon + Render)
+        ├── static/estilos.css                    ← sin cambios
+        └── templates/ (lista, formulario, login, acceso-denegado, error)  ← sin cambios</code></pre>
+          <p class="small-muted mb-0">Recordatorio de los tres nombres del Artifact: la carpeta y el <code>&lt;artifactId&gt;</code> llevan guion (<code>taller-formularios</code>); el paquete no (<code>gt.edu.url.tallerformularios</code>); la clase principal va en CamelCase (<code>TallerFormulariosApplication</code>). El nombre del <code>.jar</code> sale del <code>&lt;artifactId&gt;</code> y de la <code>&lt;version&gt;</code>: <code>taller-formularios-0.0.1-SNAPSHOT.jar</code>. El Dockerfile usa <code>*.jar</code> para no depender de ese nombre.</p>
+        </div></div>
+
+        <h2 class="h5 section-title" id="kit-props">2. <code>application.properties</code> <span class="s12-state s12-state--adjust">1 línea nueva</span></h2>
+        <div class="card mb-3"><div class="card-body">
+          <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/resources/application.properties</code></p>
+<pre><code>spring.application.name=taller-formularios
+spring.profiles.active=dev
+server.error.whitelabel.enabled=false
+
+# Puerto: Render entrega el suyo en la variable PORT; en tu computadora no existe y se usa 8080.
+server.port=${PORT:8080}
+
+# Contraseñas iniciales: NO están escritas aquí. Se leen de variables de entorno.
+app.admin.password=${ADMIN_PASSWORD}
+app.entrenador.password=${ENTRENADOR_PASSWORD}</code></pre>
+          <p class="small-muted mb-0"><strong>¿Y <code>spring.profiles.active=dev</code>?</strong> Se queda. En tu PC manda <code>dev</code>. En Render, la variable de entorno <code>SPRING_PROFILES_ACTIVE=prod</code> <strong>gana</strong> sobre lo escrito en el archivo (en Spring, lo que llega de fuera tiene prioridad sobre lo escrito adentro). Así el mismo archivo sirve en los dos lugares.</p>
+        </div></div>
+
+        <h2 class="h5 section-title" id="kit-prod">3. <code>application-prod.properties</code> <span class="s12-state s12-state--added">completado hoy</span></h2>
+        <div class="card mb-3"><div class="card-body">
+          <p class="small-muted mb-1"><strong>Ruta:</strong> <code>src/main/resources/application-prod.properties</code>. Las cuatro primeras líneas existen desde la Semana 12: es aquí donde ese trabajo "da resultado".</p>
+<pre><code># Perfil de PRODUCCIÓN: se activa en Render con SPRING_PROFILES_ACTIVE=prod.
+# Ningún valor secreto está escrito aquí: los tres ${...} llegan desde Render.
+spring.datasource.url=${DB_URL}
+spring.datasource.username=${DB_USER}
+spring.datasource.password=${DB_PASSWORD}
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+# Crea o actualiza las tablas al arrancar (en proyectos grandes se usaría Flyway).
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=false
+
+# Neon es pequeño en el plan gratuito: con 5 conexiones sobra.
+spring.datasource.hikari.maximum-pool-size=5
+
+# Render recibe la visita en HTTPS y se la pasa a la app por dentro:
+# esta línea hace que Spring respete el "https" original al redirigir.
+server.forward-headers-strategy=framework</code></pre>
+          <div class="table-responsive"><table class="table table-sm small mb-0">
+            <thead><tr><th>Línea</th><th>Qué hace</th><th>Si falta</th></tr></thead>
+            <tbody>
+              <tr><td><code>spring.datasource.url=${DB_URL}</code></td><td>Dirección JDBC de Neon</td><td>Sin la variable en Render, la app no encuentra base y no arranca</td></tr>
+              <tr><td><code>username</code> / <code>password</code></td><td>Usuario y clave de Neon, separados de la URL</td><td><code>password authentication failed for user 'neondb_owner'</code></td></tr>
+              <tr><td><code>driver-class-name</code></td><td>Usa el driver de PostgreSQL (no el de H2)</td><td>Spring lo deduce de la URL; lo dejamos explícito para que se lea</td></tr>
+              <tr><td><code>ddl-auto=update</code></td><td>Crea las tablas <code>jugador</code> y <code>usuario</code> en Neon la primera vez</td><td>Con <code>create</code> se borrarían en cada despliegue (trampa de la Semana 12)</td></tr>
+              <tr><td><code>hikari.maximum-pool-size=5</code></td><td>Máximo de conexiones abiertas a la vez</td><td>Usaría 10; funciona, pero es innecesario para una escuela</td></tr>
+              <tr><td><code>forward-headers-strategy=framework</code></td><td>Respeta el <code>https</code> que vio Render al redirigir (por ejemplo, al mandarte a <code>/login</code>)</td><td>Las redirecciones salen primero con <code>http://</code> y Render tiene que corregirlas: funciona, pero con un salto extra</td></tr>
+            </tbody>
+          </table></div>
+        </div></div>
+
+        <h2 class="h5 section-title" id="kit-dev">4. <code>application-dev.properties</code> <span class="s12-state s12-state--existing">sin cambios</span></h2>
+        <div class="card mb-3"><div class="card-body">
+<pre><code>spring.datasource.url=jdbc:h2:file:./datos/jugadores
+spring.datasource.driver-class-name=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.thymeleaf.cache=false</code></pre>
+          <p class="small-muted mb-0">Tu computadora sigue practicando con H2. Producción y práctica <strong>no comparten datos</strong>: eso es intencional (no quieres que una prueba tuya borre a un niño real).</p>
+        </div></div>
+
+        <h2 class="h5 section-title" id="kit-docker">5. <code>Dockerfile</code> <span class="s12-state s12-state--added">nuevo</span> <span class="s12-state s12-state--required">en la raíz, junto a pom.xml</span></h2>
+        <div class="card mb-3"><div class="card-body">
+<pre><code># ---------- Etapa 1: construir el .jar (una "cocina" con Maven y el JDK) ----------
+FROM maven:3.9-eclipse-temurin-17 AS construccion
+WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+# -DskipTests: las pruebas se corren en tu computadora; aquí no existen tus variables.
+RUN mvn -B -DskipTests clean package
+
+# ---------- Etapa 2: solo lo necesario para ejecutar (el "plato servido") ----------
+FROM eclipse-temurin:17-jre
+WORKDIR /app
+COPY --from=construccion /app/target/*.jar app.jar
+EXPOSE 8080
+# MaxRAMPercentage: deja que Java use hasta el 75% de los 512 MB del plan gratuito.
+ENTRYPOINT ["java", "-XX:MaxRAMPercentage=75", "-jar", "app.jar"]</code></pre>
+          <div class="table-responsive"><table class="table table-sm small mb-2">
+            <thead><tr><th>Línea</th><th>En palabras de aula</th></tr></thead>
+            <tbody>
+              <tr><td><code>FROM maven:3.9-eclipse-temurin-17 AS construccion</code></td><td>"Consigue una cocina que ya tenga Java 17 y Maven instalados". La llamamos <code>construccion</code>.</td></tr>
+              <tr><td><code>WORKDIR /app</code></td><td>"Trabaja dentro de la carpeta <code>/app</code>" (como hacer <code>cd</code>).</td></tr>
+              <tr><td><code>COPY pom.xml .</code> y <code>COPY src ./src</code></td><td>"Mete los ingredientes": la lista de dependencias y tu código.</td></tr>
+              <tr><td><code>RUN mvn -B -DskipTests clean package</code></td><td>Lo mismo que hiciste en el ejercicio 1, sin las pruebas. <code>-B</code> = sin colores ni preguntas (modo "lote").</td></tr>
+              <tr><td><code>FROM eclipse-temurin:17-jre</code></td><td>"Ahora toma un plato limpio con solo Java para <em>ejecutar</em>" (JRE, sin Maven ni compilador: más liviano y con menos piezas que atacar).</td></tr>
+              <tr><td><code>COPY --from=construccion … app.jar</code></td><td>"De la cocina, llévate solo el <code>.jar</code>". Todo lo demás se descarta.</td></tr>
+              <tr><td><code>EXPOSE 8080</code></td><td>Una nota informativa. El puerto real lo decide <code>server.port=${PORT:8080}</code>.</td></tr>
+              <tr><td><code>ENTRYPOINT [...]</code></td><td>"Cuando enciendas el contenedor, ejecuta <code>java -jar app.jar</code>".</td></tr>
+            </tbody>
+          </table></div>
+          <div class="callout warning mb-0"><div class="small-muted"><strong>Ojo con los tutoriales viejos:</strong> muchos videos usan <code>FROM openjdk:17-jdk-slim</code>. Esa imagen <strong>ya no existe</strong> en Docker Hub (fue retirada) y la construcción falla con <code>not found</code>. Usa las de este Kit (<code>maven:3.9-eclipse-temurin-17</code> y <code>eclipse-temurin:17-jre</code>), comprobadas en octubre de 2026. Tampoco necesitas <code>mvnw</code> dentro de Docker: la imagen ya trae Maven, así evitas el clásico error de permisos de <code>mvnw</code> en repositorios hechos desde Windows.</div></div>
+        </div></div>
+
+        <h2 class="h5 section-title" id="kit-dockerignore">6. <code>.dockerignore</code> <span class="s12-state s12-state--added">nuevo</span></h2>
+        <div class="card mb-3"><div class="card-body">
+<pre><code>target/
+datos/
+.git/
+.idea/
+.vscode/
+*.log</code></pre>
+          <p class="small-muted mb-0">Lo mismo que <code>.gitignore</code>, pero para Docker: qué <strong>no</strong> meter en la cocina. Lo más importante es <code>datos/</code>: tu base H2 de práctica nunca debe viajar a producción.</p>
+        </div></div>
+
+        <h2 class="h5 section-title" id="kit-vars">7. Las seis variables de entorno</h2>
+        <div class="card mb-3"><div class="card-body">
+          <div class="table-responsive"><table class="table table-sm small mb-2">
+            <thead><tr><th>Variable</th><th>La lee</th><th>En tu PC (ejercicio 5)</th><th>En Render</th></tr></thead>
+            <tbody>
+              <tr><td><span class="var-chip spring">SPRING_PROFILES_ACTIVE</span></td><td>Spring (elige el perfil)</td><td><code>prod</code> (solo para probar Neon)</td><td><code>prod</code></td></tr>
+              <tr><td><span class="var-chip neon">DB_URL</span></td><td><code>application-prod.properties</code></td><td>la de Neon</td><td>la misma</td></tr>
+              <tr><td><span class="var-chip neon">DB_USER</span></td><td><code>application-prod.properties</code></td><td><code>neondb_owner</code></td><td>el mismo</td></tr>
+              <tr><td><span class="var-chip neon">DB_PASSWORD</span></td><td><code>application-prod.properties</code></td><td>la de Neon</td><td>la misma</td></tr>
+              <tr><td><span class="var-chip tuya">ADMIN_PASSWORD</span></td><td><code>CargadorUsuarios</code></td><td>tu clave</td><td><strong>la misma</strong> (ver trampa del ej. 5)</td></tr>
+              <tr><td><span class="var-chip tuya">ENTRENADOR_PASSWORD</span></td><td><code>CargadorUsuarios</code></td><td>tu clave</td><td><strong>la misma</strong></td></tr>
+              <tr><td><span class="var-chip render">PORT</span></td><td><code>server.port</code></td><td>no existe → 8080</td><td>la pone Render (10000) — <strong>no la agregues</strong></td></tr>
+            </tbody>
+          </table></div>
+        </div></div>
+
+        <h2 class="h5 section-title" id="kit-prueba">8. Prueba final de diez pasos</h2>
+        <div class="card mb-3"><div class="card-body">
+          <ol class="small-muted mb-0">
+            <li>Con las claves definidas, <code>./mvnw clean package</code> termina en <code>BUILD SUCCESS</code>.</li>
+            <li>Con <code>PORT=9090</code>, <code>java -jar</code> abre en el 9090.</li>
+            <li>Con las seis variables (<code>prod</code>), el log dice <code>"prod"</code> y <code>PgConnection</code>, nunca <code>jdbc:h2</code>.</li>
+            <li>Neon → Tables muestra <code>jugador</code> y <code>usuario</code>; la contraseña empieza con <code>$2a$10$</code>.</li>
+            <li><code>git grep npg_</code> no encuentra nada; en <code>main</code> están <code>Dockerfile</code> y <code>.dockerignore</code>.</li>
+            <li>Render: <em>Build successful 🎉</em> y <em>Your service is live 🎉</em>; el log dice <code>Tomcat started on port 10000</code>.</li>
+            <li>Desde el celular: candado HTTPS, login, CRUD y los dos mensajes de validación.</li>
+            <li>El entrenador recibe 403 en <code>/jugadores/nuevo</code>.</li>
+            <li><em>Restart service</em> en Render: los datos siguen.</li>
+            <li>Un cambio pequeño llevado a <code>main</code> se publica solo (pestaña <em>Events</em>).</li>
+          </ol>
+        </div></div>
+      </div>
+
+      <!-- ============ PESTAÑA 3: ERRORES ============ -->
+      <div class="tab-pane fade" id="tab-errores" role="tabpanel">
+        <div class="callout info mb-3">
+          <div class="fw-semibold">Provoca el error a propósito, léelo, arréglalo</div>
+          <div class="small-muted">Los mensajes marcados <span class="badge text-bg-success">real</span> se copiaron de ejecuciones de verdad de este mismo proyecto (octubre de 2026). Los marcados <span class="badge text-bg-secondary">Render</span> son los textos que publica Render en su documentación; pueden variar un poco. <strong>Uno a la vez:</strong> provoca, lee, restaura, confirma que funciona.</div>
+        </div>
+
+        <figure class="mmd-figure">
+          <div class="mermaid">
+flowchart TD
+  A{"¿Qué dice el estado<br/>del servicio en Render?"} -->|"Failed"| B{"¿Llegó a<br/>'Build successful 🎉'?"}
+  A -->|"Live, pero la página<br/>da error o tarda"| L["Caso 8 · ¿durmiendo?<br/>Caso 5 · ¿claves?<br/>Mira la pestaña Logs"]
+  B -->|"No"| C["Falló la <b>construcción</b><br/>Dockerfile, imagen vieja,<br/>carpeta equivocada → casos 6 y 7"]
+  B -->|"Sí"| D["Falló el <b>arranque</b><br/>busca PSQLException o el<br/>primer Caused by → casos 2 a 5"]
+  A -->|"Live y todo bien,<br/>pero los datos se pierden"| E["Caso 2 · ¡estás en H2!<br/>falta SPRING_PROFILES_ACTIVE"]
+  style C fill:#fef3c7,stroke:#f59e0b
+  style D fill:#fee2e2,stroke:#ef4444
+  style E fill:#fee2e2,stroke:#ef4444
+  style L fill:#eff6ff,stroke:#3b82f6
+          </div>
+          <figcaption>¿Dónde busco? Primero ubica <strong>en qué etapa</strong> falló; luego lee el log de esa etapa.</figcaption>
+        </figure>
+
+        <div class="accordion mb-4" id="accErrores">
+
+          <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#er1">1 · <code>mvn clean package</code> falla en las pruebas <span class="badge text-bg-success ms-2">real</span></button></h2>
+            <div id="er1" class="accordion-collapse collapse show" data-bs-parent="#accErrores"><div class="accordion-body small-muted">
+              <p><strong>Cómo provocarlo:</strong> terminal nueva, sin <code>ADMIN_PASSWORD</code>, y <code>./mvnw clean package</code>.</p>
+<div class="term"><span class="bad">[ERROR]   TallerFormulariosApplicationTests.contextLoads » IllegalState Failed to load ApplicationContext</span>
+Caused by: org.springframework.util.PlaceholderResolutionException: Could not resolve placeholder 'ADMIN_PASSWORD' in value "${ADMIN_PASSWORD}" &lt;-- "${app.admin.password}"
+<span class="bad">[ERROR] Tests run: 1, Failures: 0, Errors: 1, Skipped: 0</span></div>
+              <p class="mb-0"><strong>Arreglo:</strong> define las dos claves en esa terminal y repite. (En Docker se resuelve con <code>-DskipTests</code>, porque ahí no existen tus claves.) <strong>No borres la prueba:</strong> te avisa si la app deja de encender.</p>
+            </div></div></div>
+
+          <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#er2">2 · El error silencioso: olvidaste <code>SPRING_PROFILES_ACTIVE=prod</code> <span class="badge text-bg-success ms-2">real</span></button></h2>
+            <div id="er2" class="accordion-collapse collapse" data-bs-parent="#accErrores"><div class="accordion-body small-muted">
+              <p><strong>Cómo provocarlo:</strong> en Render, en <em>Environment</em>, borra <code>SPRING_PROFILES_ACTIVE</code> y elige <em>Save and deploy</em>. (O en tu PC, arranca sin definirla.)</p>
+<div class="term">... The following 1 profile is active: <span class="bad">"dev"</span>
+... HikariPool-1 - Added connection conn0: <span class="bad">url=jdbc:h2:file:./datos/jugadores</span> user=SA
+... <span class="ok">Started TallerFormulariosApplication</span>   <span class="dim">← ¡arranca sin quejarse!</span></div>
+              <p><strong>Qué significa:</strong> la app usa el perfil <code>dev</code> escrito en <code>application.properties</code> y crea un H2 <strong>dentro del contenedor</strong>. Todo parece funcionar… hasta el siguiente despliegue o reinicio: el disco del contenedor se borra y <strong>los datos desaparecen</strong>. Neon sigue vacío.</p>
+              <p class="mb-0"><strong>Cómo detectarlo:</strong> lee la línea <code>profile is active</code> en cada despliegue, y comprueba que Neon → Tables cambia cuando usas la app. <strong>Arreglo:</strong> vuelve a agregar <code>SPRING_PROFILES_ACTIVE</code> = <code>prod</code>. Es el error más peligroso de la semana porque no avisa.</p>
+            </div></div></div>
+
+          <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#er3">3 · Pegaste la cadena de Neon tal cual en <code>DB_URL</code> <span class="badge text-bg-success ms-2">real</span></button></h2>
+            <div id="er3" class="accordion-collapse collapse" data-bs-parent="#accErrores"><div class="accordion-body small-muted">
+              <p><strong>Cómo provocarlo:</strong> usa como <code>DB_URL</code> la cadena que empieza con <code>postgresql://neondb_owner:…@…</code> (sin <code>jdbc:</code>).</p>
+<div class="term">WARN ... HHH100046: Could not obtain connection to query JDBC database metadata
+java.lang.RuntimeException: <span class="bad">Driver org.postgresql.Driver claims to not accept jdbcUrl</span>, postgresql://neondb_owner:<span class="bad">npg_AbC123xYz</span>@ep-...</div>
+              <p><strong>Qué significa:</strong> el driver de Java solo entiende direcciones que empiezan con <code>jdbc:postgresql://</code>. Y mira lo peor: <strong>tu contraseña quedó impresa en el log</strong>, a la vista de cualquiera con acceso al panel.</p>
+              <p class="mb-0"><strong>Arreglo:</strong> arma las tres piezas como en el ejercicio 4. <strong>Si la clave apareció en un log o en una captura, cámbiala:</strong> Neon → <em>Roles</em> → menú de <code>neondb_owner</code> → <strong>Reset password</strong>, y actualiza <code>DB_PASSWORD</code> en Render.</p>
+            </div></div></div>
+
+          <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#er4">4 · Clave de Neon equivocada, vacía o con espacios <span class="badge text-bg-success ms-2">real</span></button></h2>
+            <div id="er4" class="accordion-collapse collapse" data-bs-parent="#accErrores"><div class="accordion-body small-muted">
+              <p><strong>Cómo provocarlo:</strong> cambia una letra de <code>DB_PASSWORD</code>, o borra la variable.</p>
+<div class="term">Caused by: org.postgresql.util.PSQLException: <span class="bad">ERROR: password authentication failed for user 'neondb_owner'</span></div>
+              <p><strong>Ojo:</strong> si borras <code>DB_PASSWORD</code>, Spring <strong>no</strong> dice "falta la variable" (a diferencia de <code>ADMIN_PASSWORD</code>): envía el texto <code>${DB_PASSWORD}</code> literal como contraseña, y Neon responde con este mismo mensaje. También aparece si copiaste la clave con asteriscos o si la dirección del servidor tiene una letra cambiada.</p>
+              <p class="mb-0"><strong>Arreglo:</strong> vuelve a copiar desde <em>Connect</em> (con la contraseña visible), sin espacios. Si la perdiste, <em>Reset password</em> en Neon.</p>
+            </div></div></div>
+
+          <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#er5">5 · El último <code>Caused by</code> engaña: <code>Unable to determine Dialect</code> <span class="badge text-bg-success ms-2">real</span></button></h2>
+            <div id="er5" class="accordion-collapse collapse" data-bs-parent="#accErrores"><div class="accordion-body small-muted">
+              <p>En los casos 3 y 4 (y en cualquier falla de conexión), el log termina siempre así:</p>
+<div class="term">Caused by: org.hibernate.HibernateException: <span class="warn">Unable to determine Dialect without JDBC metadata</span> (please set 'jakarta.persistence.jdbc.url' for common cases or 'hibernate.dialect' ...)</div>
+              <p><strong>Qué significa:</strong> Hibernate dice "no pude hablar con la base, así que no sé qué tipo de base es". Es una <strong>consecuencia</strong>, no la causa. La regla de la Semana 13 ("lee el último <code>Caused by</code>") aquí no alcanza.</p>
+              <p class="mb-0"><strong>Arreglo:</strong> sube por el log y busca la primera línea con <code>PSQLException</code> o <code>RuntimeException: Driver</code>. Esa sí dice qué pasó (clave, formato de URL, servidor). No agregues <code>hibernate.dialect</code>: taparías el síntoma sin arreglar la conexión.</p>
+            </div></div></div>
+
+          <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#er6">6 · La construcción falla por una imagen de un tutorial viejo <span class="badge text-bg-secondary ms-2">Render</span></button></h2>
+            <div id="er6" class="accordion-collapse collapse" data-bs-parent="#accErrores"><div class="accordion-body small-muted">
+              <p><strong>Cómo se produce:</strong> el Dockerfile empieza con <code>FROM openjdk:17-jdk-slim</code> (o <code>-alpine</code>), copiado de un video anterior a 2025.</p>
+<div class="term"><span class="bad">ERROR: failed to solve: openjdk:17-jdk-slim: ... not found</span>
+<span class="render">==&gt; </span><span class="bad">Build failed 😞</span></div>
+              <p class="mb-0"><strong>Arreglo:</strong> usa las imágenes del Kit (<code>maven:3.9-eclipse-temurin-17</code> y <code>eclipse-temurin:17-jre</code>). Variante: <code>COPY target/*.jar</code> sin la etapa de Maven falla porque <code>target/</code> no se sube a GitHub; por eso el Kit construye el <code>.jar</code> dentro de Docker.</p>
+            </div></div></div>
+
+          <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#er7">7 · Render no encuentra el Dockerfile o el <code>pom.xml</code> <span class="badge text-bg-secondary ms-2">Render</span></button></h2>
+            <div id="er7" class="accordion-collapse collapse" data-bs-parent="#accErrores"><div class="accordion-body small-muted">
+              <p><strong>Cómo se produce:</strong> el Dockerfile quedó dentro de <code>src/</code>, se llama <code>dockerfile.txt</code>, o tu proyecto está en una subcarpeta del repositorio.</p>
+<div class="term"><span class="bad">error: failed to solve: failed to read dockerfile: open Dockerfile: no such file or directory</span></div>
+              <p class="mb-0"><strong>Arreglo:</strong> en github.com, mira tu rama <code>main</code>: <code>Dockerfile</code> y <code>pom.xml</code> deben verse <strong>juntos</strong>. Si están dentro de una carpeta, en Render → <em>Settings</em> → <strong>Root Directory</strong> escribe el nombre de esa carpeta. En Windows, revisa que el archivo no haya quedado con extensión oculta (<code>Dockerfile.txt</code>).</p>
+            </div></div></div>
+
+          <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#er8">8 · "No open ports detected" / la primera visita tarda un minuto <span class="badge text-bg-secondary ms-2">Render</span></button></h2>
+            <div id="er8" class="accordion-collapse collapse" data-bs-parent="#accErrores"><div class="accordion-body small-muted">
+<div class="term"><span class="render">==&gt; No open ports detected, continuing to scan...</span>
+<span class="render">==&gt; </span><span class="bad">Port scan timeout reached, no open ports detected</span></div>
+              <p><strong>Qué significa:</strong> la app nunca llegó a encender Tomcat. Casi siempre es porque se cayó al arrancar (casos 2–5): busca el error <strong>más arriba</strong> en Logs. Mientras Spring arranca en el plan gratuito, ver un par de veces "continuing to scan" es normal.</p>
+              <p class="mb-0"><strong>Distinto:</strong> si la app ya estaba <em>Live</em> y la primera visita tarda ~1 minuto con una pantalla de carga de Render, está <strong>despertando</strong> (15 min sin visitas). No es un error: es el plan gratuito.</p>
+            </div></div></div>
+
+          <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#er9">9 · Cambié <code>ADMIN_PASSWORD</code> en Render y la clave nueva no sirve <span class="badge text-bg-success ms-2">real</span></button></h2>
+            <div id="er9" class="accordion-collapse collapse" data-bs-parent="#accErrores"><div class="accordion-body small-muted">
+              <p><strong>Qué significa:</strong> el usuario <code>admin</code> ya existe en Neon (lo creó el primer arranque, quizá desde tu PC en el ejercicio 5). <code>CargadorUsuarios</code> solo crea, no actualiza. En producción <strong>no puedes</strong> "borrar <code>datos/</code>": los datos están en Neon.</p>
+              <p class="mb-0"><strong>Arreglo:</strong> usa la clave original; o, si todavía no hay datos reales, en Neon → <em>SQL Editor</em> ejecuta <code>DELETE FROM usuario;</code> y en Render <em>Manual Deploy → Restart service</em>: los dos usuarios se recrean con las claves actuales. (Los jugadores no se tocan.)</p>
+            </div></div></div>
+
+          <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#er10">10 · Subí una clave a GitHub por accidente</button></h2>
+            <div id="er10" class="accordion-collapse collapse" data-bs-parent="#accErrores"><div class="accordion-body small-muted">
+              <p><strong>Qué significa:</strong> aunque borres la línea y hagas otro commit, la clave <strong>queda en el historial</strong> de un repositorio público. Y los bots que buscan claves recorren GitHub en minutos.</p>
+              <p class="mb-0"><strong>Arreglo (en este orden):</strong> (1) <strong>cambia la clave</strong> en Neon (<em>Reset password</em>): la vieja deja de servir al instante; (2) pon la nueva en Render (<em>Environment</em> → <em>Save, rebuild, and deploy</em>); (3) quita la línea del archivo y haz commit. El paso 1 es el que protege; el 3 solo limpia.</p>
+            </div></div></div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted d-flex justify-content-between flex-wrap gap-2">
+      <span>Material Semana 14 — Despliegue en producción con Render y Neon · Formato 18 semanas (70 min por sesión).</span>
+      <span>Curso: Programación I · URL · Sábados 11:10–12:20</span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+  <script src="diagramas.js"></script>
+</body>
+</html>

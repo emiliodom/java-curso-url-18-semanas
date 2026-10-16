@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Proyecto — Guía 14 y ★ Entrega Parcial 3 (Semana 14)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 14 — Despliegue</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link active" href="proyecto.html">Proyecto ★</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Proyecto · Guía 14 (1 pt) + ★ Entrega Parcial 3 (5 pts)</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Tu proyecto, en internet, con datos reales</h1>
+          <div class="small-muted">Primero la <strong>guía de 12 pasos</strong> para publicar <strong>tu</strong> aplicación en Render con su base en Neon; al final, la <strong>plantilla calificable</strong>. Fecha límite: <strong>antes de la Sesión 15 (24 de octubre de 2026)</strong>.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 1000px;">
+
+    <div class="callout danger mb-4">
+      <div class="fw-semibold">⚠️ Esta entrega cuenta doble</div>
+      <div class="small-muted">
+        Una sola entrega, dos calificaciones: <strong>Guía de Aprendizaje 14</strong> (1 pt) y <strong>Avance del Proyecto — Entrega Parcial 3</strong> (5 pts, hito de proyecto). Completas esta página una vez y el mismo PDF sirve para ambas. Además, <strong>no borres el servicio después de entregar</strong>: tu aplicación debe seguir publicada hasta la presentación de la Semana 18.
+      </div>
+    </div>
+
+    <div class="callout warning mb-4">
+      <div class="fw-semibold">Qué significa exactamente "app en producción con CRUD y autenticación contra la base de datos real (no H2)"</div>
+      <ul class="small-muted mb-0">
+        <li><strong>En producción:</strong> se abre desde cualquier dispositivo en <code>https://….onrender.com</code>, con candado.</li>
+        <li><strong>Con CRUD:</strong> crear, listar, editar y eliminar registros de <strong>tu</strong> entidad funcionan en esa URL.</li>
+        <li><strong>Con autenticación:</strong> pide login, tiene al menos dos roles y el rol menor recibe 403 en las rutas de gestión.</li>
+        <li><strong>Contra la base real:</strong> el log dice <code>profile is active: "prod"</code>, las filas aparecen en Neon → Tables y <strong>sobreviven a un reinicio</strong> del servicio.</li>
+      </ul>
+    </div>
+
+    <div class="callout info mb-4">
+      <div class="fw-semibold">Antes de empezar</div>
+      <div class="small-muted">Necesitas tu proyecto de la Semana 13 funcionando (login con dos roles, contraseñas por variables de entorno) y subido a GitHub. En esta página, <code>TuEntidad</code> es tu clase principal, <code>tu-proyecto</code> tu Artifact (con guion: carpeta y <code>.jar</code>) y <code>gt.edu.url.tuproyecto</code> tu paquete (sin guion). Si tus variables de claves tienen otro nombre (por ejemplo <code>COORDINADOR_PASSWORD</code>), usa los tuyos. El ejemplo detallado con <strong>maquetas numeradas de cada pantalla</strong> está en los <a href="ejercicios.html">Ejercicios</a>: aquí te remitimos a ellos en cada paso.</div>
+    </div>
+
+    <div class="card mb-4"><div class="card-body">
+      <h2 class="h5 section-title mb-1">🗺️ Mapa de tu avance (marca cada paso al terminarlo)</h2>
+      <p class="small-muted mb-2">Trece pasos (del 0 al 12) en cuatro lugares. Haz clic en un círculo para marcarlo: así sabes siempre <strong>dónde estás</strong> y <strong>qué sigue</strong>.</p>
+      <div class="ruta-mapa compacta" id="mapaAvance" aria-label="Mapa de avance de la guía">
+        <div class="ruta-paso" data-paso="0"><div class="ruta-punto">0</div><span class="ruta-etq">Rama</span>💻</div>
+        <div class="ruta-paso" data-paso="1"><div class="ruta-punto">1</div><span class="ruta-etq">.jar</span>💻</div>
+        <div class="ruta-paso" data-paso="2"><div class="ruta-punto">2</div><span class="ruta-etq">Config.</span>💻</div>
+        <div class="ruta-paso" data-paso="3"><div class="ruta-punto">3</div><span class="ruta-etq">Neon</span>🐘</div>
+        <div class="ruta-paso" data-paso="4"><div class="ruta-punto">4</div><span class="ruta-etq">PC ↔ Neon</span>💻🐘</div>
+        <div class="ruta-paso" data-paso="5"><div class="ruta-punto">5</div><span class="ruta-etq">Dockerfile</span>💻</div>
+        <div class="ruta-paso" data-paso="6"><div class="ruta-punto">6</div><span class="ruta-etq">main</span>🐙</div>
+        <div class="ruta-paso" data-paso="7"><div class="ruta-punto">7</div><span class="ruta-etq">Web Service</span>☁️</div>
+        <div class="ruta-paso" data-paso="8"><div class="ruta-punto">8</div><span class="ruta-etq">Variables</span>☁️</div>
+        <div class="ruta-paso" data-paso="9"><div class="ruta-punto">9</div><span class="ruta-etq">Logs</span>☁️</div>
+        <div class="ruta-paso" data-paso="10"><div class="ruta-punto">10</div><span class="ruta-etq">Verificar</span>📱</div>
+        <div class="ruta-paso" data-paso="11"><div class="ruta-punto">11</div><span class="ruta-etq">Ciclo CD</span>🐙☁️</div>
+        <div class="ruta-paso" data-paso="12"><div class="ruta-punto">12</div><span class="ruta-etq">README</span>🐙</div>
+      </div>
+    </div></div>
+
+    <figure class="mmd-figure">
+      <div class="mermaid">
+flowchart TB
+  subgraph F1["Fase 1 · En tu PC (pasos 0–2)"]
+    direction LR
+    P0["0 · rama<br/>development"] --> P1["1 · .jar con<br/>BUILD SUCCESS"] --> P2["2 · PORT y<br/>perfil prod"]
+  end
+  subgraph F2["Fase 2 · La base (pasos 3–4)"]
+    direction LR
+    P3["3 · proyecto<br/>en Neon"] --> P4["4 · tu PC en prod<br/>escribe en Neon"]
+  end
+  subgraph F3["Fase 3 · Publicar (pasos 5–9)"]
+    direction LR
+    P5["5 · Dockerfile"] --> P6["6 · PR a main"] --> P7["7 · Web Service"] --> P8["8 · 6 variables"] --> P9["9 · Logs: Live"]
+  end
+  subgraph F4["Fase 4 · Demostrar (10–12)"]
+    direction LR
+    P10["10 · verificar<br/>con datos reales"] --> P11["11 · cambio →<br/>redeploy solo"] --> P12["12 · README"]
+  end
+  F1 --> F2
+  F2 --> F3
+  F3 --> F4
+  style F1 fill:#fffbeb,stroke:#f59e0b
+  style F2 fill:#f0fdf4,stroke:#22c55e
+  style F3 fill:#f5f3ff,stroke:#8b5cf6
+  style F4 fill:#eff6ff,stroke:#3b82f6
+      </div>
+      <figcaption>Cuatro fases. No pases a la siguiente sin el ✅ de la anterior: así, si algo falla, sabes que el problema está en lo último que agregaste.</figcaption>
+    </figure>
+
+    <h2 class="h4 section-title mb-3">Parte guiada — publica tu proyecto</h2>
+
+    <!-- PASO 0 -->
+    <div class="card mb-3"><div class="card-body">
+      <div class="paso-grande mb-2"><div class="paso-num">0</div><div><div class="paso-donde"><span class="lugar pc">💻 Tu PC</span> Fase 1</div><h3 class="h5 section-title mb-0" id="paso0">Trabaja en <code>development</code> y parte de un proyecto sano</h3></div></div>
+<pre><code>git checkout development
+git pull
+git status</code></pre>
+      <p class="small-muted mb-2">Arranca tu proyecto como en la Semana 13 (terminal con tus dos claves) y prueba en <code>localhost:8080</code>: login, los dos roles y el CRUD. <strong>No publiques algo que no funciona en tu PC</strong>: en producción sería más difícil de arreglar.</p>
+      <div class="callout success mb-0">✅ Checkpoint: <code>On branch development</code>, sin cambios pendientes, y tu app funciona completa en tu PC.</div>
+    </div></div>
+
+    <!-- PASO 1 -->
+    <div class="card mb-3"><div class="card-body">
+      <div class="paso-grande mb-2"><div class="paso-num">1</div><div><div class="paso-donde"><span class="lugar pc">💻 Tu PC</span> Fase 1 · <a href="ejercicios.html">Ejercicio 1</a></div><h3 class="h5 section-title mb-0" id="paso1">Empaca tu aplicación y ejecuta el <code>.jar</code></h3></div></div>
+<pre><code># En la terminal con tus dos claves definidas (las de la Semana 13):
+./mvnw clean package            # Windows: .\mvnw.cmd clean package
+java -jar target/tu-proyecto-0.0.1-SNAPSHOT.jar</code></pre>
+      <p class="small-muted mb-2">Si falla con <code>contextLoads » IllegalState</code> y <code>Could not resolve placeholder</code>, faltan las claves en esa terminal (es normal: la prueba enciende la app). El nombre del <code>.jar</code> sale de tu <code>&lt;artifactId&gt;</code> (con guion).</p>
+      <div class="callout success mb-0">✅ Checkpoint: <code>BUILD SUCCESS</code> y con <code>java -jar</code> tu app abre en <code>localhost:8080</code>.</div>
+    </div></div>
+
+    <!-- PASO 2 -->
+    <div class="card mb-3"><div class="card-body">
+      <div class="paso-grande mb-2"><div class="paso-num">2</div><div><div class="paso-donde"><span class="lugar pc">💻 Tu PC</span> Fase 1 · <a href="ejercicios.html">Kit, secciones 2 y 3</a></div><h3 class="h5 section-title mb-0" id="paso2">Puerto flexible y perfil de producción completo</h3></div></div>
+      <p class="small-muted mb-1">En <code>application.properties</code> agrega:</p>
+<pre><code>server.port=${PORT:8080}</code></pre>
+      <p class="small-muted mb-1">Deja <code>application-prod.properties</code> así (los <code>${…}</code> son huecos, no valores):</p>
+<pre><code>spring.datasource.url=${DB_URL}
+spring.datasource.username=${DB_USER}
+spring.datasource.password=${DB_PASSWORD}
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=false
+spring.datasource.hikari.maximum-pool-size=5
+server.forward-headers-strategy=framework</code></pre>
+      <p class="small-muted mb-2">Revisa en tu <code>pom.xml</code> que exista la dependencia <code>org.postgresql:postgresql</code> (la agregaste en la Semana 12). Si no está, agrégala sin versión, con <code>&lt;scope&gt;runtime&lt;/scope&gt;</code>, y reinicia a mano. Reempaqueta.</p>
+      <div class="callout success mb-0">✅ Checkpoint: con <code>PORT=9090</code> tu app abre en el 9090, y <code>application-prod.properties</code> no contiene ningún valor secreto.</div>
+    </div></div>
+
+    <!-- PASO 3 -->
+    <div class="card mb-3"><div class="card-body">
+      <div class="paso-grande mb-2"><div class="paso-num">3</div><div><div class="paso-donde"><span class="lugar neon">🐘 Neon</span> Fase 2 · maquetas en <a href="ejercicios.html">Ejercicios 3 y 4</a></div><h3 class="h5 section-title mb-0" id="paso3">Crea la base de tu institución y saca las 3 piezas</h3></div></div>
+      <ol class="small-muted mb-2">
+        <li><strong>New Project</strong> → nombre de tu institución (ej. <code>guarderia-arcoiris</code>) → <strong>Region</strong> en el Este de EE. UU. → <strong>Create project</strong>.</li>
+        <li><strong>Connect</strong> → <em>Connect to your branch</em> → <strong>apaga Connection pooling</strong> → muestra la contraseña → copia la cadena a tu <strong>nota privada</strong>.</li>
+        <li>Sepárala (a mano o con el <a href="cheatsheet.html">separador del Cheat Sheet</a>) en <span class="var-chip neon">DB_URL</span> (con <code>jdbc:postgresql://</code> y <code>?sslmode=require&amp;channelBinding=require</code>), <span class="var-chip neon">DB_USER</span> y <span class="var-chip neon">DB_PASSWORD</span>.</li>
+      </ol>
+      <div class="callout success mb-0">✅ Checkpoint: tienes las tres piezas en tu nota privada, <code>DB_URL</code> sin <code>-pooler</code>, y Neon → Tables muestra una base vacía.</div>
+    </div></div>
+
+    <!-- PASO 4 -->
+    <div class="card mb-3"><div class="card-body">
+      <div class="paso-grande mb-2"><div class="paso-num">4</div><div><div class="paso-donde"><span class="lugar pc">💻 Tu PC</span> <span class="lugar neon">🐘 Neon</span> Fase 2 · <a href="ejercicios.html">Ejercicio 5</a></div><h3 class="h5 section-title mb-0" id="paso4">Prueba la llave: tu PC escribe en Neon</h3></div></div>
+      <p class="small-muted mb-2">En una terminal define <strong>seis</strong> variables: <span class="var-chip spring">SPRING_PROFILES_ACTIVE</span>=<code>prod</code>, las tres de Neon y tus dos claves de usuario. Arranca con <code>java -jar</code>. (Comandos completos para PowerShell y Bash en el Ejercicio 5.)</p>
+      <ul class="small-muted mb-2">
+        <li>En el log: <code>profile is active: "prod"</code> y <code>PgConnection</code>. Si ves <code>jdbc:h2</code>, falta el perfil.</li>
+        <li>Crea un registro de tu entidad. En Neon → <strong>Tables</strong> aparece tu tabla con esa fila, y la tabla <code>usuario</code> con contraseñas que empiezan con <code>$2a$10$</code>.</li>
+      </ul>
+      <div class="callout danger mb-2"><div class="small-muted"><strong>Anota cuáles claves de usuario usaste aquí:</strong> los usuarios se crean en Neon con las claves de <em>este</em> primer arranque. En Render debes poner <strong>las mismas</strong>.</div></div>
+      <div class="callout success mb-0">✅ Checkpoint (captura para la Parte B): tu tabla en Neon → Tables con al menos una fila creada desde tu PC.</div>
+    </div></div>
+
+    <!-- PASO 5 -->
+    <div class="card mb-3"><div class="card-body">
+      <div class="paso-grande mb-2"><div class="paso-num">5</div><div><div class="paso-donde"><span class="lugar pc">💻 Tu PC</span> Fase 3 · <a href="ejercicios.html">Kit, secciones 5 y 6</a></div><h3 class="h5 section-title mb-0" id="paso5">Dockerfile y .dockerignore en la raíz</h3></div></div>
+      <p class="small-muted mb-2">Copia el <code>Dockerfile</code> y el <code>.dockerignore</code> del Kit <strong>sin cambios</strong>: el Dockerfile usa <code>target/*.jar</code>, así que funciona con el nombre de tu proyecto. Van en la raíz, junto a <code>pom.xml</code>. El archivo se llama <code>Dockerfile</code>, sin extensión (en Windows revisa que no quede <code>Dockerfile.txt</code>).</p>
+      <div class="callout success mb-0">✅ Checkpoint: en VS Code ves <code>Dockerfile</code>, <code>.dockerignore</code> y <code>pom.xml</code> al mismo nivel.</div>
+    </div></div>
+
+    <!-- PASO 6 -->
+    <div class="card mb-3"><div class="card-body">
+      <div class="paso-grande mb-2"><div class="paso-num">6</div><div><div class="paso-donde"><span class="lugar github">🐙 GitHub</span> Fase 3 · <a href="ejercicios.html">Ejercicio 6</a></div><h3 class="h5 section-title mb-0" id="paso6">Revisa secretos y lleva todo a <code>main</code></h3></div></div>
+<pre><code>git status                 # NO debe aparecer datos/ ni archivos con claves
+git grep npg_              # debe NO encontrar nada
+git add .
+git commit -m "Prepara despliegue en Render y Neon"
+git push origin development
+# github.com → Pull requests → New → base: main ← compare: development → Create → Merge</code></pre>
+      <div class="table-responsive mb-2"><table class="table table-sm small mb-0">
+        <thead><tr><th>Qué</th><th>¿Se sube?</th><th>Por qué</th></tr></thead>
+        <tbody>
+          <tr><td><code>Dockerfile</code>, <code>.dockerignore</code>, <code>*.properties</code> con <code>${…}</code></td><td>Sí</td><td>No contienen secretos</td></tr>
+          <tr><td>Valores de <code>DB_URL</code>, <code>DB_USER</code>, <code>DB_PASSWORD</code>, claves de usuario</td><td><strong>NUNCA</strong></td><td>Van solo en Render → Environment</td></tr>
+          <tr><td><code>datos/</code>, <code>target/</code></td><td><strong>NO</strong></td><td>Datos de práctica y archivos generados</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout success mb-0">✅ Checkpoint: en github.com, rama <code>main</code>, se ve el <code>Dockerfile</code> junto a <code>pom.xml</code>.</div>
+    </div></div>
+
+    <!-- PASO 7 -->
+    <div class="card mb-3"><div class="card-body">
+      <div class="paso-grande mb-2"><div class="paso-num">7</div><div><div class="paso-donde"><span class="lugar render">☁️ Render</span> Fase 3 · maqueta numerada en <a href="ejercicios.html">Ejercicio 7</a></div><h3 class="h5 section-title mb-0" id="paso7">Crea el Web Service</h3></div></div>
+      <div class="table-responsive"><table class="table table-sm small mb-2">
+        <thead><tr><th>Campo</th><th>Valor</th></tr></thead>
+        <tbody>
+          <tr><td><strong>+ New → Web Service</strong></td><td>Elige tu repositorio → <strong>Connect</strong></td></tr>
+          <tr><td>Name</td><td>Algo que identifique tu institución (será tu URL)</td></tr>
+          <tr><td>Language</td><td><strong>Docker</strong></td></tr>
+          <tr><td>Branch</td><td><code>main</code></td></tr>
+          <tr><td>Region</td><td>Este de EE. UU. (la misma zona que Neon)</td></tr>
+          <tr><td>Root Directory</td><td>Vacío (o la subcarpeta, si tu proyecto no está en la raíz del repositorio)</td></tr>
+          <tr><td>Compute</td><td><strong>Free</strong></td></tr>
+          <tr><td>Advanced → Health Check Path</td><td><code>/login</code></td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout success mb-0">✅ Checkpoint: el formulario muestra <em>Language: Docker</em> y <em>Compute: Free</em>. No pulses el botón final todavía: primero las variables (paso 8).</div>
+    </div></div>
+
+    <!-- PASO 8 -->
+    <div class="card mb-3"><div class="card-body">
+      <div class="paso-grande mb-2"><div class="paso-num">8</div><div><div class="paso-donde"><span class="lugar render">☁️ Render</span> Fase 3</div><h3 class="h5 section-title mb-0" id="paso8">Las seis variables de entorno</h3></div></div>
+      <p class="small-muted mb-2">En <strong>Environment Variables</strong> → <strong>Add Environment Variable</strong>, una por una, sin espacios:</p>
+      <p class="mb-2"><span class="var-chip spring">SPRING_PROFILES_ACTIVE = prod</span> <span class="var-chip neon">DB_URL</span> <span class="var-chip neon">DB_USER</span> <span class="var-chip neon">DB_PASSWORD</span> <span class="var-chip tuya">ADMIN_PASSWORD</span> <span class="var-chip tuya">tu 2.º rol _PASSWORD</span></p>
+      <p class="small-muted mb-2">No agregues <code>PORT</code>. Luego pulsa <strong>Deploy Web Service</strong> (o <em>Create Web Service</em>). Si después necesitas cambiar una variable: menú <strong>Environment</strong> → editar → <em>Save, rebuild, and deploy</em>.</p>
+      <div class="callout success mb-0">✅ Checkpoint (sin valores, solo nombres, para la Parte D): las seis claves aparecen en la lista de variables del servicio.</div>
+    </div></div>
+
+    <!-- PASO 9 -->
+    <div class="card mb-3"><div class="card-body">
+      <div class="paso-grande mb-2"><div class="paso-num">9</div><div><div class="paso-donde"><span class="lugar render">☁️ Render</span> Fase 3</div><h3 class="h5 section-title mb-0" id="paso9">Lee el log hasta <em>Live</em></h3></div></div>
+      <p class="small-muted mb-2">El primer despliegue tarda de 5 a 10 minutos. Busca estas cinco señales, en este orden:</p>
+<div class="term"><span class="ok">==&gt; Build successful 🎉</span>
+... The following 1 profile is active: <span class="ok">"prod"</span>          <span class="dim">← si dice "dev", falta SPRING_PROFILES_ACTIVE</span>
+... HikariPool-1 - Added connection <span class="ok">org.postgresql.jdbc.PgConnection</span>
+... Tomcat started on port <span class="ok">10000</span> (http)
+<span class="ok">==&gt; Your service is live 🎉</span></div>
+      <p class="small-muted mb-2">Si falla, usa el diagrama "¿Dónde busco?" y los 10 casos de la <a href="ejercicios.html">pestaña de errores</a>. Recuerda: en errores de conexión el último <code>Caused by</code> engaña; busca la <code>PSQLException</code>.</p>
+      <div class="callout success mb-0">✅ Checkpoint (captura para la Parte A): el estado dice <strong>Live</strong> y el log muestra <code>"prod"</code> y el puerto 10000.</div>
+    </div></div>
+
+    <!-- PASO 10 -->
+    <div class="card mb-3"><div class="card-body">
+      <div class="paso-grande mb-2"><div class="paso-num">10</div><div><div class="paso-donde"><span class="lugar navegador">📱 Navegador</span> <span class="lugar neon">🐘 Neon</span> Fase 4 · <a href="ejercicios.html">Ejercicio 8</a></div><h3 class="h5 section-title mb-0" id="paso10">Verifica de punta a punta con datos reales</h3></div></div>
+      <ol class="small-muted mb-2">
+        <li>Desde el <strong>celular</strong> (datos móviles): tu URL abre con 🔒 y te lleva al login. <em>(captura A)</em></li>
+        <li>Clave incorrecta → mensaje genérico. Entra con el rol administrador.</li>
+        <li>Crea, edita y elimina registros; envía el formulario vacío y lee tus dos mensajes. <em>(capturas C)</em></li>
+        <li>Entra con el segundo rol: sin botones de gestión; la ruta de crear escrita a mano da 403. <em>(captura C)</em></li>
+        <li>Neon → Tables: los registros creados desde el celular están ahí. <em>(captura B)</em></li>
+        <li>Render → <strong>Manual Deploy → Restart service</strong>. Cuando vuelva <em>Live</em>, recarga: los registros siguen. <em>(captura B: antes y después)</em></li>
+      </ol>
+      <div class="callout success mb-0">✅ Checkpoint: las seis pruebas pasan. Es la evidencia central de la Entrega Parcial 3.</div>
+    </div></div>
+
+    <!-- PASO 11 -->
+    <div class="card mb-3"><div class="card-body">
+      <div class="paso-grande mb-2"><div class="paso-num">11</div><div><div class="paso-donde"><span class="lugar github">🐙 GitHub</span> <span class="lugar render">☁️ Render</span> Fase 4</div><h3 class="h5 section-title mb-0" id="paso11">Comprueba el ciclo de despliegue continuo</h3></div></div>
+      <p class="small-muted mb-2">Cambia algo pequeño y visible (el título de tu lista, por ejemplo) en <code>development</code>, pruébalo en tu PC, haz el Pull Request a <code>main</code> y mira <strong>Events</strong> en Render: empieza un despliegue solo. Cuando esté <em>Live</em>, el cambio se ve en tu URL.</p>
+      <div class="callout success mb-0">✅ Checkpoint: en <em>Events</em> hay un despliegue que no lanzaste a mano, con el mensaje de tu commit.</div>
+    </div></div>
+
+    <!-- PASO 12 -->
+    <div class="card mb-3"><div class="card-body">
+      <div class="paso-grande mb-2"><div class="paso-num">12</div><div><div class="paso-donde"><span class="lugar github">🐙 GitHub</span> Fase 4</div><h3 class="h5 section-title mb-0" id="paso12">Documenta el despliegue en tu README</h3></div></div>
+      <p class="small-muted mb-1">Agrega esta sección a tu <code>README.md</code> (adáptala; <strong>sin ningún valor secreto</strong>):</p>
+<pre><code>## Despliegue
+
+- Aplicación publicada: https://tu-servicio.onrender.com
+- Hosting: Render (Web Service con Docker, plan gratuito) · Base de datos: PostgreSQL en Neon
+- Se publica automáticamente cada vez que un cambio llega a la rama `main`.
+- Variables de entorno necesarias (los valores NO están en el repositorio):
+  SPRING_PROFILES_ACTIVE=prod, DB_URL, DB_USER, DB_PASSWORD, ADMIN_PASSWORD, ENTRENADOR_PASSWORD
+- Aviso: el plan gratuito duerme la aplicación tras 15 minutos sin visitas;
+  la primera visita puede tardar cerca de un minuto.</code></pre>
+      <div class="callout success mb-0">✅ Checkpoint: el README de <code>main</code> muestra la URL pública y la lista de variables sin valores.</div>
+    </div></div>
+
+    <details class="mb-4">
+      <summary class="fw-semibold">Solución de problemas frecuentes</summary>
+      <div class="table-responsive mt-2">
+        <table class="table table-sm small mb-0">
+          <thead><tr><th>Situación</th><th>Qué hacer</th></tr></thead>
+          <tbody>
+            <tr><td><code>contextLoads » IllegalState</code> al empacar</td><td>Define tus dos claves en esa terminal y repite.</td></tr>
+            <tr><td>Log de Render con <code>"dev"</code> y <code>jdbc:h2</code></td><td>Agrega <code>SPRING_PROFILES_ACTIVE=prod</code> en Environment.</td></tr>
+            <tr><td><code>claims to not accept jdbcUrl, postgresql://…</code></td><td>Arma <code>DB_URL</code> con <code>jdbc:postgresql://</code>. Como la clave quedó en el log: Neon → Roles → <em>Reset password</em> y actualiza Render.</td></tr>
+            <tr><td><code>password authentication failed for user 'neondb_owner'</code></td><td>Copia de nuevo la clave visible, sin espacios.</td></tr>
+            <tr><td>Último <code>Caused by</code>: <code>Unable to determine Dialect</code></td><td>Busca la <code>PSQLException</code> más arriba.</td></tr>
+            <tr><td><code>openjdk…: not found</code> o <code>open Dockerfile: no such file</code></td><td>Usa el Dockerfile del Kit, en la raíz; revisa <em>Root Directory</em>.</td></tr>
+            <tr><td><code>Port scan timeout reached</code></td><td>La app se cayó al arrancar: el error real está más arriba en Logs.</td></tr>
+            <tr><td>Mi clave de admin "nueva" no funciona en producción</td><td>El usuario ya existía en Neon. Usa la del paso 4 o <code>DELETE FROM usuario;</code> en el SQL Editor y <em>Restart service</em>.</td></tr>
+            <tr><td>Tarda ~1 minuto en abrir</td><td>Estaba dormido (plan gratuito). Normal.</td></tr>
+            <tr><td>Mi entidad tiene otro nombre de tabla</td><td>Normal: Hibernate usa el nombre de tu clase (<code>TuEntidad</code> → <code>tu_entidad</code>).</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <div class="callout mb-4">
+      <div class="fw-semibold">Plan B</div>
+      <div class="small-muted">Si Render no te deja crear la cuenta o el servicio (por ejemplo, pide tarjeta y no tienes), completa los pasos 0 a 6 y documenta en el Entregable la prueba del paso 4 (tu PC en perfil <code>prod</code> escribiendo en Neon), el último mensaje de error o la pantalla que te bloqueó, y avísale al docente <strong>antes</strong> de la fecha límite para coordinar una alternativa. Se evalúa el avance real y el proceso documentado.</div>
+    </div>
+
+    <hr class="my-4" />
+    <h2 class="h4 section-title mb-3">📋 Entregable — completa esto para tu calificación</h2>
+
+    <div class="callout success mb-3">
+      <div class="small-muted">Una sola plantilla, dos calificaciones: <strong>Guía 14 (1 pt)</strong> + <strong>★ Entrega Parcial 3 (5 pts)</strong>. Pega tus capturas en el PDF final o descríbelas con precisión en cada casilla. <strong>Nunca pegues valores de claves</strong>: solo nombres de variables.</div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title mb-3">Datos del estudiante</h3>
+        <div class="row g-3">
+          <div class="col-md-5"><label class="form-label small fw-semibold">Nombre completo</label><input class="form-control fill-line" type="text" /></div>
+          <div class="col-md-3"><label class="form-label small fw-semibold">Carné</label><input class="form-control fill-line" type="text" /></div>
+          <div class="col-md-4"><label class="form-label small fw-semibold">Institución / entidad del proyecto</label><input class="form-control fill-line" type="text" /></div>
+        </div>
+        <div class="row g-3 mt-1">
+          <div class="col-md-6"><label class="form-label small fw-semibold">🌐 URL pública (https://….onrender.com)</label><input class="form-control fill-line" type="text" placeholder="https://" /></div>
+          <div class="col-md-6"><label class="form-label small fw-semibold">Repositorio (rama <code>main</code>)</label><input class="form-control fill-line" type="text" placeholder="https://github.com/..." /></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte A — Mi aplicación está en internet (pasos 7–9)</h3>
+        <p class="small-muted mb-1"><strong>A1.</strong> Captura de tu URL abierta desde el celular, con el candado 🔒 visible. <strong>A2.</strong> Copia las cinco líneas del log de Render del paso 9 (sin nada secreto) y la fecha del despliegue.</p>
+        <textarea class="code-area" rows="8" placeholder="A1: (captura) ...&#10;A2 — log:&#10;==> Build successful ...&#10;... profile is active: ...&#10;... HikariPool-1 - Added connection ...&#10;... Tomcat started on port ...&#10;==> Your service is live ...&#10;Fecha del despliegue: ..."></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte B — Mis datos viven en Neon (pasos 3, 4 y 10)</h3>
+        <p class="small-muted mb-1"><strong>B1.</strong> Captura de Neon → Tables mostrando tu tabla con registros creados <strong>desde la URL pública</strong>. <strong>B2.</strong> Prueba del reinicio: cuántos registros había antes de <em>Restart service</em> y cuántos después. <strong>B3.</strong> Región elegida en Neon y en Render, y por qué conviene que estén cerca.</p>
+        <textarea class="code-area" rows="7" placeholder="B1: (captura) tabla ..., filas visibles: ...&#10;B2: antes del reinicio: ... registros | después: ... registros&#10;B3: región Neon: ... | región Render: ... | por qué: ..."></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte C — CRUD y autenticación en producción (paso 10)</h3>
+        <p class="small-muted mb-1">Describe o pega las capturas, todas tomadas en la <strong>URL pública</strong>: (1) login con clave incorrecta; (2) rol administrador creando, editando y eliminando; (3) tus dos mensajes de validación; (4) segundo rol sin botones de gestión; (5) 403 del segundo rol en la ruta de crear.</p>
+        <textarea class="code-area" rows="9" placeholder="1. Login incorrecto: ...&#10;2. Admin — creé: ... | edité: ... | eliminé: ...&#10;3. Mensajes de validación: ... / ...&#10;4. Vista del segundo rol (usuario: ...): ...&#10;5. 403 en /.../nuevo: ..."></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte D — Configuración y secretos (pasos 2, 5, 6 y 8)</h3>
+        <p class="small-muted mb-1"><strong>D1.</strong> Pega tu <code>application-prod.properties</code> completo y tu <code>Dockerfile</code>. <strong>D2.</strong> Lista los <strong>nombres</strong> (sin valores) de las variables de entorno de tu servicio en Render. <strong>D3.</strong> Pega el resultado de <code>git grep npg_</code> (debe estar vacío) y explica en 2–3 líneas por qué <code>DB_PASSWORD</code> no puede estar en GitHub aunque el repositorio sea tuyo.</p>
+        <textarea class="code-area mb-2" rows="14" placeholder="D1 — application-prod.properties:&#10;...&#10;D1 — Dockerfile:&#10;..."></textarea>
+        <textarea class="code-area" rows="6" placeholder="D2 — nombres de variables en Render: ...&#10;D3 — git grep npg_: (vacío)&#10;Por qué: ..."></textarea>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Parte E — Documentación y reflexión (pasos 11 y 12)</h3>
+        <p class="small-muted mb-1"><strong>E1.</strong> Pega la sección "Despliegue" de tu README y el mensaje del commit que se publicó solo en el paso 11.</p>
+        <textarea class="code-area mb-3" rows="8"></textarea>
+        <ol class="small">
+          <li class="mb-2">
+            <strong>Responsabilidad operativa:</strong> tu aplicación ya está en internet y guarda datos de personas reales de una institución. ¿Qué harías si mañana descubres que tu clave de Neon quedó en una captura que compartiste? Escribe los pasos en orden.
+            <textarea class="form-control mt-1" rows="3"></textarea>
+          </li>
+          <li class="mb-2">
+            <strong>Rigor en la verificación:</strong> ¿cuál de tus pruebas te convenció de que la aplicación usa de verdad Neon y no H2? ¿Por qué el estado "Live" no era suficiente?
+            <textarea class="form-control mt-1" rows="3"></textarea>
+          </li>
+          <li>
+            <strong>Mirada docente:</strong> si tuvieras que explicar "desplegar" a estudiantes de bachillerato en 3 minutos, ¿qué analogía usarías y qué diagrama dibujarías en la pizarra?
+            <textarea class="form-control mt-1" rows="3"></textarea>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="card mb-3">
+      <div class="card-body">
+        <h3 class="h5 section-title">Lista de cotejo (marca antes de entregar)</h3>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck1" /><label class="form-check-label small" for="ck1">Mi URL <code>https://….onrender.com</code> abre desde el celular, con candado.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck2" /><label class="form-check-label small" for="ck2">El log de Render dice <code>"prod"</code>, <code>PgConnection</code> y puerto 10000.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck3" /><label class="form-check-label small" for="ck3">Mis registros aparecen en Neon → Tables y sobreviven a <em>Restart service</em>.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck4" /><label class="form-check-label small" for="ck4">CRUD completo, dos roles y 403 funcionan en la URL pública.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck5" /><label class="form-check-label small" for="ck5"><code>application-prod.properties</code> solo tiene <code>${…}</code>; <code>git grep npg_</code> no encuentra nada.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck6" /><label class="form-check-label small" for="ck6"><code>Dockerfile</code> y <code>.dockerignore</code> están en <code>main</code>, junto a <code>pom.xml</code>.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck7" /><label class="form-check-label small" for="ck7">Las seis variables están en Render (no agregué <code>PORT</code>).</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck8" /><label class="form-check-label small" for="ck8">Un cambio llevado a <code>main</code> se publicó solo.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck9" /><label class="form-check-label small" for="ck9">Mi README tiene la sección "Despliegue" con la URL y las variables sin valores.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck10" /><label class="form-check-label small" for="ck10">Ninguna clave aparece en este PDF ni en mis capturas.</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" id="ck11" /><label class="form-check-label small" for="ck11">Exporté el PDF como <code>Guia14_EntregaParcial3_TuNombre.pdf</code>.</label></div>
+      </div>
+    </div>
+
+    <div class="callout danger">
+      <div class="fw-semibold">Cómo se califica (dos rúbricas sobre la misma entrega)</div>
+      <div class="row g-3 mt-1">
+        <div class="col-md-7">
+          <div class="table-responsive">
+            <table class="table table-sm small mb-0">
+              <thead><tr><th>★ Entrega Parcial 3 — Avance del proyecto</th><th class="text-end">Pts</th></tr></thead>
+              <tbody>
+                <tr><td>Aplicación publicada y accesible por HTTPS; log con perfil <code>prod</code> (Parte A)</td><td class="text-end">1.0</td></tr>
+                <tr><td>Base de datos real en Neon con persistencia comprobada tras reinicio (Parte B)</td><td class="text-end">1.25</td></tr>
+                <tr><td>CRUD, login, dos roles y 403 funcionando en la URL pública (Parte C)</td><td class="text-end">1.5</td></tr>
+                <tr><td>Configuración por perfil y variables; Dockerfile; cero secretos en GitHub (Parte D)</td><td class="text-end">1.0</td></tr>
+                <tr><td>README con sección de despliegue y despliegue continuo comprobado (Parte E1)</td><td class="text-end">0.25</td></tr>
+                <tr class="fw-bold"><td>Subtotal del hito</td><td class="text-end">5.0</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="table-responsive">
+            <table class="table table-sm small mb-0">
+              <thead><tr><th>Guía de Aprendizaje 14</th><th class="text-end">Pts</th></tr></thead>
+              <tbody>
+                <tr><td>Plantilla completa (Partes A–D sin vacíos)</td><td class="text-end">0.6</td></tr>
+                <tr><td>Reflexión honesta y concreta (Parte E, preguntas 1–3)</td><td class="text-end">0.4</td></tr>
+                <tr class="fw-bold"><td>Subtotal de la guía</td><td class="text-end">1.0</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="small-muted mt-2">Se valora que la aplicación <strong>realmente funcione en la URL pública con datos en Neon</strong>, no solo que se describa. Una clave real visible en el PDF o en GitHub resta la totalidad de la Parte D. Entregar tarde: −25% por día.</div>
+    </div>
+
+    <div class="d-flex gap-2 mt-3 no-print">
+      <button class="btn btn-dark btn-lg btn-export" onclick="window.print()">Exportar a PDF</button>
+      <a class="btn btn-outline-primary btn-lg" href="index.html">Volver al inicio</a>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Proyecto — Guía 14 + ★ Entrega Parcial 3 · Semana 14 (formato 18 semanas) · Fecha límite: antes de la Sesión 15 (24 oct 2026)
+    </div>
+  </footer>
+
+  <script>
+    // Mapa de avance: clic en un círculo marca ese paso (y los anteriores) como hechos.
+    // Se recuerda en este navegador; si el almacenamiento no está disponible, igual funciona.
+    (function () {
+      var CLAVE = 's14-proyecto-avance';
+      var pasos = document.querySelectorAll('#mapaAvance .ruta-paso');
+      function pintar(hasta) {
+        pasos.forEach(function (p) {
+          var n = parseInt(p.dataset.paso, 10);
+          p.classList.toggle('hecho', n <= hasta);
+          p.classList.toggle('aqui', n === hasta + 1);
+        });
+      }
+      var guardado = -1;
+      try { guardado = parseInt(localStorage.getItem(CLAVE) || '-1', 10); } catch (e) { guardado = -1; }
+      pintar(isNaN(guardado) ? -1 : guardado);
+      pasos.forEach(function (p) {
+        p.style.cursor = 'pointer';
+        p.addEventListener('click', function () {
+          var n = parseInt(p.dataset.paso, 10);
+          var actual = -1;
+          pasos.forEach(function (q) { if (q.classList.contains('hecho')) actual = Math.max(actual, parseInt(q.dataset.paso, 10)); });
+          var nuevo = (n === actual) ? n - 1 : n;
+          pintar(nuevo);
+          try { localStorage.setItem(CLAVE, String(nuevo)); } catch (e) { /* sin almacenamiento: no pasa nada */ }
+        });
+      });
+    })();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+  <script src="diagramas.js"></script>
+</body>
+</html>

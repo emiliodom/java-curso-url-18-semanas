@@ -325,7 +325,71 @@ portal.
   verificados. Dominios: challenge = Laboratorio de Robótica del Instituto
   Nuevo Horizonte (roles ADMIN/DOCENTE). Sin Entrega Parcial; el siguiente
   hito es la Entrega Parcial 3 en la Semana 14.
-- **Semanas 14–18** — pendientes, mismo patrón reducido descrito en este archivo.
+- **Semana 14** (Unidad 7a: Despliegue en producción con Render y Neon) —
+  completa. **★ Entrega Parcial 3** (Guía 14 = 1 pt + hito = 5 pts, una sola
+  entrega en `proyecto.html`, rúbrica doble como la S9). Continúa
+  `taller-formularios`/`Jugador` con login de la S13; **ninguna clase Java ni
+  plantilla cambia**: solo `server.port=${PORT:8080}` en
+  `application.properties`, `application-prod.properties` completo
+  (`${DB_URL}`/`${DB_USER}`/`${DB_PASSWORD}`, `ddl-auto=update`,
+  `hikari.maximum-pool-size=5`, `server.forward-headers-strategy=framework`)
+  y dos archivos nuevos en la raíz: `Dockerfile` de dos etapas
+  (`maven:3.9-eclipse-temurin-17` → `eclipse-temurin:17-jre`,
+  `mvn -B -DskipTests clean package`, `-XX:MaxRAMPercentage=75`) y
+  `.dockerignore`. Pedido explícito del profesor: material **muy didáctico**,
+  paso a paso, con diagramas profesionales (no ASCII) y mapas "de dónde
+  vienes / qué harás / a dónde vas", contrastado con las pantallas reales de
+  2026. Dominios: ejercicios/clase/cheatsheet = Escuela de Fútbol Los
+  Cerritos; challenge = Centro de Reciclaje Comunitario Tierra Viva
+  (`Voluntario`); proyecto = el proyecto real. Verificación completa en
+  `VERIFICACION_Semana_14_despliegue.md`.
+  **Erratas del programa (`…DB con Neon.md`) confirmadas contra la
+  documentación oficial (16/10/2026):** (1) "Render detecta Maven sin
+  Dockerfile" es **falso**: Render solo tiene runtime nativo para Node, Python,
+  Ruby, Go, Rust y Elixir; Java va con **Language: Docker**. (2) Render
+  renombró *Instance Type* → **Compute** (ago 2026). (3) Neon: botón
+  **Connect** → ventana *Connect to your branch*, rama por defecto
+  `production`, *Connection pooling* encendido por defecto (el material manda
+  apagarlo: conexión directa), 1 GB gratis por proyecto desde el 2/10/2026.
+  (4) Render necesita **seis** variables, no cuatro: también
+  `ADMIN_PASSWORD`/`ENTRENADOR_PASSWORD` de la S13 (y deben ser las mismas
+  con que se crearon los usuarios en Neon: `CargadorUsuarios` solo crea).
+  `PORT` no se agrega (Render la pone: 10000). `DB_URL` se arma a mano:
+  `jdbc:postgresql://<host-sin-pooler>/neondb?sslmode=require&channelBinding=require`
+  (en JDBC es `channelBinding`, camelCase; `channel_binding` se ignora).
+  Errores reales verificados que el material enseña: `mvn clean package`
+  falla en `contextLoads` sin `ADMIN_PASSWORD` (por eso `-DskipTests` en
+  Docker); **sin `SPRING_PROFILES_ACTIVE=prod` arranca en silencio con H2
+  dentro del contenedor** y pierde datos en cada deploy; la cadena
+  `postgresql://…` sin `jdbc:` da `claims to not accept jdbcUrl` **e imprime
+  la clave en el log**; sin `DB_PASSWORD` Spring no se queja (manda
+  `${DB_PASSWORD}` literal); en toda falla de conexión el **último**
+  `Caused by` es `Unable to determine Dialect` (engañoso: buscar la
+  `PSQLException`); `openjdk:17-jdk-slim` ya no existe en Docker Hub.
+  **Patrones nuevos reutilizables (S15–S18):**
+  - `diagramas.js` + Mermaid `11.4.1` por CDN (cargar después de Bootstrap):
+    tema único y dibujo correcto dentro de pestañas ocultas (las muestra
+    fuera de pantalla un instante). Envolver cada diagrama en
+    `<figure class="mmd-figure">` con `<figcaption>`. **No** poner diagramas
+    dentro de `<details>` ni acordeones colapsados. Lecciones: el `gantt` de
+    Mermaid queda ilegible en 70 min (usar la barra HTML `.linea-70` de
+    `clase.html`); si las flechas unen nodos de distintos `subgraph`, Mermaid
+    ignora `direction` (unir los subgraphs entre sí); flowcharts muy anchos
+    se encogen hasta ser ilegibles (preferir `TB` o pocos nodos). Verificar
+    con Chrome headless (`--dump-dom` y buscar `aria-roledescription`).
+  - En `styles.css` (bloque "SEMANA 14"): `.ruta-mapa` (+ `.compacta`) para
+    "dónde estamos", `.ruta-tres` (antes/ahora/después), `.gui-mock` +
+    `.pin` para **maquetas numeradas de pantallas reales** (dibujos
+    simplificados con los nombres exactos de botones, nunca capturas ni
+    logos), `.var-chip` por origen de la variable, `.term` (terminal con
+    colores), `.paso-grande`, `.lugar` (dónde se hace el paso),
+    `.deploy-pipeline` (simulador).
+  - Challenge: secuencia con trampas que **suman si se dejan en el banco** +
+    simulador de consola con tubería iluminada y **pregunta de diagnóstico**
+    al final de cada escenario (cuenta la primera respuesta; el PDF exige
+    los 4 diagnósticos).
+- **Semanas 15–18** — pendientes, mismo patrón reducido descrito en este
+  archivo (copiar `styles.css` y `diagramas.js` de la Semana 14).
 
 ### Calendario real del curso (ojo con los saltos)
 
@@ -595,6 +659,7 @@ retroactivaron, ver "Cambio de estructura desde la Semana 6" arriba.
 | `styles.css` | **Copiar y ampliar** desde la semana más reciente (no reinventar) — incluye toasts (S3), cajas de clasificación (S5), mapa de capas/simulador y pestañas (S6) | ~450–600 líneas |
 | `quiz.js` | Motor de quiz v2 (`renderQuiz`/`gradeQuiz`/`resetQuiz`/`regenerateQuiz`/`exportQuizPdf`) — genérico, reutilizable; solo el `QUESTION_BANK` cambia por semana (definido inline en `quiz.html`) | ~170 líneas |
 | `toast.js` | **Copiar verbatim** solo si el challenge de esa semana da retroalimentación por movimiento (ver sección de toasts más abajo) | 25 líneas |
+| `diagramas.js` | **Copiar verbatim desde la Semana 14** si la semana tiene diagramas Mermaid (ver Semana 14 en "Estado actual") | 70 líneas |
 
 Todas las páginas comparten: navbar con los mismos 7 enlaces (Quiz, Guía
 Docente, Ejercicios, Cheat Sheet, Challenge, Proyecto, Ficha del Proyecto),

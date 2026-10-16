@@ -1,0 +1,691 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Challenge — Semana 14 (Despliegue: Centro de Reciclaje Tierra Viva)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="toast-stack" id="toastStack"></div>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 14 — Despliegue</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link active" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto ★</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Challenge · Semana 14 · Centro de Reciclaje Comunitario Tierra Viva</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Dos retos: ordenar un despliegue y diagnosticar la consola</h1>
+          <div class="small-muted">Pestaña 1: <strong>ordena los pasos</strong> para publicar la aplicación de voluntarios (con trampas sacadas de tutoriales viejos). Pestaña 2: un <strong>simulador de la consola de Render</strong> con cuatro escenarios; en cada uno respondes qué pasó.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="exportChallengePdf()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <div class="callout info mb-3">
+      <div class="fw-semibold">Reto de transferencia: otro dominio, las mismas ideas</div>
+      <div class="small-muted">El Centro de Reciclaje Comunitario Tierra Viva registra a sus <strong>voluntarios</strong> (entidad <code>Voluntario</code>) en una aplicación Spring Boot llamada <code>tierra-viva</code>, con login para la coordinadora (<code>ADMIN</code>) y los encargados de turno (<code>ENCARGADO</code>). Quieren publicarla con Render y Neon, igual que tú. No tienes que cambiar tu proyecto para resolver este reto.</div>
+    </div>
+
+    <div class="row g-2 mb-3">
+      <div class="col-md-6"><label class="form-label fw-semibold mb-1" for="studentName">Nombre (para el PDF)</label>
+        <input id="studentName" class="form-control" type="text" placeholder="Nombre y apellido" /></div>
+      <div class="col-md-6 d-flex align-items-end"><div class="small-muted">Para la evidencia: completa al menos un nivel de la pestaña 1 y los cuatro escenarios de la pestaña 2, y exporta a PDF.</div></div>
+    </div>
+
+    <ul class="nav nav-tabs mb-4 no-print" id="challengeTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="tab-secuencia-btn" data-bs-toggle="tab" data-bs-target="#tab-secuencia" type="button" role="tab">🧩 Ordena el despliegue</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="tab-simulador-btn" data-bs-toggle="tab" data-bs-target="#tab-simulador" type="button" role="tab">⚙️ Simulador de la consola</button>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+
+      <!-- ============ PESTAÑA 1: SECUENCIA ============ -->
+      <div class="tab-pane fade show active seq-board" id="tab-secuencia" role="tabpanel">
+        <div class="row g-3">
+          <div class="col-lg-4">
+            <div class="card"><div class="card-body">
+              <h2 class="h5 section-title">Cómo jugar</h2>
+              <ol class="small mb-0">
+                <li>Elige un nivel: <strong>Fácil → Medio → Difícil</strong>.</li>
+                <li>Arrastra cada paso (o tócalo y luego toca la casilla) en el <strong>orden</strong> en que lo haría el equipo de Tierra Viva.</li>
+                <li>Cada movimiento te da una pista inmediata.</li>
+                <li>Pulsa <strong>Verificar</strong> para tu puntaje.</li>
+              </ol>
+            </div></div>
+            <div class="callout warning mt-3">
+              <div class="fw-semibold">Ojo en Medio y Difícil</div>
+              <div class="small-muted">Aparecen pasos <strong>que no se deben hacer</strong>, copiados de tutoriales viejos o "atajos" peligrosos. No pertenecen a ninguna casilla: <strong>déjalos en el banco</strong>.</div>
+            </div>
+            <div class="card mt-3"><div class="card-body">
+              <h2 class="h6 section-title">Tu progreso</h2>
+              <div class="small">
+                <div>🟡 Fácil: <span id="progs-facil">sin intentar</span></div>
+                <div>🟠 Medio: <span id="progs-medio">sin intentar</span></div>
+                <div>🔴 Difícil: <span id="progs-dificil">sin intentar</span></div>
+              </div>
+            </div></div>
+          </div>
+
+          <div class="col-lg-8">
+            <div class="card"><div class="card-body">
+              <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3 no-print">
+                <div class="btn-group" role="group" aria-label="Nivel">
+                  <button class="btn btn-outline-primary levels-btn active" data-level="facil" onclick="loadLevelS('facil')">🟡 Fácil</button>
+                  <button class="btn btn-outline-primary levels-btn" data-level="medio" onclick="loadLevelS('medio')">🟠 Medio</button>
+                  <button class="btn btn-outline-primary levels-btn" data-level="dificil" onclick="loadLevelS('dificil')">🔴 Difícil</button>
+                </div>
+                <span class="badge text-bg-secondary" id="attemptsBadgeS">Verificaciones: 0</span>
+              </div>
+
+              <div class="callout mb-3">
+                <div class="fw-semibold">Misión — <span id="levelNameS"></span></div>
+                <div class="small-muted" id="levelMissionS"></div>
+              </div>
+
+              <h3 class="h6 fw-bold">Banco de pasos</h3>
+              <div id="poolS" class="dd-pool mb-3" aria-label="Banco de pasos"></div>
+
+              <h3 class="h6 fw-bold">Orden del despliegue (<span id="lineCountS"></span> pasos)</h3>
+              <div id="targetS" class="dd-target mb-3"></div>
+
+              <div id="resultBannerS" class="score-banner"></div>
+
+              <div class="d-flex gap-2 flex-wrap no-print mt-3">
+                <button class="btn btn-primary" onclick="verifyS()">✔ Verificar</button>
+                <button class="btn btn-outline-secondary" onclick="loadLevelS(currentLevelS)">↺ Reiniciar nivel</button>
+                <button class="btn btn-outline-warning" id="solutionBtnS" onclick="showSolutionS()" disabled>💡 Ver solución (tras 3 verificaciones)</button>
+              </div>
+
+              <details class="mt-3">
+                <summary class="fw-semibold">¿Qué deberías concluir de este nivel?</summary>
+                <pre class="mt-2" style="white-space: pre-wrap;"><code id="expectedOutputS"></code></pre>
+              </details>
+            </div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ PESTAÑA 2: SIMULADOR ============ -->
+      <div class="tab-pane fade" id="tab-simulador" role="tabpanel">
+        <div class="row g-3">
+          <div class="col-lg-4">
+            <div class="card"><div class="card-body">
+              <h2 class="h5 section-title">Lee la consola como un profesional</h2>
+              <p class="small-muted">El equipo de Tierra Viva acaba de pulsar <strong>Deploy Web Service</strong>. Avanza línea por línea y observa la tubería: ¿en qué etapa estamos? ¿Funciona de verdad? Al final, diagnostica.</p>
+              <label class="form-label small fw-semibold" for="scenarioSelect">Escenario</label>
+              <select id="scenarioSelect" class="form-select mb-3" onchange="reiniciarSimulador()">
+                <option value="ok">✅ (a) Despliegue sano</option>
+                <option value="perfil">🤫 (b) Todo "funciona"… ¿seguro?</option>
+                <option value="url">🔑 (c) La dirección de Neon pegada tal cual</option>
+                <option value="dormido">😴 (d) Lunes a las 7:00 a. m.</option>
+              </select>
+              <div class="d-flex gap-2 flex-wrap">
+                <button class="btn btn-primary" id="nextStepBtn" onclick="siguienteLinea()">▶ Siguiente línea</button>
+                <button class="btn btn-outline-secondary" onclick="reiniciarSimulador()">↺ Reiniciar</button>
+              </div>
+            </div></div>
+            <div class="card mt-3"><div class="card-body">
+              <h2 class="h6 section-title">Diagnósticos</h2>
+              <div class="small" id="diagProgreso"></div>
+            </div></div>
+          </div>
+
+          <div class="col-lg-8">
+            <div class="card"><div class="card-body">
+              <h3 class="h6 fw-bold mb-2">Tubería del despliegue (se ilumina la etapa activa)</h3>
+              <div class="deploy-pipeline mb-3">
+                <div class="pipe-stage" id="st-github"><span class="pipe-ico">🐙</span>GitHub<br/><span class="small-muted">main</span></div>
+                <div class="pipe-stage" id="st-build"><span class="pipe-ico">🏗️</span>Build<br/><span class="small-muted">Dockerfile</span></div>
+                <div class="pipe-stage" id="st-deploy"><span class="pipe-ico">🚀</span>Arranque<br/><span class="small-muted">Spring Boot</span></div>
+                <div class="pipe-stage" id="st-db"><span class="pipe-ico">🐘</span>Base de datos<br/><span class="small-muted" id="dbLabel">¿cuál?</span></div>
+                <div class="pipe-stage" id="st-live"><span class="pipe-ico">🌐</span>URL pública<br/><span class="small-muted">HTTPS</span></div>
+              </div>
+
+              <h3 class="h6 fw-bold">Consola de Render (Logs)</h3>
+              <div id="simLog" class="sim-log" style="max-height:300px"></div>
+
+              <div class="mt-3 d-flex gap-2 flex-wrap align-items-center">
+                <span class="badge text-bg-dark">Estado: <span id="estadoSrv">—</span></span>
+                <span class="badge text-bg-success">Voluntarios en Neon: <span id="filasNeon">0</span></span>
+                <span class="badge text-bg-secondary">Voluntarios que ve la app: <span id="filasApp">0</span></span>
+              </div>
+
+              <div id="diagBox" class="mt-3" style="display:none;"></div>
+            </div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Challenge — Semana 14 · Despliegue con Render y Neon, Centro de Reciclaje Comunitario Tierra Viva (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="toast.js"></script>
+  <script>
+    // ============================================================
+    // PESTAÑA 1 — Secuencia: ordenar el despliegue
+    // ============================================================
+    var CAT_LABELS_S = {
+      pc: 'en tu PC', neon: 'en Neon', github: 'en GitHub', render: 'en Render', verificar: 'verificación'
+    };
+    var CAT_TIPS_S = {
+      pc: 'Primero se prueba en casa: una pieza a la vez.',
+      neon: 'La base existe antes que el servidor que la usa.',
+      github: 'Render publica lo que hay en main.',
+      render: 'El servidor llega al final, cuando todo lo demás está probado.',
+      verificar: 'Live no es lo mismo que funciona: se prueba con datos reales.'
+    };
+
+    var LEVELS_S = {
+      facil: {
+        name: 'Fácil — Seis pasos',
+        mission: 'Ordena los seis grandes pasos para publicar la aplicación de voluntarios de Tierra Viva.',
+        lines: [
+          { text: 'Empaquetar y probar en la PC: mvnw clean package', cat: 'pc' },
+          { text: 'Crear el proyecto en Neon y copiar la cadena de conexión', cat: 'neon' },
+          { text: 'Arrancar en la PC con perfil prod y ver la tabla voluntario en Neon', cat: 'pc' },
+          { text: 'Subir Dockerfile y configuración a main con un Pull Request', cat: 'github' },
+          { text: 'Crear el Web Service en Render (Docker) con sus variables', cat: 'render' },
+          { text: 'Verificar en la URL pública con datos reales', cat: 'verificar' }
+        ],
+        distractors: [],
+        output: 'PC → Neon → PC contra Neon → GitHub → Render → verificación. Cada paso agrega UNA pieza nueva: si algo falla, el culpable es la última.'
+      },
+      medio: {
+        name: 'Medio — Ocho pasos y 2 trampas',
+        mission: 'Más detalle. Dos "atajos" de este banco son peligrosos: déjalos fuera.',
+        lines: [
+          { text: 'Definir ADMIN_PASSWORD y ENCARGADO_PASSWORD y correr mvnw clean package', cat: 'pc' },
+          { text: 'Agregar server.port=${PORT:8080} en application.properties', cat: 'pc' },
+          { text: 'Crear el proyecto tierra-viva en Neon, región Este de EE. UU.', cat: 'neon' },
+          { text: 'Apagar Connection pooling y separar la cadena en DB_URL, DB_USER y DB_PASSWORD', cat: 'neon' },
+          { text: 'Arrancar en la PC con las 6 variables y ver la tabla voluntario en Neon → Tables', cat: 'pc' },
+          { text: 'Crear Dockerfile y .dockerignore, y llevarlos a main con un Pull Request', cat: 'github' },
+          { text: 'Web Service: Language Docker, Compute Free y las 6 variables de entorno', cat: 'render' },
+          { text: 'Verificar: login, CRUD, 403 del encargado y reinicio sin pérdida de datos', cat: 'verificar' }
+        ],
+        distractors: [
+          { text: 'Escribir la clave de Neon en application-prod.properties para no olvidarla' },
+          { text: 'En Render, elegir Language: Java' }
+        ],
+        output: 'Trampas: la clave escrita en un archivo termina en GitHub (público), y en Render NO existe "Java": se usa Docker. Fíjate también en que server.port se agrega antes de construir, porque viaja dentro del .jar.'
+      },
+      dificil: {
+        name: 'Difícil — Diez pasos y 3 trampas',
+        mission: 'El despliegue completo, con las comprobaciones que hace un equipo cuidadoso. Tres pasos vienen de tutoriales viejos o de "atajos": déjalos fuera.',
+        lines: [
+          { text: 'Definir las claves y correr mvnw clean package hasta BUILD SUCCESS', cat: 'pc' },
+          { text: 'Agregar server.port=${PORT:8080} y completar application-prod.properties', cat: 'pc' },
+          { text: 'Crear el proyecto en Neon (región Este) y abrir la ventana Connect', cat: 'neon' },
+          { text: 'Apagar Connection pooling y armar DB_URL con jdbc:postgresql:// y sslmode=require', cat: 'neon' },
+          { text: 'Arrancar en la PC con perfil prod: log con "prod" y PgConnection', cat: 'pc' },
+          { text: 'Crear Dockerfile (maven:3.9-eclipse-temurin-17 → eclipse-temurin:17-jre)', cat: 'pc' },
+          { text: 'git grep npg_ sin resultados, y Pull Request de development a main', cat: 'github' },
+          { text: 'Crear el Web Service: Docker, main, Free, 6 variables, Health Check /login', cat: 'render' },
+          { text: 'Leer Logs: profile is active "prod" y Tomcat started on port 10000', cat: 'verificar' },
+          { text: 'Probar desde el celular y reiniciar el servicio: los voluntarios siguen', cat: 'verificar' }
+        ],
+        distractors: [
+          { text: 'Crear la base PostgreSQL gratuita de Render, que es más cómoda' },
+          { text: 'Usar FROM openjdk:17-jdk-slim, como en el video de 2023' },
+          { text: 'Pegar en DB_URL la cadena postgresql://usuario:clave@… tal cual' }
+        ],
+        output: 'Trampas: la base gratuita de Render se borra a los 30 días; openjdk:17-jdk-slim ya no existe en Docker Hub; y la cadena de Neon sin transformar falla ("claims to not accept jdbcUrl") e imprime la clave en el log.'
+      }
+    };
+
+    var currentLevelS = 'facil';
+    var attemptsS = 0;
+    var progressS = { facil: null, medio: null, dificil: null };
+    var selectedS = null;
+
+    function shuffle(arr) {
+      var a = arr.slice();
+      for (var i = a.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = a[i]; a[i] = a[j]; a[j] = t;
+      }
+      return a;
+    }
+
+    function makePieceS(text, cat, order) {
+      var el = document.createElement('div');
+      el.className = 'dd-piece';
+      el.textContent = text;
+      el.setAttribute('draggable', 'true');
+      el.dataset.text = text;
+      el.dataset.cat = cat;
+      el.dataset.order = order;
+      el.addEventListener('dragstart', function (e) {
+        el.classList.add('dragging');
+        e.dataTransfer.setData('text/plain', '');
+        window._dragged = el;
+      });
+      el.addEventListener('dragend', function () {
+        el.classList.remove('dragging');
+        window._dragged = null;
+      });
+      el.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (selectedS === el) {
+          el.classList.remove('selected');
+          selectedS = null;
+        } else {
+          if (selectedS) selectedS.classList.remove('selected');
+          selectedS = el;
+          el.classList.add('selected');
+        }
+      });
+      return el;
+    }
+
+    function feedbackS(piece, slotIndex) {
+      var level = LEVELS_S[currentLevelS];
+      var expected = level.lines[slotIndex];
+      if (piece.dataset.text === expected.text) {
+        return { ok: true, type: 'ok', msg: '✓ Paso correcto (' + CAT_LABELS_S[expected.cat] + '). ' + CAT_TIPS_S[expected.cat] };
+      }
+      if (piece.dataset.cat === 'trap') {
+        return { ok: false, type: 'bad', msg: 'Ese paso NO se debe hacer: es un atajo peligroso o viene de un tutorial viejo. Déjalo en el banco.' };
+      }
+      var order = parseInt(piece.dataset.order, 10);
+      var label = CAT_LABELS_S[piece.dataset.cat];
+      if (order < slotIndex) return { ok: false, type: 'warn', msg: 'Ese paso (' + label + ') va más temprano.' };
+      if (order > slotIndex) return { ok: false, type: 'warn', msg: 'Ese paso (' + label + ') todavía no toca: va más adelante.' };
+      return { ok: false, type: 'info', msg: 'Etapa correcta (' + label + '), pero no es exactamente ese paso.' };
+    }
+
+    function placeInSlotS(piece, slot) {
+      var existing = slot.querySelector('.dd-piece');
+      if (existing) document.getElementById('poolS').appendChild(existing);
+      slot.appendChild(piece);
+      piece.classList.remove('selected');
+      selectedS = null;
+      var slotIndex = Array.prototype.indexOf.call(document.querySelectorAll('#targetS .dd-slot'), slot);
+      var fb = feedbackS(piece, slotIndex);
+      slot.classList.remove('correct', 'incorrect');
+      slot.classList.add(fb.ok ? 'correct' : 'incorrect');
+      showToast(fb.msg, fb.type);
+    }
+
+    function setupDropzoneS(zone, isSlot) {
+      zone.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        if (isSlot) zone.classList.add('over');
+      });
+      zone.addEventListener('dragleave', function () { zone.classList.remove('over'); });
+      zone.addEventListener('drop', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        zone.classList.remove('over');
+        var piece = window._dragged;
+        if (!piece) return;
+        if (isSlot) placeInSlotS(piece, zone);
+        else zone.appendChild(piece);
+      });
+      zone.addEventListener('click', function (e) {
+        if (!selectedS) return;
+        if (isSlot) {
+          placeInSlotS(selectedS, zone);
+        } else if (e.target === zone) {
+          zone.appendChild(selectedS);
+          selectedS.classList.remove('selected');
+          selectedS = null;
+        }
+      });
+    }
+
+    function loadLevelS(key) {
+      currentLevelS = key;
+      attemptsS = 0;
+      selectedS = null;
+      document.getElementById('attemptsBadgeS').textContent = 'Verificaciones: 0';
+      document.getElementById('solutionBtnS').disabled = true;
+      var level = LEVELS_S[key];
+      document.getElementById('levelNameS').textContent = level.name;
+      document.getElementById('levelMissionS').textContent = level.mission;
+      document.getElementById('lineCountS').textContent = level.lines.length;
+      document.getElementById('expectedOutputS').textContent = level.output;
+      document.querySelectorAll('.levels-btn').forEach(function (b) {
+        b.classList.toggle('active', b.dataset.level === key);
+      });
+      var banner = document.getElementById('resultBannerS');
+      banner.className = 'score-banner';
+      banner.innerHTML = '';
+
+      var target = document.getElementById('targetS');
+      target.innerHTML = '';
+      level.lines.forEach(function () {
+        var slot = document.createElement('div');
+        slot.className = 'dd-slot';
+        setupDropzoneS(slot, true);
+        target.appendChild(slot);
+      });
+
+      var pool = document.getElementById('poolS');
+      pool.innerHTML = '';
+      var pieces = level.lines.map(function (l, i) { return makePieceS(l.text, l.cat, i); })
+        .concat(level.distractors.map(function (d) { return makePieceS(d.text, 'trap', -1); }));
+      shuffle(pieces).forEach(function (p) { pool.appendChild(p); });
+    }
+
+    function verifyS() {
+      attemptsS++;
+      document.getElementById('attemptsBadgeS').textContent = 'Verificaciones: ' + attemptsS;
+      if (attemptsS >= 3) document.getElementById('solutionBtnS').disabled = false;
+      var level = LEVELS_S[currentLevelS];
+      var slots = document.querySelectorAll('#targetS .dd-slot');
+      var correct = 0;
+      slots.forEach(function (slot, i) {
+        var piece = slot.querySelector('.dd-piece');
+        slot.classList.remove('correct', 'incorrect');
+        if (piece && piece.dataset.text === level.lines[i].text) {
+          correct++;
+          slot.classList.add('correct');
+        } else {
+          slot.classList.add('incorrect');
+        }
+      });
+      // Las trampas suman solo si se quedaron en el banco
+      var trapsOk = 0;
+      document.querySelectorAll('#poolS .dd-piece').forEach(function (p) { if (p.dataset.cat === 'trap') trapsOk++; });
+      var total = level.lines.length + level.distractors.length;
+      var score = correct + trapsOk;
+      var pct = Math.round((score / total) * 100);
+      progressS[currentLevelS] = { pct: pct, attempts: attemptsS };
+      document.getElementById('progs-' + currentLevelS).textContent =
+        pct + '% (' + attemptsS + ' verificación' + (attemptsS === 1 ? '' : 'es') + ')';
+
+      var banner = document.getElementById('resultBannerS');
+      var msg;
+      if (pct === 100) {
+        msg = '🎉 ¡Despliegue en orden! Así trabaja un equipo cuidadoso.';
+        showToast('¡Nivel completado! ' + level.name, 'ok', 5000);
+      } else if (pct >= 60) {
+        msg = 'Casi. Los toasts te dicen si un paso va antes, después, o si es una trampa.';
+      } else {
+        msg = 'Piensa en "una pieza a la vez": primero tu PC, luego la base, luego tu PC contra la base, después GitHub, al final Render, y siempre verificar.';
+      }
+      banner.className = 'score-banner show alert ' + (pct === 100 ? 'alert-success' : pct >= 60 ? 'alert-warning' : 'alert-danger');
+      banner.innerHTML =
+        '<div class="h5 mb-1">' + level.name + ' — ' + score + ' / ' + total + ' (' + pct + '%)</div>' +
+        '<div>' + msg + '</div>' +
+        '<div class="small mt-1">Pasos en su lugar: ' + correct + '/' + level.lines.length +
+        (level.distractors.length ? ' · Trampas evitadas: ' + trapsOk + '/' + level.distractors.length : '') +
+        ' · Fecha: ' + new Date().toLocaleString('es-GT') + '</div>';
+    }
+
+    function showSolutionS() {
+      var level = LEVELS_S[currentLevelS];
+      var pool = document.getElementById('poolS');
+      var slots = document.querySelectorAll('#targetS .dd-slot');
+      document.querySelectorAll('#targetS .dd-piece').forEach(function (p) { pool.appendChild(p); });
+      level.lines.forEach(function (line, i) {
+        var piece = Array.prototype.find.call(pool.querySelectorAll('.dd-piece'), function (p) {
+          return p.dataset.text === line.text;
+        });
+        if (piece) {
+          slots[i].appendChild(piece);
+          slots[i].classList.remove('incorrect');
+          slots[i].classList.add('correct');
+        }
+      });
+      var banner = document.getElementById('resultBannerS');
+      banner.className = 'score-banner show alert alert-warning';
+      banner.innerHTML = '<div class="fw-semibold">Solución mostrada (no cuenta como logro propio).</div><div class="small">Estúdiala, pulsa "Reiniciar nivel" e inténtalo de nuevo sin ayuda.</div>';
+      showToast('Solución mostrada — vuelve a intentarlo sin ayuda.', 'info');
+    }
+
+    // ============================================================
+    // PESTAÑA 2 — Simulador de la consola de Render
+    // Cada línea: t = texto, c = clase de color, st = etapa a iluminar,
+    // estado, neon / app = contadores de voluntarios, ok/falla = etapas.
+    // ============================================================
+    var R = 'render', D = 'dim', O = 'ok', B = 'bad', W = 'warn';
+    var SCENARIOS = {
+      ok: {
+        db: 'Neon',
+        lines: [
+          { t: '==> Cloning from https://github.com/tierra-viva/tierra-viva', c: R, st: 'github', estado: 'Building', okSt: ['github'] },
+          { t: '#8 [construccion 5/5] RUN mvn -B -DskipTests clean package', c: D, st: 'build' },
+          { t: '#8 ... [INFO] BUILD SUCCESS', c: O, st: 'build' },
+          { t: '==> Build successful 🎉', c: O, st: 'build', okSt: ['build'] },
+          { t: '==> Deploying...', c: R, st: 'deploy', estado: 'Deploying' },
+          { t: '... The following 1 profile is active: "prod"', c: O, st: 'deploy' },
+          { t: '... HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@6d1a', c: O, st: 'db', okSt: ['db'] },
+          { t: '... Tomcat started on port 10000 (http)', c: D, st: 'deploy', okSt: ['deploy'] },
+          { t: '==> Your service is live 🎉', c: O, st: 'live', estado: 'Live', okSt: ['live'] },
+          { t: '[prueba] La coordinadora inscribe a 3 voluntarios desde su celular', c: W, st: 'live', neon: 3, app: 3 },
+          { t: '[prueba] Manual Deploy → Restart service ... ==> Your service is live 🎉', c: R, st: 'live', neon: 3, app: 3 }
+        ],
+        pregunta: '¿Qué prueba demuestra que los voluntarios están en Neon y no en el disco del servidor?',
+        opciones: [
+          { t: 'Que después de reiniciar el servicio siguen los 3 voluntarios (y aparecen en Neon → Tables)', ok: true },
+          { t: 'Que el estado dice Live', ok: false },
+          { t: 'Que el build tardó varios minutos', ok: false }
+        ],
+        explica: 'Live solo dice que el servidor encendió. La evidencia de producción real es: datos que sobreviven a un reinicio y que se ven en Neon. El log lo confirma con "prod" y PgConnection.'
+      },
+      perfil: {
+        db: 'H2 (¡dentro del contenedor!)',
+        lines: [
+          { t: '==> Cloning from https://github.com/tierra-viva/tierra-viva', c: R, st: 'github', estado: 'Building', okSt: ['github'] },
+          { t: '==> Build successful 🎉', c: O, st: 'build', okSt: ['build'] },
+          { t: '==> Deploying...', c: R, st: 'deploy', estado: 'Deploying' },
+          { t: '... The following 1 profile is active: "dev"', c: W, st: 'deploy' },
+          { t: '... HikariPool-1 - Added connection conn0: url=jdbc:h2:file:./datos/voluntarios user=SA', c: W, st: 'db' },
+          { t: '... Tomcat started on port 10000 (http)', c: D, st: 'deploy', okSt: ['deploy'] },
+          { t: '==> Your service is live 🎉', c: O, st: 'live', estado: 'Live', okSt: ['live'] },
+          { t: '[prueba] La coordinadora inscribe a 3 voluntarios: los ve en la lista', c: W, st: 'live', neon: 0, app: 3 },
+          { t: '[martes] Se publica un cambio del título → nuevo despliegue → ==> Your service is live 🎉', c: R, st: 'deploy', neon: 0, app: 0, fallaSt: ['db'] },
+          { t: '[prueba] La lista de voluntarios está VACÍA. Nadie vio ningún error.', c: B, st: 'live', neon: 0, app: 0 }
+        ],
+        pregunta: '¿Qué faltó en las variables de entorno de Render?',
+        opciones: [
+          { t: 'SPRING_PROFILES_ACTIVE=prod: sin ella usa el perfil dev (H2) escrito en application.properties', ok: true },
+          { t: 'DB_PASSWORD: la clave de Neon estaba mal', ok: false },
+          { t: 'PORT=8080: Render no encontró el puerto', ok: false }
+        ],
+        explica: 'Es el error silencioso de la semana: arranca, dice Live y "funciona", pero guarda en un H2 dentro del contenedor, cuyo disco Render borra en cada despliegue. Las pistas estaban en el log: "dev" y jdbc:h2. Neon nunca recibió nada (contador en 0).'
+      },
+      url: {
+        db: 'Neon (sin conectar)',
+        lines: [
+          { t: '==> Cloning from https://github.com/tierra-viva/tierra-viva', c: R, st: 'github', estado: 'Building', okSt: ['github'] },
+          { t: '==> Build successful 🎉', c: O, st: 'build', okSt: ['build'] },
+          { t: '==> Deploying...', c: R, st: 'deploy', estado: 'Deploying' },
+          { t: '... The following 1 profile is active: "prod"', c: O, st: 'deploy' },
+          { t: 'WARN ... HHH100046: Could not obtain connection to query JDBC database metadata', c: W, st: 'db' },
+          { t: 'java.lang.RuntimeException: Driver org.postgresql.Driver claims to not accept jdbcUrl, postgresql://neondb_owner:npg_Vr3c1cl4@ep-green-leaf-77.us-east-2.aws.neon.tech/neondb?sslmode=require', c: B, st: 'db', fallaSt: ['db'] },
+          { t: 'Caused by: org.hibernate.HibernateException: Unable to determine Dialect without JDBC metadata', c: B, st: 'deploy', fallaSt: ['deploy'] },
+          { t: '==> No open ports detected, continuing to scan...', c: R, st: 'deploy' },
+          { t: '==> Deploy failed', c: B, st: 'live', estado: 'Failed', fallaSt: ['live'] }
+        ],
+        pregunta: '¿Cuál es la causa real y qué deben hacer además de corregirla?',
+        opciones: [
+          { t: 'DB_URL no empieza con jdbc: y trae usuario y clave adentro; armar las 3 piezas Y cambiar la clave en Neon porque quedó impresa en el log', ok: true },
+          { t: 'Falta el dialecto: agregar hibernate.dialect y volver a desplegar', ok: false },
+          { t: 'Render no encuentra el puerto: agregar PORT=10000', ok: false }
+        ],
+        explica: 'El último Caused by ("Unable to determine Dialect") es una consecuencia. La causa está más arriba: "claims to not accept jdbcUrl, postgresql://…". Y la línea muestra npg_Vr3c1cl4: la clave quedó en el log, así que se rota en Neon (Roles → Reset password) y se actualiza en Render.'
+      },
+      dormido: {
+        db: 'Neon',
+        lines: [
+          { t: '[domingo 18:40] Última visita a la aplicación', c: D, st: 'live', estado: 'Live', okSt: ['github', 'build', 'deploy', 'db', 'live'], neon: 12, app: 12 },
+          { t: '[domingo 18:55] 15 minutos sin visitas → el servicio se duerme (spin down)', c: W, st: 'deploy', estado: 'Dormido', neon: 12, app: 0 },
+          { t: '[domingo 19:00] Neon también se duerme tras 5 minutos sin consultas (los datos siguen ahí)', c: D, st: 'db', neon: 12, app: 0 },
+          { t: '[lunes 07:00] Una encargada abre la URL: ve una pantalla de carga de Render', c: W, st: 'live', estado: 'Despertando', neon: 12, app: 0 },
+          { t: '... Starting TierraVivaApplication ... The following 1 profile is active: "prod"', c: D, st: 'deploy' },
+          { t: '... HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection (Neon despertó en milisegundos)', c: O, st: 'db' },
+          { t: '... Started TierraVivaApplication in 51.3 seconds', c: O, st: 'deploy' },
+          { t: '[lunes 07:01] La página carga: los 12 voluntarios están completos', c: O, st: 'live', estado: 'Live', neon: 12, app: 12 }
+        ],
+        pregunta: 'La encargada escribe al grupo: "¡la app está rota, tardó un minuto!". ¿Qué le respondes?',
+        opciones: [
+          { t: 'No está rota: el plan gratuito duerme el servicio tras 15 min sin visitas; la primera visita tarda ~1 min y no se pierden datos', ok: true },
+          { t: 'Hay que borrar Neon y crear otra base', ok: false },
+          { t: 'Hay que volver a desplegar desde cero', ok: false }
+        ],
+        explica: 'Es el comportamiento esperado del plan gratuito, no un error. Los datos nunca estuvieron en peligro: viven en Neon. Comunicarlo a los usuarios también es parte de la responsabilidad operativa.'
+      }
+    };
+
+    var simIndex = -1;
+    var resultadosDiag = { ok: null, perfil: null, url: null, dormido: null };
+    var NOMBRES_ESC = { ok: '(a) Despliegue sano', perfil: '(b) ¿Funciona seguro?', url: '(c) Dirección pegada tal cual', dormido: '(d) Lunes 7:00 a. m.' };
+
+    function pintarProgresoDiag() {
+      var html = '';
+      Object.keys(NOMBRES_ESC).forEach(function (k) {
+        var r = resultadosDiag[k];
+        html += '<div>' + (r === null ? '⬜' : r ? '✅' : '❌') + ' ' + NOMBRES_ESC[k] + (r === null ? ' — sin responder' : r ? ' — diagnóstico correcto' : ' — revisar') + '</div>';
+      });
+      document.getElementById('diagProgreso').innerHTML = html;
+    }
+
+    function limpiarEtapas() {
+      ['github', 'build', 'deploy', 'db', 'live'].forEach(function (s) {
+        document.getElementById('st-' + s).classList.remove('activo', 'ok', 'falla');
+      });
+    }
+
+    function reiniciarSimulador() {
+      simIndex = -1;
+      limpiarEtapas();
+      var esc = SCENARIOS[document.getElementById('scenarioSelect').value];
+      document.getElementById('dbLabel').textContent = esc.db;
+      document.getElementById('simLog').innerHTML = '';
+      document.getElementById('estadoSrv').textContent = '—';
+      document.getElementById('filasNeon').textContent = '0';
+      document.getElementById('filasApp').textContent = '0';
+      document.getElementById('nextStepBtn').textContent = '▶ Siguiente línea';
+      document.getElementById('nextStepBtn').disabled = false;
+      var box = document.getElementById('diagBox');
+      box.style.display = 'none';
+      box.innerHTML = '';
+    }
+
+    function siguienteLinea() {
+      var clave = document.getElementById('scenarioSelect').value;
+      var esc = SCENARIOS[clave];
+      if (simIndex >= esc.lines.length - 1) return;
+      simIndex++;
+      var l = esc.lines[simIndex];
+      document.querySelectorAll('.pipe-stage').forEach(function (s) { s.classList.remove('activo'); });
+      if (l.st) document.getElementById('st-' + l.st).classList.add('activo');
+      (l.okSt || []).forEach(function (s) { var e = document.getElementById('st-' + s); e.classList.remove('falla'); e.classList.add('ok'); });
+      (l.fallaSt || []).forEach(function (s) { var e = document.getElementById('st-' + s); e.classList.remove('ok'); e.classList.add('falla'); });
+      if (l.estado) document.getElementById('estadoSrv').textContent = l.estado;
+      if (typeof l.neon === 'number') document.getElementById('filasNeon').textContent = l.neon;
+      if (typeof l.app === 'number') document.getElementById('filasApp').textContent = l.app;
+
+      var log = document.getElementById('simLog');
+      var linea = document.createElement('div');
+      linea.className = 'sim-line';
+      var colores = { render: '#c4b5fd', dim: '#94a3b8', ok: '#86efac', bad: '#fca5a5', warn: '#fde68a' };
+      linea.style.color = colores[l.c] || '#e6edf3';
+      linea.textContent = l.t;
+      log.appendChild(linea);
+      log.scrollTop = log.scrollHeight;
+
+      if (simIndex === esc.lines.length - 1) {
+        document.getElementById('nextStepBtn').textContent = '✔ Fin del registro';
+        document.getElementById('nextStepBtn').disabled = true;
+        mostrarPregunta(clave);
+      }
+    }
+
+    function mostrarPregunta(clave) {
+      var esc = SCENARIOS[clave];
+      var box = document.getElementById('diagBox');
+      var opciones = shuffle(esc.opciones.map(function (o, i) { return { t: o.t, ok: o.ok, i: i }; }));
+      var html = '<div class="callout warning"><div class="fw-semibold">🩺 Diagnostica: ' + esc.pregunta + '</div><div class="mt-2">';
+      opciones.forEach(function (o) {
+        html += '<button type="button" class="btn btn-outline-dark btn-sm d-block text-start w-100 mb-2" data-ok="' + o.ok + '">' + o.t + '</button>';
+      });
+      html += '</div></div>';
+      box.innerHTML = html;
+      box.style.display = 'block';
+      box.querySelectorAll('button[data-ok]').forEach(function (b) {
+        b.addEventListener('click', function () { responder(clave, b.dataset.ok === 'true', b); });
+      });
+    }
+
+    function responder(clave, acierto, boton) {
+      var esc = SCENARIOS[clave];
+      if (resultadosDiag[clave] === null) resultadosDiag[clave] = acierto;
+      pintarProgresoDiag();
+      var box = document.getElementById('diagBox');
+      box.querySelectorAll('button[data-ok]').forEach(function (b) {
+        b.disabled = true;
+        if (b.dataset.ok === 'true') b.className = 'btn btn-success btn-sm d-block text-start w-100 mb-2';
+      });
+      if (!acierto) boton.className = 'btn btn-danger btn-sm d-block text-start w-100 mb-2';
+      box.insertAdjacentHTML('beforeend',
+        '<div class="callout ' + (acierto ? 'success' : 'danger') + ' mt-2"><div class="fw-semibold">' +
+        (acierto ? '✅ Diagnóstico correcto' : '❌ No era esa (cuenta tu primera respuesta)') +
+        '</div><div class="small-muted">' + esc.explica + '</div></div>');
+      showToast(acierto ? 'Diagnóstico correcto.' : 'Revisa la explicación debajo del simulador.', acierto ? 'ok' : 'warn');
+    }
+
+    // ============================================================
+    // Exportación
+    // ============================================================
+    function exportChallengePdf() {
+      var name = document.getElementById('studentName').value || '';
+      var intentoS = Object.keys(progressS).some(function (k) { return progressS[k]; });
+      var diag = Object.keys(resultadosDiag).filter(function (k) { return resultadosDiag[k] !== null; }).length;
+      if (!intentoS || diag < 4) {
+        showToast('Para la evidencia: verifica al menos un nivel de la pestaña 1 y responde los 4 diagnósticos de la pestaña 2 (llevas ' + diag + ').', 'warn', 6000);
+        return;
+      }
+      if (!name.trim()) {
+        showToast('Escribe tu nombre en la casilla "Nombre (para el PDF)".', 'warn');
+        document.getElementById('studentName').focus();
+        return;
+      }
+      window.print();
+    }
+
+    // Arranque
+    setupDropzoneS(document.getElementById('poolS'), false);
+    loadLevelS('facil');
+    reiniciarSimulador();
+    pintarProgresoDiag();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
