@@ -790,9 +790,18 @@ tarjetas dinámicamente desde el arreglo JS `WEEKS` (buscar `var WEEKS = [`).
 - **Para publicar la semana N:** agregar `folder`, `sesionDoc` y `guiaDoc` a
   la entrada `{ n: N, ... }` correspondiente. La tarjeta pasa sola de
   "Próximamente" (atenuada) a "Disponible".
-- **Bloque "📍 Semana actual destacada"** (justo antes de la cuadrícula): se
-  actualiza **a mano** a la última semana publicada (título, detalle y los 3
-  enlaces: material/Sesión/Guía).
+- **Bloque "📍 Semana actual"**: desde el rediseño de octubre de 2026 se
+  genera **solo** con la última semana de `WEEKS` que tenga `folder`. Para un
+  texto más rico que `detalle`, agregar a esa semana la propiedad opcional
+  `destacado` (HTML). Ya no se edita a mano.
+- **Rediseño (oct 2026):** hero con el llamado "Califica al docente. Sé
+  escuchado" ligado al timer de la evaluación (los enlaces con clase
+  `eval-gated` se bloquean con `.is-locked` solo antes de la primera sesión),
+  franja de datos calculada (semanas publicadas, % de sesiones realizadas,
+  próxima clase y próximo hito desde `SESSION_SATURDAYS` y `HITOS`), tarjetas
+  con estado por fecha (Completada / Esta semana / Próxima clase /
+  Próximamente) y filtros por unidad según `badge`. Sin Bootstrap; todo el
+  estilo está en `portal.css` (claro y oscuro automáticos).
 - **Timer de evaluación anónima** (`SESSION_SATURDAYS` + `OPEN_HOUR =
   '11:00:00'`): ya es genérico para las 18 semanas basado en la fecha real
   (`new Date()`) — no se toca por semana. Desbloquea el botón/enlace a

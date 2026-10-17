@@ -23,6 +23,28 @@ sesionDoc: 'PEM%20en%20TIC_Sesi%C3%B3n%20de%20Clase%20N%20Programaci%C3%B3n%20I_
 guiaDoc: 'PEM%20en%20TIC_Gu%C3%ADa%20de%20Aprendizaje%20N%20Programaci%C3%B3n%201_18_semanas.md'
 ```
 
+Con eso la tarjeta muestra sola su estado según la fecha (Completada / Esta
+semana / Próxima clase / Próximamente), y si es la semana publicada más
+reciente pasa automáticamente al bloque **"📍 Semana actual"**. Para darle en
+ese bloque un texto más largo que `detalle`, agrega la propiedad opcional
+`destacado` (admite HTML).
+
+## Diseño del portal (octubre de 2026)
+
+- **Hero "Califica al docente. Sé escuchado."**: el botón principal lleva a
+  `evaluacion_docente/` y la tarjeta de la derecha muestra si la evaluación
+  de la semana está abierta y hasta cuándo. Los enlaces con clase
+  `eval-gated` (hero, barra superior, recursos y franja final) solo se
+  bloquean antes de la primera sesión del curso.
+- **Franja de datos** calculada desde `WEEKS`, `SESSION_SATURDAYS` y `HITOS`:
+  semanas publicadas, porcentaje de sesiones realizadas, próxima clase y
+  próximo hito. Si cambian las fechas, `SESSION_SATURDAYS` debe seguir
+  idéntico en `index.html` y en `evaluacion_docente/index.html`.
+- **Filtros por unidad** (chips) según el campo `badge` de cada semana, más
+  el buscador con `Ctrl+K` / `⌘K`.
+- Todo el estilo vive en `portal.css` (sin Bootstrap), con modo claro y
+  oscuro automáticos y diseño adaptado a celular.
+
 No se duplican tarjetas a mano ni se editan `data-title`/`data-tags` sueltos
 como en el formato anterior. Para la estructura completa que debe tener la
 carpeta `Material_Sesion_Clase_N_HTML_18_semanas/` de una semana nueva, ver

@@ -43,7 +43,9 @@ documentos oficiales y el enlace a la evaluación anónima de la sesión.
 - ✅ **Semana 10** — Rutas, controladores y formularios (19 sep 2026) — Thymeleaf, `@PostMapping` y binding de datos
 - ✅ **Semana 11** — Validación, errores y experiencia de usuario (26 sep 2026) — Bean Validation, mensajes de error y accesibilidad
 - ✅ **Semana 12** — Persistencia de datos con JPA y Spring Data (3 oct 2026) — los datos por fin sobreviven al reinicio, y se estrena la recarga automática con DevTools
-- ⏳ Semanas 13–18 — pendientes (se activan en el portal al publicarse)
+- ✅ **Semana 13** — Autenticación, roles y renderizado condicional (10 oct 2026) — login con usuarios en la base, BCrypt, dos roles y claves por variables de entorno
+- ✅ **Semana 14** — Despliegue en producción con Render y Neon (17 oct 2026) — ★ Entrega Parcial 3; `.jar`, Dockerfile, PostgreSQL en Neon y URL pública HTTPS. Proyecto de referencia armado desde el Kit en [`Proyecto_Semana_14_Kit/`](Proyecto_Semana_14_Kit/) y verificación en [`VERIFICACION_Semana_14_despliegue.md`](VERIFICACION_Semana_14_despliegue.md)
+- ⏳ Semanas 15–18 — pendientes (se activan en el portal al publicarse)
 
 > **Calendario:** las 18 sesiones no son sábados consecutivos. El **12 de
 > septiembre de 2026 no hubo clase** (semana de independencia), por lo que la
