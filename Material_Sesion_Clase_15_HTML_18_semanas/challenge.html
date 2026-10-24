@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Challenge — Semana 15</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="toast-stack" id="toastStack"></div>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top no-print">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 15 — Seguridad y tu proyecto</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="transformar.html">Del Kit a tu proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="paginas.html">Páginas nuevas</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Checkpoint ★</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Challenge · Semana 15 · Banco de Alimentos Comunitario «Mesa Compartida»</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Tres retos: tipos de campos, receta de adaptación y detective de seguridad</h1>
+          <div class="small-muted">Pestaña 1: <strong>arrastra cada campo</strong> de la ficha <code>Donacion</code> a su tipo Java. Pestaña 2: <strong>ordena la receta</strong> para adaptar el Kit y publicar (con trampas). Pestaña 3: <strong>detective</strong>, 4 situaciones de seguridad.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="exportChallengePdf()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <div class="callout mb-3">
+      <div class="fw-semibold">Reto de transferencia: otro dominio, las mismas ideas</div>
+      <div class="small-muted">El Banco de Alimentos «Mesa Compartida» registra cada <strong>donación</strong> en <em>una sola ficha</em> (entidad <code>Donacion</code>, sin relaciones). Necesita decidir qué tipo Java tiene cada dato. Es exactamente el ejercicio que harás con tu proyecto.</div>
+    </div>
+
+    <div class="row g-2 mb-3">
+      <div class="col-md-6"><label class="form-label fw-semibold mb-1" for="studentName">Nombre (para el PDF)</label>
+        <input id="studentName" class="form-control" type="text" placeholder="Nombre y apellido" /></div>
+      <div class="col-md-6 d-flex align-items-end"><div class="small-muted">Para la evidencia: clasifica los 13 campos (pestaña 1), verifica la receta al menos una vez (pestaña 2) y responde las 4 situaciones (pestaña 3). Luego exporta a PDF.</div></div>
+    </div>
+
+    <ul class="nav nav-tabs mb-4 no-print" role="tablist">
+      <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-tipos" type="button">🧩 Campos → tipos</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-receta" type="button">🧭 Receta del Kit</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-detective" type="button">🕵️ Detective de seguridad</button></li>
+    </ul>
+
+    <div class="tab-content">
+
+      <!-- ============ PESTAÑA 1 ============ -->
+      <div class="tab-pane fade show active" id="tab-tipos">
+        <div class="card mb-3"><div class="card-body">
+          <div class="d-flex justify-content-between flex-wrap gap-2 mb-2">
+            <div class="fw-semibold">Arrastra (o toca la pieza y luego toca la caja) cada campo a su tipo Java</div>
+            <span class="badge text-bg-secondary" id="progTipos">0 / 13 colocados · 0 errores</span>
+          </div>
+          <div id="poolT" class="dd-pool mb-3" aria-label="Banco de campos"></div>
+          <div class="mvc-board" id="boardT">
+            <div class="mvc-zone" data-tipo="String"><div class="mvc-zone-title">🔤 String</div></div>
+            <div class="mvc-zone" data-tipo="Integer"><div class="mvc-zone-title">🔢 Integer</div></div>
+            <div class="mvc-zone" data-tipo="BigDecimal"><div class="mvc-zone-title">💲 BigDecimal</div></div>
+            <div class="mvc-zone" data-tipo="LocalDate"><div class="mvc-zone-title">📅 LocalDate</div></div>
+            <div class="mvc-zone" data-tipo="boolean"><div class="mvc-zone-title">☑️ boolean</div></div>
+          </div>
+          <div id="bannerT" class="score-banner mt-3"></div>
+          <div class="mt-3 no-print"><button class="btn btn-outline-secondary" onclick="reiniciarTipos()">Reiniciar pestaña 1</button></div>
+        </div></div>
+      </div>
+
+      <!-- ============ PESTAÑA 2 ============ -->
+      <div class="tab-pane fade seq-board" id="tab-receta">
+        <div class="card mb-3"><div class="card-body">
+          <div class="d-flex justify-content-between flex-wrap gap-2 mb-2">
+            <div><div class="fw-semibold">Misión</div>
+              <div class="small-muted">El Banco de Alimentos adapta el Kit de la Semana 14 a su ficha <code>Donacion</code> y la publica. Ordena los <strong>8 pasos</strong> correctos. Hay <strong>3 trampas</strong>: déjalas en el banco (si las colocas, la verificación falla).</div></div>
+            <span class="badge text-bg-secondary" id="intentosR">Verificaciones: 0</span>
+          </div>
+          <div id="poolR" class="dd-pool mb-3" aria-label="Banco de pasos"></div>
+          <h3 class="h6 fw-bold">Orden de la receta (8 pasos)</h3>
+          <div id="targetR" class="dd-target mb-3"></div>
+          <div id="bannerR" class="score-banner"></div>
+          <div class="d-flex gap-2 flex-wrap mt-3 no-print">
+            <button class="btn btn-primary" onclick="verificarReceta()">✔ Verificar</button>
+            <button class="btn btn-outline-secondary" onclick="reiniciarReceta()">Reiniciar</button>
+            <button class="btn btn-outline-warning" id="btnSolR" onclick="verSolucionReceta()" disabled>💡 Ver solución (tras 3 verificaciones)</button>
+          </div>
+          <div id="solR" class="mt-3" style="display:none;"></div>
+        </div></div>
+      </div>
+
+      <!-- ============ PESTAÑA 3 ============ -->
+      <div class="tab-pane fade" id="tab-detective">
+        <div class="card mb-3"><div class="card-body">
+          <div class="d-flex justify-content-between flex-wrap gap-2 mb-3">
+            <div class="fw-semibold">Una auditoría salió mal en 4 lugares. Diagnostica cada situación (cuenta la <strong>primera</strong> respuesta).</div>
+            <span class="badge text-bg-secondary" id="progDet">Respondidas: 0 / 4 · Aciertos: 0</span>
+          </div>
+          <div id="detectiveBox"></div>
+        </div></div>
+      </div>
+    </div>
+  </main>
+
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Challenge — Semana 15 · Seguridad básica, HTTPS y «cómo uso todo lo construido para mi proyecto» (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="toast.js"></script>
+
+  <script>
+    function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+    var seleccion = null;           // pieza elegida con clic/toque
+    function seleccionar(el) {
+      if (seleccion) seleccion.classList.remove('selected');
+      seleccion = (seleccion === el) ? null : el;
+      if (seleccion) seleccion.classList.add('selected');
+    }
+
+    /* ---------- PESTAÑA 1: campos → tipos ---------- */
+    var CAMPOS = [
+      ['donante', 'donante — nombre de quien dona', 'String'],
+      ['nit', 'nit — «1234567-8», lleva guion', 'String'],
+      ['telefono', 'telefono — «5555-1234»', 'String'],
+      ['tipoAlimento', 'tipoAlimento — se elige de una lista (select)', 'String'],
+      ['observaciones', 'observaciones — texto largo (textarea)', 'String'],
+      ['numeroLote', 'numeroLote — «L-00452», código con letras', 'String'],
+      ['unidades', 'unidades — cuántas cajas llegaron', 'Integer'],
+      ['diasVigencia', 'diasVigencia — días antes de vencer', 'Integer'],
+      ['cantidadKg', 'cantidadKg — 12.75 kg', 'BigDecimal'],
+      ['valorEstimado', 'valorEstimado — dinero en quetzales con centavos', 'BigDecimal'],
+      ['fechaRecepcion', 'fechaRecepcion — día en que llegó', 'LocalDate'],
+      ['perecedero', 'perecedero — ¿sí o no? (casilla)', 'boolean'],
+      ['refrigerado', 'refrigerado — ¿sí o no? (casilla)', 'boolean']
+    ];
+    var colocados = 0, erroresT = 0, hechoT = false;
+
+    function crearPiezaCampo(c) {
+      var el = document.createElement('div');
+      el.className = 'dd-piece'; el.textContent = c[1]; el.draggable = true;
+      el.setAttribute('data-tipo', c[2]); el.setAttribute('data-campo', c[0]);
+      el.style.whiteSpace = 'normal';
+      el.addEventListener('dragstart', function (e) { e.dataTransfer.setData('text/plain', c[0]); el.classList.add('dragging'); seleccion = el; });
+      el.addEventListener('dragend', function () { el.classList.remove('dragging'); });
+      el.addEventListener('click', function (e) { e.stopPropagation(); if (!el.classList.contains('correct-piece')) seleccionar(el); });
+      return el;
+    }
+    function colocarEnZona(pieza, zona) {
+      if (!pieza || pieza.classList.contains('correct-piece')) return;
+      var ok = pieza.getAttribute('data-tipo') === zona.getAttribute('data-tipo');
+      if (ok) {
+        pieza.classList.add('correct-piece'); pieza.draggable = false;
+        zona.appendChild(pieza); colocados++;
+        showToast('✔ ' + pieza.getAttribute('data-campo') + ' es ' + zona.getAttribute('data-tipo') + '.', 'ok', 2500);
+      } else {
+        erroresT++;
+        pieza.classList.add('incorrect-piece');
+        setTimeout(function () { pieza.classList.remove('incorrect-piece'); }, 700);
+        showToast(pistaTipo(pieza.getAttribute('data-tipo'), zona.getAttribute('data-tipo')), 'bad', 4500);
+      }
+      if (seleccion) { seleccion.classList.remove('selected'); seleccion = null; }
+      pintarTipos();
+    }
+    function pistaTipo(real, elegido) {
+      if (elegido === 'Integer' && real === 'String') return 'Un código con guiones, letras o formato NO es un número: no haces cuentas con él. Es String.';
+      if (elegido === 'String') return 'Si vas a sumar, comparar o marcar sí/no, no es String. Piensa qué harás con el dato.';
+      if (elegido === 'boolean') return 'boolean es solo para sí/no. Este dato tiene más posibilidades.';
+      if (elegido === 'LocalDate') return 'LocalDate guarda días del calendario; este dato no es una fecha.';
+      if (elegido === 'Integer' && real === 'BigDecimal') return 'Si lleva decimales o centavos, necesitas BigDecimal (Integer solo guarda enteros).';
+      if (elegido === 'BigDecimal') return 'BigDecimal es para decimales exactos (dinero, kilos). Este dato es otra cosa.';
+      return 'Ese no es su tipo. Revisa el cheat sheet, pestaña «Campos y tipos».';
+    }
+    function pintarTipos() {
+      document.getElementById('progTipos').textContent = colocados + ' / ' + CAMPOS.length + ' colocados · ' + erroresT + ' errores';
+      var b = document.getElementById('bannerT');
+      if (colocados === CAMPOS.length) {
+        hechoT = true;
+        b.className = 'score-banner show alert ' + (erroresT <= 3 ? 'alert-success' : 'alert-warning');
+        b.innerHTML = '<div class="h5 mb-1">¡Ficha completa! 13 / 13 campos clasificados con ' + erroresT + ' error(es).</div><div>Recuerda la regla: <strong>si no haces cuentas con él, es String</strong>; dinero y decimales, BigDecimal; fechas, LocalDate; sí/no, boolean.</div>';
+      } else { b.className = 'score-banner'; b.innerHTML = ''; }
+    }
+    function configurarZonaT(z) {
+      z.addEventListener('dragover', function (e) { e.preventDefault(); z.classList.add('over'); });
+      z.addEventListener('dragleave', function () { z.classList.remove('over'); });
+      z.addEventListener('drop', function (e) {
+        e.preventDefault(); z.classList.remove('over');
+        var id = e.dataTransfer.getData('text/plain');
+        colocarEnZona(document.querySelector('#tab-tipos .dd-piece[data-campo="' + id + '"]'), z);
+      });
+      z.addEventListener('click', function () { if (seleccion && seleccion.hasAttribute('data-campo')) colocarEnZona(seleccion, z); });
+    }
+    function reiniciarTipos() {
+      colocados = 0; erroresT = 0; hechoT = false; seleccion = null;
+      document.querySelectorAll('#boardT .dd-piece').forEach(function (p) { p.remove(); });
+      var pool = document.getElementById('poolT'); pool.innerHTML = '';
+      shuffle(CAMPOS).forEach(function (c) { pool.appendChild(crearPiezaCampo(c)); });
+      pintarTipos();
+    }
+    document.querySelectorAll('#boardT .mvc-zone').forEach(configurarZonaT);
+
+    /* ---------- PESTAÑA 2: receta ---------- */
+    var PASOS = [
+      'Decidir en papel el nombre de la entidad (Donacion) y la lista de 10–15 campos con su tipo',
+      'Renombrar las clases del Kit (modelo, repositorio, servicio, controlador) y escribir los campos con sus validaciones',
+      'Actualizar formulario.html y lista.html: un bloque por campo y 3–4 columnas en la lista',
+      'Cambiar las rutas /jugadores por /donaciones también en SecurityConfig',
+      'Probar en la computadora con el perfil dev: crear, editar, eliminar y ver los mensajes de error',
+      'Vaciar en Neon la tabla vieja (los datos son de prueba) para evitar el error de columnas obligatorias',
+      'Hacer git push y vigilar el log de Render hasta que diga Live',
+      'Verificar en la URL pública: candado, CRUD, 403 del rol sin permiso y que el dato sobreviva al reinicio'
+    ];
+    var TRAMPAS = [
+      'Desactivar CSRF para que el formulario nuevo guarde sin errores',
+      'Pegar la clave de Neon en application-prod.properties para no olvidarla',
+      'Quitar sslmode=require porque «tarda en conectar»'
+    ];
+    var intentosR = 0, hechoR = false;
+
+    function crearPiezaPaso(texto, orden) {
+      var el = document.createElement('div');
+      el.className = 'dd-piece'; el.textContent = texto; el.draggable = true;
+      el.setAttribute('data-orden', orden);
+      el.addEventListener('dragstart', function (e) { e.dataTransfer.setData('text/plain', texto); el.classList.add('dragging'); seleccion = el; });
+      el.addEventListener('dragend', function () { el.classList.remove('dragging'); });
+      el.addEventListener('click', function (e) { e.stopPropagation(); seleccionar(el); });
+      return el;
+    }
+    function ponerEnSlot(pieza, slot) {
+      var previa = slot.querySelector('.dd-piece');
+      if (previa && previa !== pieza) document.getElementById('poolR').appendChild(previa);
+      slot.appendChild(pieza);
+      slot.classList.remove('correct', 'incorrect');
+      pieza.classList.remove('correct-piece', 'incorrect-piece');
+      if (seleccion) { seleccion.classList.remove('selected'); seleccion = null; }
+    }
+    function configurarDestinoR(z, esSlot) {
+      z.addEventListener('dragover', function (e) { e.preventDefault(); z.classList.add('over'); });
+      z.addEventListener('dragleave', function () { z.classList.remove('over'); });
+      z.addEventListener('drop', function (e) {
+        e.preventDefault(); z.classList.remove('over');
+        var t = e.dataTransfer.getData('text/plain');
+        var pieza = Array.prototype.filter.call(document.querySelectorAll('#tab-receta .dd-piece'), function (p) { return p.textContent === t; })[0];
+        if (!pieza) return;
+        if (esSlot) ponerEnSlot(pieza, z); else document.getElementById('poolR').appendChild(pieza);
+      });
+      z.addEventListener('click', function () {
+        if (!seleccion || !seleccion.hasAttribute('data-orden')) return;
+        if (esSlot) ponerEnSlot(seleccion, z); else { z.appendChild(seleccion); seleccion.classList.remove('selected'); seleccion = null; }
+      });
+    }
+    function reiniciarReceta() {
+      seleccion = null; hechoR = false;
+      var pool = document.getElementById('poolR'), target = document.getElementById('targetR');
+      pool.innerHTML = ''; target.innerHTML = '';
+      document.getElementById('bannerR').className = 'score-banner'; document.getElementById('bannerR').innerHTML = '';
+      document.getElementById('solR').style.display = 'none';
+      PASOS.forEach(function () { var s = document.createElement('div'); s.className = 'dd-slot'; configurarDestinoR(s, true); target.appendChild(s); });
+      var piezas = PASOS.map(function (t, i) { return crearPiezaPaso(t, i); }).concat(TRAMPAS.map(function (t) { return crearPiezaPaso(t, -1); }));
+      shuffle(piezas).forEach(function (p) { pool.appendChild(p); });
+    }
+    function verificarReceta() {
+      intentosR++;
+      document.getElementById('intentosR').textContent = 'Verificaciones: ' + intentosR;
+      if (intentosR >= 3) document.getElementById('btnSolR').disabled = false;
+      var slots = document.querySelectorAll('#targetR .dd-slot'), buenas = 0, vacias = 0, trampas = 0;
+      slots.forEach(function (s, i) {
+        var p = s.querySelector('.dd-piece');
+        s.classList.remove('correct', 'incorrect');
+        if (!p) { vacias++; return; }
+        var o = parseInt(p.getAttribute('data-orden'), 10);
+        if (o === i) { buenas++; s.classList.add('correct'); }
+        else { s.classList.add('incorrect'); if (o === -1) trampas++; }
+      });
+      var b = document.getElementById('bannerR'), ok = (buenas === PASOS.length);
+      hechoR = hechoR || ok;
+      b.className = 'score-banner show alert ' + (ok ? 'alert-success' : 'alert-warning');
+      b.innerHTML = ok
+        ? '<div class="h5 mb-1">¡Receta correcta! 8 / 8 pasos en orden y las 3 trampas fuera.</div><div>Las trampas quitan seguridad («solo para que funcione»): ninguna es una solución válida.</div>'
+        : '<div class="h5 mb-1">' + buenas + ' / 8 pasos bien colocados</div><div>' + (vacias ? 'Te faltan ' + vacias + ' casillas. ' : '') + (trampas ? 'Colocaste ' + trampas + ' trampa(s): desactivar protecciones nunca es parte de la receta. ' : '') + 'Pista: primero se <em>decide</em>, luego se <em>escribe</em>, luego se <em>prueba en casa</em>, y solo al final se <em>publica y verifica</em>.</div>';
+      showToast(ok ? '¡Receta completa!' : buenas + ' de 8 correctos. Sigue intentando.', ok ? 'ok' : 'warn');
+    }
+    function verSolucionReceta() {
+      var s = document.getElementById('solR');
+      s.style.display = 'block';
+      s.innerHTML = '<div class="callout success"><div class="fw-semibold">Solución</div><ol class="small mb-0">' + PASOS.map(function (p) { return '<li>' + p + '</li>'; }).join('') + '</ol></div>';
+    }
+
+    /* ---------- PESTAÑA 3: detective ---------- */
+    var CASOS = [
+      { t: '🔒 Caso 1 — «Funciona, pero se ve “No seguro”»', d: 'Una compañera abre la dirección <code>http://mesa-compartida.onrender.com</code> y el navegador marca «No seguro». Antes de culpar a Render, ¿qué haces primero?',
+        o: [['Comprobar si la dirección empieza por <code>https://</code>: Render redirige y emite el certificado automáticamente', true], ['Instalar un certificado SSL en <code>SecurityConfig</code>', false], ['Desactivar CSRF', false]],
+        ex: 'Render sirve HTTPS solo. «No seguro» suele significar que se entró por <code>http://</code> o que la página aún no terminó de redirigir. Verificar antes que configurar.' },
+      { t: '🛡️ Caso 2 — «El formulario nuevo da 403»', d: 'Tras crear la página de registro de donaciones, al guardar aparece <strong>403</strong>. Un compañero propone: «apaga CSRF y listo». ¿Qué respondes?',
+        o: [['No: reviso que el formulario use <code>th:action</code> para que lleve el campo <code>_csrf</code>; CSRF debe seguir activo', true], ['Sí, es lo más rápido y lo hace el 403 desaparecer', false], ['Cambiar a <code>th:utext</code>', false]],
+        ex: 'El 403 es la protección funcionando. La causa es un token ausente; se corrige el formulario, no la defensa.' },
+      { t: '🐘 Caso 3 — «La cadena de Neon “tarda en conectar”»', d: 'La aplicación se demora en arrancar. Alguien sugiere quitar <code>?sslmode=require&amp;channelBinding=require</code> de <code>DB_URL</code>. ¿Qué haces?',
+        o: [['Lo dejo: la conexión debe ir cifrada; la demora es el despertar de Neon, no el SSL', true], ['Lo quito para acelerar', false], ['Escribo la clave en el código para evitar la variable', false]],
+        ex: 'Neon pausa el cómputo por inactividad y tarda en despertar. SSL no es opcional: sin él los datos viajarían en texto claro.' },
+      { t: '💥 Caso 4 — «Un nombre que parece código»', d: 'En la lista de donaciones alguien registró como donante <code>&lt;script&gt;alert("hola")&lt;/script&gt;</code>. La lista solo muestra ese texto, sin ventana emergente. ¿Por qué es seguro?',
+        o: [['Porque la plantilla usa <code>th:text</code>, que «escapa» los símbolos; el riesgo sería <code>th:utext</code>', true], ['Porque Render bloquea los scripts', false], ['Porque Neon borra los símbolos raros', false]],
+        ex: 'Thymeleaf convierte los símbolos en texto inofensivo con <code>th:text</code>. Con <code>th:utext</code> el navegador sí ejecutaría el script (XSS).' }
+    ];
+    var respDet = [null, null, null, null];
+
+    function pintarDetective() {
+      var box = document.getElementById('detectiveBox'); box.innerHTML = '';
+      CASOS.forEach(function (c, i) {
+        var card = document.createElement('div'); card.className = 'mb-3 p-3 border rounded-3';
+        var opts = shuffle(c.o.map(function (o, k) { return { t: o[0], ok: o[1], k: k }; }));
+        card.innerHTML = '<div class="fw-semibold mb-1">' + c.t + '</div><div class="small-muted mb-2">' + c.d + '</div>' +
+          opts.map(function (o) { return '<button type="button" class="btn btn-outline-primary d-block text-start mb-2 w-100" data-i="' + i + '" data-ok="' + o.ok + '">' + o.t + '</button>'; }).join('') +
+          '<div class="small mt-1" id="fbDet' + i + '"></div>';
+        box.appendChild(card);
+      });
+      box.querySelectorAll('button[data-ok]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          var i = parseInt(b.getAttribute('data-i'), 10), ok = b.getAttribute('data-ok') === 'true';
+          if (respDet[i] === null) respDet[i] = ok;
+          box.querySelectorAll('button[data-i="' + i + '"]').forEach(function (x) {
+            x.disabled = true; x.classList.remove('btn-outline-primary');
+            x.classList.add(x.getAttribute('data-ok') === 'true' ? 'btn-success' : 'btn-outline-secondary');
+          });
+          document.getElementById('fbDet' + i).innerHTML = (ok ? '✅ ' : '❌ ') + CASOS[i].ex;
+          showToast(ok ? 'Diagnóstico correcto' : 'No era esa. Lee la explicación.', ok ? 'ok' : 'bad', 3000);
+          var n = respDet.filter(function (r) { return r !== null; }).length, a = respDet.filter(function (r) { return r === true; }).length;
+          document.getElementById('progDet').textContent = 'Respondidas: ' + n + ' / 4 · Aciertos: ' + a;
+        });
+      });
+    }
+
+    /* ---------- Exportar ---------- */
+    function exportChallengePdf() {
+      var name = document.getElementById('studentName').value || '';
+      var det = respDet.filter(function (r) { return r !== null; }).length;
+      if (!hechoT || intentosR < 1 || det < 4) {
+        showToast('Para la evidencia: completa los 13 campos (pestaña 1), verifica la receta al menos una vez (pestaña 2) y responde los 4 casos (pestaña 3; llevas ' + det + ').', 'warn', 6500);
+        return;
+      }
+      if (!name.trim()) { showToast('Escribe tu nombre en la casilla «Nombre (para el PDF)».', 'warn'); document.getElementById('studentName').focus(); return; }
+      window.print();
+    }
+
+    // Arranque
+    configurarDestinoR(document.getElementById('poolR'), false);
+    reiniciarTipos(); reiniciarReceta(); pintarDetective();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
