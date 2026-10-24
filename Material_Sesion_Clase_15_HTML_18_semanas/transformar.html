@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Del Kit a tu proyecto — Semana 15</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top no-print">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 15 — Seguridad y tu proyecto</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="transformar.html">Del Kit a tu proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="paginas.html">Páginas nuevas</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Checkpoint ★</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="brand-pill mb-2">Meta de la semana · «¿Cómo utilizo todo lo construido para mi propio proyecto?»</div>
+      <h1 class="h2 fw-bold mb-2">Del Kit de la Semana 14 a tu proyecto <span class="small-muted">(ejemplo: ficha única «Libro» de una Biblioteca)</span></h1>
+      <p class="small-muted mb-0">Esta página es una <strong>receta</strong>, no una tarea nueva. Muestra, paso a paso, cómo se convierte <code>Jugador</code> (3 campos) en <code>Libro</code> (13 campos) <strong>sin relaciones</strong>: una sola ficha con toda la información. El código mostrado fue compilado y probado (guardar, validar, editar, parámetros y 403 por CSRF) en una copia del Kit. Tu entidad tendrá otro nombre; el método es idéntico.</p>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 1000px;">
+
+    <div class="card mb-4"><div class="card-body">
+      <h2 class="h5 section-title">🧭 La idea en una imagen</h2>
+      <figure class="mmd-figure">
+        <div class="mermaid">
+flowchart TB
+  K["📦 Kit Semana 14<br/>Jugador · 3 campos"] --> A["1️⃣ Cambia el NOMBRE<br/>Jugador → Libro<br/>jugadores → libros"]
+  A --> B["2️⃣ Cambia los CAMPOS<br/>nombre, edad, posición →<br/>13 campos de la ficha"]
+  B --> C["3️⃣ Cambia los TEXTOS<br/>títulos, etiquetas, mensajes"]
+  C --> D["4️⃣ NO toques<br/>login · CSRF · perfiles ·<br/>Dockerfile · variables"]
+  D --> P["✅ Tu proyecto<br/>mismo motor, otra ficha"]
+  style K fill:#fffbeb,stroke:#f59e0b,stroke-width:2px
+  style D fill:#ecfdf5,stroke:#10b981,stroke-width:2px
+  style P fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+        </div>
+        <figcaption>Tres cosas cambian (nombre, campos, textos) y una no: todo lo demás ya funciona y ya está desplegado.</figcaption>
+      </figure>
+    </div></div>
+
+    <div class="card mb-4"><div class="card-body">
+      <h2 class="h5 section-title">🗂️ Mapa de archivos: qué cambia y qué NO</h2>
+      <div class="table-responsive"><table class="table table-sm align-middle">
+        <thead><tr><th>Archivo</th><th>¿Cambia?</th><th>Qué se hace</th></tr></thead>
+        <tbody>
+          <tr><td><code>model/Jugador.java</code> → <code>Libro.java</code></td><td>✏️ <strong>Sí, el principal</strong></td><td>Cambia el nombre de la clase y se escriben los campos (paso 1)</td></tr>
+          <tr><td><code>repository/JugadorRepository</code></td><td>✏️ Solo nombre</td><td><code>LibroRepository extends JpaRepository&lt;Libro, Long&gt;</code></td></tr>
+          <tr><td><code>service/JugadorService</code></td><td>✏️ Solo nombre</td><td>Mismos métodos (<code>listarTodos</code>, <code>guardar</code>…) con <code>Libro</code></td></tr>
+          <tr><td><code>controller/JugadorController</code></td><td>✏️ Nombre y rutas</td><td><code>/jugadores</code> → <code>/libros</code></td></tr>
+          <tr><td><code>templates/formulario.html</code></td><td>✏️ <strong>Sí</strong></td><td>Un bloque de etiqueta + input + error por cada campo (paso 3)</td></tr>
+          <tr><td><code>templates/lista.html</code></td><td>✏️ <strong>Sí</strong></td><td>Elige 3–4 columnas a mostrar (paso 4)</td></tr>
+          <tr><td><code>templates/error.html</code>, <code>login.html</code></td><td>✏️ Solo textos</td><td>Nombre de tu organización y enlace «Ver …»</td></tr>
+          <tr><td><code>security/SecurityConfig.java</code></td><td>✏️ <strong>Solo las rutas</strong></td><td><code>"/jugadores/nuevo"</code> → <code>"/libros/nuevo"</code> (en las tres reglas). La lógica no cambia.</td></tr>
+          <tr><td><code>application*.properties</code>, <code>Dockerfile</code>, <code>pom.xml</code></td><td>🔒 <strong>No</strong></td><td>La publicación ya funciona. <em>Solo</em> el <code>spring.application.name</code> es opcional.</td></tr>
+          <tr><td><code>Usuario</code>, <code>CargadorUsuarios</code>, <code>UsuarioDetailsService</code></td><td>🔒 <strong>No</strong></td><td>El login y los roles se reutilizan tal cual</td></tr>
+        </tbody></table></div>
+      <div class="callout"><div class="small-muted"><strong>Truco de VS Code:</strong> para renombrar rápido usa <span class="kbd">F2</span> sobre el nombre de la clase (renombra la clase <em>y</em> el archivo y arregla los <code>import</code>) y <span class="kbd">Ctrl</span>+<span class="kbd">Shift</span>+<span class="kbd">H</span> (buscar y reemplazar en todo el proyecto) para <code>jugadores</code> → <code>libros</code>. Revisa siempre el resultado antes de guardar.</div></div>
+    </div></div>
+
+    <div class="card mb-4"><div class="card-body">
+      <h2 class="h5 section-title">1️⃣ La entidad: de 3 a 13 campos</h2>
+      <p class="small-muted">Cada campo es <strong>una línea de atributo</strong> más sus anotaciones, <strong>más</strong> su <code>get</code> y su <code>set</code>. Lo que ya sabes de las Semanas 11 y 12 (<code>@NotBlank</code>, <code>@Min</code>, <code>@Column</code>) es todo lo que se usa.</p>
+      <div class="ruta-tres">
+        <div class="antes"><h3>Antes · Jugador</h3><div class="small-muted">3 campos: <code>nombre</code> (String), <code>edad</code> (Integer), <code>posicion</code> (String).</div></div>
+        <div class="ahora"><h3>Ahora · Libro</h3><div class="small-muted">13 campos de tipos distintos: texto, entero, decimal, fecha, sí/no y texto largo.</div></div>
+        <div class="despues"><h3>Qué sigue igual</h3><div class="small-muted"><code>@Entity</code>, el <code>id</code> con <code>IDENTITY</code>, el constructor vacío y los getters y setters.</div></div>
+      </div>
+      <pre class="mt-3"><code>package gt.edu.url.biblioteca.model;   // tu paquete (el del Artifact, sin guion)
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+
+@Entity
+public class Libro {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    // ---- TEXTO obligatorio ----
+    @NotBlank(message = "El título es obligatorio.")
+    @Size(max = 120, message = "El título admite hasta 120 caracteres.")
+    @Column(nullable = false, length = 120)
+    private String titulo;
+
+    @NotBlank(message = "El autor es obligatorio.")
+    @Size(max = 80, message = "El autor admite hasta 80 caracteres.")
+    @Column(nullable = false, length = 80)
+    private String autor;
+
+    // ---- CÓDIGO con formato: es String, no número ----
+    @NotBlank(message = "El ISBN es obligatorio.")
+    @Pattern(regexp = "[0-9-]{10,17}", message = "El ISBN lleva de 10 a 17 dígitos o guiones.")
+    @Column(nullable = false, length = 17)
+    private String isbn;
+
+    // ---- TEXTO opcional: sin @NotBlank y sin nullable=false ----
+    @Size(max = 60, message = "La editorial admite hasta 60 caracteres.")
+    @Column(length = 60)
+    private String editorial;
+
+    // ---- ENTEROS ----
+    @NotNull(message = "El año de publicación es obligatorio.")
+    @Min(value = 1450, message = "El año mínimo es 1450.")
+    @Max(value = 2100, message = "El año máximo es 2100.")
+    @Column(nullable = false)
+    private Integer anioPublicacion;
+
+    @Min(value = 1, message = "El libro debe tener al menos 1 página.")
+    private Integer numeroPaginas;            // opcional
+
+    // ---- OPCIÓN de una lista fija (select): String ----
+    @NotBlank(message = "Elige un género.")
+    @Column(nullable = false)
+    private String genero;
+
+    @NotBlank(message = "Elige un idioma.")
+    @Column(nullable = false)
+    private String idioma;
+
+    @NotNull(message = "Indica cuántos ejemplares hay.")
+    @Min(value = 0, message = "Los ejemplares no pueden ser negativos.")
+    @Column(nullable = false)
+    private Integer ejemplares;
+
+    // ---- DINERO: BigDecimal, nunca double ----
+    @DecimalMin(value = "0.00", message = "El precio no puede ser negativo.")
+    @Column(precision = 10, scale = 2)
+    private BigDecimal precio;                // opcional
+
+    // ---- FECHA ----
+    @NotNull(message = "La fecha de ingreso es obligatoria.")
+    @PastOrPresent(message = "La fecha de ingreso no puede ser futura.")
+    @Column(nullable = false)
+    private LocalDate fechaIngreso;
+
+    // ---- SÍ / NO ----
+    private boolean disponible = true;
+
+    // ---- TEXTO LARGO ----
+    @Size(max = 500, message = "El resumen admite hasta 500 caracteres.")
+    @Column(length = 500)
+    private String resumen;
+
+    public Libro() { }
+
+    // Getters y setters de CADA campo (VS Code los genera: clic derecho → Source Action → Generate Getters and Setters).
+    // Ojo: el boolean usa isDisponible()/setDisponible(...)
+}</code></pre>
+      <details><summary class="fw-semibold">¿Por qué estas decisiones?</summary>
+        <ul class="small-muted mt-2 mb-0">
+          <li><strong>Sin relaciones:</strong> no hay <code>@OneToMany</code> ni clases extra (autor, préstamo…). El autor es solo un texto. Eso es lo que hace posible terminar a tiempo.</li>
+          <li><strong>Doble candado</strong> en lo obligatorio: <code>@NotBlank</code>/<code>@NotNull</code> muestra el mensaje bonito; <code>nullable = false</code> lo exige la base.</li>
+          <li><strong><code>boolean</code> con valor inicial <code>true</code>:</strong> al abrir «Registrar libro», la casilla aparece marcada.</li>
+          <li><strong>¿Cuántos campos?</strong> Entre 10 y 15. Más es más trabajo de formulario sin más aprendizaje.</li>
+        </ul></details>
+    </div></div>
+
+    <div class="card mb-4"><div class="card-body">
+      <h2 class="h5 section-title">2️⃣ Repositorio, servicio y controlador: solo cambian los nombres</h2>
+      <p class="small-muted">Son las mismas tres clases del Kit. Se muestra el repositorio completo; en el servicio y el controlador se reemplaza <code>Jugador</code>→<code>Libro</code>, <code>jugador</code>→<code>libro</code> y <code>/jugadores</code>→<code>/libros</code>.</p>
+      <pre><code>public interface LibroRepository extends JpaRepository&lt;Libro, Long&gt; {
+}
+
+// Controlador: solo cambian los nombres y las rutas
+@GetMapping({"/", "/libros"})          public String listar(Model model) { … }
+@GetMapping("/libros/nuevo")           public String nuevo(Model model)  { … }
+@GetMapping("/libros/{id}/editar")     public String editar(@PathVariable Long id, Model model) { … }
+@PostMapping("/libros")                public String guardar(@Valid @ModelAttribute("libro") Libro libro, BindingResult resultado) { … }
+@PostMapping("/libros/{id}/eliminar")  public String eliminar(@PathVariable Long id) { … }</code></pre>
+      <div class="callout warning mb-0"><div class="small-muted"><strong>No olvides <code>SecurityConfig</code>:</strong> sus reglas nombran las rutas (<code>"/jugadores/nuevo"</code>, <code>"/jugadores/*/editar"</code>, <code>"/jugadores/**"</code>). Si cambias el controlador a <code>/libros</code> y no cambias estas tres, el administrador recibiría error de acceso o, peor, las rutas quedarían <em>sin la regla de rol</em>. Sustitúyelas por <code>"/libros/nuevo"</code>, <code>"/libros/*/editar"</code> y <code>"/libros/**"</code>.</div></div>
+    </div></div>
+
+    <div class="card mb-4"><div class="card-body">
+      <h2 class="h5 section-title">3️⃣ El formulario: un bloque por campo</h2>
+      <p class="small-muted">Cada campo repite el mismo patrón de tres líneas: <strong>etiqueta</strong>, <strong>input</strong> y <strong>mensaje de error</strong>. Lo único que cambia es el nombre del campo y el <code>type</code> del input (ver la <a href="cheatsheet.html">tabla de tipos</a>).</p>
+      <pre><code>&lt;!-- Texto --&gt;
+&lt;label for="titulo"&gt;Título&lt;/label&gt;
+&lt;input id="titulo" type="text" th:field="*{titulo}" th:errorclass="campo-error"&gt;
+&lt;p class="mensaje-error" th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"&gt;Error&lt;/p&gt;
+
+&lt;!-- Número entero --&gt;
+&lt;input id="anioPublicacion" type="number" th:field="*{anioPublicacion}" th:errorclass="campo-error"&gt;
+
+&lt;!-- Decimal (dinero) --&gt;
+&lt;input id="precio" type="number" step="0.01" th:field="*{precio}" th:errorclass="campo-error"&gt;
+
+&lt;!-- Fecha --&gt;
+&lt;input id="fechaIngreso" type="date" th:field="*{fechaIngreso}" th:errorclass="campo-error"&gt;
+
+&lt;!-- Lista fija --&gt;
+&lt;select id="genero" th:field="*{genero}"&gt;
+  &lt;option value="Novela"&gt;Novela&lt;/option&gt;
+  &lt;option value="Cuento"&gt;Cuento&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;!-- Sí / No --&gt;
+&lt;label&gt;&lt;input type="checkbox" th:field="*{disponible}"&gt; Disponible para préstamo&lt;/label&gt;
+
+&lt;!-- Texto largo --&gt;
+&lt;textarea id="resumen" rows="4" th:field="*{resumen}"&gt;&lt;/textarea&gt;</code></pre>
+      <div class="callout danger mb-0"><div class="small-muted"><strong>Dos reglas que no se negocian:</strong> (1) el <code>&lt;form&gt;</code> sigue usando <code>th:action="@{/libros}"</code> (así lleva el <code>_csrf</code>); (2) <code>th:field="*{…}"</code> debe llamarse <strong>exactamente</strong> como el atributo de la entidad, con la misma ortografía y mayúsculas.</div></div>
+    </div></div>
+
+    <div class="card mb-4"><div class="card-body">
+      <h2 class="h5 section-title">4️⃣ La lista: elige qué mostrar</h2>
+      <p class="small-muted">Una tabla con 13 columnas no cabe en un celular. Muestra <strong>3 o 4</strong> en la lista (las más útiles para reconocer un registro) y deja el resto para el formulario o la página de detalle (ver <a href="paginas.html">Páginas nuevas</a>).</p>
+      <pre><code>&lt;tr&gt;&lt;th&gt;Id&lt;/th&gt;&lt;th&gt;Título&lt;/th&gt;&lt;th&gt;Autor&lt;/th&gt;&lt;th&gt;Año&lt;/th&gt;&lt;/tr&gt;
+…
+&lt;tr th:each="libro : ${libros}"&gt;
+  &lt;td th:text="${libro.id}"&gt;1&lt;/td&gt;
+  &lt;td th:text="${libro.titulo}"&gt;Título&lt;/td&gt;
+  &lt;td th:text="${libro.autor}"&gt;Autor&lt;/td&gt;
+  &lt;td th:text="${libro.anioPublicacion}"&gt;1998&lt;/td&gt;
+  …</code></pre>
+    </div></div>
+
+    <div class="card mb-4"><div class="card-body">
+      <h2 class="h5 section-title">⚠️ Antes de hacer <code>git push</code>: lo que pasa con Neon</h2>
+      <p class="small-muted">Tu tabla en Neon ya existe con las columnas del Kit. Con <code>ddl-auto=update</code> Hibernate <strong>agrega</strong> columnas, pero <strong>nunca borra ni renombra</strong>. Tres situaciones:</p>
+      <div class="table-responsive"><table class="table table-sm">
+        <thead><tr><th>Si tú…</th><th>Entonces…</th><th>Haz esto</th></tr></thead>
+        <tbody>
+          <tr><td>Cambias el nombre de la entidad (<code>Jugador</code> → <code>Libro</code>)</td><td>Se crea una tabla <code>libro</code> nueva y vacía; <code>jugador</code> queda abandonada.</td><td>Normal. Opcional: borrar la tabla vieja en Neon → <em>Tables</em>.</td></tr>
+          <tr><td>Agregas columnas <strong>opcionales</strong> a una tabla con filas</td><td>Se agregan con valor vacío.</td><td>Nada.</td></tr>
+          <tr><td>Agregas columnas <strong>obligatorias</strong> (<code>nullable = false</code>) a una tabla con filas</td><td>El despliegue <strong>falla</strong>: <code>column "x" of relation "y" contains null values</code>.</td><td>Vacía la tabla en Neon antes de desplegar (en este curso los datos son de prueba).</td></tr>
+        </tbody></table></div>
+      <div class="callout success mb-0"><div class="small-muted"><strong>Orden seguro:</strong> 1) cambia el código y pruébalo en tu computadora (perfil <code>dev</code>, H2: si falla, borra la carpeta <code>datos/</code>); 2) vacía la tabla vieja en Neon; 3) <code>git push</code>; 4) mira el log de Render hasta ver <em>Live</em>; 5) registra un libro de prueba y reinicia para confirmar que sobrevive.</div></div>
+    </div></div>
+
+    <div class="card mb-4"><div class="card-body">
+      <h2 class="h5 section-title">✅ Resumen: tu receta en 8 pasos</h2>
+      <ol class="mb-0">
+        <li>Lee la <a href="../ficha_proyecto.html">Ficha de tu Proyecto</a> y decide el nombre de tu entidad.</li>
+        <li>Llena la <strong>tabla de campos</strong> en el <a href="proyecto.html">Checkpoint ★ (Parte B)</a>: 10–15 campos, tipo, obligatorio, validación.</li>
+        <li>Renombra las clases (modelo, repositorio, servicio, controlador).</li>
+        <li>Escribe los campos en la entidad con sus anotaciones.</li>
+        <li>Actualiza <code>formulario.html</code>, <code>lista.html</code>, <code>error.html</code> y <code>login.html</code>.</li>
+        <li>Actualiza las rutas en <code>SecurityConfig</code>.</li>
+        <li>Prueba en tu computadora (<code>dev</code>) y recorre: crear, editar, eliminar, error de validación, entrenador sin permiso.</li>
+        <li>Vacía la tabla en Neon, haz <code>git push</code> y verifica en la URL de Render.</li>
+      </ol>
+    </div></div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Del Kit a tu proyecto — Semana 15 · Seguridad básica, HTTPS y «cómo uso todo lo construido para mi proyecto» (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+  <script src="diagramas.js"></script>
+</body>
+</html>
