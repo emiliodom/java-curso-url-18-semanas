@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portada — Semana 15</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top no-print">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 15 — Seguridad y tu proyecto</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="transformar.html">Del Kit a tu proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="paginas.html">Páginas nuevas</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Checkpoint ★</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-5">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+          <div class="brand-pill mb-3">Semana 15 · Unidad 8a · Seguridad básica y HTTPS · 24 de octubre de 2026</div>
+          <h1 class="display-5 fw-bold mb-3">Verifica la seguridad y haz tuyo el proyecto <span class="small-muted">(70 min)</span></h1>
+          <p class="lead small-muted mb-4">
+            La seguridad de tu aplicación ya la da la plataforma: <strong>Render</strong> pone el candado HTTPS y <strong>Neon</strong> exige conexión cifrada.
+            Hoy no programas nada nuevo: <strong>auditas</strong> lo que ya existe (15 minutos) y dedicas el resto de la clase a lo que más importa:
+            <strong>cómo transformar el Kit de la Semana 14 en tu propio proyecto</strong>, con tus campos, tus tipos y tus páginas.
+          </p>
+          <div class="d-flex gap-2 flex-wrap">
+            <a class="btn btn-primary btn-lg" href="quiz.html">1. Quiz de Presaberes</a>
+            <a class="btn btn-outline-primary btn-lg" href="transformar.html">2. Del Kit a tu proyecto</a>
+            <a class="btn btn-outline-dark btn-lg" href="proyecto.html">3. ★ Checkpoint de entrega</a>
+          </div>
+          <div class="mt-4 callout warning">
+            <div class="fw-semibold">Congelamiento de características</div>
+            <div class="small-muted"><strong>Desde hoy no se agregan funciones nuevas.</strong> Lo que el curso enseñó (listar, crear, editar, eliminar, validar, login, roles y despliegue) es todo lo que tu proyecto necesita. Las Semanas 16–18 son para probar, pulir, presentar y entregar.</div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="card">
+            <div class="card-body">
+              <h2 class="h5 section-title mb-3">Aprendizajes esperados (hoy)</h2>
+              <ul class="mb-0">
+                <li><strong>Verifica</strong> que Render sirve tu aplicación con HTTPS y que Neon fuerza SSL.</li>
+                <li><strong>Reconoce</strong> CSRF, XSS y cabeceras de seguridad, y comprueba que siguen activos.</li>
+                <li><strong>Adapta</strong> el Kit a tu proyecto: define tus campos, sus tipos y sus validaciones.</li>
+                <li><strong>Agrega</strong> una página estática (<code>/creditos</code>) y una página con parámetros.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card mt-3">
+            <div class="card-body">
+              <h2 class="h6 section-title mb-2">Ruta del estudiante (70 min)</h2>
+              <ol class="mb-0 small">
+                <li>Quiz Presaberes + «¿quién protege qué?» (7 min)</li>
+                <li>Auditoría de seguridad: candado, SSL, CSRF, cabeceras (15 min)</li>
+                <li>Hasta dónde hemos llegado + del Kit a Biblioteca (23 min)</li>
+                <li>Páginas estáticas y con parámetros (10 min)</li>
+                <li>Challenge, Quiz Final y checkpoint (15 min)</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+
+    <div class="card mb-4"><div class="card-body">
+      <h2 class="h5 section-title mb-1">🗺️ Dónde estamos en el curso</h2>
+      <p class="small-muted mb-2">Es la penúltima semana con contenido nuevo; después solo se pule y se presenta.</p>
+      <div class="ruta-mapa" aria-label="Mapa del curso">
+        <div class="ruta-paso hecho"><div class="ruta-punto">12</div><span class="ruta-etq">Persistencia</span>JPA + perfiles</div>
+        <div class="ruta-paso hecho"><div class="ruta-punto">13</div><span class="ruta-etq">Login y roles</span>variables de entorno</div>
+        <div class="ruta-paso hecho"><div class="ruta-punto">14</div><span class="ruta-etq">Despliegue</span>Render + Neon</div>
+        <div class="ruta-paso aqui"><div class="ruta-punto">15</div><span class="ruta-etq">Seguridad</span>+ tu proyecto</div>
+        <div class="ruta-paso"><div class="ruta-punto">16</div><span class="ruta-etq">QA</span>pruebas y redeploy</div>
+        <div class="ruta-paso"><div class="ruta-punto">17</div><span class="ruta-etq">Presentación</span>★ Entrega 4</div>
+        <div class="ruta-paso"><div class="ruta-punto">18</div><span class="ruta-etq">Cierre</span>demo final</div>
+      </div>
+      <div class="ruta-tres mt-3">
+        <div class="antes"><h3>⬅️ De dónde vienes</h3>
+          <div class="small-muted">Tu aplicación ya está publicada en <code>https://…onrender.com</code>, con datos en Neon, login y roles. Funciona, pero nadie ha comprobado <em>por qué</em> es segura.</div></div>
+        <div class="ahora"><h3>📍 Qué harás hoy</h3>
+          <div class="small-muted">Auditar en el navegador (sin tocar código) y convertir el Kit de jugadores en <strong>tu</strong> ficha: tus campos, tus tipos, tus páginas.</div></div>
+        <div class="despues"><h3>➡️ A dónde vas</h3>
+          <div class="small-muted">Semana 16: casos de prueba y redeploy de <em>tu</em> proyecto. Semana 17: presentación y ★ Entrega Parcial 4.</div></div>
+      </div>
+    </div></div>
+
+    <div class="card mb-4"><div class="card-body">
+      <h2 class="h5 section-title mb-1">🔐 ¿Quién protege qué? (la idea de la auditoría)</h2>
+      <p class="small-muted">Tu seguridad tiene tres dueños. Hoy compruebas que cada uno cumple su parte.</p>
+      <figure class="mmd-figure">
+        <div class="mermaid">
+flowchart LR
+  U(["📱 Visitante<br/>navegador"]) -- "HTTPS 🔒<br/>(candado)" --> R["▶ Render<br/>certificado SSL automático"]
+  R -- "http interno" --> S["🌱 Tu app Spring Boot<br/>Spring Security"]
+  S -- "JDBC + sslmode=require 🔒" --> N[("🐘 Neon<br/>PostgreSQL")]
+  S -. "CSRF · cabeceras · BCrypt" .-> S
+  style R fill:#ede9fe,stroke:#7c3aed,stroke-width:2px
+  style S fill:#ecfdf5,stroke:#10b981,stroke-width:2px
+  style N fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+        </div>
+        <figcaption>Render protege el camino del visitante, Neon protege el camino a la base y Spring Security protege tus formularios y páginas. Tú eres responsable de no desactivar nada de eso.</figcaption>
+      </figure>
+    </div></div>
+
+    <div class="card mb-4"><div class="card-body">
+      <h2 class="h5 section-title mb-1">📍 Hasta dónde hemos llegado (inventario del proyecto)</h2>
+      <p class="small-muted">Esto es <strong>todo</strong> lo que tu aplicación ya sabe hacer. Si está en esta tabla, ya lo tienes; si no está, no se agregará.</p>
+      <div class="table-responsive">
+        <table class="table table-sm align-middle">
+          <thead><tr><th>Capacidad</th><th>Semana</th><th>Dónde vive en el Kit</th></tr></thead>
+          <tbody>
+            <tr><td>Mostrar una lista de registros</td><td>10</td><td><code>lista.html</code> + <code>listar()</code> del controlador</td></tr>
+            <tr><td>Formulario para crear y editar</td><td>10–11</td><td><code>formulario.html</code> + <code>nuevo()</code>, <code>editar()</code>, <code>guardar()</code></td></tr>
+            <tr><td>Validar antes de guardar (mensajes de error)</td><td>11</td><td>Anotaciones <code>@NotBlank</code>, <code>@Min</code>… en la entidad</td></tr>
+            <tr><td>Guardar de verdad en una base de datos</td><td>12</td><td><code>@Entity</code>, <code>JpaRepository</code>, servicio</td></tr>
+            <tr><td>Perfiles <code>dev</code> (H2) y <code>prod</code> (Neon)</td><td>12</td><td><code>application-dev/prod.properties</code></td></tr>
+            <tr><td>Login, roles ADMIN / ENTRENADOR, contraseñas cifradas</td><td>13</td><td><code>SecurityConfig</code>, <code>login.html</code>, <code>CargadorUsuarios</code></td></tr>
+            <tr><td>Aplicación publicada con HTTPS y base en la nube</td><td>14</td><td><code>Dockerfile</code>, variables de entorno en Render</td></tr>
+            <tr><td>Auditoría de seguridad</td><td><strong>15 (hoy)</strong></td><td>Sin código: se verifica en el navegador</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout success mb-0"><div class="small-muted"><strong>La meta de hoy:</strong> «¿Cómo utilizo todo lo construido para mi propio proyecto?». Respuesta corta: el Kit es una <em>plantilla</em>. Cambias el nombre de la entidad, los campos y los textos; la arquitectura (controlador → servicio → repositorio → base) no cambia.</div></div>
+    </div></div>
+
+    <div class="row g-3 mb-4">
+      <div class="col-md-6 col-lg-4"><div class="card h-100"><div class="card-body">
+        <h3 class="h6 section-title">✅ Ejercicios</h3>
+        <p class="small-muted mb-2">Siete ejercicios de auditoría y de diseño de tu ficha. Sin escribir código.</p>
+        <a href="ejercicios.html">Abrir ejercicios →</a></div></div></div>
+      <div class="col-md-6 col-lg-4"><div class="card h-100"><div class="card-body">
+        <h3 class="h6 section-title">🔁 Del Kit a tu proyecto</h3>
+        <p class="small-muted mb-2">Ejemplo completo: de <code>Jugador</code> a una ficha única <code>Libro</code> de Biblioteca (13 campos).</p>
+        <a href="transformar.html">Ver la transformación →</a></div></div></div>
+      <div class="col-md-6 col-lg-4"><div class="card h-100"><div class="card-body">
+        <h3 class="h6 section-title">📄 Páginas nuevas</h3>
+        <p class="small-muted mb-2">Cómo crear <code>/creditos</code> (estática) y páginas que reciben parámetros.</p>
+        <a href="paginas.html">Ver cómo se hace →</a></div></div></div>
+      <div class="col-md-6 col-lg-4"><div class="card h-100"><div class="card-body">
+        <h3 class="h6 section-title">📚 Cheat Sheet</h3>
+        <p class="small-muted mb-2">Seguridad en una página, tabla de tipos Java y errores comunes.</p>
+        <a href="cheatsheet.html">Abrir cheat sheet →</a></div></div></div>
+      <div class="col-md-6 col-lg-4"><div class="card h-100"><div class="card-body">
+        <h3 class="h6 section-title">🎮 Challenge y Quiz</h3>
+        <p class="small-muted mb-2">Arrastra cada campo a su tipo Java y ordena la auditoría. Quiz de 8 / 12 preguntas.</p>
+        <a href="challenge.html">Challenge →</a> · <a href="quiz.html">Quiz →</a></div></div></div>
+      <div class="col-md-6 col-lg-4"><div class="card h-100"><div class="card-body">
+        <h3 class="h6 section-title">★ Checkpoint de entrega</h3>
+        <p class="small-muted mb-2">Lista de cotejo que se guarda sola, ficha de tus campos y rúbrica de la Guía 15.</p>
+        <a href="proyecto.html">Abrir checkpoint →</a></div></div></div>
+    </div>
+
+    <div class="card mb-4"><div class="card-body">
+      <h2 class="h5 section-title">📊 Cómo se evalúa esta semana</h2>
+      <ul class="small-muted mb-0">
+        <li><strong>Actividad en clase — Sesión 15 (0.66 pts):</strong> PDF del Quiz (modo Final) + PDF del Challenge.</li>
+        <li><strong>Guía de Aprendizaje 15 (1 pt):</strong> la auditoría de seguridad y el checkpoint de entrega, desde <a href="proyecto.html">Checkpoint ★</a>. Fecha límite: antes de la Sesión 16 (31 de octubre de 2026).</li>
+        <li>Evaluación anónima de la sesión: <a href="../evaluacion_docente/index.html">formulario del docente</a> (se habilita al terminar la clase).</li>
+      </ul>
+    </div></div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Portada — Semana 15 · Seguridad básica, HTTPS y «cómo uso todo lo construido para mi proyecto» (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+  <script src="diagramas.js"></script>
+</body>
+</html>

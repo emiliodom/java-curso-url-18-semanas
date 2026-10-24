@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guía docente — Semana 15</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top no-print">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 15 — Seguridad y tu proyecto</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="transformar.html">Del Kit a tu proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="paginas.html">Páginas nuevas</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Checkpoint ★</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="brand-pill mb-2">Guía docente · Sesión 15 · 70 minutos (11:10–12:20)</div>
+      <h1 class="h2 fw-bold mb-2">Seguridad básica y «cómo uso todo lo construido para mi proyecto»</h1>
+      <p class="small-muted mb-0">Sesión <strong>solo de teoría y práctica en el navegador</strong>: no se implementa código nuevo. La seguridad la proveen Render (HTTPS) y Neon (SSL); se explica, se verifica y se pasa el resto del tiempo a adaptar el Kit a cada proyecto.</p>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 980px;">
+
+    <div class="card mb-3"><div class="card-body">
+      <h2 class="h5 section-title">⏱️ Distribución del tiempo</h2>
+      <div class="table-responsive"><div class="linea-70" role="img" aria-label="Línea de tiempo de 70 minutos">
+        <div class="seg" style="flex:7;background:#fef3c7;border-color:#f59e0b"><b>00–07</b>Presaberes</div>
+        <div class="seg" style="flex:15;background:#ede9fe;border-color:#8b5cf6"><b>07–22</b>Auditoría</div>
+        <div class="seg critico" style="flex:23;background:#dcfce7;border-color:#22c55e"><b>22–45</b>Del Kit a Biblioteca</div>
+        <div class="seg" style="flex:10;background:#e0f2fe;border-color:#0284c7"><b>45–55</b>Páginas nuevas</div>
+        <div class="seg" style="flex:15;background:#f1f5f9;border-color:#64748b"><b>55–70</b>Evidencias y checkpoint</div>
+      </div></div>
+      <p class="small-muted mt-2 mb-0">El bloque crítico es el de 23 min: es la razón de ser de la sesión. Si se atrasa, se recorta la parte de cabeceras de la auditoría, nunca la transformación.</p>
+      <style>
+        .linea-70 { display: flex; gap: 3px; min-width: 640px; }
+        .linea-70 .seg { border-top: 5px solid; border-radius: 0.5rem; padding: 0.5rem 0.45rem; font-size: 0.78rem; line-height: 1.25; }
+        .linea-70 .seg b { display: block; font-size: 0.82rem; }
+        .linea-70 .seg.critico { box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25); }
+      </style>
+    </div></div>
+
+    <div class="callout warning mb-3">
+      <div class="fw-semibold">Decisión de alcance (acordada con el docente)</div>
+      <div class="small-muted">Los estudiantes van atrasados con el proyecto. Por eso esta semana el material es el <strong>mínimo</strong>: explicaciones, quizzes y challenges, <strong>sin implementar nada</strong> en el código. Lo que sí se agrega es un <strong>checkpoint de entrega</strong> (lista de cotejo) y un repaso de hasta dónde llega la aplicación. No habrá más características nuevas.</div>
+    </div>
+
+    <div class="card mb-3"><div class="card-body">
+      <h2 class="h5 section-title">✅ Preparación del docente (~20 min, el día anterior)</h2>
+      <ol class="small-muted mb-0">
+        <li>Ten abierta la URL de tu servicio de Render de la Semana 14 y visítala 10 min antes para que no esté dormida.</li>
+        <li>Abre DevTools (<span class="kbd">F12</span>) → pestaña <em>Network</em> en la página <code>/login</code> y localiza <em>Response Headers</em>. Practica el recorrido una vez.</li>
+        <li>Prepara en una pestaña el Kit del Taller 14 (<code>Jugador</code>) y en otra la página <a href="transformar.html">Del Kit a tu proyecto</a> para comparar lado a lado.</li>
+        <li>Pide a los estudiantes que traigan su <a href="../ficha_proyecto.html">Ficha del Proyecto</a>: de ahí salen los campos que van a definir.</li>
+      </ol>
+    </div></div>
+
+    <div class="accordion" id="acc">
+
+      <div class="accordion-item">
+        <h2 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#c1">
+          <span class="time-chip me-2">00–07</span> Presaberes (quiz) + «¿quién protege qué?»
+        </button></h2>
+        <div id="c1" class="accordion-collapse collapse show" data-bs-parent="#acc"><div class="accordion-body">
+          <p><strong>Qué haces:</strong> el grupo resuelve <a href="quiz.html">quiz.html</a> en modo <em>Presaberes</em> (4 min).</p>
+          <p><strong>Guion:</strong> «Su aplicación ya está en internet. Pregunta: ¿quién se encargó del candado verde? ¿Ustedes escribieron algo para eso?» (No: lo puso Render.) «Hoy no vamos a <em>construir</em> seguridad; vamos a <em>comprobar</em> que la plataforma y Spring la están dando, y a no apagarla por accidente.»</p>
+          <p class="mb-0"><strong>Muestra el diagrama</strong> de <a href="index.html">la portada</a>: tres dueños de la seguridad (Render, Spring Security, Neon).</p>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c2">
+          <span class="time-chip me-2">07–22</span> Auditoría de seguridad básica (Ejercicios 1–6)
+        </button></h2>
+        <div id="c2" class="accordion-collapse collapse" data-bs-parent="#acc"><div class="accordion-body">
+          <p><strong>Qué haces:</strong> recorres en vivo los seis chequeos de <a href="ejercicios.html">ejercicios.html</a>; cada estudiante los repite con <em>su</em> URL.</p>
+          <ol>
+            <li><strong>Candado HTTPS</strong> (2 min): clic en el candado → «La conexión es segura». Render emite y renueva el certificado solo.</li>
+            <li><strong>Redirección http → https</strong> (2 min): escribir <code>http://…</code> y ver cómo cambia a <code>https://</code>.</li>
+            <li><strong>Cabeceras</strong> (3 min): DevTools → Network → <code>login</code> → Response Headers: <code>X-Content-Type-Options: nosniff</code>, <code>X-Frame-Options: DENY</code>, <code>Strict-Transport-Security</code>. Spring Security las añade por defecto.</li>
+            <li><strong>CSRF</strong> (3 min): Elements → buscar <code>_csrf</code>: Thymeleaf pone un campo oculto en cada <code>th:action</code>. Explica con la analogía del <em>talonario con sello</em>: el formulario legítimo trae un número que un sitio malicioso no puede adivinar.</li>
+            <li><strong>XSS</strong> (3 min): inscribir un registro cuyo nombre sea <code>&lt;b&gt;prueba&lt;/b&gt;</code> y ver que se muestra como texto, no como negrita: <code>th:text</code> escapa. El peligro sería <code>th:utext</code>.</li>
+            <li><strong>SSL hacia Neon</strong> (2 min): mostrar que <code>DB_URL</code> termina en <code>sslmode=require</code>.</li>
+          </ol>
+          <p class="mb-0"><strong>Pregunta clave:</strong> «¿Cuándo tendría sentido desactivar CSRF?» Solo en una API REST pura sin sesión ni cookies. <strong>Aquí hay sesión y formularios: se queda activo.</strong></p>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c3">
+          <span class="time-chip me-2">22–45</span> Hasta dónde hemos llegado + del Kit a Biblioteca
+        </button></h2>
+        <div id="c3" class="accordion-collapse collapse" data-bs-parent="#acc"><div class="accordion-body">
+          <p><strong>Qué haces:</strong> proyectas <a href="transformar.html">transformar.html</a> y explicas el mapa «qué archivo cambia y qué no».</p>
+          <ol>
+            <li>(3 min) <strong>Inventario</strong> de la <a href="index.html">portada</a>: «esto es todo lo que tiene su aplicación; no habrá nada más».</li>
+            <li>(5 min) <strong>La idea:</strong> el Kit es una plantilla. De <code>Jugador</code> (3 campos) a <code>Libro</code> (13 campos): <em>una sola ficha, sin relaciones</em>.</li>
+            <li>(8 min) <strong>Tabla de tipos:</strong> <code>String</code>, <code>Integer</code>, <code>BigDecimal</code>, <code>LocalDate</code>, <code>Boolean</code>… y qué input HTML corresponde a cada uno.</li>
+            <li>(5 min) <strong>Mapa de archivos:</strong> los 8 que se tocan y los que <em>no</em> (<code>SecurityConfig</code> solo cambia rutas, <code>Dockerfile</code> no cambia).</li>
+            <li>(2 min) <strong>La trampa de <code>ddl-auto=update</code>:</strong> agregar una columna obligatoria a una tabla con datos falla en PostgreSQL.</li>
+          </ol>
+          <p class="mb-0"><strong>Cómo cierra el bloque:</strong> cada estudiante abre el <a href="proyecto.html">Checkpoint ★</a> y empieza a rellenar la tabla de <em>sus</em> campos (Parte B).</p>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c4">
+          <span class="time-chip me-2">45–55</span> Páginas estáticas y páginas con parámetros
+        </button></h2>
+        <div id="c4" class="accordion-collapse collapse" data-bs-parent="#acc"><div class="accordion-body">
+          <p><strong>Qué haces:</strong> recorres <a href="paginas.html">paginas.html</a>.</p>
+          <ul class="mb-0">
+            <li><strong>/creditos (estática):</strong> un <code>@GetMapping</code> que devuelve el nombre de una plantilla, y una línea en <code>SecurityConfig</code> si debe ser pública.</li>
+            <li><strong>Con parámetros:</strong> <code>@PathVariable</code> para «un registro concreto» (<code>/libros/7</code>) y <code>@RequestParam</code> para filtros opcionales (<code>/buscar?genero=Novela</code>). Regla de oro: <em>el identificador va en la ruta; los filtros van después del signo ?</em>.</li>
+            <li>Enlaza con la auditoría: un parámetro que se imprime con <code>th:text</code> es seguro; con <code>th:utext</code> sería un hueco de XSS.</li>
+          </ul>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c5">
+          <span class="time-chip me-2">55–70</span> Evidencias y checkpoint de entrega
+        </button></h2>
+        <div id="c5" class="accordion-collapse collapse" data-bs-parent="#acc"><div class="accordion-body">
+          <p><strong>Qué haces:</strong> los estudiantes completan <a href="challenge.html">challenge.html</a> y <a href="quiz.html">quiz.html</a> (modo <em>Final</em>), exportan ambos a PDF y empiezan la <a href="proyecto.html">lista de cotejo</a>.</p>
+          <p class="mb-0"><strong>Ticket de salida (chat):</strong> «Mi entidad se llama ___ y tendrá ___ campos». Recuérdales la fecha límite: Guía 15 antes de la Sesión 16 (31 de octubre de 2026).</p>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="card mt-3"><div class="card-body">
+      <h2 class="h5 section-title">🛟 Plan B</h2>
+      <p class="small-muted mb-0"><strong>Render dormido o sin internet:</strong> proyecta las capturas conceptuales de <a href="ejercicios.html">ejercicios.html</a> y trabaja la transformación en papel (la tabla de campos no necesita servidor). <strong>Estudiante sin URL publicada:</strong> hace los ejercicios 1–6 sobre la URL del docente y documenta en el checkpoint qué le falta para publicar. <strong>Sin tiempo:</strong> el Challenge de campos→tipos y el Quiz Final son la evidencia mínima.</p>
+    </div></div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Guía docente — Semana 15 · Seguridad básica, HTTPS y «cómo uso todo lo construido para mi proyecto» (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
