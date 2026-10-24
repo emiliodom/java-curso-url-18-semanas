@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz — Semana 15</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top no-print">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 15 — Seguridad y tu proyecto</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="transformar.html">Del Kit a tu proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="paginas.html">Páginas nuevas</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Checkpoint ★</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Quiz de la semana · Elige el modo con el menú</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Presaberes y Quiz Final, en un solo lugar</h1>
+          <div class="small-muted" id="quizTypeLabel">Presaberes · 8 preguntas · no cuenta para nota</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 900px;">
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="row g-3 align-items-end">
+          <div class="col-md-6">
+            <label class="form-label fw-semibold" for="quizType">¿Qué quiz vas a resolver?</label>
+            <select id="quizType" class="form-select" onchange="renderQuiz()">
+              <option value="presaberes">🟡 Presaberes (inicio de clase, no cuenta para nota)</option>
+              <option value="final">🔴 Final de clase (evidencia de la Actividad en clase)</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold" for="studentName">Nombre del estudiante (aparecerá en el PDF)</label>
+            <input id="studentName" class="form-control" type="text" placeholder="Nombre y apellido" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout mb-3 no-print">
+      <div class="fw-semibold">¿Cómo funciona?</div>
+      <div class="small-muted">El banco repasa las Semanas 12–14 (perfiles, login, variables de entorno, despliegue) y estrena el tema de hoy: seguridad básica (HTTPS, SSL a la base, CSRF, XSS, cabeceras) y cómo adaptar el Kit a tu propio proyecto (tipos de campos, páginas nuevas, parámetros). Al cambiar de modo, o al pulsar «🔀 Nuevas preguntas», se eligen preguntas <strong>al azar</strong> y se <strong>baraja el orden de las opciones</strong>.</div>
+    </div>
+
+    <div id="quizContainer"></div>
+    <div id="scoreBanner" class="score-banner"></div>
+
+    <div class="d-flex gap-2 flex-wrap mt-3 no-print">
+      <button class="btn btn-primary btn-lg" onclick="gradeQuiz()">Calificar</button>
+      <button class="btn btn-outline-secondary" onclick="resetQuiz()">Reintentar (mismas preguntas)</button>
+      <button class="btn btn-outline-info" onclick="regenerateQuiz()">🔀 Nuevas preguntas</button>
+      <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      <a class="btn btn-outline-primary ms-auto" href="clase.html">Continuar a la clase →</a>
+    </div>
+
+    <div class="callout warning mt-4 no-print">
+      <div class="fw-semibold">Instrucciones de entrega (si estás en modo Final)</div>
+      <ol class="small-muted mb-0">
+        <li>Escribe tu nombre en la casilla de arriba.</li>
+        <li>Pulsa <strong>Calificar</strong> y revisa la retroalimentación de cada pregunta.</li>
+        <li>Pulsa <strong>Exportar a PDF</strong> y guarda el archivo como <code>QuizFinal_S15_TuNombre.pdf</code>.</li>
+        <li>Súbelo al aula virtual junto con el PDF del <a href="challenge.html">Challenge</a>.</li>
+      </ol>
+    </div>
+  </main>
+
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Quiz — Semana 15 · Seguridad básica, HTTPS y «cómo uso todo lo construido para mi proyecto» (formato 18 semanas)
+    </div>
+  </footer>
+
+
+  <script>
+    // ===== Banco de preguntas de la Semana 15 =====
+    // level: 'presaberes' | 'final' | 'ambas'
+    // La opción correcta se escribe siempre de primera; la página baraja las opciones antes de mostrarlas.
+    function Q(level, pregunta, a, b, c, fbOk, fbKo) {
+      return { level: level, pregunta: pregunta,
+        opciones: [{ v: 'a', t: a }, { v: 'b', t: b }, { v: 'c', t: c }],
+        correcta: 'a', fbOk: fbOk, fbKo: fbKo };
+    }
+    var QUESTION_BANK = [
+      // ---------- Solo Presaberes (repaso de las Semanas 12 a 14) ----------
+      Q('presaberes', 'En Render guardaste <code>DB_PASSWORD</code> como variable de entorno y no dentro del código. ¿Por qué?',
+        'Porque el código se sube a GitHub y cualquiera podría leer la clave', 'Porque Java no permite escribir contraseñas', 'Porque así la aplicación arranca más rápido',
+        'Correcto: es como guardar la llave del salón en tu bolsillo y no pegada en la puerta.',
+        'El código es público en GitHub. Una clave escrita ahí queda expuesta; las variables de entorno la entregan desde fuera.'),
+      Q('presaberes', '¿Para qué sirve tener un perfil <code>dev</code> y otro <code>prod</code>?',
+        'Para usar H2 en tu computadora y Neon en producción con el mismo código', 'Para tener dos copias del proyecto', 'Para que Render sea más barato',
+        'Correcto: la escuela es la misma, cambia la organización según el día.',
+        'Son dos juegos de configuración (base de datos, claves) para el mismo código.'),
+      Q('presaberes', 'Las contraseñas de los usuarios se guardan con BCrypt. ¿Qué significa?',
+        'Que se guarda una versión «triturada» (hash) y no la contraseña original', 'Que se guardan en un archivo de Word', 'Que se guardan sin cambios para poder leerlas',
+        'Correcto: aunque alguien viera la tabla, no podría leer la contraseña real.',
+        'BCrypt guarda un hash: una huella irreversible de la contraseña, no la contraseña.'),
+      Q('presaberes', 'Un usuario con rol ENTRENADOR escribe a mano <code>/jugadores/nuevo</code>. ¿Qué ocurre en el Kit?',
+        'Recibe «acceso denegado» (403), porque esa ruta exige el rol ADMIN', 'Puede inscribir jugadores sin problema', 'La aplicación se apaga',
+        'Correcto: la regla de <code>SecurityConfig</code> protege la ruta, no solo el enlace.',
+        'Ocultar un botón no protege nada; la regla del servidor es la que bloquea el acceso.'),
+      Q('presaberes', 'Con <code>spring.jpa.hibernate.ddl-auto=update</code>, si agregas un campo a la entidad, ¿qué hace Hibernate?',
+        'Agrega la columna nueva a la tabla, pero no borra ni renombra las existentes', 'Borra la tabla y la crea de nuevo', 'No hace nada hasta que reinicies Neon',
+        'Correcto: <code>update</code> solo agrega; es cómodo, pero no es una migración completa.',
+        '<code>update</code> agrega tablas y columnas nuevas; nunca borra ni renombra lo que ya existe.'),
+      Q('presaberes', '¿Qué diferencia hay entre <code>@NotBlank</code> y <code>@Column(nullable = false)</code>?',
+        '<code>@NotBlank</code> muestra el mensaje al usuario; <code>nullable = false</code> lo exige la base de datos', 'Ninguna: hacen exactamente lo mismo en el mismo lugar', '<code>@NotBlank</code> solo funciona en H2',
+        'Correcto: son dos candados, uno en la aplicación y otro en la base.',
+        'Validación (aplicación, con mensaje) y restricción (base de datos) son dos protecciones distintas que se complementan.'),
+
+      // ---------- Ambas (núcleo de la semana) ----------
+      Q('ambas', 'Entras a tu aplicación en Render y ves el candado HTTPS. ¿Quién configuró ese certificado?',
+        'Render, automáticamente y sin costo, sobre <code>*.onrender.com</code>', 'Tú, con una línea en <code>SecurityConfig</code>', 'Neon, al conectar la base de datos',
+        'Correcto: tu trabajo es <em>verificar</em> que está activo, no configurarlo.',
+        'El certificado SSL lo emite y renueva Render solo. En clase se comprueba, no se instala.'),
+      Q('ambas', 'Tu <code>DB_URL</code> debe terminar en <code>sslmode=require</code>. ¿Qué garantiza?',
+        'Que la conexión entre tu aplicación y Neon viaja cifrada', 'Que la base de datos hace copias de seguridad', 'Que los usuarios de la página deben usar HTTPS',
+        'Correcto: es el «sobre sellado» entre Render y Neon.',
+        '<code>sslmode=require</code> protege el tramo aplicación → base de datos. El candado del navegador protege otro tramo: visitante → Render.'),
+      Q('ambas', 'Al inspeccionar el formulario de inscripción encuentras <code>&lt;input type="hidden" name="_csrf" …&gt;</code>. ¿Qué es?',
+        'Un «sello» que prueba que el formulario salió de tu propia página', 'Un anuncio de Thymeleaf', 'Un error que se debe borrar',
+        'Correcto: sin ese sello válido, Spring rechaza el envío con 403.',
+        'Es el token CSRF. Lo agrega Thymeleaf cuando el formulario usa <code>th:action</code>.'),
+      Q('ambas', '¿En qué caso tendría sentido desactivar CSRF?',
+        'En una API REST pura sin sesión ni cookies, que se autentica con un token en una cabecera', 'En cualquier aplicación con formularios, para que funcione más fácil', 'Cuando la aplicación está desplegada en Render',
+        'Correcto. Tu proyecto tiene sesión y formularios: CSRF debe seguir activo.',
+        'CSRF protege las sesiones basadas en cookies. En una aplicación con login y formularios es obligatorio.'),
+      Q('ambas', 'Un usuario escribe <code>&lt;script&gt;alert(1)&lt;/script&gt;</code> como nombre. Tu plantilla usa <code>th:text</code>. ¿Qué ve la gente en la lista?',
+        'El texto tal cual, sin ejecutarse: Thymeleaf «escapa» los símbolos', 'Una ventana de alerta', 'Una página en blanco',
+        'Correcto: <code>th:text</code> bloquea el XSS. El riesgo estaría en <code>th:utext</code>.',
+        '<code>th:text</code> convierte <code>&lt;</code> y <code>&gt;</code> en texto inofensivo. <code>th:utext</code> sí ejecutaría el código.'),
+      Q('ambas', '¿Qué evita la cabecera <code>X-Frame-Options: DENY</code>?',
+        'Que otra página incruste la tuya dentro de un <code>iframe</code> (clickjacking)', 'Que el servidor reciba más de 10 visitas', 'Que se pierdan datos al reiniciar',
+        'Correcto: nadie puede poner botones invisibles encima de tu página.',
+        'Controla si tu página puede mostrarse dentro de un marco ajeno. Spring Security la añade por defecto.'),
+      Q('ambas', 'En tu ficha hay un campo <strong>ISBN</strong> (por ejemplo <code>978-84-376-0494-7</code>). ¿Qué tipo Java conviene?',
+        '<code>String</code>, porque no se hacen cuentas con él y lleva guiones o ceros', '<code>Integer</code>, porque son dígitos', '<code>Boolean</code>',
+        'Correcto: un código con formato es texto, aunque parezca número.',
+        'Un <code>Integer</code> borraría ceros iniciales y no admitiría guiones. Si no se opera con él, es <code>String</code>.'),
+      Q('ambas', 'Tu ficha guarda el <strong>precio</strong> de un artículo con centavos. ¿Qué tipo es el correcto?',
+        '<code>BigDecimal</code>, porque representa dinero con exactitud', '<code>String</code>', '<code>boolean</code>',
+        'Correcto: con <code>BigDecimal</code> los centavos no se pierden en redondeos.',
+        'Para dinero se usa <code>BigDecimal</code> (y en el formulario <code>type="number" step="0.01"</code>).'),
+
+      // ---------- Solo Final (aplicación al proyecto propio) ----------
+      Q('final', 'Agregaste a tu entidad un campo <strong>obligatorio</strong> (<code>nullable = false</code>) y Neon ya tiene registros. El despliegue falla con <code>contains null values</code>. ¿Qué haces?',
+        'Vacías la tabla en Neon (son datos de prueba) o dejas el campo opcional en el primer despliegue', 'Cambias <code>sslmode</code> a <code>disable</code>', 'Borras el <code>Dockerfile</code>',
+        'Correcto: <code>update</code> no puede llenar una columna obligatoria en filas que ya existen.',
+        'El problema son las filas viejas sin valor para la columna nueva obligatoria. SSL y Docker no tienen relación.'),
+      Q('final', 'Tu formulario nuevo escribe <code>&lt;form action="/libros" method="post"&gt;</code> y al guardar aparece <strong>403</strong>. ¿Cuál es la causa?',
+        'Falta <code>th:action</code>, así que el formulario no lleva el campo <code>_csrf</code>', 'La base de datos está dormida', 'El campo tiene más de 40 caracteres',
+        'Correcto: <code>th:action="@{/libros}"</code> agrega el token automáticamente.',
+        'Un 403 al enviar un formulario con sesión activa casi siempre es un token CSRF ausente.'),
+      Q('final', 'Creas la plantilla <code>creditos.html</code> y el método <code>@GetMapping("/creditos")</code>, pero al abrirla sin sesión te manda al login. ¿Qué falta?',
+        'Agregar <code>"/creditos"</code> a las rutas <code>permitAll()</code>, antes de <code>anyRequest().authenticated()</code>', 'Reiniciar Neon', 'Renombrar el archivo a <code>creditos.jsp</code>',
+        'Correcto: por defecto todo exige sesión; lo público se declara.',
+        'La regla general <code>anyRequest().authenticated()</code> captura la ruta. Debes declararla pública antes.'),
+      Q('final', 'Quieres una página con la ficha de <em>un</em> registro: <code>/libros/7</code>. ¿Qué usas en el método del controlador?',
+        '<code>@PathVariable Long id</code> con <code>@GetMapping("/libros/{id}")</code>', '<code>@RequestParam</code> con <code>@PostMapping</code>', '<code>th:utext</code>',
+        'Correcto: el identificador va en la ruta.',
+        'Un valor que forma parte de la ruta se recibe con <code>@PathVariable</code>. Los filtros después del <code>?</code> usan <code>@RequestParam</code>.'),
+      Q('final', 'En <code>/buscar?genero=Novela</code>, ¿qué pasa con <code>@RequestParam(defaultValue = "") String genero</code> si el visitante abre solo <code>/buscar</code>?',
+        'Recibe una cadena vacía y puedes mostrar todos los registros', 'Da error 404', 'La aplicación se reinicia',
+        'Correcto: el <code>defaultValue</code> hace opcional el parámetro.',
+        'Con <code>defaultValue</code> el parámetro es opcional: si falta, toma ese valor.'),
+      Q('final', 'Renombraste <code>Jugador</code> a <code>Libro</code> y desplegaste. La lista aparece vacía y Neon tiene dos tablas. ¿Qué pasó?',
+        'Hibernate creó la tabla <code>libro</code> nueva; la tabla <code>jugador</code> antigua quedó abandonada', 'Neon borró tus datos por inactividad', 'Render cambió de perfil',
+        'Correcto: <code>update</code> crea tablas nuevas, nunca renombra.',
+        'Neon no pierde datos por inactividad. Una entidad con otro nombre es una tabla nueva.'),
+      Q('final', 'Cambiaste el controlador de <code>/jugadores</code> a <code>/libros</code> pero no tocaste <code>SecurityConfig</code>. ¿Cuál es el riesgo?',
+        'Las rutas nuevas no tendrían la regla de rol y un ENTRENADOR podría crear o borrar registros', 'Ninguno: Spring las actualiza solo', 'Que HTTPS deje de funcionar',
+        'Correcto: las reglas nombran rutas concretas y hay que actualizarlas.',
+        'Las reglas de rol dependen del texto de la ruta. Si no coincide, la petición cae en <code>anyRequest().authenticated()</code>: basta tener sesión.'),
+      Q('final', '¿Por qué un buscador se escribe con <code>method="get"</code> y el formulario de guardar con <code>method="post"</code>?',
+        'Leer se hace con GET (se puede compartir el enlace); cambiar datos se hace con POST y lleva CSRF', 'Porque GET es más seguro para guardar contraseñas', 'No hay diferencia',
+        'Correcto: leer = GET; cambiar = POST.',
+        'GET pone los datos en la dirección y no debe modificar nada. POST se reserva para guardar, editar o eliminar.'),
+      Q('final', 'Tu ficha tiene 13 campos. ¿Qué conviene mostrar en la página de <em>lista</em>?',
+        'Solo 3 o 4 campos clave; el resto en el formulario o en una página de detalle', 'Los 13, aunque no quepan en un celular', 'Ninguno',
+        'Correcto: la lista sirve para reconocer un registro; el detalle, para verlo completo.',
+        'Una tabla con 13 columnas es ilegible en pantalla pequeña. Elige las columnas que identifican el registro.'),
+      Q('final', 'Para guardar la <strong>fecha de ingreso</strong> de un libro, ¿qué combinación es correcta?',
+        '<code>LocalDate</code> en la entidad y <code>type="date"</code> en el formulario', '<code>String</code> en la entidad y <code>type="number"</code> en el formulario', '<code>boolean</code> y <code>type="checkbox"</code>',
+        'Correcto: el tipo de la entidad y el input deben corresponderse.',
+        'Una fecha se modela como <code>LocalDate</code> y se captura con <code>type="date"</code>.'),
+      Q('final', 'Desde hoy el curso «congela» las características. ¿Qué significa para tu proyecto?',
+        'Se adapta lo ya aprendido (tus campos, tus páginas) y no se agregan funciones nuevas', 'Se puede agregar cualquier librería nueva hasta la entrega', 'Ya no hay que probar nada',
+        'Correcto: las semanas 16–18 son para probar, pulir y presentar.',
+        'La meta es entregar un proyecto completo y probado con lo aprendido, no crecer en alcance.')
+    ];
+    var QUIZ_CONFIG = { presaberesCount: 8, finalCount: 12 };
+  </script>
+  <script src="quiz.js"></script>
+  <script>
+    // Baraja el orden de las opciones antes de cada render (patrón desde la Semana 9).
+    function barajarOpciones() {
+      (window.QUESTION_BANK || []).forEach(function (q) {
+        for (var i = q.opciones.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var t = q.opciones[i]; q.opciones[i] = q.opciones[j]; q.opciones[j] = t;
+        }
+      });
+    }
+    var _renderBase = window.renderQuiz;
+    window.renderQuiz = function () {
+      barajarOpciones();
+      _renderBase();
+    };
+    renderQuiz();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

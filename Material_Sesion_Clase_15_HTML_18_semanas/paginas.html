@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Páginas nuevas — Semana 15</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top no-print">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 15 — Seguridad y tu proyecto</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="transformar.html">Del Kit a tu proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="paginas.html">Páginas nuevas</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Checkpoint ★</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="brand-pill mb-2">Sección especial · Cómo agregar páginas</div>
+      <h1 class="h2 fw-bold mb-2">Páginas estáticas (<code>/creditos</code>) y páginas con parámetros</h1>
+      <p class="small-muted mb-0">Agregar una página <strong>no es una «característica nueva»</strong>: reutiliza la misma receta (plantilla + método de controlador + regla de seguridad). Todo el código de esta página se probó en la copia «Biblioteca» del Kit. Los ejemplos usan <code>Libro</code>; sustitúyelo por tu entidad.</p>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 1000px;">
+
+    <div class="card mb-4"><div class="card-body">
+      <h2 class="h5 section-title">🧭 Tres formas de tener una página</h2>
+      <div class="table-responsive"><table class="table table-sm align-middle">
+        <thead><tr><th>Tipo</th><th>Ejemplo</th><th>¿Necesita Java?</th><th>Cuándo usarla</th></tr></thead>
+        <tbody>
+          <tr><td><strong>A. Archivo estático</strong></td><td><code>static/creditos.html</code> → se abre en <code>/creditos.html</code></td><td>No</td><td>Texto fijo sin menús ni datos. La URL lleva <code>.html</code>.</td></tr>
+          <tr><td><strong>B. Plantilla sin datos</strong> ⭐</td><td><code>templates/creditos.html</code> + <code>@GetMapping("/creditos")</code> → <code>/creditos</code></td><td>Un método de 3 líneas</td><td>Páginas «de contenido» con URL limpia (créditos, ayuda, acerca de). <strong>La recomendada.</strong></td></tr>
+          <tr><td><strong>C. Plantilla con parámetros</strong></td><td><code>/libros/7</code> · <code>/buscar?genero=Novela</code></td><td>Un método que recibe el parámetro</td><td>Cuando el contenido depende de <em>qué registro</em> o <em>qué filtro</em> pide el visitante.</td></tr>
+        </tbody></table></div>
+    </div></div>
+
+    <div class="card mb-4"><div class="card-body">
+      <h2 class="h5 section-title">📄 Parte 1 · La página <code>/creditos</code> en 4 pasos</h2>
+      <div class="paso-grande mb-3"><div class="paso-num">1</div><div class="flex-grow-1">
+        <div class="paso-donde"><span class="lugar pc">VS Code</span> Crea la plantilla <code>src/main/resources/templates/creditos.html</code></div>
+        <pre class="mt-2"><code>&lt;!doctype html&gt;
+&lt;html lang="es" xmlns:th="http://www.thymeleaf.org"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;title&gt;Créditos&lt;/title&gt;
+  &lt;link rel="stylesheet" th:href="@{/estilos.css}"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;main&gt;
+  &lt;h1&gt;Biblioteca Comunitaria&lt;/h1&gt;
+  &lt;h2&gt;Créditos&lt;/h2&gt;
+  &lt;p&gt;Proyecto desarrollado en el curso Programación I, Universidad Rafael Landívar.&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Autor: Tu Nombre&lt;/li&gt;
+    &lt;li&gt;Tecnologías: Java, Spring Boot, Thymeleaf, PostgreSQL (Neon) y Render.&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;p&gt;&lt;a th:href="@{/libros}"&gt;Volver a la lista&lt;/a&gt;&lt;/p&gt;
+&lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        <div class="small-muted">Es una copia de <code>error.html</code> con otro contenido: <strong>reutilizas</strong> la misma estructura y el mismo <code>estilos.css</code>.</div>
+      </div></div>
+
+      <div class="paso-grande mb-3"><div class="paso-num">2</div><div class="flex-grow-1">
+        <div class="paso-donde"><span class="lugar pc">VS Code</span> Agrega un método a un controlador (puedes crear <code>PaginasController</code>)</div>
+        <pre class="mt-2"><code>@Controller
+public class PaginasController {
+
+    @GetMapping("/creditos")
+    public String creditos() {
+        return "creditos";     // busca templates/creditos.html
+    }
+}</code></pre>
+        <div class="small-muted">El texto que devuelve el método es el <strong>nombre del archivo</strong> sin <code>.html</code>. La URL (<code>/creditos</code>) y el nombre del archivo pueden ser distintos.</div>
+      </div></div>
+
+      <div class="paso-grande mb-3"><div class="paso-num">3</div><div class="flex-grow-1">
+        <div class="paso-donde"><span class="lugar pc">VS Code</span> Decide quién puede verla en <code>SecurityConfig</code></div>
+        <pre class="mt-2"><code>.requestMatchers("/login", "/estilos.css", "/error", "/creditos").permitAll()</code></pre>
+        <div class="small-muted"><strong>Sin esta línea</strong>, <code>anyRequest().authenticated()</code> manda a todo visitante al login. Con ella, la página es pública. Recuerda: <em>gana la primera regla que coincide</em>, así que va <strong>antes</strong> de <code>anyRequest()</code>. Si prefieres que solo la vean usuarios con sesión, no agregues nada.</div>
+      </div></div>
+
+      <div class="paso-grande"><div class="paso-num">4</div><div class="flex-grow-1">
+        <div class="paso-donde"><span class="lugar navegador">Navegador</span> Enlázala y pruébala</div>
+        <pre class="mt-2"><code>&lt;a th:href="@{/creditos}"&gt;Créditos&lt;/a&gt;     &lt;!-- en lista.html o login.html --&gt;</code></pre>
+        <div class="small-muted">Siempre <code>th:href="@{/…}"</code> y no <code>href="/creditos"</code>: Thymeleaf ajusta la ruta si algún día la aplicación vive en una subcarpeta. Prueba en <code>http://localhost:8080/creditos</code> <em>sin haber iniciado sesión</em>.</div>
+      </div></div>
+
+      <details class="mt-3"><summary class="fw-semibold">Variante A: archivo en <code>static/</code> (sin Java)</summary>
+        <p class="small-muted mt-2 mb-0">Coloca <code>creditos.html</code> en <code>src/main/resources/static/</code>. Spring lo sirve en <code>/creditos.html</code> (con la extensión; <code>/creditos</code> daría 404). Como <code>SecurityConfig</code> protege todo, agrega <code>"/creditos.html"</code> a la lista <code>permitAll()</code>. No puede usar <code>th:*</code> ni insertar datos: es HTML puro.</p></details>
+    </div></div>
+
+    <div class="card mb-4"><div class="card-body">
+      <h2 class="h5 section-title">🔗 Parte 2 · Páginas que reciben parámetros</h2>
+      <p class="small-muted">Hay <strong>dos lugares</strong> donde viaja un dato en la dirección. Mira la anatomía de una URL:</p>
+      <figure class="mmd-figure">
+        <div class="mermaid">
+flowchart LR
+  U["https://mi-app.onrender.com"] --> P1["/libros/<b>7</b>"]
+  P1 --> Q1["/buscar<b>?genero=Novela</b>"]
+  P1 -. "@PathVariable<br/>parte de la RUTA" .-> E1["¿QUÉ registro?<br/>un identificador"]
+  Q1 -. "@RequestParam<br/>después del ?" .-> E2["¿CÓMO lo filtro?<br/>opcional, puede haber varios"]
+  style P1 fill:#ecfdf5,stroke:#10b981,stroke-width:2px
+  style Q1 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+        </div>
+        <figcaption>Regla de oro: <strong>el identificador va en la ruta</strong> (<code>/libros/7</code>); <strong>los filtros van después del signo ?</strong> (<code>?genero=Novela&amp;idioma=Español</code>).</figcaption>
+      </figure>
+
+      <div class="table-responsive"><table class="table table-sm align-middle">
+        <thead><tr><th></th><th><code>@PathVariable</code></th><th><code>@RequestParam</code></th></tr></thead>
+        <tbody>
+          <tr><td>Se ve así</td><td><code>/libros/7</code></td><td><code>/buscar?genero=Novela</code></td></tr>
+          <tr><td>En el controlador</td><td><code>@GetMapping("/libros/{id}")</code> + <code>@PathVariable Long id</code></td><td><code>@GetMapping("/buscar")</code> + <code>@RequestParam String genero</code></td></tr>
+          <tr><td>¿Es obligatorio?</td><td>Sí: sin él, la ruta no existe</td><td>No, si le das <code>defaultValue</code> o <code>required = false</code></td></tr>
+          <tr><td>Úsalo para</td><td>Ver o editar <em>un</em> registro</td><td>Buscar, filtrar, ordenar, paginar</td></tr>
+        </tbody></table></div>
+
+      <h3 class="h6 fw-bold mt-4">2.1 Con la ruta: la ficha de un libro (<code>/libros/7</code>)</h3>
+      <pre><code>@GetMapping("/libros/{id}")
+public String detalle(@PathVariable Long id, Model model) {
+    model.addAttribute("libro", libroService.buscarPorId(id));   // el mismo método del Kit
+    return "detalle";
+}</code></pre>
+      <pre><code>&lt;!-- templates/detalle.html (lo esencial) --&gt;
+&lt;h2 th:text="${libro.titulo}"&gt;Título&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Autor: &lt;span th:text="${libro.autor}"&gt;Autor&lt;/span&gt;&lt;/li&gt;
+  &lt;li&gt;ISBN: &lt;span th:text="${libro.isbn}"&gt;978-0&lt;/span&gt;&lt;/li&gt;
+  &lt;li th:text="${libro.disponible} ? 'Disponible para préstamo' : 'No disponible'"&gt;Disponible&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!-- y en lista.html, el título se vuelve un enlace a esa ficha: --&gt;
+&lt;a th:href="@{/libros/{id}(id=${libro.id})}" th:text="${libro.titulo}"&gt;Título&lt;/a&gt;</code></pre>
+      <div class="callout"><div class="small-muted"><strong>Probado:</strong> <code>/libros/1</code> → 200. <code>/libros/abc</code> → <strong>400</strong> (no se puede convertir «abc» en número). <code>/libros/99</code> (no existe) → <strong>500</strong>, porque <code>buscarPorId</code> lanza una excepción: tu <code>error.html</code> lo muestra con el código. Es el mismo comportamiento de «Editar» en el Kit; en la Semana 16 (QA) se puede mejorar.</div></div>
+
+      <h3 class="h6 fw-bold mt-4">2.2 Con la consulta: filtrar por género (<code>/buscar?genero=Novela</code>)</h3>
+      <pre><code>// LibroRepository: Spring Data escribe la consulta SOLO a partir del nombre del método
+List&lt;Libro&gt; findByGeneroIgnoreCase(String genero);
+
+// LibroService
+public List&lt;Libro&gt; buscarPorGenero(String genero) {
+    if (genero.isBlank()) {
+        return repositorio.findAll();          // sin filtro: todos
+    }
+    return repositorio.findByGeneroIgnoreCase(genero);
+}
+
+// Controlador
+@GetMapping("/buscar")
+public String buscar(@RequestParam(defaultValue = "") String genero, Model model) {
+    var resultados = libroService.buscarPorGenero(genero);
+    model.addAttribute("libros", resultados);
+    model.addAttribute("total", resultados.size());
+    return "lista";                            // REUTILIZA la plantilla de la lista
+}</code></pre>
+      <p class="small-muted">Fíjate en la última línea: <strong>reutilizas <code>lista.html</code></strong>; solo cambia qué libros se le entregan. Así una nueva «página» casi no cuesta nada.</p>
+      <div class="callout"><div class="small-muted"><strong>Probado:</strong> con un libro de género «Novela», <code>/buscar?genero=novela</code> lo muestra (ignora mayúsculas), <code>/buscar?genero=Cuento</code> no, y <code>/buscar</code> sin parámetro muestra todos.</div></div>
+
+      <h3 class="h6 fw-bold mt-4">2.3 Cómo se pone el enlace o el buscador</h3>
+      <pre><code>&lt;!-- Enlace con parámetro: genera /buscar?genero=Novela --&gt;
+&lt;a th:href="@{/buscar(genero='Novela')}"&gt;Ver novelas&lt;/a&gt;
+
+&lt;!-- Buscador: un formulario GET (NO lleva _csrf, porque no modifica datos) --&gt;
+&lt;form th:action="@{/buscar}" method="get"&gt;
+  &lt;select name="genero"&gt;
+    &lt;option value=""&gt;Todos&lt;/option&gt;
+    &lt;option value="Novela"&gt;Novela&lt;/option&gt;
+    &lt;option value="Cuento"&gt;Cuento&lt;/option&gt;
+  &lt;/select&gt;
+  &lt;button type="submit"&gt;Buscar&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+      <div class="small-muted">Un formulario <code>GET</code> pone sus campos en la dirección (<code>?genero=Novela</code>): el resultado se puede <strong>copiar y compartir</strong>. Un formulario <code>POST</code> es para <em>guardar o cambiar</em> cosas y siempre lleva CSRF. <strong>Regla: leer = GET; cambiar = POST.</strong></div>
+    </div></div>
+
+    <div class="card mb-4"><div class="card-body">
+      <h2 class="h5 section-title">🔐 Seguridad de las páginas nuevas (conecta con la auditoría)</h2>
+      <ul class="small-muted mb-0">
+        <li><strong>Por defecto todo exige sesión.</strong> <code>/libros/7</code> y <code>/buscar</code> funcionan solo con login (<code>anyRequest().authenticated()</code>). Haz pública únicamente la que debe serlo (créditos).</li>
+        <li><strong>Los parámetros son datos del visitante:</strong> nunca los imprimas con <code>th:utext</code>. Con <code>th:text</code> un <code>?genero=&lt;script&gt;</code> se muestra como texto inofensivo (XSS bloqueado).</li>
+        <li><strong>Leer con GET, cambiar con POST:</strong> una página que borra o guarda al abrir un enlace (GET) se salta la protección CSRF. En este proyecto eliminar es <code>POST</code> + <code>_csrf</code>: no lo cambies.</li>
+        <li>Si tu página nueva está en una ruta con regla de rol (<code>/libros/nuevo</code>), conserva esa regla <em>antes</em> que las generales.</li>
+      </ul>
+    </div></div>
+
+    <div class="card mb-4"><div class="card-body">
+      <h2 class="h5 section-title">🧪 Mini práctica (solo lectura y diseño, sin implementar hoy)</h2>
+      <ol class="small-muted mb-0">
+        <li>Escribe en tu <a href="proyecto.html">Checkpoint (Parte D)</a> qué <strong>página estática</strong> tendrá tu proyecto (créditos, ayuda, acerca de) y si debe ser pública.</li>
+        <li>Decide <strong>un parámetro</strong> útil para tu entidad: ¿una ficha por id (<code>/entidad/{id}</code>)? ¿un filtro por tu campo de lista fija (<code>?campo=valor</code>)?</li>
+        <li>Responde: ¿ese parámetro va en la ruta o después del <code>?</code>, y por qué?</li>
+      </ol>
+    </div></div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Páginas nuevas — Semana 15 · Seguridad básica, HTTPS y «cómo uso todo lo construido para mi proyecto» (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+  <script src="diagramas.js"></script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ejercicios — Semana 15</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top no-print">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 15 — Seguridad y tu proyecto</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="transformar.html">Del Kit a tu proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="paginas.html">Páginas nuevas</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Checkpoint ★</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="brand-pill mb-2">Ejercicios · Semana 15</div>
+      <h1 class="h2 fw-bold mb-2">Audita tu aplicación y diseña tu ficha <span class="small-muted">(sin escribir código)</span></h1>
+      <p class="small-muted mb-0">Los ejercicios 1–6 se hacen en el <strong>navegador</strong> sobre la URL pública de tu aplicación (<code>https://…onrender.com</code>). El ejercicio 7 es de diseño en papel o en la <a href="proyecto.html">tabla del checkpoint</a>. Dominio de los ejemplos: <strong>Escuela de Fútbol Los Cerritos</strong> (el Kit); tu proyecto real va en el checkpoint.</p>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 980px;">
+
+    <div class="callout mb-3">
+      <div class="fw-semibold">Reglas del juego</div>
+      <div class="small-muted">Nada de lo que hagas hoy cambia tu repositorio. Si un chequeo sale mal, <strong>anótalo</strong> en la lista de cotejo: corregirlo se hace en la Semana 16 (QA). Nunca pegues contraseñas ni la cadena completa de Neon en el chat: solo di <em>«sí»</em> o <em>«no»</em>.</div>
+    </div>
+
+    <ul class="nav nav-tabs mb-3 no-print" role="tablist">
+      <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#t-audit" type="button">🔎 Auditoría (1–6)</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#t-ficha" type="button">🧩 Tu ficha (7)</button></li>
+    </ul>
+
+    <div class="tab-content">
+    <div class="tab-pane fade show active" id="t-audit">
+
+      <div class="card mb-3"><div class="card-body">
+        <div class="paso-grande"><div class="paso-num">1</div><div class="flex-grow-1">
+          <div class="paso-donde"><span class="lugar navegador">Navegador</span> ¿La URL carga con candado HTTPS?</div>
+          <ol class="small-muted mt-2">
+            <li>Abre tu URL de Render. Mira la barra de direcciones: debe empezar por <code>https://</code> y mostrar un candado (o un ícono de «ajustes»).</li>
+            <li>Haz clic en el candado → <em>La conexión es segura</em> → <em>El certificado es válido</em>. Anota <strong>quién emitió</strong> el certificado.</li>
+          </ol>
+          <details><summary class="fw-semibold">Ver qué deberías encontrar</summary>
+            <p class="small-muted mt-2 mb-0">Certificado válido para <code>*.onrender.com</code>, emitido por una autoridad pública. <strong>Tú no instalaste nada:</strong> Render lo pide y lo renueva solo. Si ves «No seguro», tu URL empieza por <code>http://</code> (ejercicio 2).</p></details>
+        </div></div>
+      </div></div>
+
+      <div class="card mb-3"><div class="card-body">
+        <div class="paso-grande"><div class="paso-num">2</div><div class="flex-grow-1">
+          <div class="paso-donde"><span class="lugar navegador">Navegador</span> Escribe <code>http://</code> a propósito</div>
+          <p class="small-muted mt-2 mb-1">Cambia la <code>s</code>: escribe <code>http://tu-app.onrender.com</code> (sin la «s») y pulsa <span class="kbd">Enter</span>.</p>
+          <details><summary class="fw-semibold">Ver qué deberías encontrar</summary>
+            <p class="small-muted mt-2 mb-0">Render te redirige solo a <code>https://</code>. La conexión sin cifrar nunca llega a tu aplicación. <strong>Por eso en <code>application-prod.properties</code> existe <code>server.forward-headers-strategy=framework</code></strong>: para que Spring sepa que, por fuera, la visita fue HTTPS.</p></details>
+        </div></div>
+      </div></div>
+
+      <div class="card mb-3"><div class="card-body">
+        <div class="paso-grande"><div class="paso-num">3</div><div class="flex-grow-1">
+          <div class="paso-donde"><span class="lugar navegador">DevTools</span> Cabeceras de seguridad HTTP</div>
+          <ol class="small-muted mt-2">
+            <li>En la página <code>/login</code> pulsa <span class="kbd">F12</span> → pestaña <strong>Network</strong> → recarga con <span class="kbd">Ctrl</span>+<span class="kbd">R</span>.</li>
+            <li>Haz clic en la primera fila (<code>login</code>) → <strong>Headers</strong> → baja a <strong>Response Headers</strong>.</li>
+            <li>Busca estas tres: <code>X-Content-Type-Options</code>, <code>X-Frame-Options</code>, <code>Strict-Transport-Security</code>.</li>
+          </ol>
+          <div class="term"><span class="dim"># Lo que debes ver (valores típicos de Spring Security)</span>
+<span class="ok">x-content-type-options:</span> nosniff
+<span class="ok">x-frame-options:</span> DENY
+<span class="ok">strict-transport-security:</span> max-age=31536000 ; includeSubDomains
+<span class="ok">cache-control:</span> no-cache, no-store, max-age=0, must-revalidate</div>
+          <details><summary class="fw-semibold">¿Para qué sirve cada una?</summary>
+            <ul class="small-muted mt-2 mb-0">
+              <li><strong>nosniff:</strong> el navegador no «adivina» el tipo de archivo; evita que un archivo de texto se ejecute como script.</li>
+              <li><strong>X-Frame-Options: DENY:</strong> nadie puede incrustar tu página dentro de un <code>&lt;iframe&gt;</code> ajeno (evita el «clickjacking»: botones invisibles encima de tu página).</li>
+              <li><strong>Strict-Transport-Security:</strong> le dice al navegador «con este sitio, solo HTTPS» durante un año.</li>
+              <li><strong>Cache-Control:</strong> las páginas con sesión no se guardan en la caché de un computador compartido.</li>
+            </ul>
+            <p class="small-muted mb-0 mt-2">Si falta alguna, anótala y no te preocupes: puede que un proxy la ajuste. Lo importante es saber <em>dónde mirar</em>.</p></details>
+        </div></div>
+      </div></div>
+
+      <div class="card mb-3"><div class="card-body">
+        <div class="paso-grande"><div class="paso-num">4</div><div class="flex-grow-1">
+          <div class="paso-donde"><span class="lugar navegador">DevTools</span> ¿El CSRF sigue activo en los formularios?</div>
+          <ol class="small-muted mt-2">
+            <li>Inicia sesión como <strong>administrador</strong> y abre el formulario de inscripción.</li>
+            <li><span class="kbd">F12</span> → pestaña <strong>Elements</strong> → <span class="kbd">Ctrl</span>+<span class="kbd">F</span> → escribe <code>_csrf</code>.</li>
+            <li>Debes encontrar algo como: <code>&lt;input type="hidden" name="_csrf" value="3f9a…"&gt;</code>.</li>
+          </ol>
+          <details><summary class="fw-semibold">¿Qué es CSRF? (la analogía del talonario)</summary>
+            <p class="small-muted mt-2">Imagina que tu escuela entrega las boletas de retiro de alumnos con un <strong>número de talonario con sello</strong>. Un impostor puede intentar que el director firme una boleta falsa sin el sello. <strong>CSRF</strong> es el ataque en que otra página engaña a tu navegador (que ya tiene tu sesión abierta) para enviar un formulario «en tu nombre». El campo <code>_csrf</code> es el sello: cambia en cada sesión y el sitio atacante no puede conocerlo; si llega un POST sin sello válido, Spring responde <strong>403</strong>.</p>
+            <p class="small-muted mb-0"><strong>¿Cuándo se desactivaría?</strong> En una API REST pura, sin sesión ni cookies (usa tokens en una cabecera). <strong>En este proyecto no:</strong> hay sesión (login) y formularios Thymeleaf, así que debe permanecer activo. Thymeleaf lo inserta solo cuando usas <code>th:action</code>: por eso en el Kit todos los formularios usan <code>th:action</code>.</p></details>
+        </div></div>
+      </div></div>
+
+      <div class="card mb-3"><div class="card-body">
+        <div class="paso-grande"><div class="paso-num">5</div><div class="flex-grow-1">
+          <div class="paso-donde"><span class="lugar navegador">Navegador</span> Prueba de XSS inofensiva</div>
+          <ol class="small-muted mt-2">
+            <li>Como administrador, inscribe un registro con nombre: <code>&lt;b&gt;Prueba&lt;/b&gt; &lt;i&gt;XSS&lt;/i&gt;</code> (respeta la longitud máxima de 40).</li>
+            <li>Mira cómo aparece en la lista.</li>
+            <li>Elimina el registro de prueba al terminar.</li>
+          </ol>
+          <details><summary class="fw-semibold">Ver qué deberías encontrar</summary>
+            <p class="small-muted mt-2 mb-0">Se muestra <strong>literalmente</strong> <code>&lt;b&gt;Prueba&lt;/b&gt; &lt;i&gt;XSS&lt;/i&gt;</code>, sin negrita. <code>th:text</code> «escapa» los símbolos <code>&lt;</code> y <code>&gt;</code>. <strong>XSS</strong> sería que ese texto se ejecutara como código del navegador y robara datos. Solo ocurriría si alguien usa <code>th:utext</code> con datos de usuarios: <em>no lo hagas en tu proyecto</em>.</p></details>
+        </div></div>
+      </div></div>
+
+      <div class="card mb-3"><div class="card-body">
+        <div class="paso-grande"><div class="paso-num">6</div><div class="flex-grow-1">
+          <div class="paso-donde"><span class="lugar render">Render</span> <span class="lugar neon">Neon</span> ¿La conexión a Neon fuerza SSL?</div>
+          <ol class="small-muted mt-2">
+            <li>En Render → tu servicio → <strong>Environment</strong>, abre la variable <code>DB_URL</code> (con el ojito).</li>
+            <li>Comprueba que <strong>termina</strong> en <code>?sslmode=require&amp;channelBinding=require</code>. <strong>No pegues el valor en ningún chat.</strong></li>
+            <li>Comprueba que empieza con <code>jdbc:postgresql://</code>.</li>
+          </ol>
+          <details><summary class="fw-semibold">¿Por qué no es opcional?</summary>
+            <p class="small-muted mt-2 mb-0"><code>sslmode=require</code> significa «cifra la conexión o no conectes». Sin él, los datos viajarían en texto claro entre Render y Neon por internet. Neon además rechaza conexiones sin cifrar. Es el <strong>sobre sellado</strong> de la Semana 14. (Opcional avanzado: en Neon → <em>SQL Editor</em>, ejecuta <code>SELECT ssl FROM pg_stat_ssl WHERE pid = pg_backend_pid();</code> y debe devolver <code>true</code>.)</p></details>
+        </div></div>
+      </div></div>
+
+    </div>
+
+    <div class="tab-pane fade" id="t-ficha">
+      <div class="card mb-3"><div class="card-body">
+        <div class="paso-grande"><div class="paso-num">7</div><div class="flex-grow-1">
+          <div class="paso-donde"><span class="lugar pc">En papel o en el checkpoint</span> Diseña tu ficha única</div>
+          <p class="small-muted mt-2">Tu proyecto guardará <strong>una sola ficha</strong> (sin relaciones entre tablas) con entre <strong>10 y 15 campos</strong>. Ejemplo de dominio distinto al tuyo: un <strong>Dispensario Comunitario</strong> que registra <code>Paciente</code>.</p>
+          <ol class="small-muted">
+            <li>Escribe el nombre de tu entidad en singular y con mayúscula: <code>Paciente</code>, <code>Libro</code>, <code>Menor</code>…</li>
+            <li>Lista 10–15 datos que de verdad necesitas guardar.</li>
+            <li>Para cada uno decide: <strong>tipo Java</strong> (usa la <a href="cheatsheet.html">tabla del cheat sheet</a>), si es <strong>obligatorio</strong> y qué <strong>validación</strong> lleva.</li>
+            <li>Marca con ⭐ los 3 campos que se muestran en la <em>lista</em>; el resto solo en el formulario.</li>
+          </ol>
+          <details><summary class="fw-semibold">Solución de ejemplo (Paciente, 10 campos)</summary>
+            <div class="table-responsive mt-2"><table class="table table-sm table-code">
+              <thead><tr><th>Campo</th><th>Tipo Java</th><th>Obligatorio</th><th>Validación</th><th>En lista</th></tr></thead>
+              <tbody>
+                <tr><td>nombre</td><td>String</td><td>Sí</td><td>@NotBlank, máx. 60</td><td>⭐</td></tr>
+                <tr><td>dpi</td><td>String</td><td>Sí</td><td>@Pattern 13 dígitos</td><td></td></tr>
+                <tr><td>fechaNacimiento</td><td>LocalDate</td><td>Sí</td><td>@Past</td><td>⭐</td></tr>
+                <tr><td>sexo</td><td>String</td><td>Sí</td><td>lista fija (select)</td><td></td></tr>
+                <tr><td>telefono</td><td>String</td><td>No</td><td>@Size(max=15)</td><td></td></tr>
+                <tr><td>direccion</td><td>String</td><td>No</td><td>@Size(max=120)</td><td></td></tr>
+                <tr><td>pesoKg</td><td>BigDecimal</td><td>No</td><td>@DecimalMin("0.5")</td><td></td></tr>
+                <tr><td>tieneSeguro</td><td>boolean</td><td>—</td><td>checkbox</td><td></td></tr>
+                <tr><td>fechaIngreso</td><td>LocalDate</td><td>Sí</td><td>@PastOrPresent</td><td>⭐</td></tr>
+                <tr><td>observaciones</td><td>String (largo)</td><td>No</td><td>@Column(length=500)</td><td></td></tr>
+              </tbody></table></div>
+            <p class="small-muted mb-0">Fíjate: <strong>no hay</strong> una tabla «Consultas» ni «Médicos». Todo lo relacionado va como un campo más de la misma ficha (por ejemplo, <code>observaciones</code>).</p></details>
+        </div></div>
+      </div></div>
+    </div>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Ejercicios — Semana 15 · Seguridad básica, HTTPS y «cómo uso todo lo construido para mi proyecto» (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

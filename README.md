@@ -45,7 +45,8 @@ documentos oficiales y el enlace a la evaluación anónima de la sesión.
 - ✅ **Semana 12** — Persistencia de datos con JPA y Spring Data (3 oct 2026) — los datos por fin sobreviven al reinicio, y se estrena la recarga automática con DevTools
 - ✅ **Semana 13** — Autenticación, roles y renderizado condicional (10 oct 2026) — login con usuarios en la base, BCrypt, dos roles y claves por variables de entorno
 - ✅ **Semana 14** — Despliegue en producción con Render y Neon (17 oct 2026) — ★ Entrega Parcial 3; `.jar`, Dockerfile, PostgreSQL en Neon y URL pública HTTPS. Proyecto de referencia armado desde el Kit en [`Proyecto_Semana_14_Kit/`](Proyecto_Semana_14_Kit/) y verificación en [`VERIFICACION_Semana_14_despliegue.md`](VERIFICACION_Semana_14_despliegue.md)
-- ⏳ Semanas 15–18 — pendientes (se activan en el portal al publicarse)
+- ✅ **Semana 15** — Seguridad básica y HTTPS (24 oct 2026) — versión mínima, sin código nuevo: auditoría (HTTPS, SSL a Neon, CSRF, XSS, cabeceras), checkpoint de entrega y cómo transformar el Kit de la Semana 14 en el proyecto propio (ficha única de 10–15 campos, páginas estáticas y con parámetros)
+- ⏳ Semanas 16–18 — pendientes (se activan en el portal al publicarse)
 
 > **Calendario:** las 18 sesiones no son sábados consecutivos. El **12 de
 > septiembre de 2026 no hubo clase** (semana de independencia), por lo que la

@@ -388,8 +388,37 @@ portal.
     simulador de consola con tubería iluminada y **pregunta de diagnóstico**
     al final de cada escenario (cuenta la primera respuesta; el PDF exige
     los 4 diagnósticos).
-- **Semanas 15–18** — pendientes, mismo patrón reducido descrito en este
-  archivo (copiar `styles.css` y `diagramas.js` de la Semana 14).
+- **Semana 15** (Unidad 8a: Seguridad básica y HTTPS) — completa, **versión
+  mínima por decisión del profesor** (alumnos atrasados con el proyecto): solo
+  teoría y práctica en el navegador, quizzes y challenges, **sin implementar
+  código** (la seguridad la dan Render —HTTPS— y Neon —SSL—). Sin Entrega
+  Parcial (Guía 15 = 1 pt; Actividad en clase 0.66). Desde esta semana hay
+  **congelamiento de características**: no se agregan funciones nuevas; las
+  Semanas 16–18 son QA, presentación y cierre. Páginas (9 + README): las 7 de
+  la plantilla reducida más dos nuevas, `transformar.html` («del Kit a tu
+  proyecto»: mapa de archivos que cambian/no cambian, entidad `Libro` de 13
+  campos como ficha única sin relaciones, tabla Java↔input↔validación,
+  rutas de `SecurityConfig`, trampa de `ddl-auto=update` con columnas
+  obligatorias nuevas) y `paginas.html` (`/creditos` estática en 4 pasos con
+  `permitAll`, `@PathVariable` vs `@RequestParam`, GET vs POST). `proyecto.html`
+  es el **Checkpoint ★**: auditoría (6 chequeos), tabla de la ficha propia
+  (10–15 campos), lista de cotejo con barra de avance, páginas, reflexión y
+  rúbrica; todo se guarda en `localStorage` (clave `s15_checkpoint_v1`).
+  El challenge tiene tres pestañas (campos→tipos Java con cajas `mvc-zone`,
+  receta del Kit con 3 trampas, detective de seguridad con 4 casos).
+  Hechos verificados contra una copia del Kit (no se incluye en el repo):
+  cabeceras reales `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`,
+  `Cache-Control: no-cache…`; `Strict-Transport-Security` solo sale por HTTPS
+  (se comprueba en Render, no en localhost); POST sin `_csrf` → 403;
+  `th:text` escapa `<b>`; `/libros/abc` → 400 y `/libros/99` → 500 (el
+  `buscarPorId` del Kit lanza excepción). Las páginas se generaron con un
+  script de fragmentos + plantilla común (no se conserva en el repo; el
+  resultado es HTML estático como en el resto de semanas). Dominios:
+  ejercicios = Escuela de Fútbol/Dispensario (ficha Paciente), transformar y
+  paginas = Biblioteca (`Libro`), challenge = Banco de Alimentos «Mesa
+  Compartida» (`Donacion`), proyecto = el real.
+- **Semanas 16–18** — pendientes, mismo patrón reducido descrito en este
+  archivo (copiar `styles.css` y `diagramas.js` de la Semana 14/15).
 
 ### Calendario real del curso (ojo con los saltos)
 
