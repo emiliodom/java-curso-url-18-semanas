@@ -33,8 +33,8 @@
   <header class="hero py-4">
     <div class="container">
       <div class="brand-pill mb-2">Cheat Sheet · Semana 15</div>
-      <h1 class="h2 fw-bold mb-2">Seguridad en una página y tabla de tipos</h1>
-      <p class="small-muted mb-0">Tres pestañas: qué protege cada pieza, cómo elegir el tipo de cada campo y qué errores esperar al adaptar el Kit.</p>
+      <h1 class="h2 fw-bold mb-2">Seguridad en una página, tabla de tipos y contenidos de sesión</h1>
+      <p class="small-muted mb-0">Cuatro pestañas: qué protege cada pieza, cómo elegir el tipo de cada campo, errores comunes al adaptar el Kit y el banco de contenidos de los Quizzes (Presaberes y Final).</p>
     </div>
   </header>
 
@@ -43,6 +43,7 @@
       <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#t-seg" type="button">🔐 Seguridad</button></li>
       <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#t-tipos" type="button">🧩 Campos y tipos</button></li>
       <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#t-err" type="button">🛠️ Errores comunes</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#t-quizzes" type="button">📝 Contenidos de sesión (Quizzes)</button></li>
     </ul>
 
     <div class="tab-content">
@@ -97,9 +98,203 @@
           <tr><td><code>/creditos</code> da 404 pero <code>/creditos.html</code> funciona</td><td>El archivo está en <code>static/</code>: se sirve con su nombre completo.</td><td>Crea el método con <code>@GetMapping("/creditos")</code> y la plantilla en <code>templates/</code>.</td></tr>
           <tr><td><code>/libros/abc</code> da error 400</td><td><code>@PathVariable Long id</code> no puede convertir «abc» a número.</td><td>Normal: el navegador manda un número. Si quieres, atiende ese caso en <code>error.html</code>.</td></tr>
           <tr><td>Error al arrancar: <code>Property or field 'titulo' cannot be found</code></td><td>Renombraste un campo en la entidad pero no en <code>th:field="*{…}"</code> de la plantilla.</td><td>Busca el nombre viejo en <code>templates/</code> (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>F</kbd> en VS Code).</td></tr>
-          <tr><td>Fecha o número «no válido» al guardar</td><td>El input no coincide con el tipo (<code>type="text"</code> para un <code>LocalDate</code>, o coma decimal).</td><td>Usa <code>type="date"</code> / <code>type="number" step="0.01"</code>.</td></tr>
+          <tr><td>Fecha o número «no válido» al guardar</td><td>El input no coincide con el tipo (<code>type="date"</code> para un <code>LocalDate</code>, o coma decimal).</td><td>Usa <code>type="date"</code> / <code>type="number" step="0.01"</code>.</td></tr>
           <tr><td>Un campo texto muestra <code>&lt;script&gt;</code> ejecutándose</td><td>Se usó <code>th:utext</code>.</td><td>Cámbialo a <code>th:text</code>.</td></tr>
         </tbody></table></div>
+    </div>
+
+    <!-- NUEVA PESTAÑA: CONTENIDOS DE SESIÓN (QUIZZES) -->
+    <div class="tab-pane fade" id="t-quizzes">
+      <div class="callout info mb-3">
+        <div class="fw-semibold">🎯 Banco conceptual de la Sesión 15 (Presaberes y Quiz Final)</div>
+        <div class="small-muted">Aquí tienes un resumen de estudio rápido con todas las preguntas y aprendizajes evaluados en el <a href="quiz.html">Quiz interactivo</a>. Está dividido en tres bloques: <strong>repaso de fundamentos (Presaberes)</strong>, <strong>seguridad en producción (Núcleo)</strong> y <strong>transformación hacia el proyecto propio (Quiz Final)</strong>.</div>
+      </div>
+
+      <!-- BLOQUE 1: PRESABERES -->
+      <div class="card mb-3">
+        <div class="card-header bg-light fw-bold">
+          🟡 Bloque 1: Presaberes — Repaso de persistencia, roles y variables (Semanas 12–14)
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive"><table class="table table-sm table-striped align-middle mb-0">
+            <thead>
+              <tr>
+                <th style="width: 32%;">Concepto / Pregunta evaluada</th>
+                <th style="width: 34%;">Respuesta correcta</th>
+                <th style="width: 34%;">Justificación técnica / Clave de aula</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>¿Por qué <code>DB_PASSWORD</code> vive en variables de entorno?</strong></td>
+                <td>Porque el código se publica en GitHub y cualquiera podría leer la clave.</td>
+                <td>El código fuente es público. Las variables de entorno inyectan secretos desde el host (Render) sin guardarlos en el repositorio.</td>
+              </tr>
+              <tr>
+                <td><strong>¿Para qué sirven dos perfiles (<code>dev</code> y <code>prod</code>)?</strong></td>
+                <td>Para usar H2 en local y PostgreSQL (Neon) en internet con exactamente el mismo código.</td>
+                <td>Misma aplicación y lógica de negocio, diferente infraestructura y destino de base de datos según el entorno de ejecución.</td>
+              </tr>
+              <tr>
+                <td><strong>¿Qué significa almacenar contraseñas con BCrypt?</strong></td>
+                <td>Se almacena un resumen criptográfico irreversible (hash) y no la contraseña en texto plano.</td>
+                <td>Si un atacante accede a la tabla <code>usuario</code>, no puede revertir el hash para obtener la contraseña original de las personas.</td>
+              </tr>
+              <tr>
+                <td><strong>¿Qué pasa si un ENTRENADOR escribe <code>/jugadores/nuevo</code> a mano?</strong></td>
+                <td>Recibe un error 403 (Acceso denegado).</td>
+                <td>La seguridad real está en las reglas del servidor (<code>SecurityConfig</code>), no en ocultar enlaces en el HTML.</td>
+              </tr>
+              <tr>
+                <td><strong>Comportamiento de <code>ddl-auto=update</code> al agregar campos</strong></td>
+                <td>Agrega nuevas tablas y columnas a la base, pero nunca renombra ni elimina columnas previas.</td>
+                <td>Hibernate amplía el esquema de forma aditiva. Es práctico en clase, pero requiere precaución con datos antiguos.</td>
+              </tr>
+              <tr>
+                <td><strong>Diferencia: <code>@NotBlank</code> vs. <code>@Column(nullable = false)</code></strong></td>
+                <td><code>@NotBlank</code> valida en la app y genera el mensaje de error; <code>nullable=false</code> lo exige la base de datos.</td>
+                <td>Doble candado defensivo: la validación en Bean Validation da una respuesta amigable al usuario; la restricción SQL protege la integridad relacional.</td>
+              </tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <!-- BLOQUE 2: SEGURIDAD NÚCLEO (AMBAS) -->
+      <div class="card mb-3">
+        <div class="card-header bg-light fw-bold">
+          🌐 Bloque 2: Núcleo — Seguridad básica, HTTPS, Neon SSL y Protecciones Web (Presaberes y Final)
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive"><table class="table table-sm table-striped align-middle mb-0">
+            <thead>
+              <tr>
+                <th style="width: 32%;">Concepto / Pregunta evaluada</th>
+                <th style="width: 34%;">Respuesta correcta</th>
+                <th style="width: 34%;">Justificación técnica / Clave de aula</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>¿Quién provee el candado HTTPS en <code>*.onrender.com</code>?</strong></td>
+                <td>Render, automáticamente y sin costo mediante certificados SSL gestionados.</td>
+                <td>No hay que configurar certificados manualmente; el rol como desarrollador es <em>verificar y auditar</em> que esté activo.</td>
+              </tr>
+              <tr>
+                <td><strong>¿Qué garantiza <code>sslmode=require</code> en <code>DB_URL</code>?</strong></td>
+                <td>Que todo el tráfico entre la aplicación Spring Boot y Neon viaje estrictamente cifrado.</td>
+                <td>Es el "sobre sellado" de la conexión JDBC hacia PostgreSQL; Neon además rechaza cualquier intento de conexión insegura.</td>
+              </tr>
+              <tr>
+                <td><strong>¿Qué es el campo oculto <code>_csrf</code> en los formularios?</strong></td>
+                <td>Un token único («sello») que demuestra que el envío proviene legítimamente de nuestra propia página.</td>
+                <td>Protege contra Cross-Site Request Forgery (CSRF). Thymeleaf lo inserta automáticamente al usar <code>th:action</code>.</td>
+              </tr>
+              <tr>
+                <td><strong>¿Cuándo tendría sentido desactivar CSRF?</strong></td>
+                <td>Únicamente en una API REST pura sin sesión ni cookies (autenticada por tokens tipo Bearer).</td>
+                <td>En aplicaciones web tradicionales con cookies de sesión y formularios Thymeleaf, desactivar CSRF es una vulnerabilidad grave.</td>
+              </tr>
+              <tr>
+                <td><strong>Entrada maliciosa <code>&lt;script&gt;</code> renderizada con <code>th:text</code></strong></td>
+                <td>Se visualiza como texto plano seguro porque Thymeleaf escapa caracteres <code>&lt;</code> y <code>&gt;</code>.</td>
+                <td>Mitiga el ataque Cross-Site Scripting (XSS). La vulnerabilidad ocurriría si se usara indebidamente <code>th:utext</code>.</td>
+              </tr>
+              <tr>
+                <td><strong>Propósito de la cabecera <code>X-Frame-Options: DENY</code></strong></td>
+                <td>Impide que sitios externos incrusten nuestra página dentro de un <code>&lt;iframe&gt;</code> ajeno.</td>
+                <td>Protección contra <em>clickjacking</em> (superposición de interfaces invisibles para engañar clics del usuario).</td>
+              </tr>
+              <tr>
+                <td><strong>Tipo de dato para códigos como ISBN o DPI</strong></td>
+                <td><code>String</code> (texto con patrón de validación).</td>
+                <td>No se operan aritméticamente, pueden iniciar con cero y llevan guiones. Un <code>Integer</code> destruiría el formato.</td>
+              </tr>
+              <tr>
+                <td><strong>Tipo de dato para dinero y precios con decimales</strong></td>
+                <td><code>BigDecimal</code> (con <code>step="0.01"</code> en el HTML).</td>
+                <td>Evita errores de redondeo en punto flotante que sufriría un <code>Double</code> en transacciones contables.</td>
+              </tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <!-- BLOQUE 3: QUIZ FINAL Y PROYECTO -->
+      <div class="card mb-3">
+        <div class="card-header bg-light fw-bold">
+          🔴 Bloque 3: Quiz Final — Adaptación al proyecto propio, páginas, rutas y parámetros
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive"><table class="table table-sm table-striped align-middle mb-0">
+            <thead>
+              <tr>
+                <th style="width: 32%;">Concepto / Pregunta evaluada</th>
+                <th style="width: 34%;">Respuesta correcta</th>
+                <th style="width: 34%;">Justificación técnica / Clave de aula</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Error: <code>contains null values</code> al desplegar en Neon</strong></td>
+                <td>Se agregó una columna <code>nullable=false</code> a una tabla que ya tenía registros.</td>
+                <td>Solución: vaciar la tabla de pruebas en Neon antes del deploy o definir temporalmente la columna como opcional.</td>
+              </tr>
+              <tr>
+                <td><strong>Formulario con <code>action="/libros"</code> devuelve 403 Forbidden</strong></td>
+                <td>Falta la sintaxis <code>th:action="@{/libros}"</code> de Thymeleaf, omitiendo el token <code>_csrf</code>.</td>
+                <td>Spring Security bloquea cualquier petición POST que no presente un token CSRF válido asociado a la sesión.</td>
+              </tr>
+              <tr>
+                <td><strong>Página <code>/creditos</code> redirige inesperadamente al login</strong></td>
+                <td>No fue agregada a la lista <code>permitAll()</code> en <code>SecurityConfig</code>.</td>
+                <td>Por defecto, <code>anyRequest().authenticated()</code> intercepta y exige sesión para cualquier ruta no exenta explícitamente.</td>
+              </tr>
+              <tr>
+                <td><strong>Ficha detallada de un registro específico (<code>/libros/7</code>)</strong></td>
+                <td><code>@GetMapping("/libros/{id}")</code> capturado mediante <code>@PathVariable Long id</code>.</td>
+                <td>El identificador único del recurso forma parte integral de la ruta canónica.</td>
+              </tr>
+              <tr>
+                <td><strong>Filtrado opcional en URL: <code>/buscar?genero=Novela</code></strong></td>
+                <td><code>@RequestParam(defaultValue = "") String genero</code>.</td>
+                <td>Los criterios de búsqueda/filtrado viajan tras el signo <code>?</code> (query string) y deben contemplar valores por omisión.</td>
+              </tr>
+              <tr>
+                <td><strong>Renombrar la clase <code>Jugador</code> a <code>Libro</code> en producción</strong></td>
+                <td>Hibernate crea la tabla <code>libro</code> vacía; los datos viejos permanecen intactos en la tabla <code>jugador</code>.</td>
+                <td><code>ddl-auto=update</code> solo crea tablas nuevas; no sabe inferir un renombramiento estructural entre entidades.</td>
+              </tr>
+              <tr>
+                <td><strong>Cambiar rutas a <code>/libros</code> sin ajustar <code>SecurityConfig</code></strong></td>
+                <td>Las nuevas rutas pierden la regla restrictiva de rol (ADMIN) y quedan abiertas a cualquier usuario logueado.</td>
+                <td>Las autorizaciones dependen de patrones de URL explícitos (ej. <code>/libros/**</code>); si no coinciden, caen en la regla general.</td>
+              </tr>
+              <tr>
+                <td><strong>¿Por qué el buscador usa GET y el registro usa POST?</strong></td>
+                <td>Lectura = GET (segura, idempotente y almacenable en enlaces); Modificación = POST (requiere protección CSRF).</td>
+                <td>Estándar HTTP: nunca usar GET para mutar el estado o persistir datos en la base de datos.</td>
+              </tr>
+              <tr>
+                <td><strong>Visualización de fichas de 10–15 campos en la lista web</strong></td>
+                <td>Mostrar únicamente 3 a 4 columnas identificativas; el resto se reserva para la vista de detalle o edición.</td>
+                <td>Una tabla con 15 columnas colapsa la experiencia visual y la usabilidad móvil.</td>
+              </tr>
+              <tr>
+                <td><strong>Mapeo de fechas de ingreso o recepción</strong></td>
+                <td>Tipo <code>LocalDate</code> en Java acompañado de un <code>input type="date"</code> en HTML.</td>
+                <td>Estandariza fechas en formato ISO-8601 (<code>YYYY-MM-DD</code>) previniendo confusiones culturales entre día y mes.</td>
+              </tr>
+              <tr>
+                <td><strong>Significado del «congelamiento de características» (feature freeze)</strong></td>
+                <td>No se admiten dependencias ni funciones adicionales; el foco es migrar, auditar, probar y estabilizar el proyecto.</td>
+                <td>Permite que los alumnos con rezago alcancen la meta de entrega sin dispersión técnica innecesaria.</td>
+              </tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
     </div>
     </div>
   </main>
