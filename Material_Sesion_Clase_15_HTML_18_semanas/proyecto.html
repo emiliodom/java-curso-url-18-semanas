@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Checkpoint de entrega — Semana 15</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top no-print">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 15 — Seguridad y tu proyecto</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="transformar.html">Del Kit a tu proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="paginas.html">Páginas nuevas</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Checkpoint ★</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">★ Checkpoint de entrega · Guía de Aprendizaje 15 (1 pt)</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Auditoría, ficha de tu proyecto y lista de cotejo</h1>
+          <div class="small-muted">Una sola página que sirve de <strong>evidencia de la Guía 15</strong> y de <strong>mapa de ruta</strong> hacia la ★ Entrega Parcial 4 (Semana 17). Todo lo que escribes se <strong>guarda solo en este navegador</strong>.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="exportarPdf()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 1000px;">
+
+    <div class="card mb-3"><div class="card-body">
+      <div class="row g-2">
+        <div class="col-md-4"><label class="form-label fw-semibold mb-1" for="nombreEst">Nombre del estudiante</label><input id="nombreEst" class="form-control guardar" placeholder="Nombre y apellido"></div>
+        <div class="col-md-4"><label class="form-label fw-semibold mb-1" for="nombreProy">Nombre de mi proyecto</label><input id="nombreProy" class="form-control guardar" placeholder="Ej.: Biblioteca Comunitaria"></div>
+        <div class="col-md-4"><label class="form-label fw-semibold mb-1" for="urlProy">URL pública (Render)</label><input id="urlProy" class="form-control guardar" placeholder="https://…onrender.com"></div>
+      </div>
+      <div class="small-muted mt-2">Nunca escribas aquí contraseñas ni la cadena completa de Neon.</div>
+    </div></div>
+
+    <div class="card mb-4"><div class="card-body">
+      <h2 class="h5 section-title">📍 Hasta dónde ha llegado el proyecto (y hasta dónde llegará)</h2>
+      <div class="row g-3">
+        <div class="col-md-6"><div class="callout success mb-0"><div class="fw-semibold">Lo que ya existe (no se vuelve a construir)</div>
+          <ul class="small-muted mb-0"><li>Lista, crear, editar y eliminar registros</li><li>Validación con mensajes en español</li><li>Base de datos real (H2 en <code>dev</code>, Neon en <code>prod</code>)</li><li>Login, roles ADMIN/ENTRENADOR y contraseñas cifradas</li><li>Publicación en Render con HTTPS</li><li>Auditoría de seguridad básica (hoy)</li></ul></div></div>
+        <div class="col-md-6"><div class="callout warning mb-0"><div class="fw-semibold">Lo que NO se agregará</div>
+          <ul class="small-muted mb-0"><li>Más tablas o relaciones entre tablas</li><li>Nuevas librerías o funciones</li><li>Reportes, correo, subida de archivos</li></ul>
+          <div class="fw-semibold mt-2">Lo que sí falta (Semanas 16–18)</div>
+          <ul class="small-muted mb-0"><li>S16: casos de prueba y redeploy</li><li>S17: presentación ★ Entrega Parcial 4</li><li>S18: demo final</li></ul></div></div>
+      </div>
+    </div></div>
+
+    <!-- PARTE A -->
+    <div class="card mb-4"><div class="card-body">
+      <h2 class="h5 section-title">A. Auditoría de seguridad básica <span class="badge text-bg-secondary">25 %</span></h2>
+      <p class="small-muted">Repite los <a href="ejercicios.html">ejercicios 1–6</a> con <strong>tu</strong> URL. Marca el resultado y escribe en una frase qué viste (sin claves).</p>
+      <div class="table-responsive"><table class="table table-sm align-middle">
+        <thead><tr><th>Chequeo</th><th style="width:130px">Resultado</th><th>Evidencia (qué viste)</th></tr></thead>
+        <tbody id="tablaAuditoria"></tbody>
+      </table></div>
+    </div></div>
+
+    <!-- PARTE B -->
+    <div class="card mb-4"><div class="card-body">
+      <h2 class="h5 section-title">B. Mi ficha única (entre 10 y 15 campos) <span class="badge text-bg-secondary">25 %</span></h2>
+      <p class="small-muted">Mi entidad se llama: <input id="nombreEntidad" class="form-control form-control-sm d-inline-block guardar" style="max-width:220px" placeholder="Ej.: Libro"> &nbsp;·&nbsp; consulta el <a href="cheatsheet.html">cheat sheet de tipos</a> y el <a href="transformar.html">ejemplo Libro</a>.</p>
+      <div class="table-responsive"><table class="table table-sm align-middle" id="tablaFicha">
+        <thead><tr><th>#</th><th>Campo (camelCase)</th><th>Tipo Java</th><th>¿Obligatorio?</th><th>Validación / input</th><th>⭐ En lista</th><th class="no-print"></th></tr></thead>
+        <tbody></tbody>
+      </table></div>
+      <div class="d-flex align-items-center gap-3 flex-wrap no-print">
+        <button class="btn btn-sm btn-outline-primary" onclick="agregarFila()">+ Agregar campo</button>
+        <span class="small" id="contadorCampos"></span>
+      </div>
+      <div class="small-muted mt-2">Recuerda: sin relaciones; el campo <code>id</code> ya existe y no se cuenta. Máximo 4 campos con ⭐.</div>
+    </div></div>
+
+    <!-- PARTE C -->
+    <div class="card mb-4"><div class="card-body">
+      <h2 class="h5 section-title">C. Lista de cotejo de entrega <span class="badge text-bg-secondary">30 %</span></h2>
+      <div class="d-flex align-items-center gap-3 mb-2">
+        <div class="progress flex-grow-1" style="height:1.1rem"><div id="barra" class="progress-bar bg-success" style="width:0%">0 %</div></div>
+        <span class="small fw-semibold" id="barraTxt">0 / 0</span>
+      </div>
+      <div id="checklist"></div>
+      <div class="callout danger mt-3 mb-0"><div class="small-muted"><strong>Regla:</strong> no marques un punto que no hayas <em>probado</em>. «Live» en Render no significa «funciona»: se prueba con datos reales y se reinicia el servicio.</div></div>
+    </div></div>
+
+    <!-- PARTE D -->
+    <div class="card mb-4"><div class="card-body">
+      <h2 class="h5 section-title">D. Mis páginas <span class="badge text-bg-secondary">10 %</span></h2>
+      <p class="small-muted">Lee <a href="paginas.html">Páginas nuevas</a> y responde (diseño; implementarlo es opcional).</p>
+      <div class="row g-3">
+        <div class="col-md-6"><label class="form-label fw-semibold" for="d1">Mi página estática será: (nombre, ruta, ¿pública o con sesión?)</label><textarea id="d1" class="form-control guardar" rows="3" placeholder="Ej.: /creditos, pública, con autor y tecnologías"></textarea></div>
+        <div class="col-md-6"><label class="form-label fw-semibold" for="d2">Mi página con parámetro será: (ruta, parámetro y por qué va en la ruta o después del ?)</label><textarea id="d2" class="form-control guardar" rows="3" placeholder="Ej.: /libros/{id} porque identifica un registro"></textarea></div>
+      </div>
+    </div></div>
+
+    <!-- PARTE E -->
+    <div class="card mb-4"><div class="card-body">
+      <h2 class="h5 section-title">E. Reflexión y plan hasta la Semana 17 <span class="badge text-bg-secondary">10 %</span></h2>
+      <div class="row g-3">
+        <div class="col-md-6"><label class="form-label fw-semibold" for="e1">Hoy mi proyecto ya hace… y todavía le falta… (3–5 líneas)</label><textarea id="e1" class="form-control guardar" rows="4"></textarea></div>
+        <div class="col-md-6"><label class="form-label fw-semibold" for="e2">Mi plan: ¿qué hago esta semana, qué problema espero y a quién le pediré ayuda?</label><textarea id="e2" class="form-control guardar" rows="4"></textarea></div>
+      </div>
+    </div></div>
+
+    <div class="card mb-4"><div class="card-body">
+      <h2 class="h5 section-title">📏 Rúbrica (1 punto)</h2>
+      <div class="table-responsive"><table class="table table-sm">
+        <thead><tr><th>Parte</th><th>Peso</th><th>Excelente</th><th>Insuficiente</th></tr></thead>
+        <tbody>
+          <tr><td>A. Auditoría</td><td>25 %</td><td>6 chequeos con resultado y evidencia propia</td><td>Sin evidencia o copiada del ejemplo</td></tr>
+          <tr><td>B. Ficha</td><td>25 %</td><td>10–15 campos, tipos justificados, validaciones razonables, ⭐ ≤ 4</td><td>Menos de 10 campos o tipos que no corresponden</td></tr>
+          <tr><td>C. Lista de cotejo</td><td>30 %</td><td>≥ 80 % marcado con honestidad; lo pendiente tiene plan</td><td>Todo marcado sin pruebas o casi nada marcado</td></tr>
+          <tr><td>D. Páginas</td><td>10 %</td><td>Ruta, visibilidad y parámetro bien razonados</td><td>Sin respuesta</td></tr>
+          <tr><td>E. Reflexión</td><td>10 %</td><td>Honesta, concreta y con plan</td><td>Genérica</td></tr>
+        </tbody></table></div>
+      <div class="small-muted">Entrega: <strong>Exportar a PDF</strong> → <code>Guia15_TuNombre.pdf</code> al aula virtual, junto con los PDF del Quiz y del Challenge, antes de la Sesión 16 (31 de octubre de 2026). Esta lista de cotejo es la base de la ★ Entrega Parcial 4 (proyecto completo).</div>
+    </div></div>
+  </main>
+
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Checkpoint de entrega — Semana 15 · Seguridad básica, HTTPS y «cómo uso todo lo construido para mi proyecto» (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script>
+    var AUDIT = [
+      '1. La URL de Render carga con candado HTTPS',
+      '2. Escribir http:// redirige a https://',
+      '3. Cabeceras: nosniff, X-Frame-Options, Strict-Transport-Security presentes',
+      '4. CSRF activo: existe el campo oculto _csrf en los formularios',
+      '5. XSS: un nombre con <b> se ve como texto (th:text)',
+      '6. DB_URL termina en sslmode=require (Neon fuerza SSL)'
+    ];
+    var CHECKS = [
+      ['📦 Código y ficha', [
+        'Mi entidad tiene entre 10 y 15 campos con el tipo Java correcto',
+        'Cada campo obligatorio tiene validación con mensaje en español y nullable = false',
+        'El formulario muestra todos los campos y guarda sin errores (perfil dev)',
+        'La lista muestra solo 3–4 campos; Editar/Eliminar solo los ve el ADMIN',
+        'Los textos (títulos, login, error) usan el nombre de mi organización, no el del Kit',
+        'SecurityConfig usa las rutas de MI entidad (no /jugadores)']],
+      ['☁️ Base de datos y despliegue', [
+        'La URL de Render carga con HTTPS y muestra mi aplicación',
+        'En Render el perfil es prod (SPRING_PROFILES_ACTIVE) y la base es Neon, no H2',
+        'Un registro que creo sobrevive a Manual Deploy → Restart service',
+        'Ninguna contraseña ni cadena de Neon está en GitHub; datos/ está en .gitignore']],
+      ['🔐 Seguridad', [
+        'CSRF sigue activo (no hay csrf.disable() en SecurityConfig)',
+        'El ENTRENADOR recibe 403 al escribir a mano la ruta de crear',
+        'No uso th:utext con datos de usuarios']],
+      ['📝 Documentación', [
+        'El README del repositorio explica qué hace la app, su URL pública y cómo ejecutarla (sin claves)',
+        'Mi Ficha del Proyecto está actualizada con la entidad y sus campos',
+        'La rama main contiene la versión que está desplegada']],
+      ['🎤 Presentación (Semana 17)', [
+        'Tengo un guion de 5 minutos: problema, demo (crear/editar/eliminar/login) y lo que aprendí',
+        'Tengo una página de créditos o acerca de (opcional) y mi nombre aparece en la app']]
+    ];
+    var TIPOS = ['String', 'Integer', 'Long', 'BigDecimal', 'LocalDate', 'boolean'];
+    var KEY = 's15_checkpoint_v1';
+    var estado = JSON.parse(localStorage.getItem(KEY) || '{}');
+    estado.campos = estado.campos || {}; estado.audit = estado.audit || {}; estado.checks = estado.checks || {}; estado.filas = estado.filas || 10;
+    function guardar() { localStorage.setItem(KEY, JSON.stringify(estado)); }
+    function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
+    // Campos de texto simples
+    document.querySelectorAll('.guardar').forEach(function (el) {
+      el.value = estado.campos[el.id] || '';
+      el.addEventListener('input', function () { estado.campos[el.id] = el.value; guardar(); });
+    });
+
+    // Parte A
+    var tb = document.getElementById('tablaAuditoria');
+    AUDIT.forEach(function (t, i) {
+      var a = estado.audit[i] || { r: '', e: '' };
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td class="small">' + esc(t) + '</td>' +
+        '<td><select class="form-select form-select-sm"><option value="">—</option><option value="ok">✅ Cumple</option><option value="no">❌ No cumple</option></select></td>' +
+        '<td><input class="form-control form-control-sm" placeholder="Qué viste"></td>';
+      var sel = tr.querySelector('select'), inp = tr.querySelector('input');
+      sel.value = a.r; inp.value = a.e;
+      sel.addEventListener('change', function () { estado.audit[i] = { r: sel.value, e: inp.value }; guardar(); });
+      inp.addEventListener('input', function () { estado.audit[i] = { r: sel.value, e: inp.value }; guardar(); });
+      tb.appendChild(tr);
+    });
+
+    // Parte B
+    var fichaBody = document.querySelector('#tablaFicha tbody');
+    function filaFicha(i) {
+      var f = estado.campos['f' + i] || { n: '', t: 'String', o: false, v: '', l: false };
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td>' + (i + 1) + '</td>' +
+        '<td><input class="form-control form-control-sm" placeholder="fechaIngreso"></td>' +
+        '<td><select class="form-select form-select-sm">' + TIPOS.map(function (t) { return '<option>' + t + '</option>'; }).join('') + '</select></td>' +
+        '<td class="text-center"><input type="checkbox" class="form-check-input"></td>' +
+        '<td><input class="form-control form-control-sm" placeholder="@NotBlank, máx. 60 · type=text"></td>' +
+        '<td class="text-center"><input type="checkbox" class="form-check-input"></td>' +
+        '<td class="no-print"><button class="btn btn-sm btn-outline-danger" title="Quitar">✕</button></td>';
+      var ins = tr.querySelectorAll('input'), sel = tr.querySelector('select');
+      ins[0].value = f.n; sel.value = f.t; ins[1].checked = f.o; ins[2].value = f.v; ins[3].checked = f.l;
+      function volcar() {
+        estado.campos['f' + i] = { n: ins[0].value, t: sel.value, o: ins[1].checked, v: ins[2].value, l: ins[3].checked };
+        guardar(); contar();
+      }
+      [ins[0], ins[2]].forEach(function (x) { x.addEventListener('input', volcar); });
+      sel.addEventListener('change', volcar); ins[1].addEventListener('change', volcar); ins[3].addEventListener('change', volcar);
+      tr.querySelector('button').addEventListener('click', function () {
+        for (var k = i; k < estado.filas - 1; k++) estado.campos['f' + k] = estado.campos['f' + (k + 1)];
+        delete estado.campos['f' + (estado.filas - 1)]; estado.filas = Math.max(1, estado.filas - 1);
+        guardar(); pintarFicha();
+      });
+      return tr;
+    }
+    function pintarFicha() { fichaBody.innerHTML = ''; for (var i = 0; i < estado.filas; i++) fichaBody.appendChild(filaFicha(i)); contar(); }
+    function agregarFila() { if (estado.filas >= 15) { alert('El máximo es 15 campos.'); return; } estado.filas++; guardar(); pintarFicha(); }
+    function contar() {
+      var n = 0, l = 0;
+      for (var i = 0; i < estado.filas; i++) { var f = estado.campos['f' + i]; if (f && f.n.trim()) { n++; if (f.l) l++; } }
+      var ok = n >= 10 && n <= 15 && l <= 4;
+      document.getElementById('contadorCampos').innerHTML = (ok ? '✅ ' : '⚠️ ') + 'Campos escritos: <strong>' + n + '</strong> (meta 10–15) · Con ⭐: <strong>' + l + '</strong> (máx. 4)';
+    }
+    pintarFicha();
+
+    // Parte C
+    var total = 0; CHECKS.forEach(function (g) { total += g[1].length; });
+    function barra() {
+      var h = 0; Object.keys(estado.checks).forEach(function (k) { if (estado.checks[k]) h++; });
+      var p = Math.round(h / total * 100);
+      var b = document.getElementById('barra'); b.style.width = p + '%'; b.textContent = p + ' %';
+      document.getElementById('barraTxt').textContent = h + ' / ' + total;
+    }
+    var cl = document.getElementById('checklist');
+    CHECKS.forEach(function (g, gi) {
+      var div = document.createElement('div'); div.className = 'mb-3';
+      div.innerHTML = '<div class="fw-semibold mb-1">' + g[0] + '</div>';
+      g[1].forEach(function (t, ti) {
+        var id = 'c' + gi + '_' + ti;
+        var row = document.createElement('div'); row.className = 'form-check';
+        row.innerHTML = '<input class="form-check-input" type="checkbox" id="' + id + '"><label class="form-check-label small" for="' + id + '">' + esc(t) + '</label>';
+        var cb = row.querySelector('input'); cb.checked = !!estado.checks[id];
+        cb.addEventListener('change', function () { estado.checks[id] = cb.checked; guardar(); barra(); });
+        div.appendChild(row);
+      });
+      cl.appendChild(div);
+    });
+    barra();
+
+    function exportarPdf() {
+      if (!document.getElementById('nombreEst').value.trim()) { alert('Escribe tu nombre para identificar el PDF.'); document.getElementById('nombreEst').focus(); return; }
+      window.print();
+    }
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
