@@ -38,7 +38,7 @@ Sesión **[sincrónica]{.underline}** #15 — Sábado 24 de octubre de 2026, 11:
 > `Material_Sesion_Clase_15_HTML_18_semanas/` (hub `index.html` con el
 > inventario «hasta dónde hemos llegado», quiz unificado, guía docente,
 > `ejercicios.html` con seis chequeos de auditoría y el diseño de la ficha
-> propia, cheat sheet de tres pestañas, `transformar.html` —del Kit a tu
+> propia, cheat sheet de cuatro pestañas (con los contenidos de los quizzes), `transformar.html` —del Kit a tu
 > proyecto—, `paginas.html` —páginas estáticas y con parámetros—, challenge
 > de tres retos y la página «Checkpoint» con la lista de cotejo de entrega).
 >

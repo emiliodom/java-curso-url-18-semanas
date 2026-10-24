@@ -11,7 +11,7 @@ Versión **mínima por decisión del docente** (los estudiantes van atrasados co
 | `index.html` | Portada: mapa del curso, diagrama «quién protege qué», inventario «hasta dónde hemos llegado» |
 | `clase.html` | Guía docente minuto a minuto, preparación y Plan B |
 | `ejercicios.html` | 6 chequeos de auditoría (candado, redirección, cabeceras, CSRF, XSS, SSL a Neon) + diseño de la ficha propia |
-| `cheatsheet.html` | 3 pestañas: seguridad, tabla de tipos Java ↔ input HTML ↔ validación, errores comunes |
+| `cheatsheet.html` | 4 pestañas: seguridad, tabla de tipos Java ↔ input HTML ↔ validación, errores comunes y contenidos de sesión (Presaberes y Final) |
 | `transformar.html` | **Del Kit a tu proyecto**: mapa de archivos, entidad `Libro` completa, formulario, lista, SecurityConfig y la trampa de `ddl-auto=update` |
 | `paginas.html` | Páginas estáticas (`/creditos`) y páginas con parámetros (`@PathVariable`, `@RequestParam`) |
 | `quiz.html` | Presaberes (8) y Final (12), banco de 26 preguntas, opciones barajadas |
@@ -29,3 +29,4 @@ Versión **mínima por decisión del docente** (los estudiantes van atrasados co
 
 - Actividad en clase — Sesión 15 (0.66 pts): PDF del quiz Final + PDF del challenge.
 - Guía de Aprendizaje 15 (1 pt): PDF del Checkpoint ★ (`proyecto.html`), antes de la Sesión 16 (31 de octubre de 2026).
+
