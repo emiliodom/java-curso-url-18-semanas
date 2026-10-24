@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cheat Sheet — Semana 15</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top no-print">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 15 — Seguridad y tu proyecto</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="transformar.html">Del Kit a tu proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" href="paginas.html">Páginas nuevas</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Checkpoint ★</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="brand-pill mb-2">Cheat Sheet · Semana 15</div>
+      <h1 class="h2 fw-bold mb-2">Seguridad en una página y tabla de tipos</h1>
+      <p class="small-muted mb-0">Tres pestañas: qué protege cada pieza, cómo elegir el tipo de cada campo y qué errores esperar al adaptar el Kit.</p>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 1000px;">
+    <ul class="nav nav-tabs mb-3 no-print" role="tablist">
+      <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#t-seg" type="button">🔐 Seguridad</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#t-tipos" type="button">🧩 Campos y tipos</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#t-err" type="button">🛠️ Errores comunes</button></li>
+    </ul>
+
+    <div class="tab-content">
+    <div class="tab-pane fade show active" id="t-seg">
+      <div class="table-responsive"><table class="table align-middle">
+        <thead><tr><th>Tema</th><th>Quién lo da</th><th>Cómo lo compruebo</th><th>Qué no debo hacer</th></tr></thead>
+        <tbody>
+          <tr><td><strong>HTTPS</strong></td><td>Render (certificado SSL automático y gratis en <code>*.onrender.com</code>)</td><td>Candado en la barra; <code>http://</code> redirige a <code>https://</code></td><td>Intentar «instalar» un certificado a mano</td></tr>
+          <tr><td><strong>SSL a la base</strong></td><td>Tú, en <code>DB_URL</code>; Neon lo exige</td><td><code>…?sslmode=require&amp;channelBinding=require</code> al final</td><td>Quitar <code>sslmode</code> «para que conecte»</td></tr>
+          <tr><td><strong>CSRF</strong></td><td>Spring Security (activo por defecto)</td><td>Campo oculto <code>_csrf</code> en cada formulario <code>th:action</code></td><td>Desactivarlo con <code>http.csrf(c -&gt; c.disable())</code> en una app con sesión</td></tr>
+          <tr><td><strong>XSS</strong></td><td>Thymeleaf (<code>th:text</code> escapa)</td><td>Un nombre con <code>&lt;b&gt;</code> se ve como texto</td><td>Usar <code>th:utext</code> con datos de usuarios</td></tr>
+          <tr><td><strong>Cabeceras</strong></td><td>Spring Security</td><td>DevTools → Network → Response Headers</td><td>Quitar las cabeceras «porque estorban»</td></tr>
+          <tr><td><strong>Contraseñas</strong></td><td>BCrypt (S13) + variables de entorno (S14)</td><td>Ninguna clave escrita en el repositorio</td><td>Subir claves a GitHub</td></tr>
+        </tbody></table></div>
+      <div class="callout warning"><div class="small-muted"><strong>Cuándo sí se desactiva CSRF:</strong> solo en una API REST pura, sin sesión ni cookies, que se autentica con un token en una cabecera. Tu proyecto tiene login por sesión y formularios: <strong>CSRF se queda activo</strong>.</div></div>
+      <div class="table-responsive"><table class="table table-sm">
+        <thead><tr><th>Cabecera</th><th>Valor típico</th><th>Protege contra</th></tr></thead>
+        <tbody>
+          <tr><td><code>X-Content-Type-Options</code></td><td><code>nosniff</code></td><td>Que el navegador «adivine» y ejecute un archivo como script</td></tr>
+          <tr><td><code>X-Frame-Options</code></td><td><code>DENY</code></td><td>Que otra página te incruste en un <code>iframe</code> (clickjacking)</td></tr>
+          <tr><td><code>Strict-Transport-Security</code></td><td><code>max-age=31536000 ; includeSubDomains</code></td><td>Volver a visitar por <code>http://</code></td></tr>
+          <tr><td><code>Cache-Control</code></td><td><code>no-cache, no-store…</code></td><td>Páginas con sesión guardadas en un equipo compartido</td></tr>
+        </tbody></table></div>
+    </div>
+
+    <div class="tab-pane fade" id="t-tipos">
+      <p class="small-muted">Elige el tipo según <em>qué vas a hacer con el dato</em>, no según cómo se escribe. Regla: si vas a sumar, comparar fechas o filtrar por número, <strong>no uses String</strong>.</p>
+      <div class="table-responsive"><table class="table align-middle table-code">
+        <thead><tr><th>Dato</th><th>Tipo Java</th><th>Input en el formulario</th><th>Validación típica</th></tr></thead>
+        <tbody>
+          <tr><td>Nombre, título, autor</td><td><code>String</code></td><td><code>type="text"</code></td><td><code>@NotBlank</code> + <code>@Size(max=…)</code></td></tr>
+          <tr><td>Texto largo (resumen, observaciones)</td><td><code>String</code> + <code>@Column(length=500)</code></td><td><code>&lt;textarea&gt;</code></td><td><code>@Size(max=500)</code></td></tr>
+          <tr><td>Código con formato (ISBN, DPI, teléfono)</td><td><code>String</code> (aunque parezca número)</td><td><code>type="text"</code></td><td><code>@Pattern(regexp="…")</code></td></tr>
+          <tr><td>Cantidad entera (páginas, edad, ejemplares)</td><td><code>Integer</code></td><td><code>type="number"</code></td><td><code>@NotNull</code> <code>@Min</code> <code>@Max</code></td></tr>
+          <tr><td>Dinero o decimales exactos</td><td><code>BigDecimal</code> (nunca <code>double</code>)</td><td><code>type="number" step="0.01"</code></td><td><code>@DecimalMin("0.00")</code></td></tr>
+          <tr><td>Fecha (sin hora)</td><td><code>LocalDate</code></td><td><code>type="date"</code></td><td><code>@NotNull</code> <code>@Past</code> / <code>@PastOrPresent</code></td></tr>
+          <tr><td>Sí / No</td><td><code>boolean</code></td><td><code>type="checkbox"</code></td><td>—</td></tr>
+          <tr><td>Opción de una lista fija (género, estado)</td><td><code>String</code></td><td><code>&lt;select&gt;</code></td><td><code>@NotBlank</code></td></tr>
+        </tbody></table></div>
+      <div class="callout"><div class="small-muted"><strong>Obligatorio = dos candados:</strong> <code>@NotBlank</code>/<code>@NotNull</code> (valida en la aplicación y muestra el mensaje) <em>y</em> <code>@Column(nullable = false)</code> (lo exige la base). Un campo opcional lleva solo <code>@Column</code> sin <code>nullable = false</code>.</div></div>
+      <div class="callout danger"><div class="small-muted"><strong>Por qué el ISBN o el DPI son <code>String</code>:</strong> un <code>Integer</code> borraría los ceros iniciales y no admitiría guiones. Si no vas a «hacer cuentas» con él, es texto.</div></div>
+    </div>
+
+    <div class="tab-pane fade" id="t-err">
+      <div class="table-responsive"><table class="table align-middle">
+        <thead><tr><th>Síntoma</th><th>Causa</th><th>Solución</th></tr></thead>
+        <tbody>
+          <tr><td>Render queda en «Deploy failed»; log: <code>column "isbn" of relation "libro" contains null values</code></td><td>Agregaste un campo <strong>obligatorio</strong> (<code>nullable=false</code>) y la tabla de Neon ya tenía filas: <code>ddl-auto=update</code> no puede llenar la columna.</td><td>En el primer despliegue deja el campo sin <code>nullable=false</code>, o vacía la tabla desde Neon → <em>Tables</em> (en un proyecto estudiantil se vale) antes de desplegar.</td></tr>
+          <tr><td>Cambiaste <code>Jugador</code> por <code>Libro</code> y la lista aparece vacía</td><td><code>update</code> crea la tabla <code>libro</code> nueva; los datos viejos siguen en <code>jugador</code>.</td><td>Normal: empiezas con la tabla vacía. Puedes borrar la vieja desde Neon.</td></tr>
+          <tr><td>Al guardar: <strong>403 Forbidden</strong></td><td>El formulario nuevo usa <code>action="…"</code> en vez de <code>th:action="@{…}"</code>: no lleva <code>_csrf</code>.</td><td>Usa siempre <code>th:action</code>.</td></tr>
+          <tr><td>Tu página nueva te manda al login</td><td>No está en la lista <code>permitAll()</code> de <code>SecurityConfig</code> (o el orden de las reglas la captura antes).</td><td>Agrégala <strong>antes</strong> de <code>anyRequest().authenticated()</code>.</td></tr>
+          <tr><td><code>/creditos</code> da 404 pero <code>/creditos.html</code> funciona</td><td>El archivo está en <code>static/</code>: se sirve con su nombre completo.</td><td>Crea el método con <code>@GetMapping("/creditos")</code> y la plantilla en <code>templates/</code>.</td></tr>
+          <tr><td><code>/libros/abc</code> da error 400</td><td><code>@PathVariable Long id</code> no puede convertir «abc» a número.</td><td>Normal: el navegador manda un número. Si quieres, atiende ese caso en <code>error.html</code>.</td></tr>
+          <tr><td>Error al arrancar: <code>Property or field 'titulo' cannot be found</code></td><td>Renombraste un campo en la entidad pero no en <code>th:field="*{…}"</code> de la plantilla.</td><td>Busca el nombre viejo en <code>templates/</code> (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>F</kbd> en VS Code).</td></tr>
+          <tr><td>Fecha o número «no válido» al guardar</td><td>El input no coincide con el tipo (<code>type="text"</code> para un <code>LocalDate</code>, o coma decimal).</td><td>Usa <code>type="date"</code> / <code>type="number" step="0.01"</code>.</td></tr>
+          <tr><td>Un campo texto muestra <code>&lt;script&gt;</code> ejecutándose</td><td>Se usó <code>th:utext</code>.</td><td>Cámbialo a <code>th:text</code>.</td></tr>
+        </tbody></table></div>
+    </div>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted">
+      Cheat Sheet — Semana 15 · Seguridad básica, HTTPS y «cómo uso todo lo construido para mi proyecto» (formato 18 semanas)
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
