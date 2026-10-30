@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cheat Sheet — Semana 16 · Arquitectura, Flujo y QA</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top no-print">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 16</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios (QA)</a></li>
+          <li class="nav-item"><a class="nav-link active" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto (Reporte)</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha</a></li>
+          <li class="nav-item ms-lg-2"><button class="btn btn-outline-secondary btn-sm" onclick="window.print()">🖨️ PDF</button></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4">
+    <div class="mb-4">
+      <div class="brand-pill mb-2">Referencia Técnica Rápida</div>
+      <h1 class="h2 fw-bold">Anatomía del Proyecto, Circuito de Datos y Guía de QA</h1>
+      <p class="text-muted">Consulta rápida sobre el árbol de archivos, responsabilidades de cada capa, ciclo HTTP y diseño de casos de prueba.</p>
+    </div>
+
+    <ul class="nav nav-tabs mb-4 no-print" id="cheatTabs" role="tablist">
+      <li class="nav-item"><button class="nav-link active" id="arbol-tab" data-bs-toggle="tab" data-bs-target="#arbol" type="button" role="tab">🌲 Árbol y Archivos Clave</button></li>
+      <li class="nav-item"><button class="nav-link" id="flujo-tab" data-bs-toggle="tab" data-bs-target="#flujo" type="button" role="tab">🔄 Circuito Modelo ↔ Controlador ↔ Form ↔ Repo</button></li>
+      <li class="nav-item"><button class="nav-link" id="qa-tab" data-bs-toggle="tab" data-bs-target="#qa" type="button" role="tab">🧪 Metodología de Pruebas QA</button></li>
+      <li class="nav-item"><button class="nav-link" id="mantenimiento-tab" data-bs-toggle="tab" data-bs-target="#mantenimiento" type="button" role="tab">🚀 Mantenimiento y Redeploy Render</button></li>
+    </ul>
+
+    <div class="tab-content" id="cheatTabContent">
+      <!-- PESTAÑA 1: ARBOL Y ARCHIVOS CLAVE -->
+      <div class="tab-pane fade show active" id="arbol" role="tabpanel">
+        <div class="card mb-4">
+          <div class="card-header bg-primary text-white fw-semibold">1. El Árbol Canónico de un Proyecto Spring Boot</div>
+          <div class="card-body">
+            <p class="small text-muted mb-3">En Java y Spring Boot, la regla de oro es: <strong>la ruta de carpetas debe coincidir exactamente con la declaración <code>package</code></strong>. Si un archivo está fuera de su carpeta o fuera del paquete base, Spring no lo registrará.</p>
+            <pre class="bg-light p-3 rounded small border"><code>mi-proyecto/
+├── pom.xml                                   # Dependencias Maven (web, thymeleaf, jpa, validation, security, postgres)
+├── Dockerfile                                # Empaquetado multietapa para Render (Maven builder → Eclipse Temurin JRE 17)
+├── .dockerignore &amp; .gitignore                # Excluyen target/, .env, archivos locales
+├── README.md                                 # Documentación técnica mínima (manual y variables)
+└── src/
+    └── main/
+        ├── java/
+        │   └── gt/edu/url/miproyecto/        # PAQUETE BASE (todo debe colgar de aquí)
+        │       ├── MiProyectoApplication.java # Clase principal con @SpringBootApplication
+        │       ├── model/                    # ENTIDADES (El qué del sistema)
+        │       │   ├── Beneficiario.java     # @Entity, @Id, campos, validaciones jakarta, getters/setters
+        │       │   └── Usuario.java          # @Entity para credenciales de login (roles ADMIN / USER)
+        │       ├── repository/               # PERSISTENCIA (El acceso a datos)
+        │       │   ├── BeneficiarioRepository.java # interface extends JpaRepository&lt;Beneficiario, Long&gt;
+        │       │   └── UsuarioRepository.java      # interface extends JpaRepository&lt;Usuario, Long&gt;
+        │       ├── service/                  # NEGOCIO (Orquestación y reglas intermedias)
+        │       │   └── BeneficiarioService.java    # @Service, lógica antes de guardar/consultar
+        │       ├── controller/               # PRESENTACIÓN WEB (El tráfico HTTP)
+        │       │   ├── BeneficiarioController.java # @Controller, @GetMapping, @PostMapping, rutas CRUD
+        │       │   └── LoginController.java        # @Controller, login y acceso denegado
+        │       └── config/                   # CONFIGURACIONES DEL SISTEMA
+        │           └── SecurityConfig.java   # @Configuration, SecurityFilterChain, roles y bcrypt
+        └── resources/
+            ├── application.properties        # Perfil dev por defecto (puerto 8080, H2 local o dev)
+            ├── application-prod.properties   # Perfil prod (placeholders Neon: ${DB_URL}, ${DB_USER}, etc.)
+            ├── templates/                    # VISTAS THYMELEAF (HTML dinámico con expresiones th:*)
+            │   ├── formulario.html           # th:object, th:field, th:errors, CSRF automático
+            │   ├── lista.html                # th:each, botones de acción según sec:authorize
+            │   ├── login.html                # Formulario de inicio de sesión
+            │   ├── creditos.html             # Página estática informativa
+            │   └── error.html                # Página propia para captura amigable de excepciones
+            └── static/                       # RECURSOS ESTÁTICOS DIRECTOS
+                ├── css/estilos.css           # Hojas de estilo sin procesar por Thymeleaf
+                └── js/app.js                 # Scripts cliente opcionales</code></pre>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-header bg-dark text-white fw-semibold">2. Responsabilidades y Anotaciones Clave por Archivo</div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-striped table-hover mb-0 small">
+                <thead class="table-light">
+                  <tr><th>Capa / Archivo</th><th>Anotaciones principales</th><th>Responsabilidad única</th><th>¿Qué pasa si falla o falta?</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Entidad (Model)</strong><br/><code>Beneficiario.java</code></td>
+                    <td><code>@Entity</code>, <code>@Id</code>, <code>@GeneratedValue</code>, <code>@NotBlank</code>, <code>@NotNull</code></td>
+                    <td>Representa la tabla en Neon PostgreSQL y define qué datos son válidos.</td>
+                    <td>Hibernate no crea la tabla o se guardan registros corruptos en blanco.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Repositorio</strong><br/><code>...Repository.java</code></td>
+                    <td><code>@Repository</code> (opcional), <code>extends JpaRepository&lt;T, ID&gt;</code></td>
+                    <td>Provee métodos CRUD listos (<code>save</code>, <code>findAll</code>, <code>findById</code>, <code>deleteById</code>) sin escribir SQL a mano.</td>
+                    <td>Spring no puede inyectar el bean (<code>NoSuchBeanDefinitionException</code>).</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Servicio</strong><br/><code>...Service.java</code></td>
+                    <td><code>@Service</code>, <code>@Autowired</code></td>
+                    <td>Aislar al controlador de la base de datos; aplica reglas de negocio antes de persistir.</td>
+                    <td>Alto acoplamiento: el controlador asume demasiadas responsabilidades.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Controlador</strong><br/><code>...Controller.java</code></td>
+                    <td><code>@Controller</code>, <code>@GetMapping</code>, <code>@PostMapping</code>, <code>@Valid</code></td>
+                    <td>Recibe la petición HTTP, llena el modelo, ejecuta validaciones y decide qué vista retornar o si redirige.</td>
+                    <td>Error 404 (ruta no encontrada) o 405 (método POST no soportado).</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Vistas</strong><br/><code>templates/*.html</code></td>
+                    <td><code>th:object</code>, <code>th:field</code>, <code>th:errors</code>, <code>sec:authorize</code></td>
+                    <td>Renderiza la interfaz dinámica en el navegador, mostrando datos y errores.</td>
+                    <td>Error 500 (TemplateProcessingException) si una expresión <code>${...}</code> está mal escrita.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Seguridad</strong><br/><code>SecurityConfig.java</code></td>
+                    <td><code>@Configuration</code>, <code>@EnableWebSecurity</code></td>
+                    <td>Define qué rutas son públicas (<code>permitAll</code>) y cuáles requieren rol <code>ADMIN</code>.</td>
+                    <td>Todas las rutas quedan bloqueadas o la app queda expuesta sin autenticación.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- PESTAÑA 2: EL CIRCUITO DEL DATO COMPLETO -->
+      <div class="tab-pane fade" id="flujo" role="tabpanel">
+        <div class="card mb-4">
+          <div class="card-header bg-success text-white fw-semibold">El Ciclo de Vida de una Petición Web en Spring Boot (Paso a Paso)</div>
+          <div class="card-body">
+            <p class="small text-muted mb-3">Sigue la secuencia exacta de lo que ocurre cuando un usuario abre un formulario y guarda un registro:</p>
+            
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="p-3 border rounded bg-light h-100">
+                  <span class="badge bg-primary mb-1">Fase 1: Petición GET (Cargar Formulario)</span>
+                  <ol class="small ps-3 mb-0">
+                    <li><strong>El usuario hace clic</strong> en "Nuevo Registro" (Navegador solicita <code>GET /beneficiarios/nuevo</code>).</li>
+                    <li><strong>El Controlador atiende</strong> con <code>@GetMapping("/nuevo")</code>.</li>
+                    <li><strong>Se crea el objeto vacío:</strong> <code>model.addAttribute("beneficiario", new Beneficiario());</code> para que Thymeleaf tenga a qué enlazar los inputs.</li>
+                    <li><strong>Retorno de plantilla:</strong> <code>return "formulario";</code>.</li>
+                    <li><strong>Thymeleaf procesa:</strong> busca <code>templates/formulario.html</code>, vincula <code>th:object="${beneficiario}"</code> y envía el HTML final al navegador con los campos limpios.</li>
+                  </ol>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="p-3 border rounded bg-light h-100">
+                  <span class="badge bg-warning text-dark mb-1">Fase 2: Petición POST (Envío de Datos)</span>
+                  <ol class="small ps-3 mb-0">
+                    <li><strong>El usuario envía el formulario:</strong> <code>&lt;form th:action="@{/beneficiarios/guardar}" method="post"&gt;</code>.</li>
+                    <li><strong>Spring Security valida el token CSRF</strong> invisible generado en el formulario.</li>
+                    <li><strong>Data Binding automático:</strong> Spring toma los inputs (<code>name="nombre"</code>, etc.) y los asigna a la instancia de <code>Beneficiario</code> con sus setters.</li>
+                    <li><strong>Bean Validation:</strong> Se disparan las anotaciones (<code>@NotBlank</code>, <code>@Min</code>, etc.) marcadas con <code>@Valid</code>.</li>
+                    <li><strong>Los resultados se almacenan:</strong> Spring inyecta el resultado inmediatamente en <code>BindingResult result</code>.</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+
+            <hr class="my-4"/>
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="p-3 border border-danger rounded bg-light h-100">
+                  <span class="badge bg-danger mb-1">Fase 3A: Escenario con Errores de Validación</span>
+                  <p class="small mb-2"><strong>Condición:</strong> <code>if (result.hasErrors())</code> es VERDADERO.</p>
+                  <ul class="small ps-3 mb-2">
+                    <li><strong>NO se llama al repositorio:</strong> <code>repositorio.save()</code> nunca se ejecuta.</li>
+                    <li><strong>Regla de oro:</strong> Se retorna el nombre de la plantilla directamente: <code>return "formulario";</code>.</li>
+                    <li><strong>¿Por qué NO usar redirect?:</strong> Porque una redirección crearía una petición HTTP nueva y borraría los mensajes de error y los textos que el usuario ya escribió.</li>
+                    <li><strong>Thymeleaf renderiza:</strong> <code>th:errors="*{campo}"</code> muestra el mensaje rojo y <code>th:errorclass="is-invalid"</code> pinta el borde del input.</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="p-3 border border-success rounded bg-light h-100">
+                  <span class="badge bg-success mb-1">Fase 3B: Escenario Exitoso y Persistencia</span>
+                  <p class="small mb-2"><strong>Condición:</strong> <code>result.hasErrors()</code> es FALSO.</p>
+                  <ul class="small ps-3 mb-2">
+                    <li><strong>Invocación de persistencia:</strong> <code>servicio.guardar(beneficiario)</code> o <code>repositorio.save(beneficiario)</code>.</li>
+                    <li><strong>Hibernate (ORM):</strong> Traduce el objeto Java a una instrucción SQL <code>INSERT INTO beneficiarios (...) VALUES (...)</code> y la envía por red cifrada a <strong>Neon PostgreSQL</strong>.</li>
+                    <li><strong>Patrón POST-Redirect-GET (PRG):</strong> El método finaliza con <code>return "redirect:/beneficiarios";</code>.</li>
+                    <li><strong>Navegador recibe HTTP 302</strong> y solicita un nuevo <code>GET /beneficiarios</code>.</li>
+                    <li><strong>Ventaja crítica:</strong> Si el usuario pulsa F5 (Refrescar), no duplica el registro en la base de datos.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!-- PESTAÑA 3: METODOLOGIA DE PRUEBAS QA -->
+      <div class="tab-pane fade" id="qa" role="tabpanel">
+        <div class="card mb-4">
+          <div class="card-header bg-info text-dark fw-semibold">Estructura Canónica de un Caso de Prueba Funcional (QA)</div>
+          <div class="card-body">
+            <p class="small text-muted mb-3">En el aseguramiento de calidad (QA), un caso de prueba documenta el comportamiento esperado frente a una serie de acciones deliberadas. Nunca pruebes sin un plan.</p>
+            <div class="table-responsive">
+              <table class="table table-bordered table-sm small">
+                <thead class="table-light">
+                  <tr><th>Campo</th><th>Significado</th><th>Ejemplo en nuestro proyecto</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>ID del Caso</strong></td><td>Identificador único y ordenado</td><td><code>CP-02</code></td></tr>
+                  <tr><td><strong>Título descriptivo</strong></td><td>Qué funcionalidad específica se está evaluando</td><td>Validación de campos obligatorios en formulario de registro</td></tr>
+                  <tr><td><strong>Precondición</strong></td><td>Estado previo requerido del sistema o usuario</td><td>Usuario con sesión iniciada (rol ADMIN o ENTRENADOR) en la página <code>/nuevo</code></td></tr>
+                  <tr><td><strong>Pasos de ejecución</strong></td><td>Secuencia numerada de acciones del usuario</td><td>1. Dejar la casilla "Nombre" vacía.<br/>2. Ingresar edad negativa (-5).<br/>3. Pulsar el botón "Guardar".</td></tr>
+                  <tr><td><strong>Datos de prueba</strong></td><td>Valores concretos ingresados</td><td>Nombre = "", Edad = -5, Fecha = "2026-10-31"</td></tr>
+                  <tr><td><strong>Resultado esperado</strong></td><td>Qué debe hacer el software si funciona correctamente</td><td>El formulario no se envía; se muestran alertas rojas indicando "El nombre es obligatorio" y "La edad debe ser mayor a 0". El formulario retiene la fecha ingresada.</td></tr>
+                  <tr><td><strong>Resultado obtenido</strong></td><td>Lo que realmente ocurrió durante la prueba</td><td>Se mostraron los mensajes en rojo y no se creó ninguna fila en la base de datos Neon.</td></tr>
+                  <tr><td><strong>Severidad / Estado</strong></td><td>Impacto de la falla / Aprobación</td><td><strong>PASÓ (Aprobado)</strong> · Severidad en caso de fallo: Alta (corrupción de datos).</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="row g-3 mt-2">
+              <div class="col-md-4">
+                <div class="p-2 border rounded bg-light text-center">
+                  <div class="fw-bold text-danger">Severidad Crítica</div>
+                  <div class="small text-muted">La app se cae (500), no arranca, o permite acceso sin autenticación. Bloquea la entrega.</div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="p-2 border rounded bg-light text-center">
+                  <div class="fw-bold text-warning text-dark">Severidad Mayor</div>
+                  <div class="small text-muted">Una validación no funciona y permite guardar datos inválidos, o una redirección falla.</div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="p-2 border rounded bg-light text-center">
+                  <div class="fw-bold text-info text-dark">Severidad Menor</div>
+                  <div class="small text-muted">Faltas ortográficas, etiquetas desalineadas o textos en inglés no traducidos.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PESTAÑA 4: MANTENIMIENTO Y REDEPLOY RENDER -->
+      <div class="tab-pane fade" id="mantenimiento" role="tabpanel">
+        <div class="card mb-4">
+          <div class="card-header bg-dark text-white fw-semibold">El Ciclo de Mantenimiento Continuo: Cambio → Push → Redeploy</div>
+          <div class="card-body">
+            <p class="small text-muted mb-3">En la nube moderna (PaaS como Render), el mantenimiento no requiere acceder por SSH ni subir archivos por FTP. Todo se gobierna desde Git:</p>
+            
+            <div class="timeline p-3 bg-light rounded border">
+              <div class="mb-3">
+                <span class="badge bg-primary">Paso 1: Modificación Local</span>
+                <p class="small mb-1 mt-1">Realizas el cambio en tu editor (ej. corregir una etiqueta en <code>formulario.html</code> o ajustar una regla de validación). Pruebas en tu máquina local si lo deseas.</p>
+              </div>
+              <div class="mb-3">
+                <span class="badge bg-secondary">Paso 2: Commit y Push</span>
+                <pre class="bg-white p-2 rounded border small mb-1"><code>git add .
+git commit -m "fix(qa): corregir mensaje de validacion y alinear botones"
+git push origin main</code></pre>
+                <div class="small text-muted">El push envía los nuevos commits al repositorio remoto en GitHub.</div>
+              </div>
+              <div class="mb-3">
+                <span class="badge bg-warning text-dark">Paso 3: Webhook y Detección en Render</span>
+                <p class="small mb-1 mt-1">GitHub notifica a Render inmediatamente mediante un webhook. Render pone el deploy en estado <code>In progress</code> y comienza a ejecutar el <code>Dockerfile</code> de dos etapas.</p>
+              </div>
+              <div class="mb-3">
+                <span class="badge bg-info text-dark">Paso 4: Empaquetado y Reemplazo sin Caída</span>
+                <p class="small mb-1 mt-1">Maven compila y empaqueta el nuevo <code>.jar</code>. Render apaga el contenedor viejo únicamente cuando el nuevo contenedor pasa la prueba de arranque (Healthcheck en el puerto <code>${PORT}</code>).</p>
+              </div>
+              <div>
+                <span class="badge bg-success">Paso 5: Verificación en Producción</span>
+                <p class="small mb-0 mt-1">Refrescas tu URL pública <code>https://...onrender.com</code> y constatas que el cambio ya está visible para el cliente y los usuarios finales.</p>
+              </div>
+            </div>
+
+            <div class="callout warning mt-3">
+              <div class="fw-semibold">⚠️ Trampas frecuentes en el Redeploy de Render</div>
+              <ul class="small mb-0 ps-3">
+                <li><strong>Olvido de push a main:</strong> Hiciste el commit pero se quedó en tu computadora local o en una rama secundaria (<code>development</code>). Render solo escucha <code>main</code>.</li>
+                <li><strong>Error de compilación en Maven:</strong> Si un import o llave quedó rota, el log de Render mostrará <code>BUILD FAILURE</code> y conservará la versión previa en línea.</li>
+                <li><strong>Variables de entorno:</strong> Recuerda que Render nunca lee tu disco local; las contraseñas y la <code>DB_URL</code> viven en el panel Environment de Render.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer py-4 bg-light border-top text-center text-muted small">
+    <div class="container">
+      Universidad Rafael Landívar · Profesorado en TIC · Cheat Sheet Semana 16
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

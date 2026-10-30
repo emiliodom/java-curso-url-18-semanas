@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Challenge Interactivo — Semana 17</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="toast-stack" id="toastStack"></div>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top no-print">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 17</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Preparar Demo</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="evaluacion_pares.html">Evaluación Pares</a></li>
+          <li class="nav-item"><a class="nav-link active" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link fw-bold text-danger" href="proyecto.html">★ Entrega 4 (7 pts)</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha</a></li>
+          <li class="nav-item ms-lg-2"><button class="btn btn-outline-secondary btn-sm" onclick="exportChallengePdf()">🖨️ PDF</button></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Challenge Práctico · Semana 17</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">El Reto de la Demo Perfecta y el Ojo Evaluador</h1>
+          <div class="small-muted">Dos desafíos: ordena la secuencia cronometrada de tu demostración y clasifica la retroalimentación técnica de calidad.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="exportChallengePdf()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <div class="row g-2 mb-3">
+      <div class="col-md-6">
+        <label class="form-label fw-semibold mb-1" for="studentName">Nombre del estudiante (para el PDF)</label>
+        <input id="studentName" class="form-control" type="text" placeholder="Nombre y apellido" />
+      </div>
+      <div class="col-md-6 d-flex align-items-end">
+        <div class="small-muted">Completa ambos retos y pulsa "Exportar a PDF" para tu comprobante de Actividad sincrónica (0.66 pts).</div>
+      </div>
+    </div>
+
+    <ul class="nav nav-tabs mb-4 no-print" role="tablist">
+      <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-secuencia" type="button">⏱️ 1. Secuencia de la Demo</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-feedback-chal" type="button">🎯 2. Clasificador de Feedback</button></li>
+    </ul>
+
+    <div class="tab-content">
+      <!-- RETO 1: SECUENCIA DE LA DEMO -->
+      <div class="tab-pane fade show active" id="tab-secuencia">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h2 class="h5 fw-bold mb-1">Ordena los 4 momentos clave de una demo técnica en vivo</h2>
+            <p class="small text-muted mb-3">Arrastra cada bloque a su orden cronológico exacto. <em>¡Cuidado con las trampas!</em> Las conductas no profesionales deben quedarse en el banco.</p>
+
+            <div class="row g-2 mb-3" id="demoPiecesBank"></div>
+
+            <div class="row g-2" id="demoSlots">
+              <div class="col-md-3">
+                <div class="p-2 border rounded bg-light dd-target" data-order="1">
+                  <div class="fw-bold small text-primary mb-1">Minuto 1: Contexto</div>
+                  <div class="slot-area" style="min-height:90px;"></div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="p-2 border rounded bg-light dd-target" data-order="2">
+                  <div class="fw-bold small text-warning text-dark mb-1">Minuto 2: Formulario</div>
+                  <div class="slot-area" style="min-height:90px;"></div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="p-2 border rounded bg-light dd-target" data-order="3">
+                  <div class="fw-bold small text-success mb-1">Minuto 3: Persistencia</div>
+                  <div class="slot-area" style="min-height:90px;"></div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="p-2 border rounded bg-light dd-target" data-order="4">
+                  <div class="fw-bold small text-danger mb-1">Minuto 4: Seguridad</div>
+                  <div class="slot-area" style="min-height:90px;"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <button class="btn btn-primary" onclick="verifyDemoOrder()">Verificar Secuencia</button>
+              <button class="btn btn-outline-secondary btn-sm" onclick="initDemoChallenge()">Reiniciar</button>
+            </div>
+            <div id="demoResult" class="mt-2"></div>
+          </div>
+        </div>
+      </div>
+      <!-- RETO 2: CLASIFICADOR DE FEEDBACK -->
+      <div class="tab-pane fade" id="tab-feedback-chal">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h2 class="h5 fw-bold mb-1">Clasifica: ¿Comentario Accionable o Inútil?</h2>
+            <p class="small text-muted mb-3">Arrastra cada frase a la caja correspondiente según su utilidad pedagógica y técnica:</p>
+
+            <div class="row g-2 mb-3" id="fbPiecesBank"></div>
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="p-3 border rounded bg-success-subtle fb-zone" data-category="accionable">
+                  <div class="fw-bold text-success mb-2">💡 Comentarios Accionables y Profesionales</div>
+                  <div class="fb-drop-area" style="min-height:140px;"></div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="p-3 border rounded bg-danger-subtle fb-zone" data-category="inutil">
+                  <div class="fw-bold text-danger mb-2">🗑️ Comentarios Inútiles o Destructivos</div>
+                  <div class="fb-drop-area" style="min-height:140px;"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <button class="btn btn-primary" onclick="verifyFeedbackChal()">Verificar Clasificación</button>
+              <button class="btn btn-outline-secondary btn-sm" onclick="initFeedbackChallenge()">Reiniciar</button>
+            </div>
+            <div id="fbResult" class="mt-2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer py-4 bg-light border-top text-center text-muted small">
+    <div class="container">
+      Universidad Rafael Landívar · Challenge Interactivo Semana 17 · Programación I
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="toast.js"></script>
+  <script>
+    // ===== RETO 1 =====
+    var DEMO_PIECES = [
+      { id: 'd1', text: '1. Presentar a la entidad sin fines de lucro y mostrar la arquitectura MVC', order: 1 },
+      { id: 'd2', text: '2. Probar formulario Thymeleaf provocando error en rojo y luego guardado', order: 2 },
+      { id: 'd3', text: '3. Mostrar persistencia en Neon PostgreSQL y listado con POST-Redirect-GET', order: 3 },
+      { id: 'd4', text: '4. Demostrar seguridad con login y roles ADMIN en Spring Security', order: 4 },
+      { id: 'dt1', text: 'Trampa: Leer 15 diapositivas densas de teoría', order: 99 },
+      { id: 'dt2', text: 'Trampa: Abrir el IDE y explicar 300 líneas de código Java', order: 99 }
+    ];
+
+    function initDemoChallenge() {
+      var bank = document.getElementById('demoPiecesBank');
+      bank.innerHTML = '';
+      document.querySelectorAll('.slot-area').forEach(function(el) { el.innerHTML = ''; });
+      document.getElementById('demoResult').innerHTML = '';
+
+      var pieces = DEMO_PIECES.slice().sort(function() { return 0.5 - Math.random(); });
+      pieces.forEach(function(p) {
+        var div = document.createElement('div');
+        div.className = 'col-md-6';
+        div.innerHTML = '<div class="dd-piece p-2 bg-white border rounded small shadow-sm cursor-move" draggable="true" data-id="' + p.id + '" data-order="' + p.order + '">' + p.text + '</div>';
+        bank.appendChild(div);
+      });
+      setupDragEvents('.dd-piece', '.slot-area, #demoPiecesBank');
+    }
+
+    function verifyDemoOrder() {
+      var hits = 0;
+      document.querySelectorAll('.dd-target').forEach(function(target) {
+        var expectedOrder = parseInt(target.dataset.order);
+        var piece = target.querySelector('.dd-piece');
+        if (piece && parseInt(piece.dataset.order) === expectedOrder) {
+          piece.classList.add('border-success', 'bg-success-subtle');
+          hits++;
+        } else if (piece) {
+          piece.classList.add('border-danger', 'bg-danger-subtle');
+        }
+      });
+      var trapsLeft = document.getElementById('demoPiecesBank').querySelectorAll('[data-order="99"]').length;
+      if (hits === 4 && trapsLeft === 2) {
+        document.getElementById('demoResult').innerHTML = '<div class="alert alert-success p-2 small mb-0">🎉 ¡Secuencia perfecta! Has ordenado los 4 minutos sin trampas.</div>';
+      } else {
+        document.getElementById('demoResult').innerHTML = '<div class="alert alert-warning p-2 small mb-0">Revisa el orden de los minutos o asegúrate de dejar las trampas en el banco.</div>';
+      }
+    }
+
+    // ===== RETO 2 =====
+    var FB_PIECES = [
+      { id: 'f1', text: '«Al ingresar teléfono con letras sale error 500; sugiero cambiar el tipo en la entidad a String con @Pattern»', cat: 'accionable' },
+      { id: 'f2', text: '«La página está muy fea, no me gustó para nada.»', cat: 'inutil' },
+      { id: 'f3', text: '«En el README falta la lista de variables de entorno para Render; te sugiero agregar la tabla de DB_URL.»', cat: 'accionable' },
+      { id: 'f4', text: '«Todo bien, 10 de 10, felicidades amigo.»', cat: 'inutil' }
+    ];
+
+    function initFeedbackChallenge() {
+      var bank = document.getElementById('fbPiecesBank');
+      bank.innerHTML = '';
+      document.querySelectorAll('.fb-drop-area').forEach(function(el) { el.innerHTML = ''; });
+      document.getElementById('fbResult').innerHTML = '';
+
+      var pieces = FB_PIECES.slice().sort(function() { return 0.5 - Math.random(); });
+      pieces.forEach(function(p) {
+        var div = document.createElement('div');
+        div.className = 'col-md-6';
+        div.innerHTML = '<div class="dd-piece p-2 bg-white border rounded small shadow-sm cursor-move" draggable="true" data-id="' + p.id + '" data-cat="' + p.cat + '">' + p.text + '</div>';
+        bank.appendChild(div);
+      });
+      setupDragEvents('#fbPiecesBank .dd-piece', '.fb-drop-area, #fbPiecesBank');
+    }
+
+    function verifyFeedbackChal() {
+      var hits = 0;
+      document.querySelectorAll('.fb-zone').forEach(function(zone) {
+        var expectedCat = zone.dataset.category;
+        zone.querySelectorAll('.dd-piece').forEach(function(piece) {
+          if (piece.dataset.cat === expectedCat) {
+            piece.classList.add('border-success', 'bg-success-subtle');
+            hits++;
+          } else {
+            piece.classList.add('border-danger', 'bg-danger-subtle');
+          }
+        });
+      });
+      if (hits === 4) {
+        document.getElementById('fbResult').innerHTML = '<div class="alert alert-success p-2 small mb-0">🎉 ¡Excelente! Distingues con claridad el feedback constructivo del inútil.</div>';
+      } else {
+        document.getElementById('fbResult').innerHTML = '<div class="alert alert-warning p-2 small mb-0">Has ubicado ' + hits + ' de 4 correctamente. Revisa los recuadros rojos.</div>';
+      }
+    }
+
+    function setupDragEvents(pieceSelector, zoneSelector) {
+      var dragged = null;
+      document.querySelectorAll(pieceSelector).forEach(function(p) {
+        p.addEventListener('dragstart', function(e) { dragged = p; e.dataTransfer.setData('text/plain', p.dataset.id); });
+      });
+      document.querySelectorAll(zoneSelector).forEach(function(zone) {
+        zone.addEventListener('dragover', function(e) { e.preventDefault(); zone.classList.add('bg-white'); });
+        zone.addEventListener('dragleave', function() { zone.classList.remove('bg-white'); });
+        zone.addEventListener('drop', function(e) {
+          e.preventDefault();
+          zone.classList.remove('bg-white');
+          if (dragged) zone.appendChild(dragged);
+        });
+      });
+    }
+
+    function exportChallengePdf() {
+      var n = document.getElementById('studentName').value.trim();
+      if (!n) { alert('Por favor escribe tu nombre en la casilla superior.'); return; }
+      window.print();
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      initDemoChallenge();
+      initFeedbackChallenge();
+    });
+  </script>
+</body>
+</html>

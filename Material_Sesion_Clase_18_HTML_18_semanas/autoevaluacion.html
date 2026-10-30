@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Autoevaluación y Metacognición — Semana 18</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top no-print">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 18</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Preguntas Tribunal</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="evaluacion_pares.html">Pares (5 pts)</a></li>
+          <li class="nav-item"><a class="nav-link active" href="autoevaluacion.html">Autoevaluación</a></li>
+          <li class="nav-item"><a class="nav-link fw-bold text-danger" href="proyecto.html">★ Defensa (10 pts)</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha</a></li>
+          <li class="nav-item ms-lg-2"><button class="btn btn-outline-secondary btn-sm" onclick="window.print()">🖨️ PDF</button></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill bg-success text-white">Metacognición y Proyección Pedagógica · Semana 18</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Autoevaluación del Aprendizaje y Rol Docente en TIC</h1>
+          <div class="small-muted">Un espacio introspectivo para analizar tu evolución personal a lo largo de las 18 semanas y proyectar cómo enseñarás desarrollo web a tus futuros alumnos.</div>
+        </div>
+        <button class="btn btn-success btn-export" onclick="window.print()">Exportar Autoevaluación a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 960px;">
+    <!-- DATOS PERSONALES -->
+    <div class="card mb-4 border-success">
+      <div class="card-header bg-success text-white fw-semibold">Datos del Futuro Docente en TIC</div>
+      <div class="card-body">
+        <div class="row g-3 small">
+          <div class="col-md-6">
+            <label class="form-label fw-bold mb-1" for="autoNombre">Nombre completo</label>
+            <input type="text" id="autoNombre" class="form-control form-control-sm auto-save" placeholder="Tu nombre completo" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-bold mb-1" for="autoCarne">Número de carné URL</label>
+            <input type="text" id="autoCarne" class="form-control form-control-sm auto-save" placeholder="Ej. 1520026" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 1: EL VIAJE DEL APRENDIZAJE -->
+    <div class="card mb-4">
+      <div class="card-header bg-primary text-white fw-semibold">1. El Viaje del Aprendizaje: De la Semana 1 a la Semana 18</div>
+      <div class="card-body small">
+        <p class="text-muted mb-2">Compara tu punto de partida al iniciar el curso con tu estado actual:</p>
+        
+        <div class="mb-3">
+          <label class="form-label fw-bold mb-1">¿Qué sabías sobre desarrollo web y Java en julio de 2026 frente a lo que eres capaz de construir hoy?</label>
+          <textarea id="viajeCrecimiento" class="form-control form-control-sm auto-save" rows="3" placeholder="Al inicio solo conocía variables y ciclos básicos en consola; hoy entiendo cómo funciona una arquitectura MVC completa, manejo bases de datos en la nube (Neon) y despliego contenedores en Render..."></textarea>
+        </div>
+
+        <div class="mb-0">
+          <label class="form-label fw-bold mb-1">¿Cuál fue el obstáculo técnico más retador que enfrentaste durante el proyecto y cómo lograste resolverlo?</label>
+          <textarea id="obstaculoSuperado" class="form-control form-control-sm auto-save" rows="3" placeholder="Me costó mucho comprender por qué los datos se borraban si usaba redirect con errores en el controlador. Lo resolví trazando el flujo en papel y aplicando el retorno directo de la vista..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 2: ROL DOCENTE Y TRANSFERENCIA PEDAGÓGICA -->
+    <div class="card mb-4">
+      <div class="card-header bg-dark text-white fw-semibold">2. Transferencia Pedagógica: Mi Rol como Futuro Educador en TIC</div>
+      <div class="card-body small">
+        <div class="mb-3">
+          <label class="form-label fw-bold mb-1">Como profesor de TIC, ¿cómo explicarías a estudiantes jóvenes qué es una base de datos y por qué no se debe guardar contraseñas en texto plano?</label>
+          <textarea id="pedagogiaSeguridad" class="form-control form-control-sm auto-save" rows="3" placeholder="Usaría analogías cotidianas, como la del talonario con sello o la caja fuerte con cerradura trituradora (BCrypt), mostrando en vivo qué pasa cuando un bot encuentra claves públicas en GitHub..."></textarea>
+        </div>
+
+        <div class="mb-0">
+          <label class="form-label fw-bold mb-1">¿Qué valor le encuentras a haber desarrollado una solución orientada a una entidad sin fines de lucro comunitaria?</label>
+          <textarea id="impactoSocial" class="form-control form-control-sm auto-save" rows="3" placeholder="Le da un sentido ético y humano a la programación. No estamos programando por programar, sino resolviendo una necesidad auténtica de personas que atienden a niños, ancianos o comedores comunitarios..."></textarea>
+        </div>
+      </div>
+    </div>
+    <!-- SECCIÓN 3: ACTITUDES Y VALORES -->
+    <div class="card mb-4">
+      <div class="card-header bg-warning text-dark fw-semibold">3. Balance de Actitudes y Valores Profesionales</div>
+      <div class="card-body small">
+        <p class="text-muted mb-3">Autoevalúa honestamente tu desempeño en una escala del 1 (Necesito mejorar) al 5 (Excelente):</p>
+
+        <div class="table-responsive">
+          <table class="table table-bordered table-sm align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>Dimensión Actitudinal</th>
+                <th class="text-center" style="width: 80px;">1</th>
+                <th class="text-center" style="width: 80px;">2</th>
+                <th class="text-center" style="width: 80px;">3</th>
+                <th class="text-center" style="width: 80px;">4</th>
+                <th class="text-center" style="width: 80px;">5</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Rigurosidad técnica:</strong> Probé mi aplicación a fondo antes de entregar y no me conformé con que "compilara a medias".</td>
+                <td class="text-center"><input type="radio" name="val1" value="1" class="auto-save"></td>
+                <td class="text-center"><input type="radio" name="val1" value="2" class="auto-save"></td>
+                <td class="text-center"><input type="radio" name="val1" value="3" class="auto-save"></td>
+                <td class="text-center"><input type="radio" name="val1" value="4" class="auto-save"></td>
+                <td class="text-center"><input type="radio" name="val1" value="5" class="auto-save"></td>
+              </tr>
+              <tr>
+                <td><strong>Disciplina de mantenimiento:</strong> Gestioné mis cambios con Git, documenté mi README y protegí las claves en Render.</td>
+                <td class="text-center"><input type="radio" name="val2" value="1" class="auto-save"></td>
+                <td class="text-center"><input type="radio" name="val2" value="2" class="auto-save"></td>
+                <td class="text-center"><input type="radio" name="val2" value="3" class="auto-save"></td>
+                <td class="text-center"><input type="radio" name="val2" value="4" class="auto-save"></td>
+                <td class="text-center"><input type="radio" name="val2" value="5" class="auto-save"></td>
+              </tr>
+              <tr>
+                <td><strong>Apertura a la crítica y humildad:</strong> Escuché los comentarios de mis pares sin enojo y mejoré mi software para la entrega final.</td>
+                <td class="text-center"><input type="radio" name="val3" value="1" class="auto-save"></td>
+                <td class="text-center"><input type="radio" name="val3" value="2" class="auto-save"></td>
+                <td class="text-center"><input type="radio" name="val3" value="3" class="auto-save"></td>
+                <td class="text-center"><input type="radio" name="val3" value="4" class="auto-save"></td>
+                <td class="text-center"><input type="radio" name="val3" value="5" class="auto-save"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top">
+          <span class="text-muted" id="saveAutoStatus">💾 Guardado local automático.</span>
+          <button class="btn btn-success" onclick="window.print()">Exportar Comprobante de Autoevaluación 🖨️</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer py-4 bg-light border-top text-center text-muted small">
+    <div class="container">
+      Universidad Rafael Landívar · Facultad de Humanidades · Profesorado en TIC · Autoevaluación Semana 18
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    var STORAGE_KEY = 's18_autoevaluacion_v1';
+
+    function loadSavedData() {
+      try {
+        var raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        var data = JSON.parse(raw);
+        document.querySelectorAll('.auto-save').forEach(function(el) {
+          if (el.type === 'radio') {
+            if (data[el.name] === el.value) el.checked = true;
+          } else if (data[el.id] !== undefined) {
+            el.value = data[el.id];
+          }
+        });
+      } catch (e) { console.warn('Error loading auto data', e); }
+    }
+
+    function saveData() {
+      try {
+        var data = {};
+        document.querySelectorAll('.auto-save').forEach(function(el) {
+          if (el.type === 'radio') {
+            if (el.checked) data[el.name] = el.value;
+          } else {
+            data[el.id] = el.value;
+          }
+        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        var st = document.getElementById('saveAutoStatus');
+        if (st) st.innerText = '💾 Guardado a las ' + new Date().toLocaleTimeString();
+      } catch (e) { console.warn('Error saving auto data', e); }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      loadSavedData();
+      document.querySelectorAll('.auto-save').forEach(function(el) {
+        el.addEventListener('input', saveData);
+        el.addEventListener('change', saveData);
+      });
+    });
+  </script>
+</body>
+</html>

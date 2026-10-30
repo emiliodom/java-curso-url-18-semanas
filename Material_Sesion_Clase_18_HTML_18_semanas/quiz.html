@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz Integrador — Semana 18</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top no-print">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 18</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="quiz.html">Quiz Integrador</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Preguntas Tribunal</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="evaluacion_pares.html">Pares (5 pts)</a></li>
+          <li class="nav-item"><a class="nav-link" href="autoevaluacion.html">Autoevaluación</a></li>
+          <li class="nav-item"><a class="nav-link fw-bold text-danger" href="proyecto.html">★ Defensa (10 pts)</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha</a></li>
+          <li class="nav-item ms-lg-2"><button class="btn btn-outline-secondary btn-sm" onclick="exportQuizPdf()">🖨️ PDF</button></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill bg-info text-dark">Actividad Sincrónica Final · Valor: 0.78 Puntos</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Quiz Integrador de Cierre: Semanas 1 a 18</h1>
+          <div class="small-muted" id="quizTypeLabel">Quiz Final Integrador · 10 preguntas aleatorias barajadas</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 900px;">
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="row g-3 align-items-end">
+          <div class="col-md-6">
+            <label class="form-label fw-semibold" for="studentName">Nombre del estudiante (para el PDF)</label>
+            <input id="studentName" class="form-control" type="text" placeholder="Nombre y apellido" />
+          </div>
+          <div class="col-md-6">
+            <div class="small text-muted">Este quiz sintetiza los principios de arquitectura, persistencia, seguridad y despliegue aprendidos durante el curso.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="quizContainer"></div>
+    <div id="scoreBanner" class="score-banner"></div>
+
+    <div class="d-flex gap-2 flex-wrap mt-3 no-print">
+      <button class="btn btn-primary btn-lg" onclick="gradeQuiz()">Calificar Quiz</button>
+      <button class="btn btn-outline-secondary" onclick="resetQuiz()">Reintentar</button>
+      <button class="btn btn-outline-info" onclick="regenerateQuiz()">🔀 Nuevas preguntas</button>
+      <button class="btn btn-outline-dark btn-export" onclick="exportQuizPdf()">Exportar a PDF</button>
+      <a class="btn btn-danger ms-auto" href="proyecto.html">Ir a la Radicación de Defensa →</a>
+    </div>
+
+    <div class="callout warning mt-4 no-print">
+      <div class="fw-semibold">Comprobante de Actividad</div>
+      <p class="small-muted mb-0">Escribe tu nombre, califica y pulsa <strong>Exportar a PDF</strong> como respaldo de tu actividad en clase final (0.78 pts).</p>
+    </div>
+  </main>
+
+  <footer class="py-4 border-top bg-white">
+    <div class="container small-muted text-center">
+      Quiz Integrador — Semana 18 · Universidad Rafael Landívar · Programación I
+    </div>
+  </footer>
+
+  <script src="quiz.js"></script>
+  <script>
+    function Q(level, pregunta, a, b, c, fbOk, fbKo) {
+      return { level: level, pregunta: pregunta,
+        opciones: [{ v: 'a', t: a }, { v: 'b', t: b }, { v: 'c', t: c }],
+        correcta: 'a', fbOk: fbOk, fbKo: fbKo };
+    }
+    var QUESTION_BANK = [
+      Q('final', '¿Cuál es la función del patrón arquitectónico MVC en el desarrollo web moderno?',
+        'Separar la interfaz de usuario, la lógica de negocio y el acceso a datos en componentes especializados', 'Hacer que el código Java compile más rápido en la terminal', 'Evitar tener que pagar servidores en la nube',
+        '¡Correcto! MVC promueve el bajo acoplamiento y la alta cohesión del software.',
+        'MVC separa Modelo (datos), Vista (interfaz) y Controlador (flujo HTTP) para facilitar mantenimiento y pruebas.'),
+      Q('final', '¿Por qué las clases Java deben residir dentro del subárbol de paquetes que contiene la anotación <code>@SpringBootApplication</code>?',
+        'Porque el mecanismo de escaneo automático de componentes solo inspecciona hacia abajo desde esa clase', 'Porque Java prohíbe crear carpetas adicionales', 'Porque el motor de Thymeleaf no lee archivos compilados',
+        '¡Exacto! Spring escanea desde el paquete base; cualquier archivo externo queda ignorado (404 silencioso).',
+        'El @ComponentScan de Spring Boot busca beans desde la clase principal hacia abajo. Fuera de allí, no existen.'),
+      Q('final', '¿Qué tecnología traduce las entidades Java a tablas en PostgreSQL en nuestro proyecto?',
+        'Hibernate (a través de Spring Data JPA)', 'El navegador web del cliente', 'El archivo Dockerfile',
+        '¡Así es! Hibernate es el motor ORM que genera el SQL de inserción y consulta automáticamente.',
+        'Spring Data JPA utiliza Hibernate como ORM para mapear objetos Java a filas de bases de datos relacionales.'),
+      Q('final', '¿Por qué en un formulario Thymeleaf con errores de validación se retorna directamente el nombre de la plantilla?',
+        'Para conservar los datos que el usuario ya escribió y mostrar los mensajes de error en rojo', 'Para forzar un cierre de sesión inmediato', 'Para borrar la memoria caché del navegador',
+        '¡Regla de oro de UX! Si usaras redirect, la nueva petición HTTP borraría todos los mensajes de error.',
+        'Retornar la vista directamente mantiene el BindingResult vivo y permite a Thymeleaf pintar th:errors.')
+      ,
+      Q('final', '¿Cómo protege Spring Security contra ataques CSRF (Cross-Site Request Forgery)?',
+        'Insertando un token secreto e impredecible en cada formulario que se valida antes de procesar un POST', 'Bloqueando todas las conexiones que vengan de celulares', 'Encriptando los archivos HTML en el disco duro',
+        '¡Correcto! Thymeleaf genera el campo oculto _csrf automáticamente en cada th:action con método POST.',
+        'CSRF se previene exigiendo un token sincronizado entre la sesión del usuario y el formulario enviado.'),
+      Q('final', '¿Cuál es la función del parámetro <code>sslmode=require</code> en la cadena de conexión a Neon PostgreSQL?',
+        'Exigir que todo el tráfico entre Spring Boot y la base de datos viaje cifrado mediante SSL/TLS', 'Hacer que las consultas SQL sean más rápidas', 'Evitar que los usuarios olviden su contraseña',
+        '¡Seguridad esencial! Neon rechaza conexiones inseguras; sslmode=require es mandatorio en producción.',
+        'Neon exige cifrado SSL obligatorio para garantizar que los datos en tránsito no sean interceptados.'),
+      Q('final', '¿Qué ocurre en Render cuando haces <code>git push origin main</code>?',
+        'Render recibe un webhook de GitHub y dispara la reconstrucción del Dockerfile y despliegue automático', 'El repositorio de GitHub se bloquea por seguridad', 'La base de datos de Neon se vacía por precaución',
+        '¡Así es la integración y entrega continua (CI/CD)! Tu código se empaqueta y publica sin tocar el servidor.',
+        'Render monitorea la rama main y automatiza el build y deploy del contenedor cada vez que hay nuevos commits.'),
+      Q('final', '¿Por qué las contraseñas de los usuarios se almacenan en la base de datos con hash BCrypt?',
+        'Porque es un algoritmo unidireccional con sal: aunque un atacante robe la base de datos, no puede deducir la contraseña original', 'Para que ocupen menos espacio en el disco', 'Porque Java no sabe guardar texto largo',
+        '¡Excelente principio de ciberseguridad! Nunca guardes contraseñas en texto plano ni con cifrado reversible.',
+        'BCrypt aplica hashing lento y sal aleatoria, protegiendo las credenciales contra ataques de diccionario.'),
+      Q('final', 'En una entrega "llave en mano", ¿qué rol cumple el archivo <code>README.md</code>?',
+        'Servir como manual técnico central con diagrama de arquitectura, variables de entorno y guía de instalación', 'Guardar las contraseñas de los usuarios para no olvidarlas', 'Configurar el puerto 8080 del servidor',
+        '¡Impecable! El README es la documentación técnica viva que permite a cualquier ingeniero operar el proyecto.',
+        'El README documenta cómo compilar, cómo configurar variables y cómo interactúan las capas del sistema.'),
+      Q('final', '¿Qué aprendizaje formativo principal deja este curso para tu futuro desempeño como docente de TIC?',
+        'Haber experimentado el ciclo completo de desarrollo y comprender que el error es una oportunidad de aprendizaje guiado', 'Aprender de memoria todas las anotaciones de Spring Boot', 'Aprender a cobrar por hacer páginas web',
+        '¡Esa es la vocación docente! Quien ha construido y depurado software con sus manos puede enseñar con profunda empatía.',
+        'La experiencia práctica y la resolución de errores son la base para formar a nuevas generaciones en tecnología.')
+    ];
+
+    var QUIZ_CONFIG = {
+      presaberesCount: 10,
+      finalCount: 10,
+      presaberesTitle: 'Quiz Integrador — Semana 18',
+      finalTitle: 'Quiz Integrador — Semana 18 (0.78 pts)'
+    };
+
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof renderQuiz === 'function') {
+        renderQuiz();
+      }
+    });
+  </script>
+</body>
+</html>

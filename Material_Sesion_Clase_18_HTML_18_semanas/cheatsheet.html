@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cheat Sheet Integrador — Semana 18</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top no-print">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 18</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Preguntas Tribunal</a></li>
+          <li class="nav-item"><a class="nav-link active" href="cheatsheet.html">Cheat Sheet Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="evaluacion_pares.html">Pares (5 pts)</a></li>
+          <li class="nav-item"><a class="nav-link" href="autoevaluacion.html">Autoevaluación</a></li>
+          <li class="nav-item"><a class="nav-link fw-bold text-danger" href="proyecto.html">★ Defensa (10 pts)</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha</a></li>
+          <li class="nav-item ms-lg-2"><button class="btn btn-outline-secondary btn-sm" onclick="window.print()">🖨️ PDF</button></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4" style="max-width: 960px;">
+    <div class="mb-4">
+      <div class="brand-pill mb-2">Síntesis General del Curso</div>
+      <h1 class="h2 fw-bold">Cheat Sheet Integrador: De la Sintaxis al Despliegue Cloud</h1>
+      <p class="text-muted">La memoria técnica completa del semestre: resumen de las 4 etapas del desarrollo web con Java, glosario esencial y verificación llave en mano.</p>
+    </div>
+
+    <ul class="nav nav-tabs mb-4 no-print" role="tablist">
+      <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-mapa" type="button">🗺️ Mapa del Curso (18 Semanas)</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-glosario" type="button">📖 Glosario Técnico Esencial</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-llave" type="button">🔑 Estándar Llave en Mano</button></li>
+    </ul>
+
+    <div class="tab-content">
+      <!-- PESTAÑA 1: MAPA DEL CURSO -->
+      <div class="tab-pane fade show active" id="tab-mapa">
+        <div class="card mb-4">
+          <div class="card-header bg-primary text-white fw-semibold">Las 4 Grandes Etapas del Proyecto</div>
+          <div class="card-body">
+            <div class="row g-3 small">
+              <div class="col-md-6">
+                <div class="p-3 border rounded bg-light h-100">
+                  <span class="badge bg-secondary mb-1">Etapa 1 · Semanas 1 a 4</span>
+                  <h3 class="h6 fw-bold">Fundamentos, OOP y Git/GitHub</h3>
+                  <p class="text-muted mb-0">Tipos de datos estrictos en Java, condicionales, ciclos, clases y objetos. Control de versiones con Git (init, commit, push, branches, pull requests y README).</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="p-3 border rounded bg-light h-100">
+                  <span class="badge bg-primary mb-1">Etapa 2 · Semanas 5 a 9</span>
+                  <h3 class="h6 fw-bold">Patrones MVC y Spring Boot Base</h3>
+                  <p class="text-muted mb-0">Separación de responsabilidades: Modelo, Vista, Controlador. Spring Initializr, estructura de proyecto Maven, primeros endpoints con <code>@RestController</code> y Examen Parcial.</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="p-3 border rounded bg-light h-100">
+                  <span class="badge bg-success mb-1">Etapa 3 · Semanas 10 a 15</span>
+                  <h3 class="h6 fw-bold">Formularios, Neon JPA y Seguridad</h3>
+                  <p class="text-muted mb-0">Thymeleaf dinámico, Bean Validation con alertas y retención, persistencia en Neon PostgreSQL con Spring Data JPA y autenticación por roles con Spring Security y BCrypt.</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="p-3 border rounded bg-light h-100">
+                  <span class="badge bg-danger mb-1">Etapa 4 · Semanas 16 a 18</span>
+                  <h3 class="h6 fw-bold">QA, Mantenimiento y Gran Final</h3>
+                  <p class="text-muted mb-0">Casos de prueba funcionales, ciclo continuo con Render (cambio ➔ push ➔ redeploy), coevaluación entre pares (Ronda 2) y defensa formal de proyectos llave en mano.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PESTAÑA 2: GLOSARIO -->
+      <div class="tab-pane fade" id="tab-glosario">
+        <div class="card mb-4">
+          <div class="card-header bg-dark text-white fw-semibold">Glosario Técnico Indispensable</div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-striped table-hover mb-0 small">
+                <thead class="table-light">
+                  <tr><th>Término</th><th>Definición precisa</th><th>Ejemplo en el proyecto</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>Bean</strong></td><td>Objeto administrado por el contenedor de Spring Boot mediante inversión de control.</td><td>El repositorio inyectado en el controlador con <code>@Autowired</code>.</td></tr>
+                  <tr><td><strong>ORM (Hibernate)</strong></td><td>Object-Relational Mapping: traduce clases y objetos Java a tablas y filas SQL.</td><td><code>Beneficiario.java</code> mapeado a tabla con <code>@Entity</code>.</td></tr>
+                  <tr><td><strong>BindingResult</strong></td><td>Objeto que almacena el resultado de la validación sin lanzar excepción abrupta.</td><td><code>if (result.hasErrors()) return "formulario";</code></td></tr>
+                  <tr><td><strong>CSRF Token</strong></td><td>Identificador criptográfico que garantiza que una petición POST proviene de un formulario propio legítimo.</td><td>Campo oculto <code>_csrf</code> insertado por Thymeleaf en <code>th:action</code>.</td></tr>
+                  <tr><td><strong>BCrypt</strong></td><td>Algoritmo de hash irreversible con sal para almacenar contraseñas de forma segura.</td><td><code>new BCryptPasswordEncoder().encode("clave")</code></td></tr>
+                  <tr><td><strong>Cold Start</strong></td><td>Tiempo que tarda un contenedor suspendido en arrancar cuando recibe una petición tras inactividad.</td><td>Los ~50 segundos iniciales en el plan free de Render.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- PESTAÑA 3: LLAVE EN MANO -->
+      <div class="tab-pane fade" id="tab-llave">
+        <div class="card mb-4">
+          <div class="card-header bg-success text-white fw-semibold">El Estándar Profesional de Entrega "Llave en Mano"</div>
+          <div class="card-body small">
+            <p class="text-muted mb-3">Una entrega llave en mano no deja tareas técnicas pendientes al cliente. Revisa los 4 compromisos cumplidos:</p>
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="p-3 border rounded bg-light h-100">
+                  <h4 class="h6 fw-bold text-success">1. Software Operativo en Nube</h4>
+                  <ul class="mb-0 ps-3">
+                    <li>URL pública con HTTPS funcionando en Render.</li>
+                    <li>Base de datos Neon PostgreSQL con persistencia garantizada.</li>
+                    <li>Usuarios administradores y operadores creados.</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="p-3 border rounded bg-light h-100">
+                  <h4 class="h6 fw-bold text-primary">2. Documentación Integral</h4>
+                  <ul class="mb-0 ps-3">
+                    <li><code>README.md</code> en GitHub con árbol de paquetes y variables.</li>
+                    <li>Manual de usuario ilustrado para la entidad beneficiaria.</li>
+                    <li>Instrucciones para ejecución local con Maven.</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="p-3 border rounded bg-light h-100">
+                  <h4 class="h6 fw-bold text-warning text-dark">3. Evidencia Audiovisual</h4>
+                  <ul class="mb-0 ps-3">
+                    <li>Video A: Pitch ejecutivo de 3 minutos para los directores.</li>
+                    <li>Video B: Recorrido técnico y de código de 5 minutos.</li>
+                    <li>Ambos videos en 1080p con audio limpio.</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="p-3 border rounded bg-light h-100">
+                  <h4 class="h6 fw-bold text-danger">4. Traspaso Formal</h4>
+                  <ul class="mb-0 ps-3">
+                    <li>Correo formal enviado a la institución sin fines de lucro.</li>
+                    <li>Ficha confidencial de credenciales entregada por canal seguro.</li>
+                    <li>Repositorio limpio sin claves quemadas en Git.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer py-4 bg-light border-top text-center text-muted small">
+    <div class="container">
+      Universidad Rafael Landívar · Profesorado en TIC · Cheat Sheet Semana 18
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guía docente — Semana 18</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top no-print">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 18 — Cierre de Curso</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz Integrador</a></li>
+          <li class="nav-item"><a class="nav-link active" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Preguntas Tribunal</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="evaluacion_pares.html">Pares (5 pts)</a></li>
+          <li class="nav-item"><a class="nav-link" href="autoevaluacion.html">Autoevaluación</a></li>
+          <li class="nav-item"><a class="nav-link fw-bold text-danger" href="proyecto.html">★ Defensa (10 pts)</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="brand-pill mb-2">Guía docente · Sesión 18 · 70 minutos (11:10–12:20)</div>
+      <h1 class="h2 fw-bold mb-2">Defensa formal del proyecto, evaluación final y cierre de actas</h1>
+      <p class="small-muted mb-0">Sesión cumbre del semestre: recepción de las defensas técnicas de proyectos (10 pts), diligenciamiento de la Ronda 2 de evaluación de pares (5 pts) y metacognición docente.</p>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 980px;">
+
+    <div class="card mb-3"><div class="card-body">
+      <h2 class="h5 section-title">⏱️ Distribución del tiempo de la sesión final</h2>
+      <div class="table-responsive"><div class="linea-70" role="img" aria-label="Línea de tiempo de 70 minutos">
+        <div class="seg" style="flex:5;background:#fef3c7;border-color:#f59e0b"><b>00–05</b>Apertura</div>
+        <div class="seg critico" style="flex:40;background:#ede9fe;border-color:#8b5cf6"><b>05–45</b>Defensas en Vivo (10 pts)</div>
+        <div class="seg" style="flex:15;background:#dcfce7;border-color:#22c55e"><b>45–60</b>Peer Review R2 (5 pts)</div>
+        <div class="seg" style="flex:5;background:#e0f2fe;border-color:#0284c7"><b>60–65</b>Metacognición</div>
+        <div class="seg" style="flex:5;background:#f1f5f9;border-color:#64748b"><b>65–70</b>Cierre Actas</div>
+      </div></div>
+      <p class="small-muted mt-2 mb-0">El bloque principal de 40 min alberga las defensas en vivo. Ajusta estrictamente a 3:30 min por exposición + 30 s de retroalimentación docente para asegurar la participación de todos.</p>
+      <style>
+        .linea-70 { display: flex; gap: 3px; min-width: 640px; }
+        .linea-70 .seg { border-top: 5px solid; border-radius: 0.5rem; padding: 0.5rem 0.45rem; font-size: 0.78rem; line-height: 1.25; }
+        .linea-70 .seg b { display: block; font-size: 0.82rem; }
+        .linea-70 .seg.critico { box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.35); }
+      </style>
+    </div></div>
+
+    <div class="card mb-3"><div class="card-body">
+      <h2 class="h5 section-title">✅ Preparación previa del docente</h2>
+      <ol class="small-muted mb-0">
+        <li>Tener lista la planilla de notas con las columnas: Defensa Formal (10 pts), Peer Review R2 (5 pts) y Actividad Sincrónica (0.78 pts).</li>
+        <li>Publicar el orden exacto de presentación en el chat para que cada estudiante tenga sus ventanas listas cuando se le llame.</li>
+        <li>Tener a mano el banco de preguntas técnicas de tribunal de <a href="ejercicios.html">ejercicios.html</a>.</li>
+      </ol>
+    </div></div>
+
+    <div class="accordion" id="acc">
+
+      <!-- BLOQUE 1 -->
+      <div class="accordion-item">
+        <h2 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#b1">
+          <span class="time-chip me-2">00–05</span> Apertura formal y bienvenida institucional
+        </button></h2>
+        <div id="b1" class="accordion-collapse collapse show" data-bs-parent="#acc"><div class="accordion-body">
+          <p><strong>Qué haces:</strong> Bienvenida solemne al grupo. Felicitar a los estudiantes por haber completado las 18 semanas de un currículo riguroso de desarrollo web con Java.</p>
+          <p class="mb-0"><strong>Encuadre:</strong> Explicar que la defensa no es un examen punitivo, sino la celebración de una aplicación real entregada llave en mano a la comunidad.</p>
+        </div></div>
+      </div>
+
+      <!-- BLOQUE 2 -->
+      <div class="accordion-item">
+        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#b2">
+          <span class="time-chip me-2">05–45</span> Ronda de defensas técnicas en vivo (10 Puntos)
+        </button></h2>
+        <div id="b2" class="accordion-collapse collapse" data-bs-parent="#acc"><div class="accordion-body">
+          <p><strong>Qué haces:</strong> Conduces el orden de exposición (3:30 min por proyecto):</p>
+          <ol class="small mb-2">
+            <li>El estudiante comparte pantalla mostrando su aplicación en Render (con candado HTTPS).</li>
+            <li>Provoca el error de validación en rojo y luego guarda un registro válido en Neon.</li>
+            <li>Demuestra el control de roles con login (ADMIN vs usuario común).</li>
+            <li>El docente formula 1 pregunta técnica del banco (ej. <em>«¿Por qué en tu controlador retornaste la vista directamente ante el error de validación?»</em> o <em>«¿Dónde reside tu base de datos de producción?»</em>).</li>
+            <li>El docente califica sobre la rúbrica oficial de 10 puntos en <a href="proyecto.html">proyecto.html</a>.</li>
+          </ol>
+        </div></div>
+      </div>
+      <!-- BLOQUE 3 -->
+      <div class="accordion-item">
+        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#b3">
+          <span class="time-chip me-2">45–60</span> Diligenciamiento de la Evaluación entre Pares (Ronda 2 — 5 Pts)
+        </button></h2>
+        <div id="b3" class="accordion-collapse collapse" data-bs-parent="#acc"><div class="accordion-body">
+          <p><strong>Qué haces:</strong> Todos los estudiantes abren <a href="evaluacion_pares.html">evaluacion_pares.html</a> y completan la coevaluación sumativa sobre el proyecto del compañero asignado.</p>
+          <p class="small text-muted mb-0">Monitorea que cada alumno escriba al menos 2 fortalezas técnicas y 2 recomendaciones concretas, y exporte el PDF para subirlo al aula virtual.</p>
+        </div></div>
+      </div>
+
+      <!-- BLOQUE 4 -->
+      <div class="accordion-item">
+        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#b4">
+          <span class="time-chip me-2">60–65</span> Autoevaluación metacognitiva y reflexión del rol docente
+        </button>
+        </h2>
+        <div id="b4" class="accordion-collapse collapse" data-bs-parent="#acc"><div class="accordion-body">
+          <p><strong>Qué haces:</strong> Los estudiantes completan <a href="autoevaluacion.html">autoevaluacion.html</a> reflexionando sobre su crecimiento como futuros profesores de informática.</p>
+          <p class="small mb-0"><strong>Mensaje docente:</strong> <em>«Ustedes no solo aprendieron Java y Spring Boot: aprendieron cómo guiar a sus futuros alumnos cuando un código no compile o un despliegue falle.»</em></p>
+        </div></div>
+      </div>
+
+      <!-- BLOQUE 5 -->
+      <div class="accordion-item">
+        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#b5">
+          <span class="time-chip me-2">65–70</span> Cierre del curso y calendario de actas
+        </button></h2>
+        <div id="b5" class="accordion-collapse collapse" data-bs-parent="#acc"><div class="accordion-body">
+          <p><strong>Qué haces:</strong> Recordatorio oficial de las fechas de actas institucionales:</p>
+          <ul class="small mb-2">
+            <li><strong>1ra ronda de actas:</strong> 14 al 20 de noviembre de 2026.</li>
+            <li><strong>2da ronda de actas:</strong> 21 al 27 de noviembre de 2026.</li>
+            <li><strong>Cierre definitivo del portal:</strong> 28 de noviembre de 2026.</li>
+          </ul>
+          <p class="small text-muted mb-0">Pide a todos los estudiantes completar el formulario anónimo de <a href="../evaluacion_docente/index.html">evaluacion_docente/</a> como retroalimentación para la facultad.</p>
+        </div></div>
+      </div>
+
+    </div>
+
+    <div class="card mt-4 border-warning"><div class="card-body">
+      <h3 class="h6 fw-bold text-warning-emphasis mb-2">🆘 Plan B (si la tecnología falla en la defensa)</h3>
+      <ul class="small text-muted mb-0">
+        <li><strong>Si la URL de Render no responde:</strong> El estudiante ejecuta en vivo su aplicación en <code>localhost:8080</code> demostrando que la lógica está terminada en su máquina.</li>
+        <li><strong>Si hay corte total de internet o luz para un estudiante:</strong> Podrá enviar la grabación de su Video B (Demo Técnica de 5 min) junto con el repositorio de GitHub antes de las 23:59 del mismo día sin penalización en la defensa.</li>
+      </ul>
+    </div></div>
+
+  </main>
+
+  <footer class="footer py-4 bg-light border-top text-center text-muted small">
+    <div class="container">
+      Universidad Rafael Landívar · Profesorado en TIC · Guía Docente Semana 18
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

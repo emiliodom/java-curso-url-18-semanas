@@ -417,8 +417,30 @@ portal.
   ejercicios = Escuela de Fútbol/Dispensario (ficha Paciente), transformar y
   paginas = Biblioteca (`Libro`), challenge = Banco de Alimentos «Mesa
   Compartida» (`Donacion`), proyecto = el real.
-- **Semanas 16–18** — pendientes, mismo patrón reducido descrito en este
-  archivo (copiar `styles.css` y `diagramas.js` de la Semana 14/15).
+- **Semana 16** (Unidad 8b: QA, pruebas funcionales, arquitectura y mantenimiento) —
+  completa. Cumple el refuerzo pedagógico central solicitado: consolidar el
+  árbol de directorios de Spring Boot, los archivos clave y sus responsabilidades
+  únicas, y el flujo integral del dato (Formulario HTML/Thymeleaf ↔ Controlador
+  @Controller ↔ Bean Validation ↔ Repositorio JpaRepository ↔ Neon PostgreSQL).
+  Demuestra por qué no se usa 
+edirect ante fallos de validación (para no borrar
+  mensajes ni datos) y por qué se aplica POST-Redirect-GET tras guardar. En QA,
+  establece una batería de 6 casos de prueba funcionales (CP-01 a CP-06) con
+  severidad y diagnóstico, y comprueba el ciclo continuo cambio ➔ push a main ➔
+  redeploy automático en Render con inspección de log.
+- **Semana 17** (Unidad 9a: Presentación interna, retroalimentación y Entrega
+  Parcial 4) — completa. Hito de **7 puntos** (Guía 17 = 2 pts + ★ Entrega
+  Parcial 4 = 5 pts). Ensayo general de la demo técnica (guion de 4 minutos con
+  reloj interactivo), checklist de 10 puntos previos, protocolo operativo anti-cold
+  start para despertar Render y Neon, herramienta interactiva de evaluación entre
+  pares (Peer Review formativo con 5 criterios) y radicación del proyecto completo.
+- **Semana 18** (Unidad 9b: Gran Cierre, defensa final, evaluación y reflexión) —
+  completa. Culminación académica con **15.78 puntos** en juego (Defensa formal ante
+  tribunal = 10 pts, Peer Review Ronda 2 oficial = 5 pts, Actividad sincrónica =
+  0.78 pts). Incluye banco de preguntas de tribunal con respuestas modelo
+  (ejercicios.html), autoevaluación metacognitiva del futuro docente en TIC
+  (utoevaluacion.html), acta oficial de radicación (proyecto.html) y paquete
+  maestro de entrega llave en mano (ENTREGABLE_PROYECTO_LLAVE_EN_MANO.md).
 
 ### Calendario real del curso (ojo con los saltos)
 

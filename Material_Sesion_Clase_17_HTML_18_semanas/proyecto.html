@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Proyecto — Semana 17 · ★ Entrega Parcial 4</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top no-print">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 17</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Preparar Demo</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="evaluacion_pares.html">Evaluación Pares</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link active fw-bold text-danger" href="proyecto.html">★ Entrega 4 (7 pts)</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha</a></li>
+          <li class="nav-item ms-lg-2"><button class="btn btn-outline-secondary btn-sm" onclick="window.print()">🖨️ PDF</button></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4 bg-light border-bottom">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill bg-danger text-white">★ Hito Mayor de Evaluación · Punteo Total: 7.0 Puntos</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Entrega Parcial 4: Proyecto Completo Llave en Mano</h1>
+          <div class="small-muted">Reúne la <strong>Guía de Aprendizaje 17 (2.0 pts)</strong> y el <strong>Avance Final de Software (5.0 pts)</strong>. Tu aplicación en producción con base Neon, seguridad y documentación.</div>
+        </div>
+        <button class="btn btn-danger btn-export" onclick="window.print()">Exportar Entrega a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 960px;">
+    <!-- INFORMACIÓN GENERAL -->
+    <div class="card mb-4 border-danger">
+      <div class="card-header bg-danger text-white fw-semibold">1. Datos Generales de la Entrega</div>
+      <div class="card-body">
+        <div class="row g-3 small">
+          <div class="col-md-6">
+            <label class="form-label fw-bold mb-1" for="eNombre">Nombre completo del estudiante</label>
+            <input type="text" id="eNombre" class="form-control form-control-sm persistent" placeholder="Nombre, apellido y carné" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-bold mb-1" for="eEntidad">Institución o Entidad sin Fines de Lucro</label>
+            <input type="text" id="eEntidad" class="form-control form-control-sm persistent" placeholder="Ej. Dispensario Médico Comunitario San Rafael" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-bold mb-1" for="eUrlRender">URL pública en Render (con candado HTTPS)</label>
+            <input type="url" id="eUrlRender" class="form-control form-control-sm persistent" placeholder="https://tu-proyecto.onrender.com" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-bold mb-1" for="eUrlGit">Enlace al repositorio GitHub (rama main)</label>
+            <input type="url" id="eUrlGit" class="form-control form-control-sm persistent" placeholder="https://github.com/usuario/tu-proyecto" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARTE A: REGISTRO DE LA DEMO -->
+    <div class="card mb-4">
+      <div class="card-header bg-primary text-white fw-semibold">Parte A. Registro de la Demostración Interna (1.0 pt)</div>
+      <div class="card-body small">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label fw-bold mb-1">Nombre del compañero que presenció tu demo</label>
+            <input type="text" id="parTestigo" class="form-control form-control-sm persistent" placeholder="Nombre del compañero" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-bold mb-1">Usuario y clave de prueba compartidos para la demo</label>
+            <input type="text" id="credDemo" class="form-control form-control-sm persistent" placeholder="Ej. admin / URL2026! o entrenador / url" />
+          </div>
+          <div class="col-12">
+            <label class="form-label fw-bold mb-1">Breve resumen de cómo se desenvolvió la demo en vivo</label>
+            <textarea id="resumenDemo" class="form-control form-control-sm persistent" rows="2" placeholder="La demo duró 3:45 min; mostré la pantalla de creación, provoqué el error en rojo en la edad, se guardó el registro en Neon y demostré el acceso por rol ADMIN..."></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARTE B: PEER REVIEW RECIBIDO -->
+    <div class="card mb-4">
+      <div class="card-header bg-success text-white fw-semibold">Parte B. Evaluación entre Pares Recibida (1.4 pts)</div>
+      <div class="card-body small">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label fw-bold mb-1">Puntaje otorgado por tu compañero evaluador</label>
+            <input type="text" id="puntajePar" class="form-control form-control-sm persistent" placeholder="Ej. 4.5 / 5.0 pts" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-bold mb-1">Nombre de tu evaluador</label>
+            <input type="text" id="nombreEvaluador" class="form-control form-control-sm persistent" placeholder="Nombre del compañero que te evaluó" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-bold mb-1">Fortalezas técnicas señaladas por tu par</label>
+            <textarea id="parFortalezasRec" class="form-control form-control-sm persistent" rows="3" placeholder="Transcribe las principales fortalezas que tu compañero destacó de tu aplicación..."></textarea>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-bold mb-1">Sugerencias y oportunidades de mejora recibidas</label>
+            <textarea id="parSugerenciasRec" class="form-control form-control-sm persistent" rows="3" placeholder="Transcribe los puntos que tu compañero recomendó corregir para la entrega final..."></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- PARTE C: AUDITORÍA TÉCNICA DEL PROYECTO COMPLETO -->
+    <div class="card mb-4">
+      <div class="card-header bg-dark text-white fw-semibold">Parte C. Auditoría del Sistema Completo Llave en Mano (2.8 pts)</div>
+      <div class="card-body small">
+        <p class="text-muted mb-2">Marca los requisitos técnicos verificados que componen tu sistema completo:</p>
+
+        <div class="row g-2">
+          <div class="col-md-6">
+            <div class="form-check mb-2">
+              <input class="form-check-input persistent" type="checkbox" id="chkCrud" />
+              <label class="form-check-label" for="chkCrud"><strong>CRUD Completo:</strong> Permite crear, listar, consultar y procesar los registros de la entidad sin fallos.</label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input persistent" type="checkbox" id="chkVal" />
+              <label class="form-check-label" for="chkVal"><strong>Bean Validation & UX:</strong> Alertas visibles en rojo ante campos vacíos/inválidos y retención de valores escritos.</label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input persistent" type="checkbox" id="chkPrg" />
+              <label class="form-check-label" for="chkPrg"><strong>POST-Redirect-GET:</strong> Tras guardar se redirige a la lista; pulsar F5 no duplica filas en la base.</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-check mb-2">
+              <input class="form-check-input persistent" type="checkbox" id="chkNeon" />
+              <label class="form-check-label" for="chkNeon"><strong>Neon PostgreSQL:</strong> Datos persistentes en la nube (no se borran al reiniciar el contenedor en Render).</label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input persistent" type="checkbox" id="chkSec" />
+              <label class="form-check-label" for="chkSec"><strong>Spring Security & Roles:</strong> Rutas críticas protegidas por autenticación, contraseñas BCrypt y roles ADMIN/OPERADOR.</label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input persistent" type="checkbox" id="chkRender" />
+              <label class="form-check-label" for="chkRender"><strong>Despliegue Render con HTTPS:</strong> Servicio web activo sobre <code>*.onrender.com</code> con certificado SSL automático.</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARTE D: REPOSITORIO GITHUB Y DOCUMENTACIÓN -->
+    <div class="card mb-4">
+      <div class="card-header bg-info text-dark fw-semibold">Parte D. Repositorio GitHub y Documentación Técnica (1.0 pt)</div>
+      <div class="card-body small">
+        <div class="row g-2">
+          <div class="col-md-6">
+            <div class="form-check mb-1">
+              <input class="form-check-input persistent" type="checkbox" id="chkDocReadme" />
+              <label class="form-check-label" for="chkDocReadme"><code>README.md</code> con título del proyecto, descripción del problema y árbol de paquetes.</label>
+            </div>
+            <div class="form-check mb-1">
+              <input class="form-check-input persistent" type="checkbox" id="chkDocEnv" />
+              <label class="form-check-label" for="chkDocEnv">Lista clara de variables de entorno requeridas en Render (sin revelar contraseñas secretas).</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-check mb-1">
+              <input class="form-check-input persistent" type="checkbox" id="chkDocLocal" />
+              <label class="form-check-label" for="chkDocLocal">Instrucciones paso a paso para arrancar en máquina local con Maven (puerto 8080).</label>
+            </div>
+            <div class="form-check mb-1">
+              <input class="form-check-input persistent" type="checkbox" id="chkDocDocker" />
+              <label class="form-check-label" for="chkDocDocker"><code>Dockerfile</code> de dos etapas optimizado y <code>.dockerignore</code> presente en la raíz.</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARTE E: PLAN DE MEJORAS FINAL -->
+    <div class="card mb-4">
+      <div class="card-header bg-secondary text-white fw-semibold">Parte E. Plan de Mejoras Finales para la Semana 18 (0.8 pts)</div>
+      <div class="card-body small">
+        <label class="form-label fw-bold mb-1">Ajustes concretos que realizarás antes de la presentación y defensa final:</label>
+        <textarea id="planMejorasFinal" class="form-control form-control-sm persistent" rows="3" placeholder="1. Traducir dos mensajes de error que salían en inglés en el formulario...
+2. Mejorar la tabla del listado añadiendo badges de estado para los beneficiarios...
+3. Grabar el video explicativo de 5 minutos llave en mano..."></textarea>
+      </div>
+    </div>
+
+    <!-- RÚBRICA OFICIAL DE 7 PUNTOS -->
+    <div class="card mb-4 border-danger">
+      <div class="card-header bg-light text-danger fw-bold">Criterios de Evaluación — ★ Entrega Parcial 4 + Guía 17 (7.0 Puntos)</div>
+      <div class="card-body small">
+        <div class="row g-2">
+          <div class="col-md-4">
+            <div class="p-2 border rounded bg-light h-100">
+              <strong>Excelente (6.5 – 7.0 pts):</strong><br/>
+              Sistema 100% operativo en Render con Neon, validaciones y roles estrictos, evaluación entre pares profunda y README profesional.
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="p-2 border rounded bg-light h-100">
+              <strong>Satisfactorio (5.0 – 6.4 pts):</strong><br/>
+              Sistema operativo en línea pero presenta errores menores en mensajes de validación o la documentación omite variables de entorno.
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="p-2 border rounded bg-light h-100">
+              <strong>En Proceso (&lt; 5.0 pts):</strong><br/>
+              La aplicación no está desplegada en Render, no persiste en Neon, no tiene seguridad por roles o carece de evaluación de pares.
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top">
+          <span class="text-muted" id="saveStatus">💾 Los datos se guardan automáticamente en tu navegador.</span>
+          <button class="btn btn-danger" onclick="window.print()">Exportar Entrega Parcial 4 a PDF 🖨️</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer py-4 bg-light border-top text-center text-muted small">
+    <div class="container">
+      Universidad Rafael Landívar · Facultad de Humanidades · Profesorado en TIC · Entrega Parcial 4
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    var STORAGE_KEY = 's17_entrega4_v1';
+
+    function loadSavedData() {
+      try {
+        var raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        var data = JSON.parse(raw);
+        document.querySelectorAll('.persistent').forEach(function(el) {
+          if (data[el.id] !== undefined) {
+            if (el.type === 'checkbox') el.checked = data[el.id];
+            else el.value = data[el.id];
+          }
+        });
+      } catch (e) { console.warn('Error loading storage', e); }
+    }
+
+    function saveData() {
+      try {
+        var data = {};
+        document.querySelectorAll('.persistent').forEach(function(el) {
+          if (el.type === 'checkbox') data[el.id] = el.checked;
+          else data[el.id] = el.value;
+        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        var st = document.getElementById('saveStatus');
+        if (st) st.innerText = '💾 Guardado a las ' + new Date().toLocaleTimeString();
+      } catch (e) { console.warn('Error saving storage', e); }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      loadSavedData();
+      document.querySelectorAll('.persistent').forEach(function(el) {
+        el.addEventListener('input', saveData);
+        el.addEventListener('change', saveData);
+      });
+    });
+  </script>
+</body>
+</html>

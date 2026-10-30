@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portada — Semana 16 · QA, pruebas y mantenimiento</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top no-print">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 16 — QA y Arquitectura</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios (QA)</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto (Reporte)</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha del Proyecto</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-5">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+          <div class="brand-pill mb-3">Semana 16 · Unidad 8b · QA, pruebas y mantenimiento · 31 de octubre de 2026</div>
+          <h1 class="display-5 fw-bold mb-3">Domina tu arquitectura y asegura la calidad <span class="small-muted">(70 min)</span></h1>
+          <p class="lead small-muted mb-4">
+            Para probar y mantener una aplicación web con rigor, primero debes comprender su estructura íntima. Hoy reforzamos el <strong>árbol del proyecto</strong>, los <strong>archivos clave</strong> y el <strong>circuito completo del dato</strong> (Formulario ↔ Controlador ↔ Modelo ↔ Repositorio), ejecutamos una <strong>matriz de QA</strong> profesional y comprobamos el ciclo automático <strong>cambio → push → redeploy en Render</strong>.
+          </p>
+          <div class="d-flex gap-2 flex-wrap">
+            <a class="btn btn-primary btn-lg" href="quiz.html">1. Quiz de Presaberes</a>
+            <a class="btn btn-outline-primary btn-lg" href="ejercicios.html">2. Matriz de Pruebas QA</a>
+            <a class="btn btn-outline-dark btn-lg" href="proyecto.html">3. Reporte de Mantenimiento</a>
+          </div>
+          <div class="mt-4 callout info">
+            <div class="fw-semibold">🎯 Enfoque pedagógico de refuerzo</div>
+            <div class="small-muted">Sin librerías nuevas: consolidamos los fundamentos que causan confusión (paquetes vs carpetas, binding en formularios, inyección de repositorios y depuración de errores) antes del hito de entrega de la Semana 17.</div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="card">
+            <div class="card-body">
+              <h2 class="h5 section-title mb-3">Aprendizajes esperados</h2>
+              <ul class="mb-0 small">
+                <li><strong>Reconoce</strong> la ubicación y propósito de cada archivo del árbol de Spring Boot.</li>
+                <li><strong>Rastrea</strong> el ciclo de una petición HTTP desde el formulario hasta la base de datos Neon.</li>
+                <li><strong>Diseña y ejecuta</strong> casos de prueba funcionales (QA) con severidad y evidencias.</li>
+                <li><strong>Comprueba</strong> el ciclo de mantenimiento continuo: <code>git push</code> → redeploy automático en Render.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card mt-3">
+            <div class="card-body">
+              <h2 class="h6 section-title mb-2">Ruta de la sesión (70 min)</h2>
+              <ol class="mb-0 small">
+                <li>Presaberes + Diagnóstico del árbol (8 min)</li>
+                <li>El viaje del dato: Formulario ↔ Controlador ↔ Repositorio (22 min)</li>
+                <li>Diseño y ejecución de matriz QA (20 min)</li>
+                <li>Ciclo cambio → push → redeploy en Render (10 min)</li>
+                <li>Challenge interactivo y Quiz Final (10 min)</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <div class="card mb-4"><div class="card-body">
+      <h2 class="h5 section-title mb-1">🗺️ Dónde estamos en el curso</h2>
+      <div class="ruta-mapa mt-3" aria-label="Mapa del curso">
+        <div class="ruta-paso hecho"><div class="ruta-punto">13</div><span class="ruta-etq">Seguridad</span>Roles + BCrypt</div>
+        <div class="ruta-paso hecho"><div class="ruta-punto">14</div><span class="ruta-etq">Despliegue</span>Render + Neon</div>
+        <div class="ruta-paso hecho"><div class="ruta-punto">15</div><span class="ruta-etq">Auditoría</span>HTTPS + Ficha</div>
+        <div class="ruta-paso aqui"><div class="ruta-punto">16</div><span class="ruta-etq">QA & Arquitectura</span>Pruebas + Redeploy</div>
+        <div class="ruta-paso"><div class="ruta-punto">17</div><span class="ruta-etq">Presentación</span>★ Entrega 4</div>
+        <div class="ruta-paso"><div class="ruta-punto">18</div><span class="ruta-etq">Cierre</span>Defensa Final</div>
+      </div>
+      <div class="ruta-tres mt-3">
+        <div class="antes"><h3>⬅️ De dónde vienes</h3>
+          <div class="small-muted">Tu proyecto está en producción en Render con HTTPS y base Neon, pero persisten dudas sobre qué hace cada archivo y cómo viaja la información entre capas.</div></div>
+        <div class="ahora"><h3>📍 Qué harás hoy</h3>
+          <div class="small-muted">Aclarar el árbol y la interacción Modelo-Controlador-Formulario-Repositorio, ejecutar 6 pruebas funcionales rigurosas y verificar un redeploy automático.</div></div>
+        <div class="despues"><h3>➡️ A dónde vas</h3>
+          <div class="small-muted">Semana 17: Demostración técnica al grupo, evaluación entre pares y ★ Entrega Parcial 4 (proyecto completo llave en mano).</div></div>
+      </div>
+    </div></div>
+
+    <div class="card mb-4"><div class="card-body">
+      <h2 class="h5 section-title mb-1">🔄 El Viaje del Dato (Circuito Extremo a Extremo)</h2>
+      <p class="small-muted">Observa cómo interactúan las 4 piezas centrales cuando un usuario registra información:</p>
+      <figure class="mmd-figure">
+        <div class="mermaid">
+flowchart LR
+  subgraph Navegador ["🌐 Navegador del Usuario"]
+    F["📝 Formulario HTML<br/>(Thymeleaf th:object)"]
+  end
+  subgraph ControladorCap ["🎮 Controlador (@Controller)"]
+    C["Binding (@ModelAttribute)<br/>Validación (@Valid)<br/>¿hasErrors()?"]
+  end
+  subgraph ModeloCap ["📦 Modelo y Negocio"]
+    M["@Entity (Datos y reglas)<br/>@Service (Lógica)"]
+  end
+  subgraph PersistenciaCap ["💾 Persistencia y Base de Datos"]
+    R["JpaRepository<br/>(Spring Data)"]
+    DB[("🐘 Neon PostgreSQL<br/>(Producción)")]
+  end
+  F -- "1. POST datos" --> C
+  C -- "2. Valida contra" --> M
+  C -- "3a. Errores: regresa vista" --> F
+  C -- "3b. Válido: save()" --> R
+  R -- "4. SQL INSERT/UPDATE" --> DB
+  C -- "5. Redirect GET /lista" --> F
+  style Navegador fill:#f8fafc,stroke:#94a3b8,stroke-width:2px
+  style ControladorCap fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px
+  style ModeloCap fill:#ecfdf5,stroke:#10b981,stroke-width:2px
+  style PersistenciaCap fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+        </div>
+        <figcaption class="text-center small text-muted mt-2">Diagrama 16.1 — Circuito integral de una solicitud HTTP en la arquitectura MVC de Spring Boot.</figcaption>
+      </figure>
+    </div></div>
+
+    <div class="row g-3 mb-4">
+      <div class="col-md-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <span class="badge bg-primary mb-2">Paso 1</span>
+            <h3 class="h6 fw-bold">Quiz Unificado</h3>
+            <p class="small text-muted mb-3">Presaberes (8) y Final (12) barajados para comprobar tu comprensión del árbol, paquetes y capas.</p>
+            <a class="btn btn-outline-primary btn-sm" href="quiz.html">Abrir Quiz →</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <span class="badge bg-success mb-2">Paso 2</span>
+            <h3 class="h6 fw-bold">Ejercicios de QA</h3>
+            <p class="small text-muted mb-3">6 casos de prueba guiados: formulario vacío, validación, persistencia en Neon, seguridad y redeploy.</p>
+            <a class="btn btn-outline-success btn-sm" href="ejercicios.html">Abrir Casos de QA →</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <span class="badge bg-dark mb-2">Paso 3</span>
+            <h3 class="h6 fw-bold">Cheat Sheet & Anatomía</h3>
+            <p class="small text-muted mb-3">Tabla detallada de responsabilidades por archivo, árbol del proyecto comentado y matriz de testing.</p>
+            <a class="btn btn-outline-dark btn-sm" href="cheatsheet.html">Consultar Referencia →</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <span class="badge bg-warning text-dark mb-2">Paso 4</span>
+            <h3 class="h6 fw-bold">Challenge Interactivo</h3>
+            <p class="small text-muted mb-3">Arma el árbol arrastrando archivos a sus carpetas exactas y simula el flujo de errores en vivo.</p>
+            <a class="btn btn-outline-warning btn-sm" href="challenge.html">Jugar Challenge →</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <span class="badge bg-danger mb-2">Paso 5</span>
+            <h3 class="h6 fw-bold">Proyecto & Mantenimiento</h3>
+            <p class="small text-muted mb-3">Matriz calificable de QA ejecutada en tu Render y evidencia de redeploy continuo (Guía 16).</p>
+            <a class="btn btn-outline-danger btn-sm" href="proyecto.html">Abrir Reporte →</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <span class="badge bg-secondary mb-2">Referencia</span>
+            <h3 class="h6 fw-bold">Guía Docente (70 min)</h3>
+            <p class="small text-muted mb-3">Plan minuto a minuto de la sesión sincrónica, intervenciones clave y manejo del Plan B.</p>
+            <a class="btn btn-outline-secondary btn-sm" href="clase.html">Ver Guía Docente →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer py-4 bg-light border-top text-center text-muted small">
+    <div class="container">
+      Universidad Rafael Landívar · Profesorado en TIC · Programación I · Prof. Emilio Domínguez<br/>
+      <a href="../evaluacion_docente/index.html" class="text-decoration-none">⭐ Evaluación anónima de la sesión sincrónica</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+  <script src="diagramas.js"></script>
+</body>
+</html>
+

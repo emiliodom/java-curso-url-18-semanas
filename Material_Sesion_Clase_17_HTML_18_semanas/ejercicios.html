@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Preparación de la Demo — Semana 17</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top no-print">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 17</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link active" href="ejercicios.html">Preparar Demo</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="evaluacion_pares.html">Evaluación Pares</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link fw-bold text-danger" href="proyecto.html">★ Entrega 4 (7 pts)</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha</a></li>
+          <li class="nav-item ms-lg-2"><button class="btn btn-outline-secondary btn-sm" onclick="window.print()">🖨️ PDF</button></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4" style="max-width: 960px;">
+    <div class="mb-4">
+      <div class="brand-pill mb-2">Laboratorio de Comunicación Técnica</div>
+      <h1 class="h2 fw-bold">Guion y Preparación para la Demostración en Vivo</h1>
+      <p class="text-muted">Aprender a presentar software es tan importante como programarlo. Sigue este guion estructurado de <strong>4 minutos</strong> para que tu exposición sea fluida, técnica y convincente.</p>
+    </div>
+
+    <!-- EL GUION DE 4 MINUTOS -->
+    <div class="card mb-4 border-start border-primary border-4">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="h5 fw-bold mb-0">El Guion de 4 Minutos Paso a Paso</h2>
+          <span class="badge bg-primary">4:00 Minutos Exactos</span>
+        </div>
+
+        <div class="timeline p-2">
+          <!-- MINUTO 1 -->
+          <div class="p-3 bg-light rounded border mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <span class="fw-bold text-primary">Minuto 0:00–1:00 · El Problema y la Arquitectura</span>
+              <span class="badge bg-secondary">60 segundos</span>
+            </div>
+            <p class="small text-muted mb-2"><strong>Qué decir:</strong> <em>«Buenas tardes. Nuestro proyecto atiende a [Nombre de la Entidad sin Fines de Lucro], una institución que [describir brevemente su misión y el problema de registro que tenían]. Para solucionarlo, construimos una aplicación web en Java con Spring Boot bajo una arquitectura en capas MVC.»</em></p>
+            <p class="small text-muted mb-0"><strong>Qué mostrar:</strong> Tu diapositiva de portada o el <code>README.md</code> en GitHub mostrando el diagrama de capas (Modelo, Controlador, Repositorio, Vistas).</p>
+          </div>
+
+          <!-- MINUTO 2 -->
+          <div class="p-3 bg-light rounded border mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <span class="fw-bold text-warning text-dark">Minuto 1:00–2:15 · Formulario, Validación y UX</span>
+              <span class="badge bg-secondary">75 segundos</span>
+            </div>
+            <p class="small text-muted mb-2"><strong>Qué decir:</strong> <em>«El personal registra a los beneficiarios a través de este formulario en Thymeleaf. Para evitar datos corruptos, aplicamos Bean Validation estricto.»</em></p>
+            <p class="small text-muted mb-2"><strong>Qué mostrar:</strong> Presiona "Guardar" dejando campos vacíos. Muestra cómo aparecen las alertas en rojo y cómo los datos previos se retienen. Luego ingresa un registro real y presiona "Guardar".</p>
+            <p class="small text-success mb-0"><strong>Detalle técnico a destacar:</strong> <em>«Observen cómo aplicamos el patrón POST-Redirect-GET: si refresco la pantalla con F5, no se duplica ningún registro.»</em></p>
+          </div>
+
+          <!-- MINUTO 3 -->
+          <div class="p-3 bg-light rounded border mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <span class="fw-bold text-success">Minuto 2:15–3:15 · Persistencia en Neon y Listado</span>
+              <span class="badge bg-secondary">60 segundos</span>
+            </div>
+            <p class="small text-muted mb-2"><strong>Qué decir:</strong> <em>«La información viaja a través de Spring Data JPA y se almacena en nuestra base de datos PostgreSQL gestionada en Neon en la nube con conexión cifrada SSL.»</em></p>
+            <p class="small text-muted mb-0"><strong>Qué mostrar:</strong> El nuevo registro apareciendo en la tabla dinámica del listado principal con sus datos formateados.</p>
+          </div>
+
+          <!-- MINUTO 4 -->
+          <div class="p-3 bg-light rounded border">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <span class="fw-bold text-danger">Minuto 3:15–4:00 · Seguridad por Roles y Despliegue</span>
+              <span class="badge bg-secondary">45 segundos</span>
+            </div>
+            <p class="small text-muted mb-2"><strong>Qué decir:</strong> <em>«Implementamos Spring Security con contraseñas encriptadas con BCrypt y roles diferenciados: los usuarios comunes pueden registrar y consultar, mientras que solo el rol ADMIN tiene acceso a eliminar registros o ver auditorías.»</em></p>
+            <p class="small text-muted mb-0"><strong>Qué mostrar:</strong> Cierra sesión e intenta acceder a una ruta protegida para mostrar la redirección al login, o inicia sesión como ADMIN para mostrar los botones autorizados.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- CHECKLIST DE 10 PUNTOS ANTES DE PRESENTAR -->
+    <div class="card mb-4 border-start border-success border-4">
+      <div class="card-body">
+        <h2 class="h5 fw-bold mb-2">Checklist de 10 Puntos Previos a la Demo en Vivo</h2>
+        <p class="small text-muted mb-3">Marca cada punto en tu máquina antes de que sea tu turno de hablar:</p>
+
+        <div class="row g-2 small">
+          <div class="col-md-6">
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="checkbox" id="chk1" />
+              <label class="form-check-label" for="chk1"><strong>1. Ping preventivo:</strong> Abrí la URL de Render hace menos de 10 minutos para despertar la app.</label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="checkbox" id="chk2" />
+              <label class="form-check-label" for="chk2"><strong>2. Pestañas listas:</strong> Tengo abiertas las pestañas de Render (app pública), GitHub (código) y Neon.</label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="checkbox" id="chk3" />
+              <label class="form-check-label" for="chk3"><strong>3. Credenciales a mano:</strong> Conozco de memoria o en un bloc de notas el usuario y clave de prueba.</label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="checkbox" id="chk4" />
+              <label class="form-check-label" for="chk4"><strong>4. Zoom adecuado:</strong> El navegador está al 110% o 125% para que los espectadores lean el texto con nitidez.</label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="checkbox" id="chk5" />
+              <label class="form-check-label" for="chk5"><strong>5. Datos de prueba listos:</strong> Sé qué nombre y edad voy a escribir (sin improvisar casillas).</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="checkbox" id="chk6" />
+              <label class="form-check-label" for="chk6"><strong>6. Micrófono probado:</strong> El audio se escucha claro y sin eco.</label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="checkbox" id="chk7" />
+              <label class="form-check-label" for="chk7"><strong>7. Notificaciones apagadas:</strong> WhatsApp, Telegram y correo en silencio para evitar distracciones.</label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="checkbox" id="chk8" />
+              <label class="form-check-label" for="chk8"><strong>8. Plan B en marcha:</strong> Si Render falla, tengo VS Code abierto listo con <code>localhost:8080</code>.</label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="checkbox" id="chk9" />
+              <label class="form-check-label" for="chk9"><strong>9. Ventana de incógnito preparada:</strong> Para demostrar la protección de login sin cerrar mi sesión.</label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="checkbox" id="chk10" />
+              <label class="form-check-label" for="chk10"><strong>10. Cronómetro visible:</strong> Tengo el temporizador listo para no pasarme de los 4 minutos.</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TEMPORIZADOR DE ENSAYO INTERACTIVO -->
+    <div class="card mb-4 bg-light border-0">
+      <div class="card-body text-center py-4">
+        <h3 class="h6 fw-bold text-muted mb-2">Cronómetro de Ensayo (4:00 Minutos)</h3>
+        <div class="display-3 fw-bold font-monospace mb-3" id="demoTimer">04:00</div>
+        <div class="d-flex justify-content-center gap-2">
+          <button class="btn btn-primary" id="btnStartTimer" onclick="startTimer()">Iniciar Ensayo</button>
+          <button class="btn btn-outline-secondary" onclick="resetTimer()">Reiniciar</button>
+        </div>
+        <div class="small text-muted mt-2" id="timerFeedback">Practica tu pitch en voz alta respetando los 4 bloques.</div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer py-4 bg-light border-top text-center text-muted small">
+    <div class="container">
+      Universidad Rafael Landívar · Profesorado en TIC · Preparación de Demo Semana 17
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    var timerInterval = null;
+    var timeLeft = 240; // 4 minutos
+
+    function updateTimerDisplay() {
+      var m = Math.floor(timeLeft / 60);
+      var s = timeLeft % 60;
+      var strM = (m < 10 ? '0' : '') + m;
+      var strS = (s < 10 ? '0' : '') + s;
+      document.getElementById('demoTimer').innerText = strM + ':' + strS;
+      
+      var fb = document.getElementById('timerFeedback');
+      if (timeLeft > 180) fb.innerText = 'Minuto 1: Explica el problema y la arquitectura general.';
+      else if (timeLeft > 105) fb.innerText = 'Minuto 2: Demuestra el formulario y las validaciones en rojo.';
+      else if (timeLeft > 45) fb.innerText = 'Minuto 3: Demuestra el guardado en Neon y la tabla dinámica.';
+      else if (timeLeft > 0) fb.innerText = 'Minuto 4: Muestra la seguridad por roles (login) y cierra con el README.';
+      else fb.innerText = '¡Tiempo concluido! Tu presentación debe redondearse aquí.';
+    }
+
+    function startTimer() {
+      if (timerInterval) return;
+      document.getElementById('btnStartTimer').disabled = true;
+      timerInterval = setInterval(function() {
+        if (timeLeft > 0) {
+          timeLeft--;
+          updateTimerDisplay();
+        } else {
+          clearInterval(timerInterval);
+          timerInterval = null;
+          document.getElementById('btnStartTimer').disabled = false;
+        }
+      }, 1000);
+    }
+
+    function resetTimer() {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+      timeLeft = 240;
+      updateTimerDisplay();
+      document.getElementById('btnStartTimer').disabled = false;
+    }
+  </script>
+</body>
+</html>

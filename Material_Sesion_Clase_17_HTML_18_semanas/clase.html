@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guía docente — Semana 17</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top no-print">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 17 — Hito Entrega 4</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link active" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Preparar Demo</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="evaluacion_pares.html">Evaluación Pares</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link fw-bold text-danger" href="proyecto.html">★ Entrega 4 (7 pts)</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="brand-pill mb-2">Guía docente · Sesión 17 · 70 minutos (11:10–12:20)</div>
+      <h1 class="h2 fw-bold mb-2">Presentación interna, evaluación entre pares y Entrega Parcial 4</h1>
+      <p class="small-muted mb-0">Sesión sincrónica de <strong>demostración en vivo y coevaluación</strong>: los estudiantes ensayan su pitch técnico de 4 minutos, evalúan el proyecto de un par y entregan el proyecto completo antes de la defensa final.</p>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 980px;">
+
+    <div class="card mb-3"><div class="card-body">
+      <h2 class="h5 section-title">⏱️ Distribución del tiempo de clase</h2>
+      <div class="table-responsive"><div class="linea-70" role="img" aria-label="Línea de tiempo de 70 minutos">
+        <div class="seg" style="flex:8;background:#fef3c7;border-color:#f59e0b"><b>00–08</b>Ping Render</div>
+        <div class="seg" style="flex:12;background:#ede9fe;border-color:#8b5cf6"><b>08–20</b>Guion Demo</div>
+        <div class="seg critico" style="flex:25;background:#dcfce7;border-color:#22c55e"><b>20–45</b>Demo & Peer Review</div>
+        <div class="seg" style="flex:15;background:#fecdd3;border-color:#f43f5e"><b>45–60</b>Checklist Entrega 4</div>
+        <div class="seg" style="flex:10;background:#f1f5f9;border-color:#64748b"><b>60–70</b>Challenge & Cierre</div>
+      </div></div>
+      <p class="small-muted mt-2 mb-0">El bloque crítico de 25 min es la evaluación cruzada. Si el tiempo aprieta, garantiza que cada estudiante reciba feedback de al menos un compañero antes de cerrar las salas.</p>
+      <style>
+        .linea-70 { display: flex; gap: 3px; min-width: 640px; }
+        .linea-70 .seg { border-top: 5px solid; border-radius: 0.5rem; padding: 0.5rem 0.45rem; font-size: 0.78rem; line-height: 1.25; }
+        .linea-70 .seg b { display: block; font-size: 0.82rem; }
+        .linea-70 .seg.critico { box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.35); }
+      </style>
+    </div></div>
+
+    <div class="card mb-3"><div class="card-body">
+      <h2 class="h5 section-title">✅ Preparación previa del docente</h2>
+      <ol class="small-muted mb-0">
+        <li>Tener lista la matriz de parejas cruzadas de estudiantes antes de que comience la clase para asignarlas rápidamente en salas.</li>
+        <li>Recordar al grupo por correo o mensaje 15 minutos antes de la sesión que deben abrir la URL de su aplicación en Render para despertarla.</li>
+        <li>Tener abierta la plantilla de <a href="evaluacion_pares.html">evaluacion_pares.html</a> para proyectar los criterios de evaluación.</li>
+      </ol>
+    </div></div>
+
+    <div class="accordion" id="acc">
+
+      <!-- BLOQUE 1 -->
+      <div class="accordion-item">
+        <h2 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#b1">
+          <span class="time-chip me-2">00–08</span> Calentamiento técnico: ping masivo y Quiz Presaberes
+        </button></h2>
+        <div id="b1" class="accordion-collapse collapse show" data-bs-parent="#acc"><div class="accordion-body">
+          <p><strong>Qué haces:</strong> Pides a todos los estudiantes ingresar a su aplicación en Render desde su navegador o celular. Mientras los servidores despiertan, resuelven <a href="quiz.html">quiz.html</a> en modo <em>Presaberes</em>.</p>
+          <p><strong>Pase de lista técnico:</strong> Cada estudiante escribe en el chat su URL pública y confirma: <em>«Servicio despierto y respondiendo 200»</em>.</p>
+          <p class="mb-0"><strong>Explicación:</strong> Recuerda el motivo pedagógico: en el plan gratuito de Render, tras 15 min de inactividad el contenedor se suspende; reactivarlo tarda ~50 segundos. Hacer la petición previa previene momentos incómodos durante la exposición en vivo.</p>
+        </div></div>
+      </div>
+
+      <!-- BLOQUE 2 -->
+      <div class="accordion-item">
+        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#b2">
+          <span class="time-chip me-2">08–20</span> El guion de la demostración técnica de 4 minutos
+        </button></h2>
+        <div id="b2" class="accordion-collapse collapse" data-bs-parent="#acc"><div class="accordion-body">
+          <p><strong>Qué haces:</strong> Proyectas el guion modelo de <a href="ejercicios.html">ejercicios.html</a> y ejecutas una demo express de 3 minutos como modelo:</p>
+          <ul class="small mb-2">
+            <li><strong>Minuto 1: Contexto y Arquitectura.</strong> Quién es la entidad sin fines de lucro, problema que resuelve y diagrama del árbol de componentes en capas.</li>
+            <li><strong>Minuto 2: Formulario y Validaciones.</strong> Mostrar la pantalla de registro, forzar un error dejando campos vacíos (alertas rojas en Thymeleaf sin perder datos) y guardar un registro exitoso.</li>
+            <li><strong>Minuto 3: Persistencia y Lista.</strong> Mostrar la fila creada en la tabla dinámica y comprobar que está en Neon PostgreSQL.</li>
+            <li><strong>Minuto 4: Seguridad y Cierre.</strong> Iniciar sesión con rol ADMIN para ver acciones protegidas (como eliminar) y mostrar el repositorio GitHub con su README profesional.</li>
+          </ul>
+        </div></div>
+      </div>
+      <!-- BLOQUE 3 -->
+      <div class="accordion-item">
+        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#b3">
+          <span class="time-chip me-2">20–45</span> Rondas de demostración y evaluación entre pares
+        </button></h2>
+        <div id="b3" class="accordion-collapse collapse" data-bs-parent="#acc"><div class="accordion-body">
+          <p><strong>Dinámica en salas (Breakout rooms de 2 o 3 personas):</strong></p>
+          <ol class="small mb-2">
+            <li>El estudiante A comparte pantalla y realiza su demo de 4 minutos al estudiante B.</li>
+            <li>El estudiante B prueba la URL pública de A, navega en su repositorio y califica en <a href="evaluacion_pares.html">evaluacion_pares.html</a> (6 minutos).</li>
+            <li>Se invierten los roles: B expone y A evalúa (10 minutos).</li>
+            <li>Ambos estudiantes exportan su PDF de evaluación entre pares.</li>
+          </ol>
+          <p class="small text-muted mb-0">El profesor recorre las salas supervisando que la retroalimentación sea técnica y respetuosa.</p>
+        </div></div>
+      </div>
+
+      <!-- BLOQUE 4 -->
+      <div class="accordion-item">
+        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#b4">
+          <span class="time-chip me-2">45–60</span> Auditoría de la ★ Entrega Parcial 4 (7 Puntos)
+        </button></h2>
+        <div id="b4" class="accordion-collapse collapse" data-bs-parent="#acc"><div class="accordion-body">
+          <p><strong>Qué haces:</strong> Proyectas la sección calificable de <a href="proyecto.html">proyecto.html</a> y explicas cómo se distribuyen los 7 puntos:</p>
+          <ul class="small mb-2">
+            <li><strong>Guía de Aprendizaje 17 (2.0 pts):</strong> Registro de la demo interna y evaluación de pares completa con fortalezas y sugerencias.</li>
+            <li><strong>★ Entrega Parcial 4 (5.0 pts):</strong> Aplicación completa llave en mano (CRUD con validaciones, Neon DB, Spring Security, Render HTTPS, Dockerfile y README en GitHub).</li>
+          </ul>
+          <p class="small text-danger fw-bold mb-0">Recordar: Quien tenga fallas señaladas por su par hoy, tiene toda la semana para corregirlas y llegar a la defensa final de la Semana 18 con un sistema impecable.</p>
+        </div></div>
+      </div>
+
+      <!-- BLOQUE 5 -->
+      <div class="accordion-item">
+        <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#b5">
+          <span class="time-chip me-2">60–70</span> Challenge interactivo, Quiz Final y Cierre
+        </button></h2>
+        <div id="b5" class="accordion-collapse collapse" data-bs-parent="#acc"><div class="accordion-body">
+          <p><strong>Qué haces:</strong> Los estudiantes completan <a href="challenge.html">challenge.html</a> y <a href="quiz.html">quiz.html</a> en modo Final.</p>
+          <p class="small mb-0">Recuérdales subir su PDF de la Entrega 4 antes del sábado 14 de noviembre y verificar que sus enlaces funcionen desde navegadores externos o en modo incógnito.</p>
+        </div></div>
+      </div>
+
+    </div>
+
+    <div class="card mt-4 border-warning"><div class="card-body">
+      <h3 class="h6 fw-bold text-warning-emphasis mb-2">🆘 Plan B (si la tecnología falla en la demo)</h3>
+      <ul class="small text-muted mb-0">
+        <li><strong>Si la URL de Render de un alumno no responde en vivo:</strong> Puede compartir pantalla y demostrar el proyecto en su máquina local sobre <code>localhost:8080</code>, mostrando el repositorio en GitHub y el log de Render como evidencia del intento de despliegue.</li>
+        <li><strong>Si falla la conexión a internet de un estudiante:</strong> Su compañero puede evaluar el código y README en GitHub, y el estudiante reprograma una demo breve de 3 minutos grabada en video asíncrono para su entrega.</li>
+      </ul>
+    </div></div>
+
+  </main>
+
+  <footer class="footer py-4 bg-light border-top text-center text-muted small">
+    <div class="container">
+      Universidad Rafael Landívar · Profesorado en TIC · Guía Docente Semana 17
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Preguntas de Tribunal — Semana 18</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top no-print">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 18</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link active" href="ejercicios.html">Preguntas Tribunal</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet Final</a></li>
+          <li class="nav-item"><a class="nav-link" href="evaluacion_pares.html">Pares (5 pts)</a></li>
+          <li class="nav-item"><a class="nav-link" href="autoevaluacion.html">Autoevaluación</a></li>
+          <li class="nav-item"><a class="nav-link fw-bold text-danger" href="proyecto.html">★ Defensa (10 pts)</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha</a></li>
+          <li class="nav-item ms-lg-2"><button class="btn btn-outline-secondary btn-sm" onclick="window.print()">🖨️ PDF</button></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4" style="max-width: 960px;">
+    <div class="mb-4">
+      <div class="brand-pill mb-2">Simulador de Defensa Técnica</div>
+      <h1 class="h2 fw-bold">Banco de Preguntas del Tribunal Evaluador</h1>
+      <p class="text-muted">Durante tu defensa de 4 minutos, el docente formulará una o dos preguntas técnicas para validar tu autoría y comprensión de la arquitectura. Estudia estas 8 preguntas clave con sus respuestas modelo.</p>
+    </div>
+
+    <!-- PREGUNTA 1 -->
+    <div class="card mb-3 border-start border-primary border-4">
+      <div class="card-body">
+        <span class="badge bg-primary mb-1">Arquitectura</span>
+        <h2 class="h6 fw-bold">1. ¿Por qué dividiste tu proyecto en capas (MVC) en lugar de escribir todo en el Controlador?</h2>
+        <p class="small text-muted mb-2"><strong>Qué evalúa el profesor:</strong> Principio de responsabilidad única y bajo acoplamiento.</p>
+        <details>
+          <summary class="text-primary small fw-semibold cursor-pointer">Ver respuesta modelo recomendada</summary>
+          <div class="p-3 bg-light rounded mt-2 small">
+            <em>«Separamos en capas para cumplir el principio de responsabilidad única. El Controlador solo atiende el tráfico HTTP y delega la lógica al Servicio y el acceso a datos al Repositorio. Si en el futuro cambiamos la base de datos de Neon a otra plataforma, solo modificamos la configuración o el repositorio sin romper la interfaz gráfica de Thymeleaf.»</em>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- PREGUNTA 2 -->
+    <div class="card mb-3 border-start border-warning border-4">
+      <div class="card-body">
+        <span class="badge bg-warning text-dark mb-1">Spring Web</span>
+        <h2 class="h6 fw-bold">2. ¿Qué diferencia hay entre <code>@Controller</code> y <code>@RestController</code>, y por qué usaste <code>@Controller</code>?</h2>
+        <p class="small text-muted mb-2"><strong>Qué evalúa el profesor:</strong> Renderizado de vistas HTML vs entrega de JSON crudo.</p>
+        <details>
+          <summary class="text-primary small fw-semibold cursor-pointer">Ver respuesta modelo recomendada</summary>
+          <div class="p-3 bg-light rounded mt-2 small">
+            <em>«<code>@RestController</code> devuelve directamente datos en formato JSON o texto crudo al cuerpo de la respuesta (usado en APIs). En cambio, <code>@Controller</code> devuelve el nombre de una plantilla HTML (como <code>return "formulario";</code>) para que el motor Thymeleaf la procese y renderice la interfaz web completa para el usuario final.»</em>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- PREGUNTA 3 -->
+    <div class="card mb-3 border-start border-success border-4">
+      <div class="card-body">
+        <span class="badge bg-success mb-1">Persistencia y Nube</span>
+        <h2 class="h6 fw-bold">3. ¿Por qué la base de datos PostgreSQL vive en Neon y no en la base gratuita de Render?</h2>
+        <p class="small text-muted mb-2"><strong>Qué evalúa el profesor:</strong> Comprensión operativa de la persistencia y perfiles de nube.</p>
+        <details>
+          <summary class="text-primary small fw-semibold cursor-pointer">Ver respuesta modelo recomendada</summary>
+          <div class="p-3 bg-light rounded mt-2 small">
+            <em>«Porque la base de datos gratuita de Render expira a los 30 días y borra la información. Neon, en cambio, ofrece un nivel gratuito sin fecha de caducidad; solo suspende el cómputo por inactividad y se reactiva automáticamente con la primera consulta JDBC, asegurando que los datos de la institución nunca se pierdan.»</em>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- PREGUNTA 4 -->
+    <div class="card mb-3 border-start border-danger border-4">
+      <div class="card-body">
+        <span class="badge bg-danger mb-1">Validación y UX</span>
+        <h2 class="h6 fw-bold">4. Cuando un usuario envía un formulario con errores, ¿por qué NO se debe usar <code>return "redirect:..."</code>?</h2>
+        <p class="small text-muted mb-2"><strong>Qué evalúa el profesor:</strong> Ciclo de peticiones HTTP, estado y retención de datos.</p>
+        <details>
+          <summary class="text-primary small fw-semibold cursor-pointer">Ver respuesta modelo recomendada</summary>
+          <div class="p-3 bg-light rounded mt-2 small">
+            <em>«Porque una redirección (HTTP 302) le ordena al navegador solicitar una nueva página GET limpia, lo que destruye el objeto de error inyectado en <code>BindingResult</code> y borra todo lo que el usuario había escrito. Al devolver la plantilla directamente (<code>return "formulario"</code>), Thymeleaf conserva los campos y resalta los errores en rojo.»</em>
+          </div>
+        </details>
+      </div>
+    </div>
+    <!-- PREGUNTA 5 -->
+    <div class="card mb-3 border-start border-info border-4">
+      <div class="card-body">
+        <span class="badge bg-info text-dark mb-1">Patrón PRG</span>
+        <h2 class="h6 fw-bold">5. ¿Cuál es el beneficio de aplicar el patrón POST-Redirect-GET tras guardar con éxito?</h2>
+        <p class="small text-muted mb-2"><strong>Qué evalúa el profesor:</strong> Prevención de duplicación de registros por refresco (F5).</p>
+        <details>
+          <summary class="text-primary small fw-semibold cursor-pointer">Ver respuesta modelo recomendada</summary>
+          <div class="p-3 bg-light rounded mt-2 small">
+            <em>«Evita que el usuario duplique registros si presiona F5 o el botón de refrescar. Al redirigir tras el POST exitoso, el navegador queda en una petición GET segura; si el usuario refresca, simplemente vuelve a consultar la lista sin reenviar el formulario a la base de datos.»</em>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- PREGUNTA 6 -->
+    <div class="card mb-3 border-start border-dark border-4">
+      <div class="card-body">
+        <span class="badge bg-dark text-white mb-1">Seguridad e Higiene</span>
+        <h2 class="h6 fw-bold">6. ¿Por qué es un error grave de seguridad escribir contraseñas en <code>application.properties</code>?</h2>
+        <p class="small text-muted mb-2"><strong>Qué evalúa el profesor:</strong> Manejo de secretos y separación de configuración (12-Factor App).</p>
+        <details>
+          <summary class="text-primary small fw-semibold cursor-pointer">Ver respuesta modelo recomendada</summary>
+          <div class="p-3 bg-light rounded mt-2 small">
+            <em>«Porque ese archivo se sube a GitHub en el control de versiones público. Si quemamos contraseñas allí, cualquier persona o bot malicioso puede leer la clave y vulnerar la base de datos de Neon. La buena práctica exige usar variables de entorno configuradas en el dashboard de Render (como <code>${DB_PASSWORD}</code>).»</em>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- PREGUNTA 7 -->
+    <div class="card mb-3 border-start border-secondary border-4">
+      <div class="card-body">
+        <span class="badge bg-secondary mb-1">Thymeleaf</span>
+        <h2 class="h6 fw-bold">7. ¿Cómo sabe Spring Boot qué datos mostrar en la tabla de <code>lista.html</code>?</h2>
+        <p class="small text-muted mb-2"><strong>Qué evalúa el profesor:</strong> Vinculación entre el Model de Spring y la expresión <code>th:each</code>.</p>
+        <details>
+          <summary class="text-primary small fw-semibold cursor-pointer">Ver respuesta modelo recomendada</summary>
+          <div class="p-3 bg-light rounded mt-2 small">
+            <em>«El controlador consulta <code>repositorio.findAll()</code> y lo agrega al objeto Model con <code>model.addAttribute("beneficiarios", lista)</code>. Luego, Thymeleaf en el HTML itera sobre esa colección usando <code>th:each="item : ${beneficiarios}"</code> y dibuja una fila <code>&lt;tr&gt;</code> por cada registro recuperado.»</em>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- PREGUNTA 8 -->
+    <div class="card mb-3 border-start border-primary border-4">
+      <div class="card-body">
+        <span class="badge bg-primary mb-1">DevOps y CI/CD</span>
+        <h2 class="h6 fw-bold">8. ¿Qué ventaja ofrece el <code>Dockerfile</code> multietapa al desplegar en Render?</h2>
+        <p class="small text-muted mb-2"><strong>Qué evalúa el profesor:</strong> Optimización de contenedores y tamaño de imagen en producción.</p>
+        <details>
+          <summary class="text-primary small fw-semibold cursor-pointer">Ver respuesta modelo recomendada</summary>
+          <div class="p-3 bg-light rounded mt-2 small">
+            <em>«La primera etapa descarga Maven y el JDK completo para compilar el <code>.jar</code>. La segunda etapa copia únicamente el archivo compilado sobre una imagen JRE liviana de Eclipse Temurin 17. Esto reduce el tamaño de la imagen, acelera el arranque en Render y disminuye la superficie de vulnerabilidades en producción.»</em>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <div class="alert alert-success d-flex justify-content-between align-items-center mt-4">
+      <div>
+        <h3 class="h6 fw-bold mb-1">¡Estás listo para responder con seguridad!</h3>
+        <p class="small mb-0 text-muted">Mantén la calma, habla con vocabulario técnico y demuestra tu dominio.</p>
+      </div>
+      <a class="btn btn-success" href="proyecto.html">Ir a la Radicación de Defensa →</a>
+    </div>
+  </main>
+
+  <footer class="footer py-4 bg-light border-top text-center text-muted small">
+    <div class="container">
+      Universidad Rafael Landívar · Profesorado en TIC · Preguntas de Tribunal Semana 18
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

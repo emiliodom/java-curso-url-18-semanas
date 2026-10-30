@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Evaluación entre Pares — Semana 17</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top no-print">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 17</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Preparar Demo</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link active" href="evaluacion_pares.html">Evaluación Pares</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link fw-bold text-danger" href="proyecto.html">★ Entrega 4 (7 pts)</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha</a></li>
+          <li class="nav-item ms-lg-2"><button class="btn btn-outline-secondary btn-sm" onclick="window.print()">🖨️ PDF</button></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Peer Review Formativo · Semana 17</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Evaluación Técnica entre Pares (Ensayo General)</h1>
+          <div class="small-muted">Evalúa la aplicación y el repositorio de tu compañero asignado. Recuerda: <strong>se califica la calidad y profundidad pedagógica de tu retroalimentación</strong>, ayudándole a pulir detalles antes de la defensa final de la Semana 18.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 960px;">
+    <!-- METADATOS DE LA EVALUACIÓN -->
+    <div class="card mb-4">
+      <div class="card-header bg-primary text-white fw-semibold">Datos de la Coevaluación</div>
+      <div class="card-body">
+        <div class="row g-3 small">
+          <div class="col-md-6">
+            <label class="form-label fw-bold mb-1" for="evaluadorNombre">Nombre del estudiante evaluador (tú)</label>
+            <input type="text" id="evaluadorNombre" class="form-control form-control-sm peer-save" placeholder="Tu nombre completo" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-bold mb-1" for="evaluadoNombre">Nombre del compañero que evaluaste</label>
+            <input type="text" id="evaluadoNombre" class="form-control form-control-sm peer-save" placeholder="Nombre del compañero evaluado" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-bold mb-1" for="evaluadoRepo">URL de su repositorio en GitHub</label>
+            <input type="url" id="evaluadoRepo" class="form-control form-control-sm peer-save" placeholder="https://github.com/..." />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-bold mb-1" for="evaluadoApp">URL pública en Render de su aplicación</label>
+            <input type="url" id="evaluadoApp" class="form-control form-control-sm peer-save" placeholder="https://...onrender.com" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RÚBRICA DE 5 CRITERIOS -->
+    <div class="card mb-4">
+      <div class="card-header bg-dark text-white fw-semibold">Rúbrica de Evaluación Técnica (5 Criterios)</div>
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover mb-0 small align-middle">
+            <thead class="table-light">
+              <tr>
+                <th style="width: 28%;">Criterio Evaluado</th>
+                <th style="width: 24%;">Insuficiente (0 pts)</th>
+                <th style="width: 24%;">En Proceso (0.5 pts)</th>
+                <th style="width: 24%;">Excelente (1.0 pt)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1. Despliegue en Render y HTTPS</strong><br/><span class="text-muted">Carga pública, candado seguro y estabilidad</span></td>
+                <td><label><input type="radio" name="c1" value="0" class="peer-save"> No carga la URL o genera error 500 al arrancar.</label></td>
+                <td><label><input type="radio" name="c1" value="0.5" class="peer-save"> Carga pero tarda excesivamente o se cae en ciertas rutas.</label></td>
+                <td><label><input type="radio" name="c1" value="1.0" class="peer-save"> Carga rápido con HTTPS activo, responsiva y estable.</label></td>
+              </tr>
+              <tr>
+                <td><strong>2. Arquitectura y Árbol de Archivos</strong><br/><span class="text-muted">Estructura canónica de paquetes Java</span></td>
+                <td><label><input type="radio" name="c2" value="0" class="peer-save"> Clases sueltas fuera del paquete o capas mezcladas.</label></td>
+                <td><label><input type="radio" name="c2" value="0.5" class="peer-save"> Capas creadas pero con acoplamiento o nombres confusos.</label></td>
+                <td><label><input type="radio" name="c2" value="1.0" class="peer-save"> Árbol impecable: model, repository, controller y templates.</label></td>
+              </tr>
+              <tr>
+                <td><strong>3. Formulario, Validación y Persistencia</strong><br/><span class="text-muted">Thymeleaf th:object, th:errors y Neon DB</span></td>
+                <td><label><input type="radio" name="c3" value="0" class="peer-save"> El formulario no guarda o no muestra validaciones.</label></td>
+                <td><label><input type="radio" name="c3" value="0.5" class="peer-save"> Guarda datos pero los campos se borran si hay error.</label></td>
+                <td><label><input type="radio" name="c3" value="1.0" class="peer-save"> Valida en rojo, retiene inputs y guarda en Neon sin duplicar.</label></td>
+              </tr>
+              <tr>
+                <td><strong>4. Seguridad y Roles de Usuario</strong><br/><span class="text-muted">Spring Security, BCrypt y requestMatchers</span></td>
+                <td><label><input type="radio" name="c4" value="0" class="peer-save"> No hay login o cualquiera puede eliminar registros.</label></td>
+                <td><label><input type="radio" name="c4" value="0.5" class="peer-save"> Hay login pero la protección solo está en la vista (sec:auth).</label></td>
+                <td><label><input type="radio" name="c4" value="1.0" class="peer-save"> Roles ADMIN / OPERADOR estrictos en SecurityConfig.</label></td>
+              </tr>
+              <tr>
+                <td><strong>5. Documentación en GitHub (README)</strong><br/><span class="text-muted">Manual, variables de entorno y credenciales</span></td>
+                <td><label><input type="radio" name="c5" value="0" class="peer-save"> README vacío o el genérico de Spring Initializr.</label></td>
+                <td><label><input type="radio" name="c5" value="0.5" class="peer-save"> Documentación incompleta o faltan variables de entorno.</label></td>
+                <td><label><input type="radio" name="c5" value="1.0" class="peer-save"> README profesional con arquitectura, roles y guía de uso.</label></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- COMENTARIOS CUALITATIVOS -->
+    <div class="card mb-4">
+      <div class="card-header bg-success text-white fw-semibold">Retroalimentación Constructiva para tu Compañero</div>
+      <div class="card-body small">
+        <p class="text-muted mb-3">Evita comentarios vagos como "todo bien" o "me gustó". Sé específico: menciona nombres de clases, rutas o comportamientos concretos.</p>
+        
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="p-3 bg-light border rounded h-100">
+              <label class="form-label fw-bold text-success mb-1">🌟 2 Fortalezas Técnicas del Proyecto</label>
+              <textarea id="peerFortalezas" class="form-control form-control-sm peer-save" rows="4" placeholder="1. Me pareció excelente cómo estructuró las validaciones en la entidad Beneficiario...
+2. La interfaz en Thymeleaf es muy limpia y el acceso por rol ADMIN funciona correctamente al intentar eliminar..."></textarea>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 bg-light border rounded h-100">
+              <label class="form-label fw-bold text-primary mb-1">💡 2 Sugerencias de Mejora para la Semana 18</label>
+              <textarea id="peerSugerencias" class="form-control form-control-sm peer-save" rows="4" placeholder="1. Sugiero agregar una captura o diagrama en el README para que un usuario externo entienda el flujo...
+2. En el formulario, al cometer error en el teléfono el mensaje sale en inglés (typeMismatch); valdría la pena traducirlo en el modelo..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top">
+          <div>
+            <strong>Puntaje Asignado: </strong><span id="scoreDisplay" class="badge bg-primary fs-6">0 / 5 pts</span>
+          </div>
+          <button class="btn btn-primary" onclick="window.print()">Exportar Evaluación a PDF 🖨️</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer py-4 bg-light border-top text-center text-muted small">
+    <div class="container">
+      Universidad Rafael Landívar · Profesorado en TIC · Evaluación entre Pares Semana 17
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    var STORAGE_KEY = 's17_peer_review_v1';
+
+    function calculateScore() {
+      var total = 0;
+      ['c1', 'c2', 'c3', 'c4', 'c5'].forEach(function(crit) {
+        var checked = document.querySelector('input[name="' + crit + '"]:checked');
+        if (checked) total += parseFloat(checked.value);
+      });
+      document.getElementById('scoreDisplay').innerText = total.toFixed(1) + ' / 5.0 pts';
+      return total;
+    }
+
+    function loadSavedData() {
+      try {
+        var raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        var data = JSON.parse(raw);
+        document.querySelectorAll('.peer-save').forEach(function(el) {
+          if (el.type === 'radio') {
+            if (data[el.name] === el.value) el.checked = true;
+          } else if (data[el.id] !== undefined) {
+            el.value = data[el.id];
+          }
+        });
+        calculateScore();
+      } catch (e) { console.warn('Error loading peer review data', e); }
+    }
+
+    function saveData() {
+      try {
+        var data = {};
+        document.querySelectorAll('.peer-save').forEach(function(el) {
+          if (el.type === 'radio') {
+            if (el.checked) data[el.name] = el.value;
+          } else {
+            data[el.id] = el.value;
+          }
+        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        calculateScore();
+      } catch (e) { console.warn('Error saving peer review data', e); }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      loadSavedData();
+      document.querySelectorAll('.peer-save').forEach(function(el) {
+        el.addEventListener('input', saveData);
+        el.addEventListener('change', saveData);
+      });
+    });
+  </script>
+</body>
+</html>

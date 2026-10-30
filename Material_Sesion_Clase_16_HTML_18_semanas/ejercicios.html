@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ejercicios Prácticos de QA — Semana 16</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top no-print">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 16</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link active" href="ejercicios.html">Ejercicios (QA)</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto (Reporte)</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha</a></li>
+          <li class="nav-item ms-lg-2"><button class="btn btn-outline-secondary btn-sm" onclick="window.print()">🖨️ PDF</button></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4">
+    <div class="mb-4">
+      <div class="brand-pill mb-2">Laboratorio Práctico de QA</div>
+      <h1 class="h2 fw-bold">Batería de Pruebas Funcionales y Diagnóstico Arquitectónico</h1>
+      <p class="text-muted">Aplica estos 6 casos de prueba estructurados sobre tu proyecto. Cada ejercicio te explica <strong>qué capas se están activando</strong> y <strong>dónde revisar en tu código</strong> si algo no responde como se espera.</p>
+    </div>
+
+    <!-- CASO 1 -->
+    <div class="card mb-4 border-start border-primary border-4">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <span class="badge bg-primary">CP-01 · Presentación</span>
+          <span class="text-muted small">Capa: Controlador + Vistas Thymeleaf</span>
+        </div>
+        <h2 class="h5 fw-bold">Carga Limpia del Formulario de Registro (Petición GET)</h2>
+        <p class="small text-muted"><strong>Objetivo:</strong> Comprobar que la ruta <code>/nuevo</code> entrega el formulario sin errores y con los campos listos para captura.</p>
+        
+        <div class="bg-light p-3 rounded small mb-3">
+          <strong>Ruta arquitectónica activada:</strong><br/>
+          <code>Navegador (GET /nuevo)</code> ➔ <code>Controlador (@GetMapping)</code> ➔ <code>model.addAttribute("entidad", new Entidad())</code> ➔ <code>templates/formulario.html (th:object)</code>.
+        </div>
+
+        <ol class="small">
+          <li>Abre tu navegador e ingresa a la URL de creación (ej. <code>https://tu-app.onrender.com/beneficiarios/nuevo</code> o en localhost).</li>
+          <li>Verifica que la página responda con código HTTP 200 (sin pantalla de error blanca ni 404).</li>
+          <li>Comprueba que todos los campos del formulario aparezcan completamente vacíos y sin mensajes de error precargados.</li>
+        </ol>
+
+        <details class="mt-2">
+          <summary class="text-primary small fw-semibold cursor-pointer">🔍 ¿Qué revisar en tu código si este caso falla?</summary>
+          <div class="p-3 bg-white border rounded mt-2 small">
+            <ul>
+              <li><strong>Error 404:</strong> Verifica que tu clase controladora tenga la anotación <code>@Controller</code> (y no <code>@RestController</code>) y que esté dentro del paquete base (ej. <code>gt.edu.url.miproyecto.controller</code>).</li>
+              <li><strong>Error 500 (Neither BindingResult nor plain target object available):</strong> En el controlador olvidaste hacer <code>model.addAttribute("nombreEntidad", new Entidad())</code> con el mismo nombre que pusiste en <code>th:object="${nombreEntidad}"</code> en el HTML.</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- CASO 2 -->
+    <div class="card mb-4 border-start border-warning border-4">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <span class="badge bg-warning text-dark">CP-02 · Validación y UX</span>
+          <span class="text-muted small">Capa: Bean Validation + BindingResult</span>
+        </div>
+        <h2 class="h5 fw-bold">Rechazo de Datos Inválidos y Retención de Valores (Petición POST)</h2>
+        <p class="small text-muted"><strong>Objetivo:</strong> Verificar que la aplicación rechace entradas vacías o fuera de rango sin caerse y sin borrar lo que el usuario escribió.</p>
+
+        <div class="bg-light p-3 rounded small mb-3">
+          <strong>Ruta arquitectónica activada:</strong><br/>
+          <code>Formulario POST</code> ➔ <code>Controlador (@Valid @ModelAttribute)</code> ➔ <code>BindingResult.hasErrors() = true</code> ➔ <code>return "formulario" (SIN redirect)</code> ➔ <code>th:errors</code>.
+        </div>
+
+        <ol class="small">
+          <li>En el formulario abierto, deja un campo obligatorio en blanco (ej. Nombre).</li>
+          <li>Ingresa un valor intencionalmente inválido en un campo numérico (ej. Edad = <code>-10</code> o fecha futura si no es permitida).</li>
+          <li>Presiona el botón "Guardar" o "Registrar".</li>
+          <li><strong>Resultado esperado:</strong> El formulario debe recargarse en la misma pantalla mostrando alertas en color rojo al lado de cada campo erróneo. Los datos válidos que sí escribiste deben permanecer en sus casillas (no desaparecer).</li>
+        </ol>
+
+        <details class="mt-2">
+          <summary class="text-primary small fw-semibold cursor-pointer">🔍 ¿Qué revisar en tu código si este caso falla?</summary>
+          <div class="p-3 bg-white border rounded mt-2 small">
+            <ul>
+              <li><strong>Se guardó basura en la base de datos:</strong> Te faltó colocar <code>@Valid</code> antes del parámetro en el método del controlador, o tu entidad carece de las anotaciones de validación (<code>@NotBlank</code>, <code>@Min</code>, etc.).</li>
+              <li><strong>Los campos se limpiaron por completo:</strong> En tu controlador hiciste <code>return "redirect:/nuevo"</code> en lugar de devolver directamente la vista <code>return "formulario"</code>. El redirect destruye el estado de la petición.</li>
+              <li><strong>Error 500 al enviar:</strong> Revisa el orden de los parámetros en el controlador. <code>BindingResult</code> DEBE ir inmediatamente después del objeto validado; si colocas otro parámetro en medio (como <code>Model</code>), Spring Boot explota.</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- CASO 3 -->
+    <div class="card mb-4 border-start border-success border-4">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <span class="badge bg-success">CP-03 · Persistencia</span>
+          <span class="text-muted small">Capa: Servicio + JpaRepository + Neon DB</span>
+        </div>
+        <h2 class="h5 fw-bold">Guardado Exitoso y Redirección POST-Redirect-GET</h2>
+        <p class="small text-muted"><strong>Objetivo:</strong> Confirmar que un registro con todos los datos correctos se almacene en Neon PostgreSQL y que la app redirija a la lista sin duplicar al refrescar.</p>
+
+        <div class="bg-light p-3 rounded small mb-3">
+          <strong>Ruta arquitectónica activada:</strong><br/>
+          <code>Formulario POST válido</code> ➔ <code>repositorio.save(entidad)</code> ➔ <code>Hibernate SQL INSERT</code> ➔ <code>Neon DB</code> ➔ <code>return "redirect:/beneficiarios"</code> ➔ <code>Navegador GET /beneficiarios</code>.
+        </div>
+
+        <ol class="small">
+          <li>Llena el formulario con datos de prueba realistas (ej. Nombre: "Ana Morales", Edad: 8, teléfono válido).</li>
+          <li>Presiona "Guardar".</li>
+          <li>Verifica que la URL cambie automáticamente a la lista (ej. <code>/beneficiarios</code>) y que el nuevo registro aparezca en la tabla.</li>
+          <li>Pulsa la tecla <strong>F5</strong> (Refrescar) en el navegador: no debe aparecer ninguna advertencia de "Reenviar formulario" ni duplicarse la fila.</li>
+        </ol>
+
+        <details class="mt-2">
+          <summary class="text-primary small fw-semibold cursor-pointer">🔍 ¿Qué revisar en tu código si este caso falla?</summary>
+          <div class="p-3 bg-white border rounded mt-2 small">
+            <ul>
+              <li><strong>Falla de conexión a base de datos:</strong> Si sale error 500 con <code>PSQLException: Connection refused</code>, verifica que en Render la variable <code>DB_URL</code> tenga <code>sslmode=require</code> y que la base de datos Neon no esté en error de credenciales.</li>
+              <li><strong>Al refrescar pregunta si reenviar:</strong> El controlador retornó la vista lista directamente <code>return "lista"</code> en vez de usar <code>return "redirect:/beneficiarios"</code>.</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </div>
+    <!-- CASO 4 -->
+    <div class="card mb-4 border-start border-info border-4">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <span class="badge bg-info text-dark">CP-04 · Listado Dinámico</span>
+          <span class="text-muted small">Capa: JpaRepository + Thymeleaf th:each</span>
+        </div>
+        <h2 class="h5 fw-bold">Consulta y Renderizado de Lista Dinámica (Petición GET)</h2>
+        <p class="small text-muted"><strong>Objetivo:</strong> Validar que todos los registros de la base de datos se consulten eficientemente y se muestren ordenados en una tabla HTML.</p>
+
+        <div class="bg-light p-3 rounded small mb-3">
+          <strong>Ruta arquitectónica activada:</strong><br/>
+          <code>Navegador (GET /beneficiarios)</code> ➔ <code>repositorio.findAll()</code> ➔ <code>model.addAttribute("lista", ...)</code> ➔ <code>templates/lista.html (th:each="item : ${lista}")</code>.
+        </div>
+
+        <ol class="small">
+          <li>Ingresa a la pantalla principal del listado (ej. <code>/beneficiarios</code>).</li>
+          <li>Cuenta las filas visibles en pantalla y compáralas con los registros existentes.</li>
+          <li>Verifica que los formatos de fecha, moneda o números enteros no muestren valores <code>null</code>.</li>
+        </ol>
+
+        <details class="mt-2">
+          <summary class="text-primary small fw-semibold cursor-pointer">🔍 ¿Qué revisar en tu código si este caso falla?</summary>
+          <div class="p-3 bg-white border rounded mt-2 small">
+            <ul>
+              <li><strong>La tabla sale vacía a pesar de haber datos:</strong> Verifica que en el controlador la variable agregada al modelo tenga exactamente el mismo nombre usado en el HTML: <code>model.addAttribute("beneficiarios", repo.findAll())</code> coincide con <code>th:each="b : ${beneficiarios}"</code>.</li>
+              <li><strong>Error al acceder a propiedades:</strong> Si sale <code>Property or field 'nombre' cannot be found on object</code>, revisa que tu clase entidad tenga los métodos getter públicos (<code>getNombre()</code>) correspondientes.</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- CASO 5 -->
+    <div class="card mb-4 border-start border-danger border-4">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <span class="badge bg-danger">CP-05 · Seguridad</span>
+          <span class="text-muted small">Capa: Spring Security + SecurityFilterChain</span>
+        </div>
+        <h2 class="h5 fw-bold">Protección de Rutas y Control de Acceso por Rol</h2>
+        <p class="small text-muted"><strong>Objetivo:</strong> Asegurar que las rutas críticas de edición y eliminación estén protegidas y requieran autenticación previa.</p>
+
+        <div class="bg-light p-3 rounded small mb-3">
+          <strong>Ruta arquitectónica activada:</strong><br/>
+          <code>Petición a /beneficiarios/eliminar/{id}</code> ➔ <code>SecurityFilterChain</code> ➔ <code>Verificación de Rol ADMIN</code> ➔ <code>Si no autenticado: redirect /login</code> ➔ <code>Si autenticado sin rol: 403 /acceso-denegado</code>.
+        </div>
+
+        <ol class="small">
+          <li>Abre una ventana de incógnito (sin sesión iniciada) e intenta ingresar directamente por URL a <code>/beneficiarios/nuevo</code>.</li>
+          <li><strong>Resultado esperado 1:</strong> La aplicación debe redirigirte de inmediato a la pantalla de <code>/login</code>.</li>
+          <li>Inicia sesión con un usuario estándar (ej. rol <code>ENTRENADOR</code> o <code>VOLUNTARIO</code>). Verifica que no aparezca el botón "Eliminar" (oculto por <code>sec:authorize</code>).</li>
+          <li>Intenta forzar la eliminación escribiendo la URL directa en el navegador. <strong>Resultado esperado 2:</strong> Pantalla de acceso denegado (código HTTP 403).</li>
+        </ol>
+
+        <details class="mt-2">
+          <summary class="text-primary small fw-semibold cursor-pointer">🔍 ¿Qué revisar en tu código si este caso falla?</summary>
+          <div class="p-3 bg-white border rounded mt-2 small">
+            <ul>
+              <li><strong>Cualquier usuario puede borrar:</strong> Te confiaste solo en ocultar el botón en el HTML (<code>sec:authorize</code>). Recuerda que la verdadera seguridad está en <code>SecurityConfig.java</code> configurando <code>requestMatchers("/beneficiarios/eliminar/**").hasRole("ADMIN")</code>.</li>
+              <li><strong>La app da error 405 en acceso denegado:</strong> Si el controlador de <code>/acceso-denegado</code> está marcado con <code>@GetMapping</code>, fallará cuando un POST sea rechazado. Debe ser <code>@RequestMapping("/acceso-denegado")</code> para admitir cualquier método HTTP.</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- CASO 6 -->
+    <div class="card mb-4 border-start border-secondary border-4">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <span class="badge bg-secondary">CP-06 · Operaciones</span>
+          <span class="text-muted small">Capa: Git + Webhooks + Render CI/CD</span>
+        </div>
+        <h2 class="h5 fw-bold">Ciclo de Mantenimiento Continuo (Push a Main ➔ Redeploy en Render)</h2>
+        <p class="small text-muted"><strong>Objetivo:</strong> Comprobar el pipeline automatizado de entrega continua modificando un elemento visual y verificándolo publicado en la nube.</p>
+
+        <div class="bg-light p-3 rounded small mb-3">
+          <strong>Ruta arquitectónica activada:</strong><br/>
+          <code>Edición local</code> ➔ <code>git commit</code> ➔ <code>git push origin main</code> ➔ <code>Render Webhook</code> ➔ <code>Docker Build</code> ➔ <code>Deploy Live</code>.
+        </div>
+
+        <ol class="small">
+          <li>En tu proyecto local, realiza una mejora visible en la plantilla de créditos o en el pie de página de tu lista (ej. agregar "Versión 1.0 — QA Verificado").</li>
+          <li>Haz commit y push a la rama principal: <code>git commit -am "QA: mejora visual de cierre"</code> y <code>git push origin main</code>.</li>
+          <li>Abre el panel de control de Render en tu navegador y observa la pestaña <strong>Logs</strong> de tu Web Service.</li>
+          <li>Monitorea cómo Render detecta el nuevo commit, descarga las capas Docker, ejecuta Maven y finaliza con el mensaje <strong>"==&gt; Your service is live 🎉"</strong>.</li>
+          <li>Recarga tu aplicación en la URL pública <code>https://...onrender.com</code> y constata que el cambio ya está disponible para el mundo.</li>
+        </ol>
+
+        <details class="mt-2">
+          <summary class="text-primary small fw-semibold cursor-pointer">🔍 ¿Qué revisar si el Redeploy falla en Render?</summary>
+          <div class="p-3 bg-white border rounded mt-2 small">
+            <ul>
+              <li><strong>El deploy no inicia:</strong> Verifica si hiciste push a <code>main</code> o a otra rama. Render en su configuración tiene asignada la rama de despliegue (generalmente <code>main</code>).</li>
+              <li><strong>Build failure en Maven:</strong> Si el log muestra <code>Failed to execute goal ... test</code>, recuerda que en el Dockerfile se debe usar <code>mvn clean package -DskipTests</code> para evitar que las pruebas de integración intenten buscar bases de datos locales inexistentes en el contenedor.</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <div class="alert alert-success d-flex justify-content-between align-items-center">
+      <div>
+        <h3 class="h6 fw-bold mb-1">¡Has completado la batería de pruebas funcionales!</h3>
+        <p class="small mb-0 text-muted">Ahora documenta tus resultados en la sección calificable del Proyecto para tu entrega.</p>
+      </div>
+      <a class="btn btn-success" href="proyecto.html">Ir al Reporte de QA →</a>
+    </div>
+  </main>
+
+  <footer class="footer py-4 bg-light border-top text-center text-muted small">
+    <div class="container">
+      Universidad Rafael Landívar · Profesorado en TIC · Ejercicios de QA Semana 16
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

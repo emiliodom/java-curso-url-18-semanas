@@ -22,6 +22,7 @@ documentos oficiales y el enlace a la evaluación anónima de la sesión.
 | [`index.html`](index.html) | Portal del curso: las 18 semanas, cada una activándose al publicarse |
 | [`Nuevo_Programa_18_semanas.md`](Nuevo_Programa_18_semanas.md) | Programa oficial del curso: temario, competencias, evaluación, proyecto |
 | `Nuevo_Programa_18_semanas-DB con Neon.md` | Revisión vigente del programa **para las Semanas 12–18**: la base de datos PostgreSQL vivirá en Neon y no en Render |
+| [`ENTREGABLE_PROYECTO_LLAVE_EN_MANO.md`](ENTREGABLE_PROYECTO_LLAVE_EN_MANO.md) | Estándar de entrega llave en mano: manual de usuario, guiones de video, credenciales seguras, correos formales y checklist de certificación |
 | `Material_Sesion_Clase_N_HTML_18_semanas/` | Material interactivo de la semana N: hub, guía docente, ejercicios, quiz autocalificado, cheat sheet, challenge drag & drop y proyecto/entregable — todo exportable a PDF. Desde la Semana 6 se usa una plantilla reducida (quiz unificado, proyecto y entregable fusionados, sin puente Python); las semanas con hito de evaluación pueden agregar páginas propias (ver Semana 9) |
 | `PEM en TIC_Sesión de Clase N..._18_semanas.md/.docx` | Documento oficial de la sesión N (formato institucional) |
 | `PEM en TIC_Guía de Aprendizaje N..._18_semanas.md/.docx` | Documento oficial de la guía de aprendizaje N |
@@ -46,7 +47,9 @@ documentos oficiales y el enlace a la evaluación anónima de la sesión.
 - ✅ **Semana 13** — Autenticación, roles y renderizado condicional (10 oct 2026) — login con usuarios en la base, BCrypt, dos roles y claves por variables de entorno
 - ✅ **Semana 14** — Despliegue en producción con Render y Neon (17 oct 2026) — ★ Entrega Parcial 3; `.jar`, Dockerfile, PostgreSQL en Neon y URL pública HTTPS. Proyecto de referencia armado desde el Kit en [`Proyecto_Semana_14_Kit/`](Proyecto_Semana_14_Kit/) y verificación en [`VERIFICACION_Semana_14_despliegue.md`](VERIFICACION_Semana_14_despliegue.md)
 - ✅ **Semana 15** — Seguridad básica y HTTPS (24 oct 2026) — versión mínima, sin código nuevo: auditoría (HTTPS, SSL a Neon, CSRF, XSS, cabeceras), checkpoint de entrega y cómo transformar el Kit de la Semana 14 en el proyecto propio (ficha única de 10–15 campos, páginas estáticas y con parámetros)
-- ⏳ Semanas 16–18 — pendientes (se activan en el portal al publicarse)
+- ✅ **Semana 16** — QA, pruebas funcionales, arquitectura y mantenimiento (31 oct 2026) — refuerzo del árbol de carpetas, responsabilidades únicas, circuito Formulario ↔ Controlador ↔ Modelo ↔ Repositorio, matriz de 6 casos de prueba (CP-01 a CP-06) y ciclo continuo `git push` a `main` ➔ redeploy automático en Render
+- ✅ **Semana 17** — Presentación interna, retroalimentación y Entrega Parcial 4 (7 nov 2026) — ★ Entrega Parcial 4 (7 pts acumulados: 2 pts Guía 17 + 5 pts avance final), ensayo general de demo (guion de 4 min), protocolo anti-cold start de Render y Neon, y coevaluación entre pares con rúbrica compartida
+- ✅ **Semana 18** — Entrega final, defensa formal, evaluación y reflexión (14 nov 2026) — ★ Defensa formal de proyecto ante tribunal docente (10 pts), Evaluación entre pares Ronda 2 oficial (5 pts), autoevaluación metacognitiva del futuro docente en TIC y entrega de paquete de software llave en mano (15.78 pts en juego)
 
 > **Calendario:** las 18 sesiones no son sábados consecutivos. El **12 de
 > septiembre de 2026 no hubo clase** (semana de independencia), por lo que la

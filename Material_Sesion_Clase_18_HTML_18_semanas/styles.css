@@ -1,0 +1,1059 @@
+:root {
+    --brand: #0d6efd;
+    --brand-2: #6610f2;
+    --bg-soft: #f6f8fb;
+    --code-bg: #0b1220;
+    --code-fg: #e6edf3;
+    --ok: #22c55e;
+    --warn: #f59e0b;
+    --bad: #ef4444;
+}
+
+body {
+    background: var(--bg-soft);
+}
+
+.hero {
+    background:
+        radial-gradient(1200px circle at 10% 10%, rgba(13, 110, 253, 0.25), transparent 60%),
+        radial-gradient(900px circle at 90% 20%, rgba(102, 16, 242, 0.22), transparent 55%),
+        linear-gradient(180deg, #ffffff, var(--bg-soft));
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.brand-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    background: rgba(13, 110, 253, 0.12);
+    color: #0b3d91;
+    font-weight: 600;
+}
+
+.card {
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 10px 30px rgba(16, 24, 40, 0.06);
+}
+
+.kbd {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.9em;
+    background: #111827;
+    color: #fff;
+    padding: 0.1rem 0.4rem;
+    border-radius: 0.35rem;
+}
+
+pre {
+    background: var(--code-bg);
+    color: var(--code-fg);
+    padding: 1rem;
+    border-radius: 0.75rem;
+    overflow-x: auto;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+details > summary {
+    cursor: pointer;
+}
+
+.section-title {
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.small-muted {
+    color: rgba(0, 0, 0, 0.65);
+}
+
+.callout {
+    border-left: 5px solid var(--brand);
+    background: #fff;
+    padding: 1rem;
+    border-radius: 0.75rem;
+}
+
+.callout.warning {
+    border-left-color: var(--warn);
+}
+
+.callout.success {
+    border-left-color: var(--ok);
+}
+
+.callout.danger {
+    border-left-color: var(--bad);
+}
+
+/* ---- Transición Semana 11 → 12 ---- */
+.s12-transition-key {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.s12-state {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.22rem 0.65rem;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    line-height: 1.35;
+    vertical-align: middle;
+}
+
+.s12-state--existing {
+    color: #14532d;
+    background: #dcfce7;
+    border-color: #86efac;
+}
+
+.s12-state--added {
+    color: #1e3a8a;
+    background: #dbeafe;
+    border-color: #93c5fd;
+}
+
+.s12-state--adjust {
+    color: #713f12;
+    background: #fef3c7;
+    border-color: #fcd34d;
+}
+
+.s12-state--required {
+    color: #7f1d1d;
+    background: #fee2e2;
+    border-color: #fca5a5;
+}
+
+.s12-transition-panel {
+    border: 1px solid #bfdbfe;
+    border-left: 5px solid var(--brand);
+    border-radius: 0.75rem;
+    background: #eff6ff;
+    padding: 1rem;
+}
+
+.s12-error-map {
+    border: 1px solid #fecaca;
+    border-left: 5px solid var(--bad);
+    border-radius: 0.75rem;
+    background: #fff7f7;
+    padding: 1rem;
+}
+
+.s12-error-map code {
+    color: #7f1d1d;
+}
+
+.s12-error-map ul {
+    margin-bottom: 0;
+}
+
+.s12-transition-panel code {
+    color: #12336b;
+}
+
+@media print {
+    .s12-transition-panel {
+        break-inside: avoid;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
+
+    .s12-error-map {
+        break-inside: avoid;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
+}
+
+/* ---- Cronómetro / bloques de tiempo ---- */
+.time-chip {
+    display: inline-block;
+    min-width: 5.5rem;
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    background: #eef4ff;
+    color: #0b3d91;
+    border: 1px solid rgba(13, 110, 253, 0.25);
+}
+
+/* ---- Quiz ---- */
+.quiz-q {
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 0.75rem;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.quiz-q.correct {
+    border-color: var(--ok);
+    box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.25);
+}
+
+.quiz-q.incorrect {
+    border-color: var(--bad);
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+}
+
+.quiz-feedback {
+    display: none;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.quiz-q.correct .quiz-feedback.ok,
+.quiz-q.incorrect .quiz-feedback.ko {
+    display: block;
+}
+
+.quiz-feedback.ok {
+    background: rgba(34, 197, 94, 0.12);
+    color: #14532d;
+}
+
+.quiz-feedback.ko {
+    background: rgba(239, 68, 68, 0.1);
+    color: #7f1d1d;
+}
+
+.score-banner {
+    display: none;
+    border-radius: 0.75rem;
+    padding: 1rem 1.25rem;
+    font-weight: 600;
+}
+
+.score-banner.show {
+    display: block;
+}
+
+/* ---- Challenge drag & drop ---- */
+.dd-pool,
+.dd-target {
+    min-height: 90px;
+    border-radius: 0.75rem;
+    padding: 0.75rem;
+}
+
+.dd-pool {
+    background: #fff;
+    border: 2px dashed rgba(13, 110, 253, 0.4);
+}
+
+.dd-target {
+    background: var(--code-bg);
+    border: 2px dashed rgba(255, 255, 255, 0.25);
+    counter-reset: linea;
+}
+
+.dd-slot {
+    display: flex;
+    align-items: stretch;
+    min-height: 2.4rem;
+    margin-bottom: 0.4rem;
+    border-radius: 0.5rem;
+    border: 1.5px dashed rgba(255, 255, 255, 0.35);
+    color: rgba(255, 255, 255, 0.45);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.85rem;
+    transition: border-color .15s ease, background-color .15s ease;
+}
+
+.dd-slot::before {
+    counter-increment: linea;
+    content: counter(linea);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    border-right: 1px dashed rgba(255, 255, 255, 0.25);
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.dd-slot.over {
+    border-color: var(--brand);
+    background: rgba(13, 110, 253, 0.15);
+}
+
+.dd-slot.correct {
+    border: 1.5px solid var(--ok);
+    animation: slotPop .25s ease;
+}
+
+.dd-slot.incorrect {
+    border: 1.5px solid var(--bad);
+    animation: slotShake .3s ease;
+}
+
+@keyframes slotPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+}
+
+@keyframes slotShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+}
+
+.dd-piece {
+    display: inline-block;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.85rem;
+    background: #111827;
+    color: #e6edf3;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.5rem;
+    padding: 0.4rem 0.7rem;
+    margin: 0.2rem;
+    cursor: grab;
+    user-select: none;
+    white-space: pre;
+}
+
+.dd-piece.selected {
+    outline: 3px solid var(--warn);
+}
+
+.dd-piece.dragging {
+    opacity: 0.5;
+}
+
+.dd-slot .dd-piece {
+    flex: 1;
+    margin: 0;
+    border-radius: 0 0.5rem 0.5rem 0;
+    border: none;
+}
+
+.indent-1 { padding-left: 1.4rem; }
+.indent-2 { padding-left: 2.8rem; }
+
+/* ---- Tablero de clasificación MVC (introducido en Semana 5) ----
+   A diferencia del dd-target numerado (secuencia), este layout son
+   "cajas" que aceptan varias piezas cada una: para challenges de
+   clasificar/categorizar en vez de ordenar. Reutiliza .dd-piece/.dd-pool
+   y el motor de toasts. Copiar a semanas futuras con challenges de
+   clasificación (ej. capas de arquitectura, tipos de datos, etc.). */
+.mvc-board {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.mvc-zone {
+    flex: 1 1 220px;
+    min-height: 170px;
+    background: var(--code-bg);
+    border: 2px dashed rgba(255, 255, 255, 0.25);
+    border-radius: 0.75rem;
+    padding: 0.75rem;
+    transition: border-color .15s ease, background-color .15s ease;
+}
+
+.mvc-zone-title {
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.95rem;
+}
+
+.mvc-zone.over {
+    border-color: var(--brand);
+    background: rgba(13, 110, 253, 0.15);
+}
+
+.mvc-zone .dd-piece {
+    display: block;
+    white-space: normal;
+    margin: 0.35rem 0;
+}
+
+.mvc-zone.trap-zone .mvc-zone-title {
+    color: #fecaca;
+}
+
+/* ---- Diagrama de capas + simulador funcional (introducido en Semana 6) ----
+   Tarjetas "capa" (Presentación/Negocio/Datos), cada una con sus roles
+   internos, y un simulador paso a paso con resaltado en vivo. Copiar a
+   semanas futuras que necesiten un diagrama de arquitectura interactivo. */
+.layer-map {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.layer-card {
+    border-radius: 0.85rem;
+    padding: 0.9rem 1rem;
+    border: 2px solid transparent;
+    background: #fff;
+    box-shadow: 0 6px 18px rgba(16, 24, 40, 0.06);
+    transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+
+.layer-card .layer-title {
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.35rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.layer-card.presentacion { border-left: 6px solid #60a5fa; }
+.layer-card.negocio { border-left: 6px solid #f59e0b; }
+.layer-card.datos { border-left: 6px solid #22c55e; }
+
+.layer-card .role-chip {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.06);
+    margin: 0.15rem 0.25rem 0.15rem 0;
+}
+
+.layer-card.active-step {
+    border-color: var(--brand);
+    box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.18);
+    transform: translateY(-2px);
+}
+
+.layer-arrow {
+    text-align: center;
+    font-size: 1.3rem;
+    color: rgba(0, 0, 0, 0.35);
+    line-height: 1;
+}
+
+.sim-log {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.85rem;
+    background: var(--code-bg);
+    color: var(--code-fg);
+    border-radius: 0.75rem;
+    padding: 0.85rem 1rem;
+    min-height: 140px;
+    max-height: 260px;
+    overflow-y: auto;
+}
+
+.sim-log .sim-line { margin-bottom: 0.25rem; }
+.sim-log .sim-line.hl { color: #93c5fd; font-weight: 600; }
+
+/* ---- Pestañas de simuladores / secciones (nav-tabs reforzadas) ---- */
+.nav-tabs .nav-link {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--brand);
+    border-bottom: 3px solid var(--brand);
+}
+
+/* ---- Preparación de entorno (Semana 6): checklist de instalación ---- */
+.env-step {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    padding: 0.6rem 0;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.08);
+}
+
+.env-step:last-child { border-bottom: none; }
+
+.env-step .env-num {
+    flex: 0 0 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: rgba(13, 110, 253, 0.12);
+    color: #0b3d91;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dd-piece.correct-piece {
+    outline: 2px solid var(--ok);
+}
+
+.dd-piece.incorrect-piece {
+    outline: 2px solid var(--bad);
+}
+
+/* ---- Tabla comparativa Python/Java ---- */
+.table-code td,
+.table-code th {
+    vertical-align: top;
+}
+
+.table-code pre {
+    margin: 0;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+}
+
+/* ---- Entregable ---- */
+.fill-line {
+    border: none;
+    border-bottom: 1.5px solid rgba(0, 0, 0, 0.35);
+    width: 100%;
+    background: transparent;
+}
+
+textarea.code-area {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.85rem;
+    background: var(--code-bg);
+    color: var(--code-fg);
+    border-radius: 0.5rem;
+    width: 100%;
+    padding: 0.75rem;
+}
+
+/* ---- Toasts (feedback instantáneo, introducido en Semana 3) ----
+   Uso: showToast(mensaje, tipo) en JS. tipo: 'ok' | 'warn' | 'bad' | 'info'.
+   Copiar este bloque + la función showToast() de quiz.js/challenge.html
+   a las semanas siguientes que necesiten feedback instantáneo. */
+.toast-stack {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1080;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: min(360px, calc(100vw - 2rem));
+}
+
+.toast-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.7rem 0.9rem;
+    border-radius: 0.75rem;
+    background: #111827;
+    color: #e6edf3;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    border-left: 5px solid var(--brand);
+    font-size: 0.9rem;
+    animation: toastIn .22s ease;
+}
+
+.toast-item.leaving {
+    animation: toastOut .18s ease forwards;
+}
+
+.toast-item.ok { border-left-color: var(--ok); }
+.toast-item.warn { border-left-color: var(--warn); }
+.toast-item.bad { border-left-color: var(--bad); }
+.toast-item.info { border-left-color: #60a5fa; }
+
+.toast-icon {
+    font-size: 1.1rem;
+    line-height: 1;
+}
+
+.toast-text {
+    flex: 1;
+}
+
+@keyframes toastIn {
+    from { opacity: 0; transform: translateX(16px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes toastOut {
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(16px); }
+}
+
+@media (max-width: 576px) {
+    .toast-stack {
+        left: 1rem;
+        right: 1rem;
+        max-width: none;
+    }
+}
+
+/* ---- Exportar a PDF (impresión) ---- */
+.btn-export::before {
+    content: "🖨 ";
+}
+
+@media print {
+    nav.navbar,
+    .no-print,
+    .toast-stack,
+    .btn,
+    button {
+        display: none !important;
+    }
+
+    body {
+        background: #fff !important;
+    }
+
+    .hero {
+        background: #fff !important;
+        border-bottom: 2px solid #000;
+    }
+
+    .card {
+        box-shadow: none !important;
+        border: 1px solid #999 !important;
+        break-inside: avoid;
+    }
+
+    .quiz-q,
+    .accordion-item,
+    .callout {
+        break-inside: avoid;
+    }
+
+    /* Mostrar todos los acordeones y detalles al imprimir */
+    .accordion-collapse {
+        display: block !important;
+        height: auto !important;
+    }
+
+    /* Mostrar todas las pestañas (nav-tabs) al imprimir — introducido en Semana 6 */
+    .tab-pane {
+        display: block !important;
+        opacity: 1 !important;
+    }
+
+    .nav-tabs {
+        display: none !important;
+    }
+
+    .accordion-button::after {
+        display: none;
+    }
+
+    details {
+        open: true;
+    }
+
+    details > *:not(summary) {
+        display: block !important;
+    }
+
+    pre {
+        white-space: pre-wrap;
+        border: 1px solid #999;
+        background: #f3f4f6 !important;
+        color: #111 !important;
+    }
+
+    a[href^="http"]::after {
+        content: " (" attr(href) ")";
+        font-size: 0.8em;
+        color: #555;
+    }
+
+    .score-banner.show,
+    .quiz-feedback {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}
+
+/* ==========================================================================
+   SEMANA 14 — Componentes para guías de despliegue (reutilizables S15–S18)
+   1) .ruta-mapa      → mapa "dónde estamos / hacia dónde vamos" (stepper)
+   2) .mmd-figure     → contenedor de diagramas Mermaid (ver diagramas.js)
+   3) .gui-mock       → maqueta simplificada de una pantalla real (Render/Neon)
+   4) .pin            → número de señalización sobre la maqueta
+   5) .var-chip       → nombre de variable de entorno con color por origen
+   6) .term           → bloque de terminal con prompt y salida resaltada
+   7) .paso-grande    → encabezado numerado de cada paso de una guía larga
+   8) .seq-board      → ajustes del challenge de secuencia con frases largas
+   9) .deploy-pipeline / .pipe-stage → tubería iluminada del simulador
+   ========================================================================== */
+
+/* 1) Mapa de ruta */
+.ruta-mapa {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    padding: 0.5rem 0 0.25rem;
+    counter-reset: ruta;
+}
+
+.ruta-mapa .ruta-paso {
+    flex: 1 0 120px;
+    position: relative;
+    text-align: center;
+    padding: 0 0.35rem;
+    font-size: 0.8rem;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.ruta-mapa .ruta-paso::before {
+    content: "";
+    position: absolute;
+    top: 1.05rem;
+    left: -50%;
+    width: 100%;
+    height: 4px;
+    background: #cbd5e1;
+    z-index: 0;
+}
+
+.ruta-mapa .ruta-paso:first-child::before { display: none; }
+.ruta-mapa .ruta-paso.hecho::before,
+.ruta-mapa .ruta-paso.aqui::before { background: var(--ok); }
+
+.ruta-mapa .ruta-punto {
+    position: relative;
+    z-index: 1;
+    width: 2.2rem;
+    height: 2.2rem;
+    margin: 0 auto 0.35rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    background: #fff;
+    border: 3px solid #cbd5e1;
+    color: #64748b;
+}
+
+.ruta-mapa .ruta-paso.hecho .ruta-punto { background: var(--ok); border-color: var(--ok); color: #fff; }
+.ruta-mapa .ruta-paso.aqui .ruta-punto {
+    background: var(--brand);
+    border-color: var(--brand);
+    color: #fff;
+    box-shadow: 0 0 0 6px rgba(13, 110, 253, 0.2);
+}
+.ruta-mapa .ruta-paso.aqui { color: #0b3d91; font-weight: 700; }
+.ruta-mapa .ruta-paso .ruta-etq { display: block; font-weight: 700; color: inherit; }
+.ruta-mapa .ruta-paso.aqui .ruta-etq::after {
+    content: "📍 estás aquí";
+    display: block;
+    font-size: 0.72rem;
+    color: var(--brand);
+}
+
+/* Tres columnas "de dónde vengo / qué haré / a dónde voy" */
+.ruta-tres {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.75rem;
+}
+
+.ruta-tres > div {
+    background: #fff;
+    border-radius: 0.75rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-top: 5px solid #cbd5e1;
+}
+
+.ruta-tres .antes { border-top-color: var(--ok); }
+.ruta-tres .ahora { border-top-color: var(--brand); }
+.ruta-tres .despues { border-top-color: var(--brand-2); }
+.ruta-tres h3 { font-size: 0.95rem; font-weight: 800; margin-bottom: 0.35rem; }
+
+/* 2) Diagramas Mermaid */
+.mmd-figure {
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 0.85rem;
+    padding: 1rem;
+    margin: 0 0 1rem;
+    overflow-x: auto;
+}
+
+.mmd-figure .mermaid {
+    display: flex;
+    justify-content: center;
+    min-height: 60px;
+}
+
+/* Mientras Mermaid no termina de dibujar, se oculta el texto fuente */
+.mmd-figure .mermaid:not([data-processed]) {
+    color: transparent;
+    font-size: 0;
+}
+
+.mmd-figure figcaption {
+    font-size: 0.82rem;
+    color: rgba(0, 0, 0, 0.6);
+    margin-top: 0.6rem;
+    text-align: center;
+}
+
+.mmd-figure .mermaid svg { max-width: 100%; height: auto; }
+
+/* 3) Maqueta de pantalla (no es captura: es un dibujo simplificado) */
+.gui-mock {
+    border: 1px solid #cbd5e1;
+    border-radius: 0.75rem;
+    background: #fff;
+    overflow: hidden;
+    box-shadow: 0 12px 28px rgba(16, 24, 40, 0.10);
+    font-size: 0.86rem;
+    margin-bottom: 0.75rem;
+}
+
+.gui-mock .gui-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.75rem;
+    background: #f1f5f9;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 0.78rem;
+    color: #475569;
+}
+
+.gui-mock .gui-bar .dot { width: 0.65rem; height: 0.65rem; border-radius: 50%; background: #cbd5e1; }
+.gui-mock .gui-bar .url {
+    margin-left: 0.5rem;
+    padding: 0.1rem 0.6rem;
+    border-radius: 999px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+}
+
+.gui-mock .gui-body { padding: 0.9rem 1rem; }
+.gui-mock .gui-title { font-weight: 800; font-size: 1rem; margin-bottom: 0.6rem; }
+
+.gui-mock .gui-field {
+    display: grid;
+    grid-template-columns: minmax(120px, 34%) 1fr;
+    gap: 0.6rem;
+    align-items: center;
+    padding: 0.45rem 0;
+    border-bottom: 1px dashed #e2e8f0;
+}
+
+.gui-mock .gui-field:last-child { border-bottom: none; }
+.gui-mock .gui-label { font-weight: 700; color: #334155; }
+.gui-mock .gui-input {
+    border: 1px solid #cbd5e1;
+    border-radius: 0.4rem;
+    padding: 0.3rem 0.55rem;
+    background: #f8fafc;
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: 0.8rem;
+    color: #0f172a;
+    word-break: break-all;
+}
+
+.gui-mock .gui-input.elegir { background: #eff6ff; border-color: #93c5fd; }
+.gui-mock .gui-input.ojo { background: #fef3c7; border-color: #fcd34d; }
+.gui-mock .gui-btn {
+    display: inline-block;
+    padding: 0.35rem 0.85rem;
+    border-radius: 0.45rem;
+    background: #0f172a;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+.gui-mock .gui-btn.claro { background: #e2e8f0; color: #0f172a; }
+.gui-mock .gui-toggle {
+    display: inline-block;
+    width: 2.2rem;
+    height: 1.2rem;
+    border-radius: 999px;
+    background: #cbd5e1;
+    position: relative;
+    vertical-align: middle;
+}
+.gui-mock .gui-toggle::after {
+    content: "";
+    position: absolute;
+    top: 0.15rem;
+    left: 0.15rem;
+    width: 0.9rem;
+    height: 0.9rem;
+    border-radius: 50%;
+    background: #fff;
+}
+.gui-mock .gui-toggle.on { background: var(--ok); }
+.gui-mock .gui-toggle.on::after { left: auto; right: 0.15rem; }
+.gui-mock .gui-side {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+}
+.gui-mock .gui-side nav {
+    background: #f8fafc;
+    border-right: 1px solid #e2e8f0;
+    padding: 0.6rem 0;
+}
+.gui-mock .gui-side nav span {
+    display: block;
+    padding: 0.25rem 0.85rem;
+    color: #475569;
+}
+.gui-mock .gui-side nav span.activo { background: #e0e7ff; color: #1e3a8a; font-weight: 700; }
+
+/* 4) Pines numerados sobre las maquetas */
+.pin {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.45rem;
+    height: 1.45rem;
+    padding: 0 0.3rem;
+    border-radius: 999px;
+    background: #dc2626;
+    color: #fff;
+    font-weight: 800;
+    font-size: 0.75rem;
+    margin-right: 0.3rem;
+    vertical-align: middle;
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2);
+}
+
+.gui-leyenda { list-style: none; padding-left: 0; }
+.gui-leyenda li { margin-bottom: 0.4rem; }
+
+/* 5) Variables de entorno con color según su origen */
+.var-chip {
+    display: inline-block;
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.12rem 0.5rem;
+    border-radius: 0.4rem;
+    border: 1px solid transparent;
+    white-space: nowrap;
+}
+.var-chip.neon { background: #dcfce7; color: #14532d; border-color: #86efac; }
+.var-chip.tuya { background: #fef3c7; color: #713f12; border-color: #fcd34d; }
+.var-chip.spring { background: #dbeafe; color: #1e3a8a; border-color: #93c5fd; }
+.var-chip.render { background: #ede9fe; color: #4c1d95; border-color: #c4b5fd; }
+
+/* 6) Terminal */
+.term {
+    background: #0b1220;
+    color: #e6edf3;
+    border-radius: 0.75rem;
+    padding: 0.85rem 1rem;
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: 0.82rem;
+    overflow-x: auto;
+    white-space: pre;
+    margin-bottom: 0.75rem;
+}
+.term .ok { color: #86efac; font-weight: 700; }
+.term .bad { color: #fca5a5; font-weight: 700; }
+.term .warn { color: #fde68a; }
+.term .dim { color: #94a3b8; }
+.term .render { color: #c4b5fd; }
+
+/* 7) Paso grande de guía */
+.paso-grande {
+    display: flex;
+    gap: 0.85rem;
+    align-items: flex-start;
+}
+.paso-grande .paso-num {
+    flex: 0 0 2.6rem;
+    height: 2.6rem;
+    border-radius: 0.75rem;
+    background: linear-gradient(135deg, var(--brand), var(--brand-2));
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.paso-grande .paso-donde {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #64748b;
+}
+
+/* Etiqueta "dónde se hace este paso" */
+.lugar {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+    margin-right: 0.25rem;
+    vertical-align: middle;
+}
+.lugar.pc { background: #fef3c7; color: #713f12; }
+.lugar.github { background: #e5e7eb; color: #111827; }
+.lugar.neon { background: #dcfce7; color: #14532d; }
+.lugar.render { background: #ede9fe; color: #4c1d95; }
+.lugar.navegador { background: #dbeafe; color: #1e3a8a; }
+
+/* 8) Secuencia con frases largas */
+.seq-board .dd-piece { white-space: normal; }
+.seq-board .dd-pool .dd-piece { display: block; }
+
+/* 9) Tubería de despliegue del simulador */
+.deploy-pipeline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    align-items: stretch;
+}
+.pipe-stage {
+    flex: 1 1 120px;
+    border-radius: 0.65rem;
+    padding: 0.55rem 0.6rem;
+    background: #fff;
+    border: 2px solid #e2e8f0;
+    font-size: 0.8rem;
+    text-align: center;
+    transition: all .2s ease;
+}
+.pipe-stage .pipe-ico { font-size: 1.3rem; display: block; }
+.pipe-stage.activo { border-color: var(--brand); box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.18); transform: translateY(-2px); }
+.pipe-stage.ok { border-color: var(--ok); background: #f0fdf4; }
+.pipe-stage.falla { border-color: var(--bad); background: #fef2f2; }
+
+@media print {
+    .gui-mock, .mmd-figure, .ruta-tres > div, .paso-grande, .term {
+        break-inside: avoid;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
+    .ruta-mapa { overflow: visible; flex-wrap: wrap; }
+    .term { white-space: pre-wrap; }
+}
+
+/* Mapa de ruta con muchos pasos (ej. 13 pasos de proyecto.html) */
+.ruta-mapa.compacta .ruta-paso { flex: 1 0 62px; font-size: 0.72rem; padding: 0 0.1rem; }
+.ruta-mapa.compacta .ruta-punto { width: 1.9rem; height: 1.9rem; font-size: 0.8rem; }
+.ruta-mapa.compacta .ruta-paso::before { top: 0.9rem; }

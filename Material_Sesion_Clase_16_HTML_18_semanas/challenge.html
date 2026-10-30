@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Challenge Interactivo — Semana 16 · Árbol, Flujo y QA</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="toast-stack" id="toastStack"></div>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top no-print">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 16</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios (QA)</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link active" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">Proyecto (Reporte)</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha</a></li>
+          <li class="nav-item ms-lg-2"><button class="btn btn-outline-secondary btn-sm" onclick="exportChallengePdf()">🖨️ PDF</button></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Challenge Práctico · Semana 16 · Dominio: Comedor Infantil «Semillas de Amor»</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">El Gran Reto de Arquitectura, Flujo y QA</h1>
+          <div class="small-muted">Tres desafíos interactivos para fijar el mapa mental de Spring Boot: clasificar archivos en el árbol, simular el circuito del dato y resolver casos reales de QA.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="exportChallengePdf()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <div class="row g-2 mb-3">
+      <div class="col-md-6">
+        <label class="form-label fw-semibold mb-1" for="studentName">Nombre del estudiante (para el PDF)</label>
+        <input id="studentName" class="form-control" type="text" placeholder="Nombre y apellido" />
+      </div>
+      <div class="col-md-6 d-flex align-items-end">
+        <div class="small-muted">Completa los 3 retos para generar tu comprobante de Actividad en Clase (0.66 pts).</div>
+      </div>
+    </div>
+
+    <ul class="nav nav-tabs mb-4 no-print" role="tablist">
+      <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-arbol" type="button">🌲 1. Arma el Árbol</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-simulador" type="button">⚙️ 2. Simulador del Circuito</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-detective" type="button">🕵️ 3. Detective de QA</button></li>
+    </ul>
+
+    <div class="tab-content">
+      <!-- RETO 1: CLASIFICACION DEL ARBOL -->
+      <div class="tab-pane fade show active" id="tab-arbol">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h2 class="h5 fw-bold mb-1">Clasifica cada archivo en su carpeta correcta</h2>
+            <p class="small text-muted mb-3">Arrastra cada pieza del banco a su carpeta correspondiente. <em>¡Cuidado con las trampas!</em> Los archivos mal ubicados o que no pertenezcan al proyecto deben quedarse en el banco.</p>
+
+            <div class="row g-2 mb-3" id="treePiecesBank">
+              <!-- Piezas arrastrables generadas por JS -->
+            </div>
+
+            <div class="row g-2" id="treeDropZones">
+              <div class="col-md-3">
+                <div class="mvc-zone p-2 border rounded bg-light" data-zone="model">
+                  <div class="fw-bold small text-primary mb-1">📁 model/</div>
+                  <div class="small text-muted mb-2">Entidades y validaciones</div>
+                  <div class="zone-drop-area min-h-100" style="min-height:110px"></div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mvc-zone p-2 border rounded bg-light" data-zone="repository">
+                  <div class="fw-bold small text-success mb-1">📁 repository/</div>
+                  <div class="small text-muted mb-2">Interfaces JpaRepository</div>
+                  <div class="zone-drop-area min-h-100" style="min-height:110px"></div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mvc-zone p-2 border rounded bg-light" data-zone="controller">
+                  <div class="fw-bold small text-warning text-dark mb-1">📁 controller/</div>
+                  <div class="small text-muted mb-2">Rutas y @Controller</div>
+                  <div class="zone-drop-area min-h-100" style="min-height:110px"></div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="mvc-zone p-2 border rounded bg-light" data-zone="templates">
+                  <div class="fw-bold small text-info text-dark mb-1">📁 templates/</div>
+                  <div class="small text-muted mb-2">Vistas Thymeleaf (.html)</div>
+                  <div class="zone-drop-area min-h-100" style="min-height:110px"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <button class="btn btn-primary" onclick="verifyTree()">Verificar Clasificación</button>
+              <button class="btn btn-outline-secondary btn-sm" onclick="initTreeChallenge()">Reiniciar Árbol</button>
+            </div>
+            <div id="treeResult" class="mt-2"></div>
+          </div>
+        </div>
+      </div>
+      <!-- RETO 2: SIMULADOR FUNCIONAL DEL CIRCUITO -->
+      <div class="tab-pane fade" id="tab-simulador">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h2 class="h5 fw-bold mb-1">Simulador del Circuito HTTP: El Viaje del Dato</h2>
+            <p class="small text-muted mb-3">Observa cómo se activan las capas en tiempo real al enviar un formulario en el Comedor Infantil «Semillas de Amor».</p>
+
+            <div class="d-flex gap-2 mb-3">
+              <button class="btn btn-outline-danger btn-sm active" id="btnEscenario1" onclick="setSimScenario(1)">Escenario A: Datos Inválidos (Falla de Validación)</button>
+              <button class="btn btn-outline-success btn-sm" id="btnEscenario2" onclick="setSimScenario(2)">Escenario B: Registro Válido (Persistencia y PRG)</button>
+            </div>
+
+            <!-- Mapa visual de capas -->
+            <div class="row g-2 mb-3 text-center" id="simLayerMap">
+              <div class="col-md-3">
+                <div class="layer-card p-3 border rounded" id="layerNav">
+                  <div class="fw-bold">1. Navegador / Form</div>
+                  <div class="small text-muted">HTML + Thymeleaf</div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="layer-card p-3 border rounded" id="layerCtrl">
+                  <div class="fw-bold">2. Controlador</div>
+                  <div class="small text-muted">@Controller + @Valid</div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="layer-card p-3 border rounded" id="layerRepo">
+                  <div class="fw-bold">3. JpaRepository</div>
+                  <div class="small text-muted">Hibernate / SQL</div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="layer-card p-3 border rounded" id="layerDb">
+                  <div class="fw-bold">4. Neon DB</div>
+                  <div class="small text-muted">PostgreSQL Cloud</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Log de la consola simulada -->
+            <div class="sim-log p-3 bg-dark text-light rounded small mb-3 font-monospace" id="simLog" style="height:140px; overflow-y:auto;">
+              [Esperando inicio] Selecciona un escenario y presiona "Siguiente Paso"...
+            </div>
+
+            <div class="d-flex gap-2">
+              <button class="btn btn-primary" id="btnNextStep" onclick="nextSimStep()">▶ Siguiente Paso</button>
+              <button class="btn btn-outline-secondary" onclick="resetSim()">Reiniciar Simulador</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RETO 3: DETECTIVE DE QA -->
+      <div class="tab-pane fade" id="tab-detective">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h2 class="h5 fw-bold mb-1">Detective de QA: Diagnostica 4 Escenarios de Fallo</h2>
+            <p class="small text-muted mb-3">Un tester profesional no solo reporta que "no funciona": identifica con precisión la causa raíz en la arquitectura.</p>
+
+            <div class="row g-3" id="detectiveCards">
+              <div class="col-md-6">
+                <div class="p-3 border rounded bg-light h-100">
+                  <span class="badge bg-danger mb-2">Caso 1</span>
+                  <p class="small fw-bold mb-1">Al ingresar por URL a <code>/donaciones</code> sale la Whitelabel Error Page (404 Not Found).</p>
+                  <label class="small text-muted mb-1">¿Cuál es la causa arquitectónica?</label>
+                  <select class="form-select form-select-sm det-select" data-case="1">
+                    <option value="">-- Elige un diagnóstico --</option>
+                    <option value="A">El controlador está en un paquete externo fuera del escaneo de @SpringBootApplication</option>
+                    <option value="B">La base de datos Neon PostgreSQL se quedó sin espacio de almacenamiento</option>
+                    <option value="C">Falta la dependencia spring-boot-starter-data-jpa en el pom.xml</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="p-3 border rounded bg-light h-100">
+                  <span class="badge bg-warning text-dark mb-2">Caso 2</span>
+                  <p class="small fw-bold mb-1">El usuario envía el formulario con un campo obligatorio vacío. La página se refresca pero todos los campos se borran.</p>
+                  <label class="small text-muted mb-1">¿Cuál es la causa arquitectónica?</label>
+                  <select class="form-select form-select-sm det-select" data-case="2">
+                    <option value="">-- Elige un diagnóstico --</option>
+                    <option value="A">El controlador usó <code>return "redirect:/nuevo"</code> en vez de retornar directamente la vista <code>return "formulario"</code></option>
+                    <option value="B">El certificado SSL de HTTPS provisto por Render caducó</option>
+                    <option value="C">Thymeleaf no soporta campos numéricos en formularios</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="p-3 border rounded bg-light h-100">
+                  <span class="badge bg-info text-dark mb-2">Caso 3</span>
+                  <p class="small fw-bold mb-1">La app funciona perfecto en localhost con H2, pero en Render lanza <code>PSQLException: Connection refused</code> al arrancar.</p>
+                  <label class="small text-muted mb-1">¿Cuál es la causa arquitectónica?</label>
+                  <select class="form-select form-select-sm det-select" data-case="3">
+                    <option value="">-- Elige un diagnóstico --</option>
+                    <option value="A">La variable <code>DB_URL</code> en Render carece del parámetro obligatorio <code>sslmode=require</code> para Neon</option>
+                    <option value="B">El archivo pom.xml contiene dependencias escritas en minúsculas</option>
+                    <option value="C">Render no soporta el lenguaje Java en ningún contenedor Docker</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="p-3 border rounded bg-light h-100">
+                  <span class="badge bg-secondary mb-2">Caso 4</span>
+                  <p class="small fw-bold mb-1">Hiciste cambios en <code>formulario.html</code>, ejecutaste <code>git commit</code> y <code>git push origin main</code>, pero el deploy en Render falló en Maven.</p>
+                  <label class="small text-muted mb-1">¿Cuál es la causa arquitectónica?</label>
+                  <select class="form-select form-select-sm det-select" data-case="4">
+                    <option value="">-- Elige un diagnóstico --</option>
+                    <option value="A">En el Dockerfile se omitió <code>-DskipTests</code> y falló una prueba que intentaba conectarse a una BD inexistente</option>
+                    <option value="B">Render no permite archivos HTML dentro de la carpeta templates/</option>
+                    <option value="C">El navegador web del usuario tiene cookies bloqueadas</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <button class="btn btn-primary" onclick="verifyDetective()">Verificar Diagnósticos</button>
+              <div id="detectiveResult" class="fw-semibold small"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="footer py-4 bg-light border-top text-center text-muted small">
+    <div class="container">
+      Universidad Rafael Landívar · Challenge Interactivo Semana 16 · Programación I
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="toast.js"></script>
+  <script>
+    // ===== RETO 1: ÁRBOL DEL PROYECTO =====
+    var TREE_PIECES = [
+      { id: 'p1', name: 'Beneficiario.java (@Entity, @Id)', zone: 'model' },
+      { id: 'p2', name: 'BeneficiarioRepository.java (JpaRepository)', zone: 'repository' },
+      { id: 'p3', name: 'BeneficiarioController.java (@Controller)', zone: 'controller' },
+      { id: 'p4', name: 'formulario.html (th:object, th:field)', zone: 'templates' },
+      { id: 'p5', name: 'lista.html (th:each="item : ${lista}")', zone: 'templates' },
+      { id: 'p6', name: 'Usuario.java (@Entity de login)', zone: 'model' },
+      { id: 'p7', name: 'UsuarioRepository.java (findByUsername)', zone: 'repository' },
+      { id: 'p8', name: 'script_inseguro.py (script fuera de Java)', zone: 'trap' } // trampa
+    ];
+
+    function initTreeChallenge() {
+      var bank = document.getElementById('treePiecesBank');
+      bank.innerHTML = '';
+      document.querySelectorAll('.zone-drop-area').forEach(function(el) { el.innerHTML = ''; });
+      document.getElementById('treeResult').innerHTML = '';
+
+      var pieces = TREE_PIECES.slice().sort(function() { return 0.5 - Math.random(); });
+      pieces.forEach(function(p) {
+        var div = document.createElement('div');
+        div.className = 'col-auto';
+        div.innerHTML = '<div class="dd-piece p-2 bg-white border rounded shadow-sm small cursor-move" draggable="true" data-id="' + p.id + '" data-zone="' + p.zone + '">' + p.name + '</div>';
+        bank.appendChild(div);
+      });
+
+      attachDragEvents();
+    }
+
+    function attachDragEvents() {
+      var dragged = null;
+      document.querySelectorAll('.dd-piece').forEach(function(p) {
+        p.addEventListener('dragstart', function(e) { dragged = p; e.dataTransfer.setData('text/plain', p.dataset.id); });
+      });
+      document.querySelectorAll('.zone-drop-area, #treePiecesBank').forEach(function(zone) {
+        zone.addEventListener('dragover', function(e) { e.preventDefault(); zone.classList.add('bg-white'); });
+        zone.addEventListener('dragleave', function() { zone.classList.remove('bg-white'); });
+        zone.addEventListener('drop', function(e) {
+          e.preventDefault();
+          zone.classList.remove('bg-white');
+          if (dragged) {
+            zone.appendChild(dragged);
+            if (typeof showToast === 'function') {
+              showToast('Pieza ubicada. Presiona "Verificar" para validar.', 'info');
+            }
+          }
+        });
+      });
+    }
+
+    function verifyTree() {
+      var correct = 0;
+      var total = TREE_PIECES.length;
+      document.querySelectorAll('.zone-drop-area').forEach(function(area) {
+        var expectedZone = area.closest('.mvc-zone').dataset.zone;
+        area.querySelectorAll('.dd-piece').forEach(function(piece) {
+          if (piece.dataset.zone === expectedZone) {
+            piece.classList.add('border-success', 'bg-success-subtle');
+            piece.classList.remove('border-danger', 'bg-danger-subtle');
+            correct++;
+          } else {
+            piece.classList.add('border-danger', 'bg-danger-subtle');
+            piece.classList.remove('border-success', 'bg-success-subtle');
+          }
+        });
+      });
+      // Verificar si la trampa quedó en el banco
+      var bankTraps = document.getElementById('treePiecesBank').querySelectorAll('[data-zone="trap"]');
+      if (bankTraps.length > 0) correct++;
+
+      var res = document.getElementById('treeResult');
+      if (correct === total) {
+        res.innerHTML = '<div class="alert alert-success p-2 small mb-0">🎉 ¡Excelente! Árbol de proyecto estructurado a la perfección (100%).</div>';
+      } else {
+        res.innerHTML = '<div class="alert alert-warning p-2 small mb-0">Has acertado ' + correct + ' de ' + total + ' archivos. Revisa los marcados en rojo o trampas sueltas.</div>';
+      }
+    }
+
+    // ===== RETO 2: SIMULADOR DE FLUJO =====
+    var currentScenario = 1;
+    var currentSimStep = 0;
+    var SIM_STEPS = {
+      1: [
+        { layer: 'layerNav', log: '1. [Navegador] El usuario presiona "Guardar" en el formulario dejando campos vacíos. Se emite un HTTP POST /guardar.' },
+        { layer: 'layerCtrl', log: '2. [Controlador] Spring Boot recibe los datos, ejecuta @Valid y detecta fallas. BindingResult.hasErrors() es VERDADERO.' },
+        { layer: 'layerCtrl', log: '3. [Controlador] Decisión arquitectónica: NO se llama a repositorio.save(). Se retorna directamente la vista "formulario".' },
+        { layer: 'layerNav', log: '4. [Navegador] Thymeleaf renderiza los mensajes de error en rojo y conserva el texto escrito. La base de datos queda intacta.' }
+      ],
+      2: [
+        { layer: 'layerNav', log: '1. [Navegador] El usuario envía datos completos y válidos vía HTTP POST /guardar con token CSRF.' },
+        { layer: 'layerCtrl', log: '2. [Controlador] BindingResult.hasErrors() es FALSO. Los datos cumplen todas las restricciones.' },
+        { layer: 'layerRepo', log: '3. [JpaRepository] El controlador invoca servicio.guardar(datos) -> JpaRepository.save(entidad).' },
+        { layer: 'layerDb', log: '4. [Neon PostgreSQL] Hibernate genera SQL INSERT INTO ... y almacena la nueva fila en la nube.' },
+        { layer: 'layerCtrl', log: '5. [Controlador] Se aplica POST-Redirect-GET: se devuelve "redirect:/beneficiarios".' },
+        { layer: 'layerNav', log: '6. [Navegador] El navegador hace un nuevo GET y renderiza la tabla con el nuevo registro. Seguro contra F5.' }
+      ]
+    };
+
+    function setSimScenario(sc) {
+      currentScenario = sc;
+      document.getElementById('btnEscenario1').classList.toggle('active', sc === 1);
+      document.getElementById('btnEscenario2').classList.toggle('active', sc === 2);
+      resetSim();
+    }
+
+    function resetSim() {
+      currentSimStep = 0;
+      document.querySelectorAll('.layer-card').forEach(function(c) { c.classList.remove('border-primary', 'bg-primary-subtle', 'border-success', 'bg-success-subtle'); });
+      document.getElementById('simLog').innerHTML = '[Listo] Presiona "Siguiente Paso" para ejecutar el escenario ' + (currentScenario === 1 ? 'A (Error)' : 'B (Éxito)') + '...';
+      document.getElementById('btnNextStep').disabled = false;
+    }
+
+    function nextSimStep() {
+      var steps = SIM_STEPS[currentScenario];
+      if (currentSimStep < steps.length) {
+        var s = steps[currentSimStep];
+        document.querySelectorAll('.layer-card').forEach(function(c) { c.classList.remove('border-primary', 'bg-primary-subtle', 'border-success', 'bg-success-subtle'); });
+        var activeCard = document.getElementById(s.layer);
+        if (activeCard) {
+          activeCard.classList.add(currentScenario === 1 ? 'border-primary' : 'border-success', currentScenario === 1 ? 'bg-primary-subtle' : 'bg-success-subtle');
+        }
+        var log = document.getElementById('simLog');
+        log.innerHTML += '<br/>' + s.log;
+        log.scrollTop = log.scrollHeight;
+        currentSimStep++;
+      } else {
+        document.getElementById('btnNextStep').disabled = true;
+        if (typeof showToast === 'function') showToast('¡Escenario completado!', 'ok');
+      }
+    }
+
+    // ===== RETO 3: DETECTIVE DE QA =====
+    function verifyDetective() {
+      var answers = { 1: 'A', 2: 'A', 3: 'A', 4: 'A' };
+      var hits = 0;
+      document.querySelectorAll('.det-select').forEach(function(sel) {
+        var c = sel.dataset.case;
+        if (sel.value === answers[c]) {
+          sel.classList.add('is-valid');
+          sel.classList.remove('is-invalid');
+          hits++;
+        } else {
+          sel.classList.add('is-invalid');
+          sel.classList.remove('is-valid');
+        }
+      });
+      var out = document.getElementById('detectiveResult');
+      if (hits === 4) {
+        out.className = 'text-success fw-bold';
+        out.innerText = '✅ ¡Diagnóstico perfecto! 4/4 casos resueltos.';
+      } else {
+        out.className = 'text-warning fw-bold';
+        out.innerText = 'Acertaste ' + hits + ' de 4. Revisa los casos marcados en rojo.';
+      }
+    }
+
+    function exportChallengePdf() {
+      var name = document.getElementById('studentName').value.trim();
+      if (!name) {
+        alert('Por favor escribe tu nombre en la casilla superior antes de exportar el PDF.');
+        document.getElementById('studentName').focus();
+        return;
+      }
+      window.print();
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      initTreeChallenge();
+      resetSim();
+    });
+  </script>
+</body>
+</html>

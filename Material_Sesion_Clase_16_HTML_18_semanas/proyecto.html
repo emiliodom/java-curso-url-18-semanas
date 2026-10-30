@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Proyecto — Semana 16 · Reporte de QA y Mantenimiento</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top no-print">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 16</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Ejercicios (QA)</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link active" href="proyecto.html">Proyecto (Reporte)</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha</a></li>
+          <li class="nav-item ms-lg-2"><button class="btn btn-outline-secondary btn-sm" onclick="window.print()">🖨️ PDF</button></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div>
+          <div class="brand-pill">Guía de Aprendizaje 16 · Valor: 1 punto</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Reporte de Aseguramiento de Calidad (QA) y Redeploy</h1>
+          <div class="small-muted">Documenta la radiografía técnica de tu proyecto, la ejecución de la batería de pruebas en Render y la evidencia de tu redeploy continuo.</div>
+        </div>
+        <button class="btn btn-outline-dark btn-export" onclick="window.print()">Exportar a PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 960px;">
+    <!-- DATOS DEL ESTUDIANTE Y REPOSITORIO -->
+    <div class="card mb-4">
+      <div class="card-header bg-primary text-white fw-semibold">Datos Generales de la Entrega</div>
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label small fw-bold" for="estudianteNombre">Nombre completo del estudiante</label>
+            <input type="text" id="estudianteNombre" class="form-control form-control-sm persistent" placeholder="Tu nombre y carné" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label small fw-bold" for="nombreProyecto">Nombre de la entidad / proyecto</label>
+            <input type="text" id="nombreProyecto" class="form-control form-control-sm persistent" placeholder="Ej. Hogar de Ancianos San José" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label small fw-bold" for="urlRender">URL pública en Render (HTTPS)</label>
+            <input type="url" id="urlRender" class="form-control form-control-sm persistent" placeholder="https://tu-app.onrender.com" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label small fw-bold" for="urlGithub">Enlace al repositorio GitHub (rama main)</label>
+            <input type="url" id="urlGithub" class="form-control form-control-sm persistent" placeholder="https://github.com/usuario/repositorio" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARTE A: RADIOGRAFÍA ARQUITECTÓNICA -->
+    <div class="card mb-4">
+      <div class="card-header bg-dark text-white fw-semibold">Parte A. Radiografía Arquitectónica de tu Proyecto (20%)</div>
+      <div class="card-body">
+        <p class="small text-muted mb-3">Identifica con exactitud los nombres de archivo y clases que componen tu sistema para certificar tu dominio del árbol:</p>
+        <div class="row g-2 small">
+          <div class="col-md-4">
+            <label class="form-label fw-bold mb-1">Clase Entidad (Modelo)</label>
+            <input type="text" id="archEntidad" class="form-control form-control-sm persistent" placeholder="Ej. Beneficiario.java" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label fw-bold mb-1">Interfaz Repositorio</label>
+            <input type="text" id="archRepo" class="form-control form-control-sm persistent" placeholder="Ej. BeneficiarioRepository.java" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label fw-bold mb-1">Clase Controlador Web</label>
+            <input type="text" id="archCtrl" class="form-control form-control-sm persistent" placeholder="Ej. BeneficiarioController.java" />
+          </div>
+          <div class="col-md-4 mt-2">
+            <label class="form-label fw-bold mb-1">Plantilla Formulario</label>
+            <input type="text" id="archForm" class="form-control form-control-sm persistent" placeholder="Ej. templates/formulario.html" />
+          </div>
+          <div class="col-md-4 mt-2">
+            <label class="form-label fw-bold mb-1">Plantilla Lista</label>
+            <input type="text" id="archLista" class="form-control form-control-sm persistent" placeholder="Ej. templates/lista.html" />
+          </div>
+          <div class="col-md-4 mt-2">
+            <label class="form-label fw-bold mb-1">Clase Configuración Seguridad</label>
+            <input type="text" id="archSec" class="form-control form-control-sm persistent" placeholder="Ej. SecurityConfig.java" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARTE B: MATRIZ DE PRUEBAS FUNCIONALES -->
+    <div class="card mb-4">
+      <div class="card-header bg-success text-white fw-semibold">Parte B. Matriz de Pruebas Funcionales Ejecutada (40%)</div>
+      <div class="card-body">
+        <p class="small text-muted mb-3">Registra los resultados reales obtenidos al ejecutar la batería de QA sobre tu aplicación en producción:</p>
+        <div class="table-responsive">
+          <table class="table table-bordered table-sm small align-middle">
+            <thead class="table-light">
+              <tr>
+                <th style="width: 70px;">ID</th>
+                <th>Caso de Prueba</th>
+                <th>Datos de Prueba ingresados</th>
+                <th>Resultado Obtenido en tu URL</th>
+                <th style="width: 100px;">Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>CP-01</strong></td>
+                <td>Carga limpia de formulario GET</td>
+                <td>Acceso a ruta <code>/nuevo</code></td>
+                <td><input type="text" id="obsCp1" class="form-control form-control-sm persistent" placeholder="Respondió 200, inputs vacíos" /></td>
+                <td>
+                  <select id="estCp1" class="form-select form-select-sm persistent">
+                    <option value="PASO">✅ Pasó</option>
+                    <option value="FALLO">❌ Falló</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>CP-02</strong></td>
+                <td>Validación y retención (POST)</td>
+                <td>Nombre vacío, edad inválida</td>
+                <td><input type="text" id="obsCp2" class="form-control form-control-sm persistent" placeholder="Alertas rojas visibles, retuvo valores" /></td>
+                <td>
+                  <select id="estCp2" class="form-select form-select-sm persistent">
+                    <option value="PASO">✅ Pasó</option>
+                    <option value="FALLO">❌ Falló</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>CP-03</strong></td>
+                <td>Persistencia en Neon + PRG</td>
+                <td>Registro completo válido</td>
+                <td><input type="text" id="obsCp3" class="form-control form-control-sm persistent" placeholder="Guardó en Neon y redirigió a lista" /></td>
+                <td>
+                  <select id="estCp3" class="form-select form-select-sm persistent">
+                    <option value="PASO">✅ Pasó</option>
+                    <option value="FALLO">❌ Falló</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>CP-04</strong></td>
+                <td>Listado con Thymeleaf th:each</td>
+                <td>Consulta de tabla principal</td>
+                <td><input type="text" id="obsCp4" class="form-control form-control-sm persistent" placeholder="Renderizó filas y botones de acción" /></td>
+                <td>
+                  <select id="estCp4" class="form-select form-select-sm persistent">
+                    <option value="PASO">✅ Pasó</option>
+                    <option value="FALLO">❌ Falló</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>CP-05</strong></td>
+                <td>Protección de rutas por roles</td>
+                <td>Intento anónimo a /nuevo</td>
+                <td><input type="text" id="obsCp5" class="form-control form-control-sm persistent" placeholder="Redirigió de inmediato a /login" /></td>
+                <td>
+                  <select id="estCp5" class="form-select form-select-sm persistent">
+                    <option value="PASO">✅ Pasó</option>
+                    <option value="FALLO">❌ Falló</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- PARTE C: EVIDENCIA DE REDEPLOY EN RENDER -->
+    <div class="card mb-4">
+      <div class="card-header bg-warning text-dark fw-semibold">Parte C. Evidencia del Ciclo de Mantenimiento Continuo (25%)</div>
+      <div class="card-body">
+        <p class="small text-muted mb-2">Comprueba el ciclo <strong>cambio ➔ commit ➔ push a main ➔ redeploy automático</strong> en Render:</p>
+        
+        <div class="row g-3 small">
+          <div class="col-md-6">
+            <label class="form-label fw-bold mb-1">1. Descripción del cambio realizado en el código</label>
+            <textarea id="descCambio" class="form-control form-control-sm persistent" rows="3" placeholder="Ej. Modifiqué el pie de página en lista.html agregando 'Versión 1.0 — QA Verificado' y ajusté el padding del contenedor..."></textarea>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-bold mb-1">2. Mensaje y Hash del commit en GitHub</label>
+            <input type="text" id="hashCommit" class="form-control form-control-sm persistent mb-2" placeholder="Ej. git commit -m 'QA: ajuste de pie de pagina' (Hash: a1b2c3d)" />
+            <label class="form-label fw-bold mb-1">3. Estado final en Render Dashboard</label>
+            <input type="text" id="estadoRender" class="form-control form-control-sm persistent" placeholder="Ej. Live - Deployed successfully in 2m 45s" />
+          </div>
+          <div class="col-12">
+            <label class="form-label fw-bold mb-1">4. Fragmento del Log de Deploy en Render (evidencia textual)</label>
+            <textarea id="logDeployRender" class="form-control form-control-sm persistent font-monospace bg-light" rows="4" placeholder="Copia las líneas clave del log de Render donde se observe el empaquetado y el arranque:
+==> Uploading build...
+==> Build successful 🎉
+==> Deploying...
+==> Starting service with 'java -jar target/*.jar'
+==> Your service is live 🎉"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARTE D: DOCUMENTACIÓN TÉCNICA -->
+    <div class="card mb-4">
+      <div class="card-header bg-info text-dark fw-semibold">Parte D. Documentación Técnica Mínima en GitHub (10%)</div>
+      <div class="card-body">
+        <p class="small text-muted mb-2">Marca los elementos que ya incorporaste en el <code>README.md</code> de tu repositorio:</p>
+        <div class="small">
+          <div class="form-check mb-1">
+            <input class="form-check-input persistent" type="checkbox" id="docTree" />
+            <label class="form-check-label" for="docTree"><strong>Árbol de carpetas documentado:</strong> explicación breve de la función de model, repository, controller y templates.</label>
+          </div>
+          <div class="form-check mb-1">
+            <input class="form-check-input persistent" type="checkbox" id="docEnv" />
+            <label class="form-check-label" for="docEnv"><strong>Variables de entorno:</strong> lista de variables necesarias en Render (<code>DB_URL</code>, <code>DB_USER</code>, <code>DB_PASSWORD</code>, <code>SPRING_PROFILES_ACTIVE=prod</code>, etc.) sin exponer claves reales.</label>
+          </div>
+          <div class="form-check mb-1">
+            <input class="form-check-input persistent" type="checkbox" id="docLocal" />
+            <label class="form-check-label" for="docLocal"><strong>Instrucciones de arranque local:</strong> cómo ejecutar con Maven en desarrollo (puerto 8080, base H2).</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input persistent" type="checkbox" id="docUsers" />
+            <label class="form-check-label" for="docUsers"><strong>Credenciales de prueba:</strong> usuarios demo para el evaluador (ej. rol ADMIN y rol ENTRENADOR / OPERADOR).</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARTE E: REFLEXIÓN Y PLAN -->
+    <div class="card mb-4">
+      <div class="card-header bg-secondary text-white fw-semibold">Parte E. Reflexión de QA y Plan hacia la Semana 17 (5%)</div>
+      <div class="card-body">
+        <div class="mb-3 small">
+          <label class="form-label fw-bold mb-1">¿Qué fallas o dudas encontraste durante las pruebas y cómo las corregiste?</label>
+          <textarea id="refleFallas" class="form-control form-control-sm persistent" rows="2" placeholder="Describe brevemente el mayor tropiezo que resolviste hoy (ej. el orden de BindingResult, el redirect o la conexión SSL)..."></textarea>
+        </div>
+        <div class="small">
+          <label class="form-label fw-bold mb-1">Plan de ensayo para la demostración en vivo de la Semana 17:</label>
+          <textarea id="planDemo" class="form-control form-control-sm persistent" rows="2" placeholder="Recordar despertar la app en Render 10 min antes, tener el usuario demo listo y probar el CRUD completo..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- RÚBRICA Y GUARDADO -->
+    <div class="card mb-4 border-success">
+      <div class="card-header bg-light fw-bold text-success">Criterios de Evaluación — Guía 16 (1 Punto)</div>
+      <div class="card-body small">
+        <div class="row g-2">
+          <div class="col-md-4">
+            <div class="p-2 border rounded bg-light h-100">
+              <strong>Excelente (100%):</strong><br/>
+              Radiografía arquitectónica exacta, matriz de 5 pruebas con datos reales, log de Render indiscutible y README completo.
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="p-2 border rounded bg-light h-100">
+              <strong>Satisfactorio (75%):</strong><br/>
+              Pruebas funcionales registradas pero faltan detalles en la evidencia del log de Render o en la radiografía de archivos.
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="p-2 border rounded bg-light h-100">
+              <strong>Insuficiente (&lt;60%):</strong><br/>
+              Datos copiados del ejemplo, enlaces rotos, sin evidencia de redeploy o proyecto no desplegado en producción.
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top">
+          <span class="text-muted" id="saveStatus">💾 Los datos se guardan automáticamente en tu navegador.</span>
+          <button class="btn btn-success" onclick="window.print()">Exportar Reporte a PDF 🖨️</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer py-4 bg-light border-top text-center text-muted small">
+    <div class="container">
+      Universidad Rafael Landívar · Facultad de Humanidades · Profesorado en TIC · Guía de Aprendizaje 16
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    var STORAGE_KEY = 's16_qa_report_v1';
+
+    function loadSavedData() {
+      try {
+        var raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        var data = JSON.parse(raw);
+        document.querySelectorAll('.persistent').forEach(function(el) {
+          if (data[el.id] !== undefined) {
+            if (el.type === 'checkbox') el.checked = data[el.id];
+            else el.value = data[el.id];
+          }
+        });
+      } catch (e) { console.warn('Error loading local storage', e); }
+    }
+
+    function saveData() {
+      try {
+        var data = {};
+        document.querySelectorAll('.persistent').forEach(function(el) {
+          if (el.type === 'checkbox') data[el.id] = el.checked;
+          else data[el.id] = el.value;
+        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        var st = document.getElementById('saveStatus');
+        if (st) {
+          st.innerText = '💾 Guardado a las ' + new Date().toLocaleTimeString();
+        }
+      } catch (e) { console.warn('Error saving to local storage', e); }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      loadSavedData();
+      document.querySelectorAll('.persistent').forEach(function(el) {
+        el.addEventListener('input', saveData);
+        el.addEventListener('change', saveData);
+      });
+    });
+  </script>
+</body>
+</html>
