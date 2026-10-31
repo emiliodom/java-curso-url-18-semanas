@@ -1384,3 +1384,101 @@ code:not(pre code):not(.term code):not(.gui-mock code):not(.s12-error-map code):
 [data-bs-theme="dark"] .seg,
 [data-bs-theme="dark"] .mmd-figure { color: #0f172a; }
 [data-bs-theme="dark"] .mmd-figure { background: #fff; }
+
+/* ==========================================================================
+   CONTRASTE v2 (auditado con navegador real: ratio >= 4.5:1)
+   ========================================================================== */
+
+/* pre/code con fondo claro de Bootstrap: el pre base es oscuro-con-texto-claro,
+   asi que al usar bg-light/bg-white el texto desaparecia. */
+pre.bg-light, pre.bg-white, pre.bg-body, pre.bg-body-tertiary, pre.bg-body-secondary {
+    color: #0f172a !important;
+    border-color: #cbd5e1 !important;
+}
+pre.bg-light code, pre.bg-white code, pre.bg-body code,
+pre.bg-body-tertiary code, pre.bg-body-secondary code {
+    color: #0f172a !important;
+    background: transparent !important;
+    border: 0 !important;
+    padding: 0 !important;
+    font-weight: 500;
+}
+
+/* Colores semanticos de texto sobre fondo claro */
+.text-danger { color: #b02a37 !important; }
+.text-success { color: #146c43 !important; }
+.text-warning { color: #8a5a00 !important; }
+.text-info { color: #055160 !important; }
+.text-primary { color: #0a58ca !important; }
+.text-secondary { color: #475569 !important; }
+.text-dark .text-muted, .bg-dark .text-muted, .bg-dark .small-muted { color: #cbd5e1 !important; }
+
+/* Botones outline de Bootstrap (warning/info/success/danger) */
+.btn-outline-warning { color: #7a4d00 !important; border-color: #b97a00 !important; background: #fff8e1; }
+.btn-outline-warning:hover, .btn-outline-warning:focus { background: #b97a00 !important; color: #fff !important; }
+.btn-outline-info { color: #055160 !important; border-color: #0a7d96 !important; background: #e6f7fb; }
+.btn-outline-info:hover, .btn-outline-info:focus { background: #0a6f86 !important; color: #fff !important; }
+.btn-outline-success { color: #146c43 !important; border-color: #146c43 !important; }
+.btn-outline-success:hover { background: #146c43 !important; color: #fff !important; }
+.btn-outline-danger { color: #b02a37 !important; border-color: #b02a37 !important; }
+.btn-outline-danger:hover { background: #b02a37 !important; color: #fff !important; }
+.btn-outline-dark { color: #0f172a !important; border-color: #0f172a !important; }
+.btn-outline-dark:hover { background: #0f172a !important; color: #fff !important; }
+.btn-warning { background: #fbbf24 !important; border-color: #f59e0b !important; color: #1f1300 !important; }
+.btn-info { background: #67d4ec !important; border-color: #38bdf8 !important; color: #032830 !important; }
+
+/* Cabeceras de tarjeta claras */
+.card-header.bg-light { background: #f1f5f9 !important; color: #0f172a !important; }
+.card-header.bg-light.text-success { color: #146c43 !important; }
+.card-header.bg-light.text-danger { color: #b02a37 !important; }
+.card-header.bg-success, .badge.bg-success, .bg-success.text-white { background-color: #146c43 !important; color: #fff !important; }
+.card-header.bg-danger, .bg-danger.text-white { background-color: #b02a37 !important; color: #fff !important; }
+.card-header.bg-secondary, .bg-secondary.text-white { background-color: #334155 !important; color: #fff !important; }
+.card-header.bg-info { background-color: #bae6fd !important; color: #032830 !important; }
+.bg-light, .bg-white { color: #0f172a; }
+.table-light, .table-light > th, .table-light > td { color: #0f172a !important; }
+
+/* Alertas de Bootstrap */
+.alert-info { color: #032830; background: #cff4fc; border-color: #9eeaf9; }
+.alert-warning { color: #4d3400; background: #fff3cd; border-color: #ffe69c; }
+.alert-success { color: #0a3622; background: #d1e7dd; border-color: #a3cfbb; }
+.alert-danger { color: #58151c; background: #f8d7da; border-color: #f1aeb5; }
+.alert-secondary { color: #1e293b; background: #e2e8f0; border-color: #cbd5e1; }
+
+/* Placeholders y texto deshabilitado legibles */
+::placeholder { color: #64748b !important; opacity: 1 !important; }
+
+/* Fondos oscuros: todo el texto interno claro */
+.bg-dark, .sim-log, .term, .dd-target, .mvc-zone, .code-area { color: #e6edf3; }
+.bg-dark a, .sim-log a { color: #93c5fd; }
+.bg-dark.text-light, .sim-log.text-light { color: #e6edf3 !important; }
+.mvc-zone-title, .dd-target .dd-slot { color: #e2e8f0; }
+.dd-slot { color: rgba(255,255,255,.78) !important; }
+.dd-slot::before { color: rgba(255,255,255,.85) !important; }
+.dd-piece { color: #f1f5f9; background: #1e293b; }
+.dd-piece.bg-white, .dd-pool .dd-piece.bg-white { background: #fff !important; color: #0f172a !important; border-color: #94a3b8 !important; }
+.dd-piece.bg-light { background: #f1f5f9 !important; color: #0f172a !important; }
+.mvc-zone.trap-zone .mvc-zone-title { color: #fecaca; }
+.layer-card { color: #0f172a; }
+.layer-card .role-chip { color: #0f172a; background: #e2e8f0; }
+.layer-arrow { color: #475569; }
+.pipe-stage { color: #0f172a; }
+.gui-mock .gui-bar { color: #334155; }
+.ruta-mapa .ruta-punto { color: #0f172a; }
+.paso-grande .paso-donde { color: #475569 !important; }
+.mmd-figure figcaption { color: #374151 !important; }
+
+/* Quiz: opciones y retroalimentacion */
+.quiz-q { color: #0f172a; }
+.quiz-q label, .quiz-q .form-check-label { color: #0f172a; }
+.quiz-feedback.ok { color: #0a3622; background: #d1e7dd; }
+.quiz-feedback.ko { color: #58151c; background: #f8d7da; }
+.score-banner { color: #0f172a; }
+
+/* Botones outline activos / seleccionados: texto blanco sobre relleno */
+.btn-outline-danger.active, .btn-outline-danger:active, .btn-check:checked + .btn-outline-danger { background: #b02a37 !important; color: #fff !important; }
+.btn-outline-success.active, .btn-outline-success:active, .btn-check:checked + .btn-outline-success { background: #146c43 !important; color: #fff !important; }
+.btn-outline-warning.active, .btn-outline-warning:active, .btn-check:checked + .btn-outline-warning { background: #7a4d00 !important; color: #fff !important; }
+.btn-outline-info.active, .btn-outline-info:active, .btn-check:checked + .btn-outline-info { background: #0a6f86 !important; color: #fff !important; }
+.btn-outline-primary.active, .btn-outline-primary:active, .btn-check:checked + .btn-outline-primary { background: #0a58ca !important; color: #fff !important; }
+.btn-outline-dark.active, .btn-outline-secondary.active { background: #334155 !important; color: #fff !important; }
