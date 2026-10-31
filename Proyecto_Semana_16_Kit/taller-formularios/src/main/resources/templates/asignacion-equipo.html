@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Asignación de equipos</title>
+  <link rel="stylesheet" th:href="@{/estilos.css}">
+</head>
+<body>
+<main>
+  <h1>Escuela de Fútbol Los Cerritos</h1>
+  <h2>Asignación de jugadores a equipos</h2>
+
+  <div class="aviso" role="status" th:if="${param.ok}">Asignación guardada.</div>
+  <div class="aviso error" role="alert" th:if="${error}" th:text="${error}">Error</div>
+
+  <p th:if="${#lists.isEmpty(jugadores)}">
+    Primero inscribe jugadores en <a th:href="@{/jugadores}">la lista</a>.
+  </p>
+
+  <!-- Los <option> NO se escriben a mano: th:each los crea con lo que hay en la base. -->
+  <form th:if="${!#lists.isEmpty(jugadores)}" th:action="@{/asignacion-equipo}" method="post">
+    <label for="jugadorId">Jugador</label>
+    <select id="jugadorId" name="jugadorId">
+      <option th:each="j : ${jugadores}" th:value="${j.id}"
+              th:text="${j.nombre + ' (' + j.posicion + ')'}">Nombre</option>
+    </select>
+
+    <label for="equipoId">Equipo</label>
+    <select id="equipoId" name="equipoId">
+      <option value="">— Sin equipo —</option>
+      <option th:each="e : ${equipos}" th:value="${e.id}"
+              th:text="${e.nombre + ' (' + ocupacion[e.id] + '/' + e.cupo + ')'}">Tigres</option>
+    </select>
+
+    <button type="submit">Asignar</button>
+    <a th:href="@{/jugadores}">Volver</a>
+  </form>
+
+  <h3>Estado actual</h3>
+  <table th:if="${!#lists.isEmpty(jugadores)}">
+    <thead><tr><th>Jugador</th><th>Posición</th><th>Equipo</th></tr></thead>
+    <tbody>
+      <tr th:each="j : ${jugadores}">
+        <td th:text="${j.nombre}">Nombre</td>
+        <td th:text="${j.posicion}">Portero</td>
+        <td th:text="${j.equipoId != null} ? ${nombresEquipo[j.equipoId]} : 'Sin equipo'">Sin equipo</td>
+      </tr>
+    </tbody>
+  </table>
+</main>
+</body>
+</html>
+
