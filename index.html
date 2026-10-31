@@ -319,21 +319,23 @@
         n: 17, fecha: '7 nov 2026', tema: 'Presentación interna y retroalimentación',
         detalle: 'Demo al grupo, protocolo anti-cold start y evaluación entre pares. ★ Entrega parcial 4 (7 puntos).',
         tags: 'presentacion retroalimentacion pares entrega hito coldstart demo',
-        badge: 'Hito',
-        folder: 'Material_Sesion_Clase_17_HTML_18_semanas/index.html',
-        sesionDoc: 'PEM%20en%20TIC_Sesi%C3%B3n%20de%20Clase%2017%20Programaci%C3%B3n%20I_18_semanas.md',
-        guiaDoc: 'PEM%20en%20TIC_Gu%C3%ADa%20de%20Aprendizaje%2017%20Programaci%C3%B3n%201_18_semanas.md',
-        destacado: '<strong>Ensayo general y ★ Entrega Parcial 4 (7 puntos).</strong> Presentación técnica de 4 minutos en vivo, protocolo anti-cold start para Render y Neon, y evaluación formativa entre pares bajo rúbrica compartida.'
+        badge: 'Hito'
+        // Se activa el 7 de nov:
+        // folder: 'Material_Sesion_Clase_17_HTML_18_semanas/index.html',
+        // sesionDoc: 'PEM%20en%20TIC_Sesi%C3%B3n%20de%20Clase%2017%20Programaci%C3%B3n%20I_18_semanas.md',
+        // guiaDoc: 'PEM%20en%20TIC_Gu%C3%ADa%20de%20Aprendizaje%2017%20Programaci%C3%B3n%201_18_semanas.md',
+        // destacado: '<strong>Ensayo general y ★ Entrega Parcial 4 (7 puntos).</strong> Presentación técnica de 4 minutos en vivo, protocolo anti-cold start para Render y Neon, y evaluación formativa entre pares bajo rúbrica compartida.'
       },
       {
         n: 18, fecha: '14 nov 2026', tema: 'Entrega final, evaluación y reflexión',
         detalle: 'Defensa formal del proyecto ante tribunal docente (10 pts), coevaluación Ronda 2 (5 pts), autoevaluación metacognitiva y entrega llave en mano.',
         tags: 'entrega final presentacion reflexion defensa metacognicion llave en mano pares',
-        badge: 'Hito',
-        folder: 'Material_Sesion_Clase_18_HTML_18_semanas/index.html',
-        sesionDoc: 'PEM%20en%20TIC_Sesi%C3%B3n%20de%20Clase%2018%20Programaci%C3%B3n%20I_18_semanas.md',
-        guiaDoc: 'PEM%20en%20TIC_Gu%C3%ADa%20de%20Aprendizaje%2018%20Programaci%C3%B3n%201_18_semanas.md',
-        destacado: '<strong>Gran Cierre y Defensa Final (15.78 puntos).</strong> Presentación formal ante el tribunal docente (10 pts), segunda ronda oficial de evaluación entre pares (5 pts), autoevaluación metacognitiva y entrega de la solución llave en mano.'
+        badge: 'Hito'
+        // Se activa el 14 de nov:
+        // folder: 'Material_Sesion_Clase_18_HTML_18_semanas/index.html',
+        // sesionDoc: 'PEM%20en%20TIC_Sesi%C3%B3n%20de%20Clase%2018%20Programaci%C3%B3n%20I_18_semanas.md',
+        // guiaDoc: 'PEM%20en%20TIC_Gu%C3%ADa%20de%20Aprendizaje%2018%20Programaci%C3%B3n%201_18_semanas.md',
+        // destacado: '<strong>Gran Cierre y Defensa Final (15.78 puntos).</strong> Presentación formal ante el tribunal docente (10 pts), segunda ronda oficial de evaluación entre pares (5 pts), autoevaluación metacognitiva y entrega de la solución llave en mano.'
       }
     ];
 
@@ -408,26 +410,29 @@
         grid.appendChild(card);
       });
 
-      // Semana actual = la más reciente publicada
+      // Semana actual = semana activa (Semana 16) o la más reciente publicada
+      var SEMANA_ACTIVA_N = 16;
+      var semanaDestacada = (SEMANA_ACTIVA_N ? WEEKS.find(function(w) { return w.n === SEMANA_ACTIVA_N && !!w.folder; }) : null) || ultima;
+
       var f = document.getElementById('featured');
-      if (ultima) {
-        var idx = WEEKS.indexOf(ultima);
-        var hitoF = HITOS[ultima.n];
+      if (semanaDestacada) {
+        var idx = WEEKS.indexOf(semanaDestacada);
+        var hitoF = HITOS[semanaDestacada.n];
         f.innerHTML =
-          '<div class="big-n"><div><small>Semana</small>' + ultima.n + '</div></div>' +
+          '<div class="big-n"><div><small>Semana</small>' + semanaDestacada.n + '</div></div>' +
           '<div>' +
             '<div class="tags" style="display:flex;gap:6px;flex-wrap:wrap">' +
               '<span class="pill brand">Clase: ' + fmtDia(satDate(idx)) + ' · 11:10</span>' +
               (hitoF ? '<span class="pill star">★ ' + hitoF + '</span>' : '') +
-              '<span class="pill">' + ultima.badge + '</span>' +
+              '<span class="pill">' + semanaDestacada.badge + '</span>' +
             '</div>' +
-            '<h3>' + ultima.tema + '</h3>' +
-            '<div class="muted">' + (ultima.destacado || ultima.detalle) + '</div>' +
+            '<h3>' + semanaDestacada.tema + '</h3>' +
+            '<div class="muted">' + (semanaDestacada.destacado || semanaDestacada.detalle) + '</div>' +
           '</div>' +
           '<div class="actions">' +
-            '<a class="btn-p" href="' + ultima.folder + '">Abrir material →</a>' +
-            (ultima.sesionDoc ? '<a class="btn-s" href="' + ultima.sesionDoc + '">Sesión ' + ultima.n + '</a>' : '') +
-            (ultima.guiaDoc ? '<a class="btn-s" href="' + ultima.guiaDoc + '">Guía ' + ultima.n + '</a>' : '') +
+            '<a class="btn-p" href="' + semanaDestacada.folder + '">Abrir material →</a>' +
+            (semanaDestacada.sesionDoc ? '<a class="btn-s" href="' + semanaDestacada.sesionDoc + '">Sesión ' + semanaDestacada.n + '</a>' : '') +
+            (semanaDestacada.guiaDoc ? '<a class="btn-s" href="' + semanaDestacada.guiaDoc + '">Guía ' + semanaDestacada.n + '</a>' : '') +
           '</div>';
       }
 
