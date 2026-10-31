@@ -1338,3 +1338,7 @@ code:not(pre code):not(.term code):not(.gui-mock code):not(.s12-error-map code):
 .mvc-zone.bg-light .text-success { color: #0f5132 !important; }
 .mvc-zone.bg-light .text-primary { color: #084298 !important; }
 .mvc-zone.bg-light .text-muted { color: #495057 !important; }
+
+/* text-muted de Bootstrap (#6c757d) queda borderline sobre fondos grises;
+   #495057 cumple WCAG AA sobre blanco, bg-light y --bg-soft. */
+.text-muted { color: #495057 !important; }
