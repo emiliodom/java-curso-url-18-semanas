@@ -2,6 +2,27 @@
 
 Todas las modificaciones y adiciones de hitos del proyecto se registran en este documento.
 
+## [2026-10-31] — Corrección Integral de Contraste en Modo Claro (Portal y Semanas 16, 17, 18)
+
+### Corregido & Mejorado (Accesibilidad WCAG AAA)
+- **Bloques de Código <pre> (Terminal / IDE Theme universal):**
+  - Eliminadas las clases conflictivas g-light y g-white de todos los elementos <pre> en las Semanas 16, 17 y 18 (incluyendo el árbol canónico de Spring Boot en cheatsheet.html), resolviendo de raíz el problema de texto claro sobre fondo blanco desgastado.
+  - Blindaje CSS en styles.css: todos los <pre>, <pre code> y cualquier variante pre.bg-* quedan forzados a fondo oscuro #0b1220 !important, texto blanco nítido #f1f5f9 !important y borde #334155 !important (ratio de contraste superior a 16.5:1, nivel AAA).
+  - Comentarios en código ajustados a #94a3b8 (7.2:1) para óptima legibilidad.
+- **Pestañas y Secciones de Navegación (
+av-tabs y 
+av-pills):**
+  - Pestañas inactivas en modo claro ajustadas a #374151 (9.6:1) con fondo blanco limpio.
+  - Pestaña activa resaltada con #0a58ca (6.4:1) y borde inferior reforzado.
+- **Badges, Alertas y Botones Outline:**
+  - Badges warning (#713f12 sobre #fef08a, 8.2:1) e info (#0369a1 sobre #e0f2fe, 7.4:1).
+  - Botones outline con relleno suave y borde nítido en modo claro.
+- **Portal Raíz (portal.css):**
+  - Pastillas de estado .pill.ok actualizadas a #14532d sobre #dcfce7 (ratio 6.5:1).
+  - Estados .pill.now, .pill.star, .pill.brand y .week-n elevados a estándar WCAG AAA.
+- **Anti-Caché de Navegador:**
+  - Inyectado parámetro de versión ?v=20261031d en las referencias a styles.css en todas las páginas HTML para forzar la actualización inmediata en los navegadores de estudiantes y docentes.
+
 ## [2026-10-31] — Flujo Dinámico y Recursos Multimedia (Semana 16)
 
 ### Añadido
