@@ -40,6 +40,8 @@
     <ul class="nav nav-tabs mb-4 no-print" id="cheatTabs" role="tablist">
       <li class="nav-item"><button class="nav-link active" id="arbol-tab" data-bs-toggle="tab" data-bs-target="#arbol" type="button" role="tab">🌲 Árbol y Archivos Clave</button></li>
       <li class="nav-item"><button class="nav-link" id="flujo-tab" data-bs-toggle="tab" data-bs-target="#flujo" type="button" role="tab">🔄 Circuito Modelo ↔ Controlador ↔ Form ↔ Repo</button></li>
+      <li class="nav-item"><button class="nav-link" id="dinamico-tab" data-bs-toggle="tab" data-bs-target="#dinamico" type="button" role="tab">⚡ Flujo Dinámico (Equipos, Stats y Hub)</button></li>
+      <li class="nav-item"><button class="nav-link" id="multimedia-tab" data-bs-toggle="tab" data-bs-target="#multimedia" type="button" role="tab">🖼️ Imágenes y Videos YouTube</button></li>
       <li class="nav-item"><button class="nav-link" id="qa-tab" data-bs-toggle="tab" data-bs-target="#qa" type="button" role="tab">🧪 Metodología de Pruebas QA</button></li>
       <li class="nav-item"><button class="nav-link" id="mantenimiento-tab" data-bs-toggle="tab" data-bs-target="#mantenimiento" type="button" role="tab">🚀 Mantenimiento y Redeploy Render</button></li>
     </ul>
@@ -207,6 +209,314 @@
           </div>
         </div>
       </div>
+<!-- PESTAÑA 3: FLUJO DINAMICO (EQUIPOS, STATS Y HUB) -->
+      <div class="tab-pane fade" id="dinamico" role="tabpanel">
+        <div class="card mb-4">
+          <div class="card-header bg-primary text-white fw-semibold">1. El Concepto Central: Vincular Registros Guardando solo el ID (Cero Complejidad)</div>
+          <div class="card-body">
+            <p class="small text-muted mb-2">Muchos estudiantes se traban intentando configurar relaciones JPA complejas (<code>@ManyToOne</code>, <code>@OneToMany</code>, <code>FetchType</code>, etc.). En este curso aplicamos la regla de oro de la ingeniería pragmática: <strong>cada entidad sigue siendo una tabla plana, y para vincular dos registros guardamos simplemente el ID como un campo numérico normal</strong>.</p>
+            
+            <div class="table-responsive">
+              <table class="table table-sm table-bordered small align-middle">
+                <thead class="table-light">
+                  <tr><th>Enfoque Complejo (Innecesario)</th><th>Enfoque Pragmático del Kit (Recomendado)</th><th>¿Por qué es mejor para el proyecto?</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>@ManyToOne<br/>private Equipo equipo;</code></td>
+                    <td><code>private Long equipoId;</code></td>
+                    <td>Cero errores de recursión JSON, cero proxies perezosos, compila y guarda al instante con <code>save()</code>.</td>
+                  </tr>
+                  <tr>
+                    <td>Opciones de formulario quemadas fijas en HTML con <code>&lt;option&gt;</code> estáticos.</td>
+                    <td>Desplegables dinámicos que leen la base de datos con <code>th:each="e : ${equipos}"</code>.</td>
+                    <td>Si agregas o editas un equipo en la base, los formularios de toda la aplicación se actualizan solos.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-header bg-dark text-white fw-semibold">2. Módulo 1: Asignación a Equipos (/asignacion-equipo)</div>
+          <div class="card-body">
+            <p class="small text-muted mb-2">Permite al <code>ADMIN</code> tomar cualquier jugador registrado y asignarlo a un equipo disponible validando cupos en el Servicio.</p>
+
+            <h6 class="fw-bold mt-3 mb-1">A) La Entidad Equipo (model/Equipo.java)</h6>
+            <pre class="bg-light p-3 rounded small border"><code>@Entity
+public class Equipo {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, unique = true, length = 40)
+    private String nombre;
+
+    @Column(nullable = false)
+    private Integer cupo; // Cuántos jugadores caben en la plantilla
+
+    // Constructor vacío, constructor con campos, getters y setters
+}</code></pre>
+
+            <h6 class="fw-bold mt-3 mb-1">B) El Controlador Dinámico (controller/AsignacionController.java)</h6>
+            <pre class="bg-light p-3 rounded small border"><code>@Controller
+public class AsignacionController {
+    private final JugadorService jugadorService;
+    private final EquipoService equipoService;
+
+    // GET: Carga jugadores y equipos reales para poblar los &lt;select&gt;
+    @GetMapping("/asignacion-equipo")
+    public String ver(Model model) {
+        model.addAttribute("jugadores", jugadorService.listarTodos());
+        model.addAttribute("equipos", equipoService.listarTodos());
+        return "asignacion-equipo";
+    }
+
+    // POST: Recibe los IDs seleccionados por el usuario
+    @PostMapping("/asignacion-equipo")
+    public String asignar(@RequestParam Long jugadorId,
+                          @RequestParam(required = false) Long equipoId,
+                          Model model) {
+        try {
+            equipoService.asignar(jugadorId, equipoId);
+        } catch (IllegalStateException e) {
+            model.addAttribute("error", e.getMessage());
+            return ver(model); // Con error NO hay redirect para conservar el mensaje
+        }
+        return "redirect:/asignacion-equipo?ok";
+    }
+}</code></pre>
+
+            <h6 class="fw-bold mt-3 mb-1">C) Formulario Dinámico en Thymeleaf (templates/asignacion-equipo.html)</h6>
+            <pre class="bg-light p-3 rounded small border"><code>&lt;!-- Los &lt;option&gt; NO están escritos a mano: th:each los genera con la base de datos --&gt;
+&lt;form th:action="@{/asignacion-equipo}" method="post"&gt;
+  &lt;label for="jugadorId"&gt;Jugador a asignar:&lt;/label&gt;
+  &lt;select id="jugadorId" name="jugadorId" class="form-select"&gt;
+    &lt;option th:each="j : ${jugadores}" th:value="${j.id}"
+            th:text="${j.nombre + ' (' + j.posicion + ')'}"&gt;Nombre&lt;/option&gt;
+  &lt;/select&gt;
+
+  &lt;label for="equipoId"&gt;Equipo de destino:&lt;/label&gt;
+  &lt;select id="equipoId" name="equipoId" class="form-select"&gt;
+    &lt;option value=""&gt;— Sin equipo —&lt;/option&gt;
+    &lt;option th:each="e : ${equipos}" th:value="${e.id}"
+            th:text="${e.nombre + ' (Cupo: ' + e.cupo + ')'}"&gt;Tigres&lt;/option&gt;
+  &lt;/select&gt;
+
+  &lt;button type="submit" class="btn btn-primary mt-2"&gt;Guardar Asignación&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-header bg-success text-white fw-semibold">3. Módulo 2: Estadísticas de Jugador (/estadisticas-jugador)</div>
+          <div class="card-body">
+            <p class="small text-muted mb-2">Permite seleccionar un jugador ya registrado y cargar/actualizar sus métricas (partidos, goles, asistencias). Muestra cómo manejar un <strong>selector dinámico en cascada</strong>.</p>
+
+            <h6 class="fw-bold mt-2 mb-1">A) Patrón de Búsqueda y Carga Automática en el Controlador</h6>
+            <pre class="bg-light p-3 rounded small border"><code>@GetMapping("/estadisticas-jugador")
+public String ver(@RequestParam(required = false) Long jugadorId, Model model) {
+    EstadisticaJugador form = new EstadisticaJugador();
+    if (jugadorId != null) {
+        // Si el jugador ya tiene estadísticas guardadas, las carga para editarlas
+        form = estadisticaService.buscarPorJugador(jugadorId).orElseGet(() -&gt; {
+            EstadisticaJugador nueva = new EstadisticaJugador();
+            nueva.setJugadorId(jugadorId);
+            return nueva;
+        });
+    }
+    model.addAttribute("estadistica", form);
+    model.addAttribute("jugadores", jugadorService.listarTodos());
+    model.addAttribute("estadisticas", estadisticaService.listarTodas());
+    return "estadisticas-jugador";
+}</code></pre>
+
+            <h6 class="fw-bold mt-3 mb-1">B) Selector que Recarga la Vista (templates/estadisticas-jugador.html)</h6>
+            <pre class="bg-light p-3 rounded small border"><code>&lt;!-- 1. Selector rápido: envía un GET con ?jugadorId=... para rellenar el formulario --&gt;
+&lt;form th:action="@{/estadisticas-jugador}" method="get" class="mb-3"&gt;
+  &lt;label for="elegir"&gt;Seleccionar Jugador:&lt;/label&gt;
+  &lt;select id="elegir" name="jugadorId" onchange="this.form.submit()"&gt;
+    &lt;option th:each="j : ${jugadores}" th:value="${j.id}" th:text="${j.nombre}"
+            th:selected="${estadistica.jugadorId == j.id}"&gt;Nombre&lt;/option&gt;
+  &lt;/select&gt;
+&lt;/form&gt;
+
+&lt;!-- 2. Formulario POST con Bean Validation (@Min, @Max, @NotNull) --&gt;
+&lt;form th:if="${estadistica.jugadorId != null}" th:action="@{/estadisticas-jugador}"
+      th:object="${estadistica}" method="post"&gt;
+  &lt;input type="hidden" th:field="*{jugadorId}"&gt;
+
+  &lt;label for="partidos"&gt;Partidos Jugados:&lt;/label&gt;
+  &lt;input id="partidos" type="number" th:field="*{partidos}"&gt;
+
+  &lt;label for="goles"&gt;Goles Anotados:&lt;/label&gt;
+  &lt;input id="goles" type="number" th:field="*{goles}"&gt;
+
+  &lt;label for="asistencias"&gt;Asistencias:&lt;/label&gt;
+  &lt;input id="asistencias" type="number" th:field="*{asistencias}"&gt;
+
+  &lt;button type="submit"&gt;Guardar Métricas&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-header bg-dark text-white fw-semibold">4. Módulo 3: El Hub Personal del Jugador (/mi-hub) con Círculos y Vacantes</div>
+          <div class="card-body">
+            <p class="small text-muted mb-2">Cuando un usuario con rol <code>ROLE_JUGADOR</code> inicia sesión, el sistema lo envía a su propio Hub. Allí ve su ficha, la plantilla de su equipo (con círculos de colores y <strong>"Vacante"</strong> si el cupo no se ha llenado) y sus estadísticas personales.</p>
+
+            <h6 class="fw-bold mt-2 mb-1">A) Cómo saber quién está conectado (HubJugadorController.java)</h6>
+            <pre class="bg-light p-3 rounded small border"><code>@GetMapping("/mi-hub")
+public String hub(Principal principal, Model model) {
+    // 1. Principal.getName() nos da el 'username' con el que inició sesión
+    Jugador yo = jugadorService.buscarPorUsername(principal.getName()).orElse(null);
+    model.addAttribute("yo", yo);
+
+    if (yo != null && yo.getEquipoId() != null) {
+        Equipo equipo = equipoService.buscarPorId(yo.getEquipoId());
+        List&lt;Jugador&gt; casillas = new ArrayList&lt;&gt;(equipoService.plantilla(equipo.getId()));
+        
+        // 2. Si hay menos jugadores que el cupo, rellenamos con null para dibujar "Vacante"
+        while (casillas.size() &lt; equipo.getCupo()) {
+            casillas.add(null);
+        }
+        model.addAttribute("equipo", equipo);
+        model.addAttribute("casillas", casillas);
+    }
+    return "hub-jugador";
+}</code></pre>
+
+            <h6 class="fw-bold mt-3 mb-1">B) Renderizado de la Plantilla con Círculos (templates/hub-jugador.html)</h6>
+            <pre class="bg-light p-3 rounded small border"><code>&lt;ul class="plantilla"&gt;
+  &lt;li th:each="c : ${casillas}"&gt;
+    &lt;!-- Si la casilla tiene jugador: círculo con la inicial del nombre --&gt;
+    &lt;span th:if="${c != null}" class="circulo" th:classappend="${c.id == yo.id} ? 'yo'"
+          th:text="${#strings.substring(c.nombre, 0, 1)}"&gt;A&lt;/span&gt;
+
+    &lt;!-- Si la casilla es null: círculo punteado de vacante con un signo más --&gt;
+    &lt;span th:if="${c == null}" class="circulo vacante"&gt;+&lt;/span&gt;
+
+    &lt;span th:text="${c != null} ? ${c.nombre} : 'Vacante'"&gt;Nombre&lt;/span&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+
+            <h6 class="fw-bold mt-3 mb-1">C) Estilos CSS Responsivos para los Círculos (estilos.css)</h6>
+            <pre class="bg-light p-3 rounded small border"><code>.plantilla { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 1rem; }
+.plantilla li { display: flex; flex-direction: column; align-items: center; width: 90px; text-align: center; }
+.circulo { display: flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 50%; background: #0a58ca; color: #fff; font-size: 1.3rem; font-weight: 700; }
+.circulo.yo { background: #15803d; box-shadow: 0 0 0 3px #86efac; } /* Destacado para el jugador actual */
+.circulo.vacante { background: #f8fafc; color: #64748b; border: 2px dashed #94a3b8; } /* Cupo libre */</code></pre>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-header bg-secondary text-white fw-semibold">5. Seguridad y Redirección tras el Login</div>
+          <div class="card-body">
+            <p class="small text-muted mb-2">Para que el jugador no vea la lista administrativa ni botones de editar/borrar, agregamos una bifurcación en <code>JugadorController</code> y permisos estrictos en <code>SecurityConfig</code>:</p>
+            <pre class="bg-light p-3 rounded small border"><code>// En JugadorController.java:
+@GetMapping({"/", "/jugadores"})
+public String listar(Model model, Authentication auth) {
+    boolean esJugador = auth.getAuthorities().stream()
+            .anyMatch(a -&gt; a.getAuthority().equals("ROLE_JUGADOR"));
+    if (esJugador) {
+        return "redirect:/mi-hub"; // Jugador entra directo a su Hub
+    }
+    model.addAttribute("jugadores", jugadorService.listarTodos());
+    return "lista";
+}
+
+// En SecurityConfig.java:
+.requestMatchers("/asignacion-equipo").hasRole("ADMIN")
+.requestMatchers("/estadisticas-jugador").hasAnyRole("ADMIN", "ENTRENADOR")
+.requestMatchers("/mi-hub").hasRole("JUGADOR")</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- PESTAÑA 4: RECURSOS MULTIMEDIA (IMAGENES Y YOUTUBE) -->
+      <div class="tab-pane fade" id="multimedia" role="tabpanel">
+        <div class="card mb-4">
+          <div class="card-header bg-primary text-white fw-semibold">1. Cómo incluir Imágenes en el Proyecto (Carpeta static)</div>
+          <div class="card-body">
+            <p class="small text-muted mb-2">Spring Boot trata todo archivo dentro de <code>src/main/resources/static/</code> como un archivo público accesible directamente desde la raíz del servidor web. <strong>No necesitas configurar controladores ni rutas Java para servir imágenes</strong>.</p>
+
+            <h6 class="fw-bold mt-3 mb-1">A) Ubicación en el Árbol del Proyecto</h6>
+            <pre class="bg-light p-3 rounded small border"><code>mi-proyecto/
+└── src/main/resources/
+    ├── static/
+    │   ├── estilos.css
+    │   └── img/
+    │       ├── logo.png             &lt;-- Se accede en http://localhost:8080/img/logo.png
+    │       ├── escudo.svg           &lt;-- Se accede en http://localhost:8080/img/escudo.svg
+    │       └── foto-instalaciones.jpg
+    └── templates/
+        └── lista.html</code></pre>
+
+            <h6 class="fw-bold mt-3 mb-1">B) Sintaxis Canónica en Thymeleaf</h6>
+            <p class="small text-muted mb-2">Usa siempre <code>th:src="@{/img/nombre.png}"</code>. La arroba <code>@{...}</code> asegura que la ruta funcione tanto en tu computadora local como en Render tras el proxy reverso:</p>
+            <pre class="bg-light p-3 rounded small border"><code>&lt;!-- Imagen fija (logotipo o banner) --&gt;
+&lt;img th:src="@{/img/escudo.svg}" alt="Logotipo Escuela Los Cerritos" width="60" height="60"&gt;
+
+&lt;!-- Imagen dinámica si la entidad guarda el nombre del archivo en la base de datos --&gt;
+&lt;img th:src="@{'/img/' + ${jugador.fotoArchivo}}" alt="Foto de perfil" class="avatar"&gt;</code></pre>
+
+            <div class="callout warning mt-3">
+              <div class="fw-semibold">⚠️ Trampa habitual con Spring Security</div>
+              <p class="small mb-0">Si agregas una carpeta nueva como <code>/img/</code> y tu aplicación tiene Spring Security activo, la imagen te dará error 403 (candado roto). Para solucionarlo, agrega la ruta pública a <code>SecurityConfig.java</code>:</p>
+              <pre class="bg-light p-2 rounded small border mt-2 mb-0"><code>.requestMatchers("/login", "/estilos.css", "/img/**", "/error").permitAll()</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-header bg-dark text-white fw-semibold">2. Videos de YouTube Embebidos con &lt;iframe&gt; (Cero Dependencias)</div>
+          <div class="card-body">
+            <p class="small text-muted mb-2">Para el entregable final llave en mano (videos explicativos) o demostraciones institucionales, puedes embeber reproductores de YouTube oficiales directamente en cualquier vista Thymeleaf usando un <code>&lt;iframe&gt;</code> estándar sin instalar ninguna librería.</p>
+
+            <h6 class="fw-bold mt-3 mb-1">A) La Regla de Oro de la URL de Embebido</h6>
+            <div class="table-responsive">
+              <table class="table table-sm table-bordered small align-middle">
+                <thead class="table-light"><tr><th>Tipo de URL</th><th>Formato</th><th>¿Funciona en &lt;iframe&gt;?</th></tr></thead>
+                <tbody>
+                  <tr class="table-danger">
+                    <td>URL de Navegador (Normal)</td>
+                    <td><code>https://www.youtube.com/watch?v=dQw4w9WgXcQ</code></td>
+                    <td>❌ <strong>Falla</strong>. YouTube bloquea la inserción directa por seguridad.</td>
+                  </tr>
+                  <tr class="table-success">
+                    <td>URL de Embebido (Embed)</td>
+                    <td><code>https://www.youtube.com/embed/dQw4w9WgXcQ</code></td>
+                    <td>✅ <strong>Funciona</strong> perfectamente en cualquier navegador y celular.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h6 class="fw-bold mt-3 mb-1">B) Código HTML5 Responsivo</h6>
+            <p class="small text-muted mb-2">El atributo CSS <code>aspect-ratio: 16/9;</code> hace que el reproductor mantenga la proporción cinematográfica estándar en pantallas grandes y celulares sin deformarse:</p>
+            <pre class="bg-light p-3 rounded small border"><code>&lt;!-- Contenedor de Video Responsivo --&gt;
+&lt;div class="video-container" style="max-width: 680px; margin: 1.5rem auto;"&gt;
+  &lt;iframe style="width: 100%; aspect-ratio: 16/9; border: 0; border-radius: 12px; box-shadow: 0 4px 14px rgba(0,0,0,0.15);"
+          src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+          title="Video Demostrativo del Proyecto"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen&gt;
+  &lt;/iframe&gt;
+&lt;/div&gt;</code></pre>
+
+            <h6 class="fw-bold mt-3 mb-1">C) Inserción Dinámica desde la Base de Datos</h6>
+            <p class="small text-muted mb-2">Si tu entidad (por ejemplo un Proyecto, Taller o Beneficiario) guarda el ID del video en una columna, concaténalo con Thymeleaf:</p>
+            <pre class="bg-light p-3 rounded small border"><code>&lt;!-- Si guardas el ID 'dQw4w9WgXcQ' en el campo videoId de tu entidad --&gt;
+&lt;iframe th:if="${entidad.videoId != null}"
+        th:src="@{'https://www.youtube.com/embed/' + ${entidad.videoId}}"
+        style="width: 100%; aspect-ratio: 16/9; border: 0; border-radius: 8px;"
+        allowfullscreen&gt;
+&lt;/iframe&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+
       <!-- PESTAÑA 3: METODOLOGIA DE PRUEBAS QA -->
       <div class="tab-pane fade" id="qa" role="tabpanel">
         <div class="card mb-4">

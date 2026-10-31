@@ -422,12 +422,22 @@ portal.
   árbol de directorios de Spring Boot, los archivos clave y sus responsabilidades
   únicas, y el flujo integral del dato (Formulario HTML/Thymeleaf ↔ Controlador
   @Controller ↔ Bean Validation ↔ Repositorio JpaRepository ↔ Neon PostgreSQL).
-  Demuestra por qué no se usa 
-edirect ante fallos de validación (para no borrar
+  Demuestra por qué no se usa redirect ante fallos de validación (para no borrar
   mensajes ni datos) y por qué se aplica POST-Redirect-GET tras guardar. En QA,
   establece una batería de 6 casos de prueba funcionales (CP-01 a CP-06) con
   severidad y diagnóstico, y comprueba el ciclo continuo cambio ➔ push a main ➔
   redeploy automático en Render con inspección de log.
+  Incluye el **Kit de referencia de la Semana 16 (`Proyecto_Semana_16_Kit`)** con
+  el **flujo dinámico completo**:
+  - `/asignacion-equipo`: poblar `<select>` dinámicos desde la base de datos (equipos
+    y jugadores) y asignar validando cupo máximo sin relaciones JPA complejas (`equipoId`).
+  - `/estadisticas-jugador`: selector en cascada que recarga datos existentes y formulario
+    de métricas con Bean Validation.
+  - `/mi-hub`: portal personal del jugador autenticado (`ROLE_JUGADOR`) que muestra
+    su equipo, la plantilla con círculos visuales y casillas punteadas de *"Vacante"*
+    para cupos libres, más sus estadísticas acumuladas.
+  - Guía multimedia en `cheatsheet.html`: inclusión de imágenes en `static/img/`
+    (con reglas en Spring Security) y videos de YouTube embebidos con `<iframe>` responsivo.
 - **Semana 17** (Unidad 9a: Presentación interna, retroalimentación y Entrega
   Parcial 4) — completa. Hito de **7 puntos** (Guía 17 = 2 pts + ★ Entrega
   Parcial 4 = 5 pts). Ensayo general de la demo técnica (guion de 4 minutos con

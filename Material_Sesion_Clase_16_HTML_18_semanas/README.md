@@ -11,7 +11,7 @@ Esta semana consolida el aprendizaje acumulado del curso y responde a la necesid
 | `index.html` | Portada interactiva: mapa del árbol del proyecto, diagrama de capas y ruta del estudiante (70 min) |
 | `clase.html` | Guía docente minuto a minuto de la sesión sincrónica de 70 min, con guion pedagógico y Plan B |
 | `ejercicios.html` | 6 casos de prueba prácticos (CP-01 a CP-06): desde la carga del formulario hasta el redeploy en producción |
-| `cheatsheet.html` | Referencia técnica esencial: anatomía del árbol, responsabilidades por archivo, ciclo HTTP-MVC y glosario QA |
+| `cheatsheet.html` | Referencia técnica esencial: anatomía del árbol, pestañas de Flujo Dinámico (equipos, estadísticas, hub con vacantes), multimedia (imágenes y videos YouTube) y glosario QA |
 | `quiz.html` | Presaberes (8) y Final (12) unificados, con banco barajado sobre arquitectura y calidad de software |
 | `challenge.html` | Retos interactivos: clasificación de archivos en el árbol Spring Boot + simulador funcional de petición/respuesta |
 | `proyecto.html` | **Reporte de QA y Mantenimiento**: matriz de pruebas ejecutada en Render + evidencia de log de redeploy + rúbrica |

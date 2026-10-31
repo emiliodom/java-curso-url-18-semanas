@@ -2,6 +2,22 @@
 
 Todas las modificaciones y adiciones de hitos del proyecto se registran en este documento.
 
+## [2026-10-31] — Flujo Dinámico y Recursos Multimedia (Semana 16)
+
+### Añadido
+- **Kit de Referencia Semana 16 (`Proyecto_Semana_16_Kit/`):**
+  - Entidad `Equipo` (`id`, `nombre`, `cupo`), `EquipoRepository` y `EquipoService` con validación de límite de plantilla.
+  - `Jugador` ampliado con campos planos `equipoId` y `username` (cero relaciones JPA complejas).
+  - Entidad `EstadisticaJugador` (`jugadorId`, `partidos`, `goles`, `asistencias`) con método de persistencia *upsert* (insert o update).
+  - Controlador `AsignacionController` (`/asignacion-equipo`) con `<select>` poblados dinámicamente desde la base de datos para asignar jugadores a equipos.
+  - Controlador `EstadisticaController` (`/estadisticas-jugador`) con selector reactivo para cargar y editar métricas de jugadores guardados.
+  - Controlador `HubJugadorController` (`/mi-hub`): vista personalizada para el rol `ROLE_JUGADOR` que renderiza la plantilla del equipo con círculos de colores, círculos punteados de *"Vacante"* para los cupos disponibles y tabla de estadísticas del jugador.
+  - `SecurityConfig` actualizado con control de acceso por roles (`ADMIN`, `ENTRENADOR`, `JUGADOR`) y permiso público para `/img/**`.
+  - Recurso estático de prueba `src/main/resources/static/img/escudo.svg`.
+- **Material Didáctico Semana 16 (`cheatsheet.html`):**
+  - Nueva pestaña **⚡ Flujo Dinámico (Equipos, Stats y Hub)** con explicación detallada de por qué evitar opciones fijas quemadas en HTML, arquitectura de las 3 funcionalidades y fragmentos de código listos para usar.
+  - Nueva pestaña **🖼️ Imágenes y Videos YouTube** que enseña cómo servir imágenes locales desde `src/main/resources/static/img/` y cómo insertar videos de YouTube responsivos con `<iframe>` (`https://www.youtube.com/embed/VIDEO_ID`, `aspect-ratio: 16/9`) sin dependencias externas.
+
 ## [2026-10-30] — Ajuste de Semana Activa en Portada y Accesibilidad de Contraste (S16–S18)
 
 ### Modificado
