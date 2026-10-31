@@ -1342,3 +1342,45 @@ code:not(pre code):not(.term code):not(.gui-mock code):not(.s12-error-map code):
 /* text-muted de Bootstrap (#6c757d) queda borderline sobre fondos grises;
    #495057 cumple WCAG AA sobre blanco, bg-light y --bg-soft. */
 .text-muted { color: #495057 !important; }
+
+/* ---- Tema oscuro (toggle en theme.js) ---- */
+[data-bs-theme="dark"] {
+    --bg-soft: #0f172a;
+}
+[data-bs-theme="dark"] body { background: var(--bg-soft); }
+[data-bs-theme="dark"] .hero {
+    background:
+        radial-gradient(1200px circle at 10% 10%, rgba(13, 110, 253, 0.25), transparent 60%),
+        radial-gradient(900px circle at 90% 20%, rgba(102, 16, 242, 0.22), transparent 55%),
+        linear-gradient(180deg, #111827, var(--bg-soft));
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+[data-bs-theme="dark"] .navbar.bg-white,
+[data-bs-theme="dark"] .bg-white,
+[data-bs-theme="dark"] .dd-pool {
+    background-color: #111827 !important;
+}
+[data-bs-theme="dark"] .bg-light,
+[data-bs-theme="dark"] .footer {
+    background-color: #1e293b !important;
+}
+[data-bs-theme="dark"] .card { border-color: rgba(255, 255, 255, 0.1); box-shadow: none; }
+[data-bs-theme="dark"] .text-muted,
+[data-bs-theme="dark"] .small-muted { color: #adb5bd !important; }
+[data-bs-theme="dark"] .brand-pill { background: rgba(13, 110, 253, 0.25); color: #cfe2ff; }
+[data-bs-theme="dark"] .dd-piece.bg-white,
+[data-bs-theme="dark"] .dd-piece.bg-light {
+    background-color: #0b1220 !important;
+    color: #e6edf3 !important;
+    border-color: rgba(255, 255, 255, 0.25);
+}
+[data-bs-theme="dark"] .mvc-zone.bg-light .text-success { color: #75b798 !important; }
+[data-bs-theme="dark"] .mvc-zone.bg-light .text-primary { color: #6ea8fe !important; }
+[data-bs-theme="dark"] .mvc-zone.bg-light .text-muted { color: #adb5bd !important; }
+[data-bs-theme="dark"] .text-primary { color: #6ea8fe !important; }
+[data-bs-theme="dark"] .text-success { color: #75b798 !important; }
+[data-bs-theme="dark"] .text-danger { color: #ea868f !important; }
+/* Bloques con fondo claro fijo (líneas de tiempo, diagramas): texto oscuro */
+[data-bs-theme="dark"] .seg,
+[data-bs-theme="dark"] .mmd-figure { color: #0f172a; }
+[data-bs-theme="dark"] .mmd-figure { background: #fff; }
