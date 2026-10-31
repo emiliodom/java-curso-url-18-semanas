@@ -1324,3 +1324,17 @@ code:not(pre code):not(.term code):not(.gui-mock code):not(.s12-error-map code):
 .accordion-item {
     border: 1px solid #cbd5e1 !important;
 }
+
+/* ---- Contraste (a11y) ----
+   .dd-piece define texto claro para fondo oscuro, pero el HTML agrega
+   Bootstrap .bg-white (!important) y el texto quedaba casi invisible.
+   Forzamos texto oscuro cuando la pieza lleva fondo claro. */
+.dd-piece.bg-white,
+.dd-piece.bg-light {
+    color: #111827 !important;
+    border-color: rgba(0, 0, 0, 0.25);
+}
+
+.mvc-zone.bg-light .text-success { color: #0f5132 !important; }
+.mvc-zone.bg-light .text-primary { color: #084298 !important; }
+.mvc-zone.bg-light .text-muted { color: #495057 !important; }
