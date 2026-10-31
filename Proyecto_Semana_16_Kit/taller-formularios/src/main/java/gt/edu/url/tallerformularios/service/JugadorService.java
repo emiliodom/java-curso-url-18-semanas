@@ -34,6 +34,11 @@ public class JugadorService {
         repositorio.deleteById(id);
     }
 
+    /** SEMANA 16: el jugador vinculado a un usuario de login (vacío si no hay). */
+    public java.util.Optional<Jugador> buscarPorUsername(String username) {
+        return repositorio.findByUsername(username);
+    }
+
     public long contar() {
         return repositorio.count();
     }

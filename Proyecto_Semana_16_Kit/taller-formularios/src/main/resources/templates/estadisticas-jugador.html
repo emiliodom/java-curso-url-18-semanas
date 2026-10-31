@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Estadísticas de jugadores</title>
+  <link rel="stylesheet" th:href="@{/estilos.css}">
+</head>
+<body>
+<main>
+  <h1>Escuela de Fútbol Los Cerritos</h1>
+  <h2>Estadísticas de jugadores</h2>
+
+  <div class="aviso" role="status" th:if="${param.ok}">Estadísticas guardadas.</div>
+  <p th:if="${#lists.isEmpty(jugadores)}">Primero inscribe jugadores en <a th:href="@{/jugadores}">la lista</a>.</p>
+
+  <!-- 1) El selector de jugador: al cambiarlo se recarga la página con ?jugadorId=...
+          y el formulario aparece con lo que ya estaba guardado. -->
+  <form th:if="${!#lists.isEmpty(jugadores)}" th:action="@{/estadisticas-jugador}" method="get">
+    <label for="elegir">¿De qué jugador?</label>
+    <select id="elegir" name="jugadorId">
+      <option th:each="j : ${jugadores}" th:value="${j.id}" th:text="${j.nombre}"
+              th:selected="${estadistica.jugadorId != null and estadistica.jugadorId == j.id}">Nombre</option>
+    </select>
+    <button type="submit" class="secundario">Cargar</button>
+  </form>
+
+  <!-- 2) El formulario real. Solo aparece cuando ya hay un jugador elegido. -->
+  <form th:if="${estadistica.jugadorId != null}" th:action="@{/estadisticas-jugador}"
+        th:object="${estadistica}" method="post" novalidate>
+    <input type="hidden" th:field="*{jugadorId}">
+    <p class="mensaje-error" th:if="${#fields.hasErrors('jugadorId')}" th:errors="*{jugadorId}">Error</p>
+
+    <label for="partidos">Partidos jugados</label>
+    <input id="partidos" type="number" th:field="*{partidos}" th:errorclass="campo-error">
+    <p class="mensaje-error" th:if="${#fields.hasErrors('partidos')}" th:errors="*{partidos}">Error</p>
+
+    <label for="goles">Goles</label>
+    <input id="goles" type="number" th:field="*{goles}" th:errorclass="campo-error">
+    <p class="mensaje-error" th:if="${#fields.hasErrors('goles')}" th:errors="*{goles}">Error</p>
+
+    <label for="asistencias">Asistencias</label>
+    <input id="asistencias" type="number" th:field="*{asistencias}" th:errorclass="campo-error">
+    <p class="mensaje-error" th:if="${#fields.hasErrors('asistencias')}" th:errors="*{asistencias}">Error</p>
+
+    <button type="submit">Guardar estadísticas</button>
+  </form>
+
+  <h3>Estadísticas registradas</h3>
+  <p th:if="${#lists.isEmpty(estadisticas)}">Todavía no hay estadísticas registradas.</p>
+  <table th:if="${!#lists.isEmpty(estadisticas)}">
+    <thead><tr><th>Jugador</th><th>Partidos</th><th>Goles</th><th>Asistencias</th></tr></thead>
+    <tbody>
+      <tr th:each="e : ${estadisticas}">
+        <td th:text="${nombres[e.jugadorId]}">Nombre</td>
+        <td th:text="${e.partidos}">0</td>
+        <td th:text="${e.goles}">0</td>
+        <td th:text="${e.asistencias}">0</td>
+      </tr>
+    </tbody>
+  </table>
+  <p><a th:href="@{/jugadores}">Volver a la lista</a></p>
+</main>
+</body>
+</html>
+

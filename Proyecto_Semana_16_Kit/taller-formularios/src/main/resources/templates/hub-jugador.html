@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mi equipo</title>
+  <link rel="stylesheet" th:href="@{/estilos.css}">
+</head>
+<body>
+<main>
+  <h1>Escuela de Fútbol Los Cerritos</h1>
+
+  <div class="barra">
+    <span>Sesión de: <strong sec:authentication="name">usuario</strong></span>
+    <form th:action="@{/logout}" method="post" class="en-linea">
+      <button type="submit" class="secundario">Cerrar sesión</button>
+    </form>
+  </div>
+
+  <!-- Caso 1: el usuario existe, pero ningún jugador lo tiene como "usuario de acceso". -->
+  <div class="aviso error" role="alert" th:if="${yo == null}">
+    Tu usuario todavía no está vinculado a un jugador. Pide al administrador que lo escriba
+    en el campo "Usuario de acceso" de tu ficha.
+  </div>
+
+  <th:block th:if="${yo != null}">
+    <h2>Hola, <span th:text="${yo.nombre}">Jugador</span></h2>
+    <p>Posición: <strong th:text="${yo.posicion}">Portero</strong> · Edad: <strong th:text="${yo.edad}">12</strong></p>
+
+    <!-- Caso 2: jugador sin equipo asignado. -->
+    <div class="aviso" th:if="${equipo == null}">Todavía no tienes equipo asignado.</div>
+
+    <!-- Caso 3: tiene equipo -> plantilla. Cada casilla es un jugador o null (Vacante). -->
+    <section th:if="${equipo != null}">
+      <h3>Equipo <span th:text="${equipo.nombre}">Tigres</span></h3>
+      <ul class="plantilla">
+        <li th:each="c : ${casillas}">
+          <span th:if="${c != null}" class="circulo" th:classappend="${c.id == yo.id} ? 'yo'"
+                th:text="${#strings.substring(c.nombre, 0, 1)}">A</span>
+          <span th:if="${c == null}" class="circulo vacante">+</span>
+          <span th:text="${c != null} ? ${c.nombre} : 'Vacante'">Nombre</span>
+        </li>
+      </ul>
+    </section>
+
+    <h3>Mis estadísticas</h3>
+    <p th:if="${estadistica == null}">Tu entrenador todavía no ha registrado estadísticas.</p>
+    <table th:if="${estadistica != null}">
+      <thead><tr><th>Partidos</th><th>Goles</th><th>Asistencias</th></tr></thead>
+      <tbody>
+        <tr>
+          <td th:text="${estadistica.partidos}">0</td>
+          <td th:text="${estadistica.goles}">0</td>
+          <td th:text="${estadistica.asistencias}">0</td>
+        </tr>
+      </tbody>
+    </table>
+  </th:block>
+</main>
+</body>
+</html>
+

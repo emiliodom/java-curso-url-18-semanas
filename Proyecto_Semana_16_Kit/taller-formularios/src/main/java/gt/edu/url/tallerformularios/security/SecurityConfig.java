@@ -21,11 +21,14 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(reglas -> reglas
                 // Gana la PRIMERA regla que coincide: el orden importa.
-                .requestMatchers("/login", "/estilos.css", "/error").permitAll()
+                .requestMatchers("/login", "/estilos.css", "/img/**", "/error").permitAll()
                 .requestMatchers("/jugadores/nuevo", "/jugadores/*/editar").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/jugadores/**").hasRole("ADMIN")
                 // SEMANA 16: solo el ADMIN asigna equipos (GET y POST de la misma ruta).
                 .requestMatchers("/asignacion-equipo").hasRole("ADMIN")
+                // Personal captura estadísticas; el jugador ve su hub.
+                .requestMatchers("/estadisticas-jugador").hasAnyRole("ADMIN", "ENTRENADOR")
+                .requestMatchers("/mi-hub").hasRole("JUGADOR")
                 .anyRequest().authenticated())
             .formLogin(login -> login
                 .loginPage("/login")
