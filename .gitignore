@@ -8,3 +8,4 @@ examen_parcial/config.php
 # Respuestas e intentos de los estudiantes.
 examen_parcial/data/*.json
 evaluacion_docente/data/*.json
+mini_retro/data/*.json
