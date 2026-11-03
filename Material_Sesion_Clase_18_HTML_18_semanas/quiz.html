@@ -84,9 +84,12 @@
 
   <script src="quiz.js"></script>
   <script>
+    var optionOrder = 0;
     function Q(level, pregunta, a, b, c, fbOk, fbKo) {
+      var opciones = [{ v: 'a', t: a }, { v: 'b', t: b }, { v: 'c', t: c }];
+      var offset = optionOrder++ % opciones.length;
       return { level: level, pregunta: pregunta,
-        opciones: [{ v: 'a', t: a }, { v: 'b', t: b }, { v: 'c', t: c }],
+        opciones: opciones.slice(offset).concat(opciones.slice(0, offset)),
         correcta: 'a', fbOk: fbOk, fbKo: fbKo };
     }
     var QUESTION_BANK = [

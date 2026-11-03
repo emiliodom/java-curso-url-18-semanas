@@ -75,7 +75,8 @@
   }
 
   window.renderQuiz = function () {
-    var type = document.getElementById('quizType').value;
+    var selector = document.getElementById('quizType');
+    var type = selector ? selector.value : 'final';
     var pool = shuffle(poolFor(type));
     var n = Math.min(countFor(type), pool.length);
     var chosen = pool.slice(0, n);

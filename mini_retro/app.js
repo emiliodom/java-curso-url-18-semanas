@@ -22,6 +22,9 @@
   var currentStep = 0;
   var saveTimer = null;
   var remoteSaveChain = Promise.resolve();
+  var activeDragId = '';
+  var pointerDragId = '';
+  var pointerStart = null;
   var timerInterval = null;
   var lastTimerSave = 0;
 
@@ -61,6 +64,11 @@
     if (className) item.className = className;
     if (text !== undefined && text !== null) item.textContent = text;
     return item;
+  }
+
+  function eventElement(event) {
+    var target = event.target;
+    return target && (target.nodeType === 1 ? target : target.parentElement);
   }
 
   function showMessage(message, type) {
@@ -818,7 +826,8 @@
   }
 
   function handleClick(event) {
-    var target = event.target.closest('button');
+    var clicked = eventElement(event);
+    var target = clicked && clicked.closest('button');
     if (!target) return;
     if (target.dataset.step !== undefined) {
       goToStep(Number(target.dataset.step));
@@ -864,28 +873,24 @@
   }
 
   function handleDragStart(event) {
-    var card = event.target.closest('[data-card-id]');
-    var action = event.target.closest('[data-action-id]');
+    var target = eventElement(event);
+    if (!target) return;
+    var card = target.closest('[data-card-id]');
+    var action = target.closest('[data-action-id]');
     var draggable = card || action;
     if (!draggable) return;
     draggable.classList.add('is-dragging');
-    event.dataTransfer.effectAllowed = 'move';
-    event.dataTransfer.setData('text/plain', draggable.dataset.cardId || 'action:' + draggable.dataset.actionId);
+    activeDragId = draggable.dataset.cardId || 'action:' + draggable.dataset.actionId;
+    if (event.dataTransfer) event.dataTransfer.effectAllowed = 'move';
+    if (event.dataTransfer) event.dataTransfer.setData('text/plain', activeDragId);
   }
 
-  function handleDragOver(event) {
-    var target = event.target.closest('.drop-zone, .theme-zone, .action-list, .action-item');
-    if (!target) return;
-    event.preventDefault();
-    if (target.classList.contains('drop-zone') || target.classList.contains('theme-zone')) target.classList.add('is-over');
+  function getDropTarget(x, y) {
+    var pointed = document.elementFromPoint(x, y);
+    return pointed && pointed.closest('.drop-zone, .theme-zone, .action-list, .action-item');
   }
 
-  function handleDrop(event) {
-    var target = event.target.closest('.drop-zone, .theme-zone, .action-list, .action-item');
-    if (!target) return;
-    event.preventDefault();
-    document.querySelectorAll('.is-over').forEach(function (item) { item.classList.remove('is-over'); });
-    var dragged = event.dataTransfer.getData('text/plain');
+  function moveDraggedItem(dragged, target) {
     if (dragged.indexOf('action:') === 0 && currentStep === 3) {
       reorderAction(dragged.slice(7), target);
       return;
@@ -902,6 +907,61 @@
     renderStep();
     renderNavigation();
     scheduleSave();
+  }
+
+  function handlePointerDown(event) {
+    var target = eventElement(event);
+    if (!target || event.button !== 0 || target.closest('button, select, input, textarea')) return;
+    var card = target.closest('[data-card-id]');
+    var action = target.closest('[data-action-id]');
+    var draggable = card || action;
+    if (!draggable) return;
+    pointerDragId = draggable.dataset.cardId || 'action:' + draggable.dataset.actionId;
+    pointerStart = { x: event.clientX, y: event.clientY };
+  }
+
+  function handlePointerMove(event) {
+    if (!pointerDragId || !pointerStart) return;
+    if (Math.hypot(event.clientX - pointerStart.x, event.clientY - pointerStart.y) < 6) return;
+    var target = getDropTarget(event.clientX, event.clientY);
+    document.querySelectorAll('.is-over').forEach(function (item) { item.classList.remove('is-over'); });
+    if (target && (target.classList.contains('drop-zone') || target.classList.contains('theme-zone'))) {
+      target.classList.add('is-over');
+    }
+  }
+
+  function finishPointerDrag(event) {
+    if (!pointerDragId || !pointerStart) return;
+    var dragged = pointerDragId;
+    var moved = Math.hypot(event.clientX - pointerStart.x, event.clientY - pointerStart.y) >= 6;
+    pointerDragId = '';
+    pointerStart = null;
+    document.querySelectorAll('.is-over').forEach(function (item) { item.classList.remove('is-over'); });
+    if (!moved) return;
+    var target = getDropTarget(event.clientX, event.clientY);
+    if (target) moveDraggedItem(dragged, target);
+  }
+
+  function handleDragOver(event) {
+    var origin = eventElement(event);
+    var target = origin && origin.closest('.drop-zone, .theme-zone, .action-list, .action-item');
+    if (!target) return;
+    event.preventDefault();
+    if (target.classList.contains('drop-zone') || target.classList.contains('theme-zone')) target.classList.add('is-over');
+  }
+
+  function handleDrop(event) {
+    var origin = eventElement(event);
+    var target = origin && origin.closest('.drop-zone, .theme-zone, .action-list, .action-item');
+    if (!target) return;
+    event.preventDefault();
+    document.querySelectorAll('.is-over').forEach(function (item) { item.classList.remove('is-over'); });
+    var dragged = (event.dataTransfer && event.dataTransfer.getData('text/plain')) || activeDragId;
+    activeDragId = '';
+    if (!dragged) return;
+    pointerDragId = '';
+    pointerStart = null;
+    moveDraggedItem(dragged, target);
   }
 
   function reorderAction(id, target) {
@@ -921,6 +981,9 @@
     document.querySelectorAll('.is-dragging, .is-over').forEach(function (item) {
       item.classList.remove('is-dragging', 'is-over');
     });
+    activeDragId = '';
+    pointerDragId = '';
+    pointerStart = null;
   }
 
   function scheduleSave() {
@@ -1003,6 +1066,10 @@
   panel.addEventListener('dragover', handleDragOver);
   panel.addEventListener('drop', handleDrop);
   panel.addEventListener('dragend', handleDragEnd);
+  panel.addEventListener('pointerdown', handlePointerDown);
+  document.addEventListener('pointermove', handlePointerMove);
+  document.addEventListener('pointerup', finishPointerDrag);
+  document.addEventListener('pointercancel', handleDragEnd);
   document.getElementById('stepNav').addEventListener('click', handleClick);
 
   document.getElementById('startNew').addEventListener('click', createSession);

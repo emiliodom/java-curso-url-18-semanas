@@ -93,9 +93,12 @@
 
   <script src="quiz.js"></script>
   <script>
+    var optionOrder = 0;
     function Q(level, pregunta, a, b, c, fbOk, fbKo) {
+      var opciones = [{ v: 'a', t: a }, { v: 'b', t: b }, { v: 'c', t: c }];
+      var offset = optionOrder++ % opciones.length;
       return { level: level, pregunta: pregunta,
-        opciones: [{ v: 'a', t: a }, { v: 'b', t: b }, { v: 'c', t: c }],
+        opciones: opciones.slice(offset).concat(opciones.slice(0, offset)),
         correcta: 'a', fbOk: fbOk, fbKo: fbKo };
     }
     var QUESTION_BANK = [
@@ -117,6 +120,14 @@
         '¡Excelente! Todo software existe para resolver una necesidad humana concreta.',
         'Comienza siempre con el contexto: qué institución es y qué necesidad resuelve el software.')
       ,
+      Q('presaberes', '¿Qué conviene hacer antes de compartir pantalla para una demo alojada en Render?',
+        'Abrir previamente la URL pública para despertar el servicio y comprobar que responde', 'Cambiar la rama principal del repositorio', 'Borrar la base de datos para iniciar una sesión limpia',
+        '¡Correcto! Una comprobación previa reduce demoras y permite detectar problemas antes de presentar.',
+        'El servicio gratuito puede suspenderse por inactividad; abrir la URL con anticipación ayuda a evitar un cold start en vivo.'),
+      Q('presaberes', '¿Qué demuestra mejor que un proyecto está listo para ser recibido por otra persona?',
+        'Documentación clara, guía de uso, videos explicativos y credenciales transferidas de forma segura', 'Un README con todas las contraseñas y una captura de pantalla', 'Que el equipo original siga siendo el único que puede ejecutarlo',
+        '¡Así es! Una entrega llave en mano debe poder comprenderse, operarse y mantenerse con seguridad.',
+        'La entrega debe incluir documentación y materiales explicativos; las credenciales se comparten por un canal privado, nunca en el repositorio.'),
       // ---------- Nivel Ambas / Final ----------
       Q('ambas', '¿Cuál de los siguientes comentarios de retroalimentación es verdaderamente ACCIONABLE?',
         '«El formulario valida el nombre pero permite edades negativas; sugiero agregar @Min(1) en la entidad Beneficiario»', '«Tu página no me gusta, cámbiale los colores»', '«Todo está perfecto, 10 de 10»',
@@ -141,7 +152,31 @@
       Q('final', '¿Qué rol de usuario debe reservarse estrictamente para tareas destructivas como "Eliminar registro"?',
         'ADMIN', 'USER', 'ANONYMOUS',
         '¡Correcto! Los privilegios de borrado deben restringirse al rol con máxima jerarquía.',
-        'El rol ADMIN debe ser el único facultado para eliminar registros o alterar configuraciones críticas.')
+        'El rol ADMIN debe ser el único facultado para eliminar registros o alterar configuraciones críticas.'),
+      Q('final', '¿Qué debe incluir el guion breve de una demostración técnica del proyecto?',
+        'Problema de la entidad, recorrido de una función principal, validación o error controlado y cierre', 'Una lectura completa de cada archivo fuente', 'Solo una lista de dependencias sin mostrar la aplicación',
+        '¡Correcto! Un recorrido acotado conecta la necesidad, el comportamiento y las decisiones técnicas.',
+        'La demo debe explicar el problema y mostrar el flujo principal, una validación y un cierre claro dentro del tiempo disponible.'),
+      Q('final', '¿Qué se debe hacer si Render muestra un despliegue fallido justo antes de la presentación?',
+        'Revisar el estado y los logs, activar el Plan B local si no se resuelve y explicar la situación con claridad', 'Subir contraseñas al README para que el evaluador pueda reiniciar el servicio', 'Seguir haciendo solicitudes repetidas sin revisar los logs',
+        '¡Exactamente! Diagnóstico y contingencia son parte de una presentación profesional.',
+        'Revisar logs permite identificar la causa; el Plan B local protege la continuidad de la demo sin exponer secretos.'),
+      Q('final', '¿Cuál es una recomendación accionable para entregar una observación durante el peer review?',
+        'Describir el comportamiento observado, su efecto y una mejora concreta que pueda comprobarse', 'Decir solamente «está mal»', 'Comparar a la persona con otro equipo',
+        '¡Muy bien! Una observación útil es específica, respetuosa y orientada a una mejora verificable.',
+        'La retroalimentación accionable explica qué ocurre, por qué importa y cuál sería un siguiente paso concreto.'),
+      Q('final', '¿Cómo deben transferirse las credenciales de producción a la persona responsable?',
+        'Por un canal privado acordado, separado del repositorio y de la documentación pública', 'En el código fuente para que se configuren automáticamente', 'En el enlace público de la presentación',
+        '¡Correcto! Separar las credenciales del código reduce el riesgo de exposición.',
+        'Las claves no van en GitHub ni en un PDF público; se comparten directamente mediante un canal privado y autorizado.'),
+      Q('final', '¿Qué hace que una guía de operación sea útil para quien recibe el proyecto?',
+        'Explica cómo configurarlo, ejecutarlo, probar sus funciones y diagnosticar problemas frecuentes', 'Enumera únicamente los nombres de las clases', 'Indica que contacte al equipo original para cada tarea',
+        '¡Así es! El objetivo es que otra persona pueda operar y mantener el sistema de forma autónoma.',
+        'Una guía de operación debe permitir configurar, ejecutar y verificar el proyecto sin depender del equipo que lo construyó.'),
+      Q('final', '¿Qué evidencia ayuda a confirmar que un compromiso del equipo realmente funcionó?',
+        'Un indicador observable revisado en una fecha acordada', 'La intención de hacerlo sin fecha ni seguimiento', 'Una contraseña compartida entre todos',
+        '¡Correcto! Una acción verificable necesita evidencia y una fecha para revisarla.',
+        'Los acuerdos deben ser comprobables: definan qué señal observarán y cuándo evaluarán el resultado.')
     ];
 
     var QUIZ_CONFIG = {
