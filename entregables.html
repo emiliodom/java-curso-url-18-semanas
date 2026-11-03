@@ -39,6 +39,13 @@
     .class-hero .when { font-size: 1.05rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
     .class-hero .button { align-self: flex-start; margin-top: .5rem; color: #173b70; background: white; }
     .class-hero.final { background: linear-gradient(135deg, #4a246f, #7941a7); }
+    .class-hero .when::before { content: "●"; margin-right: .55rem; }
+    .submission-label { display: inline-flex; align-items: center; gap: .5rem; margin-bottom: .85rem; padding: .5rem .8rem; border-radius: .4rem; color: #124a32; background: #d9f3e5; font-weight: 800; letter-spacing: .035em; text-transform: uppercase; }
+    .class-label { display: inline-flex; align-items: center; gap: .5rem; margin-bottom: .85rem; padding: .5rem .8rem; border-radius: .4rem; color: #4a246f; background: #eee1fa; font-weight: 800; letter-spacing: .035em; text-transform: uppercase; }
+    .calendar-card.before { border-top: 6px solid #228653; }
+    .calendar-card.during { border-top: 6px solid #7941a7; }
+    .key { display: flex; flex-wrap: wrap; gap: .65rem; margin: .5rem 0 1rem; }
+    .key span { padding: .3rem .6rem; border-radius: .35rem; font-size: .9rem; font-weight: 700; }
     footer { padding-block: 0 1.5rem; color: #4b5565; font-size: .9rem; }
     @media print {
       :root { background: white; }
@@ -63,26 +70,27 @@
   <main>
     <section>
       <h2>Calendario y evaluación</h2>
+      <div class="key" aria-label="Clave visual de entregas">
+        <span class="submission-label">↑ Antes de clase: subir a Moodle antes de las 9:00 a. m.</span>
+        <span class="class-label">● Durante la clase: actividad en vivo</span>
+      </div>
       <div class="grid">
-        <article class="card">
-          <span class="tag">Límite en Moodle: sábado 7 de noviembre de 2026 · 9:00 a. m.</span>
+        <article class="card calendar-card before">
+          <span class="submission-label">↑ Antes de clase · Moodle · sábado 7 nov · 9:00 a. m.</span>
           <h3>Semana 17 · ensayo y Entrega Parcial 4</h3>
           <ul>
-            <li>Sube los archivos y enlaces solicitados a la actividad correspondiente en el aula virtual Moodle <strong>a más tardar a las 9:00 a. m.</strong></li>
-            <li>Presentación interna en vivo de <strong>4 minutos</strong> y retroalimentación entre pares.</li>
-            <li>Guía de Aprendizaje 17: <strong>2 puntos</strong>.</li>
-            <li>Entrega Parcial 4: proyecto completo, <strong>5 puntos</strong>.</li>
-            <li>Actividad sincrónica (Quiz Final + Challenge): <strong>0.66 puntos</strong>, se entrega por separado.</li>
+            <li><strong>Subir antes de clase:</strong> PDF de la Guía 17 + Entrega Parcial 4 y los materiales requeridos en la actividad de Moodle.</li>
+            <li><strong>Se realiza en clase:</strong> demo interna de 4 minutos, evaluación entre pares de ensayo, Quiz Final + Challenge.</li>
+            <li>Guía 17: <strong>2 puntos</strong>; Entrega Parcial 4: <strong>5 puntos</strong>; actividad sincrónica: <strong>0.66 puntos</strong>.</li>
           </ul>
         </article>
-        <article class="card">
-          <span class="tag">Límite en Moodle: sábado 14 de noviembre de 2026 · 9:00 a. m.</span>
+        <article class="card calendar-card before">
+          <span class="submission-label">↑ Antes de clase · Moodle · sábado 14 nov · 9:00 a. m.</span>
           <h3>Semana 18 · defensa y cierre</h3>
           <ul>
-            <li>Sube la documentación final y las evidencias solicitadas a Moodle <strong>a más tardar a las 9:00 a. m.</strong></li>
-            <li>Defensa formal del proyecto ante el tribunal: <strong>10 puntos</strong>.</li>
-            <li>Evaluación entre pares, Ronda 2: <strong>5 puntos</strong>.</li>
-            <li>Actividad sincrónica: <strong>0.78 puntos</strong>; autoevaluación y reflexión metacognitiva.</li>
+            <li><strong>Subir antes de clase:</strong> acta de radicación y enlaces/evidencias finales solicitados en la actividad de Moodle.</li>
+            <li><strong>Se realiza en clase:</strong> defensa formal ante el tribunal, evaluación entre pares Ronda 2 y actividad sincrónica.</li>
+            <li>Defensa: <strong>10 puntos</strong>; Ronda 2: <strong>5 puntos</strong>; actividad sincrónica: <strong>0.78 puntos</strong>. Autoevaluación y reflexión según las indicaciones del aula.</li>
             <li>Actas: Ronda 1 del 14 al 20 de noviembre; Ronda 2 del 21 al 27; cierre el 28.</li>
           </ul>
         </article>
@@ -101,7 +109,7 @@
             <p><strong>Presentación interna y evaluación entre pares de ensayo.</strong> Cada estudiante presenta su demo de 4 minutos y luego evalúa al compañero asignado con la rúbrica. Trae lista la URL pública de Render, el repositorio y datos ficticios para demostrar el flujo.</p>
             <p>La coevaluación se completa con el proyecto observado durante la sesión. No inventes resultados ni llenes la evaluación como si hubieras visto una demo que no ocurrió.</p>
           </div>
-          <a class="button" href="semana17_pares_abierta.html">Abrir rúbrica abierta de Semana 17</a>
+          <a class="button" href="semana17_pares_abierta.html">Abrir rúbrica para usar en clase</a>
         </article>
         <article class="class-hero final">
           <div>
@@ -110,7 +118,7 @@
             <p><strong>Defensa final y evaluación entre pares, Ronda 2.</strong> Presenta el proyecto ante el tribunal, demuestra el sistema y responde preguntas. Además, evalúa el proyecto final del compañero asignado mediante la rúbrica oficial de 5 puntos.</p>
             <p>Ten preparada una sesión de prueba, enlaces públicos y una explicación honesta de las limitaciones o mejoras pendientes. La actividad oral de clase es distinta del paquete documental enviado previamente por Moodle.</p>
           </div>
-          <a class="button" href="semana18_pares_abierta.html">Abrir rúbrica abierta de Semana 18</a>
+          <a class="button" href="semana18_pares_abierta.html">Abrir rúbrica para usar en clase</a>
         </article>
       </div>
     </section>
@@ -119,26 +127,26 @@
       <h2>Qué subir a Moodle</h2>
       <div class="grid">
         <article class="card">
-          <span class="tag">Semana 17 · sábado 7 de noviembre · 9:00 a. m.</span>
+          <span class="submission-label">↑ ENTREGAR ANTES DE CLASE · Moodle · 7 nov · 9:00 a. m.</span>
           <h3>Paquete de Entrega Parcial 4</h3>
           <ol class="checklist">
             <li>Completa la <a href="semana17_entrega_abierta.html">plantilla abierta de Entrega Parcial 4 / Guía 17</a>, expórtala a PDF y súbela a la actividad de Moodle. Incluye la URL de Render, el repositorio de GitHub, el resumen de la demo, la auditoría y el plan de mejoras.</li>
             <li>Incluye en el PDF y en el <code>README.md</code> los enlaces directos al <strong>Pitch ejecutivo (3 min)</strong> y a la <strong>Demostración técnica (5 min)</strong>. Verifica que ambos abran para quien evalúa sin pedir acceso a tu cuenta.</li>
             <li>Adjunta el manual de usuario en PDF o incluye un enlace directo y público de lectura, según permita la actividad de Moodle. Debe estar en español y servirle a una persona de la entidad que no programó el sistema.</li>
-            <li>La evaluación entre pares de ensayo se realiza <strong>en clase</strong>. Revisa antes la <a href="semana17_pares_abierta.html">rúbrica abierta de Semana 17</a>; la actividad presencial se basa en la demo real del compañero asignado y es independiente del paquete documental entregado a las 9:00 a. m.</li>
-            <li>Entrega los PDFs del Quiz Final y Challenge en la actividad de clase indicada en Moodle. No los sustituyas por el PDF de la Entrega Parcial 4.</li>
+            <li><strong>Se hace en clase, no es parte del paquete previo:</strong> evaluación entre pares de ensayo. Revisa antes la <a href="semana17_pares_abierta.html">rúbrica abierta de Semana 17</a>; la evaluación se basa en la demo real del compañero asignado.</li>
+            <li><strong>Quiz Final + Challenge:</strong> son actividades sincrónicas de clase. Sigue la indicación del docente para exportar y subir sus PDFs; no los confundas con el PDF de Entrega Parcial 4.</li>
           </ol>
           <p><strong>Antes de pulsar «Enviar»:</strong> abre desde una ventana privada los enlaces de Render, GitHub y los dos videos; revisa que los PDFs se lean y que no incluyan claves ni datos personales reales.</p>
         </article>
         <article class="card">
-          <span class="tag">Semana 18 · sábado 14 de noviembre · 9:00 a. m.</span>
+          <span class="submission-label">↑ ENTREGAR ANTES DE CLASE · Moodle · 14 nov · 9:00 a. m.</span>
           <h3>Paquete de defensa final</h3>
           <ol class="checklist">
             <li>Completa la <a href="semana18_defensa_abierta.html">copia abierta del acta de radicación de la defensa</a>, expórtala a PDF y súbela a la actividad de Semana 18 en Moodle.</li>
             <li>Registra la URL pública final de Render, el enlace al repositorio de GitHub y los enlaces de los dos videos. Si corregiste o volviste a grabar algo después de Semana 17, actualiza los enlaces aquí y en el <code>README.md</code>.</li>
             <li>Confirma que el proyecto entregado corresponde a la versión que defenderás. El repositorio debe reflejar el código final y la app publicada debe estar disponible en HTTPS.</li>
-            <li>La evaluación entre pares, Ronda 2, se realiza <strong>en clase</strong> sobre el proyecto final del compañero asignado. Revisa antes la <a href="semana18_pares_abierta.html">rúbrica abierta de Semana 18</a>; la actividad es distinta del paquete de documentos enviado a las 9:00 a. m.</li>
-            <li>Completa la autoevaluación y reflexión final en su actividad indicada. Si se pide evidencia o PDF, súbelo también antes de la hora límite.</li>
+            <li><strong>Se hace en clase, no es parte del paquete previo:</strong> defensa oral y evaluación entre pares Ronda 2 sobre el proyecto final del compañero asignado. Revisa antes la <a href="semana18_pares_abierta.html">rúbrica abierta de Semana 18</a>.</li>
+            <li>La autoevaluación y reflexión se completan según las indicaciones de su actividad en Moodle; no las confundas con la defensa oral.</li>
           </ol>
           <p>En la defensa en vivo presenta el sistema y responde al tribunal; el acta y los enlaces se radican por Moodle. La presentación oral no sustituye la carga de archivos.</p>
         </article>
