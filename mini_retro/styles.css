@@ -53,6 +53,7 @@ button { cursor: pointer; }
 .brand-mark { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 13px; color: white; background: var(--blue); font-size: 1.45rem; }
 .header-link, .text-button { color: var(--blue); font-weight: 700; text-decoration: none; }
 .header-link:hover, .text-button:hover { text-decoration: underline; }
+.header-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 1rem; }
 
 .shell { width: min(1120px, calc(100% - 2rem)); margin: 0 auto; padding: 2.4rem 0 4rem; }
 .intro { max-width: 800px; margin: 0 auto 1.5rem; text-align: center; }
@@ -207,6 +208,7 @@ h1 { margin-bottom: .65rem; font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.
 }
 
 @media (max-width: 520px) {
+  .header-actions { gap: .65rem; }
   .header-link { font-size: .8rem; }
   .field-grid, .action-form { grid-template-columns: 1fr; }
   .action-form .wide { grid-column: auto; }

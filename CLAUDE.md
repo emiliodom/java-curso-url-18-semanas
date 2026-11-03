@@ -444,14 +444,30 @@ portal.
   Parcial 4 = 5 pts). Ensayo general de la demo técnica (guion de 4 minutos con
   reloj interactivo), checklist de 10 puntos previos, protocolo operativo anti-cold
   start para despertar Render y Neon, herramienta interactiva de evaluación entre
-  pares (Peer Review formativo con 5 criterios) y radicación del proyecto completo.
+  pares (Peer Review formativo con 5 criterios), radicación del proyecto completo
+  y mini retrospectiva PHP autoguiada con apéndice para docente/equipos. En nov.
+  2026 se corrigieron rúbrica/contraseñas/exportación del challenge, los bancos
+  de quiz (S17: 8 presaberes + 12 finales; S18: quiz final sin selector ausente),
+  y el arrastre nativo de tarjetas/agrupaciones.
 - **Semana 18** (Unidad 9b: Gran Cierre, defensa final, evaluación y reflexión) —
   completa. Culminación académica con **15.78 puntos** en juego (Defensa formal ante
   tribunal = 10 pts, Peer Review Ronda 2 oficial = 5 pts, Actividad sincrónica =
   0.78 pts). Incluye banco de preguntas de tribunal con respuestas modelo
   (ejercicios.html), autoevaluación metacognitiva del futuro docente en TIC
   (utoevaluacion.html), acta oficial de radicación (proyecto.html) y paquete
-  maestro de entrega llave en mano (ENTREGABLE_PROYECTO_LLAVE_EN_MANO.md).
+  maestro de entrega llave en mano (ENTREGABLE_PROYECTO_LLAVE_EN_MANO.md). En
+  nov. 2026 se sustituyeron los campos de contraseña por confirmaciones de
+  traspaso privado y se alineó el quiz integrador con el modo oscuro.
+
+**Contraste de Semanas 17–18:** auditoría de las 16 páginas HTML en tema claro y
+oscuro (incluyendo contenido oculto) encontró texto de hasta 1:1 en oscuro, por
+reglas de alto contraste fijas que ignoraban los fondos oscuros de página. Las
+dos hojas `styles.css` (idénticas) ahora definen pares de texto/superficie por
+tema para navegación, tarjetas, callouts, controles, formularios, quizzes, tabs,
+acordeones, tablas y alertas. Se añadió versión `?v=20261103a` a las 16 páginas
+para invalidar caché. Revalidación automatizada con Playwright: cero textos
+visibles bajo WCAG AA en ambas paletas; color de fondo general claro `#f6f8fb`
+y oscuro `#0f172a`, con tarjetas oscuras `#1e293b`.
 
 ### Calendario real del curso (ojo con los saltos)
 
@@ -966,6 +982,15 @@ final presenta un acta completa imprimible a PDF.
 - Requiere PHP 7.4+ y permisos de escritura en `data/`; despliegue y límites de
   privacidad en `mini_retro/README.md`. No usar para datos personales ni
   sensibles. Tras exportar el PDF, el equipo debe borrar la sesión.
+- `GUIA_RETROSPECTIVA.html`: apéndice imprimible para el docente y los grupos;
+  documenta preparación/despliegue, propósito, flujo de 30 minutos, criterios
+  de avance, privacidad, exportación y seguimiento formativo. El grupo no
+  necesita facilitador durante la sesión. Una sola pantalla/sesión compartida:
+  no existe edición simultánea en tiempo real.
+- Validación de noviembre de 2026: sintaxis PHP/JS, API de crear/guardar/cargar/
+  borrar y métodos HTTP, recorrido navegador de los cinco pasos, preservación de
+  acentos, reanudación, exportación del acta y arrastre nativo entre columnas y
+  agrupaciones; el modo accesible de mover tarjetas sigue disponible.
 
 ## Memoria del usuario (fuera de este repo)
 

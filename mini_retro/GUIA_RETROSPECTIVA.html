@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Apéndice para preparar, facilitar y completar una retrospectiva de equipo autoguiada.">
+  <title>Guía de retrospectiva | Programación I</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #172033;
+      --muted: #475569;
+      --paper: #fff;
+      --page: #f1f5f9;
+      --line: #cbd5e1;
+      --blue: #123d75;
+      --blue-soft: #e8f0fb;
+      --green: #14532d;
+      --green-soft: #e8f5ec;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--page);
+      font: 16px/1.65 system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    a { color: #0756a5; }
+    a:focus-visible, button:focus-visible {
+      outline: 3px solid #f59e0b;
+      outline-offset: 3px;
+    }
+    .topbar {
+      padding: .8rem max(1rem, calc((100% - 900px) / 2));
+      background: #10233f;
+    }
+    .topbar a { color: #fff; font-weight: 700; }
+    main { width: min(900px, calc(100% - 2rem)); margin: 2rem auto 4rem; }
+    .hero, section {
+      margin-bottom: 1.2rem;
+      padding: clamp(1.1rem, 3vw, 2rem);
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      background: var(--paper);
+      box-shadow: 0 5px 18px rgb(15 23 42 / 6%);
+    }
+    .hero { border-top: 6px solid var(--blue); }
+    .eyebrow { margin: 0; color: var(--blue); font-size: .82rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; }
+    h1 { margin: .35rem 0 .6rem; font-size: clamp(1.8rem, 5vw, 2.7rem); line-height: 1.15; }
+    h2 { margin: 0 0 .7rem; font-size: 1.4rem; line-height: 1.25; }
+    h3 { margin: 1.1rem 0 .3rem; font-size: 1.05rem; }
+    p { margin: .45rem 0 .8rem; }
+    .muted { color: var(--muted); }
+    .callout { padding: .9rem 1rem; border-left: 5px solid var(--blue); border-radius: .6rem; background: var(--blue-soft); }
+    .safe { border-left-color: var(--green); background: var(--green-soft); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: .8rem; }
+    .stage { padding: 1rem; border: 1px solid var(--line); border-radius: .75rem; }
+    .stage h3 { margin-top: 0; }
+    .time { display: inline-block; margin-bottom: .35rem; padding: .1rem .5rem; border-radius: 99px; color: #fff; background: var(--blue); font-size: .8rem; font-weight: 800; }
+    ol, ul { padding-left: 1.35rem; }
+    li { margin: .3rem 0; }
+    .actions { display: flex; flex-wrap: wrap; gap: .65rem; margin-top: 1rem; }
+    .button {
+      display: inline-block;
+      padding: .65rem 1rem;
+      border: 2px solid var(--blue);
+      border-radius: .6rem;
+      color: #fff;
+      background: var(--blue);
+      font-weight: 750;
+      text-decoration: none;
+    }
+    .button.secondary { color: var(--blue); background: #fff; }
+    .foot { color: var(--muted); font-size: .9rem; }
+    @media print {
+      body { background: #fff; }
+      .topbar, .actions { display: none; }
+      main { width: 100%; margin: 0; }
+      .hero, section { box-shadow: none; break-inside: avoid; }
+      a { color: inherit; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="topbar" aria-label="Navegación">
+    <a href="index.php">← Volver a la retrospectiva</a>
+  </nav>
+  <main>
+    <header class="hero">
+      <p class="eyebrow">Apéndice · Programación I · Herramienta autoguiada</p>
+      <h1>Guía de retrospectiva de equipo</h1>
+      <p class="muted">Orientaciones para el docente y para los grupos. La herramienta está diseñada para que el equipo avance sin que el docente tenga que dirigir cada paso.</p>
+      <div class="callout safe">
+        <strong>Propósito:</strong> aprender del proceso de trabajo, reconocer lo que conviene conservar y acordar pequeños experimentos de mejora. No es una evaluación de personas ni una búsqueda de culpables.
+      </div>
+      <div class="actions">
+        <a class="button" href="index.php">Abrir el reproductor</a>
+        <button class="button secondary" type="button" onclick="window.print()">Imprimir o guardar esta guía en PDF</button>
+      </div>
+    </header>
+
+    <section aria-labelledby="docente">
+      <h2 id="docente">A. Guía para el docente</h2>
+      <p>La retrospectiva es un cierre reflexivo y autoguiado. El docente no necesita crear equipos en el sistema, gestionar cuentas, recopilar contraseñas ni permanecer como facilitador durante la actividad.</p>
+      <h3>Preparación previa (una sola vez por curso o despliegue)</h3>
+      <ol>
+        <li>Publica la carpeta en un servidor con PHP 7.4 o posterior y HTTPS. En Apache, conserva <code>data/.htaccess</code> y comprueba que PHP pueda escribir en <code>data/</code>.</li>
+        <li>Abre la URL publicada, crea una sesión de prueba, recarga y confirma que se guardó; luego borra esa sesión de prueba.</li>
+        <li>Comparte la URL del reproductor y esta guía. Recuérdales que usen un alias de equipo, que no incluyan información sensible y que borren la sesión al terminar de exportar su acta.</li>
+      </ol>
+      <div class="callout">
+        <strong>Durante la actividad:</strong> cada equipo controla el ritmo, el cronómetro y sus decisiones. Si el grupo pide ayuda, facilita con preguntas abiertas sobre hechos, condiciones del proceso y experimentos posibles; no determines qué respuesta es “correcta”.
+      </div>
+      <h3>Seguimiento pedagógico</h3>
+      <ul>
+        <li>Invita al grupo a compartir únicamente los aprendizajes o acciones que quiera hacer públicos; el enlace privado y el acta pertenecen al equipo.</li>
+        <li>Da seguimiento a las acciones en la próxima revisión: ¿se intentaron?, ¿qué evidencia apareció?, ¿qué conviene ajustar?</li>
+        <li>No atribuyas una calificación automáticamente al acta. Úsala como reflexión formativa o evidencia solo si así lo establece la actividad del curso.</li>
+        <li>Tras confirmar que el grupo descargó su acta, indícale que use <strong>Borrar esta retrospectiva</strong>. No conserves copias del servidor más tiempo del necesario.</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="estudiantes">
+      <h2 id="estudiantes">B. Guía para el grupo</h2>
+      <ol>
+        <li>Una persona abre el reproductor y selecciona <strong>Crear retrospectiva</strong>. Completen los datos con un alias de equipo, el nombre corto del proyecto y el periodo que revisan.</li>
+        <li>Compartan el enlace privado de continuación solo con integrantes del equipo. Lo más sencillo es trabajar en una sola pantalla y conversar en voz alta; no hay edición simultánea entre dispositivos.</li>
+        <li>Inicien el cronómetro si les ayuda a distribuir los 30 minutos sugeridos. Se puede pausar; no bloquea la sesión ni hace que el trabajo se borre.</li>
+        <li>Completen las cinco etapas. El botón <strong>Siguiente etapa</strong> indica qué requisito falta si todavía no pueden avanzar.</li>
+        <li>En la etapa <strong>Acta</strong>, revisen que el resumen represente lo que acordaron. Elijan <strong>Exportar acta a PDF</strong> y luego <strong>Guardar como PDF</strong> en el diálogo del navegador.</li>
+        <li>Guarden el PDF según las instrucciones de su curso y, después, pulsen <strong>Borrar esta retrospectiva</strong> para eliminar los datos guardados.</li>
+      </ol>
+      <div class="callout safe">
+        <strong>Acuerdo de seguridad:</strong> cada persona hizo lo mejor que pudo con lo que sabía y tenía en ese momento. Hablen de hechos observables y del proceso; eviten ataques personales, nombres completos, contraseñas y datos de beneficiarios.
+      </div>
+    </section>
+
+    <section aria-labelledby="etapas">
+      <h2 id="etapas">C. Las etapas y sus resultados</h2>
+      <div class="grid">
+        <article class="stage">
+          <span class="time">3 min</span>
+          <h3>1. Preparar</h3>
+          <p>Definan equipo, proyecto, periodo y fecha. Confirmen los acuerdos de proceso, voz equitativa y confidencialidad.</p>
+        </article>
+        <article class="stage">
+          <span class="time">8 min</span>
+          <h3>2. Reunir datos</h3>
+          <p>Escriban al menos tres observaciones concretas y clasifíquenlas en <strong>Seguir haciendo</strong>, <strong>Probar o cambiar</strong> y <strong>Preguntas</strong>. Debe haber al menos una tarjeta en cada columna.</p>
+        </article>
+        <article class="stage">
+          <span class="time">7 min</span>
+          <h3>3. Encontrar patrones</h3>
+          <p>Agrupen al menos dos tarjetas bajo un tema. Registren un aprendizaje de 20 caracteres o más y asignen al menos un voto para priorizar.</p>
+        </article>
+        <article class="stage">
+          <span class="time">8 min</span>
+          <h3>4. Acordar acciones</h3>
+          <p>Definan de una a tres acciones pequeñas; cada una necesita tarea, responsable por rol, fecha de revisión y evidencia de éxito.</p>
+        </article>
+        <article class="stage">
+          <span class="time">4 min</span>
+          <h3>5. Cerrar</h3>
+          <p>Valoren la confianza del equipo del 1 al 5, escriban el aprendizaje o compromiso final y confirmen que las acciones son comprobables.</p>
+        </article>
+        <article class="stage">
+          <span class="time">Acta</span>
+          <h3>6. Exportar</h3>
+          <p>Revisen los datos que la herramienta va a imprimir y guarden el informe en PDF. Después eliminen la sesión.</p>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="buenas">
+      <h2 id="buenas">D. Qué hace útil una retrospectiva</h2>
+      <ul>
+        <li>Describir qué pasó y cuándo, en lugar de etiquetar o culpar a una persona.</li>
+        <li>Escuchar a todas las voces; quien lee las instrucciones no decide por el grupo.</li>
+        <li>Buscar condiciones repetidas del proceso y reconocer también lo que ayudó.</li>
+        <li>Elegir acciones pequeñas y posibles, con un responsable por función y una señal observable para revisar el resultado.</li>
+        <li>Tratar la confianza baja como una invitación a simplificar el acuerdo, no como una razón para presionar a alguien.</li>
+      </ul>
+      <p class="foot">Las etapas se pueden usar como una conversación de aprendizaje; cumplir los mínimos permite avanzar en el reproductor, pero no sustituye el diálogo respetuoso del equipo.</p>
+    </section>
+
+    <section aria-labelledby="privacidad">
+      <h2 id="privacidad">E. Privacidad y solución de problemas</h2>
+      <ul>
+        <li><strong>El enlace privado es una llave:</strong> cualquier persona que lo tenga puede ver y editar la sesión. No lo publiques ni lo agregues a GitHub.</li>
+        <li><strong>No es una herramienta de chat en tiempo real:</strong> varias copias editadas simultáneamente pueden sobrescribirse. Prefieran una sola pantalla compartida.</li>
+        <li><strong>Si se pierde la conexión:</strong> la herramienta conserva un borrador local cuando el navegador lo permite e informa si el servidor no pudo guardar. No borren los datos del navegador hasta confirmar la recuperación.</li>
+        <li><strong>Si el acta no se ve completa:</strong> en el diálogo de impresión seleccionen “Guardar como PDF” y revisen la vista previa antes de guardar.</li>
+        <li><strong>Si no se crea ni se guarda una sesión:</strong> comprueben que se usa la URL del servidor PHP, que el sitio está en HTTPS y que el servidor puede escribir en <code>mini_retro/data/</code>. Abrir <code>index.php</code> con <code>file://</code> no sirve.</li>
+        <li><strong>Si necesitan continuar:</strong> vuelvan a abrir el enlace privado guardado por el equipo; no creen otra sesión salvo que hayan decidido empezar de nuevo.</li>
+      </ul>
+      <p class="foot">Para instalación, hosting y límites de datos, consulta el <a href="README.md">README técnico de mini_retro</a>.</p>
+    </section>
+  </main>
+</body>
+</html>

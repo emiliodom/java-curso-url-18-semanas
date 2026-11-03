@@ -14,7 +14,10 @@
       <span class="brand-mark" aria-hidden="true">↻</span>
       <span>Retro de equipo<small>Laboratorio de aprendizaje · Programación I</small></span>
     </a>
-    <a class="header-link" href="../Material_Sesion_Clase_17_HTML_18_semanas/index.html">Material Semana 17</a>
+    <nav class="header-actions" aria-label="Recursos">
+      <a class="header-link" href="GUIA_RETROSPECTIVA.html">Guía para docente y equipos</a>
+      <a class="header-link" href="../Material_Sesion_Clase_17_HTML_18_semanas/index.html">Material Semana 17</a>
+    </nav>
   </header>
 
   <main class="shell">

@@ -17,6 +17,7 @@ Esta semana representa el ensayo general y el cierre constructivo del desarrollo
 | `challenge.html` | Retos interactivos: ordenar los bloques de una demo profesional + clasificador de feedback constructivo |
 | `proyecto.html` | **★ Entrega Parcial 4 (Proyecto Completo) + Guía 17 (7.0 pts)**: auditoría llave en mano, evidencias y plan final |
 | `../mini_retro/` | Mini retrospectiva de equipo autoguiada con guardado PHP y acta exportable a PDF |
+| `../mini_retro/GUIA_RETROSPECTIVA.html` | Apéndice para el docente y los equipos: preparación, cinco etapas, privacidad y exportación del acta |
 | `styles.css`, `quiz.js`, `toast.js`, `diagramas.js` | Motores y estilos visuales oficiales del curso |
 
 ## Punteo de la semana (Sección 4.2 del programa)

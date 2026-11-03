@@ -4,6 +4,13 @@ Aplicación PHP autoguiada para que un grupo revise su proceso, acuerde mejoras 
 se lleve un acta lista para guardar como PDF. No requiere cuenta, base de datos,
 API externa, credenciales ni configuración de secretos.
 
+## Apéndice: guía para el docente y los equipos
+
+La [Guía de retrospectiva](GUIA_RETROSPECTIVA.html) reúne instrucciones para
+preparar y dar seguimiento a la actividad, así como una guía paso a paso para
+los grupos. También está enlazada desde el reproductor. Está diseñada para
+imprimirse o guardarse como PDF.
+
 ## Ejecutar localmente
 
 Requiere PHP 7.4 o posterior. Desde la raíz del repositorio:
@@ -84,4 +91,5 @@ en la entrega indicada por el curso.
 | `app.js` | Etapas, arrastrar/soltar, validación, guardado y acta imprimible |
 | `api.php` | API JSON con validación, llave de sesión y bloqueo de archivo |
 | `styles.css` | Diseño adaptable y formato de impresión |
+| `GUIA_RETROSPECTIVA.html` | Apéndice de uso para el docente y los equipos |
 | `data/.htaccess` | Protección del almacén JSON en Apache |

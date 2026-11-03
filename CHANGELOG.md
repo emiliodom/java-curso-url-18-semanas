@@ -2,6 +2,25 @@
 
 Todas las modificaciones y adiciones de hitos del proyecto se registran en este documento.
 
+## [2026-11-03] — Cierre de la Mini Retrospectiva y Accesibilidad S17–S18
+
+### Añadido
+- **Apéndice de retrospectiva (`mini_retro/GUIA_RETROSPECTIVA.html`):**
+  - Guía imprimible para el docente (preparación de hosting, acompañamiento y seguimiento formativo) y para los grupos (pasos, tiempos, requisitos de avance, acta y privacidad).
+  - Enlace visible desde el reproductor, el README del módulo y la portada de la Semana 17.
+- **Documentación viva:** actualizado `CLAUDE.md` como referencia técnica canónica con el estado del mini reproductor, los límites operativos/privacidad, las reparaciones de quizzes y drag-and-drop y los resultados de la auditoría de contraste.
+
+### Corregido
+- **Revisión Semanas 17–18:** la plantilla de proyecto S17 ahora separa los 7 puntos de guía/hito de los 0.66 puntos de actividad; las plantillas de proyecto ya no recogen contraseñas; el PDF del challenge exige completar ambos retos.
+- **Quizzes:** S17 contiene suficientes preguntas para sus 8 presaberes y 12 finales, con posiciones de respuesta correcta variadas. S18 renderiza el quiz final de 10 preguntas aunque no tenga selector `quizType`.
+- **Mini retrospectiva:** corregido el manejo de eventos de arrastre cuando el objetivo es un nodo de texto; el movimiento con mouse y el arrastre HTML5 funcionan para clasificar y agrupar, conservando el selector accesible.
+- **Contraste y fondos:** corregido el conflicto entre la paleta fija de alto contraste y el tema oscuro, que producía texto oscuro sobre superficies oscuras (hasta 1:1). Los estilos ahora coordinan colores de texto y superficies en navbar, botones, formularios, tarjetas, alertas, callouts, quizzes, tabs, acordeones y tablas. Se agregó versión `?v=20261103a` a las 16 páginas de las Semanas 17–18.
+
+### Verificación
+- Auditoría en navegador de las 16 páginas HTML de las Semanas 17–18, en temas claro y oscuro e incluyendo contenido oculto: cero pares de texto/fondo por debajo de WCAG AA para texto.
+- Confirmados los fondos generales `#f6f8fb` (claro) y `#0f172a` (oscuro), superficies de tarjeta oscura `#1e293b`, legibilidad de estados activos y correspondencia idéntica de ambas hojas `styles.css`.
+- Revisión funcional de progresión por etapas, guardado/reanudación, reporte PDF y arrastre de tarjetas; comprobaciones PHP/JavaScript y `git diff --check` satisfactorias.
+
 ## [2026-10-31] — Corrección Integral de Contraste en Modo Claro (Portal y Semanas 16, 17, 18)
 
 ### Corregido & Mejorado (Accesibilidad WCAG AAA)
