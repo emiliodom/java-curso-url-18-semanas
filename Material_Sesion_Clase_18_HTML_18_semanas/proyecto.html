@@ -93,14 +93,15 @@
 
     <!-- PARTE B: CREDENCIALES DE PRUEBA -->
     <div class="card mb-4">
-      <div class="card-header bg-dark text-white fw-semibold">Parte B. Credenciales de Prueba para el Tribunal Evaluador</div>
+      <div class="card-header bg-dark text-white fw-semibold">Parte B. Traspaso Seguro de Credenciales de Prueba</div>
       <div class="card-body small">
+        <p class="text-muted">No escribas contraseñas en esta plantilla: los datos se guardan en el navegador y se incluyen en el PDF. Entrega las credenciales por el canal privado indicado por el curso.</p>
         <div class="row g-3">
           <div class="col-md-6">
             <div class="p-2 border rounded bg-light">
               <span class="badge bg-danger mb-1">Rol Administrador (ADMIN)</span>
               <div><strong>Usuario:</strong> <code>admin</code></div>
-              <div><strong>Contraseña de prueba:</strong> <input type="text" id="claveAdminDemo" class="form-control form-control-sm d-inline-block w-auto final-save" placeholder="Clave configurada" /></div>
+              <div class="form-check mt-2"><input class="form-check-input final-save" type="checkbox" id="credAdminTransferida" /><label class="form-check-label" for="credAdminTransferida">Credencial compartida por canal privado</label></div>
               <div class="text-muted" style="font-size:0.75rem;">Acceso total: crear, ver listados, modificar y eliminar registros.</div>
             </div>
           </div>
@@ -108,7 +109,7 @@
             <div class="p-2 border rounded bg-light">
               <span class="badge bg-secondary mb-1">Rol Operador / Voluntario</span>
               <div><strong>Usuario:</strong> <code>operador</code> (o <code>entrenador</code>)</div>
-              <div><strong>Contraseña de prueba:</strong> <input type="text" id="claveOperadorDemo" class="form-control form-control-sm d-inline-block w-auto final-save" placeholder="Clave configurada" /></div>
+              <div class="form-check mt-2"><input class="form-check-input final-save" type="checkbox" id="credOperadorTransferida" /><label class="form-check-label" for="credOperadorTransferida">Credencial compartida por canal privado</label></div>
               <div class="text-muted" style="font-size:0.75rem;">Acceso estándar: registro de beneficiarios y visualización de tablas.</div>
             </div>
           </div>

@@ -35,9 +35,9 @@
     <div class="container">
       <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
         <div>
-          <div class="brand-pill bg-danger text-white">★ Hito Mayor de Evaluación · Punteo Total: 7.66 Puntos</div>
+          <div class="brand-pill bg-danger text-white">★ Guía 17 + Entrega Parcial 4 · 7.0 Puntos</div>
           <h1 class="h2 fw-bold mt-2 mb-1">Entrega Parcial 4: Proyecto Completo Llave en Mano</h1>
-          <div class="small-muted">Reúne la <strong>Guía de Aprendizaje 17 (2.0 pts)</strong>, el <strong>Avance Final de Software (5.0 pts)</strong> y la <strong>Actividad sincrónica (0.66 pts)</strong>. Tu aplicación en producción con base Neon, seguridad y documentación.</div>
+          <div class="small-muted">Esta plantilla reúne la <strong>Guía de Aprendizaje 17 (2.0 pts)</strong> y el <strong>Avance Final de Software (5.0 pts)</strong>. La Actividad sincrónica (0.66 pts) se entrega aparte con los PDF del Quiz Final y Challenge.</div>
         </div>
         <button class="btn btn-danger btn-export" onclick="window.print()">Exportar Entrega a PDF</button>
       </div>
@@ -80,8 +80,11 @@
             <input type="text" id="parTestigo" class="form-control form-control-sm persistent" placeholder="Nombre del compañero" />
           </div>
           <div class="col-md-6">
-            <label class="form-label fw-bold mb-1">Usuario y clave de prueba compartidos para la demo</label>
-            <input type="text" id="credDemo" class="form-control form-control-sm persistent" placeholder="Ej. admin / URL2026! o entrenador / url" />
+            <div class="form-check">
+              <input class="form-check-input persistent" type="checkbox" id="credDemo" />
+              <label class="form-check-label fw-bold" for="credDemo">Verifiqué las credenciales de prueba y las compartiré por un canal privado.</label>
+            </div>
+            <div class="form-text">No escribas contraseñas aquí ni las incluyas en el PDF o repositorio. Usa el canal privado de entrega indicado por el curso.</div>
           </div>
           <div class="col-12">
             <label class="form-label fw-bold mb-1">Breve resumen de cómo se desenvolvió la demo en vivo</label>
@@ -194,14 +197,14 @@
       </div>
     </div>
 
-    <!-- RÚBRICA OFICIAL DE 7.66 PUNTOS -->
+    <!-- RÚBRICA OFICIAL DE 7.0 PUNTOS -->
     <div class="card mb-4 border-danger">
-      <div class="card-header bg-light text-danger fw-bold">Criterios de Evaluación — ★ Entrega Parcial 4 + Guía 17 (7.66 Puntos)</div>
+      <div class="card-header bg-light text-danger fw-bold">Criterios de Evaluación — ★ Entrega Parcial 4 + Guía 17 (7.0 Puntos)</div>
       <div class="card-body small">
         <div class="row g-2">
           <div class="col-md-4">
             <div class="p-2 border rounded bg-light h-100">
-              <strong>Excelente (6.5 – 7.66 pts):</strong><br/>
+              <strong>Excelente (6.5 – 7.0 pts):</strong><br/>
               Sistema 100% operativo en Render con Neon, validaciones y roles estrictos, evaluación entre pares profunda y README profesional.
             </div>
           </div>
@@ -220,7 +223,7 @@
         </div>
 
         <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top">
-          <span class="text-muted" id="saveStatus">💾 Los datos se guardan automáticamente en tu navegador.</span>
+          <span class="text-muted" id="saveStatus">💾 Los datos se guardan automáticamente en tu navegador. No guardes contraseñas en esta plantilla.</span>
           <button class="btn btn-danger" onclick="window.print()">Exportar Entrega Parcial 4 a PDF 🖨️</button>
         </div>
       </div>

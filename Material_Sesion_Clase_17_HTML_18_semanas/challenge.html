@@ -151,6 +151,8 @@
   <script src="toast.js"></script>
   <script>
     // ===== RETO 1 =====
+    var demoComplete = false;
+    var feedbackComplete = false;
     var DEMO_PIECES = [
       { id: 'd1', text: '1. Presentar a la entidad sin fines de lucro y mostrar la arquitectura MVC', order: 1 },
       { id: 'd2', text: '2. Probar formulario Thymeleaf provocando error en rojo y luego guardado', order: 2 },
@@ -161,6 +163,7 @@
     ];
 
     function initDemoChallenge() {
+      demoComplete = false;
       var bank = document.getElementById('demoPiecesBank');
       bank.innerHTML = '';
       document.querySelectorAll('.slot-area').forEach(function(el) { el.innerHTML = ''; });
@@ -178,6 +181,9 @@
 
     function verifyDemoOrder() {
       var hits = 0;
+      document.querySelectorAll('#demoSlots .dd-piece').forEach(function(piece) {
+        piece.classList.remove('border-success', 'border-danger', 'bg-success-subtle', 'bg-danger-subtle');
+      });
       document.querySelectorAll('.dd-target').forEach(function(target) {
         var expectedOrder = parseInt(target.dataset.order);
         var piece = target.querySelector('.dd-piece');
@@ -189,7 +195,8 @@
         }
       });
       var trapsLeft = document.getElementById('demoPiecesBank').querySelectorAll('[data-order="99"]').length;
-      if (hits === 4 && trapsLeft === 2) {
+      demoComplete = hits === 4 && trapsLeft === 2;
+      if (demoComplete) {
         document.getElementById('demoResult').innerHTML = '<div class="alert alert-success p-2 small mb-0">🎉 ¡Secuencia perfecta! Has ordenado los 4 minutos sin trampas.</div>';
       } else {
         document.getElementById('demoResult').innerHTML = '<div class="alert alert-warning p-2 small mb-0">Revisa el orden de los minutos o asegúrate de dejar las trampas en el banco.</div>';
@@ -205,6 +212,7 @@
     ];
 
     function initFeedbackChallenge() {
+      feedbackComplete = false;
       var bank = document.getElementById('fbPiecesBank');
       bank.innerHTML = '';
       document.querySelectorAll('.fb-drop-area').forEach(function(el) { el.innerHTML = ''; });
@@ -222,6 +230,9 @@
 
     function verifyFeedbackChal() {
       var hits = 0;
+      document.querySelectorAll('.fb-zone .dd-piece').forEach(function(piece) {
+        piece.classList.remove('border-success', 'border-danger', 'bg-success-subtle', 'bg-danger-subtle');
+      });
       document.querySelectorAll('.fb-zone').forEach(function(zone) {
         var expectedCat = zone.dataset.category;
         zone.querySelectorAll('.dd-piece').forEach(function(piece) {
@@ -233,7 +244,8 @@
           }
         });
       });
-      if (hits === 4) {
+      feedbackComplete = hits === 4;
+      if (feedbackComplete) {
         document.getElementById('fbResult').innerHTML = '<div class="alert alert-success p-2 small mb-0">🎉 ¡Excelente! Distingues con claridad el feedback constructivo del inútil.</div>';
       } else {
         document.getElementById('fbResult').innerHTML = '<div class="alert alert-warning p-2 small mb-0">Has ubicado ' + hits + ' de 4 correctamente. Revisa los recuadros rojos.</div>';
@@ -251,7 +263,17 @@
         zone.addEventListener('drop', function(e) {
           e.preventDefault();
           zone.classList.remove('bg-white');
-          if (dragged) zone.appendChild(dragged);
+          if (dragged) {
+            zone.appendChild(dragged);
+            if (dragged.dataset.id.charAt(0) === 'd') {
+              demoComplete = false;
+              document.getElementById('demoResult').innerHTML = '';
+            } else {
+              feedbackComplete = false;
+              document.getElementById('fbResult').innerHTML = '';
+            }
+            dragged.classList.remove('border-success', 'border-danger', 'bg-success-subtle', 'bg-danger-subtle');
+          }
         });
       });
     }
@@ -259,6 +281,10 @@
     function exportChallengePdf() {
       var n = document.getElementById('studentName').value.trim();
       if (!n) { alert('Por favor escribe tu nombre en la casilla superior.'); return; }
+      if (!demoComplete || !feedbackComplete) {
+        alert('Completa y verifica correctamente ambos retos antes de exportar el PDF.');
+        return;
+      }
       window.print();
     }
 
