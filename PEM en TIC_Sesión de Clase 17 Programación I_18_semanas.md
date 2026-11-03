@@ -89,3 +89,4 @@ Sesión **[sincrónica]{.underline}** #17 — Sábado 7 de noviembre de 2026, 11
 
 *Actividad que realizará el estudiante: Exportar PDF del Challenge y Quiz Final, y verificar el envío de la Entrega Parcial 4 antes del 14 de noviembre.*
 
+**Disponibilidad del material HTML:** antes de la sesión, `entregables.html` es la única página disponible para consultar la guía de entrega. Las demás páginas de Semana 17 se habilitan el sábado 7 de noviembre de 2026 a las 7:00 a. m. (hora local del dispositivo) y permanecen abiertas después. El overlay es un control visual del navegador para organizar la publicación, no una medida de seguridad del contenido estático.

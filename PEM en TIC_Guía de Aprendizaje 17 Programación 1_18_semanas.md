@@ -57,3 +57,4 @@ antes de la Sesión 18 (14 de noviembre de 2026) · **Valor acumulado:** **7 pun
 
 **Rúbrica:** Excelente (7.0 pts) = Aplicación 100% operativa en Render sin errores, evaluación de pares constructiva y profunda, y documentación técnica impecable; Satisfactorio (5.0–6.0 pts) = Sistema operativo con fallas menores de validación o documentación básica; En proceso (&lt;4.0 pts) = Aplicación no desplegada, sin seguridad o sin evaluación de pares.
 
+**Disponibilidad del material HTML:** `entregables.html` es la única página de Semana 17 disponible antes de la sesión. Las demás se habilitan el sábado 7 de noviembre de 2026 a las 7:00 a. m. (hora local del dispositivo) y permanecen abiertas después.

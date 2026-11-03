@@ -448,7 +448,10 @@ portal.
   y mini retrospectiva PHP autoguiada con apéndice para docente/equipos. Incluye
   `entregables.html`, guía navegable de documentación, videos, plataformas y
   credenciales seguras; está enlazada desde el portal raíz y la navegación de la
-  Semana 17 y la Semana 18. En nov.
+  Semana 17 y la Semana 18. Desde noviembre de 2026, solo `entregables.html`
+  queda disponible antes del sábado 7 de noviembre a las 7:00 a. m.; las otras
+  ocho páginas muestran cuenta regresiva y overlay mediante `acceso-semana17.js`
+  y, al abrirse, no se vuelven a cerrar. En nov.
   2026 se corrigieron rúbrica/contraseñas/exportación del challenge, los bancos
   de quiz (S17: 8 presaberes + 12 finales; S18: quiz final sin selector ausente),
   y el arrastre nativo de tarjetas/agrupaciones.
@@ -462,8 +465,14 @@ portal.
   La Mini Retro está enlazada en la navegación y portada, y se ofrece en
   `clase.html` como actividad opcional posterior de 30 minutos, fuera de la
   sesión oficial de 70 minutos y sin sustituir el Peer Review sumativo. En
-  nov. 2026 se sustituyeron los campos de contraseña por confirmaciones de
-  traspaso privado y se alineó el quiz integrador con el modo oscuro.
+  noviembre de 2026, las ocho páginas HTML muestran un overlay y cuenta
+  regresiva hasta el sábado 14 de noviembre a las 7:00 a. m.; antes de esa hora,
+  solo permiten abrir la guía de entregables de la Semana 17. La lógica vive en
+  `acceso-semana18.js`; al abrirse, las páginas no se vuelven a cerrar. Estos
+  overlays son controles de disponibilidad en el navegador, no controles de
+  seguridad del contenido estático. En nov. 2026 se sustituyeron los campos de
+  contraseña por confirmaciones de traspaso privado y se alineó el quiz
+  integrador con el modo oscuro.
 
 **Contraste de Semanas 17–18:** auditoría de las 16 páginas HTML en tema claro y
 oscuro (incluyendo contenido oculto) encontró texto de hasta 1:1 en oscuro, por

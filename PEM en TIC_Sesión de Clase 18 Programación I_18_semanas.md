@@ -37,6 +37,8 @@ Sesión **[sincrónica]{.underline}** #18 — Sábado 14 de noviembre de 2026, 1
 > **Material de apoyo de la sesión:** carpeta HTML
 > `Material_Sesion_Clase_18_HTML_18_semanas/` (hub `index.html` con balance final del curso, guía docente `clase.html`, banco de preguntas de tribunal en `ejercicios.html`, cheatsheet del curso completo, herramienta de `evaluacion_pares.html` Ronda 2, formulario de `autoevaluacion.html`, y `proyecto.html` para la radicación final de la defensa).
 >
+> **Disponibilidad previa:** antes del sábado 14 de noviembre de 2026 a las 7:00 a. m. (hora local del dispositivo), el material HTML de Semana 18 presenta una cuenta regresiva y solo permite abrir la guía de entregables de Semana 17. A partir de esa hora, las páginas quedan disponibles y no se vuelven a bloquear. Es un control visual de publicación en el navegador, no una medida de seguridad para contenido estático.
+>
 > **Fechas oficiales de actas de fin de ciclo:**
 > - Primera ronda de actas: 14 al 20 de noviembre de 2026.
 > - Segunda ronda de actas: 21 al 27 de noviembre de 2026.
@@ -87,4 +89,3 @@ Sesión **[sincrónica]{.underline}** #18 — Sábado 14 de noviembre de 2026, 1
 *Tiempo estimado: 5 minutos (minutos 65–70)*
 
 *Recursos: `evaluacion_docente/` (evaluación final docente).*
-

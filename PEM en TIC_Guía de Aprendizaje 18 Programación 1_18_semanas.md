@@ -54,3 +54,4 @@ height="0.5729166666666666in"}
 
 **Instrucciones de entrega:** completar la radicación de la defensa en `proyecto.html`, adjuntar la evaluación entre pares de `evaluacion_pares.html` y la reflexión de `autoevaluacion.html`, y confirmar que los enlaces de Render y GitHub permanezcan activos para el registro en actas.
 
+**Disponibilidad del material HTML:** antes del sábado 14 de noviembre de 2026 a las 7:00 a. m. (hora local del dispositivo), solo se puede consultar la información de entregables enlazada a la guía de Semana 17. Las demás páginas de Semana 18 se habilitan a esa hora y permanecen abiertas.

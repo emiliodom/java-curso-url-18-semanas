@@ -22,6 +22,13 @@ Esta semana representa el ensayo general y el cierre constructivo del desarrollo
 | `../ENTREGABLE_PROYECTO_LLAVE_EN_MANO.md` | Guía maestra completa en Markdown, con plantillas de correo y checklist de certificación de 20 puntos |
 | `styles.css`, `quiz.js`, `toast.js`, `diagramas.js` | Motores y estilos visuales oficiales del curso |
 
+## Disponibilidad programada del material
+
+- `entregables.html` permanece disponible antes de la sesión para consultar la documentación, los videos, las plataformas y los accesos seguros. Es la única página de esta semana habilitada anticipadamente.
+- Las demás páginas de Semana 17 se abren el sábado **7 de noviembre de 2026 a las 7:00 a. m.**, hora local del dispositivo. Después de esa hora no vuelven a bloquearse.
+- El bloqueo visual y la cuenta regresiva los implementa `acceso-semana17.js`, cargado por las nueve páginas HTML de la carpeta.
+- Es una guía de disponibilidad en el navegador, no un control de seguridad del contenido: los archivos son estáticos y el bloqueo puede omitirse desactivando JavaScript.
+
 ## Punteo de la semana (Sección 4.2 del programa)
 
 - **Actividad en clase — Sesión 17:** 0.66 pts (PDF Quiz Final + PDF Challenge).
