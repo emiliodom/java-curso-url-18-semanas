@@ -47,6 +47,7 @@ PEM en TIC_Sesión de Clase N ..._18_semanas.md/.docx   # Documento oficial de s
 PEM en TIC_Guía de Aprendizaje N ..._18_semanas.md/.docx # Documento oficial de guía, por semana
 Material_Sesion_Clase_N_HTML_18_semanas/   # Material HTML interactivo de la semana N (ver plantilla abajo)
 evaluacion_docente/                 # Módulo de evaluación anónima (todas las 18 sesiones)
+mini_retro/                         # Reproductor PHP de retrospectiva por equipo con informe PDF
 media/                              # Imágenes institucionales (logos URL) usadas por los .md oficiales
 ARCHIVO_POR_AHORA/, Material_Sesion_Clase_N_X/, *.zip   # Formato ANTERIOR (pre-18-semanas), no vigente
 ```
@@ -947,6 +948,24 @@ de datos** (`data/evaluaciones.json`).
 - Probado localmente con `php -S 127.0.0.1:PUERTO` desde la carpeta
   `evaluacion_docente/` — requiere PHP 7.2+ (usar `function_exists('mb_substr')`
   como fallback si el hosting no tiene `mbstring`, ya resuelto en `guardar.php`).
+
+## Módulo `mini_retro/`
+
+Reproductor PHP autoguiado para retrospectivas de equipo, enlazado desde el
+portal raíz y la Semana 17. Guía a los grupos por preparación segura,
+recolección de hechos, patrones/votación, acciones verificables y cierre; al
+final presenta un acta completa imprimible a PDF.
+
+- `index.php` + `app.js`: interfaz adaptable, drag-and-drop con controles
+  alternativos por teclado/pantalla táctil, cronómetro, validación de avance,
+  borrador local y sincronización automática.
+- `api.php`: API JSON de creación, lectura, guardado y borrado. Cada sesión usa
+  una llave aleatoria privada, no requiere cuentas ni guarda credenciales.
+- `data/sessions.json`: se crea al iniciar; está ignorado por Git. `data/.htaccess`
+  bloquea el acceso HTTP directo en Apache.
+- Requiere PHP 7.4+ y permisos de escritura en `data/`; despliegue y límites de
+  privacidad en `mini_retro/README.md`. No usar para datos personales ni
+  sensibles. Tras exportar el PDF, el equipo debe borrar la sesión.
 
 ## Memoria del usuario (fuera de este repo)
 

@@ -44,6 +44,10 @@ ese bloque un texto más largo que `detalle`, agrega la propiedad opcional
   el buscador con `Ctrl+K` / `⌘K`.
 - Todo el estilo vive en `portal.css` (sin Bootstrap), con modo claro y
   oscuro automáticos y diseño adaptado a celular.
+- El recurso **Mini retrospectiva de equipo** apunta a `mini_retro/`, una
+  aplicación PHP autoguiada. Funciona al publicarse en un hosting PHP; un
+  portal servido como archivos estáticos (por ejemplo, GitHub Pages) no ejecuta
+  PHP. Para probarla localmente, sigue `mini_retro/README.md`.
 
 No se duplican tarjetas a mano ni se editan `data-title`/`data-tags` sueltos
 como en el formato anterior. Para la estructura completa que debe tener la
