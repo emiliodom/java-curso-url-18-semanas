@@ -445,7 +445,10 @@ portal.
   reloj interactivo), checklist de 10 puntos previos, protocolo operativo anti-cold
   start para despertar Render y Neon, herramienta interactiva de evaluación entre
   pares (Peer Review formativo con 5 criterios), radicación del proyecto completo
-  y mini retrospectiva PHP autoguiada con apéndice para docente/equipos. En nov.
+  y mini retrospectiva PHP autoguiada con apéndice para docente/equipos. Incluye
+  `entregables.html`, guía navegable de documentación, videos, plataformas y
+  credenciales seguras; está enlazada desde el portal raíz y la navegación de la
+  Semana 17 y la Semana 18. En nov.
   2026 se corrigieron rúbrica/contraseñas/exportación del challenge, los bancos
   de quiz (S17: 8 presaberes + 12 finales; S18: quiz final sin selector ausente),
   y el arrastre nativo de tarjetas/agrupaciones.
@@ -455,7 +458,10 @@ portal.
   0.78 pts). Incluye banco de preguntas de tribunal con respuestas modelo
   (ejercicios.html), autoevaluación metacognitiva del futuro docente en TIC
   (utoevaluacion.html), acta oficial de radicación (proyecto.html) y paquete
-  maestro de entrega llave en mano (ENTREGABLE_PROYECTO_LLAVE_EN_MANO.md). En
+  maestro de entrega llave en mano (ENTREGABLE_PROYECTO_LLAVE_EN_MANO.md).
+  La Mini Retro está enlazada en la navegación y portada, y se ofrece en
+  `clase.html` como actividad opcional posterior de 30 minutos, fuera de la
+  sesión oficial de 70 minutos y sin sustituir el Peer Review sumativo. En
   nov. 2026 se sustituyeron los campos de contraseña por confirmaciones de
   traspaso privado y se alineó el quiz integrador con el modo oscuro.
 
@@ -968,9 +974,9 @@ de datos** (`data/evaluaciones.json`).
 ## Módulo `mini_retro/`
 
 Reproductor PHP autoguiado para retrospectivas de equipo, enlazado desde el
-portal raíz y la Semana 17. Guía a los grupos por preparación segura,
-recolección de hechos, patrones/votación, acciones verificables y cierre; al
-final presenta un acta completa imprimible a PDF.
+portal raíz y las navegaciones de las Semanas 17 y 18. Guía a los grupos por
+preparación segura, recolección de hechos, patrones/votación, acciones
+verificables y cierre; al final presenta un acta completa imprimible a PDF.
 
 - `index.php` + `app.js`: interfaz adaptable, drag-and-drop con controles
   alternativos por teclado/pantalla táctil, cronómetro, validación de avance,

@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Guía de entregables, documentación, videos y accesos seguros para el proyecto llave en mano." />
+  <title>Entregables Llave en Mano — Semana 17</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=20261103a" />
+  <script src="theme.js"></script>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top no-print">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Semana 17 — Entregables</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="clase.html">Guía Docente</a></li>
+          <li class="nav-item"><a class="nav-link" href="ejercicios.html">Preparar Demo</a></li>
+          <li class="nav-item"><a class="nav-link" href="cheatsheet.html">Cheat Sheet</a></li>
+          <li class="nav-item"><a class="nav-link" href="evaluacion_pares.html">Evaluación Pares</a></li>
+          <li class="nav-item"><a class="nav-link" href="challenge.html">Challenge</a></li>
+          <li class="nav-item"><a class="nav-link" href="proyecto.html">★ Entrega 4</a></li>
+          <li class="nav-item"><a class="nav-link active fw-bold" href="entregables.html">Entregables</a></li>
+          <li class="nav-item"><a class="nav-link" href="../mini_retro/">Mini Retro</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ficha_proyecto.html">Ficha</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero py-4">
+    <div class="container" style="max-width: 1000px;">
+      <div class="brand-pill mb-2">Semana 17 · Guía práctica para la entrega final</div>
+      <h1 class="h2 fw-bold mb-2">¿Qué debe incluir tu proyecto llave en mano?</h1>
+      <p class="lead small-muted mb-3">Usa esta guía para organizar archivos, enlaces y accesos sin exponer contraseñas. La Semana 17 es el ensayo y la entrega del proyecto completo; deja el paquete listo para la defensa formal de la Semana 18.</p>
+      <div class="d-flex flex-wrap gap-2">
+        <a class="btn btn-danger" href="proyecto.html">Completar la Entrega Parcial 4</a>
+        <a class="btn btn-primary" href="ejercicios.html">Preparar la demo de 4 minutos</a>
+        <a class="btn btn-outline-primary" href="evaluacion_pares.html">Abrir evaluación entre pares</a>
+        <a class="btn btn-outline-dark" href="../ENTREGABLE_PROYECTO_LLAVE_EN_MANO.md">Consultar guía maestra Markdown</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4" style="max-width: 1000px;">
+    <section class="card border-primary mb-4">
+      <div class="card-body">
+        <h2 class="h5 section-title">Accesos rápidos del curso</h2>
+        <div class="row g-2 small">
+          <div class="col-md-6"><a href="../index.html#recursos">Portal raíz y recursos generales</a></div>
+          <div class="col-md-6"><a href="../mini_retro/">Iniciar mini retrospectiva de equipo</a></div>
+          <div class="col-md-6"><a href="../mini_retro/GUIA_RETROSPECTIVA.html">Leer guía de uso de la retrospectiva</a></div>
+          <div class="col-md-6"><a href="../Material_Sesion_Clase_18_HTML_18_semanas/index.html">Ir a los materiales de la Semana 18</a></div>
+          <div class="col-md-6"><a href="../Material_Sesion_Clase_18_HTML_18_semanas/proyecto.html">Acta de radicación de la defensa final</a></div>
+          <div class="col-md-6"><a href="../ENTREGABLE_PROYECTO_LLAVE_EN_MANO.md">Plantillas de correo y estándar completo de entrega</a></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="alert alert-info">
+      <strong>¿Ya existía una versión HTML de la guía maestra?</strong> No. El archivo <code>ENTREGABLE_PROYECTO_LLAVE_EN_MANO.md</code> es Markdown. Esta página es su guía HTML de preparación para las Semanas 17–18; la guía maestra sigue siendo la referencia completa e incluye plantillas de correo y el checklist de certificación.
+    </div>
+
+    <section class="card mb-4">
+      <div class="card-body">
+        <h2 class="h5 section-title">1. Lo que entregas y documentas</h2>
+        <ul class="mb-0">
+          <li><strong>Aplicación publicada:</strong> URL pública de Render con HTTPS; verifica que cargue desde una ventana privada o un dispositivo externo.</li>
+          <li><strong>Repositorio:</strong> enlace de GitHub a la rama principal, con código, <code>README.md</code>, <code>Dockerfile</code>, <code>.gitignore</code> y <code>.dockerignore</code>.</li>
+          <li><strong>README técnico:</strong> propósito del sistema, entidad beneficiaria, arquitectura/paquetes, cómo ejecutarlo localmente y nombres de las variables de entorno requeridas (nunca sus valores secretos).</li>
+          <li><strong>Manual de usuario:</strong> instrucciones en español para iniciar sesión, registrar y consultar información, corregir errores y entender los permisos de cada rol. Es para el personal de la entidad, no solo para quien programó.</li>
+          <li><strong>Evidencia de funcionamiento:</strong> CRUD, validaciones, persistencia en Neon, inicio de sesión y permisos por rol.</li>
+          <li><strong>Entrega de Semana 17:</strong> completa <a href="proyecto.html">la plantilla de la Entrega Parcial 4</a> y exporta el PDF solicitado. La coevaluación se completa y exporta por separado en <a href="evaluacion_pares.html">Evaluación entre Pares</a>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card mb-4">
+      <div class="card-body">
+        <h2 class="h5 section-title">2. Videos del paquete final</h2>
+        <p class="small-muted">Prepara ambos videos para la entrega llave en mano y la defensa de Semana 18. La demo interna de Semana 17 es una presentación en vivo de 4 minutos; no es lo mismo que estos dos videos.</p>
+        <div class="table-responsive">
+          <table class="table table-bordered align-middle mb-3">
+            <thead class="table-light"><tr><th>Video</th><th>Duración y audiencia</th><th>Qué debe mostrar</th></tr></thead>
+            <tbody>
+              <tr><th>Pitch ejecutivo</th><td>3 minutos · institución y público general</td><td>Problema de la entidad, beneficio de la solución, recorrido breve por la app y cierre del equipo.</td></tr>
+              <tr><th>Demostración técnica</th><td>5 minutos · evaluación técnica</td><td>Arquitectura en GitHub/VS Code, validación, persistencia, roles y evidencia del despliegue.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <ul class="mb-0">
+          <li>Graba en 1080p como mínimo; cuida que se lea el texto y que la voz sea clara.</li>
+          <li>Publica como “no listado” o comparte un enlace de Drive con permiso de lectura para quienes evalúan. Prueba el enlace sin iniciar sesión.</li>
+          <li>Incluye los dos enlaces en el README y en el acta de la <a href="../Material_Sesion_Clase_18_HTML_18_semanas/proyecto.html">defensa final</a>.</li>
+          <li>No muestres contraseñas, cadenas de conexión, datos reales de beneficiarios ni secretos en pantalla.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card border-warning mb-4">
+      <div class="card-body">
+        <h2 class="h5 section-title">3. Plataformas y credenciales: qué compartir</h2>
+        <p>Entrega enlaces e identificadores de prueba; <strong>no entregues contraseñas de tus cuentas personales</strong> de GitHub, Render o Neon. El proyecto es público y sus secretos no deben quedar en el repositorio, documentos, videos ni PDFs.</p>
+        <div class="table-responsive">
+          <table class="table table-bordered align-middle mb-3">
+            <thead class="table-light"><tr><th>Servicio</th><th>En la entrega visible</th><th>Privado / nunca publicar</th></tr></thead>
+            <tbody>
+              <tr><th>GitHub</th><td>URL del repositorio y rama principal; código y documentación accesibles a lectura.</td><td>No compartas tu contraseña, token personal ni claves SSH.</td></tr>
+              <tr><th>Render</th><td>URL pública de la aplicación y evidencia del despliegue.</td><td>No compartas la contraseña de tu cuenta ni publiques valores de variables de entorno.</td></tr>
+              <tr><th>Neon</th><td>Indica que PostgreSQL aloja la base de producción; demuestra persistencia sin revelar la cadena de conexión.</td><td>No publiques usuario/contraseña de Neon, URL JDBC completa ni credenciales propietarias.</td></tr>
+              <tr><th>Usuarios de prueba de la aplicación</th><td>Indica qué roles están disponibles (por ejemplo, administrador y operador).</td><td>Comparte usuario y contraseña de prueba solo por el canal privado que indique el curso; no los incluyas en README, repositorio, videos o PDF.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="mb-0"><strong>Canal:</strong> usa el aula virtual o el mecanismo privado indicado por el docente. Si se requiere acceso de colaboración a una plataforma, invita una cuenta con permisos mínimos; no entregues la contraseña de la cuenta propietaria. Rota o desactiva las credenciales temporales al concluir la evaluación.</p>
+      </div>
+    </section>
+
+    <section class="card mb-4">
+      <div class="card-body">
+        <h2 class="h5 section-title">4. Calendario de cierre</h2>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <h3 class="h6 fw-bold">Semana 17 · ensayo y avance completo</h3>
+            <ul class="small mb-0">
+              <li>Presenta la demo en vivo de 4 minutos y recibe retroalimentación.</li>
+              <li>Entrega la plantilla de Proyecto (Guía 17 + Entrega Parcial 4) y la evaluación de pares por separado.</li>
+              <li>Verifica README, manual, enlaces públicos y estado de la aplicación.</li>
+              <li>Registra las mejoras pendientes antes de la defensa final.</li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <h3 class="h6 fw-bold">Semana 18 · defensa y paquete final</h3>
+            <ul class="small mb-0">
+              <li>Presenta la defensa ante el tribunal y completa la Ronda 2 de evaluación entre pares.</li>
+              <li>Radica el acta final con URLs de la app, repositorio y videos.</li>
+              <li>Confirma que los enlaces abren para el tribunal sin solicitar acceso personal.</li>
+              <li>Usa la mini retrospectiva como reflexión de equipo opcional; no sustituye la evaluación de pares.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card mb-4">
+      <div class="card-body">
+        <h2 class="h5 section-title">5. Mini retrospectiva: acceso y cuidado de datos</h2>
+        <ol class="mb-3">
+          <li>Abre <a href="../mini_retro/">la herramienta Mini Retro</a> y elige crear una retrospectiva. No requiere cuenta ni contraseña.</li>
+          <li>Comparte el enlace privado de esa sesión solo con tu equipo; trabajen en una sola pantalla para evitar sobrescribir cambios.</li>
+          <li>Usen un alias de equipo. No ingresen nombres completos, contraseñas ni datos de beneficiarios.</li>
+          <li>Exporten el acta a PDF y, después de guardarla, borren la sesión desde la herramienta.</li>
+        </ol>
+        <p class="small text-muted mb-0">La herramienta necesita estar publicada en un servidor con PHP. Si el enlace no abre o no guarda, avisa al docente; no abras el archivo PHP directamente como archivo local. Consulta la <a href="../mini_retro/GUIA_RETROSPECTIVA.html">guía completa de la Mini Retro</a>.</p>
+      </div>
+    </section>
+
+    <section class="card border-success mb-4">
+      <div class="card-body">
+        <h2 class="h5 section-title">Checklist rápido antes de enviar</h2>
+        <div class="row g-2 small">
+          <div class="col-md-6"><label><input type="checkbox" /> URL de Render abre con HTTPS.</label></div>
+          <div class="col-md-6"><label><input type="checkbox" /> Repositorio y README son accesibles.</label></div>
+          <div class="col-md-6"><label><input type="checkbox" /> CRUD, validaciones, Neon y roles fueron probados.</label></div>
+          <div class="col-md-6"><label><input type="checkbox" /> Manual de usuario está completo.</label></div>
+          <div class="col-md-6"><label><input type="checkbox" /> Enlaces de los dos videos abren sin pedir acceso.</label></div>
+          <div class="col-md-6"><label><input type="checkbox" /> No hay contraseñas ni secretos en archivos públicos.</label></div>
+          <div class="col-md-6"><label><input type="checkbox" /> PDF de Entrega 4 y PDF de evaluación de pares están listos.</label></div>
+          <div class="col-md-6"><label><input type="checkbox" /> Enlaces finales están registrados en el acta de Semana 18.</label></div>
+        </div>
+        <p class="small text-muted mt-3 mb-0">Para la lista oficial de certificación de 20 puntos y las plantillas de correo, consulta la <a href="../ENTREGABLE_PROYECTO_LLAVE_EN_MANO.md">guía maestra</a>.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer py-4 bg-light border-top text-center text-muted small">
+    <div class="container">Universidad Rafael Landívar · Profesorado en TIC · Semana 17</div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

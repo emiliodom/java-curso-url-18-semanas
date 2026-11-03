@@ -25,6 +25,9 @@ Esta semana representa la **culminación académica del curso**: los estudiantes
 | `autoevaluacion.html` | Formulario de autoevaluación y reflexión metacognitiva docente |
 | `quiz.html` | Quiz de cierre e integración de competencias |
 | `proyecto.html` | **Acta de Radicación de Defensa**: enlaces a Render, GitHub, videos y rúbrica de 10 pts |
+| `../mini_retro/` | Mini retrospectiva opcional de equipo, para realizar después de la sesión |
+| `../mini_retro/GUIA_RETROSPECTIVA.html` | Guía de uso para el docente y los equipos |
+| `../Material_Sesion_Clase_17_HTML_18_semanas/entregables.html` | Guía HTML de documentación, videos, enlaces y credenciales seguras |
 | `styles.css`, `quiz.js`, `toast.js`, `diagramas.js` | Recursos y estilos oficiales |
 
 ## Calendario de Actas Finales
@@ -33,3 +36,4 @@ Esta semana representa la **culminación académica del curso**: los estudiantes
 - **2da ronda de actas:** 21 al 27 de noviembre de 2026.
 - **Cierre definitivo del sistema académico:** 28 de noviembre de 2026.
 
+La Mini Retro está enlazada desde la portada, la navegación de la semana y el guion docente. Es una actividad opcional posterior de aproximadamente 30 minutos; no forma parte de los 70 minutos oficiales, no tiene puntaje asignado y no sustituye la Ronda 2 de Evaluación entre Pares. Requiere hosting PHP.

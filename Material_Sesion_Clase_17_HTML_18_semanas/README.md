@@ -16,8 +16,10 @@ Esta semana representa el ensayo general y el cierre constructivo del desarrollo
 | `quiz.html` | Quiz unificado (Presaberes y Final) con banco barajado sobre comunicación técnica y aseguramiento de calidad |
 | `challenge.html` | Retos interactivos: ordenar los bloques de una demo profesional + clasificador de feedback constructivo |
 | `proyecto.html` | **★ Entrega Parcial 4 (Proyecto Completo) + Guía 17 (7.0 pts)**: auditoría llave en mano, evidencias y plan final |
+| `entregables.html` | Guía para estudiantes: documentación, videos, enlaces de plataforma y manejo seguro de credenciales; enlaza la mini retrospectiva y la Semana 18 |
 | `../mini_retro/` | Mini retrospectiva de equipo autoguiada con guardado PHP y acta exportable a PDF |
 | `../mini_retro/GUIA_RETROSPECTIVA.html` | Apéndice para el docente y los equipos: preparación, cinco etapas, privacidad y exportación del acta |
+| `../ENTREGABLE_PROYECTO_LLAVE_EN_MANO.md` | Guía maestra completa en Markdown, con plantillas de correo y checklist de certificación de 20 puntos |
 | `styles.css`, `quiz.js`, `toast.js`, `diagramas.js` | Motores y estilos visuales oficiales del curso |
 
 ## Punteo de la semana (Sección 4.2 del programa)
@@ -28,3 +30,5 @@ Esta semana representa el ensayo general y el cierre constructivo del desarrollo
 - **Plantilla `proyecto.html`:** **7.0 puntos** (Guía 17 + Entrega Parcial 4), antes de la Sesión 18.
 - **Actividad en clase:** **0.66 puntos**, con los PDF del Quiz Final y Challenge. No forma parte de la rúbrica de `proyecto.html`.
 - **Total de instrumentos de la semana:** **7.66 puntos**.
+
+La Mini Retro se abre desde el portal raíz o el enlace de navegación de esta semana. Requiere que la carpeta esté publicada en un hosting PHP; no se ejecuta al abrir el archivo localmente ni desde un hosting estático.

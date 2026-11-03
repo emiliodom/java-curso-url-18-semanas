@@ -2,6 +2,21 @@
 
 Todas las modificaciones y adiciones de hitos del proyecto se registran en este documento.
 
+## [2026-11-03] — Guía de Entregables y Accesos de Cierre (Semanas 17–18)
+
+### Añadido
+- **Guía para estudiantes de la Semana 17 (`Material_Sesion_Clase_17_HTML_18_semanas/entregables.html`):**
+  - Resume los entregables llave en mano, README técnico, manual de usuario, evidencia, Pitch ejecutivo (3 min) y Demo técnica (5 min).
+  - Explica qué accesos pueden publicarse y cuáles deben compartirse solo por el canal privado del curso; prohíbe publicar credenciales personales, secretos de Render/Neon o contraseñas de prueba en repositorios, PDFs y videos.
+  - Enlaza la guía maestra Markdown, la plantilla calificable de la Semana 17, la radicación de Semana 18 y la Mini Retro.
+- **Navegación y portadas:** añadidos accesos a la guía de entregables y/o Mini Retro desde el portal raíz y las barras de navegación de todas las páginas HTML de las Semanas 17 y 18; ambas portadas incluyen tarjetas de acceso.
+- **Semana 18:** la guía docente ahora presenta la Mini Retro como actividad opcional posterior de aproximadamente 30 minutos, fuera de la sesión de 70 minutos y sin sustituir la Ronda 2 oficial de Evaluación entre Pares.
+- **Documentación de proyecto:** actualizados los README de las Semanas 17–18 y `CLAUDE.md` con rutas, disponibilidad, alcance y requisitos operativos de la Mini Retro y la nueva guía.
+
+### Verificación
+- Los enlaces locales de las 17 páginas HTML de las Semanas 17–18 resuelven (287 rutas); comprobado el acceso a la guía de entregables y Mini Retro en las 9 páginas de Semana 17, las 8 de Semana 18 y el portal raíz.
+- `git diff --check` satisfactorio.
+
 ## [2026-11-03] — Cierre de la Mini Retrospectiva y Accesibilidad S17–S18
 
 ### Añadido

@@ -28,6 +28,9 @@ documentos oficiales y el enlace a la evaluación anónima de la sesión.
 | `PEM en TIC_Guía de Aprendizaje N..._18_semanas.md/.docx` | Documento oficial de la guía de aprendizaje N |
 | [`examen_parcial/`](examen_parcial/) | Backend PHP del examen parcial: califica en el servidor y limita los intentos. La clave de respuestas y la contraseña de admin **no están en el repo** (ver su README) |
 | [`evaluacion_docente/`](evaluacion_docente/) | Formulario 100% anónimo de evaluación del profesor, sugerencias y quejas (todas las sesiones en una sola fuente de datos) + dashboard `/admin` |
+| [`mini_retro/`](mini_retro/) | Mini retrospectiva de equipo autoguiada (PHP): sesión privada sin cuentas, acta exportable a PDF y guía de uso |
+| [`Material_Sesion_Clase_17_HTML_18_semanas/entregables.html`](Material_Sesion_Clase_17_HTML_18_semanas/entregables.html) | Guía HTML para preparar la entrega llave en mano: documentación, videos, enlaces a plataformas y manejo seguro de credenciales |
+| [`CHANGELOG.md`](CHANGELOG.md) | Bitácora de cambios y verificaciones del repositorio |
 | `ARCHIVO_POR_AHORA/`, `Material_Sesion_Clase_N_X/` | Material del **formato anterior** (ya no vigente), conservado como archivo histórico |
 
 ## Semanas publicadas
@@ -48,8 +51,8 @@ documentos oficiales y el enlace a la evaluación anónima de la sesión.
 - ✅ **Semana 14** — Despliegue en producción con Render y Neon (17 oct 2026) — ★ Entrega Parcial 3; `.jar`, Dockerfile, PostgreSQL en Neon y URL pública HTTPS. Proyecto de referencia armado desde el Kit en [`Proyecto_Semana_14_Kit/`](Proyecto_Semana_14_Kit/) y verificación en [`VERIFICACION_Semana_14_despliegue.md`](VERIFICACION_Semana_14_despliegue.md)
 - ✅ **Semana 15** — Seguridad básica y HTTPS (24 oct 2026) — versión mínima, sin código nuevo: auditoría (HTTPS, SSL a Neon, CSRF, XSS, cabeceras), checkpoint de entrega y cómo transformar el Kit de la Semana 14 en el proyecto propio (ficha única de 10–15 campos, páginas estáticas y con parámetros)
 - ✅ **Semana 16** — QA, pruebas funcionales, arquitectura y mantenimiento (31 oct 2026) — refuerzo del árbol de carpetas, responsabilidades únicas, circuito Formulario ↔ Controlador ↔ Modelo ↔ Repositorio, matriz de 6 casos de prueba (CP-01 a CP-06) y ciclo continuo `git push` a `main` ➔ redeploy automático en Render
-- ✅ **Semana 17** — Presentación interna, retroalimentación y Entrega Parcial 4 (7 nov 2026) — ★ Entrega Parcial 4 (7 pts acumulados: 2 pts Guía 17 + 5 pts avance final), ensayo general de demo (guion de 4 min), protocolo anti-cold start de Render y Neon, y coevaluación entre pares con rúbrica compartida
-- ✅ **Semana 18** — Entrega final, defensa formal, evaluación y reflexión (14 nov 2026) — ★ Defensa formal de proyecto ante tribunal docente (10 pts), Evaluación entre pares Ronda 2 oficial (5 pts), autoevaluación metacognitiva del futuro docente en TIC y entrega de paquete de software llave en mano (15.78 pts en juego)
+- ✅ **Semana 17** — Presentación interna, retroalimentación y Entrega Parcial 4 (7 nov 2026) — ★ Entrega Parcial 4 (7 pts acumulados: 2 pts Guía 17 + 5 pts avance final), ensayo general de demo (guion de 4 min), protocolo anti-cold start de Render y Neon, coevaluación entre pares y [guía HTML de entregables](Material_Sesion_Clase_17_HTML_18_semanas/entregables.html) para documentación, videos y accesos seguros. La [Mini Retro](mini_retro/) está enlazada desde la portada y navegación de la semana.
+- ✅ **Semana 18** — Entrega final, defensa formal, evaluación y reflexión (14 nov 2026) — ★ Defensa formal de proyecto ante tribunal docente (10 pts), Evaluación entre pares Ronda 2 oficial (5 pts), autoevaluación metacognitiva del futuro docente en TIC y entrega de paquete de software llave en mano (15.78 pts en juego). La [Mini Retro](mini_retro/) está disponible como actividad opcional posterior; no reemplaza Peer Review ni ocupa los 70 minutos de clase.
 
 > **Calendario:** las 18 sesiones no son sábados consecutivos. El **12 de
 > septiembre de 2026 no hubo clase** (semana de independencia), por lo que la
@@ -62,6 +65,12 @@ documentos oficiales y el enlace a la evaluación anónima de la sesión.
 > archivos completos** con los 11 archivos del proyecto —cada uno con su
 > ruta, su línea `package` y sus `import`— útil como material de
 > recuperación para cualquier estudiante atrasado.
+
+> **Cierre y entregables:** el [estándar maestro llave en mano](ENTREGABLE_PROYECTO_LLAVE_EN_MANO.md)
+> conserva el checklist y las plantillas completas; la [guía HTML de Semana 17](Material_Sesion_Clase_17_HTML_18_semanas/entregables.html)
+> ofrece a los estudiantes una ruta directa para preparar documentos, videos y
+> compartir credenciales de prueba únicamente por un canal privado. La Mini
+> Retro necesita hosting PHP y se debe borrar después de exportar su acta.
 
 ## Dónde vive la base de datos del proyecto
 
