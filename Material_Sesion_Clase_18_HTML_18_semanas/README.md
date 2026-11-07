@@ -30,12 +30,9 @@ Esta semana representa la **culminación académica del curso**: los estudiantes
 | `../Material_Sesion_Clase_17_HTML_18_semanas/entregables.html` | Guía HTML de documentación, videos, enlaces y credenciales seguras |
 | `styles.css`, `quiz.js`, `toast.js`, `diagramas.js` | Recursos y estilos oficiales |
 
-## Disponibilidad programada del material
+## Disponibilidad del material
 
-- Antes de la sesión, la única información disponible desde Semana 18 es la guía de entregables enlazada a `../Material_Sesion_Clase_17_HTML_18_semanas/entregables.html`.
-- Las ocho páginas HTML de esta carpeta se abren el sábado **14 de noviembre de 2026 a las 7:00 a. m.**, hora local del dispositivo. Después de esa hora permanecen disponibles.
-- `acceso-semana18.js` presenta el overlay y la cuenta regresiva en cada página; al llegar la hora, elimina el overlay.
-- Es una guía de disponibilidad en el navegador, no un control de seguridad del contenido: los archivos son estáticos y el bloqueo puede omitirse desactivando JavaScript.
+- Las ocho páginas HTML de la carpeta están abiertas desde el 7 de noviembre de 2026, sin bloqueo por fecha (se retiró el overlay `acceso-semana18.js`). En el portal, la Semana 17 sigue marcada como semana actual.
 
 ## Calendario de Actas Finales
 

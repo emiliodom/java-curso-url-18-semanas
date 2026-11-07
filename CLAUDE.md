@@ -448,10 +448,10 @@ portal.
   y mini retrospectiva PHP autoguiada con apéndice para docente/equipos. Incluye
   `entregables.html`, guía navegable de documentación, videos, plataformas y
   credenciales seguras; está enlazada desde el portal raíz y la navegación de la
-  Semana 17 y la Semana 18. Desde noviembre de 2026, solo `entregables.html`
-  queda disponible antes del sábado 7 de noviembre a las 7:00 a. m.; las otras
-  ocho páginas muestran cuenta regresiva y overlay mediante `acceso-semana17.js`
-  y, al abrirse, no se vuelven a cerrar. En nov.
+  Semana 17 y la Semana 18. Las nueve páginas están abiertas: el overlay
+  con cuenta regresiva (`acceso-semana17.js`) se retiró el 7 de noviembre de
+  2026, junto con el de la Semana 18. La Semana 17 es la semana actual del
+  portal (`SEMANA_ACTIVA_N = 17` en `index.html`). En nov.
   2026 se corrigieron rúbrica/contraseñas/exportación del challenge, los bancos
   de quiz (S17: 8 presaberes + 12 finales; S18: quiz final sin selector ausente),
   y el arrastre nativo de tarjetas/agrupaciones.
@@ -464,13 +464,11 @@ portal.
   maestro de entrega llave en mano (ENTREGABLE_PROYECTO_LLAVE_EN_MANO.md).
   La Mini Retro está enlazada en la navegación y portada, y se ofrece en
   `clase.html` como actividad opcional posterior de 30 minutos, fuera de la
-  sesión oficial de 70 minutos y sin sustituir el Peer Review sumativo. En
-  noviembre de 2026, las ocho páginas HTML muestran un overlay y cuenta
-  regresiva hasta el sábado 14 de noviembre a las 7:00 a. m.; antes de esa hora,
-  solo permiten abrir la guía de entregables de la Semana 17. La lógica vive en
-  `acceso-semana18.js`; al abrirse, las páginas no se vuelven a cerrar. Estos
-  overlays son controles de disponibilidad en el navegador, no controles de
-  seguridad del contenido estático. En nov. 2026 se sustituyeron los campos de
+  sesión oficial de 70 minutos y sin sustituir el Peer Review sumativo. Las
+  ocho páginas están abiertas desde el 7 de noviembre de 2026 (se retiró el
+  overlay `acceso-semana18.js`), pero en el portal no es la semana actual: el
+  bloque "Semana actual" lo fija `SEMANA_ACTIVA_N` en `index.html`, no la
+  última semana publicada. En nov. 2026 se sustituyeron los campos de
   contraseña por confirmaciones de traspaso privado y se alineó el quiz
   integrador con el modo oscuro.
 
@@ -884,9 +882,10 @@ tarjetas dinámicamente desde el arreglo JS `WEEKS` (buscar `var WEEKS = [`).
   la entrada `{ n: N, ... }` correspondiente. La tarjeta pasa sola de
   "Próximamente" (atenuada) a "Disponible".
 - **Bloque "📍 Semana actual"**: desde el rediseño de octubre de 2026 se
-  genera **solo** con la última semana de `WEEKS` que tenga `folder`. Para un
-  texto más rico que `detalle`, agregar a esa semana la propiedad opcional
-  `destacado` (HTML). Ya no se edita a mano.
+  genera con la semana `SEMANA_ACTIVA_N` (constante en el script; hoy `17`) y,
+  si es `null`/`0` o esa semana no tiene `folder`, con la última semana de
+  `WEEKS` que tenga `folder`. Para un texto más rico que `detalle`, agregar a
+  esa semana la propiedad opcional `destacado` (HTML).
 - **Rediseño (oct 2026):** hero con el llamado "Califica al docente. Sé
   escuchado" ligado al timer de la evaluación (los enlaces con clase
   `eval-gated` se bloquean con `.is-locked` solo antes de la primera sesión),
