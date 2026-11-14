@@ -30,14 +30,25 @@ if (!empty($in['sitio_web'])) {
 }
 
 // --- Validación ---
-$sesion = isset($in['sesion']) ? (int) $in['sesion'] : 0;
-if ($sesion < 1 || $sesion > 18) {
-    http_response_code(400);
-    echo json_encode(['ok' => false, 'error' => 'Sesión inválida (1–18)']);
-    exit;
+// Dos tipos de registro en el mismo archivo:
+//   "sesion" (1–18, los 5 criterios de siempre) y
+//   "curso"  (evaluación del curso completo, sesion = 0, criterios propios).
+// Los registros anteriores a nov. 2026 no traen "tipo": se tratan como "sesion".
+$tipo = (isset($in['tipo']) && $in['tipo'] === 'curso') ? 'curso' : 'sesion';
+
+if ($tipo === 'curso') {
+    $sesion = 0;
+    $criterios = ['organizacion', 'materiales', 'aprendizaje', 'proyecto', 'docente', 'recomendaria'];
+} else {
+    $sesion = isset($in['sesion']) ? (int) $in['sesion'] : 0;
+    if ($sesion < 1 || $sesion > 18) {
+        http_response_code(400);
+        echo json_encode(['ok' => false, 'error' => 'Sesión inválida (1–18)']);
+        exit;
+    }
+    $criterios = ['claridad', 'ritmo', 'utilidad', 'dominio', 'ambiente'];
 }
 
-$criterios = ['claridad', 'ritmo', 'utilidad', 'dominio', 'ambiente'];
 $puntajes  = [];
 foreach ($criterios as $c) {
     $v = isset($in['puntajes'][$c]) ? (int) $in['puntajes'][$c] : 0;
@@ -59,6 +70,7 @@ function limpiar_texto($t) {
 $registro = [
     'id'          => 'ev_' . bin2hex(random_bytes(6)),
     'fecha'       => gmdate('c'),           // hora del servidor, no del cliente
+    'tipo'        => $tipo,
     'sesion'      => $sesion,
     'puntajes'    => $puntajes,
     'lo_mejor'    => limpiar_texto($in['lo_mejor'] ?? ''),

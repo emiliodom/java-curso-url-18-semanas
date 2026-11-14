@@ -29,6 +29,20 @@ reciente pasa automáticamente al bloque **"📍 Semana actual"**. Para darle en
 ese bloque un texto más largo que `detalle`, agrega la propiedad opcional
 `destacado` (admite HTML).
 
+## Cierre del curso (14 de noviembre de 2026)
+
+- El hero es el banner **"¡Felicidades por completar Programación 1!"**
+  (`img/felicidades-programacion1-*`: JPG y WebP de 1600 y 960 px, y un
+  recorte cuadrado para celular servido con `<picture>`). El texto del banner
+  está también en el `alt` de la imagen.
+- Debajo, el llamado **"Califica el curso completo. Sé escuchado"** lleva a
+  `https://proximaweb.click/url/evaluacion_docente/index.html?modo=curso`
+  (ver `evaluacion_docente/README.md`). El botón secundario evalúa la sesión
+  del día. La barra superior, Recursos y la banda final apuntan al mismo
+  formulario del curso.
+- La Semana 18 es la semana actual (`SEMANA_ACTIVA_N = 18`) y la evaluación de
+  la sesión quedó abierta todo el día (`OPEN_HOUR = '00:00:00'`).
+
 ## Diseño del portal (octubre de 2026)
 
 - **Hero "Califica al docente. Sé escuchado."**: el botón principal lleva a
@@ -60,7 +74,8 @@ En `index.html` los enlaces a archivos con espacios van con URL-encoding (por ej
 
 ## Material del formato anterior
 
-Las carpetas `Material_Sesion_Clase_N_X/` sin sufijo `_18_semanas` son del
-formato de curso anterior (ya no vigente). Quedan enlazadas solo dentro del
-`<details>` "🗄 Archivo — formato anterior" al final del portal, sin tarjetas
-en la cuadrícula principal.
+Las carpetas del formato anterior (`Material_Sesion_Clase_N_X/` sin sufijo
+`_18_semanas` y `ARCHIVO_POR_AHORA/`) se eliminaron del repositorio en el
+commit `1223811`. El desplegable "🗄 Archivo" que las enlazaba se quitó del
+portal el 14 de noviembre de 2026 porque todos sus enlaces estaban rotos. Si
+se necesitan, se recuperan del historial de Git.

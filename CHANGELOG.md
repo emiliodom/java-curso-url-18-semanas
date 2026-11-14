@@ -2,6 +2,22 @@
 
 Todas las modificaciones y adiciones de hitos del proyecto se registran en este documento.
 
+## [2026-11-14] — Cierre del curso: portal, evaluación del curso completo y auditorías
+
+### Añadido
+- **Portal raíz:** banner "¡Felicidades por completar Programación 1!" como hero (`img/`, JPG y WebP de 1600/960 px y recorte cuadrado para celular), seguido del llamado "Califica el curso completo. Sé escuchado" hacia `https://proximaweb.click/url/evaluacion_docente/index.html?modo=curso`.
+- **Evaluación del curso completo (`evaluacion_docente/`):** modo `?modo=curso` con 6 criterios propios; se guarda con `tipo: "curso"` en el mismo JSON y el panel `/admin` lo muestra en una sección separada de los promedios por sesión.
+
+### Cambiado
+- **Portal:** la Semana 18 es la semana actual; la evaluación de la sesión quedó abierta todo el día de cierre (`OPEN_HOUR = '00:00:00'`). Se quitó el desplegable del archivo histórico (sus 7 enlaces estaban rotos desde el commit `1223811`).
+- **Evaluación entre pares, Ronda 2 (`Material_Sesion_Clase_18_HTML_18_semanas/evaluacion_pares.html` y `semana18_pares_abierta.html`):** reescrita para que se entienda que se califica la calidad de la evaluación del estudiante (tabla de 5 pts), no la nota del compañero; pasos, "qué revisar" y evidencia por criterio, sin penalizar el arranque lento del plan gratuito de Render, y aviso al exportar incompleta.
+- **Mini retrospectiva (`mini_retro/`):** requisito "Para avanzar" visible en cada etapa, etapa 3 con pasos numerados y explicación de por qué las tarjetas vuelven a "sin agrupar", casilla de aprendizaje a ancho completo, etapa 4 orientada al siguiente proyecto, enlace a la Semana 18.
+
+### Verificación
+- Recorrido completo de la Mini Retro con Playwright sobre PHP local (5 etapas y acta, sin errores de JavaScript).
+- `evaluacion_docente`: envíos de sesión y de curso aceptados; envíos incompletos o de sesión inválida rechazados; panel admin con la sección del curso y el filtro "Curso completo" (prueba en una copia con datos de prueba).
+- Portal y página de pares revisados en Chrome sin errores de JavaScript, en claro, oscuro y a ancho de celular.
+
 ## [2026-11-03] — Guía de Entregables y Accesos de Cierre (Semanas 17–18)
 
 ### Añadido

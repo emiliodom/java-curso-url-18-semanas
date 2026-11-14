@@ -450,8 +450,8 @@ portal.
   credenciales seguras; está enlazada desde el portal raíz y la navegación de la
   Semana 17 y la Semana 18. Las nueve páginas están abiertas: el overlay
   con cuenta regresiva (`acceso-semana17.js`) se retiró el 7 de noviembre de
-  2026, junto con el de la Semana 18. La Semana 17 es la semana actual del
-  portal (`SEMANA_ACTIVA_N = 17` en `index.html`). En nov.
+  2026, junto con el de la Semana 18. Fue la semana actual del portal hasta el
+  14 de noviembre de 2026 (desde ese día es la 18). En nov.
   2026 se corrigieron rúbrica/contraseñas/exportación del challenge, los bancos
   de quiz (S17: 8 presaberes + 12 finales; S18: quiz final sin selector ausente),
   y el arrastre nativo de tarjetas/agrupaciones.
@@ -466,11 +466,29 @@ portal.
   `clase.html` como actividad opcional posterior de 30 minutos, fuera de la
   sesión oficial de 70 minutos y sin sustituir el Peer Review sumativo. Las
   ocho páginas están abiertas desde el 7 de noviembre de 2026 (se retiró el
-  overlay `acceso-semana18.js`), pero en el portal no es la semana actual: el
-  bloque "Semana actual" lo fija `SEMANA_ACTIVA_N` en `index.html`, no la
-  última semana publicada. En nov. 2026 se sustituyeron los campos de
-  contraseña por confirmaciones de traspaso privado y se alineó el quiz
-  integrador con el modo oscuro.
+  overlay `acceso-semana18.js`) y desde el 14 de noviembre de 2026 es la
+  semana actual del portal (`SEMANA_ACTIVA_N = 18`). En nov. 2026 se
+  sustituyeron los campos de contraseña por confirmaciones de traspaso privado
+  y se alineó el quiz integrador con el modo oscuro.
+  **Auditoría del 14 de nov. 2026 (día de la sesión):**
+  - `evaluacion_pares.html` (y su copia `semana18_pares_abierta.html`, clave
+    de guardado propia) se reescribió porque contradecía la regla de la Ronda 1:
+    decía "Calificación asignada a tu compañero". Ahora deja claro que **se
+    califica la calidad de la evaluación del estudiante** (tabla de 5 pts:
+    criterios con evidencia 2.0 · fortalezas específicas 1.0 · sugerencias
+    accionables 1.5 · reflexión y respeto 0.5) y que el puntaje marcado es un
+    dictamen de referencia, no la nota del compañero (su proyecto lo califica el
+    tribunal). Cada criterio trae "Qué revisar", tres niveles y un campo de
+    evidencia; el criterio 1 ya no penaliza el arranque lento del plan gratuito
+    de Render; roles genéricos (no "ADMIN/OPERADOR"); tabla de comentario inútil
+    vs. útil; barra de avance y aviso al exportar incompleto.
+  - `mini_retro/` (la retro de esta semana): requisito "✅ Para avanzar" visible
+    en cada etapa (antes solo aparecía tras el error), etapa 3 con 4 pasos
+    numerados y la explicación de por qué las tarjetas vuelven a "sin agrupar",
+    casilla de aprendizaje a ancho completo (salía diminuta), etapa 4 orientada
+    al próximo proyecto o a la práctica docente (ya no hay "próxima revisión"),
+    "Resultado" en vez de "Etapa 6", enlace a la Semana 18. Recorrido completo
+    verificado con Playwright y PHP local (5 etapas + acta, sin errores).
 
 **Contraste de Semanas 17–18:** auditoría de las 16 páginas HTML en tema claro y
 oscuro (incluyendo contenido oculto) encontró texto de hasta 1:1 en oscuro, por
@@ -882,7 +900,7 @@ tarjetas dinámicamente desde el arreglo JS `WEEKS` (buscar `var WEEKS = [`).
   la entrada `{ n: N, ... }` correspondiente. La tarjeta pasa sola de
   "Próximamente" (atenuada) a "Disponible".
 - **Bloque "📍 Semana actual"**: desde el rediseño de octubre de 2026 se
-  genera con la semana `SEMANA_ACTIVA_N` (constante en el script; hoy `17`) y,
+  genera con la semana `SEMANA_ACTIVA_N` (constante en el script; hoy `18`) y,
   si es `null`/`0` o esa semana no tiene `folder`, con la última semana de
   `WEEKS` que tenga `folder`. Para un texto más rico que `detalle`, agregar a
   esa semana la propiedad opcional `destacado` (HTML).
@@ -894,13 +912,21 @@ tarjetas dinámicamente desde el arreglo JS `WEEKS` (buscar `var WEEKS = [`).
   con estado por fecha (Completada / Esta semana / Próxima clase /
   Próximamente) y filtros por unidad según `badge`. Sin Bootstrap; todo el
   estilo está en `portal.css` (claro y oscuro automáticos).
-- **Timer de evaluación anónima** (`SESSION_SATURDAYS` + `OPEN_HOUR =
-  '11:00:00'`): ya es genérico para las 18 semanas basado en la fecha real
-  (`new Date()`) — no se toca por semana. Desbloquea el botón/enlace a
-  `evaluacion_docente/` automáticamente cada sábado al terminar la clase.
-- **`<details>` "🗄 Archivo — formato anterior"** al final: enlaces al
-  material pre-18-semanas. No agregar tarjetas del formato anterior a la
-  cuadrícula principal.
+- **Cierre del curso (14 nov 2026):** el hero es ahora el banner
+  "¡Felicidades por completar Programación 1!" (`img/felicidades-programacion1-*`,
+  JPG + WebP en 1600/960 px y un recorte cuadrado para celular con
+  `<picture>`; el PNG original de 2 MB no se versiona) seguido del llamado
+  "Califica el curso completo. Sé escuchado", que apunta a
+  `https://proximaweb.click/url/evaluacion_docente/index.html?modo=curso`
+  (también la barra superior, Recursos y la banda final). El botón secundario
+  evalúa la sesión del día.
+- **Timer de evaluación anónima** (`SESSION_SATURDAYS` + `OPEN_HOUR`): genérico
+  para las 18 semanas según la fecha real. Era `'11:00:00'` (fin de la clase);
+  el 14 nov 2026 se cambió a `'00:00:00'` para que la evaluación de la Semana 18
+  quedara abierta todo el día de cierre.
+- **Archivo del formato anterior:** el desplegable "🗄 Archivo" se quitó del
+  portal (14 nov 2026) porque sus carpetas se eliminaron del repo en el commit
+  `1223811` y todos sus enlaces estaban rotos.
 - El buscador (`Ctrl+K`) filtra por `data-title`/`data-tags` de cada tarjeta.
 
 ## `ficha_proyecto.html` (registro inicial del proyecto, transversal)
@@ -969,6 +995,13 @@ de datos** (`data/evaluaciones.json`).
   (si cambian las fechas del programa, actualizar en ambos lugares).
 - `guardar.php`: agrega el registro al JSON con `flock` (bloqueo de archivo)
   y un honeypot anti-bots (`sitio_web`).
+- **Modo "curso completo" (nov. 2026):** `index.html?modo=curso` (o el selector
+  "⭐ El curso completo") muestra 6 criterios propios (`organizacion`,
+  `materiales`, `aprendizaje`, `proyecto`, `docente`, `recomendaria`) y textos de
+  cierre. `guardar.php` lo guarda con `tipo: "curso"` y `sesion: 0` en el mismo
+  JSON; los registros sin `tipo` (anteriores) se tratan como `"sesion"`. El
+  panel lo muestra en su propia sección y lo excluye de los promedios por
+  sesión; el filtro de comentarios tiene la opción "🎓 Curso completo".
 - `admin/index.php` + `admin/descargar.php`: dashboard protegido con
   contraseña (definida en `config.php` — **cambiarla antes de publicar**),
   con promedios por sesión, comentarios filtrables y descarga del JSON.

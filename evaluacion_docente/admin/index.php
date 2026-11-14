@@ -37,15 +37,40 @@ $criterios = [
     'ambiente' => 'Ambiente',
 ];
 
-// Filtro por sesión (?sesion=N)
-$filtro = isset($_GET['sesion']) && $_GET['sesion'] !== '' ? (int) $_GET['sesion'] : 0;
-$visibles = $filtro
-    ? array_values(array_filter($evals, function ($e) use ($filtro) { return (int)$e['sesion'] === $filtro; }))
-    : $evals;
+// Criterios de la evaluación del curso completo (registros con tipo = "curso")
+$criteriosCurso = [
+    'organizacion' => 'Organización',
+    'materiales'   => 'Materiales',
+    'aprendizaje'  => 'Aprendizaje',
+    'proyecto'     => 'Proyecto',
+    'docente'      => 'Docente',
+    'recomendaria' => 'Recomendaría',
+];
+function es_curso($e) { return ($e['tipo'] ?? 'sesion') === 'curso'; }
+$evalsSesion = array_values(array_filter($evals, function ($e) { return !es_curso($e); }));
+$evalsCurso  = array_values(array_filter($evals, 'es_curso'));
 
-// Estadísticas por sesión
+// Filtro (?sesion=N o ?sesion=curso)
+$filtroRaw = isset($_GET['sesion']) ? (string) $_GET['sesion'] : '';
+$filtroCurso = $filtroRaw === 'curso';
+$filtro = (!$filtroCurso && $filtroRaw !== '') ? (int) $filtroRaw : 0;
+if ($filtroCurso) {
+    $visibles = $evalsCurso;
+} elseif ($filtro) {
+    $visibles = array_values(array_filter($evalsSesion, function ($e) use ($filtro) { return (int)$e['sesion'] === $filtro; }));
+} else {
+    $visibles = $evals;
+}
+
+// Promedios del curso completo
+$curso = ['n' => count($evalsCurso), 'sumas' => array_fill_keys(array_keys($criteriosCurso), 0)];
+foreach ($evalsCurso as $e) {
+    foreach ($criteriosCurso as $k => $_) { $curso['sumas'][$k] += (int) ($e['puntajes'][$k] ?? 0); }
+}
+
+// Estadísticas por sesión (solo registros de sesión)
 $porSesion = [];
-foreach ($evals as $e) {
+foreach ($evalsSesion as $e) {
     $s = (int) $e['sesion'];
     if (!isset($porSesion[$s])) {
         $porSesion[$s] = ['n' => 0, 'sumas' => array_fill_keys(array_keys($criterios), 0)];
@@ -120,8 +145,8 @@ function h($t) { return htmlspecialchars($t ?? '', ENT_QUOTES, 'UTF-8'); }
       </div>
       <div class="col-md-3">
         <div class="card text-center"><div class="card-body">
-          <div class="display-6 fw-bold"><?= count($porSesion) ?></div>
-          <div class="text-secondary">sesiones con datos</div>
+          <div class="display-6 fw-bold"><?= $curso['n'] ?></div>
+          <div class="text-secondary">evaluaciones del curso completo</div>
         </div></div>
       </div>
       <div class="col-md-3">
@@ -132,7 +157,7 @@ function h($t) { return htmlspecialchars($t ?? '', ENT_QUOTES, 'UTF-8'); }
             $global = $n ? round($todas / $n, 2) : 0;
           ?>
           <div class="display-6 fw-bold"><?= $global ?>/5</div>
-          <div class="text-secondary">promedio global</div>
+          <div class="text-secondary">promedio de las sesiones</div>
         </div></div>
       </div>
       <div class="col-md-3">
@@ -141,6 +166,29 @@ function h($t) { return htmlspecialchars($t ?? '', ENT_QUOTES, 'UTF-8'); }
           <div class="display-6 fw-bold"><?= $quejas ?></div>
           <div class="text-secondary">quejas registradas</div>
         </div></div>
+      </div>
+    </div>
+
+    <div class="card mb-4 border-warning">
+      <div class="card-body">
+        <h2 class="h5 fw-bold mb-1">🎓 Evaluación del curso completo</h2>
+        <div class="text-secondary small mb-3">Respuestas del formulario abierto con <code>?modo=curso</code>. No entran en los promedios por sesión.</div>
+        <?php if (!$curso['n']): ?>
+          <div class="text-secondary">Aún no hay evaluaciones del curso completo.</div>
+        <?php else: ?>
+        <div class="row g-3">
+          <?php foreach ($criteriosCurso as $k => $label): $p = prom($curso, $k); ?>
+            <div class="col-md-4">
+              <div class="small fw-semibold"><?= h($label) ?></div>
+              <div class="d-flex align-items-center gap-2">
+                <div class="bar flex-grow-1"><span style="width: <?= $p / 5 * 100 ?>%"></span></div>
+                <span class="fw-semibold <?= $p < 3 ? 'text-danger' : '' ?>"><?= $p ?></span>
+              </div>
+            </div>
+          <?php endforeach; ?>
+        </div>
+        <a class="btn btn-sm btn-outline-warning mt-3" href="?sesion=curso">Ver comentarios del curso completo (<?= $curso['n'] ?>)</a>
+        <?php endif; ?>
       </div>
     </div>
 
@@ -192,7 +240,8 @@ function h($t) { return htmlspecialchars($t ?? '', ENT_QUOTES, 'UTF-8'); }
           <h2 class="h5 fw-bold mb-0">Comentarios (<?= count($visibles) ?>)</h2>
           <form method="get" class="d-flex gap-2">
             <select class="form-select form-select-sm" name="sesion" onchange="this.form.submit()">
-              <option value="">Todas las sesiones</option>
+              <option value="">Todas las respuestas</option>
+              <option value="curso" <?= $filtroCurso ? 'selected' : '' ?>>🎓 Curso completo</option>
               <?php for ($i = 1; $i <= 18; $i++): ?>
                 <option value="<?= $i ?>" <?= $filtro === $i ? 'selected' : '' ?>>Semana <?= $i ?></option>
               <?php endfor; ?>
@@ -207,11 +256,11 @@ function h($t) { return htmlspecialchars($t ?? '', ENT_QUOTES, 'UTF-8'); }
         <?php foreach (array_reverse($visibles) as $e): ?>
           <div class="comment-card border">
             <div class="d-flex justify-content-between flex-wrap">
-              <span class="fw-semibold">Semana <?= (int) $e['sesion'] ?></span>
+              <span class="fw-semibold"><?= es_curso($e) ? '🎓 Curso completo' : 'Semana ' . (int) $e['sesion'] ?></span>
               <span class="text-secondary small"><?= h(substr($e['fecha'], 0, 16)) ?> UTC · <?= h($e['id']) ?></span>
             </div>
             <div class="small text-secondary mb-2">
-              <?php foreach ($criterios as $k => $label): ?>
+              <?php foreach ((es_curso($e) ? $criteriosCurso : $criterios) as $k => $label): ?>
                 <?= h($label) ?>: <strong><?= (int) ($e['puntajes'][$k] ?? 0) ?></strong> ·
               <?php endforeach; ?>
             </div>

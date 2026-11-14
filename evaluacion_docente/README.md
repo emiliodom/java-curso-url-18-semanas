@@ -58,6 +58,25 @@ Permisos → `755` (o `775` si persiste).
 2. Revisa el dashboard `/admin` después de clase: promedios por sesión, sugerencias y quejas.
 3. Descarga el JSON cuando quieras respaldar o analizar los datos (Excel, Python, etc.).
 
+## Evaluación del curso completo (modo `curso`)
+
+Desde el cierre del curso (14 de noviembre de 2026) el mismo formulario sirve
+para evaluar **todo el curso**:
+
+- Enlace directo: `https://proximaweb.click/url/evaluacion_docente/index.html?modo=curso`
+  (o pulsar "⭐ El curso completo" en la parte superior del formulario).
+- Seis criterios de 1 a 5: organización del curso, materiales, aprendizaje,
+  el proyecto como forma de aprender, desempeño del docente y si lo
+  recomendarían; más lo mejor, sugerencias para la próxima generación y quejas.
+- Se guarda en el mismo `data/evaluaciones.json` con `"tipo": "curso"` y
+  `"sesion": 0`. Los registros sin `tipo` (anteriores) cuentan como sesión.
+- En `/admin` aparece la sección **🎓 Evaluación del curso completo** con sus
+  promedios, separada de los promedios por sesión, y el filtro de comentarios
+  tiene la opción "Curso completo".
+- **Para que el enlace funcione hay que volver a subir por FTP**
+  `index.html`, `guardar.php` y `admin/index.php`. Si el servidor tiene la
+  versión anterior, el enlace abre el formulario de sesión de siempre.
+
 ## Enlace desde el material de clase
 
 El hub de la Semana 1 (`Material_Sesion_Clase_1_HTML_18_semanas/index.html`) puede

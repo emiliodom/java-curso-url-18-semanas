@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Evaluación anónima de la sesión — Programación I</title>
+  <title>Evaluación anónima — Programación I</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <style>
     body { background: #f6f8fb; }
@@ -14,6 +14,12 @@
         linear-gradient(180deg, #fff, #f6f8fb);
       border-bottom: 1px solid rgba(0,0,0,.06);
     }
+    body.modo-curso .hero {
+      background:
+        radial-gradient(900px circle at 0% 0%, rgba(250,204,21,.35), transparent 60%),
+        radial-gradient(900px circle at 100% 30%, rgba(236,72,153,.25), transparent 55%),
+        linear-gradient(180deg, #fff, #f6f8fb);
+    }
     .card { border: 1px solid rgba(0,0,0,.06); box-shadow: 0 10px 30px rgba(16,24,40,.06); }
     .rating-group .btn { min-width: 3rem; }
     .anon-badge {
@@ -21,29 +27,44 @@
       padding: .35rem .7rem; border-radius: 999px;
       background: rgba(34,197,94,.15); color: #14532d; font-weight: 600;
     }
+    .mode-switch .btn { font-weight: 600; }
     .hp-field { position: absolute; left: -9999px; opacity: 0; height: 0; overflow: hidden; }
+    .solo-curso { display: none; }
+    body.modo-curso .solo-curso { display: block; }
+    body.modo-curso .solo-sesion { display: none; }
   </style>
 </head>
 <body>
   <header class="hero py-4">
     <div class="container" style="max-width: 820px;">
       <div class="anon-badge mb-2">🔒 100% anónimo — no se guarda tu nombre, correo ni IP</div>
-      <h1 class="h2 fw-bold mb-1">Evaluación de la sesión, sugerencias y quejas</h1>
-      <p class="text-secondary mb-0">
+      <h1 class="h2 fw-bold mb-1 solo-sesion">Evaluación de la sesión, sugerencias y quejas</h1>
+      <h1 class="h2 fw-bold mb-1 solo-curso">🎓 Evalúa el curso completo</h1>
+      <p class="text-secondary mb-3 solo-sesion">
         Tu opinión mejora el curso. Este formulario es <strong>completamente anónimo</strong>:
-        no hay forma técnica de saber quién respondió. Sé honesto y específico.
-        Toma menos de 2 minutos.
+        no hay forma técnica de saber quién respondió. Sé honesto y específico. Toma menos de 2 minutos.
       </p>
+      <p class="text-secondary mb-3 solo-curso">
+        Terminaste las 18 semanas de Programación I. Antes de irte, cuéntanos cómo fue <strong>todo el curso</strong>:
+        lo que funcionó, lo que cambiarías y lo que recomendarías. Tus respuestas, <strong>completamente anónimas</strong>,
+        definen cómo se dará el curso a la próxima generación. Toma unos 3 minutos.
+      </p>
+      <div class="btn-group mode-switch" role="group" aria-label="¿Qué quieres evaluar?">
+        <input type="radio" class="btn-check" name="modo" id="modoSesion" value="sesion" autocomplete="off" checked>
+        <label class="btn btn-outline-primary" for="modoSesion">Una sesión</label>
+        <input type="radio" class="btn-check" name="modo" id="modoCurso" value="curso" autocomplete="off">
+        <label class="btn btn-outline-primary" for="modoCurso">⭐ El curso completo</label>
+      </div>
     </div>
   </header>
 
   <main class="container py-4" style="max-width: 820px;">
     <form id="evalForm" autocomplete="off">
 
-      <div class="card mb-3">
+      <div class="card mb-3 solo-sesion">
         <div class="card-body">
           <label class="form-label fw-semibold" for="sesion">¿Qué sesión estás evaluando?</label>
-          <select id="sesion" name="sesion" class="form-select" required>
+          <select id="sesion" name="sesion" class="form-select">
             <option value="" selected disabled>Elige la semana/sesión…</option>
             <option value="1">Semana 1 — Fundamentos de Java y tipos de datos (11 jul)</option>
             <option value="2">Semana 2 — Lógica, métodos y buenas prácticas (18 jul)</option>
@@ -69,7 +90,7 @@
 
       <div class="card mb-3">
         <div class="card-body">
-          <h2 class="h5 fw-bold mb-3">Califica la sesión (1 = muy mal · 5 = excelente)</h2>
+          <h2 class="h5 fw-bold mb-3"><span class="solo-sesion">Califica la sesión</span><span class="solo-curso">Califica el curso completo</span> <span class="fw-normal text-secondary">(1 = muy mal · 5 = excelente)</span></h2>
           <div id="ratings"></div>
         </div>
       </div>
@@ -78,16 +99,16 @@
         <div class="card-body">
           <h2 class="h5 fw-bold mb-3">Cuéntanos más (opcional pero muy valioso)</h2>
           <div class="mb-3">
-            <label class="form-label fw-semibold" for="lo_mejor">👍 ¿Qué fue lo mejor de la sesión? ¿Qué deberíamos repetir?</label>
-            <textarea class="form-control" id="lo_mejor" name="lo_mejor" rows="3" maxlength="1500" placeholder="Ej: el challenge de arrastrar código me ayudó a entender la estructura…"></textarea>
+            <label class="form-label fw-semibold" for="lo_mejor" id="lblMejor">👍 ¿Qué fue lo mejor de la sesión? ¿Qué deberíamos repetir?</label>
+            <textarea class="form-control" id="lo_mejor" name="lo_mejor" rows="3" maxlength="1500"></textarea>
           </div>
           <div class="mb-3">
-            <label class="form-label fw-semibold" for="sugerencias">💡 Sugerencias: ¿qué cambiarías o agregarías?</label>
-            <textarea class="form-control" id="sugerencias" name="sugerencias" rows="3" maxlength="1500" placeholder="Ej: más tiempo para los ejercicios, un video corto antes de clase…"></textarea>
+            <label class="form-label fw-semibold" for="sugerencias" id="lblSug">💡 Sugerencias: ¿qué cambiarías o agregarías?</label>
+            <textarea class="form-control" id="sugerencias" name="sugerencias" rows="3" maxlength="1500"></textarea>
           </div>
           <div class="mb-0">
-            <label class="form-label fw-semibold" for="quejas">⚠ Quejas: ¿algo no funcionó o te incomodó? (di lo que sea, es anónimo)</label>
-            <textarea class="form-control" id="quejas" name="quejas" rows="3" maxlength="1500" placeholder="Ej: el audio se cortaba, fuimos muy rápido en casting…"></textarea>
+            <label class="form-label fw-semibold" for="quejas" id="lblQueja">⚠ Quejas: ¿algo no funcionó o te incomodó? (di lo que sea, es anónimo)</label>
+            <textarea class="form-control" id="quejas" name="quejas" rows="3" maxlength="1500"></textarea>
           </div>
           <!-- honeypot anti-spam: los humanos no ven este campo -->
           <div class="hp-field" aria-hidden="true">
@@ -97,16 +118,18 @@
         </div>
       </div>
 
-      <div class="d-flex gap-2 align-items-center">
+      <div class="d-flex gap-2 align-items-center flex-wrap">
         <button class="btn btn-primary btn-lg" type="submit" id="sendBtn">Enviar evaluación anónima</button>
         <span class="text-secondary small">Al enviar no se registra ningún dato personal.</span>
       </div>
 
-      <div id="okMsg" class="alert alert-success mt-3" style="display:none;">
-        ✅ ¡Gracias! Tu evaluación anónima fue registrada. Puedes cerrar esta página.
-      </div>
       <div id="errMsg" class="alert alert-danger mt-3" style="display:none;"></div>
     </form>
+
+    <div id="okMsg" class="alert alert-success mt-3" style="display:none;">
+      <div class="fw-semibold mb-1">✅ ¡Gracias! Tu evaluación anónima fue registrada.</div>
+      <div id="okExtra">Puedes cerrar esta página.</div>
+    </div>
   </main>
 
   <footer class="py-4 border-top bg-white">
@@ -117,9 +140,8 @@
 
   <script>
     // ===== Selección automática de la semana =====
-    // La semana lectiva corre de sábado (día de clase) a viernes siguiente:
-    // p. ej., del sáb 11-jul al vie 17-jul es "Semana 1". Se preselecciona la
-    // semana vigente según la fecha de hoy (el estudiante puede cambiarla).
+    // La semana lectiva corre de sábado (día de clase) a viernes siguiente.
+    // Mantener idéntico a SESSION_SATURDAYS del portal raíz (index.html).
     var SESSION_SATURDAYS = [
       '2026-07-11', '2026-07-18', '2026-07-25', '2026-08-01', '2026-08-08',
       '2026-08-15', '2026-08-22', '2026-08-29', '2026-09-05', '2026-09-19',
@@ -142,42 +164,103 @@
       }
     })();
 
-    // Genera las 5 escalas de calificación
-    var CRITERIOS = [
-      { id: 'claridad',   label: 'Claridad de la explicación' },
-      { id: 'ritmo',      label: 'Ritmo de la clase (ni lento ni apurado)' },
-      { id: 'utilidad',   label: 'Utilidad de los materiales y ejercicios' },
-      { id: 'dominio',    label: 'Dominio del tema por parte del profesor' },
-      { id: 'ambiente',   label: 'Ambiente de respeto y apertura a preguntas' }
-    ];
-
-    var cont = document.getElementById('ratings');
-    CRITERIOS.forEach(function (c) {
-      var row = document.createElement('div');
-      row.className = 'mb-3';
-      var html = '<label class="form-label">' + c.label + ' <span class="text-danger">*</span></label>' +
-        '<div class="btn-group rating-group d-flex flex-wrap" role="group">';
-      for (var v = 1; v <= 5; v++) {
-        html += '<input type="radio" class="btn-check" name="' + c.id + '" id="' + c.id + v + '" value="' + v + '" required />' +
-          '<label class="btn btn-outline-primary" for="' + c.id + v + '">' + v + '</label>';
+    // ===== Criterios por modo =====
+    // Sesión: los 5 de siempre (no cambiar los id: el panel /admin los promedia).
+    // Curso completo (desde nov. 2026): se guardan con tipo "curso".
+    var CRITERIOS = {
+      sesion: [
+        { id: 'claridad', label: 'Claridad de la explicación' },
+        { id: 'ritmo',    label: 'Ritmo de la clase (ni lento ni apurado)' },
+        { id: 'utilidad', label: 'Utilidad de los materiales y ejercicios' },
+        { id: 'dominio',  label: 'Dominio del tema por parte del profesor' },
+        { id: 'ambiente', label: 'Ambiente de respeto y apertura a preguntas' }
+      ],
+      curso: [
+        { id: 'organizacion', label: 'Organización del curso: las 18 semanas siguieron un orden lógico' },
+        { id: 'materiales',   label: 'Materiales: páginas semanales, Kits, quizzes y challenges' },
+        { id: 'aprendizaje',  label: 'Cuánto aprendí: hoy puedo construir y publicar una app web con Java' },
+        { id: 'proyecto',     label: 'El proyecto real como forma de aprender (de la ficha al despliegue)' },
+        { id: 'docente',      label: 'Desempeño del docente a lo largo del curso' },
+        { id: 'recomendaria', label: '¿Recomendarías este curso a un compañero de profesorado?' }
+      ]
+    };
+    var TEXTOS = {
+      sesion: {
+        mejor: '👍 ¿Qué fue lo mejor de la sesión? ¿Qué deberíamos repetir?',
+        sug: '💡 Sugerencias: ¿qué cambiarías o agregarías?',
+        queja: '⚠ Quejas: ¿algo no funcionó o te incomodó? (di lo que sea, es anónimo)',
+        phMejor: 'Ej: el challenge de arrastrar código me ayudó a entender la estructura…',
+        phSug: 'Ej: más tiempo para los ejercicios, un video corto antes de clase…',
+        phQueja: 'Ej: el audio se cortaba, fuimos muy rápido en casting…'
+      },
+      curso: {
+        mejor: '👍 ¿Qué fue lo mejor de todo el curso? ¿Qué no debería cambiar nunca?',
+        sug: '💡 Para la próxima generación: ¿qué cambiarías, quitarías o agregarías?',
+        queja: '⚠ ¿Algo del curso no funcionó o te incomodó? (es anónimo)',
+        phMejor: 'Ej: los Kits completos con package e imports; publicar mi proyecto en Render…',
+        phSug: 'Ej: empezar antes con el proyecto real, más práctica de Git, menos páginas por semana…',
+        phQueja: 'Ej: la semana de despliegue fue muy pesada para 70 minutos…'
       }
-      html += '</div>';
-      row.innerHTML = html;
-      cont.appendChild(row);
+    };
+
+    var modo = 'sesion';
+    var params = new URLSearchParams(location.search);
+    if (params.get('modo') === 'curso') modo = 'curso';
+
+    function pintarModo() {
+      document.body.classList.toggle('modo-curso', modo === 'curso');
+      document.getElementById(modo === 'curso' ? 'modoCurso' : 'modoSesion').checked = true;
+      document.title = (modo === 'curso' ? 'Evaluación del curso completo' : 'Evaluación anónima de la sesión') + ' — Programación I';
+      var t = TEXTOS[modo];
+      document.getElementById('lblMejor').textContent = t.mejor;
+      document.getElementById('lblSug').textContent = t.sug;
+      document.getElementById('lblQueja').textContent = t.queja;
+      document.getElementById('lo_mejor').placeholder = t.phMejor;
+      document.getElementById('sugerencias').placeholder = t.phSug;
+      document.getElementById('quejas').placeholder = t.phQueja;
+      document.getElementById('sesion').required = (modo === 'sesion');
+
+      var cont = document.getElementById('ratings');
+      cont.innerHTML = '';
+      CRITERIOS[modo].forEach(function (c) {
+        var row = document.createElement('div');
+        row.className = 'mb-3';
+        var html = '<label class="form-label">' + c.label + ' <span class="text-danger">*</span></label>' +
+          '<div class="btn-group rating-group d-flex flex-wrap" role="group" aria-label="' + c.label + '">';
+        for (var v = 1; v <= 5; v++) {
+          html += '<input type="radio" class="btn-check" name="' + c.id + '" id="' + c.id + v + '" value="' + v + '" required />' +
+            '<label class="btn btn-outline-primary" for="' + c.id + v + '">' + v + '</label>';
+        }
+        html += '</div>';
+        row.innerHTML = html;
+        cont.appendChild(row);
+      });
+    }
+
+    document.querySelectorAll('input[name="modo"]').forEach(function (r) {
+      r.addEventListener('change', function () {
+        modo = r.value;
+        var url = new URL(location.href);
+        if (modo === 'curso') url.searchParams.set('modo', 'curso'); else url.searchParams.delete('modo');
+        history.replaceState(null, '', url);
+        pintarModo();
+      });
     });
+    pintarModo();
 
     document.getElementById('evalForm').addEventListener('submit', function (e) {
       e.preventDefault();
       var f = e.target;
       var data = {
-        sesion: parseInt(f.sesion.value, 10),
+        tipo: modo,
+        sesion: modo === 'curso' ? 0 : parseInt(f.sesion.value, 10),
         puntajes: {},
         lo_mejor: f.lo_mejor.value.trim(),
         sugerencias: f.sugerencias.value.trim(),
         quejas: f.quejas.value.trim(),
         sitio_web: f.sitio_web.value // honeypot
       };
-      CRITERIOS.forEach(function (c) {
+      CRITERIOS[modo].forEach(function (c) {
         var checked = f.querySelector('input[name="' + c.id + '"]:checked');
         data.puntajes[c.id] = checked ? parseInt(checked.value, 10) : null;
       });
@@ -195,8 +278,11 @@
         .then(function (res) {
           if (res.ok) {
             f.style.display = 'none';
+            document.querySelector('.mode-switch').style.display = 'none';
+            document.getElementById('okExtra').textContent = modo === 'curso'
+              ? 'Gracias por estas 18 semanas. Te deseo muchos éxitos en tu carrera profesional. ¡Vamos por más!'
+              : '¿Ya terminaste el curso? También puedes evaluar el curso completo con el botón de arriba.';
             document.getElementById('okMsg').style.display = 'block';
-            document.body.appendChild(document.getElementById('okMsg'));
             window.scrollTo(0, 0);
           } else {
             throw new Error(res.error || 'Error desconocido');

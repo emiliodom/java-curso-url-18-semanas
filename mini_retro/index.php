@@ -16,7 +16,7 @@
     </a>
     <nav class="header-actions" aria-label="Recursos">
       <a class="header-link" href="GUIA_RETROSPECTIVA.html">Guía para docente y equipos</a>
-      <a class="header-link" href="../Material_Sesion_Clase_17_HTML_18_semanas/index.html">Material Semana 17</a>
+      <a class="header-link" href="../Material_Sesion_Clase_18_HTML_18_semanas/index.html">Material Semana 18</a>
     </nav>
   </header>
 

@@ -37,117 +37,135 @@
     <div class="container">
       <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
         <div>
-          <div class="brand-pill bg-primary text-white">Evaluación entre Pares · Ronda 2 Oficial · Valor: 5.0 Puntos</div>
-          <h1 class="h2 fw-bold mt-2 mb-1">Coevaluación Técnica Sumativa del Proyecto Final</h1>
-          <div class="small-muted">Segunda ronda oficial del curso (la primera fue en Semana 9). Se evalúa tu rigurosidad y juicio profesional al auditar el proyecto terminado de tu compañero.</div>
+          <div class="brand-pill bg-primary text-white">Evaluación entre pares · Ronda 2 · Tú obtienes hasta 5 puntos</div>
+          <h1 class="h2 fw-bold mt-2 mb-1">Evalúa el proyecto final de un compañero</h1>
+          <div class="small-muted">Segunda y última ronda del curso (la primera fue en la Semana 9). Tienes <strong>15 minutos</strong> en clase. Revisas su aplicación con la rúbrica, anotas lo que viste y le dejas 2 fortalezas y 2 sugerencias útiles.</div>
         </div>
-        <button class="btn btn-primary btn-export" onclick="window.print()">Exportar Evaluación a PDF</button>
+        <button class="btn btn-primary btn-export" type="button" onclick="exportarPares()">Exportar a PDF</button>
       </div>
     </div>
   </header>
 
   <main class="container py-4" style="max-width: 960px;">
-    <!-- METADATOS -->
+
+    <div class="callout success mb-4">
+      <div class="fw-semibold">⭐ La regla más importante: te calificamos a ti, no al proyecto</div>
+      <div class="small-muted">Tus <strong>5 puntos</strong> dependen de <strong>qué tan bien evalúas</strong>: si aplicas la rúbrica con evidencia, si tus comentarios son concretos y si eres respetuoso. Puedes obtener 5/5 aunque el proyecto que te tocó esté incompleto, siempre que lo evalúes bien. El puntaje que marcas en la rúbrica <strong>no es la nota de tu compañero</strong> (su proyecto lo califica el tribunal en la defensa): es tu dictamen, que le sirve a él como retroalimentación y al docente como referencia.</div>
+    </div>
+
+    <!-- PASOS -->
+    <div class="card mb-4">
+      <div class="card-header fw-semibold">🧭 Cómo hacerlo, paso a paso (15 minutos)</div>
+      <div class="card-body small">
+        <ol class="mb-2">
+          <li class="mb-1"><strong>Recibe tu asignación.</strong> El docente te dice a quién evalúas. Pide a tu compañero la URL de su aplicación y de su repositorio.</li>
+          <li class="mb-1"><strong>Abre su aplicación</strong> (la URL <code>…onrender.com</code>). Si tarda hasta un minuto en cargar, es normal: el plan gratuito de Render "duerme" la app. <strong>No lo penalices.</strong></li>
+          <li class="mb-1"><strong>Pruébala con él.</strong> Pídele que inicie sesión en su pantalla compartida. <strong>Nunca escribas sus contraseñas en este formulario</strong> ni en el chat.</li>
+          <li class="mb-1"><strong>Recorre los 5 criterios.</strong> Cada uno trae una lista de "qué revisar". Marca un nivel y escribe en una línea qué viste (la evidencia).</li>
+          <li class="mb-1"><strong>Escribe 2 fortalezas y 2 sugerencias</strong> concretas (abajo hay ejemplos de comentario útil y de comentario inútil).</li>
+          <li class="mb-1"><strong>Responde la reflexión</strong> de una o dos líneas.</li>
+          <li><strong>Exporta a PDF</strong> como <code>Pares_R2_TuNombre.pdf</code> y súbelo al aula virtual junto con tu radicación de la defensa.</li>
+        </ol>
+        <div class="d-flex align-items-center gap-2 flex-wrap no-print">
+          <div class="progress flex-grow-1" style="height: 10px; min-width: 200px;" role="progressbar" aria-label="Avance de la evaluación">
+            <div class="progress-bar" id="avanceBar" style="width: 0%"></div>
+          </div>
+          <span class="fw-semibold" id="avanceTxt">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DATOS -->
     <div class="card mb-4 border-primary">
-      <div class="card-header bg-primary text-white fw-semibold">Datos Oficiales de la Coevaluación</div>
+      <div class="card-header bg-primary text-white fw-semibold">1. Datos de la evaluación</div>
       <div class="card-body">
         <div class="row g-3 small">
           <div class="col-md-6">
-            <label class="form-label fw-bold mb-1" for="eNombre">Tu nombre completo (estudiante evaluador)</label>
-            <input type="text" id="eNombre" class="form-control form-control-sm peer-save" placeholder="Tu nombre y carné" />
+            <label class="form-label fw-bold mb-1" for="eNombre">Tu nombre y carné (quien evalúa)</label>
+            <input type="text" id="eNombre" class="form-control form-control-sm peer-save req" placeholder="Nombre completo y carné" />
           </div>
           <div class="col-md-6">
             <label class="form-label fw-bold mb-1" for="eCompanero">Nombre del compañero evaluado</label>
-            <input type="text" id="eCompanero" class="form-control form-control-sm peer-save" placeholder="Nombre completo del colega" />
+            <input type="text" id="eCompanero" class="form-control form-control-sm peer-save req" placeholder="Nombre completo" />
           </div>
           <div class="col-md-6">
-            <label class="form-label fw-bold mb-1" for="eUrlRepo">Repositorio GitHub del proyecto evaluado</label>
-            <input type="url" id="eUrlRepo" class="form-control form-control-sm peer-save" placeholder="https://github.com/..." />
+            <label class="form-label fw-bold mb-1" for="eUrlApp">URL pública de su aplicación (Render)</label>
+            <input type="url" id="eUrlApp" class="form-control form-control-sm peer-save req" placeholder="https://….onrender.com" />
           </div>
           <div class="col-md-6">
-            <label class="form-label fw-bold mb-1" for="eUrlApp">URL pública en Render de la aplicación</label>
-            <input type="url" id="eUrlApp" class="form-control form-control-sm peer-save" placeholder="https://...onrender.com" />
+            <label class="form-label fw-bold mb-1" for="eUrlRepo">Repositorio en GitHub</label>
+            <input type="url" id="eUrlRepo" class="form-control form-control-sm peer-save req" placeholder="https://github.com/…" />
           </div>
         </div>
       </div>
     </div>
 
-    <!-- RÚBRICA SUMATIVA DE 5 CRITERIOS -->
+    <!-- RÚBRICA -->
+    <h2 class="h5 section-title mb-2">2. Rúbrica: marca un nivel y anota lo que viste</h2>
+    <p class="small-muted mb-3">Cada criterio vale hasta 1 punto en tu dictamen (0 · 0.5 · 1). Si dudas entre dos niveles, elige el que puedas <strong>justificar con lo que viste</strong> y escríbelo en la evidencia.</p>
+
+    <div id="criterios"></div>
+
+    <!-- RETROALIMENTACIÓN -->
     <div class="card mb-4">
-      <div class="card-header bg-dark text-white fw-semibold">Rúbrica de 5 Criterios (1.0 Punto cada uno = 5.0 Puntos)</div>
-      <div class="card-body p-0">
-        <div class="table-responsive">
-          <table class="table table-bordered table-hover mb-0 small align-middle">
-            <thead class="table-light">
-              <tr>
-                <th style="width: 25%;">Criterio</th>
-                <th style="width: 25%;">Insuficiente (0 pts)</th>
-                <th style="width: 25%;">En Proceso (0.5 pts)</th>
-                <th style="width: 25%;">Excelente (1.0 pt)</th>
-              </tr>
-            </thead>
+      <div class="card-header bg-success text-white fw-semibold">3. Tu retroalimentación para el compañero</div>
+      <div class="card-body small">
+        <p class="mb-2">Un buen comentario dice <strong>qué viste</strong>, <strong>por qué importa</strong> y, si es sugerencia, <strong>qué haría falta hacer</strong>.</p>
+        <div class="table-responsive mb-3">
+          <table class="table table-sm table-bordered mb-0 align-middle">
+            <thead><tr><th style="width:50%">❌ Comentario inútil</th><th>✅ Comentario útil</th></tr></thead>
             <tbody>
-              <tr>
-                <td><strong>1. Despliegue y Disponibilidad en Nube</strong><br/><span class="text-muted">Render HTTPS y arranque</span></td>
-                <td><label><input type="radio" name="cr1" value="0" class="peer-save"> No carga la URL pública o da error 500.</label></td>
-                <td><label><input type="radio" name="cr1" value="0.5" class="peer-save"> Carga pero tarda o muestra enlaces rotos.</label></td>
-                <td><label><input type="radio" name="cr1" value="1.0" class="peer-save"> Carga rápida con HTTPS activo, responsiva y estable.</label></td>
-              </tr>
-              <tr>
-                <td><strong>2. Arquitectura MVC y Árbol</strong><br/><span class="text-muted">Separación en paquetes y código limpio</span></td>
-                <td><label><input type="radio" name="cr2" value="0" class="peer-save"> Paquetes mezclados o clases fuera del paquete base.</label></td>
-                <td><label><input type="radio" name="cr2" value="0.5" class="peer-save"> Estructura básica pero con controladores sobrecargados.</label></td>
-                <td><label><input type="radio" name="cr2" value="1.0" class="peer-save"> Separación limpia: model, repository, service, controller.</label></td>
-              </tr>
-              <tr>
-                <td><strong>3. CRUD, Validación y Neon DB</strong><br/><span class="text-muted">Persistencia real y retención de valores</span></td>
-                <td><label><input type="radio" name="cr3" value="0" class="peer-save"> No valida o los datos se pierden al reiniciar.</label></td>
-                <td><label><input type="radio" name="cr3" value="0.5" class="peer-save"> Guarda en Neon pero borra casillas ante errores.</label></td>
-                <td><label><input type="radio" name="cr3" value="1.0" class="peer-save"> Valida en rojo, retiene inputs, persiste y aplica PRG.</label></td>
-              </tr>
-              <tr>
-                <td><strong>4. Seguridad y Roles de Usuario</strong><br/><span class="text-muted">Spring Security, BCrypt y requestMatchers</span></td>
-                <td><label><input type="radio" name="cr4" value="0" class="peer-save"> Sin autenticación o claves en texto plano.</label></td>
-                <td><label><input type="radio" name="cr4" value="0.5" class="peer-save"> Hay login pero rutas críticas carecen de restricción.</label></td>
-                <td><label><input type="radio" name="cr4" value="1.0" class="peer-save"> Roles estrictos (ADMIN/OPERADOR) y rutas blindadas.</label></td>
-              </tr>
-              <tr>
-                <td><strong>5. Documentación y Entrega Llave en Mano</strong><br/><span class="text-muted">README, variables y manual de usuario</span></td>
-                <td><label><input type="radio" name="cr5" value="0" class="peer-save"> README vacío o sin instrucciones.</label></td>
-                <td><label><input type="radio" name="cr5" value="0.5" class="peer-save"> Manual incompleto o faltan variables de entorno.</label></td>
-                <td><label><input type="radio" name="cr5" value="1.0" class="peer-save"> README impecable con arquitectura, roles y variables.</label></td>
-              </tr>
+              <tr><td>"Está bonito."</td><td>"La lista de beneficiarios se lee bien en el celular: la tabla no se sale de la pantalla."</td></tr>
+              <tr><td>"Le falta seguridad."</td><td>"Con el rol de consulta pude abrir <code>/beneficiarios/nuevo</code>. Falta proteger esa ruta en <code>SecurityConfig</code> con <code>hasRole("ADMIN")</code>."</td></tr>
+              <tr><td>"Mejorar el README."</td><td>"El README no dice qué variables de entorno necesita Render. Sugiero agregar la lista de nombres (sin valores)."</td></tr>
             </tbody>
           </table>
         </div>
-      </div>
-    </div>
-    <!-- COMENTARIOS FINALES -->
-    <div class="card mb-4">
-      <div class="card-header bg-success text-white fw-semibold">Dictamen Cualitativo de Cierre</div>
-      <div class="card-body small">
         <div class="row g-3">
           <div class="col-md-6">
-            <div class="p-3 bg-light border rounded h-100">
-              <label class="form-label fw-bold text-success mb-1">🌟 2 Fortalezas Sobresalientes del Proyecto</label>
-              <textarea id="fortalezasFinal" class="form-control form-control-sm peer-save" rows="4" placeholder="1. Destaco la claridad del diseño visual y la rapidez de respuesta de la base de datos Neon...
-2. La arquitectura del código sigue fielmente los estándares del curso con sus capas bien definidas..."></textarea>
-            </div>
+            <label class="form-label fw-bold text-success mb-1" for="fort1">🌟 Fortaleza 1</label>
+            <textarea id="fort1" class="form-control form-control-sm peer-save req" rows="3" placeholder="Qué viste y por qué es un acierto…"></textarea>
+            <label class="form-label fw-bold text-success mb-1 mt-2" for="fort2">🌟 Fortaleza 2</label>
+            <textarea id="fort2" class="form-control form-control-sm peer-save req" rows="3" placeholder="Menciona una pantalla, archivo o decisión concreta…"></textarea>
           </div>
           <div class="col-md-6">
-            <div class="p-3 bg-light border rounded h-100">
-              <label class="form-label fw-bold text-primary mb-1">🎯 2 Recomendaciones para su Implementación Real</label>
-              <textarea id="recomendacionesFinal" class="form-control form-control-sm peer-save" rows="4" placeholder="1. Para la entrega a la ONG sugiero capacitar al personal sobre el manejo de usuarios administradores...
-2. Podría agregarse un botón de exportar tabla a Excel o PDF en una versión futura..."></textarea>
-            </div>
+            <label class="form-label fw-bold text-primary mb-1" for="sug1">🎯 Sugerencia 1</label>
+            <textarea id="sug1" class="form-control form-control-sm peer-save req" rows="3" placeholder="Qué falta → qué haría falta hacer…"></textarea>
+            <label class="form-label fw-bold text-primary mb-1 mt-2" for="sug2">🎯 Sugerencia 2</label>
+            <textarea id="sug2" class="form-control form-control-sm peer-save req" rows="3" placeholder="Una mejora posible antes de entregarlo a la institución…"></textarea>
           </div>
         </div>
+      </div>
+    </div>
 
-        <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top">
-          <div>
-            <strong>Calificación Asignada a tu Compañero: </strong><span id="scoreDisplay" class="badge bg-primary fs-6">0 / 5.0 pts</span>
-          </div>
-          <button class="btn btn-primary" onclick="window.print()">Exportar Comprobante de Peer Review 🖨️</button>
+    <!-- REFLEXIÓN -->
+    <div class="card mb-4">
+      <div class="card-header fw-semibold">4. Reflexión breve</div>
+      <div class="card-body small">
+        <label class="form-label fw-bold mb-1" for="reflexion">¿Qué viste en este proyecto que aplicarías al tuyo o enseñarías a tus futuros estudiantes?</label>
+        <textarea id="reflexion" class="form-control form-control-sm peer-save req" rows="3" placeholder="Una o dos líneas…"></textarea>
+      </div>
+    </div>
+
+    <!-- CÓMO SE CALIFICA -->
+    <div class="card mb-4 border-success">
+      <div class="card-header fw-semibold">5. Cómo se califica TU evaluación (5 puntos)</div>
+      <div class="card-body small">
+        <div class="table-responsive">
+          <table class="table table-sm mb-2">
+            <thead><tr><th>Lo que revisa el docente en tu PDF</th><th class="text-end">Pts</th></tr></thead>
+            <tbody>
+              <tr><td>Aplicaste los 5 criterios y la evidencia escrita es coherente con el nivel que marcaste</td><td class="text-end">2.0</td></tr>
+              <tr><td>Las 2 fortalezas son específicas (mencionan una pantalla, ruta, archivo o decisión concreta)</td><td class="text-end">1.0</td></tr>
+              <tr><td>Las 2 sugerencias son accionables: dicen qué falta y qué haría falta hacer</td><td class="text-end">1.5</td></tr>
+              <tr><td>La reflexión muestra qué aprendiste del proyecto revisado; lenguaje respetuoso en todo el documento</td><td class="text-end">0.5</td></tr>
+              <tr class="fw-bold"><td>Total</td><td class="text-end">5.0</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 pt-2 border-top">
+          <div><strong>Tu dictamen sobre el proyecto (referencia, no es su nota):</strong> <span id="scoreDisplay" class="badge bg-primary fs-6">0.0 / 5.0</span></div>
+          <button class="btn btn-primary" type="button" onclick="exportarPares()">Exportar a PDF 🖨️</button>
         </div>
       </div>
     </div>
@@ -155,7 +173,7 @@
 
   <footer class="footer py-4 bg-light border-top text-center text-muted small">
     <div class="container">
-      Universidad Rafael Landívar · Facultad de Humanidades · Profesorado en TIC · Evaluación entre Pares Ronda 2
+      Universidad Rafael Landívar · Facultad de Humanidades · Profesorado en TIC · Evaluación entre pares, Ronda 2
     </div>
   </footer>
 
@@ -163,14 +181,94 @@
   <script>
     var STORAGE_KEY = 's18_peer_review_r2';
 
+    // Cada criterio: qué revisar (en lenguaje de aula) y los tres niveles.
+    var CRITERIOS = [
+      { id: 'cr1', ej: 'Ej.: abrió en 40 s con candado; la lista y el formulario funcionan', titulo: '1. La aplicación está publicada y funciona',
+        revisar: ['Abre la URL <code>https://…onrender.com</code>. Si tarda hasta 1 minuto, espera: es el plan gratuito (no se penaliza).',
+                  'Fíjate en el candado 🔒 de la barra de direcciones.',
+                  'Navega al menos tres pantallas (inicio, lista, formulario).'],
+        niveles: ['No abre o da error después de esperar.', 'Abre, pero hay pantallas con error o enlaces rotos.', 'Abre con HTTPS y se navega sin errores.'] },
+      { id: 'cr2', ej: 'Ej.: model, repository, service y controller dentro de gt.edu.url.…', titulo: '2. El código está ordenado por capas (MVC)',
+        revisar: ['En GitHub, abre <code>src/main/java/…</code> hasta el paquete base.',
+                  'Busca las carpetas <code>model</code>, <code>repository</code>, <code>service</code> y <code>controller</code> dentro de ese paquete.',
+                  'Abre un controlador: ¿llama al servicio, o hace todo él solo?'],
+        niveles: ['Clases sueltas o fuera del paquete base.', 'Hay carpetas, pero el controlador hace el trabajo del servicio o del repositorio.', 'Cada capa en su carpeta y con su responsabilidad.'] },
+      { id: 'cr3', ej: 'Ej.: con el nombre vacío salió el mensaje y no se borró la edad', titulo: '3. Guarda, valida y conserva los datos',
+        revisar: ['Pide que registre algo nuevo: debe volver a la lista y verse el registro (guardar → redirigir → mostrar).',
+                  'Pide que envíe el formulario con un campo obligatorio vacío: debe salir un mensaje junto al campo <strong>sin borrar</strong> lo ya escrito.',
+                  'Pregunta dónde se guardan los datos: deben estar en Neon (puede mostrarte la tabla), no en H2.'],
+        niveles: ['No valida, o los datos se pierden.', 'Guarda en Neon, pero al fallar la validación borra lo escrito o no muestra el mensaje.', 'Valida con mensajes claros, conserva lo escrito y guarda en Neon.'] },
+      { id: 'cr4', ej: 'Ej.: con el rol de consulta, /…/nuevo mostró acceso denegado', titulo: '4. Login y roles protegen de verdad',
+        revisar: ['Pide que inicie sesión con el rol de <strong>menos permisos</strong>.',
+                  'Que escriba a mano en la barra una ruta de administrador (por ejemplo <code>/…/nuevo</code>): debe salir "acceso denegado", no el formulario.',
+                  'En GitHub, busca que ninguna contraseña esté escrita en el código ni en <code>application*.properties</code>.'],
+        niveles: ['No hay login, o hay contraseñas escritas en el repositorio.', 'Hay login, pero el rol menor entra a una ruta de administrador.', 'Al menos dos roles, rutas protegidas y claves fuera del código.'] },
+      { id: 'cr5', ej: 'Ej.: el README tiene la URL y las 6 variables, pero no explica los roles', titulo: '5. Está documentado para entregarlo',
+        revisar: ['Abre el <code>README.md</code> del repositorio.',
+                  '¿Tiene la URL pública, cómo ejecutarlo y la lista de variables de entorno <strong>sin valores</strong>?',
+                  '¿Explica los roles y existe un manual o guía para la institución?'],
+        niveles: ['README vacío o sin instrucciones.', 'Incompleto: falta la URL, las variables o los roles.', 'Completo: URL, ejecución, variables sin valores, roles y manual.'] }
+    ];
+    var VALORES = ['0', '0.5', '1.0'];
+    var ETIQUETAS = ['Insuficiente · 0', 'En proceso · 0.5', 'Logrado · 1'];
+
+    (function pintarCriterios() {
+      var cont = document.getElementById('criterios');
+      CRITERIOS.forEach(function (c) {
+        var html = '<div class="card mb-3"><div class="card-body small">' +
+          '<h3 class="h6 fw-bold mb-2">' + c.titulo + '</h3>' +
+          '<div class="mb-2"><span class="fw-semibold">Qué revisar:</span><ul class="mb-0">' +
+          c.revisar.map(function (r) { return '<li>' + r + '</li>'; }).join('') + '</ul></div>' +
+          '<fieldset class="mb-2"><legend class="visually-hidden">Nivel para ' + c.titulo + '</legend><div class="row g-2">';
+        c.niveles.forEach(function (n, i) {
+          var id = c.id + '_' + i;
+          html += '<div class="col-md-4"><input class="btn-check peer-save" type="radio" name="' + c.id + '" id="' + id + '" value="' + VALORES[i] + '">' +
+            '<label class="btn btn-outline-' + ['danger', 'warning', 'success'][i] + ' w-100 text-start h-100 small" for="' + id + '">' +
+            '<strong>' + ETIQUETAS[i] + '</strong><br>' + n + '</label></div>';
+        });
+        html += '</div></fieldset>' +
+          '<label class="form-label fw-semibold mb-1" for="' + c.id + '_ev">Evidencia: ¿qué viste? (una línea)</label>' +
+          '<input type="text" id="' + c.id + '_ev" class="form-control form-control-sm peer-save req" placeholder="' + c.ej + '">' +
+          '</div></div>';
+        cont.insertAdjacentHTML('beforeend', html);
+      });
+    })();
+
+    function faltantes() {
+      var lista = [];
+      CRITERIOS.forEach(function (c) {
+        if (!document.querySelector('input[name="' + c.id + '"]:checked')) lista.push('Nivel del criterio ' + c.titulo.charAt(0));
+      });
+      document.querySelectorAll('.req').forEach(function (el) {
+        if (!el.value.trim()) {
+          var lbl = document.querySelector('label[for="' + el.id + '"]');
+          lista.push(lbl ? lbl.textContent.replace(/\s+/g, ' ').trim() : el.id);
+        }
+      });
+      return lista;
+    }
+
     function calculateScore() {
       var total = 0;
-      ['cr1', 'cr2', 'cr3', 'cr4', 'cr5'].forEach(function(crit) {
-        var checked = document.querySelector('input[name="' + crit + '"]:checked');
+      CRITERIOS.forEach(function (c) {
+        var checked = document.querySelector('input[name="' + c.id + '"]:checked');
         if (checked) total += parseFloat(checked.value);
       });
-      document.getElementById('scoreDisplay').innerText = total.toFixed(1) + ' / 5.0 pts';
+      document.getElementById('scoreDisplay').innerText = total.toFixed(1) + ' / 5.0';
+      var totalElementos = CRITERIOS.length + document.querySelectorAll('.req').length;
+      var hechos = totalElementos - faltantes().length;
+      document.getElementById('avanceBar').style.width = Math.round(hechos / totalElementos * 100) + '%';
+      document.getElementById('avanceTxt').textContent = hechos + ' de ' + totalElementos + ' elementos completos';
       return total;
+    }
+
+    function exportarPares() {
+      var f = faltantes();
+      if (f.length && !confirm('Te faltan ' + f.length + ' elemento(s):\n\n- ' + f.slice(0, 8).join('\n- ') +
+          (f.length > 8 ? '\n…' : '') + '\n\nUna evaluación incompleta pierde puntos. ¿Exportar de todos modos?')) {
+        return;
+      }
+      window.print();
     }
 
     function loadSavedData() {
@@ -178,21 +276,20 @@
         var raw = localStorage.getItem(STORAGE_KEY);
         if (!raw) return;
         var data = JSON.parse(raw);
-        document.querySelectorAll('.peer-save').forEach(function(el) {
+        document.querySelectorAll('.peer-save').forEach(function (el) {
           if (el.type === 'radio') {
             if (data[el.name] === el.value) el.checked = true;
           } else if (data[el.id] !== undefined) {
             el.value = data[el.id];
           }
         });
-        calculateScore();
-      } catch (e) { console.warn('Error loading peer data', e); }
+      } catch (e) { /* sin almacenamiento: la página funciona igual */ }
     }
 
     function saveData() {
       try {
         var data = {};
-        document.querySelectorAll('.peer-save').forEach(function(el) {
+        document.querySelectorAll('.peer-save').forEach(function (el) {
           if (el.type === 'radio') {
             if (el.checked) data[el.name] = el.value;
           } else {
@@ -200,13 +297,14 @@
           }
         });
         localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-        calculateScore();
-      } catch (e) { console.warn('Error saving peer data', e); }
+      } catch (e) { /* sin almacenamiento: la página funciona igual */ }
+      calculateScore();
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       loadSavedData();
-      document.querySelectorAll('.peer-save').forEach(function(el) {
+      calculateScore();
+      document.querySelectorAll('.peer-save').forEach(function (el) {
         el.addEventListener('input', saveData);
         el.addEventListener('change', saveData);
       });

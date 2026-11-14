@@ -374,3 +374,46 @@ details.fold ol { margin: 10px 0 0; color: var(--muted); }
     .featured .big-n { width: 64px; height: 64px; font-size: 1.6rem; }
     .feedback-band a { width: 100%; justify-content: center; }
 }
+
+/* ---------- Cierre del curso (nov. 2026): banner de felicitación + llamado ---------- */
+.visually-hidden {
+    position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+.hero-final { margin-top: 28px; }
+.final-banner {
+    margin: 0;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border);
+    background: #dbeafe;
+    position: relative;
+}
+.final-banner img { display: block; width: 100%; height: auto; }
+.final-banner::after {
+    /* franja dorada inferior que "amarra" el banner con el panel del llamado */
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 6px;
+    background: linear-gradient(90deg, #facc15, #f97316, #ec4899);
+}
+
+.hero.hero-cta { margin-top: 18px; }
+.cta-title {
+    font-size: clamp(1.9rem, 4.4vw, 3.1rem);
+    line-height: 1.07;
+    letter-spacing: -0.03em;
+    font-weight: 900;
+    margin: 16px 0 14px;
+    color: #fff;
+}
+.cta-title .glow {
+    background: linear-gradient(90deg, #fde68a, #fdba74, #f9a8d4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+@media (max-width: 640px) {
+    .final-banner { border-radius: 20px; }
+    .hero-final { margin-top: 16px; }
+}

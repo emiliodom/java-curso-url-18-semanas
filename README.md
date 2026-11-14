@@ -31,7 +31,7 @@ documentos oficiales y el enlace a la evaluación anónima de la sesión.
 | [`mini_retro/`](mini_retro/) | Mini retrospectiva de equipo autoguiada (PHP): sesión privada sin cuentas, acta exportable a PDF y guía de uso |
 | [`Material_Sesion_Clase_17_HTML_18_semanas/entregables.html`](Material_Sesion_Clase_17_HTML_18_semanas/entregables.html) | Guía HTML para preparar la entrega llave en mano: documentación, videos, enlaces a plataformas y manejo seguro de credenciales |
 | [`CHANGELOG.md`](CHANGELOG.md) | Bitácora de cambios y verificaciones del repositorio |
-| `ARCHIVO_POR_AHORA/`, `Material_Sesion_Clase_N_X/` | Material del **formato anterior** (ya no vigente), conservado como archivo histórico |
+| `img/` | Imágenes del portal (banner de felicitación del cierre del curso, optimizado en JPG/WebP) |
 
 ## Semanas publicadas
 

@@ -223,7 +223,7 @@
       button.disabled = index > currentStep && !canVisit(index);
       button.setAttribute('aria-current', index === currentStep ? 'step' : 'false');
       if (index < currentStep && isStepComplete(index)) button.classList.add('is-done');
-      var number = element('span', '', index === 5 ? 'ETAPA 6' : 'ETAPA ' + (index + 1) + ' · ' + step.time + ' MIN');
+      var number = element('span', '', index === 5 ? 'RESULTADO' : 'ETAPA ' + (index + 1) + ' · ' + step.time + ' MIN');
       var title = element('strong', '', step.title);
       button.append(number, title);
       li.appendChild(button);
@@ -268,6 +268,7 @@
     );
     heading.append(headingCopy, element('span', 'phase-time', '⏱ ' + STEPS[currentStep].time + ' min'));
     article.appendChild(heading);
+    article.appendChild(element('p', 'requisito', '✅ Para avanzar: ' + missingFor(currentStep).join(' ')));
 
     if (currentStep === 0) renderSetup(article);
     if (currentStep === 1) renderGather(article);
@@ -315,7 +316,7 @@
     var fields = element('div', 'field-grid');
     addField(fields, 'Nombre del equipo (sin datos personales)', 'teamName', state.teamName, 'text', 'Ej. Equipo Horizonte');
     addField(fields, 'Proyecto o sistema que revisan', 'projectName', state.projectName, 'text', 'Ej. Registro del dispensario');
-    addField(fields, 'Periodo o hito que revisan', 'reviewPeriod', state.reviewPeriod, 'text', 'Ej. Semana 14 a 17');
+    addField(fields, 'Periodo o hito que revisan', 'reviewPeriod', state.reviewPeriod, 'text', 'Ej. Semanas 1 a 18 (todo el curso)');
     addField(fields, 'Fecha de la retrospectiva', 'meetingDate', state.meetingDate, 'date', '');
     article.appendChild(fields);
     article.appendChild(element('h3', '', 'Acuerdos de trabajo'));
@@ -365,7 +366,6 @@
     submit.type = 'submit';
     form.append(textLabel, categoryLabel, submit);
     article.appendChild(form);
-    article.appendChild(element('p', 'helper', 'Para avanzar: mínimo 3 tarjetas y al menos una en cada columna.'));
     var board = element('div', 'drop-board');
     CATEGORIES.forEach(function (category) {
       var zone = element('section', 'drop-zone');
@@ -433,7 +433,15 @@
   }
 
   function renderInsights(article) {
-    addCallout(article, 'Agrupar no es buscar una causa personal. Pregunten: ¿qué condición del sistema se repite?, ¿qué ayudó?, ¿qué podemos comprobar en el siguiente ciclo?');
+    addCallout(article, 'En la etapa anterior ordenaron las tarjetas por tipo. Ahora buscan qué tarjetas hablan de lo mismo: por eso todas empiezan "sin agrupar". Los tres temas sugeridos son solo un punto de partida; renómbrenlos o creen otros. Agrupar no es buscar culpables: pregunten qué condición del proceso se repite.');
+    var pasos = element('ol', 'pasos-etapa');
+    [
+      'Muevan cada tarjeta a un tema: arrástrenla o usen su menú “Sin agrupar”.',
+      'Si ven algo que se repite, creen un tema con un nombre propio (ej. “Todo se dejó para el final”). Un patrón agrupa al menos dos tarjetas.',
+      'Usen los 3 votos del equipo en las tarjetas que más conviene atender. Votos usados: ' + totalVotes() + ' / 3.',
+      'Escriban abajo, en una o dos frases, el aprendizaje que se llevan.'
+    ].forEach(function (texto) { pasos.appendChild(element('li', '', texto)); });
+    article.appendChild(pasos);
     var form = element('form', 'theme-form');
     form.id = 'themeForm';
     var input = document.createElement('input');
@@ -446,7 +454,6 @@
     button.type = 'submit';
     form.append(input, button);
     article.appendChild(form);
-    article.appendChild(element('p', 'helper', 'Arrastren tarjetas a un tema o asígnenlas desde su menú. Un patrón válido agrupa al menos dos tarjetas.'));
 
     var grid = element('div', 'theme-grid');
     state.themes.forEach(function (theme) {
@@ -499,13 +506,13 @@
   }
 
   function renderActions(article) {
-    addCallout(article, 'Elijan una acción pequeña que puedan probar antes de la próxima revisión. Un buen acuerdo dice qué se hará, qué rol lo impulsa, cuándo y qué evidencia mostrará que ayudó.');
+    addCallout(article, 'Elijan una acción pequeña que puedan probar en su próximo proyecto, en la entrega a la institución o en su práctica docente (si el curso ya terminó, piensen en el siguiente trabajo en equipo). Un buen acuerdo dice qué se hará, qué rol lo impulsa, cuándo y qué evidencia mostrará que ayudó.');
     var form = element('form', 'action-form');
     form.id = 'actionForm';
     var fields = [
       ['actionText', 'Acción verificable', 'Ej. Revisar cada PR antes de mezclarlo', 'text'],
       ['actionOwner', 'Responsable por rol (no hace falta nombre)', 'Ej. Quien abre el PR', 'text'],
-      ['actionDue', 'Fecha de revisión', '', 'date'],
+      ['actionDue', 'Fecha para comprobarla', '', 'date'],
       ['actionMeasure', '¿Qué evidencia indicará que funcionó?', 'Ej. Ningún conflicto pendiente al cierre del día', 'textarea']
     ];
     fields.forEach(function (field) {

@@ -234,3 +234,10 @@ h1 { margin-bottom: .65rem; font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.
   .report-actions { display: none !important; }
   a { color: inherit; text-decoration: none; }
 }
+
+/* Auditoría nov. 2026: requisito visible por etapa, pasos numerados y casilla de aprendizaje a ancho completo */
+.requisito { margin: .4rem 0 1rem; padding: .55rem .8rem; border-radius: 10px; background: #ecfdf3; color: #14532d; font-size: .9rem; font-weight: 600; }
+.pasos-etapa { margin: .2rem 0 1rem; padding-left: 1.3rem; }
+.pasos-etapa li { margin: .25rem 0; }
+.insight-box .field-label { display: block; margin-bottom: .4rem; }
+.insight-box textarea { display: block; width: 100%; min-height: 96px; box-sizing: border-box; }
