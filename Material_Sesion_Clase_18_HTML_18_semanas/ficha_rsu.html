@@ -71,6 +71,17 @@ tfoot td{font-weight:600;padding-top:10px}
 @media (max-width:620px){.grid{grid-template-columns:minmax(0,1fr)}}
 @media (prefers-reduced-motion:no-preference){button{transition:border-color .15s}}
 
+/* ---------- Ayudas por sección (no se imprimen) ---------- */
+details.ayuda{border:1px dashed var(--accent);border-radius:10px;background:var(--field);padding:8px 12px;font-size:14px}
+details.ayuda summary{cursor:pointer;font-weight:600;color:var(--accent)}
+details.ayuda[open] summary{margin-bottom:8px}
+.ayuda-body{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ayuda-body ul{margin:4px 0 0;padding-left:18px}.ayuda-body li{margin:3px 0}
+.ayuda-body .ej{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+.ayuda-body .ej p{margin:4px 0}
+@media (max-width:620px){.ayuda-body{grid-template-columns:minmax(0,1fr)}}
+::placeholder{color:var(--muted);opacity:.75}
+
 /* ---------- Documento para PDF (solo se ve al imprimir) ---------- */
 #print-doc{display:none}
 @page{size:letter;margin:16mm 15mm 18mm}
@@ -133,6 +144,7 @@ tfoot td{font-weight:600;padding-top:10px}
   <ul>
     <li><strong>Se guarda sola</strong> en este navegador mientras escribes. Si cierras la página y vuelves desde la misma computadora, tu avance sigue aquí.</li>
     <li>Para continuar en <strong>otra computadora</strong>, usa “Descargar avance (.json)” y después “Cargar avance” en la otra.</li>
+    <li>¿No sabes qué poner? Cada sección tiene <strong>“💡 Qué poner aquí”</strong> con preguntas guía y el ejemplo de un equipo que hizo una app web con Spring Boot. Las ayudas y los ejemplos en gris <strong>no salen en el PDF</strong>.</li>
     <li>Al terminar, pulsa <strong>“Exportar a PDF”</strong> y en la ventana de impresión elige <strong>“Guardar como PDF”</strong>. El PDF incluye todo el texto de cada caja, aunque sea muy largo.</li>
   </ul>
 </div>
@@ -148,19 +160,27 @@ tfoot td{font-weight:600;padding-top:10px}
 
 <section>
   <h2><span class="n">I.</span>Identificación del proyecto</h2>
+  <details class="ayuda"><summary>💡 Qué poner aquí (con ejemplo)</summary>
+    <div class="ayuda-body"><div><strong>Qué escribir</strong><ul><li>El <strong>nombre del proyecto</strong> debe decir qué hiciste y para quién: “Sistema web de… para…”.</li><li><strong>Ciclo académico:</strong> el año (2026). <strong>Curso:</strong> el nombre oficial del curso.</li><li>Director, catedrático y código: los datos oficiales de tu carrera. Si no conoces el código del catedrático, pídelo antes de exportar.</li></ul></div>
+    <div class="ej"><strong>Ejemplo de un equipo</strong><ul><li><b>Nombre:</b> Sistema web de registro de beneficiarios para el Dispensario Comunitario Santa Ana</li><li><b>Ciclo:</b> 2026</li><li><b>Carrera:</b> Profesorado en Enseñanza Media con Especialidad en TIC</li><li><b>Curso:</b> Programación I — Introducción al Desarrollo Web con Java</li></ul></div></div>
+  </details>
   <div class="grid">
-    <label class="full">Nombre del proyecto<input data-f="proyecto" id="f-proyecto"></label>
+    <label class="full">Nombre del proyecto<input data-f="proyecto" id="f-proyecto" placeholder="Ej. Sistema web de registro de beneficiarios para el Dispensario Santa Ana"></label>
     <label>Ciclo académico<input data-f="ciclo" id="f-ciclo" inputmode="numeric" placeholder="Año"></label>
-    <label>Carrera<input data-f="carrera" id="f-carrera"></label>
-    <label class="full">Director o coordinador de carrera involucrado<input data-f="director" id="f-director"></label>
-    <label class="full">Curso<input data-f="curso" id="f-curso"></label>
-    <label>Catedrático(s)<input data-f="catedratico" id="f-catedratico"></label>
-    <label>Código(s) de catedrático(s)<input data-f="codigo" id="f-codigo"></label>
+    <label>Carrera<input data-f="carrera" id="f-carrera" placeholder="Ej. Profesorado en Enseñanza Media con Especialidad en TIC"></label>
+    <label class="full">Director o coordinador de carrera involucrado<input data-f="director" id="f-director" placeholder="Nombre del director o coordinador de tu carrera"></label>
+    <label class="full">Curso<input data-f="curso" id="f-curso" placeholder="Ej. Programación I — Introducción al Desarrollo Web con Java"></label>
+    <label>Catedrático(s)<input data-f="catedratico" id="f-catedratico" placeholder="Nombre completo del catedrático"></label>
+    <label>Código(s) de catedrático(s)<input data-f="codigo" id="f-codigo" placeholder="Pídelo a tu catedrático"></label>
   </div>
 </section>
 
 <section>
   <h2><span class="n">II.</span>Participantes</h2>
+  <details class="ayuda"><summary>💡 Qué poner aquí (con ejemplo)</summary>
+    <div class="ayuda-body"><div><strong>Qué escribir</strong><ul><li>Agrega a <strong>todos los integrantes del equipo</strong> con su carné (la tabla cuenta los estudiantes sola).</li><li><strong>Colaboradores:</strong> personas de la entidad que te ayudaron (te dieron información, probaron la app).</li><li><strong>Grupo objetivo:</strong> quién usa la app (usuarios directos) y a quién beneficia (beneficiarios indirectos).</li><li><strong>Número aproximado:</strong> cuántas personas de cada grupo.</li></ul></div>
+    <div class="ej"><strong>Ejemplo de un equipo</strong><ul><li><b>Catedráticos:</b> 1 · <b>Colaboradores:</b> 2 (coordinadora y enfermera del dispensario)</li><li><b>Grupo objetivo:</b> personal administrativo del dispensario (usuarios del sistema) y familias atendidas (beneficiarios indirectos)</li><li><b>Número aproximado:</b> 3 usuarios del sistema y 120 familias registradas</li></ul></div></div>
+  </details>
   <h3>Estudiantes</h3>
   <div class="tablewrap"><table>
     <thead><tr><th>Nombre completo</th><th>Carné</th><th></th></tr></thead>
@@ -168,55 +188,75 @@ tfoot td{font-weight:600;padding-top:10px}
   </table></div>
   <div class="bar"><button class="small ghost" type="button" data-add="students">+ Agregar estudiante</button><span class="count" id="count-est"></span></div>
   <div class="grid">
-    <label>Número de catedráticos<input data-f="ncated" id="f-ncated" inputmode="numeric"></label>
-    <label>Número de colaboradores<input data-f="ncolab" id="f-ncolab" inputmode="numeric"></label>
-    <label class="full">Grupo objetivo o beneficiarios<input data-f="grupo" id="f-grupo"></label>
-    <label class="full">Número aproximado<input data-f="aprox" id="f-aprox" placeholder="p. ej. 6 catedráticos"></label>
+    <label>Número de catedráticos<input data-f="ncated" id="f-ncated" placeholder="Ej. 1" inputmode="numeric"></label>
+    <label>Número de colaboradores<input data-f="ncolab" id="f-ncolab" placeholder="Ej. 2" inputmode="numeric"></label>
+    <label class="full">Grupo objetivo o beneficiarios<input data-f="grupo" id="f-grupo" placeholder="Ej. Personal del dispensario y familias atendidas"></label>
+    <label class="full">Número aproximado<input data-f="aprox" id="f-aprox" placeholder="Ej. 3 usuarios del sistema y 120 familias"></label>
   </div>
 </section>
 
 <section>
   <h2><span class="n">III.</span>Contraparte</h2>
+  <details class="ayuda"><summary>💡 Qué poner aquí (con ejemplo)</summary>
+    <div class="ayuda-body"><div><strong>Qué escribir</strong><ul><li>La <strong>institución sin fines de lucro</strong> para la que hiciste la app (guardería, casa hogar, dispensario, escuela, iglesia, asociación…).</li><li>El <strong>encargado</strong>: nombre y cargo de la persona con quien coordinaste.</li><li>Dirección, correo y teléfono <strong>institucionales</strong> (con permiso de la entidad). No pongas datos personales de los beneficiarios.</li></ul></div>
+    <div class="ej"><strong>Ejemplo de un equipo</strong><ul><li><b>Entidad:</b> Dispensario Comunitario Santa Ana</li><li><b>Encargado:</b> Licda. María Pérez, coordinadora</li><li><b>Dirección:</b> 3a. calle 4-15, zona 1, Mixco</li></ul></div></div>
+  </details>
   <div class="grid">
-    <label class="full">Entidad(es) con la que se trabajó<input data-f="entidad" id="f-entidad"></label>
-    <label class="full">Encargado o contacto en la entidad<input data-f="contacto" id="f-contacto"></label>
-    <label class="full">Dirección<input data-f="dir" id="f-dir"></label>
-    <label>Correo electrónico<input data-f="correo" id="f-correo" type="email"></label>
-    <label>Teléfono<input data-f="tel" id="f-tel" type="tel"></label>
+    <label class="full">Entidad(es) con la que se trabajó<input data-f="entidad" id="f-entidad" placeholder="Ej. Dispensario Comunitario Santa Ana"></label>
+    <label class="full">Encargado o contacto en la entidad<input data-f="contacto" id="f-contacto" placeholder="Ej. Licda. María Pérez, coordinadora"></label>
+    <label class="full">Dirección<input data-f="dir" id="f-dir" placeholder="Dirección de la entidad"></label>
+    <label>Correo electrónico<input data-f="correo" id="f-correo" placeholder="correo institucional de la entidad" type="email"></label>
+    <label>Teléfono<input data-f="tel" id="f-tel" placeholder="teléfono de la entidad" type="tel"></label>
   </div>
 </section>
 
 <section>
   <h2><span class="n">IV.</span>Objetivos del proyecto (RSA)</h2>
-  <label>4.1 Objetivo general<textarea data-f="ogen" id="f-ogen"></textarea></label>
+  <details class="ayuda"><summary>💡 Qué poner aquí (con ejemplo)</summary>
+    <div class="ayuda-body"><div><strong>Qué escribir</strong><ul><li><strong>Objetivo general:</strong> una sola oración: verbo + qué app + para quién + para qué. Ej.: “Desarrollar… que permita… para…”.</li><li><strong>Académico:</strong> lo que tú aprendiste o aplicaste (MVC, Spring Boot, base de datos, seguridad, despliegue).</li><li><strong>De servicio:</strong> lo que la entidad gana (digitalizar registros, capacitar al personal, entregar manual).</li><li><strong>De valores:</strong> valores que pusiste en práctica (responsabilidad con datos de personas, solidaridad, trabajo en equipo).</li><li>Escribe <strong>un objetivo por línea</strong>: en el PDF salen como lista.</li></ul></div>
+    <div class="ej"><strong>Ejemplo de un equipo</strong><p><b>General:</b> Desarrollar e implementar una aplicación web con Java y Spring Boot que permita al Dispensario Comunitario Santa Ana registrar, consultar y actualizar a sus beneficiarios de forma segura, para sustituir el registro en papel.</p><p><b>Académicos:</b><br>Aplicar la arquitectura MVC y por capas con Spring Boot.<br>Guardar la información en PostgreSQL (Neon) usando JPA.<br>Publicar la aplicación en Render con HTTPS.</p><p><b>De servicio:</b><br>Digitalizar el registro de beneficiarios de la entidad.<br>Capacitar al personal en el uso del sistema y entregar un manual.</p><p><b>De valores:</b><br>Responsabilidad en el manejo de datos personales.<br>Compromiso con la comunidad.<br>Trabajo colaborativo.</p></div></div>
+  </details>
+  <label>4.1 Objetivo general<textarea data-f="ogen" id="f-ogen" placeholder="Desarrollar e implementar una aplicación web con Spring Boot que permita a [entidad] [qué hará], para [beneficio]."></textarea></label>
   <h3>4.2 Objetivos específicos</h3>
-  <label>Objetivo académico<span class="hint">Un objetivo por línea.</span><textarea data-f="oacad" id="f-oacad"></textarea></label>
-  <label>Objetivo de servicio<span class="hint">Un objetivo por línea.</span><textarea data-f="oserv" id="f-oserv"></textarea></label>
-  <label>Objetivo de valores<span class="hint">Un valor por línea.</span><textarea data-f="oval" id="f-oval"></textarea></label>
+  <label>Objetivo académico<span class="hint">Un objetivo por línea.</span><textarea data-f="oacad" id="f-oacad" placeholder="Aplicar la arquitectura MVC con Spring Boot.&#10;Guardar los datos en PostgreSQL (Neon) con JPA."></textarea></label>
+  <label>Objetivo de servicio<span class="hint">Un objetivo por línea.</span><textarea data-f="oserv" id="f-oserv" placeholder="Digitalizar el registro de [beneficiarios] de la entidad.&#10;Capacitar al personal en el uso del sistema."></textarea></label>
+  <label>Objetivo de valores<span class="hint">Un valor por línea.</span><textarea data-f="oval" id="f-oval" placeholder="Responsabilidad en el manejo de datos personales.&#10;Compromiso con la comunidad."></textarea></label>
 </section>
 
 <section>
   <h2><span class="n">V.</span>Descripción del proyecto</h2>
-  <label>¿Por qué nació este proyecto?<textarea data-f="desc" id="f-desc" style="min-height:180px"></textarea></label>
+  <details class="ayuda"><summary>💡 Qué poner aquí (con ejemplo)</summary>
+    <div class="ayuda-body"><div><strong>Qué escribir</strong><ul><li>¿Qué <strong>problema</strong> tenía la entidad? ¿Cómo lo resolvía antes (papel, Excel, cuadernos)?</li><li>¿Por qué una <strong>aplicación web</strong> ayuda? ¿Qué hace tu app (registrar, buscar, editar, roles, login)?</li><li>¿Con qué <strong>tecnologías</strong>? (Java, Spring Boot, Thymeleaf, JPA, PostgreSQL en Neon, Render, GitHub).</li><li>¿Qué <strong>cambió</strong> para la entidad o qué se espera que cambie?</li><li>Escribe de 2 a 4 párrafos; puede ser largo, el PDF no lo corta.</li></ul></div>
+    <div class="ej"><strong>Ejemplo de un equipo</strong><p>El Dispensario Comunitario Santa Ana registraba a sus beneficiarios en cuadernos. Buscar el historial de una familia tomaba varios minutos y los datos se repetían o se perdían.</p><p>Como proyecto del curso Programación I desarrollamos una aplicación web con Java y Spring Boot que permite registrar, buscar y actualizar beneficiarios. Tiene inicio de sesión con dos roles (administración y consulta), valida los datos antes de guardarlos y está publicada en internet (Render) con su base de datos en Neon.</p><p>Ahora el personal consulta la información desde cualquier computadora o celular, y los datos de las personas están protegidos con usuario y contraseña.</p></div></div>
+  </details>
+  <label>¿Por qué nació este proyecto?<textarea data-f="desc" id="f-desc" placeholder="¿Qué problema tenía la entidad? ¿Cómo lo resolvía antes? ¿Qué hace tu aplicación y con qué tecnologías? ¿Qué cambió?" style="min-height:180px"></textarea></label>
 </section>
 
 <section>
   <h2><span class="n">VI.</span>Cronograma de actividades</h2>
+  <details class="ayuda"><summary>💡 Qué poner aquí (con ejemplo)</summary>
+    <div class="ayuda-body"><div><strong>Qué escribir</strong><ul><li>Las <strong>etapas principales</strong> del proyecto, con su fecha y responsable.</li><li>Puedes usar el botón <strong>“Llenar con las etapas del curso”</strong> y luego ajustar fechas y responsables.</li><li>Incluye las reuniones o capacitaciones con la entidad si las hubo.</li></ul></div>
+    <div class="ej"><strong>Ejemplo de un equipo</strong><ul><li>Propuesta y estructura MVC en GitHub — 08/08/2026 — Equipo</li><li>Despliegue en Render y Neon — 17/10/2026 — Equipo</li><li>Capacitación al personal del dispensario — 12/11/2026 — Ana López</li><li>Defensa final y entrega a la entidad — 14/11/2026 — Equipo</li></ul></div></div>
+  </details>
   <div class="tablewrap"><table>
     <thead><tr><th>Actividad</th><th>Fecha</th><th>Responsable</th><th></th></tr></thead>
     <tbody id="t-acts"></tbody>
   </table></div>
-  <div class="bar"><button class="small ghost" type="button" data-add="acts">+ Agregar actividad</button></div>
+  <div class="bar"><button class="small ghost" type="button" data-add="acts">+ Agregar actividad</button><button class="small" type="button" data-act="cronograma">Llenar con las etapas del curso</button></div>
 </section>
 
 <section>
   <h2><span class="n">VII.</span>Costos</h2>
+  <details class="ayuda"><summary>💡 Qué poner aquí (con ejemplo)</summary>
+    <div class="ayuda-body"><div><strong>Qué escribir</strong><ul><li><strong>7.1 Horas:</strong> el total de horas del proyecto. Una forma de calcularlo: 18 clases de 70 min (21 h) + tu trabajo autónomo semanal.</li><li>En <strong>Catedrático, Colaboradores y Contraparte</strong> escribe las <strong>horas</strong> que dedicó cada uno.</li><li><strong>7.2 Presupuesto:</strong> los recursos usados y su costo en quetzales. Los servicios gratuitos se anotan con costo 0.00 (así se ve el valor del aporte).</li></ul></div>
+    <div class="ej"><strong>Ejemplo de un equipo</strong><ul><li><b>Horas invertidas:</b> 90 por estudiante (21 h de clase + ~4 h semanales de trabajo autónomo)</li><li><b>Catedrático:</b> 21 horas · <b>Colaboradores:</b> 4 horas (entrevistas y pruebas) · <b>Contraparte:</b> N/A</li><li><b>Presupuesto:</b> Hosting Render plan gratuito (1 × 0.00) · Base de datos Neon plan gratuito (1 × 0.00) · Internet para desarrollo (4 meses × 150.00) · Impresión del manual de usuario (2 × 25.00)</li></ul></div></div>
+  </details>
   <div class="grid">
-    <label class="full">7.1 Cantidad de horas invertidas<input data-f="horas" id="f-horas" inputmode="decimal"></label>
+    <label class="full">7.1 Cantidad de horas invertidas<input data-f="horas" id="f-horas" placeholder="Ej. 90 horas por estudiante" inputmode="decimal"></label>
     <div class="full"><h3>Estudiantes</h3><ul class="estlist" id="est-list"></ul></div>
-    <label>Catedrático<input data-f="cated2" id="f-cated2"></label>
-    <label>Colaboradores<input data-f="colab" id="f-colab"></label>
-    <label class="full">Contraparte<input data-f="contra" id="f-contra" placeholder="N/A si no aplica"></label>
+    <label>Catedrático<input data-f="cated2" id="f-cated2" placeholder="Horas del catedrático. Ej. 21 horas"></label>
+    <label>Colaboradores<input data-f="colab" id="f-colab" placeholder="Horas de colaboradores. Ej. 4 horas"></label>
+    <label class="full">Contraparte<input data-f="contra" id="f-contra" placeholder="Horas de la entidad, o N/A si no aplica"></label>
   </div>
   <h3>7.2 Presupuesto</h3>
   <div class="tablewrap"><table>
@@ -229,22 +269,34 @@ tfoot td{font-weight:600;padding-top:10px}
 
 <section>
   <h2><span class="n">VIII.</span>Monitoreo</h2>
-  <label>Mecanismo de monitoreo<textarea data-f="monit" id="f-monit"></textarea></label>
+  <details class="ayuda"><summary>💡 Qué poner aquí (con ejemplo)</summary>
+    <div class="ayuda-body"><div><strong>Qué escribir</strong><ul><li>¿Cómo <strong>dieron seguimiento</strong> al avance mientras trabajaban?</li><li>Piensa en lo que usaron: commits y ramas en GitHub, Pull Requests, guías semanales, checkpoint de la Semana 15, revisiones con el catedrático, reuniones con la entidad.</li></ul></div>
+    <div class="ej"><strong>Ejemplo de un equipo</strong><p>El avance se registró en GitHub: cada integrante trabajó en una rama y los cambios se integraron por Pull Request revisado. Cada semana entregamos la guía del curso y en la Semana 15 hicimos el checkpoint con lista de cotejo. Mostramos avances a la coordinadora del dispensario cada dos semanas para confirmar que los campos del registro eran los que necesitaban.</p></div></div>
+  </details>
+  <label>Mecanismo de monitoreo<textarea data-f="monit" id="f-monit" placeholder="¿Cómo dieron seguimiento al avance? (GitHub, guías semanales, revisiones, reuniones con la entidad)"></textarea></label>
 </section>
 
 <section>
   <h2><span class="n">IX.</span>Evaluación</h2>
-  <label>Mecanismo de evaluación<textarea data-f="eval" id="f-eval"></textarea></label>
+  <details class="ayuda"><summary>💡 Qué poner aquí (con ejemplo)</summary>
+    <div class="ayuda-body"><div><strong>Qué escribir</strong><ul><li>¿Cómo <strong>comprobaron que el proyecto funciona</strong> y que cumple sus objetivos?</li><li>Piensa en: pruebas funcionales (casos CP-01 a CP-06 de la Semana 16), evaluación entre pares (Semanas 9 y 18), entregas parciales, defensa ante el tribunal y la opinión de la entidad.</li></ul></div>
+    <div class="ej"><strong>Ejemplo de un equipo</strong><p>Aplicamos seis casos de prueba funcionales (registro, validación, edición, eliminación, acceso por rol y persistencia tras reiniciar). El proyecto fue evaluado por compañeros en dos rondas, en las cuatro entregas parciales y en la defensa final. La coordinadora del dispensario usó el sistema durante una semana y nos dio su retroalimentación.</p></div></div>
+  </details>
+  <label>Mecanismo de evaluación<textarea data-f="eval" id="f-eval" placeholder="¿Cómo comprobaron que funciona? (pruebas funcionales, evaluación entre pares, defensa, opinión de la entidad)"></textarea></label>
 </section>
 
 <section>
   <h2><span class="n">X.</span>Resultados</h2>
+  <details class="ayuda"><summary>💡 Qué poner aquí (con ejemplo)</summary>
+    <div class="ayuda-body"><div><strong>Qué escribir</strong><ul><li>Una fila por <strong>actor</strong>: estudiantes, docente, entidad (contraparte) y beneficiarios.</li><li>En cada fila: qué <strong>ayudó</strong>, qué <strong>dificultó</strong> y qué <strong>recomiendan</strong> para la próxima vez.</li><li>En <strong>observaciones generales</strong>, el cierre: aprendizajes y el estado en que queda la app.</li></ul></div>
+    <div class="ej"><strong>Ejemplo de un equipo</strong><ul><li><b>Estudiantes</b> — Favoreció: los Kits del curso y trabajar con ramas. Dificultó: el despliegue en Render la primera vez. Recomendación: publicar desde las primeras semanas.</li><li><b>Entidad</b> — Favoreció: la disposición del personal para probar. Dificultó: poco tiempo para reuniones. Recomendación: agendar una capacitación breve al recibir el sistema.</li></ul></div></div>
+  </details>
   <div class="tablewrap"><table style="min-width:640px">
     <thead><tr><th>Actor</th><th>Aspectos que favorecieron</th><th>Aspectos que dificultaron</th><th>Recomendaciones</th><th></th></tr></thead>
     <tbody id="t-results"></tbody>
   </table></div>
   <div class="bar"><button class="small ghost" type="button" data-add="results">+ Agregar fila</button></div>
-  <label>Observaciones generales<textarea data-f="obs" id="f-obs" style="min-height:120px"></textarea></label>
+  <label>Observaciones generales<textarea data-f="obs" id="f-obs" placeholder="Aprendizajes del equipo y estado en que queda la aplicación." style="min-height:120px"></textarea></label>
 </section>
 
 <div class="bar" id="bar-bottom">
@@ -419,11 +471,39 @@ tfoot td{font-weight:600;padding-top:10px}
   // Si alguien imprime con Ctrl+P sin usar el botón, también sale el documento completo.
   window.addEventListener("beforeprint",function(){if(!$("#print-doc").innerHTML)$("#print-doc").innerHTML=buildDoc(collect())});
 
+  // Etapas reales del curso (formato 18 semanas, 2026). Solo agrega las que falten y usa primero las filas vacías.
+  var ETAPAS_CURSO=[
+    ["Propuesta del proyecto y estructura MVC en GitHub (Entrega Parcial 1)","2026-08-08"],
+    ["Aplicación Spring Boot base en GitHub (Entrega Parcial 2)","2026-09-05"],
+    ["Formularios, rutas y validación de datos","2026-09-26"],
+    ["Base de datos con JPA, inicio de sesión y roles","2026-10-10"],
+    ["Despliegue en Render con base de datos en Neon (Entrega Parcial 3)","2026-10-17"],
+    ["Pruebas funcionales y corrección de errores","2026-10-31"],
+    ["Presentación interna y proyecto completo (Entrega Parcial 4)","2026-11-07"],
+    ["Defensa final y entrega del sistema a la entidad","2026-11-14"]
+  ];
+  function llenarCronograma(){
+    var existentes=rows("acts").map(function(r){return String(r.a||"").trim()});
+    var agregadas=0;
+    ETAPAS_CURSO.forEach(function(e){
+      if(existentes.indexOf(e[0])>-1)return;
+      var vacia=$$(T.acts.body+" tr").filter(function(tr){
+        return Array.prototype.every.call(tr.querySelectorAll("[data-c]"),function(el){return !el.value.trim()});
+      })[0];
+      if(vacia){vacia.querySelector('[data-c="a"]').value=e[0];vacia.querySelector('[data-c="f"]').value=e[1];vacia.querySelector('[data-c="r"]').value="Equipo de estudiantes"}
+      else addRow("acts",{a:e[0],f:e[1],r:"Equipo de estudiantes"});
+      agregadas++;
+    });
+    changed();
+    msg(agregadas?"✓ Se agregaron "+agregadas+" etapas del curso. Ajusta fechas y responsables a tu proyecto.":"El cronograma ya tiene las etapas del curso.",true);
+  }
+
   var clearArmed=false, clearTimer=null;
   function act(a){
     if(a==="export"){exportarPdf()}
     else if(a==="save"){var d2=collect();descargar("avance_Ficha_RSU_"+(slug(d2.f.proyecto)||"proyecto")+".json",JSON.stringify(d2,null,1),"application/json");msg("✓ Avance descargado. Guárdalo para continuar en otra computadora.",true)}
     else if(a==="load"){$("#file").click()}
+    else if(a==="cronograma"){llenarCronograma()}
     else if(a==="clear"){
       var all=$$('[data-act="clear"]');
       if(!clearArmed){clearArmed=true;all.forEach(function(b){b.textContent="Confirmar: borrar todo"});

@@ -486,7 +486,13 @@ portal.
   recorta una fila más alta que la página). Verificado con Playwright: textos
   de ~9 000 caracteres y una celda de varias páginas aparecen completos en el
   PDF (marcadores al final de cada texto leídos con pdf.js). Las cajas crecen
-  solas en pantalla.
+  solas en pantalla. Como el formato es difícil de llenar, cada sección trae
+  un desplegable "💡 Qué poner aquí (con ejemplo)" con preguntas guía y el
+  ejemplo de un equipo que hizo una app Spring Boot para una entidad sin fines
+  de lucro (Dispensario Comunitario Santa Ana), ejemplos en gris dentro de las
+  casillas y, en el cronograma, el botón "Llenar con las etapas del curso"
+  (`ETAPAS_CURSO`: los hitos reales de 2026; usa primero filas vacías y no
+  duplica). Ayudas y ejemplos no salen en el PDF.
   **Auditoría del 14 de nov. 2026 (día de la sesión):**
   - `evaluacion_pares.html` (y su copia `semana18_pares_abierta.html`, clave
     de guardado propia) se reescribió porque contradecía la regla de la Ronda 1:
