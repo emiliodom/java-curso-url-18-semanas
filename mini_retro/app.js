@@ -185,6 +185,7 @@
 
   function openWorkspace() {
     document.getElementById('welcome').hidden = true;
+    if (document.getElementById('firstTime')) document.getElementById('firstTime').hidden = true;
     document.getElementById('workspace').hidden = false;
     renderAll();
     startClock();
@@ -268,7 +269,9 @@
     );
     heading.append(headingCopy, element('span', 'phase-time', '⏱ ' + STEPS[currentStep].time + ' min'));
     article.appendChild(heading);
+    article.appendChild(renderGuide(currentStep));
     article.appendChild(element('p', 'requisito', '✅ Para avanzar: ' + missingFor(currentStep).join(' ')));
+    article.appendChild(renderExample(currentStep));
 
     if (currentStep === 0) renderSetup(article);
     if (currentStep === 1) renderGather(article);
@@ -276,6 +279,151 @@
     if (currentStep === 3) renderActions(article);
     if (currentStep === 4) renderClosing(article);
     panel.appendChild(article);
+  }
+
+  // Guía por etapa para equipos que nunca han hecho una retrospectiva (nov. 2026):
+  // por qué se hace, qué harán (pasos) y qué tendrán al terminar.
+  // La etapa 3 no lleva "pasos" aquí porque ya los muestra dentro de su propio contenido.
+  var GUIDES = [
+    {
+      why: 'Una retrospectiva solo sirve si todos se sienten seguros para contar lo que pasó. Si alguien teme que lo culpen, callará justo lo más útil. Por eso primero acuerdan cómo van a conversar y qué periodo van a revisar: sin un periodo claro, la plática se dispersa.',
+      steps: [
+        'Escriban un alias para el equipo (no nombres reales), el proyecto y el periodo que revisan. Hoy, en el cierre del curso: todo el curso.',
+        'Una persona lee en voz alta cada acuerdo de trabajo. Si alguien no está de acuerdo, este es el momento de decirlo.',
+        'Marquen cada acuerdo cuando todas las personas digan “de acuerdo”.',
+        'Si les ayuda a medir el tiempo, pulsen “Iniciar cronómetro” (arriba a la derecha).'
+      ],
+      result: 'Un espacio de confianza y un tema acotado: saben qué van a revisar y con qué reglas van a hablar.'
+    },
+    {
+      why: 'Antes de opinar o proponer soluciones hay que mirar los hechos. Si empiezan discutiendo qué cambiar, cada quien defenderá su idea sin saber si todos hablan del mismo problema. Reunir hechos primero le da al equipo la misma “foto” de lo que pasó.',
+      steps: [
+        'Dos minutos en silencio: cada persona piensa 2 o 3 hechos del periodo. Un hecho es algo que se vio o se puede comprobar, no una opinión sobre alguien.',
+        'Por turnos, cada quien dicta sus hechos y una persona los escribe: una idea por tarjeta.',
+        'Elijan la columna: “Seguir haciendo” = lo que ayudó; “Probar o cambiar” = lo que estorbó; “Preguntas” = dudas que nadie sabe responder.',
+        'Todavía no discutan ni busquen soluciones: solo escuchen y anoten. Eso viene después.'
+      ],
+      result: 'Una lista de hechos que todo el equipo reconoce como propia: lo que funcionó, lo que conviene cambiar y lo que todavía no entienden.'
+    },
+    {
+      why: 'Una tarjeta suelta es una anécdota; varias tarjetas que cuentan lo mismo son un patrón, y los patrones muestran qué parte del proceso se repite. Como no se puede arreglar todo a la vez, votar ayuda a elegir el único foco que más vale la pena atender.',
+      steps: null,
+      result: 'Un tema elegido por el equipo, con sus votos, y una frase que explica qué aprendieron de él.'
+    },
+    {
+      why: 'Una retrospectiva sin acciones es solo una plática. En esta etapa convierten lo aprendido en algo pequeño que probarán. Debe ser tan concreto que, más adelante, cualquiera pueda decir sin dudar si se hizo y si funcionó.',
+      steps: [
+        'Partan del tema más votado en la etapa anterior.',
+        'Propongan una acción pequeña, que se pueda hacer en una o dos semanas y que dependa solo del equipo.',
+        'Asignen un rol, no una persona (por ejemplo, “quien integra en main”). Así nadie queda señalado.',
+        'Elijan una fecha para comprobarla y escriban qué evidencia les dirá que funcionó.',
+        'Pulsen “Añadir acuerdo”. Pueden agregar hasta 3, pero una acción bien hecha vale más que tres vagas.'
+      ],
+      result: 'De 1 a 3 acuerdos verificables: qué harán, qué rol lo impulsa, cuándo y cómo sabrán si funcionó.'
+    },
+    {
+      why: 'Cerrar a propósito evita que la conversación quede “en el aire”. Medir la confianza muestra si las acciones son realistas: si el número es bajo, todavía están a tiempo de simplificarlas antes de terminar.',
+      steps: [
+        'A la cuenta de tres, cada persona muestra con los dedos qué tan segura está (1 a 5) de que el equipo hará las acciones. Conversen las diferencias y elijan el número del equipo.',
+        'Escriban en una o dos frases lo que se llevan de esta retrospectiva.',
+        'Marquen la confirmación final y pulsen “Generar acta”.',
+        'En el acta: revisen que diga lo que acordaron, expórtenla a PDF y, cuando la hayan guardado, borren la sesión.'
+      ],
+      result: 'El acta de la retrospectiva lista para guardar en PDF, con sus aprendizajes y compromisos por escrito.'
+    }
+  ];
+
+  function renderGuide(index) {
+    var data = GUIDES[index];
+    var box = element('div', 'stage-guide');
+    var why = element('div', 'guide-part');
+    why.appendChild(element('strong', '', '¿Por qué hacemos esto?'));
+    why.appendChild(element('p', '', data.why));
+    box.appendChild(why);
+    if (data.steps) {
+      var how = element('div', 'guide-part');
+      how.appendChild(element('strong', '', '¿Qué van a hacer?'));
+      var list = element('ol', '');
+      data.steps.forEach(function (step) { list.appendChild(element('li', '', step)); });
+      how.appendChild(list);
+      box.appendChild(how);
+    }
+    var result = element('div', 'guide-part guide-result');
+    result.appendChild(element('strong', '', 'Al terminar esta etapa tendrán:'));
+    result.appendChild(element('p', '', data.result));
+    box.appendChild(result);
+    return box;
+  }
+
+  // Ejemplos por etapa (nov. 2026): un caso del propio curso para orientar al equipo.
+  // Cada ejemplo: introducción, bloques [título, [líneas]] y, opcional, un contraste "evitar / mejor".
+  var EXAMPLES = [
+    {
+      intro: 'Así completó esta etapa un equipo que construyó el registro de un dispensario comunitario.',
+      blocks: [
+        ['Datos de la sesión', ['Equipo: Equipo Horizonte', 'Proyecto: Registro del Dispensario Santa Ana', 'Periodo: Semanas 1 a 18 (todo el curso)']],
+        ['Cómo leyeron los acuerdos', ['Una persona leyó cada acuerdo en voz alta y las demás respondieron “de acuerdo” antes de marcarlo.']]
+      ]
+    },
+    {
+      intro: 'Una tarjeta = un hecho que alguien pudo ver. Así quedaron algunas tarjetas de ese equipo:',
+      blocks: [
+        ['Seguir haciendo', ['Revisar el Pull Request antes de unir a main evitó que se rompiera la app en Render.', 'Probar el login con los dos roles antes de cada entrega.']],
+        ['Probar o cambiar', ['Dejamos el despliegue para la última semana y el primer build falló dos veces.', 'Trabajamos los tres directamente en main y tuvimos conflictos en el pom.xml.']],
+        ['Preguntas', ['¿Cómo probamos con datos de ejemplo sin usar datos reales de pacientes?']]
+      ],
+      avoid: ['“Pedro nunca hizo nada.” (habla de una persona y es un juicio)', '“Dos tareas quedaron sin responsable en la semana 15.” (habla del proceso y se puede comprobar)']
+    },
+    {
+      intro: 'El equipo vio que dos tarjetas contaban la misma historia y creó un tema propio.',
+      blocks: [
+        ['Tema creado: “Todo se dejó para el final”', ['Dejamos el despliegue para la última semana y el primer build falló dos veces.', 'Las pruebas de roles se hicieron el día de la entrega.']],
+        ['Votos (3 en total)', ['2 votos a “Dejamos el despliegue para la última semana…”', '1 voto a “Trabajamos los tres directamente en main…”']],
+        ['Aprendizaje que escribieron', ['Cuando dejamos lo técnico para el final, cualquier error se vuelve urgente; publicar temprano nos daría margen para corregir.']]
+      ]
+    },
+    {
+      intro: 'Una acción buena es pequeña, depende del equipo y se puede comprobar.',
+      blocks: [
+        ['Acción verificable', ['Publicar en Render una primera versión en la semana 1 del próximo proyecto.']],
+        ['Responsable por rol', ['Quien integra los cambios en main.']],
+        ['Fecha para comprobarla', ['Dos semanas después de iniciar el próximo proyecto.']],
+        ['Evidencia de que funcionó', ['La URL pública abre y el log de Render dice “prod” antes del día 15.']]
+      ],
+      avoid: ['“Comunicarnos mejor.” (no dice qué hacer ni cómo saber si se logró)', '“Revisión de 10 minutos cada lunes con el tablero de tareas abierto.” (se puede hacer y comprobar)']
+    },
+    {
+      intro: 'Así cerró el equipo:',
+      blocks: [
+        ['Confianza: 4 de 5', ['La acción es pequeña y depende solo de nosotros; no marcamos 5 porque el próximo proyecto aún no tiene fecha.']],
+        ['Aprendizaje o compromiso', ['Nos llevamos que publicar temprano y revisar cada Pull Request evita sorpresas. Lo aplicaremos en el próximo proyecto y lo enseñaremos a nuestros estudiantes.']]
+      ]
+    }
+  ];
+
+  function renderExample(index) {
+    var data = EXAMPLES[index];
+    var box = element('details', 'example-box');
+    box.open = true;
+    box.appendChild(element('summary', '', '💡 Ejemplo de un equipo (úsenlo como guía, no lo copien)'));
+    box.appendChild(element('p', 'example-intro', data.intro));
+    var grid = element('div', 'example-grid');
+    data.blocks.forEach(function (block) {
+      var col = element('div', 'example-block');
+      col.appendChild(element('strong', '', block[0]));
+      var list = element('ul', '');
+      block[1].forEach(function (line) { list.appendChild(element('li', '', line)); });
+      col.appendChild(list);
+      grid.appendChild(col);
+    });
+    box.appendChild(grid);
+    if (data.avoid) {
+      var contrast = element('div', 'example-contrast');
+      contrast.appendChild(element('p', 'example-bad', '✗ Evitar: ' + data.avoid[0]));
+      contrast.appendChild(element('p', 'example-good', '✓ Mejor: ' + data.avoid[1]));
+      box.appendChild(contrast);
+    }
+    return box;
   }
 
   function stageTitle(index) {
@@ -1049,6 +1197,7 @@
       currentStep = 0;
       document.getElementById('workspace').hidden = true;
       document.getElementById('welcome').hidden = false;
+      if (document.getElementById('firstTime')) document.getElementById('firstTime').hidden = false;
       showMessage('La retrospectiva fue borrada.', 'success');
     } catch (error) {
       showMessage(error.message + ' No se borró ningún dato; vuelvan a intentarlo cuando el servidor esté disponible.', 'error');

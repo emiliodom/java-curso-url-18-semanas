@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Retrospectiva guiada para equipos de proyecto: recopila datos, descubre patrones, acuerda acciones y exporta un informe.">
   <title>Retro de equipo | Programación I</title>
-  <link rel="stylesheet" href="styles.css">
-  <script src="app.js" defer></script>
+  <link rel="stylesheet" href="styles.css?v=20261114c">
+  <script src="app.js?v=20261114c" defer></script>
 </head>
 <body>
   <header class="site-header">
@@ -40,6 +40,19 @@
         <p>La información se guarda en este navegador y en el servidor PHP. El enlace de continuación funciona como llave compartida: no lo publiques. No escriban contraseñas ni datos sensibles.</p>
       </div>
       <button id="startNew" class="button button-primary" type="button">Crear retrospectiva</button>
+    </section>
+
+    <section id="firstTime" class="first-time" aria-labelledby="firstTimeTitle">
+      <h2 id="firstTimeTitle">¿Primera vez? Qué es una retrospectiva</h2>
+      <p>Es una conversación corta y ordenada en la que el equipo mira hacia atrás para <strong>aprender de cómo trabajó</strong>, no para calificar ni buscar culpables. Se usa al terminar un proyecto o una etapa, y en el aula sirve igual con estudiantes. La herramienta los guía; cada etapa explica por qué se hace, qué deben hacer y trae un ejemplo.</p>
+      <ol>
+        <li><strong>Preparar (3 min):</strong> acuerdan cómo conversar y qué periodo revisan.</li>
+        <li><strong>Reunir datos (8 min):</strong> cada persona aporta hechos: lo que ayudó, lo que estorbó y sus dudas.</li>
+        <li><strong>Encontrar patrones (7 min):</strong> agrupan los hechos que se parecen y votan el tema más importante.</li>
+        <li><strong>Acordar acciones (8 min):</strong> deciden algo pequeño y comprobable que harán distinto.</li>
+        <li><strong>Cerrar (4 min):</strong> miden su confianza, escriben qué se llevan y generan el acta.</li>
+      </ol>
+      <p class="muted">Al final se llevan un <strong>acta en PDF</strong> con lo que aprendieron y lo que se comprometen a probar. Trabajen en una sola pantalla, conversando en voz alta.</p>
     </section>
 
     <section id="workspace" hidden>

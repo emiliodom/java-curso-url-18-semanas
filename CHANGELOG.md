@@ -8,10 +8,12 @@ Todas las modificaciones y adiciones de hitos del proyecto se registran en este 
 - **Portal raíz:** banner "¡Felicidades por completar Programación 1!" como hero (`img/`, JPG y WebP de 1600/960 px y recorte cuadrado para celular), seguido del llamado "Califica el curso completo. Sé escuchado" hacia `https://proximaweb.click/url/evaluacion_docente/index.html?modo=curso`.
 - **Evaluación del curso completo (`evaluacion_docente/`):** modo `?modo=curso` con 6 criterios propios; se guarda con `tipo: "curso"` en el mismo JSON y el panel `/admin` lo muestra en una sección separada de los promedios por sesión.
 
+- **Ficha RSU (`Material_Sesion_Clase_18_HTML_18_semanas/ficha_rsu.html`):** formato de sistematización de proyectos RSU integrado al menú y la portada de la Semana 18. Guarda solo en el navegador, descarga y carga el avance en `.json`, y exporta a PDF un documento armado con los datos: los textos largos y las filas de tabla más altas que una página ya no se cortan (verificado con textos de ~9 000 caracteres).
+
 ### Cambiado
 - **Portal:** la Semana 18 es la semana actual; la evaluación de la sesión quedó abierta todo el día de cierre (`OPEN_HOUR = '00:00:00'`). Se quitó el desplegable del archivo histórico (sus 7 enlaces estaban rotos desde el commit `1223811`).
 - **Evaluación entre pares, Ronda 2 (`Material_Sesion_Clase_18_HTML_18_semanas/evaluacion_pares.html` y `semana18_pares_abierta.html`):** reescrita para que se entienda que se califica la calidad de la evaluación del estudiante (tabla de 5 pts), no la nota del compañero; pasos, "qué revisar" y evidencia por criterio, sin penalizar el arranque lento del plan gratuito de Render, y aviso al exportar incompleta.
-- **Mini retrospectiva (`mini_retro/`):** requisito "Para avanzar" visible en cada etapa, etapa 3 con pasos numerados y explicación de por qué las tarjetas vuelven a "sin agrupar", casilla de aprendizaje a ancho completo, etapa 4 orientada al siguiente proyecto, enlace a la Semana 18.
+- **Mini retrospectiva (`mini_retro/`):** pensada para quien nunca ha hecho una retro: portada "¿Primera vez? Qué es una retrospectiva" y, en cada etapa, por qué se hace, qué van a hacer y qué tendrán al terminar; ejemplo de un equipo en cada etapa (y contraste "Evitar / Mejor" en las etapas 2 y 4); requisito "Para avanzar" visible en cada etapa, etapa 3 con pasos numerados y explicación de por qué las tarjetas vuelven a "sin agrupar", casilla de aprendizaje a ancho completo, etapa 4 orientada al siguiente proyecto, enlace a la Semana 18.
 
 ### Verificación
 - Recorrido completo de la Mini Retro con Playwright sobre PHP local (5 etapas y acta, sin errores de JavaScript).

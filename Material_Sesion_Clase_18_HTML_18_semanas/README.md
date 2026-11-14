@@ -23,6 +23,7 @@ Esta semana representa la **culminación académica del curso**: los estudiantes
 | `cheatsheet.html` | Síntesis del curso completo (Semanas 1 a 18), glosario final y checklist |
 | `evaluacion_pares.html` | Herramienta oficial de la Ronda 2 de Peer Review (5.0 pts) con rúbrica sumativa |
 | `autoevaluacion.html` | Formulario de autoevaluación y reflexión metacognitiva docente |
+| `ficha_rsu.html` | Ficha RSU (formato oficial de sistematización de proyectos de Responsabilidad Social Universitaria, secciones I a X). Se guarda sola en el navegador (`localStorage`, clave `rsu-ficha-draft`), permite descargar/cargar el avance en `.json` y exporta a PDF un documento armado con los datos (no las cajas), por lo que los textos largos no se cortan. |
 | `quiz.html` | Quiz de cierre e integración de competencias |
 | `proyecto.html` | **Acta de Radicación de Defensa**: enlaces a Render, GitHub, videos y rúbrica de 10 pts |
 | `../mini_retro/` | Mini retrospectiva opcional de equipo, para realizar después de la sesión |

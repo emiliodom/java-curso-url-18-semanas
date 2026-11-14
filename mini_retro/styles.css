@@ -241,3 +241,29 @@ h1 { margin-bottom: .65rem; font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.
 .pasos-etapa li { margin: .25rem 0; }
 .insight-box .field-label { display: block; margin-bottom: .4rem; }
 .insight-box textarea { display: block; width: 100%; min-height: 96px; box-sizing: border-box; }
+
+/* Ejemplos por etapa (nov. 2026) */
+.example-box { margin: 0 0 1.1rem; padding: .8rem 1rem; border: 1px solid #c7d2fe; border-radius: 12px; background: #f5f7ff; }
+.example-box summary { cursor: pointer; font-weight: 700; color: #3730a3; }
+.example-intro { margin: .5rem 0 .6rem; color: var(--muted, #475569); font-size: .92rem; }
+.example-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: .6rem; }
+.example-block { padding: .6rem .75rem; border-radius: 10px; background: #fff; border: 1px solid #e0e7ff; font-size: .9rem; }
+.example-block ul { margin: .3rem 0 0; padding-left: 1.1rem; }
+.example-block li { margin: .2rem 0; }
+.example-contrast { display: grid; gap: .3rem; margin-top: .6rem; font-size: .9rem; }
+.example-contrast p { margin: 0; padding: .4rem .65rem; border-radius: 8px; }
+.example-bad { background: #fef2f2; color: #991b1b; }
+.example-good { background: #ecfdf3; color: #14532d; }
+@media print { .example-box { display: none; } }
+
+/* Guía por etapa para equipos sin experiencia (nov. 2026) */
+.stage-guide { display: grid; gap: .7rem; margin: .4rem 0 1rem; padding: .9rem 1rem; border: 1px solid #dbe4f0; border-radius: 12px; background: #fbfcfe; }
+.stage-guide .guide-part p { margin: .25rem 0 0; }
+.stage-guide .guide-part ol { margin: .3rem 0 0; padding-left: 1.3rem; }
+.stage-guide .guide-part li { margin: .2rem 0; }
+.stage-guide .guide-result { padding: .55rem .75rem; border-radius: 10px; background: #eef4ff; }
+.first-time { margin-top: 1rem; padding: 1rem 1.1rem; border-radius: 14px; border: 1px solid #dbe4f0; background: #fff; text-align: left; }
+.first-time h2 { font-size: 1.05rem; margin: 0 0 .4rem; }
+.first-time ol { margin: .4rem 0 0; padding-left: 1.3rem; }
+.first-time li { margin: .25rem 0; }
+@media print { .stage-guide, .first-time { display: none; } }

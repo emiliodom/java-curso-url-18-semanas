@@ -470,6 +470,23 @@ portal.
   semana actual del portal (`SEMANA_ACTIVA_N = 18`). En nov. 2026 se
   sustituyeron los campos de contraseña por confirmaciones de traspaso privado
   y se alineó el quiz integrador con el modo oscuro.
+  **Ficha RSU (`ficha_rsu.html`, 14 nov 2026):** formato oficial de
+  sistematización de proyectos de Responsabilidad Social Universitaria
+  (secciones I–X), enlazado en el menú de las 8 páginas, con tarjeta en la
+  portada y en las copias abiertas `semana18_*_abierta.html`. Venía como
+  artefacto de claude.ai (`window.claude.use("downloads")`, que no funciona en
+  el hosting); ahora guarda solo en `localStorage` (`rsu-ficha-draft`, la misma
+  clave del original) y descarga/carga el avance en `.json` con un Blob normal.
+  **Regla de exportación a PDF para formularios con texto largo:** no imprimir
+  las cajas (`textarea` recorta lo que no cabe en su altura); al exportar se
+  arma `#print-doc` con los datos y `@media print` oculta el formulario. En ese
+  documento: `white-space:pre-wrap` + `overflow-wrap:anywhere`, tablas con
+  `table-layout:fixed`, `thead{display:table-header-group}` y
+  `tr{break-inside:auto}` (el original usaba `break-inside:avoid` en filas, que
+  recorta una fila más alta que la página). Verificado con Playwright: textos
+  de ~9 000 caracteres y una celda de varias páginas aparecen completos en el
+  PDF (marcadores al final de cada texto leídos con pdf.js). Las cajas crecen
+  solas en pantalla.
   **Auditoría del 14 de nov. 2026 (día de la sesión):**
   - `evaluacion_pares.html` (y su copia `semana18_pares_abierta.html`, clave
     de guardado propia) se reescribió porque contradecía la regla de la Ronda 1:
@@ -487,8 +504,20 @@ portal.
     numerados y la explicación de por qué las tarjetas vuelven a "sin agrupar",
     casilla de aprendizaje a ancho completo (salía diminuta), etapa 4 orientada
     al próximo proyecto o a la práctica docente (ya no hay "próxima revisión"),
-    "Resultado" en vez de "Etapa 6", enlace a la Semana 18. Recorrido completo
-    verificado con Playwright y PHP local (5 etapas + acta, sin errores).
+    "Resultado" en vez de "Etapa 6", enlace a la Semana 18. Pensado para
+    grupos que **nunca han hecho una retro**: la portada tiene "¿Primera vez?
+    Qué es una retrospectiva" (`#firstTime`, se oculta al crear la sesión) y
+    cada etapa abre con una guía (arreglo `GUIDES` en `app.js`): "¿Por qué
+    hacemos esto?", "¿Qué van a hacer?" (pasos; la etapa 3 los trae en su
+    propio contenido) y "Al terminar esta etapa tendrán". Cada etapa trae
+    además un recuadro "💡 Ejemplo de un equipo" (arreglo `EXAMPLES` en
+    `app.js`, caso de un dispensario publicado en Render) y, en las etapas 2 y
+    4, un contraste "Evitar / Mejor"; no se imprime en el acta. `index.php`
+    carga `app.js`/`styles.css` con `?v=` para forzar la versión nueva. Los
+    datos no cambian de formato: sesiones en `data/sessions.json` (servidor) y
+    borrador en `localStorage` (`url_mini_retro_v1`), así que actualizar los
+    archivos no borra retros en curso. Recorrido completo verificado con
+    Playwright y PHP local (5 etapas + acta, sin errores).
 
 **Contraste de Semanas 17–18:** auditoría de las 16 páginas HTML en tema claro y
 oscuro (incluyendo contenido oculto) encontró texto de hasta 1:1 en oscuro, por
